@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-01 17:15 · `main` en `573ea89`
+Último commit: 2026-10-01 23:38 · `main` en `8384012`
 
 ## 🗺️ Roadmap
 
@@ -42,7 +42,7 @@ Versiones publicadas (tags): `v0.2.0`
 - [ ] **T-001** Publicar los tags de versión (herramientas/crear-tags.sh) · _pendiente_
 - [ ] **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico · _pendiente_
 - [ ] **T-003** Desplegar el backend nuevo como servicio systemd · _pendiente_
-- [ ] **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN) · _pendiente_
+- [ ] **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN) · _pendiente_ — commits: `8384012` (2026-10-01)
 - [ ] **T-005** HTTPS en el backend para publicar en Cloudflare Pages · _pendiente_
 
 ### v2.2.0 · Cuentas y calidad
