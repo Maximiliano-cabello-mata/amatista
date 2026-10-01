@@ -9,7 +9,7 @@ Todas las versiones de Amatista. Formato basado en [Keep a Changelog](https://ke
 | [1.0.0] | 2026-09-28 | **V1 · Integración** | `cde262b` |
 | [0.1.0] | 2026-09-27 | Prototipo | `0772159` |
 
-Los tags se crean con `bash herramientas/crear-tags.sh` (ver `docs/2026-10-01_versiones-y-tablero.txt`).
+Los tags están publicados y firmados con SSH; se crearon con `bash herramientas/crear-tags.sh` (ver `docs/2026-10-01_versiones-y-tablero.txt`).
 
 ## [Sin publicar]
 
