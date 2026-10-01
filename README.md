@@ -449,7 +449,7 @@ Amatista se encuentra actualmente en una etapa temprana de desarrollo.
 Clonar el repositorio:
 
 ```bash
-git clone https://github.com/MAXIMILIANO1234345/amatista.git
+git clone https://github.com/Maximiliano-cabello-mata/amatista.git
 ```
 
 Entrar al frontend:

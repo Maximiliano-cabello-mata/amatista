@@ -47,5 +47,5 @@ Primera versión con integración completa **React → FastAPI → Oracle**.
 - `manifest.json` y `sw.js` vacíos: la PWA aún no funciona sin conexión.
 - No hay autenticación real (las sesiones se crean solo con un email).
 
-[Sin publicar]: https://github.com/MAXIMILIANO1234345/amatista/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/MAXIMILIANO1234345/amatista/releases/tag/v0.1.0
+[Sin publicar]: https://github.com/Maximiliano-cabello-mata/amatista/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/Maximiliano-cabello-mata/amatista/releases/tag/v0.1.0
