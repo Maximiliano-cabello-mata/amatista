@@ -40,6 +40,9 @@ Desde la raíz del repositorio oficial (clon completo, no superficial):
 - Si git tiene configurada la firma SSH (user.signingkey), los tags se firman.
 - Se puede ejecutar varias veces: los tags que ya existen se saltan.
 
+Estado: publicados el 2026-10-01. Los cuatro tags están firmados con SSH
+(verificados en GitHub) y v0.2.0 ya se quitó del remoto.
+
 Opcional: en GitHub → Releases → "Draft a new release", elegir cada tag y
 pegar su sección del CHANGELOG.md.
 
