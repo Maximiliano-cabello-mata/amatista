@@ -45,3 +45,19 @@ refactor(api): reorganize route functions into separate modules
 [CHORE]
 chore(ai): update versions in the virtual environment's requirements.txt
 chore(repo): create base directories to isolate frontend from backend
+
+
+5. TASK REFERENCES (KANBAN BOARD)
+------------------------------------------------------
+Mention the board task in the commit title or body. The board in
+KANBAN.md moves the card automatically (see tablero/README.md):
+
+* T-004            -> moves the task to "En progreso"
+* revision T-004   -> moves it to "Revisión"
+* cierra T-004     -> "Hecho" once the commit reaches main
+* reabre T-004     -> back to "Pendiente"
+
+Example:
+feat(db): create application user in oracle
+
+cierra T-004

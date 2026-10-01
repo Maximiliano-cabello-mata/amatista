@@ -1,0 +1,78 @@
+# =============================================================================
+# TABLERO DE AMATISTA: roadmap (versiones) y tareas (Kanban)
+#
+# Este archivo lo editan las personas: aquí se crean tareas y se planean
+# versiones. El estado de cada tarea lo calculan los commits (ver
+# tablero/README.md) y el resultado se publica en KANBAN.md.
+#
+# estado (opcional): estado mínimo puesto a mano (pendiente, en-progreso,
+# revision, hecho). Los commits solo pueden hacer avanzar una tarea.
+# =============================================================================
+
+roadmap:
+  - version: v2.1.0
+    nombre: Oracle en producción
+    objetivo: El progreso de los alumnos se guarda en Oracle desde el servidor.
+  - version: v2.2.0
+    nombre: Cuentas y calidad
+    objetivo: Alumnos con cuenta propia y CI que revise cada cambio.
+  - version: v2.3.0
+    nombre: Módulo 2
+    objetivo: Segundo módulo de Blender y de A-Frame.
+  - version: v3.0.0
+    nombre: Amatista 3D Lab
+    objetivo: Modelos GLB, tutor IA y puente con Blender (ver docs/propuestas).
+
+tareas:
+  - id: T-001
+    titulo: Publicar los tags de versión (herramientas/crear-tags.sh)
+    version: v2.1.0
+    area: repo
+  - id: T-002
+    titulo: Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico
+    version: v2.1.0
+    area: db
+  - id: T-003
+    titulo: Desplegar el backend nuevo como servicio systemd
+    version: v2.1.0
+    area: api
+  - id: T-004
+    titulo: Usuario de aplicación en Oracle (dejar de usar ADMIN)
+    version: v2.1.0
+    area: db
+  - id: T-005
+    titulo: HTTPS en el backend para publicar en Cloudflare Pages
+    version: v2.1.0
+    area: api
+  - id: T-006
+    titulo: Autenticación de alumnos
+    version: v2.2.0
+    area: api
+  - id: T-007
+    titulo: CI en GitHub Actions (lint, build y pytest)
+    version: v2.2.0
+    area: repo
+  - id: T-008
+    titulo: Proteger main (solo cambios por PR)
+    version: v2.2.0
+    area: repo
+  - id: T-009
+    titulo: Módulo 2 de Blender (interfaz y navegación)
+    version: v2.3.0
+    area: pwa
+  - id: T-010
+    titulo: Módulo 2 de A-Frame (cargar modelos GLB)
+    version: v2.3.0
+    area: pwa
+  - id: T-011
+    titulo: Visor de modelos GLB en las lecciones
+    version: v3.0.0
+    area: pwa
+  - id: T-012
+    titulo: Tutor IA con Ollama dentro de las lecciones
+    version: v3.0.0
+    area: ia
+  - id: T-013
+    titulo: Add-on de Blender conectado con la plataforma
+    version: v3.0.0
+    area: pwa

@@ -1,0 +1,46 @@
+# Actualiza KANBAN.md con cada push, en cualquier rama.
+# El tablero siempre se publica en main; las otras ramas nunca tocan
+# KANBAN.md, así que no hay conflictos al hacer merge.
+name: Tablero Kanban
+
+on:
+  push:
+    branches: ['**']
+    paths-ignore: ['KANBAN.md']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tablero-kanban
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0 # todas las ramas y tags: el estado sale del historial
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - run: pip install pyyaml
+
+      - run: python tablero/actualizar.py
+
+      - name: Publicar KANBAN.md en main
+        run: |
+          if git diff --quiet -- KANBAN.md; then
+            echo "El tablero no cambió"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add KANBAN.md
+          git commit -m "chore(repo): actualizar tablero Kanban [skip ci]"
+          git push origin main

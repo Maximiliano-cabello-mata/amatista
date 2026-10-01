@@ -1,0 +1,67 @@
+=============================================================================
+VERSIONES (TAGS) Y TABLERO KANBAN
+PROYECTO: AMATISTA PWA
+FECHA: 1 DE OCTUBRE DE 2026 (UTC-6)
+=============================================================================
+
+1. VERSIONES IDENTIFICADAS EN EL HISTORIAL
+-----------------------------------------------------------------------------
+Revisando los commits, el proyecto tuvo tres fases. Se agruparon en pocos
+tags, uno al final de cada fase:
+
+  v0.1.0  0772159  27/09  Prototipo
+          Estructura del monorepo, documentación inicial y App Shell
+          (React + Tailwind + visor A-Frame). PRs #1 a #4.
+
+  v1.0.0  cde262b  28/09  V1 · INTEGRACIÓN
+          React → FastAPI → Oracle funcionando, CORS, flujo de sesiones,
+          arreglos (Errno 98, ORA-01400, indicador de estado) y la
+          documentación organizada por carpetas y fechas. PRs #5 a #9.
+
+  v2.0.0  0ea0e8a  29/09  V2 · PLATAFORMA EDUCATIVA
+          Empieza con el giro de identidad (PR #10): low poly estilo
+          videojuego y PWA real que funciona sin conexión. Termina con el
+          Módulo 1 de ambos cursos, el progreso offline-first y el backend
+          dentro del repositorio (PR #11).
+
+  v2.0.1  573ea89  01/10  Migración al repositorio oficial
+          Maximiliano-cabello-mata/amatista y commits firmados con SSH.
+          Reemplaza al tag v0.2.0, que apuntaba a esta misma versión.
+
+2. CÓMO CREAR LOS TAGS
+-----------------------------------------------------------------------------
+Desde la raíz del repositorio oficial (clon completo, no superficial):
+
+    bash herramientas/crear-tags.sh --reemplazar-v0.2.0
+    git push origin --tags
+    git push origin :refs/tags/v0.2.0      # quita el tag viejo de GitHub
+
+- Cada tag lleva la fecha de su commit, no la del día en que se crea.
+- Si git tiene configurada la firma SSH (user.signingkey), los tags se firman.
+- Se puede ejecutar varias veces: los tags que ya existen se saltan.
+
+Opcional: en GitHub → Releases → "Draft a new release", elegir cada tag y
+pegar su sección del CHANGELOG.md.
+
+3. REGLA PARA LAS PRÓXIMAS VERSIONES
+-----------------------------------------------------------------------------
+  MAYOR (v3.0.0)   Cambio de fase del producto (por ejemplo el 3D Lab).
+  MENOR (v2.1.0)   Una meta del roadmap terminada (ver KANBAN.md).
+  PARCHE (v2.0.2)  Solo correcciones.
+
+Al cerrar una versión:
+  1. Pasar las notas de "Sin publicar" a una sección nueva en CHANGELOG.md.
+  2. git tag -s v2.1.0 -m "v2.1.0 — Oracle en producción"
+  3. git push origin v2.1.0
+
+4. TABLERO KANBAN (ROADMAP + KANBAN + GIT-DRIVEN)
+-----------------------------------------------------------------------------
+  tablero/tareas.yml          Roadmap y tareas (lo editan las personas).
+  tablero/actualizar.py       Calcula el estado de cada tarea con los commits.
+  .github/workflows/tablero.yml
+                              Lo ejecuta con cada push y publica KANBAN.md.
+  KANBAN.md                   El tablero (generado, no se edita a mano).
+
+Para mover tarjetas basta con mencionar la tarea en el commit
+(T-004, cierra T-004, reabre T-004). Detalle en tablero/README.md.
+=============================================================================

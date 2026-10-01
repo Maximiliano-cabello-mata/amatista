@@ -356,6 +356,14 @@ docs/propuestas/2026-09-27_motor_generativo_3d.txt
 
 ---
 
+## 📌 Tablero y versiones
+
+- **[KANBAN.md](KANBAN.md)**: roadmap de las próximas versiones y tablero Kanban que se actualiza solo con los commits ([cómo se usa](tablero/README.md)).
+- **[CHANGELOG.md](CHANGELOG.md)**: qué trajo cada versión. Fases: `v0.1.0` prototipo · `v1.0.0` integración · `v2.0.0` plataforma educativa.
+- Tags: `bash herramientas/crear-tags.sh` (ver `docs/2026-10-01_versiones-y-tablero.txt`).
+
+---
+
 ## 🚧 Estado actual
 
 Amatista se encuentra actualmente en una etapa temprana de desarrollo.
