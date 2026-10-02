@@ -6,6 +6,10 @@
 --   2. Pega este archivo completo.
 --   3. Pulsa "Ejecutar script" (F5), NO "Ejecutar sentencia" (Ctrl+Enter).
 --
+-- Después ejecuta 002_autenticacion_y_contenido.sql (cuentas, sesiones seguras
+-- y tablas de contenido). Con alumnos reales NO vuelvas a ejecutar este archivo:
+-- los cambios nuevos van en scripts numerados que no borran datos.
+--
 -- ATENCIÓN: borra las tablas de la app (USUARIOS, SESIONES, SESIONES_WEB y
 -- PROGRESO_LECCIONES) con sus datos de prueba, y las vuelve a crear limpias.
 --

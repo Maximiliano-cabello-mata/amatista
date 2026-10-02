@@ -8,7 +8,8 @@ from sqlalchemy.orm import Session
 
 from api.comun import asegurar_usuario, error_bd
 from database.conexion import obtener_db
-from database.modelos import Sesion
+from api.dependencias import es_cuenta_registrada
+from database.modelos import Sesion, Usuario
 
 router = APIRouter(prefix="/api", tags=["sesiones"])
 
@@ -28,6 +29,9 @@ def iniciar_sesion(datos: SolicitudSesion, db: Session = Depends(obtener_db)):
 
     sesion_id = str(uuid.uuid4())
     try:
+        # Las cuentas con contraseña entran por /api/auth/iniciar-sesion.
+        if es_cuenta_registrada(db.get(Usuario, usuario_id)):
+            raise HTTPException(status_code=401, detail="Esta cuenta tiene contraseña: inicia sesión con tu correo.")
         asegurar_usuario(db, usuario_id, datos.nombre)
         db.add(
             Sesion(

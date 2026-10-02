@@ -16,6 +16,13 @@ Los tags están publicados y firmados con SSH; se crearon con `bash herramientas
 ### Agregado
 - Tags de versión organizados por fases y script `herramientas/crear-tags.sh`.
 - Tablero Kanban con roadmap que se actualiza solo con los commits (`tablero/`, `KANBAN.md`).
+- Cuentas con correo y contraseña (`/api/auth/*`): registro que conserva el progreso anónimo, inicio de sesión con fusión de dispositivos, confirmación de correo y recuperación de contraseña con códigos de 6 dígitos, bloqueo tras intentos fallidos y límite por IP.
+- Roles alumno, profesor y admin: padrón de cuentas y cambio de roles en `/api/admin/usuarios`.
+- `backend/sql/002_autenticacion_y_contenido.sql`: amplía Oracle sin borrar datos.
+
+### Cambiado
+- El progreso de una cuenta registrada solo se escribe y se lee con su sesión.
+- `diagnostico_oracle.py` compara Oracle con todos los modelos, incluido el largo de los textos.
 
 ## [2.0.1] - 2026-10-01
 

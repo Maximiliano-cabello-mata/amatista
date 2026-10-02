@@ -11,29 +11,28 @@ tablas reales con las que espera el backend. No modifica nada.
 """
 import sys
 
-from sqlalchemy import text
+from sqlalchemy import Integer, String, Text, text
 
 from database.conexion import crear_motor
+from database.modelos import Base
 
-# Tablas y tipos que espera el backend (ver sql/001_esquema_amatista.sql).
+
+def tipo_oracle(columna) -> str:
+    """Tipo de Oracle para una columna del modelo, como "VARCHAR2(64)" o "NUMBER"."""
+    if isinstance(columna.type, Text):
+        return "CLOB"
+    if isinstance(columna.type, String):
+        return f"VARCHAR2({columna.type.length})"
+    if isinstance(columna.type, Integer):
+        return "NUMBER"
+    return "TIMESTAMP"
+
+
+# Tablas y tipos que espera el backend: salen de database/modelos.py, que
+# coincide con sql/001 + sql/002.
 ESPERADO = {
-    "USUARIOS": {"ID": "VARCHAR2", "NOMBRE": "VARCHAR2", "CREADO_EN": "TIMESTAMP"},
-    "SESIONES": {
-        "ID": "VARCHAR2",
-        "USUARIO_ID": "VARCHAR2",
-        "DISPOSITIVO": "VARCHAR2",
-        "ACTIVA": "NUMBER",
-        "ULTIMO_ACCESO": "TIMESTAMP",
-    },
-    "PROGRESO_LECCIONES": {
-        "USUARIO_ID": "VARCHAR2",
-        "CURSO_ID": "VARCHAR2",
-        "LECCION_ID": "VARCHAR2",
-        "COMPLETADA": "NUMBER",
-        "PUNTAJE": "NUMBER",
-        "INTENTOS": "NUMBER",
-        "ACTUALIZADO_EN": "TIMESTAMP",
-    },
+    tabla.name.upper(): {c.name.upper(): tipo_oracle(c) for c in tabla.columns}
+    for tabla in Base.metadata.sorted_tables
 }
 
 # Tablas de versiones anteriores que el script SQL elimina.
@@ -53,10 +52,19 @@ PISTAS = [
 ]
 
 
+def separar(tipo):
+    """"VARCHAR2(64)" -> ("VARCHAR2", 64); "TIMESTAMP(6)" -> ("TIMESTAMP", None)."""
+    base, _, resto = tipo.partition("(")
+    if base == "VARCHAR2" and resto.rstrip(")").isdigit():
+        return base, int(resto.rstrip(")"))
+    return base, None
+
+
 def comparar(real):
     """Compara las tablas reales con las esperadas.
 
-    real: {"TABLA": {"COLUMNA": "TIPO"}} tal como sale de USER_TAB_COLUMNS.
+    real: {"TABLA": {"COLUMNA": "TIPO"}} tal como sale de USER_TAB_COLUMNS
+    (los VARCHAR2 con su largo en caracteres, por ejemplo "VARCHAR2(36)").
     Devuelve la lista de problemas (vacía si todo coincide).
     """
     problemas = []
@@ -68,11 +76,19 @@ def comparar(real):
             tipo_real = real[tabla].get(columna)
             if tipo_real is None:
                 problemas.append(f"Falta la columna {tabla}.{columna}.")
-            elif not tipo_real.startswith(tipo):
+                continue
+            base, largo = separar(tipo)
+            base_real, largo_real = separar(tipo_real)
+            if base_real != base:
                 aviso = f"{tabla}.{columna} es {tipo_real} y debería ser {tipo}."
-                if tipo == "VARCHAR2" and tipo_real.startswith("NUMBER"):
+                if base == "VARCHAR2" and base_real == "NUMBER":
                     aviso += " Guardar ahí un correo o un UUID provoca ORA-01722 (invalid number)."
                 problemas.append(aviso)
+            elif largo and largo_real and largo_real < largo:
+                problemas.append(
+                    f"{tabla}.{columna} es {tipo_real} y debería ser {tipo}: "
+                    "los valores más largos fallan con ORA-12899 (value too large)."
+                )
     return problemas
 
 
@@ -94,7 +110,9 @@ def main() -> int:
             version = getattr(conexion.connection.driver_connection, "version", "?")
             filas = conexion.execute(
                 text(
-                    "SELECT table_name, column_name, data_type FROM user_tab_columns "
+                    "SELECT table_name, column_name, "
+                    "CASE WHEN data_type = 'VARCHAR2' THEN 'VARCHAR2(' || char_length || ')' "
+                    "ELSE data_type END FROM user_tab_columns "
                     "ORDER BY table_name, column_id"
                 )
             ).all()
@@ -122,8 +140,12 @@ def main() -> int:
         print("✗ Las tablas no coinciden con lo que espera el backend:")
         for problema in problemas:
             print(f"  - {problema}")
-        print("→ Solución: ejecuta backend/sql/001_esquema_amatista.sql en Database Actions > SQL")
-        print("  con el botón «Ejecutar script» (F5). Borra los datos de prueba y recrea las tablas.")
+        print("→ Solución: en Database Actions > SQL ejecuta con «Ejecutar script» (F5):")
+        if not any(t in real for t in ("USUARIOS", "SESIONES", "PROGRESO_LECCIONES")):
+            print("  1. backend/sql/001_esquema_amatista.sql (crea las tablas base)")
+            print("  2. backend/sql/002_autenticacion_y_contenido.sql")
+        else:
+            print("  backend/sql/002_autenticacion_y_contenido.sql (agrega lo que falta sin borrar datos).")
         return 2
 
     print("✓ Las tablas coinciden con lo que espera el backend.")

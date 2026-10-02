@@ -24,3 +24,19 @@ def test_senala_tablas_obsoletas():
     real = esquema_correcto()
     real["SESIONES_WEB"] = {"ID": "VARCHAR2"}
     assert obsoletas(real) == ["SESIONES_WEB"]
+
+
+def test_detecta_sesiones_con_id_corto_y_columnas_faltantes():
+    # Esquema que deja solo 001: SESIONES.ID de 36 caracteres y USUARIOS sin email.
+    real = esquema_correcto()
+    real["SESIONES"]["ID"] = "VARCHAR2(36)"
+    del real["USUARIOS"]["EMAIL"]
+    problemas = comparar(real)
+    assert any("SESIONES.ID es VARCHAR2(36)" in p and "ORA-12899" in p for p in problemas)
+    assert "Falta la columna USUARIOS.EMAIL." in problemas
+
+
+def test_columna_mas_larga_de_lo_necesario_no_es_problema():
+    real = esquema_correcto()
+    real["USUARIOS"]["NOMBRE"] = "VARCHAR2(400)"
+    assert comparar(real) == []

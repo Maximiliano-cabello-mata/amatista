@@ -1,15 +1,16 @@
 from datetime import datetime
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from api.comun import asegurar_usuario, error_bd
+from api.dependencias import puede_ver_alumno, resolver_alumno, usuario_opcional
 from database.conexion import obtener_db
-from database.modelos import ProgresoLeccion, ahora
+from database.modelos import ProgresoLeccion, Usuario, ahora
 
 router = APIRouter(prefix="/api", tags=["progreso"])
 
@@ -24,7 +25,8 @@ class EventoProgreso(BaseModel):
 
 
 class SolicitudProgreso(BaseModel):
-    usuario_id: str = Field(min_length=1, max_length=100)
+    # Con sesión se ignora: el progreso siempre es del usuario de la sesión.
+    usuario_id: Optional[str] = Field(default=None, max_length=100)
     eventos: List[EventoProgreso] = Field(min_length=1, max_length=500)
 
 
@@ -41,7 +43,11 @@ def combinar(a: EventoProgreso, b: EventoProgreso) -> EventoProgreso:
 
 
 @router.post("/progreso")
-def guardar_progreso(datos: SolicitudProgreso, db: Session = Depends(obtener_db)):
+def guardar_progreso(
+    datos: SolicitudProgreso,
+    actual: Optional[Usuario] = Depends(usuario_opcional),
+    db: Session = Depends(obtener_db),
+):
     """Guarda el progreso enviado desde el dispositivo del alumno.
 
     El progreso nunca retrocede: una lección completada sigue completada y
@@ -53,18 +59,21 @@ def guardar_progreso(datos: SolicitudProgreso, db: Session = Depends(obtener_db)
         por_leccion[clave] = combinar(por_leccion[clave], evento) if clave in por_leccion else evento
 
     try:
-        asegurar_usuario(db, datos.usuario_id)
+        alumno_id = resolver_alumno(db, actual, datos.usuario_id)
+        asegurar_usuario(db, alumno_id)
         for (curso_id, leccion_id), evento in por_leccion.items():
-            fila = db.get(ProgresoLeccion, (datos.usuario_id, curso_id, leccion_id))
+            fila = db.get(ProgresoLeccion, (alumno_id, curso_id, leccion_id))
             if fila is None:
                 fila = ProgresoLeccion(
-                    usuario_id=datos.usuario_id,
+                    usuario_id=alumno_id,
                     curso_id=curso_id,
                     leccion_id=leccion_id,
                     completada=0,
                     intentos=0,
                 )
                 db.add(fila)
+            if evento.completada and not fila.completada:
+                fila.completada_en = ahora()
             fila.completada = 1 if (fila.completada or evento.completada) else 0
             if evento.puntaje is not None:
                 fila.puntaje = max(fila.puntaje or 0, evento.puntaje)
@@ -75,12 +84,20 @@ def guardar_progreso(datos: SolicitudProgreso, db: Session = Depends(obtener_db)
         db.rollback()
         raise error_bd(error, "/api/progreso")
 
-    return {"guardados": len(por_leccion)}
+    return {"guardados": len(por_leccion), "usuario_id": alumno_id}
 
 
 @router.get("/progreso/{usuario_id}")
-def leer_progreso(usuario_id: str, db: Session = Depends(obtener_db)):
+def leer_progreso(
+    usuario_id: str,
+    actual: Optional[Usuario] = Depends(usuario_opcional),
+    db: Session = Depends(obtener_db),
+):
     try:
+        if not puede_ver_alumno(db, actual, usuario_id):
+            if actual is None:
+                raise HTTPException(status_code=401, detail="Inicia sesión para ver este progreso.")
+            raise HTTPException(status_code=403, detail="No tienes permiso para ver este progreso.")
         filas = db.scalars(
             select(ProgresoLeccion).where(ProgresoLeccion.usuario_id == usuario_id)
         ).all()

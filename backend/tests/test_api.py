@@ -1,21 +1,10 @@
 import pytest
-from fastapi.testclient import TestClient
 from sqlalchemy import func, select, text
 from sqlalchemy.orm import Session
 
 from database import conexion
 from database.modelos import Sesion, Usuario
-
-
-@pytest.fixture()
-def cliente(tmp_path, monkeypatch):
-    monkeypatch.setenv("DATABASE_URL", f"sqlite:///{tmp_path / 'prueba.db'}")
-    conexion.motor.cache_clear()
-    from main import app
-
-    with TestClient(app) as c:
-        yield c
-    conexion.motor.cache_clear()
+from tests.conftest import solo_sqlite
 
 
 def contar(modelo):
@@ -30,7 +19,7 @@ def test_inicio(cliente):
 def test_salud(cliente):
     respuesta = cliente.get("/api/salud")
     assert respuesta.status_code == 200
-    assert respuesta.json() == {"estado": "ok", "motor": "sqlite"}
+    assert respuesta.json() == {"estado": "ok", "motor": conexion.motor().dialect.name}
 
 
 def test_iniciar_sesion_crea_usuario_una_vez(cliente):
@@ -75,7 +64,7 @@ def test_progreso_combina_eventos_repetidos(cliente):
         {"curso_id": "aframe", "leccion_id": "les_af_002", "completada": True},
     ]
     respuesta = cliente.post("/api/progreso", json={"usuario_id": "alumno-1", "eventos": eventos})
-    assert respuesta.json() == {"guardados": 2}
+    assert respuesta.json()["guardados"] == 2
     lecciones = cliente.get("/api/progreso/alumno-1").json()["lecciones"]
     assert {(l["leccion_id"], l["completada"]) for l in lecciones} == {("les_af_001", True), ("les_af_002", True)}
 
@@ -86,6 +75,7 @@ def test_progreso_valida_datos(cliente):
     assert cliente.post("/api/progreso", json={"usuario_id": "a", "eventos": []}).status_code == 422
 
 
+@solo_sqlite
 def test_error_de_base_de_datos_devuelve_mensaje(cliente):
     with conexion.motor().begin() as c:
         c.execute(text("DROP TABLE progreso_lecciones"))

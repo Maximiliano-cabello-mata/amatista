@@ -48,6 +48,7 @@ app.add_middleware(
 )
 
 app.include_router(auth.router)
+app.include_router(auth.router_heredado)  # /api/confirmar-correo
 app.include_router(sesiones.router)  # /api/iniciar-sesion heredado (alumnos anónimos)
 app.include_router(progreso.router)
 app.include_router(eventos.router)
