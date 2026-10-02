@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-02 04:24 · `main` en `4789f8e`
+Último commit: 2026-10-02 04:27 · `main` en `d0c2fec`
 
 ## 🗺️ Roadmap
 
@@ -43,7 +43,7 @@ Versiones publicadas (tags): `v2.0.1` · `v2.0.0` · `v1.0.0` · `v0.1.0`
 ### v2.2.0 · Cuentas y calidad
 
 - [ ] **T-006** Autenticación de alumnos · _revision_ — commits: `b2a0eb0` (2026-10-02)
-- [ ] **T-007** CI en GitHub Actions (lint, build y pytest) · _revision_ — commits: `2fcbdc6` (2026-10-02)
+- [ ] **T-007** CI en GitHub Actions (lint, build y pytest) · _revision_ — commits: `cd7c7bc` (2026-10-02)
 - [ ] **T-008** Proteger main (solo cambios por PR) · _pendiente_
 
 ### v2.3.0 · Módulo 2
