@@ -1,0 +1,76 @@
+=============================================================================
+INCIDENCIAS DEL 2 DE OCTUBRE DE 2026
+PROYECTO: AMATISTA PWA
+FECHA: 2 DE OCTUBRE DE 2026 (UTC-6)
+ÍNDICE DE TODAS LAS INCIDENCIAS: docs/incidencias/README.md
+=============================================================================
+
+Se registran las fallas encontradas durante la jornada de la plataforma
+unificada (v2.2.0), su causa, cómo se corrigieron y qué falta.
+
+
+INC-005 · ORA-12899 AL INICIAR SESIÓN (SESIONES.ID DEMASIADO CORTO)
+-----------------------------------------------------------------------------
+Síntoma   Iniciar sesión con una cuenta respondía 500. Oracle rechazaba el
+          token: ORA-12899 value too large for column SESIONES.ID
+          (actual: 64, maximum: 36).
+Causa     sql/002 debía ampliar SESIONES.ID de VARCHAR2(36) a VARCHAR2(64).
+          Su función ampliar_columna leía el «2» de «VARCHAR2(64)» como el
+          largo de la columna y concluía que no hacía falta ampliarla.
+          Las pruebas con SQLite no lo detectan (SQLite no limita VARCHAR).
+Solución  002 corregida en el PR #9 (rama claude/project-thread-7bh70f).
+          Volver a ejecutar la 002 corregida amplía la columna sin borrar
+          datos. Probado contra Oracle 26ai en contenedor.
+Estado    ABIERTA hasta fusionar el PR #9 y ejecutar la 002 en la VM (T-002).
+
+
+INC-006 · 500 AL ABRIR UNA LECCIÓN DESDE ORACLE (COLUMNAS IS JSON)
+-----------------------------------------------------------------------------
+Síntoma   GET /api/contenido/lecciones/... devolvía 500 con Oracle; con
+          SQLite funcionaba.
+Causa     python-oracledb entrega como dict las columnas con CHECK IS JSON
+          (LECCIONES.CONTENIDO, PROGRESO_LECCIONES.DATOS_LIGEROS); el
+          código esperaba texto, igual que en SQLite.
+Solución  TextoJSON (TypeDecorator en database/modelos.py) devuelve siempre
+          texto. Incluido en el PR #9 con su prueba.
+Estado    ABIERTA hasta fusionar el PR #9.
+
+
+INC-007 · DOCUMENTOS ENLAZADOS QUE NO EXISTEN
+-----------------------------------------------------------------------------
+Síntoma   a) KANBAN.md y tablero/README.md enlazaban
+             docs/arquitectura/2026-10-02_formula_modulos.txt.
+          b) despliegue/amatista-api.service y despliegue/Caddyfile remiten a
+             docs/despliegue/2026-10-02_despliegue_oci.txt.
+          Ninguno de los dos existía.
+Causa     Los documentos quedaron en la lista de pendientes de la bitácora
+          (sección 2.2), pero el código ya los enlazaba.
+Solución  a) Se escribió la Fórmula (PR del cierre del 2 de octubre).
+          b) Pendiente en T-031. Mientras tanto, los encabezados de cada
+             archivo de despliegue/ explican cómo instalarlo y la guía de
+             Oracle llega con el PR #9.
+Estado    a) RESUELTA al fusionar ese PR · b) PENDIENTE (T-031).
+
+
+INC-008 · NO SE PUEDE PROBAR CONTRA EL ORACLE REAL DESDE FUERA DE LA VM
+-----------------------------------------------------------------------------
+Síntoma   Las pruebas automáticas no llegan a la Autonomous Database.
+Causa     La ACL de OCI solo admite la IP de la VM ARM (ver ORA-12506 en
+          backend/README.md). Es lo esperado por seguridad.
+Mitigación Las fallas de Oracle se reproducen con el contenedor
+          gvenzl/oracle-free (guía en docs/despliegue/, PR #9). Lo que solo
+          se ve en producción se verifica con diagnostico_oracle.py en la VM.
+Estado    MITIGADA. No se abre la ACL.
+
+
+INC-009 · EL TAG DE CIERRE NO SE PUDO PUBLICAR DESDE LA SESIÓN EN LA NUBE
+-----------------------------------------------------------------------------
+Síntoma   git push del tag v2.2.0-alpha.2 respondió HTTP 403.
+Causa     La sesión de Claude solo puede escribir en su propia rama; los
+          tags del proyecto además se firman con la llave SSH de Maximiliano.
+Solución  El tag quedó registrado en herramientas/crear-tags.sh para crearlo
+          firmado desde la computadora de Maximiliano:
+              bash herramientas/crear-tags.sh
+              git push origin v2.2.0-alpha.2
+Estado    PENDIENTE de esa acción.
+=============================================================================
