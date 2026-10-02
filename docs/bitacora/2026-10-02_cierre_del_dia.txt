@@ -1,0 +1,121 @@
+=============================================================================
+BITÁCORA: CIERRE DEL DÍA, PROGRESO Y PLAN PARA MAÑANA
+PROYECTO: AMATISTA PWA
+FECHA: 2 DE OCTUBRE DE 2026 (UTC-6)
+BASE: main en 88dd539 (después del PR #8)
+=============================================================================
+
+En tres líneas
+  Comprobado: main está en verde (206 pruebas del backend, 135 del frontend,
+              6 del tablero, contenido válido, lint y build; CI verde en GitHub).
+  Falta:      fusionar el PR #9 (correcciones de Oracle) y hacer las acciones
+              en la VM: SQL, despliegue, SMTP e importar contenido.
+  Siguiente:  fusionar el PR #9 → seguir la guía de Oracle paso a paso en la VM.
+
+
+1. LO QUE SE HIZO HOY (PULL REQUESTS)
+-----------------------------------------------------------------------------
+  PR #3  Fusionado  Registro de la publicación de los tags (cierra T-001).
+  PR #4  Fusionado  Base de identidad, roles y los 8 modelos de tablas.
+  PR #5  Cerrado    Autenticación completa en rama aparte. Se cerró sin
+                    fusionar: la autenticación ya está en main por otros PR
+                    (backend/api/auth.py y frontend/src/pages/cuenta/).
+                    El código sigue en la rama claude/project-thread-tclvj3.
+  PR #6  Fusionado  Punto de control: bloques interactivos y panel del alumno.
+  PR #7  Fusionado  Lecciones interactivas, panel del alumno, Kanban de
+                    contenido y CI.
+  PR #8  Fusionado  Páginas del panel de administración (resumen, usuarios,
+                    contenido, editor de lecciones y sistema).
+  PR #9  ABIERTO    Oracle al 100 %: 002 amplía SESIONES.ID a 64, JSON de
+                    lecciones desde Oracle y guía paso a paso
+                    (docs/despliegue/2026-10-02_oracle_paso_a_paso.md).
+                    CI verde. Espera tu visto bueno para fusionarse.
+  PR del cierre     Esta bitácora, registro de incidencias, tareas nuevas
+                    del Kanban, reorganización de docs/ y READMEs.
+
+Detalle técnico de todo lo construido: 2026-10-02_estado_plataforma_unificada.txt.
+
+
+2. VERIFICACIÓN AL CIERRE (main en 88dd539)
+-----------------------------------------------------------------------------
+  Backend    python -m pytest -q                          206 pasan
+  Contenido  python herramientas/contenido.py validar     2 módulos, 0 errores
+  Tablero    python -m pytest -q tablero                  6 pasan
+  Frontend   npm run lint · npx vitest run · npm run build limpio · 135 pasan · ok
+  GitHub     CI verde en main (PR #8) y en el PR #9
+  NO probado contra el Oracle real (la ACL solo admite la VM). Las dos fallas
+  propias de Oracle se reprodujeron y corrigieron con un contenedor (PR #9).
+
+
+3. TAGS
+-----------------------------------------------------------------------------
+  Publicados: v0.1.0 · v1.0.0 · v2.0.0 · v2.0.1 · v2.2.0-alpha.1
+  Nuevo:      v2.2.0-alpha.2 → 88dd539 (main al cierre, con el panel de
+              administración). Ya está en herramientas/crear-tags.sh. Desde
+              la sesión en la nube no se puede publicar (incidencia INC-009);
+              en tu computadora:
+                  git pull origin main
+                  bash herramientas/crear-tags.sh
+                  git push origin v2.2.0-alpha.2
+  v2.1.0 y v2.2.0 (sin «alpha») se crean cuando sus metas estén aceptadas
+  (regla en docs/guias/2026-10-01_versiones-y-tablero.txt).
+
+
+4. DÓNDE NOS ENCONTRAMOS
+-----------------------------------------------------------------------------
+  v2.1.0 · Oracle en producción                     1 de 5 hechas
+    Hecho T-001. En revisión T-002 y T-004 (scripts listos, falta
+    ejecutarlos en la VM). Pendientes T-003 (systemd) y T-005 (HTTPS).
+
+  v2.2.0 · Plataforma unificada                     código casi completo
+    Al fusionar el PR del cierre pasan a Hecho T-007 (CI verde en GitHub),
+    T-018 y T-020 (panel de administración probado en navegador).
+    En revisión: T-006, T-014 a T-017, T-019, T-021 y T-022.
+    Pendientes: T-008, T-023 a T-027 y las nuevas T-029 a T-033.
+    Fechas del plan: piloto el 8 de octubre (decisión el 7), beta el 15.
+
+  v2.3.0 (Módulo 2) y v3.0.0 (3D Lab): sin empezar, como estaba previsto.
+
+  En resumen: lo que falta para el piloto ya no es código, sino poner en
+  marcha el servidor (Oracle, servicio, HTTPS, SMTP), probar el recorrido
+  completo y revisar la seguridad.
+
+
+5. PENDIENTES
+-----------------------------------------------------------------------------
+  Requieren a Maximiliano
+    a. Fusionar el PR #9 (y el PR de este cierre).
+    b. Publicar el tag v2.2.0-alpha.2 (sección 3).
+    c. En la VM: respaldar Oracle → ejecutar 002 → 003 (→ 004) →
+       diagnostico_oracle.py (T-002, T-004). Guía:
+       docs/despliegue/2026-10-02_oracle_paso_a_paso.md (llega con el PR #9).
+    d. Desplegar con despliegue/amatista-api.service y actualizar.sh (T-003),
+       HTTPS con despliegue/Caddyfile y un nombre DNS (T-005).
+    e. Configurar SMTP_* y AMATISTA_ADMINS (T-032); importar el catálogo
+       (T-033).
+    f. Proteger main en GitHub permitiendo el bypass del workflow del
+       tablero (T-008).
+
+  Puede hacerlo Claude (en un hilo nuevo)
+    g. Prueba de punta a punta en navegador (T-029).
+    h. Revisión de seguridad e integridad (T-030).
+    i. Documentos de la v2.2 que faltan (T-031): base de datos optimizada,
+       autenticación y roles, panel y administración, y la guía de
+       despliegue en OCI que citan los archivos de despliegue/. La
+       Fórmula ya quedó escrita hoy.
+    j. Agregar el campo "formula" a las lecciones del módulo 1 (T-022).
+
+
+6. SUGERENCIAS PARA CONTINUAR MAÑANA (EN ESTE ORDEN)
+-----------------------------------------------------------------------------
+  1. Fusionar el PR #9 y el PR del cierre; publicar el tag alpha.2.
+  2. Oracle en la VM con la guía paso a paso (a–c). Es lo que desbloquea
+     todo lo demás (T-002 → T-023, T-033, T-025).
+  3. Mientras tanto, en paralelo: prueba de punta a punta (T-029) y
+     revisión de seguridad (T-030) contra SQLite y el contenedor Oracle.
+  4. Servicio systemd + HTTPS + SMTP (T-003, T-005, T-032) y publicar el
+     frontend en Cloudflare Pages (T-024).
+  5. Con eso, correr las pruebas P01–P10 (T-025) antes de la decisión del
+     piloto del 7 de octubre.
+  Regla del centro (PROYECTO.md): una tarea en ejecución a la vez.
+=============================================================================
