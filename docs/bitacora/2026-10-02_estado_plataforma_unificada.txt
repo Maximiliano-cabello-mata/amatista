@@ -184,6 +184,8 @@ Verificación al momento del corte (todo en verde):
 -----------------------------------------------------------------------------
   1. En la VM ARM, respaldar Oracle y ejecutar sql/002 → 003 (→ 004) en
      Database Actions con F5; luego python diagnostico_oracle.py. (T-002)
+     Guía paso a paso: docs/despliegue/2026-10-02_oracle_paso_a_paso.md
+     (probada en Oracle 26ai; la 002 corregida amplía SESIONES.ID a 64).
   2. Desplegar el backend nuevo con despliegue/amatista-api.service y
      configurar AMATISTA_ADMINS, SMTP_* y CORS_ORIGINS. (T-003)
   3. HTTPS con despliegue/Caddyfile y un nombre DNS. (T-005)
