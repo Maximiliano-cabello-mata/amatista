@@ -2,15 +2,15 @@
 BITÁCORA: CIERRE DEL DÍA, PROGRESO Y PLAN PARA MAÑANA
 PROYECTO: AMATISTA PWA
 FECHA: 2 DE OCTUBRE DE 2026 (UTC-6)
-BASE: main en 88dd539 (después del PR #8)
+BASE: main después del PR #11 (todo el trabajo del día ya está en main)
 =============================================================================
 
 En tres líneas
   Comprobado: main está en verde (206 pruebas del backend, 135 del frontend,
               6 del tablero, contenido válido, lint y build; CI verde en GitHub).
-  Falta:      fusionar el PR #9 (correcciones de Oracle) y hacer las acciones
+  Falta:      hacer las acciones
               en la VM: SQL, despliegue, SMTP e importar contenido.
-  Siguiente:  fusionar el PR #9 → seguir la guía de Oracle paso a paso en la VM.
+  Siguiente:  seguir la guía de Oracle paso a paso en la VM.
 
 
 1. LO QUE SE HIZO HOY (PULL REQUESTS)
@@ -26,12 +26,16 @@ En tres líneas
                     contenido y CI.
   PR #8  Fusionado  Páginas del panel de administración (resumen, usuarios,
                     contenido, editor de lecciones y sistema).
-  PR #9  ABIERTO    Oracle al 100 %: 002 amplía SESIONES.ID a 64, JSON de
+  PR #9  Cerrado    Oracle al 100 %: 002 amplía SESIONES.ID a 64, JSON de
                     lecciones desde Oracle y guía paso a paso
                     (docs/despliegue/2026-10-02_oracle_paso_a_paso.md).
-                    CI verde. Espera tu visto bueno para fusionarse.
-  PR del cierre     Esta bitácora, registro de incidencias, tareas nuevas
+                    Su contenido pasó al PR #11.
+  PR #10 Cerrado    Esta bitácora, registro de incidencias, tareas nuevas
                     del Kanban, reorganización de docs/ y READMEs.
+                    Su contenido pasó al PR #11.
+  PR #11 Fusionado  Rama única de Claude: une los PR #9 y #10 y la
+                    cronología del proyecto
+                    (2026-10-02_ramas_y_cronologia.txt). CI verde.
 
 Detalle técnico de todo lo construido: 2026-10-02_estado_plataforma_unificada.txt.
 
@@ -68,7 +72,7 @@ Detalle técnico de todo lo construido: 2026-10-02_estado_plataforma_unificada.t
     ejecutarlos en la VM). Pendientes T-003 (systemd) y T-005 (HTTPS).
 
   v2.2.0 · Plataforma unificada                     código casi completo
-    Al fusionar el PR del cierre pasan a Hecho T-007 (CI verde en GitHub),
+    Con el PR #11 en main pasan a Hecho T-007 (CI verde en GitHub),
     T-018 y T-020 (panel de administración probado en navegador).
     En revisión: T-006, T-014 a T-017, T-019, T-021 y T-022.
     Pendientes: T-008, T-023 a T-027 y las nuevas T-029 a T-033.
@@ -84,11 +88,15 @@ Detalle técnico de todo lo construido: 2026-10-02_estado_plataforma_unificada.t
 5. PENDIENTES
 -----------------------------------------------------------------------------
   Requieren a Maximiliano
-    a. Fusionar el PR #9 (y el PR de este cierre).
+    a. Hecho: el PR #11 llevó a main las correcciones de Oracle y este
+     cierre. Borrar desde tu PC las ramas que ya no hacen falta:
+         git push origin --delete claude/project-thread-7bh70f \
+             claude/project-thread-bpfcse dev
+     y decidir si se borra claude/project-thread-tclvj3 (PR #5).
     b. Publicar el tag v2.2.0-alpha.2 (sección 3).
     c. En la VM: respaldar Oracle → ejecutar 002 → 003 (→ 004) →
        diagnostico_oracle.py (T-002, T-004). Guía:
-       docs/despliegue/2026-10-02_oracle_paso_a_paso.md (llega con el PR #9).
+       docs/despliegue/2026-10-02_oracle_paso_a_paso.md.
     d. Desplegar con despliegue/amatista-api.service y actualizar.sh (T-003),
        HTTPS con despliegue/Caddyfile y un nombre DNS (T-005).
     e. Configurar SMTP_* y AMATISTA_ADMINS (T-032); importar el catálogo
@@ -108,7 +116,7 @@ Detalle técnico de todo lo construido: 2026-10-02_estado_plataforma_unificada.t
 
 6. SUGERENCIAS PARA CONTINUAR MAÑANA (EN ESTE ORDEN)
 -----------------------------------------------------------------------------
-  1. Fusionar el PR #9 y el PR del cierre; publicar el tag alpha.2.
+  1. Publicar el tag alpha.2 y borrar las ramas sobrantes.
   2. Oracle en la VM con la guía paso a paso (a–c). Es lo que desbloquea
      todo lo demás (T-002 → T-023, T-033, T-025).
   3. Mientras tanto, en paralelo: prueba de punta a punta (T-029) y

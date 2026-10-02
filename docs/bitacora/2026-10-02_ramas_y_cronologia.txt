@@ -9,7 +9,8 @@ En tres líneas
              que reúne todo lo que aún no estaba en main (antes PR #9 y PR #10).
   Avance:    el código de la plataforma unificada (v2.2) está casi completo y
              en verde; lo que falta es poner en marcha Oracle y el servidor.
-  Siguiente: fusionar la rama única en main y seguir la guía de Oracle en la VM.
+  Estado:    la rama única se fusionó en main con el PR #11; todo está en main.
+  Siguiente: seguir la guía de Oracle en la VM.
 
 
 1. QUÉ PASÓ CON LAS RAMAS
@@ -90,7 +91,8 @@ En tres líneas
     - PR #10 (06:21 UTC): bitácora del cierre, registro de incidencias,
       Kanban T-029 a T-033, docs/guias y tag v2.2.0-alpha.2 preparado.
       Ahora en la rama única.
-    - Unificación de ramas (este documento).
+    - PR #11 (fusionado): unificación de ramas y este documento; todo el
+      trabajo del día queda en main.
 
 
 3. HASTA DÓNDE AVANZAMOS
@@ -114,7 +116,7 @@ En tres líneas
 
 4. PENDIENTES QUE REQUIEREN A MAXIMILIANO
 -----------------------------------------------------------------------------
-  a. Dar el sí para fusionar la rama única en main.
+  a. Hecho: la rama única se fusionó en main (PR #11).
   b. Borrar las ramas ya contenidas (sección 1) y confirmar si se borra
      claude/project-thread-tclvj3 (PR #5).
   c. Publicar el tag v2.2.0-alpha.2 desde tu computadora:
