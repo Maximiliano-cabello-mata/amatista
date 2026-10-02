@@ -1,0 +1,85 @@
+=============================================================================
+LA FÓRMULA AMATISTA: CÓMO SE DISEÑA UN MÓDULO
+PROYECTO: AMATISTA PWA
+FECHA: 2 DE OCTUBRE DE 2026 (UTC-6)
+FUENTE: docs/arquitectura/2026-10-02_contrato_tecnico_plataforma.md
+        (secciones 3 y 4). Este documento es la versión de consulta.
+=============================================================================
+
+1. EL CICLO DEL CRISTAL (5 PASOS)
+-----------------------------------------------------------------------------
+Cada módulo de un curso sigue cinco pasos. Cada lección indica el paso que
+cubre con el campo "formula" del JSON.
+
+  Paso       Duración   Para qué                          Bloques sugeridos
+  ---------  ---------  --------------------------------  ---------------------------
+  gancho     2–4 min    Despertar curiosidad con una      hotspots, quiz_inline,
+                        pregunta o reto visual            image
+  explora    5–8 min    Descubrir el concepto             scene_explorer,
+                        manipulando                       concept_cards, matching
+  practica   6–10 min   Aplicarlo guiado, con             ordering, fill_blanks,
+                        retroalimentación inmediata       code_challenge con checks
+  reto       8–15 min   Mini proyecto propio con          code_challenge abierto o
+                        criterio de logro                 instrucciones de Blender
+                                                          + checklist de evidencia
+  jefe       —          Examen final (exam,               quizData con
+                        passingScore 80) que desbloquea   passingScore 80
+                        la insignia del módulo
+
+Ritmo: una idea por lección, 10 minutos como máximo y siempre una
+interacción cada ~2 bloques de texto.
+
+Gamificación: 100 XP por lección + puntaje del examen + 10 XP por actividad
+perfecta; niveles (0, 250, 650, 1200, 1900, 2750… XP), racha diaria,
+insignia por módulo y aviso «Nuevo contenido» cuando un módulo crece.
+
+
+2. FORMATO DEL JSON
+-----------------------------------------------------------------------------
+Archivo: frontend/src/data/modulos/<curso>-modulo-<n>.json → { "module": {...} }
+
+Módulo: curso ("blender" | "aframe"), order (= número del módulo), insignia,
+estado (borrador | revision | publicado | archivado) y lessons.
+
+Lección: { id, title, slug?, type, durationSeconds?, isLocked, cover?,
+contentBlocks?, quizData?, replaces?: [ids viejos], formula? }
+
+  type: theory_reading, theory_interactive, video_lesson, code_interactive,
+        exam (usa quizData { passingScore, questions }).
+  replaces: al cambiar una lección, lo completado en la vieja pasa a la nueva.
+
+Bloques de contenido: markdown_text, image, concept_cards, timeline,
+pipeline, layers, callout, code_snippet y video_player (detalle en
+2026-09-29_formato-lecciones.txt).
+
+Bloques interactivos (llevan "id" único y "required", por defecto true; la
+lección se completa cuando todos los requeridos están resueltos):
+
+  quiz_inline     pregunta con opciones; al menos una correcta.
+  ordering        3 a 8 elementos en el orden correcto (se barajan al mostrar).
+  matching        2 a 8 pares izquierda/derecha.
+  fill_blanks     plantilla con [[respuesta]] o [[una|alternativa]]; 1 a 10
+                  huecos; no distingue mayúsculas ni espacios extra.
+  hotspots        imagen con 1 a 10 puntos (x, y de 0 a 100); se completa al
+                  abrirlos todos.
+  scene_explorer  escena A-Frame con controles (segments, color, wireframe,
+                  metalness, roughness, scale, rotationSpeed) y meta opcional.
+  code_challenge  HTML inicial y checks (selector, attr, equals, contains,
+                  min) evaluados con DOMParser; vista previa A-Frame opcional.
+
+
+3. FLUJO PARA CREAR O CAMBIAR UN MÓDULO
+-----------------------------------------------------------------------------
+  1. Esqueleto: cd backend && python herramientas/contenido.py nuevo-modulo
+     (o «Crear módulo» en #/admin/contenido, que genera los 5 pasos).
+  2. Escribir las lecciones con estado "borrador".
+  3. Validar: python herramientas/contenido.py validar (CI lo exige).
+  4. Cambiar el estado a "revision" y luego a "publicado". KANBAN.md muestra
+     el estado de cada módulo y cuántos pasos de la Fórmula cubre.
+  5. Lo editado en el panel vive en la base: exportarlo a JSON con
+     python herramientas/contenido.py exportar <modulo_id> <archivo> y hacer
+     commit (ver tablero/README.md, «Flujo de contenido»).
+
+Pendiente: los módulo 1 todavía no llevan el campo "formula" en sus
+lecciones, por eso la columna «Fórmula» del tablero muestra «—».
+=============================================================================

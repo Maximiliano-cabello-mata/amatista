@@ -2,7 +2,7 @@
 
 Punto de entrada para Maximiliano como desarrollador único. Aquí se decide **qué sigue, por qué y dónde está la información**. Las carpetas técnicas y los documentos existentes conservan su ubicación.
 
-[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md)
+[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Último cierre](docs/bitacora/2026-10-02_cierre_del_dia.txt)
 
 ## 1. Dirección y límite de trabajo
 
@@ -130,7 +130,7 @@ Una línea de producto es un frente del roadmap; una rama Git es un cambio tempo
 
 En la consulta inicial, dev estaba ocho commits detrás de main y no tenía commits exclusivos. Es un dato histórico, no un estado permanente. No se elimina ni se sincroniza automáticamente.
 
-Cerrar una versión exige: tareas aceptadas, evidencia del recorrido de usuario, notas en CHANGELOG y tag conforme a la [convención existente](docs/2026-10-01_versiones-y-tablero.txt). Un tag por sí solo no demuestra que un despliegue esté operativo.
+Cerrar una versión exige: tareas aceptadas, evidencia del recorrido de usuario, notas en CHANGELOG y tag conforme a la [convención existente](docs/guias/2026-10-01_versiones-y-tablero.txt). Un tag por sí solo no demuestra que un despliegue esté operativo.
 
 ## 7. Entrada de futuras ampliaciones
 
@@ -156,8 +156,11 @@ Registrar decisiones importantes en un documento de arquitectura fechado: contex
 - [Mapa conceptual](docs/arquitectura/2026-09-27_mindmap.png)
 - [Identidad visual](docs/arquitectura/2026-09-28_identidad_visual_interfaz.txt)
 - [Formato de lecciones](docs/arquitectura/2026-09-29_formato-lecciones.txt)
-- [Convención de commits](docs/2026-09-27_convencion_commits.txt)
-- [Versiones y tablero](docs/2026-10-01_versiones-y-tablero.txt)
+- [Contrato técnico de la plataforma unificada](docs/arquitectura/2026-10-02_contrato_tecnico_plataforma.md)
+- [La Fórmula Amatista](docs/arquitectura/2026-10-02_formula_modulos.txt)
+- [Plan de lanzamiento](docs/planeacion/2026-10-01_plan_lanzamiento.txt)
+- [Convención de commits](docs/guias/2026-09-27_convencion_commits.txt)
+- [Versiones y tablero](docs/guias/2026-10-01_versiones-y-tablero.txt)
 
 ### Evidencia e historial
 
@@ -165,6 +168,9 @@ Registrar decisiones importantes en un documento de arquitectura fechado: contex
 - [Reporte App Shell](docs/bitacora/2026-09-27_reporte_app_shell.txt)
 - [Resumen inicial](docs/bitacora/2026-09-27_resumen.txt)
 - [Lecciones y progreso](docs/bitacora/2026-09-29_lecciones-y-progreso.txt)
+- [Estado de la plataforma unificada](docs/bitacora/2026-10-02_estado_plataforma_unificada.txt)
+- [Cierre del 2 de octubre y plan siguiente](docs/bitacora/2026-10-02_cierre_del_dia.txt)
+- [Registro de incidencias](docs/incidencias/README.md) (índice de todas)
 - [ORA-01400](docs/incidencias/2026-09-27_ora-01400-autoincremento.txt)
 - [Puerto ocupado y CORS](docs/incidencias/2026-09-27_puerto-ocupado-y-cors.txt)
 - [Diagnóstico Oracle/progreso](docs/incidencias/2026-09-29_diagnostico-oracle-progreso.txt)

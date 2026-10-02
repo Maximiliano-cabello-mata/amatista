@@ -9,7 +9,11 @@ Todas las versiones de Amatista. Formato basado en [Keep a Changelog](https://ke
 | [1.0.0] | 2026-09-28 | **V1 · Integración** | `cde262b` |
 | [0.1.0] | 2026-09-27 | Prototipo | `0772159` |
 
-Los tags están publicados y firmados con SSH; se crearon con `bash herramientas/crear-tags.sh` (ver `docs/2026-10-01_versiones-y-tablero.txt`).
+Pre-lanzamientos de la v2.2.0: `v2.2.0-alpha.1` (`f68c704`: cuentas, Oracle 20 GB, progreso adaptable,
+contenido administrable, lecciones interactivas y panel del alumno) y `v2.2.0-alpha.2` (`88dd539`: panel
+de administración; se publica con `crear-tags.sh`).
+
+Los tags están publicados y firmados con SSH; se crearon con `bash herramientas/crear-tags.sh` (ver `docs/guias/2026-10-01_versiones-y-tablero.txt`).
 
 ## [Sin publicar]
 
@@ -23,7 +27,16 @@ Los tags están publicados y firmados con SSH; se crearon con `bash herramientas
   (búsqueda, detalle, rol, cuentas de prueba, confirmar correo), gestor de contenido (crear módulo con la
   Fórmula, publicar, archivar, reordenar, exportar), editor de lecciones con vista previa y sistema (salud
   y purga).
-- Tags de versión organizados por fases y script `herramientas/crear-tags.sh`.
+- Tags de versión organizados por fases y script `herramientas/crear-tags.sh` (incluye `v2.2.0-alpha.2`).
+- Índice de la documentación (`docs/README.md`), registro de incidencias (`docs/incidencias/README.md`),
+  la Fórmula Amatista (`docs/arquitectura/2026-10-02_formula_modulos.txt`) y bitácora del cierre del 2 de octubre.
+- Tareas T-029 a T-033 en el tablero: prueba de punta a punta, revisión de seguridad, documentación de la v2.2,
+  SMTP e importación del catálogo a Oracle.
+
+### Cambiado
+- La convención de commits y la guía de versiones y tablero pasan a `docs/guias/`.
+- README, `backend/README.md` (rutas nuevas, despliegue con `despliegue/`) y `frontend/README.md` (estructura,
+  rutas y pruebas) actualizados al estado de la v2.2.
 - Tablero Kanban con roadmap que se actualiza solo con los commits (`tablero/`, `KANBAN.md`).
 
 ## [2.0.1] - 2026-10-01
