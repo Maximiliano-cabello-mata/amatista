@@ -14,6 +14,12 @@ Los tags están publicados y firmados con SSH; se crearon con `bash herramientas
 ## [Sin publicar]
 
 ### Agregado
+- **Plataforma unificada (v2.2.0, en curso):** cuentas con roles (alumno, profesor, admin), fusión del
+  progreso offline con la cuenta, esquema Oracle incremental para 20 GB (`backend/sql/002`–`004`),
+  contenido administrable por API y CLI, progreso que se adapta al contenido nuevo, 7 bloques
+  interactivos aplicados al Módulo 1, panel del alumno, métricas de alumnos activos, CI y archivos de
+  despliegue. Falta el panel de administración en la PWA: ver
+  `docs/bitacora/2026-10-02_estado_plataforma_unificada.txt`.
 - Tags de versión organizados por fases y script `herramientas/crear-tags.sh`.
 - Tablero Kanban con roadmap que se actualiza solo con los commits (`tablero/`, `KANBAN.md`).
 

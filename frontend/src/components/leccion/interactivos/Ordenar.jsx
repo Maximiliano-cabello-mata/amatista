@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { TextoEnLinea } from '../Markdown';
 import { useActividad } from './hooks';
-import { mezclarDistinto, mover, posicionesCorrectas, semillaDe } from './logica';
+import { mezclarDistinto, mover, posicionesCorrectas, semillaDe, textoPlano } from './logica';
 import { BOTON_PRINCIPAL, BOTON_SECUNDARIO, MarcoActividad, Retroalimentacion } from './Marco';
 
 const FLECHA = 'grid h-9 w-9 place-items-center text-white/60 transition-colors hover:bg-white/10 hover:text-neon disabled:pointer-events-none disabled:opacity-20';
@@ -50,7 +50,8 @@ function Ordenar({ bloque, alCompletar, resuelta }) {
     boton?.focus();
   }, [orden]);
 
-  const textoDe = (id) => porId.get(id)?.text ?? '';
+  // Texto plano para anuncios y aria-label (en pantalla se ve con su formato).
+  const textoDe = (id) => textoPlano(porId.get(id)?.text);
 
   const cambiar = (desde, hasta, control) => {
     const nuevo = mover(orden, desde, hasta);
@@ -183,7 +184,7 @@ function Ordenar({ bloque, alCompletar, resuelta }) {
                 {marca === true ? '✓' : marca === false ? '✗' : indice + 1}
               </span>
               <span className="min-w-0 flex-1 py-1 leading-snug text-texto select-none">
-                <TextoEnLinea texto={texto} />
+                <TextoEnLinea texto={porId.get(id)?.text ?? ''} />
                 {marca === true && <span className="sr-only"> (en su lugar)</span>}
                 {marca === false && <span className="sr-only"> (fuera de lugar)</span>}
               </span>
@@ -215,7 +216,7 @@ function Ordenar({ bloque, alCompletar, resuelta }) {
           );
         })}
       </ol>
-      <p className="sr-only" aria-live="assertive">
+      <p className="sr-only" aria-live="polite">
         {anuncio}
       </p>
 

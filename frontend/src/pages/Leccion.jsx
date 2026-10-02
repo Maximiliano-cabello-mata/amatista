@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useCatalogo } from '../catalogo/contexto';
 import { IconoCandado } from '../components/Iconos';
 import BloqueContenido from '../components/leccion/BloqueContenido';
 import Examen from '../components/leccion/Examen';
 import Figura from '../components/leccion/Figura';
+import { actividadesDe } from '../components/leccion/interactivos/logica';
 import { buscarLeccion, duracionTexto, TIPOS_LECCION } from '../data/cursos';
 import { useProgreso } from '../progreso/contexto';
 import {
@@ -33,10 +34,32 @@ function Aviso({ titulo, texto, enlace, textoEnlace }) {
 }
 
 // Contenido de una lección que no es examen, con su botón para completarla.
-function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, alCompletar }) {
-  const requiereTarjetas = !completada && leccion.contentBlocks.some((b) => b.type === 'concept_cards');
-  const [tarjetasListas, setTarjetasListas] = useState(false);
-  const bloqueado = requiereTarjetas && !tarjetasListas;
+// El botón se habilita cuando todas las actividades requeridas (bloques
+// interactivos y tarjetas de concepto) están resueltas; en un repaso no se bloquea.
+function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, resueltasPrevias, alResolver, alCompletar }) {
+  const bloques = leccion.contentBlocks ?? [];
+  const actividades = useMemo(() => actividadesDe(leccion.contentBlocks), [leccion.contentBlocks]);
+  // Las resueltas en una visita anterior (guardadas en el progreso) ya cuentan.
+  const [resueltas, setResueltas] = useState(
+    () => new Set(actividades.filter((a) => a.registrable && resueltasPrevias?.[a.bloque.id] !== undefined).map((a) => a.clave)),
+  );
+  const requeridas = actividades.filter((a) => a.requerida);
+  const hechas = requeridas.filter((a) => resueltas.has(a.clave)).length;
+  const bloqueado = !completada && hechas < requeridas.length;
+
+  const resolver = (actividad, resultado) => {
+    if (resueltas.has(actividad.clave)) return;
+    setResueltas((previas) => new Set(previas).add(actividad.clave));
+    if (actividad.registrable) alResolver(actividad.bloque.id, resultado);
+  };
+
+  const irAPendiente = () => {
+    const pendiente = requeridas.find((a) => !resueltas.has(a.clave));
+    const nodo = pendiente && document.getElementById(`actividad-${pendiente.clave}`);
+    if (!nodo) return;
+    nodo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    nodo.focus({ preventScroll: true });
+  };
 
   const continuar = () => {
     if (!completada) alCompletar();
@@ -47,12 +70,24 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, alC
   if (completada) textoBoton = siguiente ? 'Siguiente lección ▶' : 'Volver al curso ▶';
   else if (siguiente?.type === 'exam') textoBoton = 'Completar e ir al examen ▶';
 
+  const porIndice = new Map(actividades.map((a) => [a.indice, a]));
+
   return (
     <>
       <div className="space-y-8">
-        {leccion.contentBlocks.map((bloque, i) => (
-          <BloqueContenido key={i} bloque={bloque} alDescubrirTodas={() => setTarjetasListas(true)} />
-        ))}
+        {bloques.map((bloque, i) => {
+          const actividad = porIndice.get(i);
+          if (!actividad) return <BloqueContenido key={i} bloque={bloque} />;
+          return (
+            <div key={actividad.clave} id={`actividad-${actividad.clave}`} tabIndex={-1} className="scroll-mt-24 outline-none">
+              <BloqueContenido
+                bloque={bloque}
+                resuelta={resueltas.has(actividad.clave)}
+                alCompletar={(resultado) => resolver(actividad, resultado)}
+              />
+            </div>
+          );
+        })}
       </div>
 
       <footer className="mt-12 flex flex-col-reverse gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-start sm:justify-between">
@@ -67,18 +102,42 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, alC
           <span />
         )}
         <div className="flex flex-col items-stretch gap-2 sm:items-end">
+          {!completada && requeridas.length > 0 && (
+            <div className="flex items-center gap-3 sm:justify-end" aria-hidden="true">
+              <span className="flex gap-1">
+                {requeridas.map((a) => (
+                  <span
+                    key={a.clave}
+                    className={`hexagono h-3 w-3 transition-colors ${resueltas.has(a.clave) ? 'bg-emerald-400' : 'bg-white/15'}`}
+                  />
+                ))}
+              </span>
+            </div>
+          )}
           <button
             type="button"
             onClick={continuar}
             disabled={bloqueado}
+            aria-describedby={completada ? undefined : `estado-${leccion.id}`}
             className="corte-poly-sm bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white transition-[filter] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {textoBoton}
           </button>
           {!completada && (
-            <span className="text-center font-mono text-xs text-white/50 sm:text-right">
-              {bloqueado ? 'Descubre todas las tarjetas para continuar' : `+${XP_POR_LECCION} XP`}
+            <span id={`estado-${leccion.id}`} className="text-center font-mono text-xs text-white/50 sm:text-right" aria-live="polite">
+              {requeridas.length > 0 && `Actividades: ${hechas} de ${requeridas.length}`}
+              {requeridas.length > 0 && ' · '}
+              {bloqueado ? 'Resuélvelas para continuar' : `+${XP_POR_LECCION} XP`}
             </span>
+          )}
+          {bloqueado && (
+            <button
+              type="button"
+              onClick={irAPendiente}
+              className="self-center font-mono text-xs uppercase tracking-widest text-neon underline-offset-4 hover:underline sm:self-end"
+            >
+              Ir a la actividad pendiente ▾
+            </button>
           )}
         </div>
       </footer>
@@ -87,7 +146,14 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, alC
 }
 
 function Leccion({ cursoId, leccionId }) {
-  const { progreso, completarLeccion, registrarExamen, otorgarInsignia, registrarSesionAprendizaje } = useProgreso();
+  const {
+    progreso,
+    completarLeccion,
+    registrarExamen,
+    registrarActividad,
+    otorgarInsignia,
+    registrarSesionAprendizaje,
+  } = useProgreso();
   const { buscarCurso } = useCatalogo();
   const curso = buscarCurso(cursoId);
   const ubicacion = curso && buscarLeccion(curso, leccionId);
@@ -199,6 +265,8 @@ function Leccion({ cursoId, leccionId }) {
           completada={completada}
           anterior={anterior}
           siguiente={siguiente}
+          resueltasPrevias={registroLeccion(progreso, curso.id, leccion.id)?.resueltas}
+          alResolver={(bloqueId, resultado) => registrarActividad(curso.id, leccion.id, bloqueId, resultado)}
           alCompletar={() => completarLeccion(curso.id, leccion.id)}
         />
       )}

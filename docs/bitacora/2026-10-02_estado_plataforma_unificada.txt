@@ -1,0 +1,229 @@
+=============================================================================
+ESTADO DE LA PLATAFORMA UNIFICADA (v2.2.0): QUÉ ESTÁ HECHO Y QUÉ FALTA
+PROYECTO: AMATISTA PWA
+FECHA: 2 DE OCTUBRE DE 2026 (UTC-6)
+RAMA: claude/intelligent-darwin-3r4e2f
+=============================================================================
+
+Corte de trabajo hecho a pedido: el desarrollo se detuvo antes de terminar
+y este documento deja constancia exacta de lo terminado, lo incompleto y
+cómo continuar. Especificación completa: docs/arquitectura/
+2026-10-02_contrato_tecnico_plataforma.md.
+
+Verificación al momento del corte (todo en verde):
+  - Backend:  python -m pytest -q                → 206 pruebas pasan
+  - Contenido: python herramientas/contenido.py validar → 2 módulos, 0 errores
+  - Tablero:  python -m pytest tablero/test_actualizar.py → 6 pasan
+  - Frontend: npm run lint (limpio) · npm test → 132 pruebas · build correcto
+  - CI:       .github/workflows/ci.yml es YAML válido (aún no corrió en GitHub)
+  - NO se probó contra un Oracle real (la ACL solo permite la VM ARM).
+  - NO se hizo la prueba de punta a punta en navegador ni las revisiones de
+    seguridad e integridad que estaban planeadas (ver sección 3).
+
+
+1. HECHO Y VERIFICADO
+-----------------------------------------------------------------------------
+1.1 Base de datos Oracle (20 GB)                                 [T-014]
+  - 8 tablas: USUARIOS, SESIONES, PROGRESO_LECCIONES, LOGROS (IOT),
+    EVENTOS_APRENDIZAJE (particionada por mes), CURSOS, MODULOS, LECCIONES
+    (contenido JSON con CHECK IS JSON). Modelo en backend/database/modelos.py.
+  - sql/002: incremental, idempotente y NO destructivo (solo ALTER ADD y
+    CREATE; verifica el diccionario antes de cada cambio). Presupuesto de
+    espacio en su encabezado: ~12 KB por alumno (~25 KB peor caso); los
+    eventos son lo único que crece y se controlan con la retención.
+  - sql/003: purga diaria (sesiones viejas y meses de eventos con DROP
+    PARTITION), job DBMS_SCHEDULER y vista V_AMATISTA_ESPACIO (% de 20 GB).
+  - sql/004: usuario de aplicación AMATISTA_APP con permisos mínimos
+    (T-004); el backend usa DB_ESQUEMA para trabajar sobre las tablas de ADMIN.
+  - sql/LEEME.txt: orden de ejecución. Con datos: 002 → 003 → 004. NUNCA 001.
+  - diagnostico_oracle.py revisa las 8 tablas, restricciones, filas y espacio.
+  - tests/test_esquema.py impide que modelos, SQL y diagnóstico se desalineen.
+
+1.2 Autenticación y roles (API)                                   [T-006]
+  - /api/auth: registro, iniciar/cerrar sesión, cerrar todas, /yo (GET y
+    PATCH), confirmar correo, reenviar código, recuperar, restablecer y
+    cambiar contraseña.
+  - Contraseñas PBKDF2-SHA256 (600 000 iteraciones); tokens opacos guardados
+    como SHA-256; códigos de 6 dígitos con hash, caducidad de 15 min y 5
+    intentos; bloqueo de 15 min tras 5 contraseñas incorrectas; límites por
+    IP (429 con Retry-After); mensajes que no revelan qué correos existen.
+  - Roles alumno / profesor / admin. Primer admin con AMATISTA_ADMINS o con
+    python herramientas/crear_admin.py correo@x.
+  - Fusión offline → cuenta: al registrarse, la fila anónima del dispositivo
+    se convierte en la cuenta; al entrar desde otro dispositivo, su progreso
+    anónimo se une a la cuenta (sin retroceder nada).
+  - Correo por SMTP (STARTTLS, en segundo plano, 10 s máximo). Sin SMTP no
+    se envía nada; en desarrollo AMATISTA_MOSTRAR_CODIGOS=1 devuelve el código.
+
+1.3 Progreso, eventos y métricas (API)                           [T-017]
+  - El servidor toma la identidad de la sesión: un alumno no puede leer ni
+    escribir el progreso de otro cambiando usuario_id (prueba P02).
+  - Alumnos anónimos siguen funcionando sin cuenta (offline-first) y la PWA
+    vieja en caché sigue sincronizando (contratos tolerantes).
+  - Progreso monotónico + datos_ligeros (≤250) + completada_en + insignias.
+  - /api/eventos deduplicado por id (un reenvío no cuenta dos veces, P10).
+  - /api/admin: resumen con las definiciones del plan de lanzamiento
+    (registros, activaciones, activos semanales, retención de semana 2,
+    embudo, serie diaria, por curso), usuarios con búsqueda/paginación,
+    detalle, cambio de rol, marcar prueba, confirmar correo, purga y salud.
+
+1.4 Contenido administrable (API + CLI)                          [T-019]
+  - /api/contenido/catalogo público con ETag/304.
+  - Endpoints de admin: árbol, cursos, módulos (con "generar esqueleto" de
+    la Fórmula), lecciones (crear, editar, publicar, archivar, mover),
+    validar y plantillas. Id inmutable; publicar solo si valida; archivar
+    en vez de borrar.
+  - contenido/validacion.py valida los 9 bloques existentes y los 7
+    interactivos con mensajes en español que indican la ruta del error.
+  - contenido/plantillas.py: la Fórmula Amatista y una plantilla por paso.
+  - CLI backend/herramientas/contenido.py: validar, importar (idempotente),
+    exportar y nuevo-modulo.
+
+1.5 Núcleo del frontend                                          [T-015]
+  - Sesión (useAuth) guardada en IndexedDB; páginas Entrar, Registro,
+    Confirmar, Recuperar y Perfil (pages/cuenta/).
+  - Catálogo combinado: el empaquetado (offline) + el del servidor (se guarda
+    en IndexedDB). Los módulos se cargan solos de data/modulos/*.json.
+  - Progreso v2 con migración desde v1 sin pérdida, almacenamiento por
+    identidad, sincronización con token, cola de eventos, nivel y racha.
+  - Reglas de ACOPLE (progreso que se adapta al contenido nuevo):
+      · una lección agregada no bloquea a quien ya avanzó más adelante;
+      · "replaces" traslada lo completado de una lección vieja a la nueva;
+      · el % se recalcula contra el catálogo vigente y aparece "Nueva";
+      · lo completado, el XP y las insignias nunca se pierden.
+  - Barra superior unificada (Cursos, Mi panel, Laboratorio, Admin, cuenta)
+    con menú móvil; rutas nuevas en rutas.js.
+
+1.6 Lecciones interactivas                                 [T-021, T-022]
+  - 7 bloques nuevos en components/leccion/interactivos/: quiz_inline,
+    ordering (arrastrar o botones), matching, fill_blanks, hotspots,
+    scene_explorer (A-Frame bajo demanda) y code_challenge (checks con
+    DOMParser y vista previa).
+  - La lección se completa cuando están resueltas todas las actividades
+    requeridas; cada actividad suma al progreso (registrarActividad).
+  - Módulo 1 de Blender y de A-Frame con los 7 tipos aplicados
+    (2 a 3 actividades por lección de teoría); el validador los acepta.
+
+1.7 Panel del alumno e inicio                                     [T-016]
+  - #/panel: nivel y título, XP, racha, "continúa donde te quedaste",
+    avance por curso, retos semanales y logros, mapa de actividad de 12
+    semanas, lecciones por semana, exámenes, muro de insignias, tarjeta
+    para crear cuenta o estado de sincronización, y espacios "Próximamente"
+    (Tutor IA, Galería de proyectos, Retos de la comunidad).
+  - Gráficas SVG reutilizables en components/graficas/ (anillo, barras,
+    mapa de calor, medidor) con pruebas.
+  - Inicio rediseñado con la propuesta de valor, "Continuar" y la Fórmula.
+
+1.8 Kanban, CI y despliegue                                  [T-007, ...]
+  - tablero/tareas.yml: roadmap v2.2.0 "Plataforma unificada" y tareas
+    T-014 a T-028 (incluye pruebas P01–P10, piloto y beta) con depende_de
+    y aceptación.
+  - tablero/actualizar.py: nueva sección "Contenido" en KANBAN.md generada
+    de data/modulos/*.json (estado de cada módulo, lecciones y actividades):
+    el flujo de contenido se ve solo en el tablero.
+  - .github/workflows/ci.yml: pytest + validar contenido + lint + vitest +
+    build en cada push y PR.
+  - despliegue/: amatista-api.service (systemd), Caddyfile (HTTPS) y
+    actualizar.sh (T-003 y T-005; falta aplicarlos en la VM).
+  - Documentos del 1 de octubre movidos a docs/arquitectura/ y
+    docs/planeacion/.
+
+
+2. INCOMPLETO (SE DETUVO A MEDIAS)
+-----------------------------------------------------------------------------
+2.1 Panel de administración en la PWA                    [T-018, T-020]
+  HECHO: la API completa (1.3 y 1.4); services/admin.js con las llamadas;
+  components/admin/ con la lógica pura y probada (logica.js), piezas
+  visuales (ui.jsx, NavAdmin.jsx), hooks de datos y de confirmación.
+  FALTA: las páginas. pages/admin/Admin.jsx sigue siendo un esqueleto con
+  título y navegación. Por hacer (especificación en el contrato, sec. 2 y 5):
+    - Resumen: tarjetas KPI, selector 7/14/30 días, serie diaria, embudo y
+      tabla por curso (datos de GET /api/admin/resumen).
+    - Usuarios: tabla con búsqueda, filtros, orden y paginación; cambiar
+      rol, marcar prueba y confirmar correo; detalle del alumno.
+    - Gestor de contenido: árbol cursos → módulos → lecciones, crear módulo
+      con esqueleto, publicar/archivar, exportar JSON, reordenar.
+    - Editor de lección: metadatos, paleta de bloques (GET /plantillas),
+      edición JSON por bloque, vista previa con BloqueContenido, validar,
+      guardar y publicar.
+    - Sistema: salud detallada y purga.
+  MIENTRAS TANTO el administrador puede crear contenido con la CLI:
+    cd backend && python herramientas/contenido.py nuevo-modulo blender 2 "Interfaz y navegación"
+    (edita el JSON generado) → python herramientas/contenido.py validar
+    → python herramientas/contenido.py importar
+  y cambiar roles con crear_admin.py o PATCH /api/admin/usuarios/{id}.
+
+2.2 Documentación
+  HECHO: este documento, el contrato técnico, sql/LEEME.txt, el paso 4 de
+  backend/README.md (ya no manda ejecutar 001 sobre datos reales),
+  tablero/README.md.
+  FALTA:
+    - docs/arquitectura/2026-10-02_base_de_datos_optimizada.txt (mientras:
+      encabezado de sql/002 y sql/LEEME.txt).
+    - docs/arquitectura/2026-10-02_autenticacion_y_roles.txt (mientras:
+      sección 1 y 2 del contrato y backend/.env.example).
+    - docs/arquitectura/2026-10-02_formula_modulos.txt y actualizar
+      2026-09-29_formato-lecciones.txt con los bloques nuevos (mientras:
+      secciones 3 y 4 del contrato y GET /api/contenido/plantillas).
+    - docs/arquitectura/2026-10-02_panel_y_administracion.txt.
+    - docs/despliegue/ (carpeta vacía): guía de despliegue en OCI para
+      usar despliegue/*.
+    - README.md raíz, backend/README.md (lista de endpoints nuevos),
+      frontend/README.md (contextos, rutas, npm test) y CHANGELOG.md
+      (sección [Sin publicar]).
+
+2.3 Verificación pendiente
+  - Prueba de punta a punta en navegador (anónimo → registro → fusión de
+    dos dispositivos → offline → admin publica una lección → el progreso
+    se acopla). Las reglas están cubiertas por pruebas unitarias, pero el
+    recorrido completo no se ejecutó.
+  - Revisión adversarial de seguridad (permisos, tokens, XSS en contenido)
+    e integridad de datos (migración, fusión, sincronización).
+  - Capturas en navegador de cada bloque interactivo (el panel y el inicio
+    sí se revisaron en 390 px y 1280 px).
+
+
+3. ACCIONES QUE REQUIEREN A UNA PERSONA (NO SE PUEDEN HACER DESDE AQUÍ)
+-----------------------------------------------------------------------------
+  1. En la VM ARM, respaldar Oracle y ejecutar sql/002 → 003 (→ 004) en
+     Database Actions con F5; luego python diagnostico_oracle.py. (T-002)
+  2. Desplegar el backend nuevo con despliegue/amatista-api.service y
+     configurar AMATISTA_ADMINS, SMTP_* y CORS_ORIGINS. (T-003)
+  3. HTTPS con despliegue/Caddyfile y un nombre DNS. (T-005)
+  4. python herramientas/contenido.py importar contra Oracle para cargar el
+     catálogo en la base.
+  5. Proteger main en GitHub (T-008) y revisar que CI pase en el PR.
+
+
+4. DECISIONES TOMADAS AL IMPLEMENTAR (DONDE EL CONTRATO ERA AMBIGUO)
+-----------------------------------------------------------------------------
+  - Límites por IP más amplios que "10/min" porque un salón sale a
+    internet con una sola IP: registro 20/min, iniciar-sesion 30/min,
+    recuperar y reenviar-codigo 10/min. Constantes LIMITE_* en api/auth.py.
+  - Con AMATISTA_REQUIERE_CONFIRMACION=1 el registro responde token null y
+    requiere_confirmacion true (la PWA lleva a #/confirmar).
+  - Solo un id local simple (no un correo) se adopta como id de cuenta; la
+    fusión borra el progreso del anónimo después de copiarlo y lo marca con
+    fusionado_en.
+  - Métricas: los anónimos no fusionados SÍ cuentan como alumnos (se
+    excluyen es_prueba, profesor/admin y filas fusionadas); una lección con
+    completada_en cuenta como lesson_completed aunque la PWA vieja no mande
+    eventos.
+  - Un estado "revision" en un JSON se guarda como "borrador" en Oracle (la
+    restricción admite borrador/publicado/archivado).
+  - XP: 100 por lección + puntaje de examen + 10 por actividad perfecta
+    (en el frontend). El XP del panel admin no suma las actividades.
+  - Niveles: 0, 250, 650, 1200, 1900, 2750… XP — Aprendiz, Modelador,
+    Escultor, Arquitecto, Maestro del Cristal, Leyenda del Cristal.
+  - Purga desde la API con DELETE (AMATISTA_APP no puede quitar
+    particiones); el job de 003 corre como dueño y sí quita meses completos.
+
+
+5. CÓMO CONTINUAR
+-----------------------------------------------------------------------------
+  1. Terminar las páginas del panel admin (2.1) sobre services/admin.js y
+     components/admin/ — es lo único funcional que falta.
+  2. Prueba de punta a punta y revisiones (2.3); corregir lo que salga.
+  3. Documentación (2.2).
+  4. Acciones de la sección 3 y las pruebas P01–P10 del plan (T-025).
+=============================================================================
