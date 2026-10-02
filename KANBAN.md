@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-02 03:13 · `main` en `bc3cd64`
+Último commit: 2026-10-02 03:18 · `main` en `a99f64f`
 
 ## 🗺️ Roadmap
 
