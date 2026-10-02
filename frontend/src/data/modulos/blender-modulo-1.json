@@ -7,6 +7,9 @@
     "description": "Antes de correr, hay que aprender a caminar. En este módulo descubriremos qué es Blender, su historia de película, y traduciremos el 'idioma 3D' a términos sencillos para que no te pierdas cuando empecemos a diseñar.",
     "estimatedTimeMinutes": 45,
     "order": 1,
+    "curso": "blender",
+    "insignia": "Explorador 3D",
+    "estado": "publicado",
     "lessons": [
       {
         "id": "les_001",

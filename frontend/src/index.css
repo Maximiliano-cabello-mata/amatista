@@ -40,11 +40,25 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Retroalimentación de las actividades: "no es así" y "¡correcto!" */
+@keyframes sacudir {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+@keyframes acierto {
+  0% { transform: scale(0.96); opacity: 0.6; }
+  60% { transform: scale(1.02); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
 .animar-flotar { animation: flotar 5s ease-in-out infinite; }
 .animar-pulso { animation: pulso 2.4s ease-in-out infinite; }
 .animar-entrar { animation: entrar 0.5s ease-out both; }
+.animar-sacudir { animation: sacudir 0.4s ease-in-out; }
+.animar-acierto { animation: acierto 0.45s ease-out both; }
 
 @media (prefers-reduced-motion: reduce) {
-  .animar-flotar, .animar-pulso, .animar-entrar { animation: none; }
+  .animar-flotar, .animar-pulso, .animar-entrar, .animar-sacudir, .animar-acierto { animation: none; }
   * { transition-duration: 0.01ms !important; }
 }

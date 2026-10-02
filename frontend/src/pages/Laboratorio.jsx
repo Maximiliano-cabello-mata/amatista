@@ -2,12 +2,71 @@
 // Esta página se carga bajo demanda, así A-Frame no pesa en la pantalla de inicio.
 import 'aframe';
 import { useEffect, useState } from 'react';
+import { useAuth } from '../auth/contexto';
+import { useCatalogo } from '../catalogo/contexto';
+import { useProgreso } from '../progreso/contexto';
+import { rutas } from '../rutas';
 import { API_URL, consultarSalud, iniciarSesionBD } from '../services/api';
+
+// Estado de la cuenta, del catálogo y de la sincronización (diagnóstico).
+function Diagnostico() {
+  const { usuario } = useAuth();
+  const { origen, version, actualizar } = useCatalogo();
+  const { progreso, sincronizacion, sincronizarAhora } = useProgreso();
+  const [aviso, setAviso] = useState(null);
+
+  const probar = async (accion, exito) => {
+    setAviso('Probando…');
+    const resultado = await accion();
+    setAviso(resultado.ok ? exito : resultado.error);
+  };
+
+  return (
+    <div className="border-b border-white/10 pb-4 text-xs text-gray-400">
+      <h2 className="mb-2 text-sm font-semibold text-amatista-claro">Diagnóstico</h2>
+      <p>
+        Cuenta: <span className="text-white">{usuario ? `${usuario.email} (${usuario.rol})` : 'sin sesión (anónimo)'}</span>
+      </p>
+      <p className="truncate">
+        Id local: <span className="text-white">{progreso.cuentaId ?? progreso.alumnoId}</span>
+      </p>
+      <p>
+        Catálogo: <span className="text-white">{origen === 'servidor' ? `servidor · ${version}` : 'empaquetado en la app'}</span>
+      </p>
+      <p>
+        Pendientes: <span className="text-white">{sincronizacion.pendientes}</span> · eventos:{' '}
+        <span className="text-white">{sincronizacion.eventosPendientes}</span>
+      </p>
+      {sincronizacion.error && <p className="text-red-400">{sincronizacion.error}</p>}
+      <div className="mt-3 grid gap-2">
+        <button
+          type="button"
+          onClick={() => probar(sincronizarAhora, 'Sincronización enviada.')}
+          className="corte-poly-sm w-full bg-white/10 py-2 text-xs font-bold text-white hover:bg-white/20"
+        >
+          Sincronizar ahora
+        </button>
+        <button
+          type="button"
+          onClick={() => probar(actualizar, 'Catálogo al día.')}
+          className="corte-poly-sm w-full bg-white/10 py-2 text-xs font-bold text-white hover:bg-white/20"
+        >
+          Actualizar catálogo
+        </button>
+      </div>
+      {aviso && (
+        <p className="mt-2 text-neon" role="status">
+          {aviso}
+        </p>
+      )}
+    </div>
+  );
+}
 
 function Laboratorio() {
   const [salud, setSalud] = useState(null);
   const [sesionActiva, setSesionActiva] = useState(null);
-  const [errorSesion, setErrorSesion] = useState(false);
+  const [errorSesion, setErrorSesion] = useState(null);
 
   useEffect(() => {
     consultarSalud().then(setSalud);
@@ -20,14 +79,14 @@ function Laboratorio() {
   }
   const online = Boolean(salud?.baseDatos);
 
+  // Endpoint heredado: registra un alumno anónimo de prueba (no inicia sesión).
   const handleCrearSesion = async () => {
-    // Simulamos un correo de un alumno
-    const datosDB = await iniciarSesionBD("alumno_prueba@amatista.local");
-    if (datosDB) {
-      setSesionActiva(datosDB);
-      setErrorSesion(false);
+    const resultado = await iniciarSesionBD("alumno_prueba@amatista.local");
+    if (resultado.ok) {
+      setSesionActiva(resultado.datos);
+      setErrorSesion(null);
     } else {
-      setErrorSesion(true);
+      setErrorSesion(resultado.error);
     }
   };
 
@@ -35,7 +94,7 @@ function Laboratorio() {
     <main className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <a href="#/" className="font-mono text-xs uppercase tracking-widest text-white/50 hover:text-neon">
+          <a href={rutas.inicio} className="font-mono text-xs uppercase tracking-widest text-white/50 hover:text-neon">
             ◂ Volver a cursos
           </a>
           <h1 className="mt-1 text-2xl font-extrabold text-white">Laboratorio técnico</h1>
@@ -59,6 +118,7 @@ function Laboratorio() {
 
       <div className="flex flex-col gap-4 lg:flex-row">
         <aside className="corte-poly flex flex-col gap-4 bg-superficie p-4 lg:w-1/4">
+          <Diagnostico />
           <div className="border-b border-white/10 pb-4">
             <h2 className="mb-2 font-semibold text-amatista-claro">Gestor de Base de Datos</h2>
             {!sesionActiva ? (
@@ -70,9 +130,7 @@ function Laboratorio() {
                 >
                   Crear Nueva Sesión (Prueba)
                 </button>
-                {errorSesion && (
-                  <p className="mt-2 text-xs text-red-400">No se pudo crear la sesión. Revisa la conexión con el backend.</p>
-                )}
+                {errorSesion && <p className="mt-2 text-xs text-red-400">No se pudo crear la sesión: {errorSesion}</p>}
               </>
             ) : (
               <div className="border border-amatista/30 bg-black/50 p-3 text-xs">

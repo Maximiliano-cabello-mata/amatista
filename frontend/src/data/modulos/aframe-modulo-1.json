@@ -7,6 +7,9 @@
     "description": "Descubre cómo la web ha evolucionado. Aprenderemos qué es WebXR y cómo A-Frame nos permite construir experiencias de Realidad Virtual directamente en el navegador usando etiquetas que ya conoces.",
     "estimatedTimeMinutes": 40,
     "order": 1,
+    "curso": "aframe",
+    "insignia": "Arquitecto WebXR",
+    "estado": "publicado",
     "lessons": [
       {
         "id": "les_af_001",

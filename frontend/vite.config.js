@@ -8,6 +8,11 @@ export default defineConfig({
     // El chunk de A-Frame (~1.3 MB) se carga bajo demanda.
     chunkSizeWarningLimit: 1400,
   },
+  // Pruebas de funciones puras (reglas del progreso, catálogo): `npm test`.
+  test: {
+    include: ['src/**/*.test.js'],
+    environment: 'node',
+  },
   plugins: [
     react(),
     VitePWA({
@@ -52,6 +57,11 @@ export default defineConfig({
           },
         ],
         navigateFallback: '/index.html',
+        // Si la API se sirve en el mismo dominio (Caddy en /api), abrir una URL
+        // de la API no debe devolver la app. Las respuestas de la API nunca se
+        // guardan en el service worker: el catálogo y el progreso offline viven
+        // en IndexedDB y se piden siempre frescos al servidor.
+        navigateFallbackDenylist: [/^\/api\//],
         cleanupOutdatedCaches: true,
       },
     }),
