@@ -1,0 +1,133 @@
+=============================================================================
+DOCUMENTACIÓN DE INCIDENCIAS Y RESOLUCIÓN: DESPLIEGUE SQL v2.2.0, SINCRONIZACIÓN
+DE REPOSITORIO REMOTO Y CARGA DE CATÁLOGO EN ORACLE 26ai
+PROYECTO: AMATISTA PWA
+FECHA: 2 DE OCTUBRE DE 2026 (UTC-6)
+SERVIDOR: OCI ARM (opc@max) · Oracle Autonomous Database 23.26.3.3.0 (20 GB)
+RAMA APLICADA: claude/project-thread-7bh70f
+=============================================================================
+
+-----------------------------------------------------------------------------
+1. CONTEXTO Y ANTECEDENTES (HISTORIAL DEL PROYECTO)
+-----------------------------------------------------------------------------
+En sesiones previas (septiembre de 2026), la integración entre FastAPI y Oracle
+Autonomous Database superó bloqueos estructurales iniciales:
+  - ORA-01400 (inserción de NULL en llaves primarias sin autoincremento).
+  - ORA-01722 y ORA-02267 (conflicto entre identificadores NUMBER y VARCHAR2
+    en llaves foráneas al guardar correos o UUIDs).
+  - ORA-00942 (referencias a la tabla obsoleta SESIONES_WEB o discrepancias
+    de esquema).
+  - Errno 98 (puerto 8000 ocupado por procesos huérfanos de Uvicorn y bloqueo
+    de CORS en el navegador).
+
+El objetivo de la sesión del 2 de octubre de 2026 fue aplicar en producción el
+nuevo esquema incremental de la versión v2.2.0 («Plataforma unificada»): 8 tablas
+optimizadas para el límite de 20 GB del Free Tier, mantenimiento automático,
+actualización del backend en la VM ARM e importación del catálogo de cursos
+(Blender y A-Frame) hacia Oracle.
+
+-----------------------------------------------------------------------------
+2. COMPLICACIONES E INCIDENCIAS DEL DÍA (2 DE OCTUBRE DE 2026)
+-----------------------------------------------------------------------------
+
+Incidencia A: Ampliación de SESIONES.ID a 64 caracteres (Prevención ORA-12899)
+  - Descripción: El nuevo sistema de autenticación guarda en SESIONES.ID el
+    hash SHA-256 del token de sesión (64 caracteres hexadecimales), mientras
+    que el esquema base (001) creaba la columna con VARCHAR2(36). En la versión
+    previa del script 002, la expresión regular de `ampliar_columna` leía el
+    primer número del texto 'VARCHAR2(64)' (tomando el 2 de VARCHAR2 en vez de
+    64), por lo que no ampliaba la columna y provocaba `ORA-12899: value too
+    large for column` al iniciar sesión.
+  - Solución aplicada: Se ejecutó la versión corregida de
+    `002_autenticacion_contenido_eventos.sql`, que extrae explícitamente el
+    número entre paréntesis con `REGEXP_SUBSTR(p_tipo, '\(([0-9]+)', 1, 1, NULL, 1)`,
+    amplía SESIONES.ID a VARCHAR2(64) y cierra limpiamente las sesiones antiguas
+    de 36 caracteres sin borrar alumnos ni progreso.
+
+Incidencia B: Error de redirección en Bash y bloqueo de prompt (`>`) al editar .env
+  - Descripción: Al intentar configurar las variables de entorno en la terminal
+    SSH (`[opc@max ~]$`) pegando líneas con marcadores como
+    `DB_PASSWORD=<la_contraseña...>` y `DB_DSN=<tu_cadena...>`, el intérprete
+    Bash arrojó:
+      `-bash: syntax error near unexpected token 'newline'`
+    y posteriormente dejó la consola atrapada en un prompt de continuación (`>`)
+    al pegar comandos junto con texto de configuración.
+  - Causa raíz: Los caracteres `<` y `>` son operadores de redirección de
+    entrada/salida en Linux, y las variables deben editarse dentro del archivo
+    `~/amatista/backend/.env` en lugar de ejecutarse directamente en el shell.
+  - Solución aplicada: Se canceló el buffer de entrada con `Ctrl + C` y se
+    conservó intacto el archivo `backend/.env` funcional que ya tenía la cadena
+    TLS de conexión a Oracle.
+
+Incidencia C: `[Errno 2] No such file or directory` al ejecutar `herramientas/contenido.py`
+              y error `pathspec 'claude/project-thread-7bh70f' did not match`
+  - Descripción: Tras comprobar que Oracle ya tenía creadas las 8 tablas y la
+    vista `V_AMATISTA_ESPACIO`, el comando:
+      `python herramientas/contenido.py validar`
+    falló indicando que el archivo no existía. Al intentar cambiar a la rama
+    `claude/project-thread-7bh70f`, Git devolvió:
+      `error: pathspec 'claude/project-thread-7bh70f' did not match any file(s) known to git`
+  - Causa raíz: Al inspeccionar `git remote -v` y `git ls-remote --heads origin`,
+    se descubrió que el repositorio local de la VM ARM seguía apuntando a la
+    URL antigua (`https://github.com/MAXIMILIANO1234345/amatista.git`), la cual
+    permanecía congelada en el commit `0ea0e8a` (v2.0.0 del 29 de septiembre),
+    previo a la migración al repositorio oficial nuevo (`Maximiliano-cabello-mata/amatista`).
+  - Solución aplicada:
+    1. Se actualizó el remoto en el servidor:
+       `git remote set-url origin https://github.com/Maximiliano-cabello-mata/amatista.git`
+    2. Se descargaron las ramas y tags nuevos (`v0.1.0` a `v2.2.0-alpha.1`):
+       `git fetch origin --prune`
+    3. Se cambió a la rama de la plataforma unificada:
+       `git checkout claude/project-thread-7bh70f`
+
+Incidencia D: Respuesta vacía en `curl` tras reinicio de `systemd` y objetos `BIN$...`
+  - Descripción: Al ejecutar en cadena `sudo systemctl restart amatista-backend`
+    seguido inmediatamente de `curl -s http://localhost:8000/api/salud`, la
+    salida en consola fue vacía. Adicionalmente, `diagnostico_oracle.py` mostró
+    3 segmentos `BIN$XJlhePE...` (0.06 MB cada uno) en el reporte de espacio.
+  - Causa raíz:
+    1. `systemctl restart` devuelve el control a la terminal mientras Uvicorn
+       aún está levantando el proceso e inicializando el pool de conexiones TLS
+       hacia Oracle, por lo que una petición en el mismo milisegundo no recibe
+       respuesta.
+    2. Los segmentos `BIN$...` corresponden a tablas borradas en pruebas
+       anteriores que permanecen en la papelera de reciclaje (`RECYCLEBIN`) de
+       Oracle.
+  - Solución aplicada: Al aguardar 2 segundos (`sleep 2`) tras el reinicio del
+    servicio, `/api/salud` y `/api/contenido/catalogo` respondieron de forma
+    inmediata. Los objetos `BIN$` no afectan el funcionamiento (el uso total es
+    de apenas 4.0 MB / 0.02 % de 20 GB) y pueden purgarse opcionalmente con
+    `PURGE RECYCLEBIN;` en Database Actions.
+
+-----------------------------------------------------------------------------
+3. ESTADO FINAL VERIFICADO AL CIERRE DEL DÍA (2 DE OCTUBRE DE 2026)
+-----------------------------------------------------------------------------
+1. Diagnóstico de Base de Datos (`python diagnostico_oracle.py`):
+   - Motor: Oracle 23.26.3.3.0 conectado como ADMIN (esquema ADMIN).
+   - Tablas verificadas (8/8): CURSOS, EVENTOS_APRENDIZAJE (particionada por
+     mes), LECCIONES, LOGROS, MODULOS, PROGRESO_LECCIONES (7 filas conservadas),
+     SESIONES (2 filas), USUARIOS (2 filas conservadas).
+   - Espacio utilizado: 4.0 MB de 20 GB (0.02 %).
+   - Resultado: "✓ Las tablas coinciden con lo que espera el backend."
+
+2. Validación e Importación de Contenido (`herramientas/contenido.py`):
+   - `validar`: 2 archivos JSON validados (`aframe-modulo-1.json` con 3
+     lecciones y `blender-modulo-1.json` con 4 lecciones), 0 errores.
+   - `importar`: Cursos `blender` y `aframe` creados; módulos `mod_aframe_001`
+     y `mod_teoria_001` creados y publicados en Oracle con sus 7 lecciones.
+
+3. Verificación de Endpoints en Producción (`amatista-backend`):
+   - `GET /api/salud` -> `{"estado":"ok","motor":"oracle"}`
+   - `GET /api/contenido/catalogo` -> Sirviendo JSON versionado (`fe4ad644...`)
+     directamente desde las tablas de Oracle.
+
+-----------------------------------------------------------------------------
+4. PENDIENTES PARA LA SIGUIENTE SESIÓN
+-----------------------------------------------------------------------------
+  - Configurar `AMATISTA_ADMINS` con el correo del administrador en `backend/.env`
+    (o ejecutar `python herramientas/crear_admin.py`).
+  - Completar opcionalmente la transición al usuario `AMATISTA_APP` (`sql/004`)
+    con `DB_ESQUEMA=ADMIN` en `backend/.env`.
+  - Configurar Caddy (`despliegue/Caddyfile`) para exponer el backend con HTTPS
+    y enlazarlo con el frontend desplegado.
+=============================================================================
