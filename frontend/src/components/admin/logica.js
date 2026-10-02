@@ -211,3 +211,40 @@ export function datosSerie(serie = [], metrica = 'activos') {
 
 // Páginas totales de una lista paginada.
 export const totalPaginas = (total, porPagina) => Math.max(1, Math.ceil((Number(total) || 0) / Math.max(1, porPagina)));
+
+// Lección del servidor → partes que edita el editor: los metadatos (base), el
+// texto JSON de cada bloque y el de quizData (exámenes).
+export function separarLeccion(leccion = {}) {
+  const { contentBlocks, quizData, ...base } = leccion;
+  return {
+    base,
+    textosBloques: (contentBlocks ?? []).map(aTextoJSON),
+    textoQuiz: quizData ? aTextoJSON(quizData) : aTextoJSON({ passingScore: 80, questions: [] }),
+  };
+}
+
+// Inverso de separarLeccion. Devuelve {ok, leccion, erroresBloques: {índice:
+// mensaje}, errorQuiz}; con errores de JSON la lección no se puede enviar.
+export function armarLeccion(base, textosBloques = [], textoQuiz = '') {
+  const leccion = { ...base };
+  const erroresBloques = {};
+  let errorQuiz = null;
+  if (leccion.type === 'exam') {
+    const quiz = leerJSON(textoQuiz);
+    if (quiz.ok) leccion.quizData = quiz.valor;
+    else errorQuiz = quiz.error;
+  } else {
+    leccion.contentBlocks = textosBloques.map((texto, i) => {
+      const bloque = leerBloque(texto);
+      if (bloque.ok) return bloque.valor;
+      erroresBloques[i] = bloque.error;
+      return null;
+    });
+  }
+  // Los opcionales vacíos no se envían (el validador los rechazaría).
+  for (const campo of ['formula', 'cover', 'slug']) if (!leccion[campo]) delete leccion[campo];
+  if (!leccion.replaces?.length) delete leccion.replaces;
+  if (!Number(leccion.durationSeconds)) delete leccion.durationSeconds;
+  const ok = !errorQuiz && Object.keys(erroresBloques).length === 0;
+  return { ok, leccion, erroresBloques, errorQuiz };
+}

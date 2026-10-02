@@ -132,26 +132,23 @@ Verificación al momento del corte (todo en verde):
 2. INCOMPLETO (SE DETUVO A MEDIAS)
 -----------------------------------------------------------------------------
 2.1 Panel de administración en la PWA                    [T-018, T-020]
-  HECHO: la API completa (1.3 y 1.4); services/admin.js con las llamadas;
-  components/admin/ con la lógica pura y probada (logica.js), piezas
-  visuales (ui.jsx, NavAdmin.jsx), hooks de datos y de confirmación.
-  FALTA: las páginas. pages/admin/Admin.jsx sigue siendo un esqueleto con
-  título y navegación. Por hacer (especificación en el contrato, sec. 2 y 5):
-    - Resumen: tarjetas KPI, selector 7/14/30 días, serie diaria, embudo y
-      tabla por curso (datos de GET /api/admin/resumen).
-    - Usuarios: tabla con búsqueda, filtros, orden y paginación; cambiar
-      rol, marcar prueba y confirmar correo; detalle del alumno.
-    - Gestor de contenido: árbol cursos → módulos → lecciones, crear módulo
-      con esqueleto, publicar/archivar, exportar JSON, reordenar.
-    - Editor de lección: metadatos, paleta de bloques (GET /plantillas),
-      edición JSON por bloque, vista previa con BloqueContenido, validar,
-      guardar y publicar.
-    - Sistema: salud detallada y purga.
-  MIENTRAS TANTO el administrador puede crear contenido con la CLI:
-    cd backend && python herramientas/contenido.py nuevo-modulo blender 2 "Interfaz y navegación"
-    (edita el JSON generado) → python herramientas/contenido.py validar
-    → python herramientas/contenido.py importar
-  y cambiar roles con crear_admin.py o PATCH /api/admin/usuarios/{id}.
+  TERMINADO el 2 de octubre (rama claude/project-thread-7bh70f): las
+  páginas están en pages/admin/ sobre services/admin.js y components/admin/.
+    - Resumen.jsx: KPI, selector 7/14/30 días, serie diaria (activos,
+      lecciones o registros), embudo y tabla por curso.
+    - Usuarios.jsx y Usuario.jsx: tabla con búsqueda, filtro de rol, orden,
+      filas fusionadas y paginación; detalle con progreso por curso,
+      insignias, eventos y acciones (rol, prueba, confirmar correo) con
+      confirmación.
+    - Contenido.jsx: árbol cursos → módulos → lecciones, crear módulo con
+      esqueleto de la Fórmula, publicar/archivar, reordenar y exportar JSON.
+    - EditorLeccion.jsx: metadatos, paleta de bloques (GET /plantillas),
+      JSON por bloque, vista previa con BloqueContenido/Examen, validar,
+      guardar, crear y publicar; avisa antes de salir con cambios.
+    - Sistema.jsx (#/admin/sistema, solo admin): filas por tabla y purga.
+  Un profesor ve todo en modo lectura; solo el admin modifica.
+  Verificado en navegador contra el backend con SQLite (390 px y 1280 px):
+  login de admin, las 6 secciones, validar, crear lección y crear módulo.
 
 2.2 Documentación
   HECHO: este documento, el contrato técnico, sql/LEEME.txt, el paso 4 de
@@ -221,8 +218,7 @@ Verificación al momento del corte (todo en verde):
 
 5. CÓMO CONTINUAR
 -----------------------------------------------------------------------------
-  1. Terminar las páginas del panel admin (2.1) sobre services/admin.js y
-     components/admin/ — es lo único funcional que falta.
+  1. (Hecho) Páginas del panel admin (2.1).
   2. Prueba de punta a punta y revisiones (2.3); corregir lo que salga.
   3. Documentación (2.2).
   4. Acciones de la sección 3 y las pruebas P01–P10 del plan (T-025).

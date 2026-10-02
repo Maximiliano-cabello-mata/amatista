@@ -18,8 +18,11 @@ Los tags están publicados y firmados con SSH; se crearon con `bash herramientas
   progreso offline con la cuenta, esquema Oracle incremental para 20 GB (`backend/sql/002`–`004`),
   contenido administrable por API y CLI, progreso que se adapta al contenido nuevo, 7 bloques
   interactivos aplicados al Módulo 1, panel del alumno, métricas de alumnos activos, CI y archivos de
-  despliegue. Falta el panel de administración en la PWA: ver
-  `docs/bitacora/2026-10-02_estado_plataforma_unificada.txt`.
+  despliegue. Estado y pendientes: `docs/bitacora/2026-10-02_estado_plataforma_unificada.txt`.
+- **Panel de administración en la PWA** (`#/admin`): resumen con métricas del lanzamiento, usuarios
+  (búsqueda, detalle, rol, cuentas de prueba, confirmar correo), gestor de contenido (crear módulo con la
+  Fórmula, publicar, archivar, reordenar, exportar), editor de lecciones con vista previa y sistema (salud
+  y purga).
 - Tags de versión organizados por fases y script `herramientas/crear-tags.sh`.
 - Tablero Kanban con roadmap que se actualiza solo con los commits (`tablero/`, `KANBAN.md`).
 

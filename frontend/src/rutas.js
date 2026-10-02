@@ -13,6 +13,7 @@ export const rutas = {
   admin: '#/admin',
   adminUsuarios: '#/admin/usuarios',
   adminContenido: '#/admin/contenido',
+  adminSistema: '#/admin/sistema',
   curso: (cursoId) => `#/curso/${parte(cursoId)}`,
   leccion: (cursoId, leccionId) => `#/curso/${parte(cursoId)}/leccion/${parte(leccionId)}`,
   adminUsuario: (usuarioId) => `#/admin/usuarios/${parte(usuarioId)}`,
@@ -27,6 +28,7 @@ export const rutas = {
 //   #/admin/contenido                    → contenido
 //   #/admin/contenido/nueva/:modulo      → nueva-leccion  {moduloId}
 //   #/admin/contenido/:curso/:leccion    → leccion        {cursoId, leccionId}
+//   #/admin/sistema                      → sistema
 function rutaAdmin(partes) {
   const [seccion, a, b, c] = partes;
   if (seccion === 'usuarios') {
@@ -37,6 +39,7 @@ function rutaAdmin(partes) {
     if (a && b) return { seccion: 'leccion', params: { cursoId: a, leccionId: b } };
     return { seccion: 'contenido', params: {} };
   }
+  if (seccion === 'sistema') return { seccion: 'sistema', params: {} };
   return { seccion: 'resumen', params: {} };
 }
 
