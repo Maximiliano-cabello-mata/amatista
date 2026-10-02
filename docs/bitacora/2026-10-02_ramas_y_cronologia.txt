@@ -1,0 +1,133 @@
+=============================================================================
+BITÁCORA: RAMAS UNIFICADAS Y CRONOLOGÍA DEL PROYECTO
+PROYECTO: AMATISTA PWA
+FECHA: 2 DE OCTUBRE DE 2026
+=============================================================================
+
+En tres líneas
+  Ramas:     quedan main y una sola rama de Claude, claude/project-thread-bt494k,
+             que reúne todo lo que aún no estaba en main (antes PR #9 y PR #10).
+  Avance:    el código de la plataforma unificada (v2.2) está casi completo y
+             en verde; lo que falta es poner en marcha Oracle y el servidor.
+  Estado:    la rama única se fusionó en main con el PR #11; todo está en main.
+  Siguiente: seguir la guía de Oracle en la VM.
+
+
+1. QUÉ PASÓ CON LAS RAMAS
+-----------------------------------------------------------------------------
+  Cada hilo de trabajo con Claude abrió su propia rama, por eso aparecieron
+  varias. Así quedaron:
+
+  main                              Rama principal. Sin cambios.
+  claude/project-thread-bt494k      LA RAMA ÚNICA DE CLAUDE. Es main más:
+                                      - la corrección de Oracle (antes PR #9)
+                                      - el cierre del día (antes PR #10)
+  claude/project-thread-7bh70f      Por borrar. Su único commit pendiente
+                                    (PR #9) está en la rama única.
+  claude/project-thread-bpfcse      Por borrar. Sus 3 commits (PR #10) están
+                                    en la rama única.
+  dev                               Por borrar. Todo su contenido ya estaba
+                                    en main (PR #1 y PR #2).
+  claude/project-thread-tclvj3      Espera tu confirmación. Es el PR #5 que
+                                    cerraste sin fusionar. main ya tiene
+                                    otra versión más completa de lo mismo
+                                    (registro, inicio de sesión, confirmar
+                                    correo, recuperar y cambiar contraseña,
+                                    y la migración 002). Lo único que no
+                                    está en main con ese nombre es
+                                    backend/correo.py y el archivo
+                                    sql/002_autenticacion_y_contenido.sql,
+                                    reemplazados en main por otros.
+
+  Las tres ramas "por borrar" ya no tienen nada propio. La sesión en la
+  nube no tiene permiso para borrar ramas (HTTP 403, igual que con los
+  tags), así que se borran desde tu computadora:
+      git push origin --delete claude/project-thread-7bh70f \
+          claude/project-thread-bpfcse dev
+
+  Comprobado: cada archivo que cambiaban los PR #9 y #10 es idéntico en la
+  rama única, y las 207 pruebas del backend pasan en ella.
+
+
+2. CRONOLOGÍA (ORDENADA POR FECHAS)
+-----------------------------------------------------------------------------
+  27 sep 2026   Inicio del proyecto
+    - PWA Amatista y arquitectura del backend.
+    - App shell con React, Tailwind y visor 3D.
+    - Arquitectura de base de datos y backend (FastAPI + Oracle).
+    - Conexión CORS frontend ↔ backend con Oracle; arreglo ORA-01400 y
+      flujo de sesiones.
+    - Tag v0.1.0.
+
+  28 sep 2026
+    - Indicador de estado corregido, migración a Tailwind v4.
+    - Documentos fechados, CHANGELOG e investigación del desarrollo.
+    - Tag v1.0.0.
+
+  29 sep 2026
+    - Identidad low poly y pantalla de selección de cursos.
+    - Módulo 1 de Blender y A-Frame, progreso local y backend en el repo.
+    - Tag v2.0.0.
+
+  1 oct 2026
+    - PR #1 (fusionado): verificación de firma SSH.
+    - PR #2 (fusionado): enlaces al nuevo repositorio oficial.
+    - Tags organizados (v2.0.1, v2.2.0-alpha.1) y tablero Kanban.
+    - PR #3 (fusionado): registro de la publicación de los tags (T-001).
+
+  2 oct 2026
+    - PR #4 (fusionado, 03:06 UTC): base de identidad, roles y los 8
+      modelos de tablas.
+    - Esquema Oracle optimizado para 20 GB con migración incremental.
+    - PR #5 (cerrado sin fusionar, 04:32 UTC): autenticación completa en
+      rama aparte; quedó reemplazada por la versión que ya está en main.
+    - PR #6 y PR #7 (fusionados, 04:12 y 04:30 UTC): cuentas de alumnos,
+      progreso adaptable, contenido administrable, lecciones interactivas,
+      panel del alumno, Kanban de contenido y CI.
+    - PR #8 (fusionado, 05:12 UTC): panel de administración (resumen,
+      usuarios, contenido, editor de lecciones, sistema).
+    - PR #9 (05:24 UTC): correcciones de Oracle (SESIONES.ID a 64, JSON de
+      lecciones) y guía paso a paso. Ahora en la rama única.
+    - PR #10 (06:21 UTC): bitácora del cierre, registro de incidencias,
+      Kanban T-029 a T-033, docs/guias y tag v2.2.0-alpha.2 preparado.
+      Ahora en la rama única.
+    - PR #11 (fusionado): unificación de ramas y este documento; todo el
+      trabajo del día queda en main.
+
+
+3. HASTA DÓNDE AVANZAMOS
+-----------------------------------------------------------------------------
+  v2.1.0 · Oracle en producción            1 de 5 tareas hechas
+    Los scripts están listos; falta ejecutarlos en la VM (T-002, T-004),
+    servicio systemd (T-003) y HTTPS (T-005).
+
+  v2.2.0 · Plataforma unificada            código casi completo
+    Cuentas, roles, progreso, lecciones interactivas, panel del alumno y
+    panel de administración están en main y con pruebas en verde.
+    Falta: prueba de punta a punta (T-029), revisión de seguridad (T-030),
+    documentos de la v2.2 (T-031), SMTP y administradores (T-032),
+    importar el catálogo (T-033).
+
+  v2.3.0 (Módulo 2) y v3.0.0 (3D Lab): sin empezar, según el plan.
+
+  Fechas del plan: decisión del piloto el 7 de octubre, piloto el 8,
+  beta el 15.
+
+
+4. PENDIENTES QUE REQUIEREN A MAXIMILIANO
+-----------------------------------------------------------------------------
+  a. Hecho: la rama única se fusionó en main (PR #11).
+  b. Borrar las ramas ya contenidas (sección 1) y confirmar si se borra
+     claude/project-thread-tclvj3 (PR #5).
+  c. Publicar el tag v2.2.0-alpha.2 desde tu computadora:
+         git pull origin main
+         bash herramientas/crear-tags.sh
+         git push origin v2.2.0-alpha.2
+  d. En la VM: respaldar Oracle y ejecutar 002 → 003 (→ 004) y
+     diagnostico_oracle.py, siguiendo
+     docs/despliegue/2026-10-02_oracle_paso_a_paso.md.
+  e. Despliegue (systemd, HTTPS), SMTP y proteger main (T-003, T-005,
+     T-032, T-008).
+
+  Detalle completo: 2026-10-02_cierre_del_dia.txt
+=============================================================================

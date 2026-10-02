@@ -127,34 +127,35 @@ El backend y la inteligencia artificial deben ampliar la experiencia, no convert
 ```text
 amatista/
 │
-├── frontend/
+├── frontend/              # PWA React + Vite (ver frontend/README.md)
 │   ├── public/            # íconos e ilustraciones
 │   ├── scripts/           # generador de ilustraciones low poly
-│   ├── src/               # app React (ver frontend/README.md)
-│   ├── package.json
-│   └── vite.config.js
+│   └── src/               # páginas, lecciones interactivas, panel del alumno y admin
 │
-├── backend/
-│   ├── api/               # rutas: sesiones y progreso
-│   ├── database/          # conexión (Oracle o SQLite) y modelos
-│   ├── sql/               # esquema de Oracle
+├── backend/               # API FastAPI (ver backend/README.md)
+│   ├── api/               # auth, progreso, eventos, contenido, admin, sesiones
+│   ├── database/          # conexión (Oracle o SQLite) y los 8 modelos
+│   ├── contenido/         # validación y plantillas de la Fórmula
+│   ├── herramientas/      # CLI de contenido y crear_admin.py
+│   ├── sql/               # esquema de Oracle 001–004 (orden en sql/LEEME.txt)
 │   ├── tests/
-│   ├── diagnostico_oracle.py
-│   ├── main.py
-│   └── requirements.txt
+│   └── diagnostico_oracle.py
 │
-├── ai_tutor/
-│   └── prompts/
+├── ai_tutor/prompts/      # Tutor IA (reservado)
+├── despliegue/            # systemd, Caddy (HTTPS) y script de actualización
+├── herramientas/          # crear-tags.sh
+├── tablero/               # generador del Kanban (tareas.yml → KANBAN.md)
+├── docs/                  # documentación por carpetas (índice: docs/README.md)
+│   ├── arquitectura/      # decisiones técnicas vigentes
+│   ├── bitacora/          # avance por sesión y plan siguiente
+│   ├── incidencias/       # fallas resueltas (registro: incidencias/README.md)
+│   ├── planeacion/        # plan de lanzamiento
+│   ├── propuestas/        # 3D Lab y motor generativo
+│   └── guias/             # convención de commits, versiones y tablero
 │
-├── docs/
-│   ├── arquitectura/      # arquitectura general, backend/BD, recomendaciones, mindmap
-│   ├── bitacora/          # resúmenes y reportes de avance por fecha
-│   ├── incidencias/       # errores resueltos
-│   ├── propuestas/        # ideas y ramas futuras (3D Lab, motor generativo)
-│   └── 2026-09-27_convencion_commits.txt
-│
-├── .env.example
-├── .gitignore
+├── PROYECTO.md            # centro de dirección: qué sigue y dónde está cada cosa
+├── KANBAN.md              # tablero generado (no se edita a mano)
+├── CHANGELOG.md
 └── README.md
 ```
 
@@ -186,7 +187,7 @@ El frontend representa el núcleo de la experiencia del estudiante.
 - Comunicación con backend.
 - Comunicación con Tutor IA.
 
-Hoy la PWA tiene la pantalla de cursos, el mapa de cada módulo, el reproductor de lecciones (lecturas, tarjetas interactivas, código con vista 3D en vivo y exámenes) y el progreso con XP e insignias. El formato de las lecciones está en `docs/arquitectura/2026-09-29_formato-lecciones.txt`.
+Hoy la PWA tiene la pantalla de cursos, el mapa de cada módulo, el reproductor de lecciones con 7 tipos de actividades interactivas (quiz, ordenar, relacionar, completar, puntos en imagen, explorador de escenas y retos de código), cuentas de alumno (entrar, registro, confirmar, recuperar y perfil), el panel del alumno (`#/panel`: nivel, racha, retos e insignias) y el panel de administración (`#/admin`: métricas, usuarios, gestor de contenido y editor de lecciones). El formato de las lecciones está en `docs/arquitectura/2026-09-29_formato-lecciones.txt` y el diseño de módulos en `docs/arquitectura/2026-10-02_formula_modulos.txt`.
 
 ---
 
@@ -275,17 +276,9 @@ El código del backend ya está en `backend/`. Cómo ejecutarlo, probarlo y deja
 
 ## 🗄️ Base de datos
 
-El modelo inicial contempla tres entidades principales:
+Oracle Autonomous Database (presupuesto de 20 GB) con 8 tablas: `USUARIOS`, `SESIONES`, `PROGRESO_LECCIONES`, `LOGROS`, `EVENTOS_APRENDIZAJE` (particionada por mes), `CURSOS`, `MODULOS` y `LECCIONES` (contenido JSON). En desarrollo y en las pruebas se usa SQLite con los mismos modelos.
 
-```text
-usuarios
-sesiones
-progreso_lecciones
-```
-
-La intención es mantener inicialmente una estructura sencilla y expandirla únicamente cuando las funcionalidades del producto lo requieran.
-
-El esquema oficial está en `backend/sql/001_esquema_amatista.sql`: todos los identificadores de usuario son texto (`VARCHAR2`), así caben correos y UUID. El historial de la conexión con Oracle está en `docs/arquitectura/2026-09-27_backend_y_base_de_datos.txt` y el diagnóstico de los errores ORA en `docs/incidencias/2026-09-29_diagnostico-oracle-progreso.txt`.
+Los scripts están en `backend/sql/` y se ejecutan en el orden de `backend/sql/LEEME.txt`: con datos reales, `002` → `003` → `004` (nunca `001`, que borra las tablas). `diagnostico_oracle.py` comprueba que las tablas coinciden con el backend. Historial: `docs/arquitectura/2026-09-27_backend_y_base_de_datos.txt` y el [registro de incidencias](docs/incidencias/README.md).
 
 ---
 
@@ -358,46 +351,38 @@ docs/propuestas/2026-09-27_motor_generativo_3d.txt
 
 ## 📌 Tablero y versiones
 
+- **[PROYECTO.md](PROYECTO.md)**: centro de dirección (qué sigue, por qué y dónde está cada cosa).
 - **[KANBAN.md](KANBAN.md)**: roadmap de las próximas versiones y tablero Kanban que se actualiza solo con los commits ([cómo se usa](tablero/README.md)).
-- **[CHANGELOG.md](CHANGELOG.md)**: qué trajo cada versión. Fases: `v0.1.0` prototipo · `v1.0.0` integración · `v2.0.0` plataforma educativa.
-- Tags: `bash herramientas/crear-tags.sh` (ver `docs/2026-10-01_versiones-y-tablero.txt`).
+- **[CHANGELOG.md](CHANGELOG.md)**: qué trajo cada versión. Fases: `v0.1.0` prototipo · `v1.0.0` integración · `v2.0.0` plataforma educativa · `v2.2.0-alpha.*` plataforma unificada (en curso).
+- Tags: `bash herramientas/crear-tags.sh` (ver `docs/guias/2026-10-01_versiones-y-tablero.txt`).
+- Último cierre y plan para continuar: [`docs/bitacora/2026-10-02_cierre_del_dia.txt`](docs/bitacora/2026-10-02_cierre_del_dia.txt).
 
 ---
 
 ## 🚧 Estado actual
 
-Amatista se encuentra actualmente en una etapa temprana de desarrollo.
+Al 2 de octubre de 2026 la **plataforma unificada (v2.2.0)** tiene el código casi completo y en verde (206 pruebas del backend, 135 del frontend y CI en GitHub). Lo que falta para el piloto del 8 de octubre es ponerla en marcha en el servidor. El estado de cada tarea vive en [KANBAN.md](KANBAN.md).
 
 ### Implementado
 
-- [x] Estructura base del monorepo.
-- [x] Frontend con React y Vite.
-- [x] Configuración inicial de Tailwind CSS.
-- [x] App Shell inicial.
-- [x] Integración básica de A-Frame.
+- [x] PWA instalable que funciona sin conexión (React, Vite, Tailwind, A-Frame).
 - [x] Identidad visual low poly y pantalla de selección de cursos.
-- [x] Manifest PWA funcional (app instalable).
-- [x] Service Worker con precache de la pantalla de cursos.
-- [x] Visor 3D inicial.
-- [x] Identidad visual base.
-- [x] Arquitectura general documentada.
-- [x] Convención de commits.
-- [x] Arquitectura de backend y base de datos documentada.
-- [x] Plantilla de variables de entorno.
-- [x] Módulo 1 de Blender y de A-Frame con lecciones ilustradas y examen.
-- [x] Ruta de aprendizaje con lecciones que se desbloquean.
-- [x] Progreso local en IndexedDB con XP e insignias.
-- [x] Sincronización del progreso con el backend.
-- [x] API FastAPI en el repositorio, con pruebas.
+- [x] Módulo 1 de Blender y de A-Frame con lecciones, actividades interactivas y examen.
+- [x] Progreso local en IndexedDB (XP, niveles, racha, insignias) que se sincroniza con el backend.
+- [x] Progreso que se adapta cuando cambia el contenido (lecciones nuevas, `replaces`, % recalculado).
+- [x] Cuentas de alumno con roles (alumno, profesor, admin) y fusión del progreso offline con la cuenta.
+- [x] Panel del alumno y panel de administración (métricas, usuarios, gestor y editor de contenido).
+- [x] API FastAPI: auth, progreso, eventos, contenido administrable y administración.
+- [x] Esquema Oracle incremental para 20 GB (002–004) y diagnóstico.
+- [x] CI en GitHub Actions y tablero Kanban automático.
 
-### En desarrollo
+### Pendiente
 
-- [ ] Integración de Oracle con el esquema nuevo (pendiente en el servidor).
-- [ ] Autenticación de alumnos.
-- [ ] Módulos 2 a 4 de cada curso.
-- [ ] Integración del Tutor IA.
-- [ ] Carga dinámica de modelos GLB.
-- [ ] Experiencias WebXR completas.
+- [ ] Fusionar el PR #9 (correcciones de Oracle) y ejecutar el SQL en la VM.
+- [ ] Backend como servicio con HTTPS, SMTP y catálogo importado en Oracle.
+- [ ] Prueba de punta a punta y revisión de seguridad.
+- [ ] Frontend publicado en Cloudflare Pages; piloto (8/10) y beta (15/10).
+- [ ] Módulos 2 a 4, visor GLB, Tutor IA y experiencias WebXR completas.
 
 ---
 
@@ -446,43 +431,35 @@ Amatista se encuentra actualmente en una etapa temprana de desarrollo.
 
 ---
 
-## 🚀 Ejecución del frontend
+## 🚀 Ejecución local
 
-### Requisitos
-
-- Node.js
-- npm
-- Git
-
-Clonar el repositorio:
+Requisitos: Node.js, npm, Python 3.12+ y Git.
 
 ```bash
 git clone https://github.com/Maximiliano-cabello-mata/amatista.git
-```
+cd amatista
 
-Entrar al frontend:
+# Backend con SQLite (sin Oracle)
+cd backend
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements-dev.txt
+DATABASE_URL=sqlite:///./amatista_local.db uvicorn main:app --reload
 
-```bash
-cd amatista/frontend
-```
-
-Instalar dependencias:
-
-```bash
+# Frontend, en otra terminal
+cd frontend
 npm install
-```
-
-Ejecutar el entorno de desarrollo:
-
-```bash
 npm run dev
 ```
 
-Generar build de producción:
+Comprobaciones (las mismas que corre CI):
 
 ```bash
-npm run build
+cd backend && python -m pytest -q && python herramientas/contenido.py validar
+cd frontend && npm run lint && npm test && npm run build
+python -m pytest -q tablero
 ```
+
+Para dejar Oracle y el servidor funcionando: `backend/README.md` y `despliegue/`.
 
 ---
 
@@ -525,34 +502,25 @@ chore(repo): actualizar dependencias
 La documentación completa se encuentra en:
 
 ```text
-docs/2026-09-27_convencion_commits.txt
+docs/guias/2026-09-27_convencion_commits.txt
 ```
 
 ---
 
 ## 📚 Documentación
 
-La documentación técnica del proyecto se encuentra en:
+El índice completo está en **[docs/README.md](docs/README.md)**:
 
-```text
-/docs
-```
-
-Incluye:
-
-- arquitectura general;
-- recomendaciones de organización;
-- arquitectura de backend;
-- arquitectura de base de datos;
-- convención de commits;
-- mapa conceptual (`docs/arquitectura/2026-09-27_mindmap.png`);
-- incidencias resueltas (`docs/incidencias/`);
-- bitácora de avances (`docs/bitacora/`);
-- propuestas de producto: Amatista 3D Lab y motor generativo 3D (`docs/propuestas/`).
+- `docs/arquitectura/`: decisiones técnicas vigentes (contrato técnico, formato de lecciones, la Fórmula);
+- `docs/bitacora/`: avance de cada sesión y plan siguiente;
+- `docs/incidencias/`: fallas resueltas, con su [registro](docs/incidencias/README.md);
+- `docs/planeacion/`: plan de lanzamiento;
+- `docs/propuestas/`: Amatista 3D Lab y motor generativo 3D;
+- `docs/guias/`: convención de commits, versiones y tablero.
 
 Todos los archivos dentro de `docs/` se nombran con su fecha de creación al inicio: `AAAA-MM-DD_tema.txt`. Así se ordenan solos por fecha dentro de cada carpeta.
 
-El historial de versiones está en `CHANGELOG.md`. Cada versión se marca con un tag de Git (`v0.1.0`, `v0.2.0`, ...).
+El historial de versiones está en `CHANGELOG.md`. Cada versión se marca con un tag de Git (`v1.0.0`, `v2.0.1`, `v2.2.0-alpha.1`, ...).
 
 ---
 
@@ -580,7 +548,7 @@ Amatista se encuentra actualmente en desarrollo.
 Antes de contribuir se recomienda consultar:
 
 ```text
-docs/2026-09-27_convencion_commits.txt
+docs/guias/2026-09-27_convencion_commits.txt
 ```
 
 Las contribuciones deben mantener la separación de responsabilidades del monorepo y evitar introducir dependencias innecesarias entre frontend, backend e IA.
