@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-01 21:06 · `main` en `cdbf5c7`
+Último commit: 2026-10-02 03:10 · `main` en `257d571`
 
 ## 🗺️ Roadmap
 
@@ -19,12 +19,10 @@ Versiones publicadas (tags): `v2.0.1` · `v2.0.0` · `v1.0.0` · `v0.1.0`
 
 ## 📌 Kanban
 
-| 📋 Pendiente (12) | 🔨 En progreso (0) | 👀 Revisión (0) | ✅ Hecho (1) |
+| 📋 Pendiente (10) | 🔨 En progreso (0) | 👀 Revisión (2) | ✅ Hecho (1) |
 |---|---|---|---|
-| **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.1.0 · db</sub> |   |   | **T-001** Publicar los tags de versión (herramientas/crear-tags.sh)<br><sub>v2.1.0 · repo</sub> |
-| **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.1.0 · api</sub> |   |   |   |
-| **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.1.0 · db</sub> |   |   |   |
-| **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.1.0 · api</sub> |   |   |   |
+| **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.1.0 · api</sub> |   | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.1.0 · db</sub> | **T-001** Publicar los tags de versión (herramientas/crear-tags.sh)<br><sub>v2.1.0 · repo</sub> |
+| **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.1.0 · api</sub> |   | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.1.0 · db</sub> |   |
 | **T-006** Autenticación de alumnos<br><sub>v2.2.0 · api</sub> |   |   |   |
 | **T-007** CI en GitHub Actions (lint, build y pytest)<br><sub>v2.2.0 · repo</sub> |   |   |   |
 | **T-008** Proteger main (solo cambios por PR)<br><sub>v2.2.0 · repo</sub> |   |   |   |
@@ -39,9 +37,9 @@ Versiones publicadas (tags): `v2.0.1` · `v2.0.0` · `v1.0.0` · `v0.1.0`
 ### v2.1.0 · Oracle en producción
 
 - [x] **T-001** Publicar los tags de versión (herramientas/crear-tags.sh) · _hecho_ — commits: `9b95f9f` (2026-10-01), `57c063b` (2026-10-01)
-- [ ] **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico · _pendiente_
+- [ ] **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico · _revision_ — commits: `30348e0` (2026-10-02)
 - [ ] **T-003** Desplegar el backend nuevo como servicio systemd · _pendiente_
-- [ ] **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN) · _pendiente_ — commits: `8384012` (2026-10-01)
+- [ ] **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN) · _revision_ — commits: `8384012` (2026-10-01), `30348e0` (2026-10-02)
 - [ ] **T-005** HTTPS en el backend para publicar en Cloudflare Pages · _pendiente_
 
 ### v2.2.0 · Cuentas y calidad
