@@ -1,16 +1,16 @@
 import { useProgreso } from '../progreso/contexto';
-import { resumenCurso } from '../progreso/reglas';
+import { resumenCurso, resumenModulo } from '../progreso/reglas';
 import { rutas } from '../rutas';
-import { IconoCandado } from './Iconos';
+import { CristalLogo, IconoCandado } from './Iconos';
 import { ACENTOS, ICONOS_CURSO } from './estiloCurso';
 
 function TarjetaCurso({ curso, indice }) {
   const { progreso } = useProgreso();
-  const Icono = ICONOS_CURSO[curso.id];
-  const acento = ACENTOS[curso.acento];
+  // Un curso publicado desde el servidor puede no tener ícono ni acento propios.
+  const Icono = ICONOS_CURSO[curso.id] ?? CristalLogo;
+  const acento = ACENTOS[curso.acento] ?? ACENTOS.neon;
   const bloqueado = curso.estado === 'bloqueado';
-  const { total, completadas, siguiente } = resumenCurso(progreso, curso);
-  const porcentaje = total ? Math.round((completadas / total) * 100) : 0;
+  const { total, completadas, siguiente, porcentaje } = resumenCurso(progreso, curso);
 
   let textoBoton = '▶ Comenzar';
   if (completadas > 0) textoBoton = siguiente ? '▶ Continuar' : '✓ Repasar';
@@ -57,18 +57,24 @@ function TarjetaCurso({ curso, indice }) {
 
         {/* Ruta de módulos del curso */}
         <ol className="grid gap-2" aria-label={`Módulos de ${curso.titulo}`}>
-          {curso.modulos.map((modulo, i) => {
+          {curso.modulos.map((modulo) => {
             const publicado = Boolean(modulo.contenido) && !bloqueado;
+            const nuevas = publicado ? resumenModulo(progreso, curso.id, modulo).nuevas : 0;
             return (
-              <li key={modulo.titulo} className="flex items-center gap-3">
+              <li key={modulo.id} className="flex items-center gap-3">
                 <span
                   className={`hexagono grid h-7 w-8 shrink-0 place-items-center font-mono text-[11px] font-bold ${
                     publicado ? `${acento.fondo} text-base` : 'bg-white/10 text-white/50'
                   }`}
                 >
-                  {i + 1}
+                  {modulo.numero}
                 </span>
                 <span className={publicado ? 'text-white' : 'text-white/45'}>{modulo.titulo}</span>
+                {nuevas > 0 && (
+                  <span className="corte-poly-sm bg-neon/15 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest text-neon">
+                    Nuevo
+                  </span>
+                )}
                 <span
                   className={`ml-auto font-mono text-[10px] uppercase tracking-widest ${
                     publicado ? acento.texto : 'text-white/30'

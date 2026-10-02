@@ -1,9 +1,12 @@
+import { useCatalogo } from '../catalogo/contexto';
 import TarjetaCurso from '../components/TarjetaCurso';
-import { cursos } from '../data/cursos';
+import { rutas } from '../rutas';
 
 const RUTA = ['Blender', 'GLB', 'A-Frame', 'WebXR'];
 
 function Inicio() {
+  const { cursos } = useCatalogo();
+
   return (
     <main className="mx-auto max-w-6xl px-4 pb-16 pt-10 sm:px-6 sm:pt-16">
       <section className="animar-entrar mb-10 max-w-2xl sm:mb-14">
@@ -38,7 +41,7 @@ function Inicio() {
 
       <footer className="mt-14 flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-6 font-mono text-xs text-white/40">
         <span>Amatista · plataforma offline-first de creación 3D</span>
-        <a href="#/laboratorio" className="hover:text-neon">
+        <a href={rutas.laboratorio} className="hover:text-neon">
           Laboratorio técnico ▸
         </a>
       </footer>

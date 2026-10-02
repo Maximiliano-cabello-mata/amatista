@@ -1,10 +1,22 @@
+import { useCatalogo } from '../catalogo/contexto';
 import { IconoCandado, CristalLogo } from '../components/Iconos';
 import EstadoGuardado from '../components/EstadoGuardado';
 import { ACENTOS, ICONOS_CURSO } from '../components/estiloCurso';
-import { buscarCurso, duracionTexto, TIPOS_LECCION } from '../data/cursos';
+import { duracionTexto, tituloCorto, TIPOS_LECCION } from '../data/cursos';
 import { useProgreso } from '../progreso/contexto';
-import { estaCompletada, estaDesbloqueada, moduloCompletado, resumenCurso } from '../progreso/reglas';
+import {
+  estaCompletada,
+  estaDesbloqueada,
+  idInsignia,
+  leccionEsNueva,
+  resumenCurso,
+  resumenModulo,
+  tieneInsignia,
+} from '../progreso/reglas';
 import { rutas } from '../rutas';
+
+const ETIQUETA_NUEVA =
+  'corte-poly-sm shrink-0 bg-neon/15 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest text-neon';
 
 function NodoLeccion({ numero, hecha, abierta, acento }) {
   if (hecha) {
@@ -28,36 +40,47 @@ function NodoLeccion({ numero, hecha, abierta, acento }) {
   );
 }
 
-function MapaModulo({ curso, modulo, numero, progreso }) {
+function MapaModulo({ curso, modulo, acento, progreso }) {
   const contenido = modulo.contenido;
-  const acento = ACENTOS[curso.acento];
-  const titulo = contenido.title.replace(/^Módulo\s+\d+:\s*/i, '');
-  const completado = moduloCompletado(progreso, curso.id, modulo);
+  const numero = modulo.numero;
+  const titulo = tituloCorto(contenido.title);
+  const { total, completadas, nuevas } = resumenModulo(progreso, curso.id, modulo);
+  const insigniaGanada = tieneInsignia(progreso.insignias, idInsignia(curso.id, modulo));
 
   return (
     <section className={`corte-poly bg-gradient-to-br p-[2px] ${acento.borde}`} aria-labelledby={`modulo-${numero}`}>
       <div className="corte-poly bg-superficie/95 p-6 sm:p-8">
-        <p className="font-mono text-xs uppercase tracking-[0.25em] text-neon">Módulo {numero}</p>
+        <div className="flex flex-wrap items-center gap-3">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-neon">Módulo {numero}</p>
+          {nuevas > 0 && (
+            <span className={ETIQUETA_NUEVA}>
+              Nuevo contenido · {nuevas} {nuevas === 1 ? 'lección' : 'lecciones'}
+            </span>
+          )}
+        </div>
         <h2 id={`modulo-${numero}`} className="mt-1 text-2xl font-extrabold text-white sm:text-3xl">
           {titulo}
         </h2>
         <p className="mt-3 leading-relaxed text-texto/75">{contenido.description}</p>
         <p className="mt-3 font-mono text-xs uppercase tracking-wider text-white/45">
-          {contenido.estimatedTimeMinutes} min · {contenido.lessons.length} lecciones
+          {contenido.estimatedTimeMinutes ? `${contenido.estimatedTimeMinutes} min · ` : ''}
+          {completadas} / {total} lecciones
         </p>
 
         <ol className="relative mt-7 space-y-2">
           <span className="absolute bottom-6 left-6 top-6 w-px bg-white/10" aria-hidden="true" />
           {contenido.lessons.map((leccion, i) => {
-            const hecha = estaCompletada(progreso, curso.id, leccion.id);
+            const hecha = estaCompletada(progreso, curso.id, leccion);
             const abierta = estaDesbloqueada(progreso, curso.id, modulo, i);
+            const nueva = leccionEsNueva(progreso, curso.id, modulo, i);
             const actual = abierta && !hecha;
             const fila = (
               <>
                 <NodoLeccion numero={i + 1} hecha={hecha} abierta={abierta} acento={acento} />
                 <span className="min-w-0 flex-1">
-                  <span className={`block font-semibold ${abierta ? 'text-white' : 'text-white/45'}`}>
+                  <span className={`flex flex-wrap items-center gap-2 font-semibold ${abierta ? 'text-white' : 'text-white/45'}`}>
                     {leccion.title}
+                    {nueva && <span className={ETIQUETA_NUEVA}>Nueva</span>}
                   </span>
                   <span className="block font-mono text-[11px] uppercase tracking-wider text-white/45">
                     {TIPOS_LECCION[leccion.type]}
@@ -94,13 +117,15 @@ function MapaModulo({ curso, modulo, numero, progreso }) {
           })}
         </ol>
 
-        <div className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
-          <CristalLogo className={`h-9 w-9 shrink-0 ${completado ? 'animar-flotar' : 'opacity-35 grayscale'}`} />
-          <p className="text-sm text-texto/75">
-            Insignia <strong className="text-white">{modulo.insignia}</strong>
-            {completado ? ' · ¡desbloqueada!' : ' · aprueba el examen para ganarla'}
-          </p>
-        </div>
+        {modulo.insignia && (
+          <div className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">
+            <CristalLogo className={`h-9 w-9 shrink-0 ${insigniaGanada ? 'animar-flotar' : 'opacity-35 grayscale'}`} />
+            <p className="text-sm text-texto/75">
+              Insignia <strong className="text-white">{modulo.insignia}</strong>
+              {insigniaGanada ? ' · ¡desbloqueada!' : ' · aprueba el examen final para ganarla'}
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -108,6 +133,7 @@ function MapaModulo({ curso, modulo, numero, progreso }) {
 
 function Curso({ cursoId }) {
   const { progreso } = useProgreso();
+  const { buscarCurso } = useCatalogo();
   const curso = buscarCurso(cursoId);
 
   if (!curso) {
@@ -119,9 +145,9 @@ function Curso({ cursoId }) {
     );
   }
 
-  const Icono = ICONOS_CURSO[curso.id];
-  const acento = ACENTOS[curso.acento];
-  const { total, completadas, siguiente } = resumenCurso(progreso, curso);
+  const Icono = ICONOS_CURSO[curso.id] ?? CristalLogo;
+  const acento = ACENTOS[curso.acento] ?? ACENTOS.neon;
+  const { total, completadas, porcentaje, siguiente } = resumenCurso(progreso, curso);
 
   return (
     <main className="mx-auto max-w-4xl px-4 pb-20 pt-6 sm:px-6 sm:pt-10">
@@ -152,7 +178,7 @@ function Curso({ cursoId }) {
               aria-valuenow={completadas}
               aria-label={`Progreso en ${curso.titulo}`}
             >
-              <div className={`h-full transition-[width] duration-500 ${acento.fondo}`} style={{ width: `${(completadas / total) * 100}%` }} />
+              <div className={`h-full transition-[width] duration-500 ${acento.fondo}`} style={{ width: `${porcentaje}%` }} />
             </div>
           </div>
         </div>
@@ -167,16 +193,16 @@ function Curso({ cursoId }) {
       </header>
 
       <div className="mt-10 space-y-4">
-        {curso.modulos.map((modulo, i) =>
+        {curso.modulos.map((modulo) =>
           modulo.contenido ? (
-            <MapaModulo key={modulo.titulo} curso={curso} modulo={modulo} numero={i + 1} progreso={progreso} />
+            <MapaModulo key={modulo.id} curso={curso} modulo={modulo} acento={acento} progreso={progreso} />
           ) : (
             <div
-              key={modulo.titulo}
+              key={modulo.id}
               className="corte-poly-sm flex items-center justify-between gap-4 border border-white/5 bg-superficie/60 px-5 py-4"
             >
               <span>
-                <span className="block font-mono text-[11px] uppercase tracking-widest text-white/35">Módulo {i + 1}</span>
+                <span className="block font-mono text-[11px] uppercase tracking-widest text-white/35">Módulo {modulo.numero}</span>
                 <span className="font-semibold text-white/55">{modulo.titulo}</span>
               </span>
               <span className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-white/35">
