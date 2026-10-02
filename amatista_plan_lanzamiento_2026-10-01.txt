@@ -1,0 +1,318 @@
+AMATISTA
+Plan de lanzamiento y captación de alumnos
+
+Responsable propuesto: Maximiliano Cabello Mata
+Fecha de elaboración: 1 de octubre de 2026
+Calendario y cortes de medición: hora de Ciudad de México
+Estado: propuesta ejecutable de lanzamiento, pendiente de diagnóstico técnico
+
+1. DECISIÓN Y FECHAS OBJETIVO
+
+Lanzar primero una beta educativa que permita estudiar, realizar actividades y conservar el progreso. El motor generativo 3D avanzará como investigación independiente y no será requisito de apertura.
+
+Fechas propuestas:
+- 2 de octubre: diagnóstico inicial y confirmación de infraestructura.
+- 7 de octubre, 18:00: decisión de apertura del piloto.
+- 8 de octubre, 18:00: piloto por invitación con 10 alumnos.
+- 14 de octubre, 18:00: revisión final de calidad y evidencia del piloto.
+- 15 de octubre, 18:00: beta pública con incorporación gradual.
+- 22 de octubre: meta de 20 alumnos activos semanales verificados.
+- 29 de octubre: meta de 30 alumnos activos semanales y primer informe de resultados.
+
+La fecha del 15 de octubre es un objetivo condicionado, no una promesa de disponibilidad ni de captación. Se confirma después del diagnóstico del día 2. Si el 14 persisten fallos de seguridad, pérdida de progreso o bloqueo del aprendizaje, la beta pública se mueve al 22; el piloto continúa únicamente si es seguro. Si tampoco supera las pruebas el día 21, se mantiene cerrado y se publica una nueva estimación basada en los bloqueos.
+
+El objetivo de exposición será presentar una plataforma utilizable y evidencia de alumnos reales. Una lista de interesados o cuentas de prueba no acredita alumnos activos.
+
+2. PUNTO DE PARTIDA Y ALCANCE DE LA REVISIÓN
+
+La documentación revisada de main describe cursos, módulo 1 de Blender y A-Frame, actividades, examen, progreso local en IndexedDB y sincronización mediante FastAPI. El Kanban mantiene pendientes Oracle en producción, HTTPS, autenticación, CI y protección de main. [1–3]
+
+El README del backend describe un servidor ARM y Oracle Autonomous Database con acceso limitado por IP. También advierte que el código desplegado puede diferir del repositorio y que el script inicial de esquema borra datos de prueba. Antes de actualizar debe inventariarse el servidor y respaldarse la base. No se ejecutará un script destructivo sobre datos de alumnos. [4]
+
+Estas son evidencias documentales. Este plan no certifica que producción funcione: todavía deben ejecutarse build, pruebas, diagnóstico Oracle, revisión de autenticación, pruebas offline y medición de carga. No se ha confirmado una URL pública operativa, la cuota real de la cuenta ni el número actual de alumnos.
+
+Supuestos de planificación: un desarrollador, acceso a GitHub y al servidor, posibilidad de invitar alumnos voluntarios y unas 70 a 90 horas totales entre el 2 y el 14 de octubre. Si el diagnóstico descubre que falta rehacer autenticación o sincronización, se reduce alcance o se mueve la fecha.
+
+3. QUÉ INCLUYE LA PRIMERA BETA
+
+Entrega obligatoria:
+- Acceso HTTPS desde computadora y teléfono.
+- Acceso individual y autorización que proteja el progreso de cada alumno. Para el piloto pueden aprovisionarse cuentas por invitación; nunca cuentas compartidas.
+- Una ruta corta y completa, reutilizando el módulo 1 mejor validado. Mostrar únicamente lecciones terminadas y verificadas.
+- Primera actividad útil en 15 a 20 minutos, examen o ejercicio final y progreso comprensible.
+- Descarga o preparación explícita del contenido que se promete offline, reapertura sin conexión y conservación local del avance.
+- Sincronización al recuperar conexión, sin duplicar logros ni perder resultados.
+- Instrucciones de acceso, limitaciones de la beta, canal de soporte y mecanismo para reportar fallos.
+- Registro mínimo de actividad que permita distinguir visitas, registros, aprendizaje y retorno.
+
+Fuera de la fecha de lanzamiento:
+- Motor prompt a script bpy, ejecución de Python generado, renderizado headless y generación automática de GLB.
+- Add-on y puente bidireccional de Blender.
+- Tutor IA obligatorio, nuevos módulos extensos, pagos y certificados con validez institucional.
+- Promesas de AR/VR en todos los dispositivos. Conservar visualización 3D convencional cuando WebXR no esté disponible.
+
+Un visor GLB o tutor solo entra si ya está probado, no bloquea las lecciones y no consume tiempo necesario para corregir fallos críticos. La beta puede abrir sin IA.
+
+4. TRABAJO EN PARALELO Y CONTROL DEL ALCANCE
+
+Hay dos frentes de lanzamiento que sí deben avanzar juntos: estabilidad técnica y captación del piloto. El motor generativo es un tercer frente experimental con un máximo de 10 % del tiempo, solo después de cumplir las tareas críticas del día. Ante un bloqueo del lanzamiento, su asignación pasa a cero.
+
+Distribución orientativa de 80 horas:
+- 30 h: infraestructura, cuentas, autorización y sincronización.
+- 24 h: pruebas, correcciones y ensayo de recuperación.
+- 12 h: contenido mínimo, instrucciones, reclutamiento y sesiones del piloto.
+- 6 h: instrumentación y preparación del informe de uso.
+- 8 h: contingencia; si no se utiliza, investigación del motor generativo.
+
+Estos valores son una estimación inicial que debe recalcularse el día 2. No equivalen a una evaluación del esfuerzo realizada sobre todo el código.
+
+Organización propuesta:
+- main: código aprobado para producción.
+- dev: integración y entorno de pruebas con datos separados.
+- feature/...: cambios pequeños de lanzamiento mediante pull request.
+- feature/motor-generativo: rama propuesta para el experimento; todavía no existe en la consulta de ramas realizada.
+- Límite de trabajo: una tarea técnica y una acción de captación activas a la vez.
+
+Editar tablero/tareas.yml para planificar; KANBAN.md se genera y no debe corregirse manualmente. README debe enlazar una sola planificación vigente. Cada tarea de lanzamiento debe tener criterio de cierre, evidencia y dependencia. No mezclar el compromiso de beta con el conjunto completo de v3.0.0. [1–3,5]
+
+Ritmo diario: bloque de desarrollo, bloque de pruebas y cierre de 15 minutos con avances, bloqueos y siguiente tarea. Se pueden reservar revisiones por la tarde o noche, pero los despliegues se hacen con tiempo posterior para observar y revertir. Trabajar sin descanso no es una dependencia del calendario.
+
+5. HOSTING RECOMENDADO Y PRESUPUESTO
+
+Decisión principal: Cloudflare Pages para React/Vite y OCI para FastAPI y Oracle, reutilizando el servidor documentado si pasa el diagnóstico. La PWA usa IndexedDB localmente; el navegador nunca se conecta directamente a Oracle.
+
+Opción A — Preferida si OCI ya está operativo
+Frontend: Cloudflare Pages Free.
+API: VM OCI elegible para Always Free.
+Base de datos: Oracle existente, verificando que su modalidad también sea gratuita.
+Costo base objetivo: USD 0 al mes dentro de las cuotas y sin complementos.
+Riesgo: disponibilidad de capacidad, límites de cuenta y recuperación de instancias inactivas. El costo cero debe comprobarse en la consola; no se deduce por usar Oracle. [6–8]
+
+Opción B — Alternativa de bajo costo para la API
+Frontend: Cloudflare Pages Free.
+API: Render, instancia de 512 MB desde USD 7 al mes según tarifa consultada.
+Base: conservar Oracle si la conexión TLS y la lista de IP permitidas funcionan desde Render.
+Costo base orientativo: USD 7 al mes más posibles impuestos, excedentes y servicios adicionales; no es una cotización cerrada.
+Condición: validar que la API cabe en 512 MB. Revisar las direcciones de salida de Render y su compatibilidad con la ACL de Oracle. Una IP dedicada tiene costo adicional; no asumir que está incluida. No migrar simultáneamente de base de datos para salvar el calendario. [9–11]
+
+Opción C — Solo demostraciones y pruebas
+Frontend: Cloudflare Pages Free.
+API: Render Free con base persistente externa.
+Costo base objetivo: USD 0 dentro de cuotas.
+Limitación: el servicio gratuito se suspende después de 15 minutos sin tráfico y el arranque puede tardar aproximadamente un minuto. Su sistema de archivos es efímero: SQLite local no sirve como almacenamiento permanente de alumnos. No es la opción preferida para clases con horario. [10]
+
+Cloudflare Pages admite 500 builds mensuales en Free y un máximo de 25 MiB por archivo. Mantener imágenes y GLB ligeros; no añadir almacenamiento adicional hasta que un archivo necesario lo requiera. El frontend puede usar el subdominio pages.dev sin comprar dominio. [6–7]
+
+Presupuesto operativo propuesto: intentar USD 0 al mes y reservar hasta USD 15 mensuales como techo inicial para la alternativa de API, sujeto a la factura estimada. No convertir a pesos con un tipo de cambio supuesto. Dominio propio, correo transaccional, publicidad, almacenamiento extra e IA no están incluidos. No se contrata ningún servicio mediante este documento.
+
+Punto de decisión: el 3 de octubre debe estar resuelto el host de la API. Si OCI no pasa diagnóstico y no hay una ruta viable y costeada hacia Render más Oracle, el plazo deja de ser confiable y se replantea antes de reclutar la beta pública.
+
+6. PROCEDIMIENTO DE DESPLIEGUE
+
+Preparación
+1) Registrar commit, configuración y versiones actualmente desplegadas. Respaldar datos y comprobar que el respaldo puede restaurarse en pruebas.
+2) Crear un entorno de pruebas con usuarios y datos ficticios. Las vistas previas del frontend no deben escribir en producción.
+3) Ejecutar las pruebas del backend y build del frontend en CI. Añadir lint cuando esté configurado. Revisar dependencias vulnerables según explotabilidad y exposición.
+4) Sustituir el uso de ADMIN por un usuario de aplicación con permisos mínimos. Aplicar cambios de esquema no destructivos y compatibles con la versión anterior.
+
+Backend en OCI
+5) Instalar dependencias desde los archivos del proyecto y desplegar el commit aprobado. Ejecutar FastAPI con systemd y reinicio ante fallo.
+6) Colocar un proxy HTTPS delante de la API; restringir el puerto de la aplicación al acceso local cuando el proxy esté en la misma VM. Configurar un nombre DNS y certificado válido para la API. La URL HTTPS es un requisito, no un detalle pendiente de la demo.
+7) Mantener secretos fuera del repositorio. Limitar CORS al frontend autorizado y verificar la ACL/TLS de Oracle. La autenticación y autorización deben operar también en el backend; CORS no las sustituye.
+8) Ejecutar diagnostico_oracle.py y comprobar GET /api/salud. Un HTTP 200 aislado no valida el producto: debe seguir una prueba de guardar y recuperar progreso con dos cuentas diferentes. [4]
+
+Frontend en Pages
+9) Configurar frontend como directorio raíz, instalar dependencias reproducibles con npm ci si existe lockfile y ejecutar npm run build. Publicar dist. Verificar estos valores contra package.json antes del primer despliegue. [12]
+10) Definir VITE_API_URL con la URL HTTPS correcta. Esta variable forma parte del cliente y no debe contener secretos.
+11) Probar rutas profundas, recarga, manifest, Service Worker y actualización de caché. Una versión anterior instalada debe actualizarse sin borrar el progreso.
+12) Publicar únicamente el commit aprobado. Ajustar el disparador para que los commits automáticos del Kanban no provoquen despliegues innecesarios.
+
+Salida y reversión
+13) Registrar versión, fecha, responsable y evidencia de pruebas. Observar al menos una hora tras publicar.
+14) Mantener el artefacto anterior de frontend y la versión anterior de API listos para revertir. Una reversión de código no revierte la base de datos automáticamente.
+15) Ensayar la recuperación en pruebas: meta inicial de restauración menor a dos horas y respaldo diario con pérdida potencial máxima objetivo de 24 horas. Son objetivos a verificar, no garantías ya demostradas.
+
+7. PRUEBAS Y DIAGNÓSTICOS OBLIGATORIOS
+
+Cada prueba debe registrar fecha, commit, ambiente, dispositivo, resultado esperado, resultado real y evidencia. No marcar “aprobada” sin ejecución.
+
+P01 — Construcción y regresión
+Build de producción y pruebas del backend satisfactorios. Confirmar que el flujo completo funciona con los artefactos generados, no solo en modo desarrollo.
+
+P02 — Cuentas y separación de alumnos
+Entrar y salir; rechazar acceso sin credenciales. Un alumno A no puede leer ni modificar progreso de B alterando usuario_id. El servidor obtiene la identidad de la sesión validada. Probar recuperación o soporte de acceso para el piloto.
+
+P03 — Aprendizaje completo
+Cinco recorridos consecutivos sin bloqueo: entrar, abrir lección, hacer actividad, finalizar y consultar progreso. Revisar exactitud de XP, requisitos y respuestas del examen.
+
+P04 — Offline real
+Preparar una lección, desconectar la red, cerrar y reabrir la aplicación, completar una actividad y conservar resultados. Probar también recursos 3D y dependencias externas. Una visita inicial sin descarga no debe prometer contenido disponible offline.
+
+P05 — Sincronización
+Reintentar el mismo evento y comprobar que no duplica progreso. Simular cortes, fallo de API y dos dispositivos; definir y verificar qué resultado prevalece. El estado “pendiente de sincronizar” debe ser visible.
+
+P06 — Reinicio y actualización
+Reiniciar API, actualizar frontend y migrar caché sin perder sesiones válidas ni progreso. Probar almacenamiento local agotado o no disponible con mensaje comprensible.
+
+P07 — Dispositivos y usabilidad
+Windows con Chrome y Edge, un Android real y otro dispositivo de un participante. Si se ofrece soporte iPhone, probar Safari antes de afirmarlo. Revisar navegación por teclado, legibilidad y alternativa cuando WebXR no funcione.
+
+P08 — Carga inicial
+En pruebas, simular 20 alumnos concurrentes durante 15 minutos guardando y consultando progreso. Objetivos: cero pérdida de datos, menos de 1 % de errores inesperados y percentil 95 de API menor a 1 segundo, excluyendo IA. Registrar CPU, RAM, conexiones y ubicación de la prueba. Los objetivos deben aprobarse mediante medición; no derivan de la tarifa del host.
+
+P09 — Seguridad y recuperación
+Revisar HTTPS, permisos, secretos, límites ante abuso y restauración de respaldo. No registrar contraseñas ni tokens en logs. Comprobar que las rutas de depuración no exponen información sensible.
+
+P10 — Conteo de actividad
+Una cuenta de prueba no aumenta los alumnos activos. Un evento reenviado no se cuenta dos veces. La actividad offline conserva su fecha y se incorpora después de sincronizar, identificando retrasos del reporte.
+
+Decisión de apertura
+- Cero defectos que expongan datos, pierdan progreso o impidan estudiar.
+- P01 a P10 aprobadas para el alcance anunciado, con excepciones menores documentadas que no comprometan esos criterios.
+- Recuperación ensayada y soporte disponible.
+- Antes de la beta pública: al menos cinco alumnos reales completan el flujo y el piloto acumula 48 horas sin fallos críticos conocidos.
+- Si falla un requisito, corregir y repetir la prueba afectada más la regresión del flujo principal. No abrir por cumplir únicamente la fecha.
+
+8. CALENDARIO DE EJECUCIÓN
+
+2 de octubre — Diagnóstico
+Inventario del servidor, diferencia frente a main, estado Oracle, autenticación, build, pruebas y baseline de usuarios. Entregable: lista de bloqueos y estimación revisada.
+
+3 de octubre — Host y alcance
+Confirmar OCI o alternativa; resolver HTTPS y entornos. Elegir una ruta educativa corta. Preparar lista de candidatos al piloto sin enviar invitaciones automáticas.
+
+4 y 5 de octubre — Identidad y datos
+Cuentas, autorización por usuario, persistencia, reintentos y eventos mínimos de medición. Entregable: dos cuentas aisladas y avance recuperable.
+
+6 y 7 de octubre — Candidato al piloto
+CI, pruebas críticas, revisión de contenido, respaldo y restauración. Decisión el día 7. Si aprueba, confirmar horario con diez participantes.
+
+8 de octubre — Piloto
+Sesión de 45 minutos: cinco de acceso, diez de orientación, veinte de actividad y diez de comentarios. Observar dónde se detienen y registrar incidencias.
+
+9 a 11 de octubre — Corrección y retorno
+Resolver los tres problemas principales; invitar a una segunda actividad en otro día. Incorporar hasta diez participantes adicionales solo si el servicio está estable.
+
+12 y 13 de octubre — Ensayo de apertura
+Pruebas de carga, navegadores, actualización y conteo. Congelar nuevas funciones. Preparar página de bienvenida y mensajes de convocatoria.
+
+14 de octubre — Decisión
+Revisar evidencia, costos, soporte y fallos. Confirmar beta del día 15 o mover al día 22.
+
+15 de octubre — Beta pública
+Abrir registro o solicitudes de acceso y admitir una primera cohorte limitada a 30 cuentas. Observar la API después de cada incorporación; no abrir una campaña masiva el primer día.
+
+16 a 22 de octubre — Activación
+Acompañar primeras lecciones, realizar otra sesión guiada y llegar a 20 activos semanales. Subir el cupo hasta 60 cuentas solo si carga y soporte lo permiten.
+
+23 a 29 de octubre — Retención e informe
+Ofrecer un reto breve con el contenido validado, recoger comentarios y buscar 30 activos semanales. Publicar resultados medidos, aunque sean inferiores a la meta.
+
+9. DEFINICIÓN Y METAS DE ALUMNOS ACTIVOS
+
+Registro: persona con una cuenta creada. No implica aprendizaje.
+Activación: alumno que completa su primera lección o entrega una actividad válida dentro de siete días desde el alta.
+Alumno activo semanal: cuenta de una persona real con al menos dos sesiones de aprendizaje en días distintos dentro de una ventana de siete días, y al menos una lección completada o actividad válida en esa ventana. Una sesión de aprendizaje exige interacción con una lección; no basta abrir la portada.
+Retención de segunda semana: porcentaje de alumnos activados en una cohorte que vuelve a realizar una actividad significativa entre los días 8 y 14 posteriores a su activación.
+
+Excluir personal del proyecto, bots, pruebas y duplicados. Contar personas únicas, sin sumar dos dispositivos como dos alumnos. El primer día pueden existir alumnos activados, pero todavía no cumplirán el requisito de retorno de esta definición semanal.
+
+Metas propuestas:
+- 8 de octubre: 10 participantes del piloto y 7 activaciones.
+- 15 de octubre: 20 registros acumulados y 8 activos en el período del 9 al 15.
+- 22 de octubre: 40 registros acumulados, 30 activaciones acumuladas y 20 activos del 16 al 22.
+- 29 de octubre: 60 registros acumulados, 45 activaciones acumuladas y 30 activos del 23 al 29.
+- Retención de segunda semana: objetivo inicial de 40 %, informando también numerador y denominador.
+
+Son metas de gestión, no resultados garantizados ni estimaciones estadísticas. Cada corte termina a las 23:59 de Ciudad de México. Los reportes se cierran 48 horas después para incorporar actividad offline sincronizada; lo que siga pendiente se declara como limitación.
+
+10. CÓMO CONSEGUIR LOS PRIMEROS ALUMNOS
+
+Público inicial: estudiantes adultos de UTN y contactos interesados en Blender, creación web y entornos virtuales. La relación con UTN es un canal potencial, no un convenio ni respaldo institucional confirmado.
+
+Propuesta de invitación: “Prueba una ruta gratuita para crear y visualizar una escena 3D en el navegador. Son sesiones cortas; podrás guardar tu progreso y ayudarnos a mejorar la beta”. Ajustar el mensaje a las funciones que hayan superado pruebas.
+
+Embudo objetivo al 22 de octubre:
+120 invitaciones pertinentes → 60 visitas interesadas → 40 registros → 30 activaciones → 20 activos semanales.
+Supuestos: 50 % visita, 67 % registro entre visitantes, 75 % activación y 67 % continuidad entre activados. Son hipótesis para revisar, no tasas observadas.
+
+Acciones del responsable:
+- Del 3 al 7: identificar 20 candidatos y confirmar 10 participantes disponibles.
+- Del 8 al 22: llegar a 120 contactos pertinentes acumulados, aproximadamente diez invitaciones personales por día de captación.
+- Solicitar a dos docentes o responsables de comunidad permiso para compartir la convocatoria. Una solicitud no equivale a difusión confirmada.
+- Publicar tres piezas breves: recorrido real de una lección, ejemplo terminado y demostración offline verificada. Usar un enlace medible por canal.
+- Realizar dos sesiones guiadas de 45 minutos y ofrecer una ruta de tres pasos con una tarea concreta para volver.
+- Enviar seguimiento únicamente a quienes acepten recibirlo: ayuda tras el primer día y recordatorio de segunda actividad. No usar mensajes masivos no solicitados.
+- Del 23 al 29: buscar 180 invitaciones acumuladas con el objetivo de 90 visitas, 60 registros, 45 activaciones y 30 activos semanales.
+
+No invertir en anuncios antes de detectar dónde se pierde el interés. Si hay visitas sin registros, corregir la propuesta y el acceso; si hay registros sin actividad, acompañar la primera lección; si nadie vuelve, mejorar el siguiente ejercicio. Si el día 11 hay menos de cinco activaciones, dedicar la siguiente jornada a observar usuarios y quitar fricción.
+
+11. MEDICIÓN Y EVIDENCIA PARA EXPONER EL PROYECTO
+
+Instrumentación mínima propuesta:
+- Eventos: account_created, learning_session_started, lesson_completed, activity_submitted y sync_succeeded.
+- Campos: event_id único, identificador interno del alumno, session_id, lesson_id cuando aplique, fecha de ocurrencia, fecha de recepción, versión y marca de cuenta de prueba.
+- Validar identidad y eventos en servidor; usar event_id para eliminar duplicados.
+- Registrar por separado canal de llegada y actividad educativa. Las visitas de analítica web no sustituyen el conteo de alumnos activos.
+- Mostrar un resumen simple o exportación agregada; no construir un módulo analítico completo para lanzar.
+
+Informe semanal: período, registros, activaciones, activos, retención por cohorte, actividades completadas, errores críticos y próxima mejora. Incluir números absolutos junto a porcentajes.
+
+Evidencia de exposición: URL funcional, video corto del flujo real, captura agregada del reporte, muestra anonimizada de actividad y dos testimonios voluntarios autorizados. Informar para qué se recopilan datos, reducirlos a lo necesario y ofrecer contacto para solicitar su eliminación. No publicar correos ni avances individuales identificables.
+
+Texto modelo, solo después de comprobar resultados:
+“Entre el [inicio] y el [fin], Amatista registró [N] alumnos activos semanales, definidos como usuarios con actividad educativa en dos días distintos y al menos una actividad completada. El reporte excluye cuentas de prueba y se cerró el [fecha]”.
+
+Si aún no se cumple la meta, decir: “Beta con [N] participantes y [M] alumnos activados; estamos midiendo su retorno”. Nunca reemplazar actividad real con cuentas creadas por el equipo.
+
+12. OPERACIÓN Y CRITERIOS DE CONTINUIDAD
+
+Maximiliano coordina desarrollo, despliegue, convocatoria y soporte. Los alumnos participan en pruebas y comentarios de forma voluntaria; no se les asigna responsabilidad de calidad. Las herramientas de asistencia pueden preparar cambios y análisis, pero cada resultado se valida antes de producción.
+
+Durante el piloto: revisar errores, /api/salud, sincronizaciones pendientes y gastos al inicio y cierre del día y antes de una sesión. Tras una alerta de caída, comprobar base, proceso de API, TLS y versión desplegada en ese orden según los síntomas. Registrar la causa y la solución.
+
+Fallo crítico: pausar altas y despliegues, proteger datos y revertir la versión si corresponde. Informar a participantes del estado y siguiente revisión. Un fallo de sincronización debe conservar eventos locales y permitir reintento; no indicar éxito si el servidor no confirmó.
+
+Después del 29 de octubre: ampliar contenido si hay retorno y baja incidencia. Retomar inversión mayor en el generador solo cuando haya dos semanas de operación estable, ninguna incidencia crítica abierta, recuperación comprobada y capacidad de trabajo libre. No supeditar el soporte de alumnos a la investigación 3D.
+
+13. FUENTES Y TRAZABILIDAD
+
+Repositorio revisado en la sesión del 1 de octubre de 2026, hora de México. Referencia de main observada: 36db25ebf83931b46bf6bc7657353154bf0284ac. Las condiciones comerciales se consultaron durante la elaboración; verificar el costo final y cuotas de la cuenta antes de contratar. Fechas, metas, umbrales y estimaciones de esfuerzo de este documento son propuestas propias.
+
+[1] README de Amatista
+https://github.com/Maximiliano-cabello-mata/amatista/blob/main/README.md
+
+[2] Kanban
+https://github.com/Maximiliano-cabello-mata/amatista/blob/main/KANBAN.md
+
+[3] Fuente de tareas y versiones
+https://github.com/Maximiliano-cabello-mata/amatista/blob/main/tablero/tareas.yml
+
+[4] Backend y diagnóstico Oracle
+https://github.com/Maximiliano-cabello-mata/amatista/blob/main/backend/README.md
+
+[5] Motor generativo separado
+https://github.com/Maximiliano-cabello-mata/amatista/blob/main/docs/propuestas/2026-09-27_motor_generativo_3d.txt
+
+[6] Cloudflare Pages
+https://www.cloudflare.com/products/pages/
+
+[7] Límites de Cloudflare Pages
+https://developers.cloudflare.com/pages/platform/limits/
+
+[8] Oracle Always Free y restricciones
+https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm
+
+[9] Tarifas Render
+https://render.com/pricing
+
+[10] Restricciones de Render Free
+https://render.com/docs/free
+
+[11] Direcciones de salida y costos de IP dedicada
+https://render.com/docs/outbound-ip-addresses
+https://render.com/docs/dedicated-ips
+
+[12] Despliegue React y FastAPI
+https://developers.cloudflare.com/pages/framework-guides/deploy-a-react-site/
+https://render.com/docs/deploy-fastapi
