@@ -36,7 +36,7 @@ function MapaCalor({
 }) {
   const id = useId();
   const [activo, setActivo] = useState(null);
-  const hoyTexto = fechaLocal(hoy ?? new Date());
+  const hoyTexto = fechaLocal(hoy);
   const paso = celda + separacion;
   const ancho = IZQUIERDA + semanas * paso - separacion;
   const alto = ARRIBA + 7 * paso - separacion;
@@ -125,6 +125,7 @@ function MapaCalor({
           {dias.map((d, i) => {
             if (d.futuro) return null;
             const { x, y } = posicion(d);
+            // El borde transparente agranda la zona sensible hasta cubrir la separación.
             return (
               <rect
                 key={d.fecha}
@@ -134,6 +135,8 @@ function MapaCalor({
                 height={celda}
                 rx="2"
                 fill={colorDe(d.valor)}
+                stroke="transparent"
+                strokeWidth={separacion}
                 onPointerEnter={() => setActivo(i)}
               />
             );
