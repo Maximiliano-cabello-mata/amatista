@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-02 03:18 · `main` en `a99f64f`
+Último commit: 2026-10-02 04:10 · `main` en `5382e5f`
 
 ## 🗺️ Roadmap
 
@@ -19,12 +19,11 @@ Versiones publicadas (tags): `v2.0.1` · `v2.0.0` · `v1.0.0` · `v0.1.0`
 
 ## 📌 Kanban
 
-| 📋 Pendiente (10) | 🔨 En progreso (0) | 👀 Revisión (2) | ✅ Hecho (1) |
+| 📋 Pendiente (9) | 🔨 En progreso (0) | 👀 Revisión (3) | ✅ Hecho (1) |
 |---|---|---|---|
 | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.1.0 · api</sub> |   | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.1.0 · db</sub> | **T-001** Publicar los tags de versión (herramientas/crear-tags.sh)<br><sub>v2.1.0 · repo</sub> |
 | **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.1.0 · api</sub> |   | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.1.0 · db</sub> |   |
-| **T-006** Autenticación de alumnos<br><sub>v2.2.0 · api</sub> |   |   |   |
-| **T-007** CI en GitHub Actions (lint, build y pytest)<br><sub>v2.2.0 · repo</sub> |   |   |   |
+| **T-007** CI en GitHub Actions (lint, build y pytest)<br><sub>v2.2.0 · repo</sub> |   | **T-006** Autenticación de alumnos<br><sub>v2.2.0 · api</sub> |   |
 | **T-008** Proteger main (solo cambios por PR)<br><sub>v2.2.0 · repo</sub> |   |   |   |
 | **T-009** Módulo 2 de Blender (interfaz y navegación)<br><sub>v2.3.0 · pwa</sub> |   |   |   |
 | **T-010** Módulo 2 de A-Frame (cargar modelos GLB)<br><sub>v2.3.0 · pwa</sub> |   |   |   |
@@ -44,7 +43,7 @@ Versiones publicadas (tags): `v2.0.1` · `v2.0.0` · `v1.0.0` · `v0.1.0`
 
 ### v2.2.0 · Cuentas y calidad
 
-- [ ] **T-006** Autenticación de alumnos · _pendiente_
+- [ ] **T-006** Autenticación de alumnos · _revision_ — commits: `b2a0eb0` (2026-10-02)
 - [ ] **T-007** CI en GitHub Actions (lint, build y pytest) · _pendiente_
 - [ ] **T-008** Proteger main (solo cambios por PR) · _pendiente_
 
