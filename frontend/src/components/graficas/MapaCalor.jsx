@@ -208,32 +208,35 @@ function MapaCalor({
       <p className="sr-only" aria-live="polite">
         {seleccionado ? descripcion(seleccionado) : ''}
       </p>
-      <table className="sr-only">
-        <caption>{titulo} por semana</caption>
-        <thead>
-          <tr>
-            <th scope="col">Semana del</th>
-            {DIAS_CORTOS.map((dia) => (
-              <th key={dia} scope="col">
-                {dia}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {Array.from({ length: semanas }, (_, semana) => {
-            const fila = dias.slice(semana * 7, semana * 7 + 7);
-            return (
-              <tr key={fila[0].fecha}>
-                <th scope="row">{fechaCorta(fila[0].fecha, { conDia: false })}</th>
-                {fila.map((d) => (
-                  <td key={d.fecha}>{d.futuro ? '—' : d.valor}</td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {/* sr-only va en un div: una tabla no se encoge a 1 px y desbordaría la página en móvil. */}
+      <div className="sr-only">
+        <table>
+          <caption>{titulo} por semana</caption>
+          <thead>
+            <tr>
+              <th scope="col">Semana del</th>
+              {DIAS_CORTOS.map((dia) => (
+                <th key={dia} scope="col">
+                  {dia}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {Array.from({ length: semanas }, (_, semana) => {
+              const fila = dias.slice(semana * 7, semana * 7 + 7);
+              return (
+                <tr key={fila[0].fecha}>
+                  <th scope="row">{fechaCorta(fila[0].fecha, { conDia: false })}</th>
+                  {fila.map((d) => (
+                    <td key={d.fecha}>{d.futuro ? '—' : d.valor}</td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </figure>
   );
 }

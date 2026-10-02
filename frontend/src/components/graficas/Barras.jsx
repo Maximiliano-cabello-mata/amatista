@@ -67,6 +67,12 @@ function Barras({
   const altoTotal = MARGEN.arriba + alto + MARGEN.abajo;
   const indiceResaltado = datos.findIndex((d) => d.clave === resaltar);
   const seleccionado = activo === null ? null : datos[activo];
+  // Las etiquetas de los extremos se corren hacia adentro para no cortarse
+  // (monoespaciada de 10 px: ~6.1 px por carácter).
+  const xEtiqueta = (i, etiqueta) => {
+    const mitad = (String(etiqueta ?? '').length * 6.1) / 2;
+    return limitar(centro(i), mitad, ancho - mitad);
+  };
 
   const alTeclear = (evento) => {
     const ultimo = datos.length - 1;
@@ -135,7 +141,7 @@ function Barras({
                 )}
                 {etiquetaVisible && (
                   <text
-                    x={centro(i)}
+                    x={xEtiqueta(i, dato.etiqueta)}
                     y={base + 15}
                     textAnchor="middle"
                     fill={resaltada ? COLORES.texto : COLORES.textoSuave}
@@ -177,23 +183,26 @@ function Barras({
       <p className="sr-only" aria-live="polite">
         {seleccionado ? `${seleccionado.detalle ?? seleccionado.etiqueta}: ${texto(Number(seleccionado.valor) || 0)}` : ''}
       </p>
-      <table className="sr-only">
-        <caption>{titulo}</caption>
-        <thead>
-          <tr>
-            <th scope="col">{encabezados[0]}</th>
-            <th scope="col">{encabezados[1]}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {datos.map((dato) => (
-            <tr key={dato.clave}>
-              <th scope="row">{dato.detalle ?? dato.etiqueta}</th>
-              <td>{texto(Number(dato.valor) || 0)}</td>
+      {/* sr-only va en un div: una tabla no se encoge a 1 px y desbordaría la página en móvil. */}
+      <div className="sr-only">
+        <table>
+          <caption>{titulo}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{encabezados[0]}</th>
+              <th scope="col">{encabezados[1]}</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {datos.map((dato) => (
+              <tr key={dato.clave}>
+                <th scope="row">{dato.detalle ?? dato.etiqueta}</th>
+                <td>{texto(Number(dato.valor) || 0)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </figure>
   );
 }

@@ -24,6 +24,34 @@
             "body": "### El 3D llega al navegador\nTradicionalmente, para experimentar Realidad Virtual (VR) necesitabas descargar aplicaciones pesadas. **WebXR** es la tecnología que permite que tu navegador (Chrome, Firefox, Safari) renderice mundos 3D usando la tarjeta gráfica de tu computadora o celular."
           },
           {
+            "type": "quiz_inline",
+            "id": "quiz-webxr-navegador",
+            "question": "¿Qué necesita tu público para entrar a una experiencia WebXR?",
+            "options": [
+              {
+                "id": "navegador",
+                "text": "Solo un navegador compatible: se abre con un enlace",
+                "isCorrect": true
+              },
+              {
+                "id": "app",
+                "text": "Descargar una aplicación pesada desde una tienda",
+                "isCorrect": false
+              },
+              {
+                "id": "visor",
+                "text": "Un visor de realidad virtual, sin él no funciona",
+                "isCorrect": false
+              },
+              {
+                "id": "blender",
+                "text": "Tener Blender instalado en su computadora",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "WebXR vive en el navegador: basta con abrir un enlace. El visor es opcional; la misma escena 3D también se ve en la pantalla del celular o de la computadora."
+          },
+          {
             "type": "markdown_text",
             "body": "### Entra A-Frame\nA-Frame es un *framework* de código abierto mantenido por Supermedium (y originalmente por Mozilla). Su magia radica en que envuelve la complejidad de tecnologías como WebGL en simples etiquetas web. No necesitas compilar nada complejo; todo corre en el navegador."
           },
@@ -53,6 +81,39 @@
               }
             ],
             "footer": "WebXR se suma a esta cadena para mostrar la escena en visores de realidad virtual y en realidad aumentada."
+          },
+          {
+            "type": "matching",
+            "id": "parejas-capas-webxr",
+            "prompt": "Une cada pieza con el trabajo que hace",
+            "pairs": [
+              {
+                "id": "html",
+                "left": "Tu HTML",
+                "right": "Describe la escena con etiquetas como `<a-box>`"
+              },
+              {
+                "id": "aframe",
+                "left": "A-Frame",
+                "right": "Convierte esas etiquetas en objetos 3D"
+              },
+              {
+                "id": "three",
+                "left": "three.js",
+                "right": "Motor 3D en JavaScript que A-Frame usa por dentro"
+              },
+              {
+                "id": "webgl",
+                "left": "WebGL",
+                "right": "Deja al navegador dibujar con la tarjeta gráfica"
+              },
+              {
+                "id": "webxr",
+                "left": "WebXR",
+                "right": "Lleva la escena a visores de realidad virtual y aumentada"
+              }
+            ],
+            "explanation": "Tú solo escribes la primera capa: A-Frame la traduce a three.js, three.js dibuja con WebGL y WebXR lleva el resultado a los visores."
           }
         ],
         "cover": {
@@ -83,10 +144,103 @@
             "body": "Fíjate en las etiquetas: `<a-box>` para un cubo, `<a-sphere>` para una esfera. Atributos como `position`, `rotation` y `color` controlan cómo y dónde se renderiza el objeto en el espacio 3D."
           },
           {
+            "type": "hotspots",
+            "id": "puntos-hola-mundo",
+            "src": "ilustraciones/aframe-webxr.svg",
+            "alt": "La escena «Hola Mundo» de A-Frame dentro de una ventana del navegador: una caja celeste, una esfera rosa, un cilindro amarillo sobre un suelo verde, el cielo gris y un visor de realidad virtual.",
+            "points": [
+              {
+                "id": "caja",
+                "x": 36,
+                "y": 62,
+                "title": "`<a-box>`: la caja",
+                "text": "El cubo celeste (`color=\"#4CC3D9\"`). Con `rotation=\"0 45 0\"` está girado 45° en el eje Y: por eso ves una de sus esquinas al frente."
+              },
+              {
+                "id": "esfera",
+                "x": 47,
+                "y": 47,
+                "title": "`<a-sphere>`: la esfera",
+                "text": "Con `radius=\"1.25\"` es la figura más grande. Su `position` tiene Z = -5 y la de la caja Z = -3: la esfera está más lejos, por eso queda detrás."
+              },
+              {
+                "id": "cilindro",
+                "x": 55,
+                "y": 64,
+                "title": "`<a-cylinder>`: el cilindro",
+                "text": "`radius=\"0.5\"` define su grosor y `height=\"1.5\"` su altura, ambos en metros."
+              },
+              {
+                "id": "suelo",
+                "x": 44,
+                "y": 80,
+                "title": "`<a-plane>`: el suelo",
+                "text": "Un plano nace de pie, como una pared. `rotation=\"-90 0 0\"` lo acuesta 90° para que sea el piso."
+              },
+              {
+                "id": "cielo",
+                "x": 19,
+                "y": 31,
+                "title": "`<a-sky>`: el cielo",
+                "text": "Una esfera gigante que envuelve toda la escena por dentro. Aquí es gris claro: `color=\"#ECECEC\"`."
+              },
+              {
+                "id": "visor",
+                "x": 81,
+                "y": 78,
+                "title": "El visor: WebXR",
+                "text": "Sin cambiar ni una línea, la misma página se puede ver con un visor de realidad virtual: A-Frame muestra un botón para entrar en modo VR cuando el navegador lo permite."
+              }
+            ]
+          },
+          {
             "type": "callout",
             "variant": "reto",
             "title": "Reto",
             "body": "Pulsa **Editar**, cambia el `color` de la `<a-box>` a `blue` y ejecuta de nuevo. Después prueba mover la esfera con `position=\"0 2 -5\"`."
+          },
+          {
+            "type": "fill_blanks",
+            "id": "huecos-etiqueta-caja",
+            "prompt": "Completa la etiqueta: una caja celeste, girada 45° y a 3 metros frente a la cámara.",
+            "template": "<[[a-box]] [[position]]=\"-1 0.5 -3\" [[rotation]]=\"0 45 0\" [[color]]=\"#4CC3D9\"></[[a-box]]>",
+            "code": true,
+            "explanation": "Las primitivas de A-Frame empiezan con `a-` y se cierran como cualquier etiqueta HTML. `position` va en metros (X Y Z): una Z negativa aleja el objeto hacia el frente. `rotation` va en grados."
+          },
+          {
+            "type": "code_challenge",
+            "id": "reto-caja-roja-esfera",
+            "prompt": "Tu turno: agrega una **caja roja** y una **esfera** a la escena. Dales `position` para que queden frente a la cámara (Z negativa).",
+            "language": "html",
+            "starter": "<a-scene>\n  <!-- 1. Agrega aquí una caja roja -->\n\n  <!-- 2. Agrega aquí una esfera -->\n\n  <a-plane position=\"0 0 -4\" rotation=\"-90 0 0\" width=\"6\" height=\"6\" color=\"#7BC8A4\"></a-plane>\n  <a-sky color=\"#ECECEC\"></a-sky>\n</a-scene>",
+            "checks": [
+              {
+                "selector": "a-scene a-box",
+                "text": "Hay una `<a-box>` dentro de `<a-scene>`"
+              },
+              {
+                "selector": "a-scene a-box",
+                "attr": "color",
+                "equals": "red",
+                "text": "La caja es roja: `color=\"red\"` (o `#FF0000`)"
+              },
+              {
+                "selector": "a-scene a-box",
+                "attr": "position",
+                "text": "La caja tiene `position`"
+              },
+              {
+                "selector": "a-scene a-sphere",
+                "text": "Hay una `<a-sphere>` dentro de `<a-scene>`"
+              },
+              {
+                "selector": "a-scene a-sphere",
+                "attr": "position",
+                "text": "La esfera tiene `position`"
+              }
+            ],
+            "solution": "<a-scene>\n  <!-- 1. Agrega aquí una caja roja -->\n  <a-box position=\"-1 0.5 -3\" rotation=\"0 45 0\" color=\"red\"></a-box>\n  <!-- 2. Agrega aquí una esfera -->\n  <a-sphere position=\"1 1.25 -5\" radius=\"1.25\" color=\"#EF2D5E\"></a-sphere>\n  <a-plane position=\"0 0 -4\" rotation=\"-90 0 0\" width=\"6\" height=\"6\" color=\"#7BC8A4\"></a-plane>\n  <a-sky color=\"#ECECEC\"></a-sky>\n</a-scene>",
+            "preview": true
           }
         ]
       },

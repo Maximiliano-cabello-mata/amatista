@@ -12,8 +12,13 @@ Palabras clave en el mensaje del commit (mayúsculas o minúsculas):
                                 en revisión si todavía está en otra rama
     reabre T-007              → vuelve a pendiente
 
+Además publica la sección "Contenido": el estado de cada módulo de
+frontend/src/data/modulos/*.json (borrador → revision → publicado), así el
+flujo de contenido se ve en el mismo tablero sin mantenerlo a mano.
+
 Uso: python tablero/actualizar.py   (requiere PyYAML)
 """
+import json
 import re
 import subprocess
 import sys
@@ -24,6 +29,7 @@ import yaml
 RAIZ = Path(__file__).resolve().parent.parent
 TAREAS = RAIZ / "tablero" / "tareas.yml"
 SALIDA = RAIZ / "KANBAN.md"
+MODULOS = RAIZ / "frontend" / "src" / "data" / "modulos"
 
 ESTADOS = ["pendiente", "en-progreso", "revision", "hecho"]
 COLUMNAS = {
@@ -38,6 +44,16 @@ CIERRA = re.compile(r"\b(?:cierra|cerrar|closes?|closed|fix(?:es|ed)?|resuelve|h
 REVISION = re.compile(r"\b(?:revisi[oó]n|review)\s+" + ID, re.I)
 REABRE = re.compile(r"\b(?:reabre|reopen)\s+" + ID, re.I)
 MENCION = re.compile(r"\b" + ID)
+
+# Flujo de contenido (mismos estados que valida backend/contenido/validacion.py).
+ESTADOS_CONTENIDO = ["borrador", "revision", "publicado", "archivado"]
+ICONOS_CONTENIDO = {"borrador": "📝", "revision": "👀", "publicado": "✅", "archivado": "🗄️", "error": "⚠️"}
+BLOQUES_INTERACTIVOS = {
+    "quiz_inline", "ordering", "matching", "fill_blanks", "hotspots", "scene_explorer", "code_challenge",
+}
+PASOS_FORMULA = ["gancho", "explora", "practica", "reto", "jefe"]
+PREFIJO_MODULO = re.compile(r"^\s*M[óo]dulo\s+\d+\s*[:.\-–—]\s*", re.I)
+ARCHIVO_MODULO = re.compile(r"^(.+)-modulo-(\d+)\.json$")
 
 
 def git(*args):
@@ -97,12 +113,82 @@ def calcular_estados(tareas, commits, en_main):
     return estado, actividad, desconocidas
 
 
+def leer_modulos(carpeta=MODULOS):
+    """Un resumen por archivo de módulo, en orden estable (curso, número, archivo).
+
+    Un archivo ilegible no detiene el tablero: aparece con estado "error".
+    """
+    filas = []
+    for ruta in sorted(carpeta.glob("*.json")):
+        nombre = ARCHIVO_MODULO.match(ruta.name)
+        fila = {
+            "archivo": ruta.name,
+            "curso": nombre.group(1) if nombre else "—",
+            "numero": int(nombre.group(2)) if nombre else 0,
+            "titulo": ruta.stem,
+            "estado": "error",
+            "lecciones": 0,
+            "interactivos": 0,
+            "pasos": [],
+        }
+        try:
+            modulo = json.loads(ruta.read_text(encoding="utf-8"))["module"]
+            lecciones = [l for l in modulo.get("lessons") or [] if isinstance(l, dict)]
+        except (OSError, ValueError, KeyError, TypeError, AttributeError):
+            filas.append(fila)
+            continue
+        bloques = [b for l in lecciones for b in l.get("contentBlocks") or [] if isinstance(b, dict)]
+        # Sin "estado" el frontend lo toma como publicado (JSON anteriores a la v2.2).
+        estado = modulo.get("estado") or "publicado"
+        orden = modulo.get("order")
+        fila.update(
+            curso=modulo.get("curso") or fila["curso"],
+            numero=orden if isinstance(orden, int) else fila["numero"],
+            titulo=PREFIJO_MODULO.sub("", str(modulo.get("title") or ruta.stem)),
+            estado=estado if estado in ESTADOS_CONTENIDO else "error",
+            lecciones=len(lecciones),
+            interactivos=sum(b.get("type") in BLOQUES_INTERACTIVOS for b in bloques),
+            pasos=[p for p in PASOS_FORMULA if any(l.get("formula") == p for l in lecciones)],
+        )
+        filas.append(fila)
+    return sorted(filas, key=lambda f: (str(f["curso"]), f["numero"], f["archivo"]))
+
+
+def seccion_contenido(modulos):
+    lineas = [
+        "## 📚 Contenido",
+        "",
+        "> Sale de `frontend/src/data/modulos/*.json` (campo `estado` de cada módulo). Flujo:",
+        "> 📝 borrador → 👀 revision → ✅ publicado. Solo lo publicado llega a los alumnos",
+        "> ([la Fórmula](docs/arquitectura/2026-10-02_formula_modulos.txt)).",
+        "",
+    ]
+    if not modulos:
+        return lineas + ["Todavía no hay módulos en `frontend/src/data/modulos/`.", ""]
+    cuenta = {e: sum(m["estado"] == e for m in modulos) for e in ESTADOS_CONTENIDO + ["error"]}
+    resumen = " → ".join(f"{ICONOS_CONTENIDO[e]} {e} ({cuenta[e]})" for e in ESTADOS_CONTENIDO[:3])
+    extras = [f"{ICONOS_CONTENIDO[e]} {e} ({cuenta[e]})" for e in ("archivado", "error") if cuenta[e]]
+    lineas += [resumen + (" · " + " · ".join(extras) if extras else ""), ""]
+    lineas += [
+        "| Curso | Módulo | Título | Estado | Lecciones | Bloques interactivos | Fórmula |",
+        "|---|---|---|---|---|---|---|",
+    ]
+    for m in modulos:
+        titulo = m["titulo"].replace("|", "\\|")
+        estado = f"{ICONOS_CONTENIDO[m['estado']]} {m['estado']}"
+        formula = f"{len(m['pasos'])}/{len(PASOS_FORMULA)}" if m["pasos"] else "—"
+        lineas.append(
+            f"| {m['curso']} | {m['numero']} | {titulo} | {estado} | {m['lecciones']} | {m['interactivos']} | {formula} |"
+        )
+    return lineas + [""]
+
+
 def barra(hechas, total, ancho=10):
     llenos = round(ancho * hechas / total) if total else 0
     return "▰" * llenos + "▱" * (ancho - llenos)
 
 
-def generar(datos, estado, actividad, publicadas, principal):
+def generar(datos, estado, actividad, publicadas, principal, modulos=()):
     tareas = datos["tareas"]
     por_id = {t["id"]: t for t in tareas}
     # Fecha del último commit (no la hora actual): si nada cambió, el archivo
@@ -147,7 +233,8 @@ def generar(datos, estado, actividad, publicadas, principal):
                 celdas.append(" ")
         lineas.append("| " + " | ".join(celdas) + " |")
 
-    lineas += ["", "## 🧾 Detalle por versión", ""]
+    lineas += [""] + seccion_contenido(list(modulos))
+    lineas += ["## 🧾 Detalle por versión", ""]
     for etapa in datos["roadmap"]:
         lineas += [f"### {etapa['version']} · {etapa['nombre']}", ""]
         for t in (t for t in tareas if t["version"] == etapa["version"]):
@@ -172,9 +259,13 @@ def main():
     estado, actividad, desconocidas = calcular_estados(datos["tareas"], leer_commits(), en_main)
     publicadas = git("tag", "-l", "v*", "--sort=-v:refname").split()
 
-    SALIDA.write_text(generar(datos, estado, actividad, publicadas, principal), encoding="utf-8")
+    modulos = leer_modulos()
+    SALIDA.write_text(generar(datos, estado, actividad, publicadas, principal, modulos), encoding="utf-8")
     resumen = ", ".join(f"{e}: {sum(v == e for v in estado.values())}" for e in ESTADOS)
-    print(f"KANBAN.md actualizado ({resumen})")
+    print(f"KANBAN.md actualizado ({resumen}; módulos: {len(modulos)})")
+    con_error = [m["archivo"] for m in modulos if m["estado"] == "error"]
+    if con_error:
+        print(f"Aviso: módulos ilegibles o con estado desconocido: {', '.join(con_error)}")
     if desconocidas:
         print(f"Aviso: commits mencionan tareas que no están en tareas.yml: {', '.join(sorted(desconocidas))}")
 

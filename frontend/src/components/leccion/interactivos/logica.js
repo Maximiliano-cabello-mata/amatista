@@ -97,6 +97,9 @@ export function partesPlantilla(plantilla = '') {
   return partes;
 }
 
+// Texto sin marcas de Markdown en línea (**, *, `), para aria-label y lectores de pantalla.
+export const textoPlano = (texto = '') => String(texto).replace(/\*\*|[*`]/g, '');
+
 // Comparación sin mayúsculas ni espacios extra.
 export const normalizarRespuesta = (texto = '') => String(texto).trim().replace(/\s+/g, ' ').toLowerCase();
 

@@ -1,0 +1,77 @@
+# CI (T-007): revisa cada push y cada pull request.
+# - backend: pytest, validación de los módulos JSON y pruebas del tablero.
+# - frontend: lint, pruebas (vitest) y build de producción.
+# Los commits del bot del tablero solo tocan KANBAN.md: no disparan CI.
+name: CI
+
+on:
+  push:
+    branches: ['**']
+    paths-ignore: ['KANBAN.md']
+  pull_request:
+    paths-ignore: ['KANBAN.md']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      # Pruebas con SQLite temporal (tests/conftest.py); nunca Oracle real.
+      AMATISTA_SIN_LIMITES: '1'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements*.txt
+
+      - name: Instalar dependencias
+        run: pip install -r requirements-dev.txt pyyaml
+
+      - name: Pruebas del backend
+        run: python -m pytest -q
+
+      - name: Validar los módulos de contenido
+        run: python herramientas/contenido.py validar
+
+      - name: Pruebas del tablero
+        working-directory: .
+        run: python -m pytest -q tablero
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Pruebas
+        run: npm test
+
+      - name: Build de producción
+        run: npm run build

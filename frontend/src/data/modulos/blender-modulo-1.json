@@ -28,6 +28,34 @@
             "body": "### La campaña 'Free Blender'\nTon no quería dejar morir el proyecto. En 2002, lanzó una loca campaña de crowdfunding (antes de que existiera Kickstarter). Pidió a la comunidad **100,000 €** para comprarle el código fuente a los inversores y liberarlo. ¡Lo lograron en solo 7 semanas! Hoy, Blender es 100% de código abierto (GPL) y pertenece a todos nosotros."
           },
           {
+            "type": "quiz_inline",
+            "id": "quiz-free-blender",
+            "question": "¿Cómo se convirtió Blender en software libre en 2002?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Una gran empresa de videojuegos lo compró y lo regaló",
+                "isCorrect": false
+              },
+              {
+                "id": "b",
+                "text": "La comunidad reunió **100 000 €** en la campaña «Free Blender» para comprar el código",
+                "isCorrect": true
+              },
+              {
+                "id": "c",
+                "text": "El gobierno holandés obligó a NaN a publicarlo",
+                "isCorrect": false
+              },
+              {
+                "id": "d",
+                "text": "Siempre fue gratis: Ton lo publicó así desde 1995",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "Cuando NaN quebró, Ton Roosendaal le pidió ayuda a la comunidad: en solo 7 semanas juntaron los 100 000 € para comprarle el código a los inversores y liberarlo con licencia **GPL**."
+          },
+          {
             "type": "timeline",
             "title": "La historia en cuatro momentos",
             "items": [
@@ -62,6 +90,29 @@
             "variant": "dato",
             "title": "¿Sabías que…?",
             "body": "Blender es gratis para siempre y **todo lo que crees con él es tuyo**, incluso si lo vendes. La licencia GPL protege el programa, no tus modelos."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz-licencia-gpl",
+            "question": "Modelas un personaje en Blender y quieres venderlo en una tienda de modelos 3D. ¿Puedes hacerlo?",
+            "options": [
+              {
+                "id": "si",
+                "text": "Sí: lo que creas con Blender es tuyo, aunque lo vendas",
+                "isCorrect": true
+              },
+              {
+                "id": "gpl",
+                "text": "No: la licencia GPL obliga a regalar todo lo que hagas con el programa",
+                "isCorrect": false
+              },
+              {
+                "id": "pago",
+                "text": "Solo si antes pagas una licencia comercial de Blender",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "La GPL protege el **programa** (su código), no tus **creaciones**. Tus modelos, renders y animaciones son tuyos y puedes venderlos."
           }
         ],
         "cover": {
@@ -103,6 +154,74 @@
                 "alt": "Una cámara 3D apuntando a una escena y la foto final que produce."
               }
             ]
+          },
+          {
+            "type": "scene_explorer",
+            "id": "explorador-esfera-low-poly",
+            "title": "Laboratorio: la malla de una esfera",
+            "primitive": "sphere",
+            "controls": [
+              {
+                "param": "segments",
+                "label": "Segmentos (detalle de la malla)",
+                "type": "range",
+                "min": 3,
+                "max": 32,
+                "step": 1,
+                "default": 24
+              },
+              {
+                "param": "wireframe",
+                "label": "Ver solo el alambre",
+                "type": "toggle",
+                "default": false
+              },
+              {
+                "param": "color",
+                "label": "Color del material",
+                "type": "color",
+                "default": "#9B59B6"
+              }
+            ],
+            "goal": {
+              "param": "segments",
+              "op": "<=",
+              "value": 8,
+              "text": "Baja los **segmentos** a 8 o menos: la esfera se vuelve *low poly* y cada cara plana se nota. Activa el alambre para ver la malla."
+            }
+          },
+          {
+            "type": "matching",
+            "id": "parejas-diccionario-3d",
+            "prompt": "Une cada palabra del idioma 3D con su significado",
+            "pairs": [
+              {
+                "id": "malla",
+                "left": "Malla",
+                "right": "La forma del objeto: un cascarón de vértices, aristas y caras"
+              },
+              {
+                "id": "material",
+                "left": "Material",
+                "right": "De qué está hecho: madera, cristal, metal…"
+              },
+              {
+                "id": "shader",
+                "left": "Shader",
+                "right": "Instrucciones matemáticas que dicen cómo reacciona a la luz"
+              },
+              {
+                "id": "render",
+                "left": "Render",
+                "right": "Calcular luces, sombras y colores para crear la imagen final"
+              },
+              {
+                "id": "low-poly",
+                "left": "Low poly",
+                "right": "Estilo con pocas caras, donde cada cara plana se nota"
+              }
+            ],
+            "explanation": "La **malla** es la forma, el **material** (con sus **shaders**) dice de qué está hecha y el **render** toma la foto final. Con pocas caras, la malla se ve *low poly*: el estilo de Amatista."
           }
         ]
       },
@@ -155,10 +274,70 @@
             ]
           },
           {
+            "type": "ordering",
+            "id": "orden-pipeline-dragon",
+            "prompt": "Un estudio va a crear un dragón animado para un corto. Ordena su trabajo, del primer paso al último.",
+            "items": [
+              {
+                "id": "modelar",
+                "text": "Darle forma al cuerpo, las alas y la cola (la malla)"
+              },
+              {
+                "id": "texturizar",
+                "text": "Pintarle escamas y elegir de qué material está hecho"
+              },
+              {
+                "id": "rigging",
+                "text": "Ponerle huesos para poder doblar las alas y la cola"
+              },
+              {
+                "id": "animar",
+                "text": "Crear el vuelo con fotogramas clave"
+              },
+              {
+                "id": "iluminar",
+                "text": "Colocar las luces del atardecer"
+              },
+              {
+                "id": "render",
+                "text": "Calcular la imagen final de cada fotograma"
+              }
+            ],
+            "explanation": "**Modelar → Texturizar → Rigging → Animar → Iluminar → Render.** Cada paso usa el anterior: para doblar las alas en la animación primero hace falta el esqueleto, y el render necesita las luces ya puestas."
+          },
+          {
             "type": "callout",
             "variant": "dato",
             "title": "El pipeline de Amatista",
             "body": "En esta ruta usaremos una versión corta: **Modelar → Texturizar → Exportar GLB → verlo en la web con A-Frame**."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz-taza-sin-rigging",
+            "question": "Vas a modelar una taza para un catálogo y no se va a mover. ¿Qué pasos del pipeline puedes saltarte?",
+            "options": [
+              {
+                "id": "rig-anim",
+                "text": "Rigging y animación",
+                "isCorrect": true
+              },
+              {
+                "id": "tex-luz",
+                "text": "Texturizado e iluminación",
+                "isCorrect": false
+              },
+              {
+                "id": "mod-render",
+                "text": "Modelado y render",
+                "isCorrect": false
+              },
+              {
+                "id": "ninguno",
+                "text": "Ninguno: siempre se hacen los seis pasos",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "El esqueleto (**rigging**) y la **animación** solo hacen falta si el objeto se mueve. Una taza quieta necesita forma, material, luz y render."
           }
         ]
       },
