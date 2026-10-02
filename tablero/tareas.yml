@@ -35,6 +35,7 @@ tareas:
     titulo: Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico
     version: v2.1.0
     area: db
+    bloqueo: "Fusionar antes el PR #9 (002 corregida); luego seguir docs/despliegue/2026-10-02_oracle_paso_a_paso.md en la VM"
   - id: T-003
     titulo: Desplegar el backend nuevo como servicio systemd
     version: v2.1.0
@@ -165,3 +166,38 @@ tareas:
     version: v2.2.0
     area: lanzamiento
     depende_de: [T-027]
+
+  # --- Cierre del 2 de octubre: lo que falta para el piloto ------------------
+  - id: T-029
+    titulo: Prueba de punta a punta en navegador (anónimo → cuenta → offline → admin publica → acople)
+    version: v2.2.0
+    area: lanzamiento
+    depende_de: [T-018, T-020]
+    aceptacion:
+      - "Recorrido de la sección 2.3 de la bitácora del 2/10 con capturas en 390 px y 1280 px"
+  - id: T-030
+    titulo: Revisión de seguridad e integridad (permisos, tokens, XSS en contenido, fusión y sincronización)
+    version: v2.2.0
+    area: api
+    aceptacion:
+      - "Hallazgos registrados en docs/incidencias/ y corregidos o con decisión escrita"
+  - id: T-031
+    titulo: Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)
+    version: v2.2.0
+    area: repo
+    aceptacion:
+      - "Los documentos pendientes de docs/README.md existen y están enlazados (incluida docs/despliegue/2026-10-02_despliegue_oci.txt)"
+  - id: T-032
+    titulo: Configurar SMTP y primer admin en el servidor (confirmación y recuperación por correo)
+    version: v2.2.0
+    area: api
+    depende_de: [T-003]
+    aceptacion:
+      - "Registro con AMATISTA_REQUIERE_CONFIRMACION=1 recibe el código por correo"
+  - id: T-033
+    titulo: Importar el catálogo a Oracle (herramientas/contenido.py importar)
+    version: v2.2.0
+    area: contenido
+    depende_de: [T-002]
+    aceptacion:
+      - "GET /api/contenido/catalogo en producción devuelve los 2 módulos publicados"
