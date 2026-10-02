@@ -9,6 +9,7 @@
 #
 # Si tienes la firma SSH de git configurada (user.signingkey), los tags se
 # firman (-s). Cada tag lleva la fecha de su commit, no la de hoy.
+# v2.2.0-alpha.1 se creó a mano; v2.2.0-alpha.2 es el cierre del 2/10 (main con el panel de administración).
 # Es seguro ejecutarlo varias veces: los tags que ya existen se saltan.
 # =============================================================================
 set -euo pipefail
@@ -19,6 +20,7 @@ VERSIONES=(
   "v1.0.0|cde262b|V1 Integración: React → FastAPI → Oracle, sesiones y documentación organizada"
   "v2.0.0|0ea0e8a|V2 Plataforma educativa: identidad low poly, PWA offline, Módulo 1, progreso y backend en el repo"
   "v2.0.1|573ea89|Migración al repositorio oficial y firma SSH de commits"
+  "v2.2.0-alpha.2|88dd539|Plataforma unificada (avance): panel de administración en la PWA (resumen, usuarios, contenido, editor de lecciones y sistema)"
 )
 
 git fetch --quiet origin --tags
