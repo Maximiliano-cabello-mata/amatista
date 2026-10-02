@@ -21,6 +21,7 @@ describe('rutas', () => {
     expect(analizarRuta('#/admin/usuarios')).toMatchObject({ seccion: 'usuarios' });
     expect(analizarRuta(rutas.adminUsuario('usr-1'))).toMatchObject({ seccion: 'usuario', params: { id: 'usr-1' } });
     expect(analizarRuta('#/admin/contenido')).toMatchObject({ seccion: 'contenido' });
+    expect(analizarRuta(rutas.adminSistema)).toMatchObject({ seccion: 'sistema', params: {} });
     expect(analizarRuta(rutas.adminLeccion('blender', 'les_001'))).toMatchObject({
       seccion: 'leccion',
       params: { cursoId: 'blender', leccionId: 'les_001' },

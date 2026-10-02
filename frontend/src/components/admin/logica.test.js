@@ -3,6 +3,7 @@ import { consultaURL } from '../../services/admin';
 import {
   agruparProgreso,
   aFecha,
+  armarLeccion,
   bloqueDelError,
   bloqueDesdeEjemplo,
   datosSerie,
@@ -15,6 +16,7 @@ import {
   moverElemento,
   nombreArchivoModulo,
   porcentaje,
+  separarLeccion,
   totalPaginas,
 } from './logica';
 
@@ -146,5 +148,42 @@ describe('serie diaria', () => {
   it('convierte la serie del resumen en columnas', () => {
     const datos = datosSerie([{ fecha: '2026-10-02', activos: 3, completadas: 5, registros: 1 }], 'completadas');
     expect(datos).toEqual([{ clave: '2026-10-02', etiqueta: '2', detalle: '2 oct 2026', valor: 5 }]);
+  });
+});
+
+describe('editor de lecciones', () => {
+  const leccion = {
+    id: 'les_001',
+    title: 'Mallas',
+    type: 'theory_reading',
+    isLocked: true,
+    formula: 'explora',
+    contentBlocks: [{ type: 'markdown_text', body: 'Hola' }],
+  };
+
+  it('separa y vuelve a armar la misma lección', () => {
+    const { base, textosBloques, textoQuiz } = separarLeccion(leccion);
+    expect(base).not.toHaveProperty('contentBlocks');
+    expect(textosBloques).toHaveLength(1);
+    const armada = armarLeccion(base, textosBloques, textoQuiz);
+    expect(armada.ok).toBe(true);
+    expect(armada.leccion).toEqual(leccion);
+  });
+
+  it('marca el bloque con JSON inválido y quita opcionales vacíos', () => {
+    const armada = armarLeccion({ ...leccion, formula: '', replaces: [], durationSeconds: 0 }, ['{"type":"callout"}', '{ roto'], '');
+    expect(armada.ok).toBe(false);
+    expect(Object.keys(armada.erroresBloques)).toEqual(['1']);
+    expect(armada.leccion).not.toHaveProperty('formula');
+    expect(armada.leccion).not.toHaveProperty('replaces');
+    expect(armada.leccion).not.toHaveProperty('durationSeconds');
+  });
+
+  it('un examen usa quizData y no contentBlocks', () => {
+    const armada = armarLeccion({ id: 'x', title: 'Jefe', type: 'exam' }, ['{"type":"callout"}'], '{"passingScore":80,"questions":[]}');
+    expect(armada.ok).toBe(true);
+    expect(armada.leccion.quizData.passingScore).toBe(80);
+    expect(armada.leccion).not.toHaveProperty('contentBlocks');
+    expect(armarLeccion({ type: 'exam' }, [], 'mal').errorQuiz).toMatch(/JSON inválido/);
   });
 });

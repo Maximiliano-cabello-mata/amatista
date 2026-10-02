@@ -1,13 +1,11 @@
 import { rutas } from '../../rutas';
 import { alSalirPorEnlace } from './cambios';
 
-export const RUTA_SISTEMA = '#/admin/sistema';
-
 const ENTRADAS = [
   { grupo: 'resumen', texto: 'Resumen', href: rutas.admin, icono: '◆' },
   { grupo: 'usuarios', texto: 'Usuarios', href: rutas.adminUsuarios, icono: '◎' },
   { grupo: 'contenido', texto: 'Contenido', href: rutas.adminContenido, icono: '▤' },
-  { grupo: 'sistema', texto: 'Sistema', href: RUTA_SISTEMA, icono: '⚙', soloAdmin: true },
+  { grupo: 'sistema', texto: 'Sistema', href: rutas.adminSistema, icono: '⚙', soloAdmin: true },
 ];
 
 // Navegación del panel: pestañas desplazables en móvil, columna lateral en escritorio.
