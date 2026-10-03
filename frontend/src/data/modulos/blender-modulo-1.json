@@ -8,6 +8,7 @@
     "estimatedTimeMinutes": 45,
     "order": 1,
     "curso": "blender",
+    "nivel": "blender-n1",
     "insignia": "Explorador 3D",
     "estado": "publicado",
     "lessons": [
