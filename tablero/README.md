@@ -15,7 +15,7 @@ El contenido sigue su propio flujo en los JSON de los módulos y el tablero lo r
 
 ## Cómo se usa
 
-1. **Crear una tarea**: agrégala en [`tareas.yml`](tareas.yml) con el siguiente id libre (hoy `T-034`), su versión y su área. Opcional: `depende_de`, `aceptacion`, `evidencia`, `bloqueo` (se leen en el YAML; no cambian el estado).
+1. **Crear una tarea**: agrégala en [`tareas.yml`](tareas.yml) con el siguiente id libre (hoy `T-055`), su versión y su área. Opcional: `depende_de`, `aceptacion`, `evidencia`, `bloqueo` (se leen en el YAML; no cambian el estado).
 2. **Trabajar en ella**: menciona su id en el commit y la tarjeta se mueve sola.
 
 | En el mensaje del commit | La tarjeta pasa a |
@@ -60,6 +60,18 @@ El contenido que se edita en el panel de administración vive en la base de dato
 también aparezca aquí, expórtalo con
 `python herramientas/contenido.py exportar <modulo_id> ../frontend/src/data/modulos/<curso>-modulo-<n>.json`
 y haz commit del JSON.
+
+## Etapas e histórico
+
+Cada etapa del proyecto tiene su tablero. Al cambiar de etapa:
+
+1. Copiar `tareas.yml` y el `KANBAN.md` publicado en `main` a [`historico/`](historico/) con la fecha (`AAAA-MM-DD_v2_tareas.yml`, `AAAA-MM-DD_v2_KANBAN.md`). No se editan después.
+2. Reescribir `tareas.yml` con el bloque `etapa` (nombre, fecha, plan, enlace al histórico) y el roadmap nuevo. Las tareas abiertas conservan su id; las cerradas quedan solo en el histórico y se listan en `etapa.archivadas` para que sus commits viejos no salgan como desconocidos.
+
+| Etapa | Desde | Histórico |
+|---|---|---|
+| v2 «Plataforma unificada» | 1 oct 2026 | [tareas](historico/2026-10-03_v2_tareas.yml) · [tablero](historico/2026-10-03_v2_KANBAN.md) |
+| v3 «Reestructuración» (actual) | 3 oct 2026 | [plan](../docs/reestructuracion/00_plan_maestro.md) |
 
 ## Cómo funciona
 

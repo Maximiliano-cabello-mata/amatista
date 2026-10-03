@@ -48,7 +48,11 @@ pegar su sección del CHANGELOG.md.
 
 3. REGLA PARA LAS PRÓXIMAS VERSIONES
 -----------------------------------------------------------------------------
-  MAYOR (v3.0.0)   Cambio de fase del producto (por ejemplo el 3D Lab).
+  MAYOR (v3.0.0)   Cambio de fase del producto. La v3 es la etapa
+                   «Reestructuración» (3/10/2026): niveles, versiones de
+                   Blender y add-on. Su primer tag es v3.0.0-alpha.1, en el
+                   commit de main donde se fusionó la reestructuración
+                   (docs/reestructuracion/00_plan_maestro.md, sección 4).
   MENOR (v2.1.0)   Una meta del roadmap terminada (ver KANBAN.md).
   PARCHE (v2.0.2)  Solo correcciones.
 
@@ -67,4 +71,8 @@ Al cerrar una versión:
 
 Para mover tarjetas basta con mencionar la tarea en el commit
 (T-004, cierra T-004, reabre T-004). Detalle en tablero/README.md.
+
+Al cambiar de etapa (MAYOR), el tablero anterior se archiva tal cual en
+tablero/historico/ y tareas.yml empieza con un bloque "etapa". La v2 quedó
+en tablero/historico/2026-10-03_v2_*.
 =============================================================================

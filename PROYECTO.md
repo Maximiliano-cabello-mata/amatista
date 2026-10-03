@@ -2,15 +2,17 @@
 
 Punto de entrada para Maximiliano como desarrollador único. Aquí se decide **qué sigue, por qué y dónde está la información**. Las carpetas técnicas y los documentos existentes conservan su ubicación.
 
-[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Último cierre](docs/bitacora/2026-10-02_cierre_del_dia.txt)
+[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Reestructuración v3](docs/reestructuracion/README.md) · [Estado al 3 oct](docs/bitacora/2026-10-03_estado_y_reestructuracion.md)
 
 ## 1. Dirección y límite de trabajo
 
 **Producto principal:** una plataforma educativa para aprender creación 3D y llevarla a la web con Blender, GLB y A-Frame/WebXR, manteniendo el aprendizaje y el progreso local cuando no hay conexión.
 
-**Siguiente resultado propuesto:** completar y comprobar el recorrido de una lección: abrir → estudiar → completar → recargar sin conexión → recuperar conexión → sincronizar y recuperar el progreso. La integración con Oracle debe tener evidencia en el entorno real.
+**Etapa actual (desde el 3 de octubre de 2026): v3 «Reestructuración».** Es una ampliación, no un reinicio: el curso se organiza en cinco niveles, cada lección declara su versión de Blender verificada y su ficha (objetivo, habilidades, comprobación), el avance se mide también por habilidades, y un add-on de Blender se conectará a la plataforma. Todo con migraciones aditivas que conservan usuarios y progreso. Plan, fases y decisiones pendientes: [plan maestro](docs/reestructuracion/00_plan_maestro.md).
 
-La visión 3D Lab se conserva como ampliación. Tutor IA, add-on y motor generativo entran por incrementos independientes cuando el núcleo tiene una prueba reproducible. Que exista una propuesta no obliga a abrir su desarrollo esta semana.
+**Dos frentes en paralelo, sin mezclarse:** el piloto del 8 de octubre se hace con la v2.2 (servicio, HTTPS, SMTP, pruebas y seguridad: versión `v2.2.0` del tablero); la v3 avanza por fases (A base → B contenido existente en niveles → C «Mi primer espacio 3D» → D laboratorio GLB → E add-on → F especialidades y tutor). Los scripts 005 y 006 pueden ejecutarse en Oracle antes del piloto; el código nuevo se despliega después.
+
+Tutor IA, add-on y motor generativo siguen entrando por incrementos independientes: el primer recorrido de cada lección debe poder completarse sin add-on.
 
 **Regla personal:** una tarea en ejecución, hasta tres preparadas para continuar y una sola meta de entrega. Revisión cuenta dentro del trabajo activo. Estos límites son una política manual; el generador actual no los impone.
 
@@ -45,6 +47,8 @@ Revisión documental de main del 1 de octubre de 2026, base `36db25e`. Es una fo
 | Motor generativo | [Propuesta del motor](docs/propuestas/2026-09-27_motor_generativo_3d.txt) | Investigación separada; requiere límites de ejecución y prueba de viabilidad |
 
 ## 4. Orden de ejecución propuesto
+
+> **Actualización del 3 de octubre:** el orden vigente está en el [plan maestro de la v3](docs/reestructuracion/00_plan_maestro.md) (sección 3) y en el [tablero](KANBAN.md). Primero el piloto (T-003, T-005, T-032, T-029, T-030), en paralelo T-035 (ejecutar 005 y 006) y después la fase B (T-038, T-039, T-044, T-041). La tabla siguiente es la del 1 de octubre y se conserva como historia; el tablero de entonces está en [`tablero/historico/`](tablero/historico/).
 
 Las versiones originales se conservan en el YAML. El orden de trabajo puede adelantar un habilitador de otra versión sin dar por publicada esa versión.
 
@@ -162,6 +166,12 @@ Registrar decisiones importantes en un documento de arquitectura fechado: contex
 - [Convención de commits](docs/guias/2026-09-27_convencion_commits.txt)
 - [Versiones y tablero](docs/guias/2026-10-01_versiones-y-tablero.txt)
 
+### Reestructuración v3
+
+- [Plan maestro](docs/reestructuracion/00_plan_maestro.md) · [Modelo de contenido](docs/reestructuracion/01_modelo_de_contenido.md) · [Manual de Oracle](docs/reestructuracion/02_manual_oracle.md) · [Add-on de Blender](docs/reestructuracion/03_addon_blender.md)
+- [Propuesta de contenido por niveles](docs/propuestas/2026-10-03_propuesta_contenido_blender.txt)
+- [Tablero de la v2 archivado](tablero/historico/2026-10-03_v2_KANBAN.md)
+
 ### Evidencia e historial
 
 - [Investigación y desarrollo](docs/bitacora/2026-09-27_investigacion_desarrollo.txt)
@@ -170,6 +180,7 @@ Registrar decisiones importantes en un documento de arquitectura fechado: contex
 - [Lecciones y progreso](docs/bitacora/2026-09-29_lecciones-y-progreso.txt)
 - [Estado de la plataforma unificada](docs/bitacora/2026-10-02_estado_plataforma_unificada.txt)
 - [Cierre del 2 de octubre y plan siguiente](docs/bitacora/2026-10-02_cierre_del_dia.txt)
+- [Estado al 3 de octubre y arranque de la reestructuración](docs/bitacora/2026-10-03_estado_y_reestructuracion.md)
 - [Registro de incidencias](docs/incidencias/README.md) (índice de todas)
 - [ORA-01400](docs/incidencias/2026-09-27_ora-01400-autoincremento.txt)
 - [Puerto ocupado y CORS](docs/incidencias/2026-09-27_puerto-ocupado-y-cors.txt)

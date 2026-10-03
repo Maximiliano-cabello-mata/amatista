@@ -1,0 +1,287 @@
+AMATISTA
+PROPUESTA DE CONTENIDO Y RUTA DE APRENDIZAJE DE BLENDER
+Fecha: 3 de octubre de 2026
+Versión del documento: 1.0
+Estado: propuesta para planificación e implementación progresiva.
+Responsable del proyecto: Maximiliano Cabello Mata.
+
+1. PROPÓSITO Y BASE DE LA PROPUESTA
+
+Organizar un solo curso de Blender con distintos puntos de entrada, desde el primer contacto hasta la especialización avanzada. La ruta debe servir a personas que aprenden por interés personal y a quienes buscan desarrollar habilidades aplicables a proyectos laborales.
+
+Esta propuesta recoge las decisiones conversadas sobre Amatista y complementa el documento «Pedagogía y Diseño de un Plan de Estudios Básico de Blender vía Add-on.pdf». Conserva el aprendizaje por proyectos, las ayudas opcionales, el repaso y la autonomía del estudiante.
+
+La revisión anterior de la rama claude/project-thread-bpfcse, commit 8157ace, identificó una base de cursos, módulos, actividades, progreso, paneles y administración. Esa revisión fue estática; no certifica el estado actual del servidor ni demuestra que las ampliaciones descritas aquí ya existan.
+
+El PDF de referencia plantea unas 90 horas y cinco fases. Este documento propone reorganizar la entrada y ampliar el mapa educativo. No asigna esas 90 horas al conjunto de los cinco niveles nuevos: la duración deberá estimarse por módulo y ajustarse después del piloto.
+
+2. OBJETIVO EDUCATIVO
+
+Permitir que el estudiante comprenda lo que hace, complete proyectos de complejidad creciente y pueda repetir las habilidades en una situación diferente sin depender de instrucciones paso a paso.
+
+El recorrido debe permitir:
+- Entrar desde cero o recuperar conocimientos previos.
+- Identificar y practicar habilidades que faltan.
+- Crear, guardar, corregir y presentar proyectos propios.
+- Consultar ayuda sin perder libertad para experimentar.
+- Conocer la versión de Blender con la que se verificó cada actividad.
+- Llevar posteriormente sus modelos al entorno web de Amatista.
+
+3. ESTRUCTURA: UN CURSO, CINCO NIVELES
+
+Jerarquía propuesta: curso > nivel > módulo > lección > actividad.
+Cada nivel culmina en un proyecto y una revisión de habilidades.
+
+NIVEL 1. DESDE CERO
+Perfil: nunca ha utilizado Blender o se pierde al abrirlo.
+Contenidos:
+- Preparación del entorno e identificación de la versión.
+- Alternativas de navegación para distintos teclados y dispositivos.
+- Interfaz esencial, selección y diferencia entre objeto y vista.
+- Ejes, navegación, desplazamiento, rotación y escala.
+- Añadir, duplicar y eliminar primitivas.
+- Organización inicial mediante nombres y colecciones.
+- Deshacer, cancelar y recuperar la orientación.
+- Guardar, abrir y crear una nueva versión del archivo.
+- Color básico y presentación con una escena de apoyo preparada.
+Proyecto: habitación sencilla construida con primitivas.
+Evidencia: archivo editable que se pueda volver a abrir, captura del resultado y una variación realizada por el alumno.
+Criterio de salida: puede organizar una escena simple y conservar su trabajo, explicando qué transforma al mover la vista y qué transforma al mover un objeto.
+
+NIVEL 2. BÁSICO CON CONOCIMIENTOS PREVIOS
+Perfil: conoce herramientas, pero tiene vacíos o poca consistencia.
+Contenidos:
+- Diagnóstico y repaso de navegación y transformaciones.
+- Modo Objeto y Modo Edición.
+- Vértices, aristas y caras.
+- Extrusión, inserción, cortes y bisel en ejercicios graduales.
+- Proporciones y descomposición de referencias en formas.
+- Introducción a modificadores mediante un caso sencillo.
+- Materiales básicos, cámara e iluminación inicial.
+- Revisión de errores frecuentes y organización del proyecto.
+Proyecto: mesa con una lámpara estilizada o un objeto de complejidad equivalente.
+Evidencia: archivo organizado y explicación breve de las herramientas elegidas.
+Criterio de salida: construye un objeto sencillo y adapta su forma sin copiar cada acción de un tutorial.
+
+NIVEL 3. CONSOLIDACIÓN Y AUTONOMÍA
+Perfil: puede seguir tutoriales, pero se bloquea al comenzar por su cuenta.
+Contenidos:
+- Leer una referencia y dividir el trabajo en pasos.
+- Elegir herramientas ya conocidas según el resultado buscado.
+- Estimar proporciones y comprobar resultados parciales.
+- Diagnosticar una escena con errores preparados.
+- Retomar un archivo incompleto.
+- Pedir pistas progresivas y explicar decisiones.
+- Repetir una habilidad en un contexto diferente.
+Proyecto: crear un rincón de estudio propio a partir de una referencia o boceto.
+Evidencia: plan breve, archivo inicial y final, registro de una corrección y resultado personal.
+Criterio de salida: termina una escena pequeña con ayuda limitada y justifica al menos una decisión de modelado y una corrección.
+Este nivel tiene contenido propio. No consiste solamente en añadir herramientas más difíciles.
+
+NIVEL 4. INTERMEDIO
+Perfil: termina proyectos pequeños y necesita un flujo más consistente.
+Contenidos propuestos:
+- Modelado de mayor complejidad y organización reutilizable.
+- Topología adecuada al uso previsto del modelo.
+- Modificadores y revisión de resultados.
+- Introducción práctica a UV y texturas.
+- Materiales, iluminación y composición con intención visual.
+- Animación sencilla mediante fotogramas clave.
+- Preparación, exportación y revisión de modelos para web.
+- Gestión de archivos, recursos y versiones del proyecto.
+Proyecto: pequeño conjunto de objetos coherentes presentado en una escena y, cuando la integración exista, en el laboratorio web.
+Criterio de salida: resuelve un proyecto completo, documenta su entrega y corrige problemas identificados al revisarlo.
+
+NIVEL 5. AVANZADO POR ESPECIALIDAD
+Perfil: domina la base y tiene un objetivo concreto.
+Ramas propuestas:
+- Modelos y escenas para web y videojuegos; prioridad por afinidad con Amatista.
+- Animación y rigging.
+- Visualización de productos y presentación.
+- Procedimientos y automatización, como ampliación posterior.
+Cada rama tendrá prerrequisitos y un proyecto final propios. Completar una rama no implica dominar todas las áreas de Blender ni obtener una certificación profesional externa.
+
+4. ENTRADA Y RECORRIDOS PERSONALIZADOS
+
+Proponer un diagnóstico opcional compuesto por preguntas breves y una práctica. Preguntar qué puede hacer el estudiante, no solo cuánto tiempo lleva usando Blender.
+
+Tareas posibles: abrir y guardar un archivo, organizar tres objetos, modificar una forma y explicar cómo resolvería un pequeño problema.
+
+El diagnóstico recomienda un nivel; el alumno puede cambiar su punto de entrada. Los resultados deben enlazar a lecciones de repaso concretas. El mapa completo permanece visible.
+
+Los prerrequisitos orientan el orden. Una alerta de conocimientos pendientes no debe convertirse automáticamente en un bloqueo de herramientas o de exploración.
+
+5. POLÍTICA DE VERSIONES DE BLENDER
+
+Separar la versión del software, la versión del contenido y la versión del add-on.
+
+Categorías:
+A. Versión principal del curso: una versión LTS concreta, elegida tras revisar su soporte oficial y realizar las pruebas necesarias.
+B. Versiones adicionales verificadas: versiones específicas con resultados de prueba registrados.
+C. Versiones sin verificar: no se promete compatibilidad del complemento ni coincidencia de interfaz.
+
+Este documento no selecciona números de versión ni afirma cuáles predominan en empresas. Esa decisión queda pendiente de verificación oficial y del contexto de los usuarios participantes.
+
+Uso personal y laboral pueden compartir versión. Para proyectos laborales se refuerzan reproducibilidad, compatibilidad con el equipo y claridad de la entrega. Para uso personal se permite explorar otras versiones indicando las diferencias conocidas.
+
+Matriz de compatibilidad a mantener:
+- Versión exacta de Blender y sistema operativo probado.
+- Versión de la lección y del archivo de práctica.
+- Versión del add-on, cuando exista.
+- Operaciones verificadas y diferencias observadas.
+- Fecha, responsable y evidencia de prueba.
+- Estado: principal, compatible, sin verificar o retirada.
+
+Una lección debe indicar «Verificada en…» y ofrecer notas de diferencias cuando proceda. No duplicar el curso completo por versión: reutilizar conceptos y mantener variantes de capturas o instrucciones donde sean necesarias.
+
+Antes de cambiar la versión principal, probar apertura de archivos, ejercicios representativos, exportaciones y funciones del complemento. Conservar la edición anterior del contenido para alumnos que ya la utilizan y documentar la transición.
+
+6. ESTRUCTURA MÍNIMA DE CADA LECCIÓN
+
+1) Objetivo observable.
+2) Prerrequisitos y versión verificada.
+3) Resultado de referencia visual.
+4) Explicación breve de los conceptos necesarios.
+5) Demostración o práctica guiada.
+6) Variante personal o reto de transferencia.
+7) Errores frecuentes y pistas opcionales.
+8) Criterios de comprobación.
+9) Guardado y evidencia del trabajo.
+10) Repaso posterior dentro de otra actividad.
+
+Ejemplo: «Construir una mesa».
+Objetivo: crear una cubierta y cuatro patas con proporciones coherentes.
+Apoyos: referencia frontal y lateral, captura de herramientas y diagrama de ejes.
+Práctica guiada: construir la primera versión.
+Variante: cambiar dimensiones o diseño manteniendo la estabilidad visual.
+Comprobación: piezas completas, colocación coherente, objetos identificables y archivo guardado.
+Transferencia: reutilizar lo aprendido para crear un banco sin repetir la explicación completa.
+
+7. ELEMENTOS GRÁFICOS Y ACCESIBILIDAD
+
+Priorizar recursos que expliquen una acción o concepto:
+- Capturas anotadas con pocos elementos destacados.
+- Comparaciones antes/después.
+- Diagramas de ejes, jerarquías y procesos.
+- Referencias desde más de un ángulo.
+- Animaciones breves opcionales para acciones espaciales.
+- Tarjetas de problemas y puntos de revisión.
+
+Toda pieza debe tener un propósito didáctico, texto alternativo o explicación equivalente, fuente o autoría y versión de Blender cuando corresponda. No depender únicamente del color para comunicar errores o ejes.
+
+Usar texto legible, controles accesibles y alternativas textuales a videos. Preparar recursos ligeros y comprobar su disponibilidad sin conexión. Ofrecer instrucciones mediante menús además de atajos cuando sea útil.
+
+La identidad low-poly de Amatista puede acompañar estos recursos manteniendo legibilidad y consistencia.
+
+8. BLENDER, PLATAFORMA, LABORATORIO Y ADD-ON
+
+Blender: creación y edición de los proyectos.
+Plataforma: recorrido, lecciones, recursos, progreso y evidencias.
+Laboratorio web: exploración de ejemplos y comprobación de modelos exportados, según las capacidades implementadas.
+Add-on futuro: instrucciones contextuales, pistas y comprobaciones locales opcionales.
+
+El laboratorio inicial propuesto necesita:
+- Objetivo e instrucciones vinculados con una lección.
+- Escena de ejemplo y forma de reiniciarla.
+- Referencia del resultado esperado.
+- Avisos comprensibles cuando un recurso no está disponible.
+- Visor GLB y revisión de importación como incremento pendiente.
+
+El primer recorrido debe poder completarse sin add-on. Cuando exista, deberá apoyar la misma lección, permitir volver a la plataforma y conservar la libertad de trabajo del alumno.
+
+No presentar la existencia de un objeto o modificador como prueba suficiente de aprendizaje. La validación automática puede verificar una condición técnica; la comprensión requiere además variación, explicación o resolución de otra tarea.
+
+9. EVALUACIÓN, PROGRESO Y AUTONOMÍA
+
+Mostrar por separado:
+- Avance: lecciones y actividades completadas.
+- Experiencia: XP, racha e insignias.
+- Habilidades: evidencia de lo que puede realizar.
+
+Estados propuestos por habilidad: sin practicar, realizada con guía, realizada con pistas y demostrada de forma autónoma.
+
+Rúbrica común de proyecto:
+A. Cumple el objetivo de la actividad.
+B. Aplica las herramientas pertinentes.
+C. Organiza y guarda una entrega que se puede revisar.
+D. Identifica y corrige un problema.
+E. Explica una decisión o adapta el resultado.
+
+Para cada criterio registrar: todavía no demostrado, logrado con ayuda o logrado de forma autónoma. No penalizar diferencias creativas que respeten el objetivo. Permitir reintentos y conservar la evidencia más reciente junto con el historial pertinente.
+
+10. PRIMERA ENTREGA PROPUESTA
+
+Nombre: «Mi primer espacio 3D».
+Alcance: introducción desde cero, fundamentos seleccionados y un reto de consolidación. No equivale a declarar completos los cinco niveles.
+
+Secuencia de producción:
+01. Preparar el entorno y abrir el archivo de práctica.
+02. Navegar sin mover los objetos.
+03. Seleccionar y transformar primitivas.
+04. Construir la base de una habitación.
+05. Guardar, cerrar y recuperar el proyecto.
+06. Crear una mesa y organizar sus piezas.
+07. Introducir edición de malla con una modificación sencilla.
+08. Añadir una lámpara estilizada y colores básicos.
+09. Presentar la escena con cámara e iluminación guiadas.
+10. Resolver un error preparado y crear una variante personal.
+11. Revisar el proyecto con la rúbrica y explicar una decisión.
+12. Extensión posterior: exportar un objeto y comprobarlo en el laboratorio.
+
+La exportación se añade cuando el visor y el flujo estén comprobados. El aprendizaje inicial conserva una entrega válida mediante el archivo editable y una imagen.
+
+Condiciones de aceptación:
+- Cada lección tiene objetivo, práctica, recursos y comprobación.
+- Las capturas y los archivos corresponden a la versión declarada.
+- Se puede guardar y continuar sin perder trabajo.
+- El alumno dispone de pistas y recuperación de errores.
+- Los recursos anunciados como offline se han probado en esa condición.
+- Una persona principiante puede completar el recorrido observado.
+- Una persona con experiencia básica puede entrar por el repaso y resolver la variante.
+
+11. INTEGRACIÓN CON LA ORGANIZACIÓN DE AMATISTA
+
+Mantener PROYECTO.md como entrada de dirección, el tablero como seguimiento y los documentos específicos como detalle. Este documento aporta el diseño del contenido; no crea otro tablero de estados.
+
+Propuesta de tareas, sin asignar IDs hasta consultar los disponibles:
+- Inventariar lecciones existentes y relacionarlas con los cinco niveles.
+- Identificar vacíos y reutilizar contenido válido.
+- Seleccionar y verificar la versión principal de Blender.
+- Crear una lección modelo completa con recursos y rúbrica.
+- Completar el proyecto «Mi primer espacio 3D».
+- Preparar ejercicios de consolidación y diagnóstico opcional.
+- Implementar el incremento mínimo del laboratorio.
+- Observar el piloto y corregir puntos de bloqueo.
+
+Campos de planificación sugeridos para una lección: identificador estable, nivel, módulo, habilidad, objetivo, prerrequisitos, versión de contenido, versiones verificadas de Blender, recursos, archivo de práctica, evaluación, evidencia y disponibilidad offline.
+
+Son campos propuestos. Antes de incorporarlos al editor o al formato de contenido, revisar el esquema existente, las migraciones y la conservación del progreso.
+
+12. PRODUCCIÓN Y VALIDACIÓN DEL CONTENIDO
+
+Flujo: diseñar > redactar > producir recursos > ejecutar la práctica > revisar > probar con alumnos > publicar.
+
+Revisar que los pasos se puedan realizar desde el archivo inicial y que las instrucciones no dependan de acciones omitidas. Registrar errores de contenido y diferencias de versión con evidencia.
+
+El piloto debe observar: si entiende la consigna, dónde solicita ayuda, si recupera un error, si guarda su trabajo y si puede repetir una habilidad con una variación. Registrar tiempos como observación, no como límite rígido para aprobar.
+
+Antes de ampliar el temario, resolver los bloqueos detectados en el primer recorrido. No prometer reducción del abandono o mejora del aprendizaje sin datos del propio piloto.
+
+13. DECISIONES PENDIENTES
+
+- Versión exacta principal y versiones adicionales a verificar.
+- Sistemas operativos y dispositivos del primer grupo.
+- Duración estimada de cada módulo a partir de prácticas reales.
+- Formato de entrega de evidencias y alcance de la revisión humana.
+- Alcance mínimo del visor y del futuro add-on.
+- Especialidad avanzada que se desarrollará primero.
+
+14. REFERENCIAS DE TRABAJO Y LÍMITES
+
+- Documento adjunto: «Pedagogía y Diseño de un Plan de Estudios Básico de Blender vía Add-on.pdf», consultado en esta conversación.
+- Revisión estática previa de Amatista, rama claude/project-thread-bpfcse, commit 8157ace.
+- Propuestas y preferencias expresadas por Maximiliano Cabello Mata el 3 de octubre de 2026.
+
+Este documento es una propuesta de diseño y producción de contenido. No es una auditoría del repositorio actual, una certificación de compatibilidad ni una validación de todas las afirmaciones técnicas y pedagógicas del PDF original.
+
+Resultado buscado: una ruta continua y verificable en la que cada alumno pueda entrar según sus conocimientos, aprender con apoyo y avanzar hacia proyectos propios.

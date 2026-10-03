@@ -1,0 +1,203 @@
+# =============================================================================
+# TABLERO DE AMATISTA: roadmap (versiones) y tareas (Kanban)
+#
+# Este archivo lo editan las personas: aquí se crean tareas y se planean
+# versiones. El estado de cada tarea lo calculan los commits (ver
+# tablero/README.md) y el resultado se publica en KANBAN.md.
+#
+# estado (opcional): estado mínimo puesto a mano (pendiente, en-progreso,
+# revision, hecho). Los commits solo pueden hacer avanzar una tarea.
+#
+# Campos opcionales (no cambian el estado; se leen aquí): resultado,
+# depende_de, aceptacion, evidencia y bloqueo (ver tablero/README.md).
+# =============================================================================
+
+roadmap:
+  - version: v2.1.0
+    nombre: Oracle en producción
+    objetivo: El progreso de los alumnos se guarda en Oracle desde el servidor.
+  - version: v2.2.0
+    nombre: Plataforma unificada
+    objetivo: Cuentas con roles, panel del alumno, panel de administración, contenido administrable, lecciones interactivas y lanzamiento de la beta.
+  - version: v2.3.0
+    nombre: Módulo 2
+    objetivo: Segundo módulo de Blender y de A-Frame.
+  - version: v3.0.0
+    nombre: Amatista 3D Lab
+    objetivo: Modelos GLB, tutor IA y puente con Blender (ver docs/propuestas).
+
+tareas:
+  - id: T-001
+    titulo: Publicar los tags de versión (herramientas/crear-tags.sh)
+    version: v2.1.0
+    area: repo
+  - id: T-002
+    titulo: Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico
+    version: v2.1.0
+    area: db
+    bloqueo: "Fusionar antes el PR #9 (002 corregida); luego seguir docs/despliegue/2026-10-02_oracle_paso_a_paso.md en la VM"
+  - id: T-003
+    titulo: Desplegar el backend nuevo como servicio systemd
+    version: v2.1.0
+    area: api
+  - id: T-004
+    titulo: Usuario de aplicación en Oracle (dejar de usar ADMIN)
+    version: v2.1.0
+    area: db
+  - id: T-005
+    titulo: HTTPS en el backend para publicar en Cloudflare Pages
+    version: v2.1.0
+    area: api
+  - id: T-006
+    titulo: Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)
+    version: v2.2.0
+    area: api
+  - id: T-007
+    titulo: CI en GitHub Actions (lint, build y pytest)
+    version: v2.2.0
+    area: repo
+  - id: T-008
+    titulo: Proteger main (solo cambios por PR)
+    version: v2.2.0
+    area: repo
+  - id: T-009
+    titulo: Módulo 2 de Blender (interfaz y navegación)
+    version: v2.3.0
+    area: pwa
+  - id: T-010
+    titulo: Módulo 2 de A-Frame (cargar modelos GLB)
+    version: v2.3.0
+    area: pwa
+  - id: T-011
+    titulo: Visor de modelos GLB en las lecciones
+    version: v3.0.0
+    area: pwa
+  - id: T-012
+    titulo: Tutor IA con Ollama dentro de las lecciones
+    version: v3.0.0
+    area: ia
+  - id: T-013
+    titulo: Add-on de Blender conectado con la plataforma
+    version: v3.0.0
+    area: pwa
+
+  # --- v2.2.0 · Plataforma unificada ----------------------------------------
+  - id: T-014
+    titulo: Esquema incremental 002–004 (8 tablas, 20 GB) y diagnóstico ampliado
+    version: v2.2.0
+    area: db
+  - id: T-015
+    titulo: Catálogo dinámico y progreso adaptable (acople, replaces, % recalculado)
+    version: v2.2.0
+    area: pwa
+  - id: T-016
+    titulo: Panel del alumno (nivel, racha, retos, actividad e insignias)
+    version: v2.2.0
+    area: pwa
+  - id: T-017
+    titulo: Eventos de aprendizaje y métricas de alumnos activos (API)
+    version: v2.2.0
+    area: api
+  - id: T-018
+    titulo: Panel de administración en la PWA (resumen, métricas y usuarios)
+    version: v2.2.0
+    area: pwa
+    depende_de: [T-017]
+  - id: T-019
+    titulo: Contenido administrable (API borrador → publicado, validación y CLI)
+    version: v2.2.0
+    area: contenido
+  - id: T-020
+    titulo: Gestor de contenido en el panel de administración (editor de lecciones)
+    version: v2.2.0
+    area: pwa
+    depende_de: [T-019]
+  - id: T-021
+    titulo: Bloques interactivos en las lecciones (7 tipos nuevos)
+    version: v2.2.0
+    area: pwa
+  - id: T-022
+    titulo: Aplicar la Fórmula Amatista al módulo 1 (bloques interactivos en los JSON)
+    version: v2.2.0
+    area: contenido
+    depende_de: [T-021]
+    aceptacion:
+      - "python herramientas/contenido.py validar sin errores"
+      - "Una interacción cada ~2 bloques de texto en cada lección"
+  - id: T-023
+    titulo: Respaldo de Oracle y restauración ensayada en pruebas
+    version: v2.2.0
+    area: db
+    depende_de: [T-002]
+    aceptacion:
+      - "Restauración en menos de 2 horas, respaldo diario (plan, sección 6)"
+  - id: T-024
+    titulo: Publicar el frontend en Cloudflare Pages contra la API HTTPS
+    version: v2.2.0
+    area: pwa
+    depende_de: [T-005]
+    aceptacion:
+      - "VITE_API_URL con https, sin contenido mixto ni errores CORS"
+      - "Rutas profundas, recarga y actualización del service worker sin perder progreso"
+  - id: T-025
+    titulo: Pruebas P01–P10 del plan de lanzamiento con evidencia
+    version: v2.2.0
+    area: lanzamiento
+    depende_de: [T-002, T-003, T-005, T-024]
+    aceptacion:
+      - "Cada prueba con fecha, commit, ambiente, dispositivo, esperado, real y evidencia"
+  - id: T-026
+    titulo: Piloto por invitación con 10 alumnos (8 de octubre, 18:00)
+    version: v2.2.0
+    area: lanzamiento
+    depende_de: [T-025]
+    aceptacion:
+      - "Decisión de apertura el 7 de octubre; 7 activaciones como meta"
+  - id: T-027
+    titulo: Beta pública con cohorte inicial de 30 cuentas (15 de octubre, 18:00)
+    version: v2.2.0
+    area: lanzamiento
+    depende_de: [T-026]
+    aceptacion:
+      - "Cero defectos que expongan datos, pierdan progreso o impidan estudiar"
+      - "5 alumnos reales completan el flujo y 48 h del piloto sin fallos críticos"
+  - id: T-028
+    titulo: Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)
+    version: v2.2.0
+    area: lanzamiento
+    depende_de: [T-027]
+
+  # --- Cierre del 2 de octubre: lo que falta para el piloto ------------------
+  - id: T-029
+    titulo: Prueba de punta a punta en navegador (anónimo → cuenta → offline → admin publica → acople)
+    version: v2.2.0
+    area: lanzamiento
+    depende_de: [T-018, T-020]
+    aceptacion:
+      - "Recorrido de la sección 2.3 de la bitácora del 2/10 con capturas en 390 px y 1280 px"
+  - id: T-030
+    titulo: Revisión de seguridad e integridad (permisos, tokens, XSS en contenido, fusión y sincronización)
+    version: v2.2.0
+    area: api
+    aceptacion:
+      - "Hallazgos registrados en docs/incidencias/ y corregidos o con decisión escrita"
+  - id: T-031
+    titulo: Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)
+    version: v2.2.0
+    area: repo
+    aceptacion:
+      - "Los documentos pendientes de docs/README.md existen y están enlazados (incluida docs/despliegue/2026-10-02_despliegue_oci.txt)"
+  - id: T-032
+    titulo: Configurar SMTP y primer admin en el servidor (confirmación y recuperación por correo)
+    version: v2.2.0
+    area: api
+    depende_de: [T-003]
+    aceptacion:
+      - "Registro con AMATISTA_REQUIERE_CONFIRMACION=1 recibe el código por correo"
+  - id: T-033
+    titulo: Importar el catálogo a Oracle (herramientas/contenido.py importar)
+    version: v2.2.0
+    area: contenido
+    depende_de: [T-002]
+    aceptacion:
+      - "GET /api/contenido/catalogo en producción devuelve los 2 módulos publicados"
