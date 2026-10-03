@@ -353,15 +353,16 @@ docs/propuestas/2026-09-27_motor_generativo_3d.txt
 
 - **[PROYECTO.md](PROYECTO.md)**: centro de dirección (qué sigue, por qué y dónde está cada cosa).
 - **[KANBAN.md](KANBAN.md)**: roadmap de las próximas versiones y tablero Kanban que se actualiza solo con los commits ([cómo se usa](tablero/README.md)).
-- **[CHANGELOG.md](CHANGELOG.md)**: qué trajo cada versión. Fases: `v0.1.0` prototipo · `v1.0.0` integración · `v2.0.0` plataforma educativa · `v2.2.0-alpha.*` plataforma unificada (en curso).
+- **[CHANGELOG.md](CHANGELOG.md)**: qué trajo cada versión. Fases: `v0.1.0` prototipo · `v1.0.0` integración · `v2.0.0` plataforma educativa · `v2.2.0-alpha.*` plataforma unificada · `v3.0.0-alpha.*` **reestructuración** (en curso).
+- **[Reestructuración v3](docs/reestructuracion/README.md)**: plan maestro, modelo de contenido por niveles, manual de Oracle y guía del add-on de Blender.
 - Tags: `bash herramientas/crear-tags.sh` (ver `docs/guias/2026-10-01_versiones-y-tablero.txt`).
-- Último cierre y plan para continuar: [`docs/bitacora/2026-10-02_cierre_del_dia.txt`](docs/bitacora/2026-10-02_cierre_del_dia.txt).
+- Estado y plan más recientes: [`docs/bitacora/2026-10-03_estado_y_reestructuracion.md`](docs/bitacora/2026-10-03_estado_y_reestructuracion.md).
 
 ---
 
 ## 🚧 Estado actual
 
-Al 2 de octubre de 2026 la **plataforma unificada (v2.2.0)** tiene el código casi completo y en verde (206 pruebas del backend, 135 del frontend y CI en GitHub). Lo que falta para el piloto del 8 de octubre es ponerla en marcha en el servidor. El estado de cada tarea vive en [KANBAN.md](KANBAN.md).
+Al 3 de octubre de 2026 la **plataforma unificada (v2.2)** está en `main` y en producción con Oracle (002 y 003 aplicados). Empieza la etapa **v3 «Reestructuración»**: curso por niveles, versiones de Blender verificadas, habilidades y un add-on de Blender conectado ([plan](docs/reestructuracion/00_plan_maestro.md)). El piloto del 8 de octubre sigue con la v2.2. El estado de cada tarea vive en [KANBAN.md](KANBAN.md).
 
 ### Implementado
 
@@ -375,14 +376,15 @@ Al 2 de octubre de 2026 la **plataforma unificada (v2.2.0)** tiene el código ca
 - [x] API FastAPI: auth, progreso, eventos, contenido administrable y administración.
 - [x] Esquema Oracle incremental para 20 GB (002–004) y diagnóstico.
 - [x] CI en GitHub Actions y tablero Kanban automático.
+- [x] Base de la v3: niveles, habilidades, rúbrica y versiones de Blender en Oracle (005), herramientas de autor (006), API de niveles y Blender, CLI `nueva-leccion` y `mapa`.
 
 ### Pendiente
 
-- [ ] Fusionar el PR #9 (correcciones de Oracle) y ejecutar el SQL en la VM.
-- [ ] Backend como servicio con HTTPS, SMTP y catálogo importado en Oracle.
+- [ ] Ejecutar 005 y 006 en Oracle y sembrar los niveles (T-035).
+- [ ] Backend como servicio con HTTPS y SMTP.
 - [ ] Prueba de punta a punta y revisión de seguridad.
 - [ ] Frontend publicado en Cloudflare Pages; piloto (8/10) y beta (15/10).
-- [ ] Módulos 2 a 4, visor GLB, Tutor IA y experiencias WebXR completas.
+- [ ] Contenido por niveles («Mi primer espacio 3D»), visor GLB, add-on de Blender y tutor IA (roadmap v3.1–v3.4).
 
 ---
 
@@ -515,12 +517,13 @@ El índice completo está en **[docs/README.md](docs/README.md)**:
 - `docs/bitacora/`: avance de cada sesión y plan siguiente;
 - `docs/incidencias/`: fallas resueltas, con su [registro](docs/incidencias/README.md);
 - `docs/planeacion/`: plan de lanzamiento;
-- `docs/propuestas/`: Amatista 3D Lab y motor generativo 3D;
+- `docs/reestructuracion/`: etapa v3 (plan, modelo de contenido, manual de Oracle, add-on de Blender);
+- `docs/propuestas/`: Amatista 3D Lab, motor generativo 3D y propuesta de contenido por niveles;
 - `docs/guias/`: convención de commits, versiones y tablero.
 
 Todos los archivos dentro de `docs/` se nombran con su fecha de creación al inicio: `AAAA-MM-DD_tema.txt`. Así se ordenan solos por fecha dentro de cada carpeta.
 
-El historial de versiones está en `CHANGELOG.md`. Cada versión se marca con un tag de Git (`v1.0.0`, `v2.0.1`, `v2.2.0-alpha.1`, ...).
+El historial de versiones está en `CHANGELOG.md`. Cada versión se marca con un tag de Git (`v1.0.0`, `v2.0.1`, `v2.2.0-alpha.1`, `v3.0.0-alpha.1`, ...).
 
 ---
 

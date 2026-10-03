@@ -205,6 +205,18 @@ def generar(datos, estado, actividad, publicadas, principal, modulos=()):
         "",
         f"Último commit: {ultimo} · `{principal}` en `{cabeza}`",
         "",
+    ]
+    etapa_actual = datos.get("etapa")
+    if etapa_actual:
+        linea = f"**Etapa: {etapa_actual['nombre']}**"
+        if etapa_actual.get("desde"):
+            linea += f" (desde el {etapa_actual['desde']})"
+        if etapa_actual.get("plan"):
+            linea += f" · [plan]({etapa_actual['plan']})"
+        if etapa_actual.get("historico"):
+            linea += f" · [tablero anterior]({etapa_actual['historico']})"
+        lineas += [linea, ""]
+    lineas += [
         "## 🗺️ Roadmap",
         "",
         "| Versión | Meta | Objetivo | Avance |",
@@ -257,6 +269,7 @@ def main():
     principal = principales[0]
     en_main = set(git("rev-list", *principales).split())
     estado, actividad, desconocidas = calcular_estados(datos["tareas"], leer_commits(), en_main)
+    desconocidas -= set((datos.get("etapa") or {}).get("archivadas", []))
     publicadas = git("tag", "-l", "v*", "--sort=-v:refname").split()
 
     modulos = leer_modulos()

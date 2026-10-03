@@ -18,10 +18,20 @@ def test_tareas_yml_es_valido():
     datos = yaml.safe_load(actualizar.TAREAS.read_text(encoding="utf-8"))
     versiones = {etapa["version"] for etapa in datos["roadmap"]}
     ids = [t["id"] for t in datos["tareas"]]
+    archivadas = set((datos.get("etapa") or {}).get("archivadas", []))
     assert len(ids) == len(set(ids))
+    assert not archivadas & set(ids)
     for tarea in datos["tareas"]:
         assert tarea["version"] in versiones, tarea["id"]
-        assert set(tarea.get("depende_de", [])) <= set(ids), tarea["id"]
+        assert set(tarea.get("depende_de", [])) <= set(ids) | archivadas, tarea["id"]
+
+
+def test_historico_del_tablero_existe():
+    datos = yaml.safe_load(actualizar.TAREAS.read_text(encoding="utf-8"))
+    etapa = datos.get("etapa") or {}
+    for clave in ("plan", "historico"):
+        if etapa.get(clave):
+            assert (actualizar.RAIZ / etapa[clave]).exists(), etapa[clave]
 
 
 def test_estados_por_commits():

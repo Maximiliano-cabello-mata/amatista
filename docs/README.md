@@ -4,15 +4,27 @@ Todos los documentos llevan su fecha de creación al inicio del nombre (`AAAA-MM
 así se ordenan solos dentro de cada carpeta. Los reportes fechados son historia: cuando cambia una
 decisión se escribe un documento nuevo o se actualiza el de arquitectura correspondiente.
 
+**Etapa vigente: v3 «Reestructuración».** Empieza por [`reestructuracion/`](reestructuracion/README.md): plan maestro, modelo de
+contenido por niveles, manual de Oracle y guía del add-on de Blender.
+
 | Carpeta | Qué contiene | Empieza por |
 |---|---|---|
+| [`reestructuracion/`](reestructuracion/) | La etapa v3: niveles, versiones de Blender, habilidades, herramientas de autor y add-on | [Plan maestro](reestructuracion/00_plan_maestro.md) |
 | [`arquitectura/`](arquitectura/) | Decisiones técnicas vigentes: arquitectura, base de datos, formato de lecciones, la Fórmula, contrato técnico | [Contrato técnico v2.2](arquitectura/2026-10-02_contrato_tecnico_plataforma.md) |
-| [`bitacora/`](bitacora/) | Qué pasó en cada sesión de trabajo y qué sigue | [Cierre del 2 de octubre](bitacora/2026-10-02_cierre_del_dia.txt) |
+| [`bitacora/`](bitacora/) | Qué pasó en cada sesión de trabajo y qué sigue | [3 de octubre: estado y reestructuración](bitacora/2026-10-03_estado_y_reestructuracion.md) |
 | [`incidencias/`](incidencias/) | Fallas diagnosticadas, su causa y su solución | [Registro de incidencias](incidencias/README.md) |
 | [`planeacion/`](planeacion/) | Planes de lanzamiento y fechas | [Plan de lanzamiento](planeacion/2026-10-01_plan_lanzamiento.txt) |
-| [`propuestas/`](propuestas/) | Ampliaciones futuras (3D Lab, motor generativo) | [Amatista 3D Lab](propuestas/2026-09-27_amatista_3d_lab.txt) |
+| [`propuestas/`](propuestas/) | Propuestas y ampliaciones (contenido por niveles, 3D Lab, motor generativo) | [Propuesta de contenido y ruta de Blender](propuestas/2026-10-03_propuesta_contenido_blender.txt) |
 | [`guias/`](guias/) | Cómo se trabaja en el repo: commits, versiones y tablero | [Convención de commits](guias/2026-09-27_convencion_commits.txt) |
-| `despliegue/` | Guías para dejar el servidor listo (llega con el PR #9; falta la guía de OCI, T-031) | `2026-10-02_oracle_paso_a_paso.md` |
+| [`despliegue/`](despliegue/) | Guías para dejar el servidor listo (falta la guía de OCI, T-031) | [Oracle paso a paso (v2.2)](despliegue/2026-10-02_oracle_paso_a_paso.md); para la v3, el [manual de Oracle](reestructuracion/02_manual_oracle.md) |
+
+## Reestructuración (v3, vigente)
+
+- [Plan maestro](reestructuracion/00_plan_maestro.md)
+- [Modelo de contenido](reestructuracion/01_modelo_de_contenido.md)
+- [Manual de Oracle](reestructuracion/02_manual_oracle.md)
+- [Add-on de Blender](reestructuracion/03_addon_blender.md)
+- [Propuesta de contenido (fuente)](propuestas/2026-10-03_propuesta_contenido_blender.txt)
 
 ## Arquitectura
 
@@ -34,10 +46,11 @@ Mientras tanto: `backend/sql/LEEME.txt`, el encabezado de `backend/sql/002_*.sql
 - [Investigación y desarrollo](bitacora/2026-09-27_investigacion_desarrollo.txt) · [Reporte App Shell](bitacora/2026-09-27_reporte_app_shell.txt) · [Resumen inicial](bitacora/2026-09-27_resumen.txt)
 - [Lecciones y progreso](bitacora/2026-09-29_lecciones-y-progreso.txt)
 - [Estado de la plataforma unificada](bitacora/2026-10-02_estado_plataforma_unificada.txt)
-- [Cierre del 2 de octubre](bitacora/2026-10-02_cierre_del_dia.txt)
+- [Cierre del 2 de octubre](bitacora/2026-10-02_cierre_del_dia.txt) · [Ramas y cronología](bitacora/2026-10-02_ramas_y_cronologia.txt)
+- [3 de octubre: todo lo realizado y arranque de la reestructuración](bitacora/2026-10-03_estado_y_reestructuracion.md)
 
 ## Guías del repositorio
 
 - [Convención de commits](guias/2026-09-27_convencion_commits.txt)
 - [Versiones (tags) y tablero Kanban](guias/2026-10-01_versiones-y-tablero.txt)
-- [Cómo se usa el tablero](../tablero/README.md)
+- [Cómo se usa el tablero](../tablero/README.md) · [Tableros archivados](../tablero/historico/)

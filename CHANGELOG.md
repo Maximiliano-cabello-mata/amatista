@@ -18,6 +18,17 @@ Los tags están publicados y firmados con SSH; se crearon con `bash herramientas
 ## [Sin publicar]
 
 ### Agregado
+- **Reestructuración (v3.0.0, en curso; primer tag `v3.0.0-alpha.1`):** el curso se organiza por niveles.
+  Oracle `005` (aditivo, conserva usuarios y progreso): tablas `NIVELES`, `HABILIDADES`,
+  `HABILIDADES_ALUMNO`, `EVALUACIONES_RUBRICA`, `VERSIONES_BLENDER`, `VERIFICACIONES_BLENDER` y
+  `MODULOS.NIVEL_ID`. Oracle `006`: vistas `V_AMATISTA_MAPA`, `V_AMATISTA_FICHAS_INCOMPLETAS`,
+  `V_AMATISTA_COMPATIBILIDAD` y paquete `AMATISTA_AUTOR` para crear niveles y lecciones desde Database
+  Actions. API `/api/contenido/niveles`, `/api/contenido/mapa/{curso}` y `/api/blender/*`; el catálogo
+  incluye los niveles publicados. Ficha opcional de lección validada; CLI `sembrar-niveles`, `mapa` y
+  `nueva-leccion` (estructura de 10 pasos). Documentación en `docs/reestructuracion/` (plan maestro,
+  modelo de contenido, manual de Oracle, guía del add-on de Blender) y bitácora del 3 de octubre.
+- Tablero de la etapa v3 (roadmap v2.2.0 piloto → v3.4.0) con el de la v2 archivado en `tablero/historico/`;
+  el generador muestra la etapa y su histórico.
 - **Plataforma unificada (v2.2.0, en curso):** cuentas con roles (alumno, profesor, admin), fusión del
   progreso offline con la cuenta, esquema Oracle incremental para 20 GB (`backend/sql/002`–`004`),
   contenido administrable por API y CLI, progreso que se adapta al contenido nuevo, 7 bloques
@@ -34,6 +45,7 @@ Los tags están publicados y firmados con SSH; se crearon con `bash herramientas
   SMTP e importación del catálogo a Oracle.
 
 ### Cambiado
+- `INCIDENCIAS.txt` de la raíz pasa a `docs/incidencias/` (INC-010); INC-005 y INC-006 quedan resueltas.
 - La convención de commits y la guía de versiones y tablero pasan a `docs/guias/`.
 - README, `backend/README.md` (rutas nuevas, despliegue con `despliegue/`) y `frontend/README.md` (estructura,
   rutas y pruebas) actualizados al estado de la v2.2.

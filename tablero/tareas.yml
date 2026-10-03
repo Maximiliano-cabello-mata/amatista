@@ -10,78 +10,68 @@
 #
 # Campos opcionales (no cambian el estado; se leen aquí): resultado,
 # depende_de, aceptacion, evidencia y bloqueo (ver tablero/README.md).
+#
+# Tablero de la etapa v3 «Reestructuración» (desde el 3 de octubre de 2026).
+# El tablero de la v2 quedó tal cual en tablero/historico/. Plan completo:
+# docs/reestructuracion/00_plan_maestro.md
 # =============================================================================
 
+etapa:
+  nombre: Reestructuración
+  desde: "2026-10-03"
+  plan: docs/reestructuracion/00_plan_maestro.md
+  historico: tablero/historico/2026-10-03_v2_KANBAN.md
+  # Tareas cerradas en la v2 (están en el histórico). Se listan para que los
+  # commits viejos que las mencionan no aparezcan como «tareas desconocidas».
+  archivadas: [T-001, T-007, T-018, T-020]
+
 roadmap:
-  - version: v2.1.0
-    nombre: Oracle en producción
-    objetivo: El progreso de los alumnos se guarda en Oracle desde el servidor.
   - version: v2.2.0
-    nombre: Plataforma unificada
-    objetivo: Cuentas con roles, panel del alumno, panel de administración, contenido administrable, lecciones interactivas y lanzamiento de la beta.
-  - version: v2.3.0
-    nombre: Módulo 2
-    objetivo: Segundo módulo de Blender y de A-Frame.
+    nombre: Piloto
+    objetivo: Cerrar la v2.2 y abrir el piloto del 8 de octubre sin ampliar el alcance (servicio, HTTPS, SMTP, pruebas y seguridad).
   - version: v3.0.0
-    nombre: Amatista 3D Lab
-    objetivo: Modelos GLB, tutor IA y puente con Blender (ver docs/propuestas).
+    nombre: Reestructuración
+    objetivo: Niveles, habilidades, versiones de Blender y herramientas de autor en Oracle; documentación y tablero nuevos.
+  - version: v3.1.0
+    nombre: Mi primer espacio 3D
+    objetivo: Primera entrega de contenido por niveles (lecciones 01–11 de la propuesta) con fichas, rúbrica y versión verificada.
+  - version: v3.2.0
+    nombre: Laboratorio 3D
+    objetivo: Visor GLB en las lecciones, escena de ejemplo y lección 12 (exportar y comprobar).
+  - version: v3.3.0
+    nombre: Add-on de Blender
+    objetivo: Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones).
+  - version: v3.4.0
+    nombre: Especialidades y tutor
+    objetivo: Primera rama del nivel 5 y tutor IA dentro de las lecciones.
 
 tareas:
-  - id: T-001
-    titulo: Publicar los tags de versión (herramientas/crear-tags.sh)
-    version: v2.1.0
-    area: repo
+  # --- v2.2.0 · Piloto: lo que quedó abierto de la v2 (mismos ids) ----------
   - id: T-002
     titulo: Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico
-    version: v2.1.0
+    version: v2.2.0
     area: db
-    bloqueo: "Fusionar antes el PR #9 (002 corregida); luego seguir docs/despliegue/2026-10-02_oracle_paso_a_paso.md en la VM"
+    evidencia: "002 y 003 ejecutados en la VM el 2 de octubre (docs/incidencias/2026-10-02_despliegue-sql-v2.2-en-produccion.txt, INC-010)"
   - id: T-003
     titulo: Desplegar el backend nuevo como servicio systemd
-    version: v2.1.0
+    version: v2.2.0
     area: api
   - id: T-004
     titulo: Usuario de aplicación en Oracle (dejar de usar ADMIN)
-    version: v2.1.0
+    version: v2.2.0
     area: db
   - id: T-005
     titulo: HTTPS en el backend para publicar en Cloudflare Pages
-    version: v2.1.0
+    version: v2.2.0
     area: api
   - id: T-006
     titulo: Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)
     version: v2.2.0
     area: api
-  - id: T-007
-    titulo: CI en GitHub Actions (lint, build y pytest)
-    version: v2.2.0
-    area: repo
   - id: T-008
     titulo: Proteger main (solo cambios por PR)
     version: v2.2.0
     area: repo
-  - id: T-009
-    titulo: Módulo 2 de Blender (interfaz y navegación)
-    version: v2.3.0
-    area: pwa
-  - id: T-010
-    titulo: Módulo 2 de A-Frame (cargar modelos GLB)
-    version: v2.3.0
-    area: pwa
-  - id: T-011
-    titulo: Visor de modelos GLB en las lecciones
-    version: v3.0.0
-    area: pwa
-  - id: T-012
-    titulo: Tutor IA con Ollama dentro de las lecciones
-    version: v3.0.0
-    area: ia
-  - id: T-013
-    titulo: Add-on de Blender conectado con la plataforma
-    version: v3.0.0
-    area: pwa
-
-  # --- v2.2.0 · Plataforma unificada ----------------------------------------
   - id: T-014
     titulo: Esquema incremental 002–004 (8 tablas, 20 GB) y diagnóstico ampliado
     version: v2.2.0
@@ -98,20 +88,10 @@ tareas:
     titulo: Eventos de aprendizaje y métricas de alumnos activos (API)
     version: v2.2.0
     area: api
-  - id: T-018
-    titulo: Panel de administración en la PWA (resumen, métricas y usuarios)
-    version: v2.2.0
-    area: pwa
-    depende_de: [T-017]
   - id: T-019
     titulo: Contenido administrable (API borrador → publicado, validación y CLI)
     version: v2.2.0
     area: contenido
-  - id: T-020
-    titulo: Gestor de contenido en el panel de administración (editor de lecciones)
-    version: v2.2.0
-    area: pwa
-    depende_de: [T-019]
   - id: T-021
     titulo: Bloques interactivos en las lecciones (7 tipos nuevos)
     version: v2.2.0
@@ -166,8 +146,6 @@ tareas:
     version: v2.2.0
     area: lanzamiento
     depende_de: [T-027]
-
-  # --- Cierre del 2 de octubre: lo que falta para el piloto ------------------
   - id: T-029
     titulo: Prueba de punta a punta en navegador (anónimo → cuenta → offline → admin publica → acople)
     version: v2.2.0
@@ -201,3 +179,150 @@ tareas:
     depende_de: [T-002]
     aceptacion:
       - "GET /api/contenido/catalogo en producción devuelve los 2 módulos publicados"
+
+  # --- v3.0.0 · Reestructuración (fase A y B del plan) ----------------------
+  - id: T-034
+    titulo: Estructura de niveles, habilidades y versiones de Blender en código y esquema (005)
+    version: v3.0.0
+    area: db
+    aceptacion:
+      - "Pruebas en CI; 005 probado en Oracle sin perder filas de la v2.2"
+  - id: T-035
+    titulo: Ejecutar 005 y 006 en producción y sembrar los niveles
+    version: v3.0.0
+    area: db
+    depende_de: [T-034, T-036]
+    aceptacion:
+      - "diagnostico_oracle.py dice «Las tablas coinciden» (14 tablas)"
+      - "importar crea los 8 niveles de Blender (docs/reestructuracion/02_manual_oracle.md)"
+  - id: T-036
+    titulo: Herramientas de autor en Oracle (006, vistas y paquete AMATISTA_AUTOR)
+    version: v3.0.0
+    area: db
+    aceptacion:
+      - "Paquete VALID en Oracle; nueva_leccion crea los mismos 10 pasos que la CLI"
+  - id: T-037
+    titulo: Documentación de la reestructuración, bitácora y tablero nuevo
+    version: v3.0.0
+    area: repo
+  - id: T-038
+    titulo: Elegir y verificar la versión principal de Blender (LTS)
+    version: v3.0.0
+    area: contenido
+    depende_de: [T-035]
+    aceptacion:
+      - "Una fila principal en VERSIONES_BLENDER con nota del soporte oficial consultado"
+  - id: T-039
+    titulo: Inventario de lecciones existentes → niveles y fichas
+    version: v3.0.0
+    area: contenido
+    depende_de: [T-035]
+    aceptacion:
+      - "Cada módulo con nivel; contenido.py mapa al 100 % en lo publicado"
+  - id: T-040
+    titulo: Lección modelo completa (10 pasos, recursos, rúbrica y verificación)
+    version: v3.0.0
+    area: contenido
+    depende_de: [T-038]
+  - id: T-041
+    titulo: Mapa de niveles en la PWA y «Verificada en…» en cada lección
+    version: v3.0.0
+    area: pwa
+    depende_de: [T-035]
+  - id: T-042
+    titulo: Habilidades y rúbrica en la API y en el panel del alumno
+    version: v3.0.0
+    area: api
+    aceptacion:
+      - "El alumno ve avance, experiencia y habilidades por separado"
+  - id: T-043
+    titulo: Diagnóstico opcional de entrada que recomienda un nivel
+    version: v3.0.0
+    area: pwa
+    depende_de: [T-041]
+  - id: T-044
+    titulo: Editor del panel con ficha de lección y nivel del módulo
+    version: v3.0.0
+    area: pwa
+    aceptacion:
+      - "El admin llena la ficha y asigna nivel sin tocar JSON"
+
+  # --- v3.1.0 · Mi primer espacio 3D (sección 10 de la propuesta) ------------
+  - id: T-009
+    titulo: "Mi primer espacio 3D: lecciones 01–03 (entorno, navegar, seleccionar y transformar)"
+    version: v3.1.0
+    area: contenido
+    depende_de: [T-040]
+  - id: T-045
+    titulo: "Mi primer espacio 3D: lecciones 04–05 (base de la habitación, guardar y recuperar)"
+    version: v3.1.0
+    area: contenido
+    depende_de: [T-009]
+  - id: T-046
+    titulo: "Mi primer espacio 3D: lecciones 06–07 (mesa y primera edición de malla)"
+    version: v3.1.0
+    area: contenido
+    depende_de: [T-045]
+  - id: T-047
+    titulo: "Mi primer espacio 3D: lecciones 08–09 (lámpara, colores, cámara e iluminación)"
+    version: v3.1.0
+    area: contenido
+    depende_de: [T-046]
+  - id: T-048
+    titulo: "Mi primer espacio 3D: lecciones 10–11 (error preparado, variante y rúbrica)"
+    version: v3.1.0
+    area: contenido
+    depende_de: [T-047, T-042]
+    aceptacion:
+      - "Condiciones de la sección 10 de la propuesta, observadas con una persona principiante y otra con experiencia básica"
+
+  # --- v3.2.0 · Laboratorio 3D ------------------------------------------------
+  - id: T-010
+    titulo: Módulo 2 de A-Frame (cargar modelos GLB)
+    version: v3.2.0
+    area: pwa
+  - id: T-011
+    titulo: Visor de modelos GLB en las lecciones
+    version: v3.2.0
+    area: pwa
+  - id: T-049
+    titulo: Laboratorio mínimo (escena de ejemplo, reinicio, avisos de recurso faltante) y lección 12
+    version: v3.2.0
+    area: pwa
+    depende_de: [T-011]
+
+  # --- v3.3.0 · Add-on de Blender (docs/reestructuracion/03_addon_blender.md) -
+  - id: T-050
+    titulo: Contrato de API del add-on y vinculación de cuenta por código
+    version: v3.3.0
+    area: api
+  - id: T-051
+    titulo: Esqueleto del add-on (manifiesto 4.2+, preferencias, panel de la lección)
+    version: v3.3.0
+    area: blender
+    depende_de: [T-050]
+  - id: T-052
+    titulo: Comprobaciones locales de la lección 03 en el add-on
+    version: v3.3.0
+    area: blender
+    depende_de: [T-051]
+  - id: T-053
+    titulo: Registrar verificaciones de versión desde Blender
+    version: v3.3.0
+    area: blender
+    depende_de: [T-051]
+  - id: T-013
+    titulo: Add-on de Blender conectado con la plataforma (MVP publicado)
+    version: v3.3.0
+    area: blender
+    depende_de: [T-052, T-053]
+
+  # --- v3.4.0 · Especialidades y tutor ---------------------------------------
+  - id: T-054
+    titulo: Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)
+    version: v3.4.0
+    area: contenido
+  - id: T-012
+    titulo: Tutor IA con Ollama dentro de las lecciones
+    version: v3.4.0
+    area: ia
