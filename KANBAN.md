@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-03 22:20 · `main` en `d004071`
+Último commit: 2026-10-04 06:20 · `main` en `c730c0e`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -113,7 +113,7 @@ Versiones publicadas (tags): `v2.2.0-alpha.1` · `v2.0.1` · `v2.0.0` · `v1.0.0
   - 🎯 Listo cuando: Recorrido de la sección 2.3 de la bitácora del 2/10 con capturas en 390 px y 1280 px
 - [ ] **T-030** Revisión de seguridad e integridad (permisos, tokens, XSS en contenido, fusión y sincronización) · _pendiente_
   - 🎯 Listo cuando: Hallazgos registrados en docs/incidencias/ y corregidos o con decisión escrita
-- [ ] **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue) · _en-progreso_ — commits: `c01f296` (2026-10-02), `54edda8` (2026-10-02)
+- [ ] **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue) · _en-progreso_ — commits: `c01f296` (2026-10-02), `54edda8` (2026-10-02), `ffe3543` (2026-10-04)
   - 🎯 Listo cuando: Los documentos pendientes de docs/README.md existen y están enlazados (incluida docs/despliegue/2026-10-02_despliegue_oci.txt)
 - [ ] **T-032** Configurar SMTP y primer admin en el servidor (confirmación y recuperación por correo) · _pendiente_
   - 🎯 Listo cuando: Registro con AMATISTA_REQUIERE_CONFIRMACION=1 recibe el código por correo
