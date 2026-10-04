@@ -3,37 +3,86 @@
 // servidor puede agregar o actualizar módulos (ver catalogo/combinar.js).
 //
 // Forma de un curso: {id, numero, titulo, subtitulo, descripcion, estado, nivel,
-// acento, recurso, modulos: [{id, numero, titulo, insignia, contenido}]}.
+// acento, ruta, recurso, modulos: [{id, numero, titulo, insignia, contenido}]}.
 // `contenido` es el `module` del JSON (lecciones incluidas) o null si el módulo
 // aún no se publica ("Próximamente").
 
 // Datos de cada curso y títulos de sus módulos por número. Un JSON publicado
 // con ese número (`order`) reemplaza al marcador "Próximamente".
 const CURSOS_BASE = [
+  // Ruta de Blender (motor v3, practices/blender/cursos.json): cuatro cursos por
+  // dificultad. Hoy se publican Principiante y Principiante-Intermedio; cada
+  // módulo cierra con una práctica guiada dentro de Blender. El curso «blender»
+  // de la v2 quedó archivado (data/modulos/archivo/): el progreso se conserva.
   {
-    id: 'blender',
+    id: 'blender_principiante',
     numero: '01',
-    titulo: 'Blender',
-    subtitulo: 'Modelado 3D low poly',
+    titulo: 'Blender Principiante',
+    subtitulo: 'Desde cero: tu primer contacto con el 3D',
     descripcion:
-      'Descubre el mundo 3D, modela objetos low poly, dales color y expórtalos en formato GLB listos para la web.',
+      'Para quien nunca abrió Blender: te mueves en el espacio 3D, modelas tu primera malla y usas modificadores. Practicas dentro de Blender con Amatista a tu lado.',
     estado: 'disponible',
     nivel: 'Principiante',
     acento: 'blender',
+    ruta: 'blender',
     recurso: {
       texto: 'Descarga Blender gratis',
       url: 'https://www.blender.org/download/',
     },
     modulos: [
-      { titulo: 'El mundo 3D y Blender', insignia: 'Explorador 3D' },
-      { titulo: 'Interfaz y navegación' },
-      { titulo: 'Modelado low poly' },
-      { titulo: 'Materiales y exportación GLB' },
+      { titulo: 'La interfaz y navegación 3D', insignia: 'Maquinista 3D' },
+      { titulo: 'Modelado poligonal básico', insignia: 'Forjador low-poly' },
+      { titulo: 'Modificadores', insignia: 'Ingeniero de naves' },
     ],
   },
   {
-    id: 'aframe',
+    id: 'blender_principiante_intermedio',
     numero: '02',
+    titulo: 'Blender Principiante-Intermedio',
+    subtitulo: 'Materiales, luz, render y animación',
+    descripcion:
+      'Ya sabes moverte y modelar: ahora pintas tu nave, la iluminas como un fotógrafo, sacas tu primer render y animas una pelota que rebota.',
+    estado: 'disponible',
+    nivel: 'Principiante-Intermedio',
+    acento: 'blender',
+    ruta: 'blender',
+    recurso: {
+      texto: 'Descarga Blender gratis',
+      url: 'https://www.blender.org/download/',
+    },
+    modulos: [
+      { titulo: 'Materiales y sombreado', insignia: 'Pintor de naves' },
+      { titulo: 'Iluminación y cámara', insignia: 'Director de foto' },
+      { titulo: 'Animación básica', insignia: 'Animador' },
+    ],
+  },
+  {
+    id: 'blender_intermedio',
+    numero: '03',
+    titulo: 'Blender Intermedio',
+    subtitulo: 'Próximamente',
+    descripcion: 'Proyectos completos con un flujo profesional. Llega después del piloto.',
+    estado: 'bloqueado',
+    nivel: 'Intermedio',
+    acento: 'blender',
+    ruta: 'blender',
+    modulos: [{ titulo: 'Próximamente' }],
+  },
+  {
+    id: 'blender_avanzado',
+    numero: '04',
+    titulo: 'Blender Avanzado',
+    subtitulo: 'Próximamente',
+    descripcion: 'Ramas para web y videojuegos, animación, producto y procedimientos.',
+    estado: 'bloqueado',
+    nivel: 'Avanzado',
+    acento: 'blender',
+    ruta: 'blender',
+    modulos: [{ titulo: 'Próximamente' }],
+  },
+  {
+    id: 'aframe',
+    numero: '05',
     titulo: 'A-Frame',
     subtitulo: 'Mundos WebXR en el navegador',
     descripcion:
@@ -60,10 +109,12 @@ export function cursoDelModulo(modulo, ruta = '', idsCursos = CURSOS_BASE.map((c
   if (modulo.curso) return modulo.curso;
   const pistas = [modulo.courseId ?? '', ruta.split('/').pop() ?? ''];
   for (const pista of pistas) {
-    const encontrado = idsCursos.find((id) => new RegExp(`(^|[_-])${id}([_-]|$)`, 'i').test(pista));
+    // El id más largo primero: «blender_principiante_intermedio» antes que «blender_principiante».
+    const porLargo = [...idsCursos].sort((a, b) => b.length - a.length);
+    const encontrado = porLargo.find((id) => new RegExp(`(^|[_-])${id}([_-]|$)`, 'i').test(pista));
     if (encontrado) return encontrado;
   }
-  const archivo = /^([a-z0-9]+)-modulo-\d+\.json$/i.exec(ruta.split('/').pop() ?? '');
+  const archivo = /^([a-z0-9_]+)-modulo-\d+\.json$/i.exec(ruta.split('/').pop() ?? '');
   return archivo ? archivo[1].toLowerCase() : null;
 }
 

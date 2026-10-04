@@ -56,18 +56,23 @@ describe('armarCatalogo (data/cursos.js)', () => {
 
   it('cursoDelModulo usa curso, courseId o el nombre del archivo', () => {
     expect(cursoDelModulo({ curso: 'aframe' })).toBe('aframe');
-    expect(cursoDelModulo({ courseId: 'crs_blender_fundamentos' })).toBe('blender');
+    expect(cursoDelModulo({ courseId: 'crs_blender_fundamentos' }, '', ['blender', 'aframe'])).toBe('blender');
     expect(cursoDelModulo({}, './modulos/aframe-modulo-3.json')).toBe('aframe');
+    expect(cursoDelModulo({}, './modulos/blender_principiante_intermedio-modulo-2.json')).toBe(
+      'blender_principiante_intermedio',
+    );
   });
 
-  it('el catálogo empaquetado tiene los módulos 1 publicados con sus insignias', () => {
-    const blender = cursos.find((c) => c.id === 'blender');
-    expect(blender.modulos[0].contenido).toBeTruthy();
-    expect(blender.modulos[0].insignia).toBe('Explorador 3D');
-    expect(blender.modulos[1].id).toBe('blender-m2');
-    expect(leccionesDelCurso(blender).length).toBeGreaterThan(0);
-    expect(buscarInsignia(cursos, `blender:${blender.modulos[0].id}`).nombre).toBe('Explorador 3D');
-    expect(buscarInsignia(cursos, 'blender:no-existe')).toBeNull();
+  it('el catálogo empaquetado tiene los cursos de Blender del motor v3 con sus insignias', () => {
+    const blender = cursos.find((c) => c.id === 'blender_principiante');
+    expect(blender.modulos.map((m) => m.id)).toEqual(['mod_bp_001', 'mod_bp_002', 'mod_bp_003']);
+    expect(blender.modulos[0].insignia).toBe('Maquinista 3D');
+    expect(leccionesDelCurso(blender).length).toBe(12);
+    expect(buscarInsignia(cursos, `blender_principiante:${blender.modulos[0].id}`).nombre).toBe('Maquinista 3D');
+    expect(buscarInsignia(cursos, 'blender_principiante:no-existe')).toBeNull();
+    expect(cursos.find((c) => c.id === 'blender_principiante_intermedio').modulos.every((m) => m.contenido)).toBe(true);
+    expect(cursos.find((c) => c.id === 'blender_avanzado').estado).toBe('bloqueado');
+    expect(cursos.find((c) => c.id === 'blender')).toBeUndefined(); // curso v2 archivado
   });
 
   it('buscarLeccion encuentra la lección que reemplaza a un id viejo', () => {

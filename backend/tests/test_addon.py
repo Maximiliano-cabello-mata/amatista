@@ -339,17 +339,35 @@ def test_repositorio_de_extensiones(cliente, monkeypatch):
     assert estado["blender_minimo"] == "4.2.0" and estado["version_addon"] == motor.VERSION_ADDON
 
 
+def test_el_plan_v3_enlaza_cada_practica_con_su_leccion(cliente, crear_cuenta):
+    from api.contenido import asegurar_cursos_base, importar_modulo
+
+    _, admin = crear_cuenta(rol="admin")
+    carpeta = motor.RAIZ / "frontend" / "src" / "data" / "modulos"
+    with Session(conexion.motor()) as db:
+        asegurar_cursos_base(db)
+        for archivo in sorted(carpeta.glob("blender_*-modulo-*.json")):
+            importar_modulo(db, json.loads(archivo.read_text(encoding="utf-8")))
+        db.commit()
+    resumen = cliente.post(f"{API}/practicas/sincronizar?publicar=true", headers=admin).json()
+    assert resumen["errores"] == [] and resumen["lecciones_enlazadas"] == 6
+    with Session(conexion.motor()) as db:
+        enlaces = {p.id: (p.curso_id, p.leccion_id) for p in db.query(Practica).all()}
+    assert enlaces["blender.bp.m1.tren"] == ("blender_principiante", "bp1_practica")
+    assert enlaces["blender.bpi.m3.pelota"] == ("blender_principiante_intermedio", "bpi3_practica")
+
+
 def test_importar_el_modulo_2_enlaza_la_practica_con_su_leccion(cliente, crear_cuenta, sembrar):
     from api.contenido import importar_modulo
     from api.niveles import sembrar_niveles_blender
 
     _, admin = crear_cuenta(rol="admin")
     sembrar(cliente, admin)
-    archivo = motor.RAIZ / "frontend" / "src" / "data" / "modulos" / "blender-modulo-2.json"
+    archivo = motor.RAIZ / "frontend" / "src" / "data" / "modulos" / "archivo" / "blender-modulo-2.json"
     with Session(conexion.motor()) as db:
         sembrar_niveles_blender(db)
         resumen = importar_modulo(db, json.loads(archivo.read_text(encoding="utf-8")))
         db.commit()
-        assert resumen["estado"] == "borrador"  # «revision» en el archivo: no llega a los alumnos
+        assert resumen["estado"] == "archivado"  # curso v2 archivado en el motor v3: no llega a los alumnos
         practica = db.get(Practica, "blender.n1.mesa")
         assert (practica.curso_id, practica.leccion_id) == ("blender", "les_103")

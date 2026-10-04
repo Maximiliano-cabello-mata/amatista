@@ -162,7 +162,7 @@ describe('módulos y cursos', () => {
   });
 
   it('funciona con el catálogo empaquetado', () => {
-    for (const curso of cursos) {
+    for (const curso of cursos.filter((c) => c.estado !== 'bloqueado')) {
       const resumen = resumenCurso(progresoCon([]), curso);
       expect(resumen.total).toBeGreaterThan(0);
       expect(resumen.siguiente.indice).toBe(0);

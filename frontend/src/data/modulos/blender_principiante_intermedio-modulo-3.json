@@ -1,0 +1,343 @@
+{
+  "module": {
+    "id": "mod_bpi_003",
+    "title": "Módulo 3: Animación básica",
+    "slug": "bpi-modulo-3-animacion",
+    "description": "Agrega el tiempo: con fotogramas clave haces que una pelota caiga, se aplaste contra el suelo y vuelva a subir.",
+    "estimatedTimeMinutes": 45,
+    "order": 3,
+    "curso": "blender_principiante_intermedio",
+    "insignia": "Animador",
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "bpi3_gancho",
+        "title": "24 fotos por segundo",
+        "slug": "24-fotos-por-segundo",
+        "type": "theory_interactive",
+        "durationSeconds": 240,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Explicar qué es un fotograma y un fotograma clave.",
+          "habilidades": [
+            "bl-linea-de-tiempo",
+            "bl-fotograma-clave"
+          ],
+          "prerrequisitos": [
+            "bpi2_jefe"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Decir cuántos fotogramas hay en un segundo."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Animar es guardar momentos\nUna animación son muchas imágenes seguidas: normalmente **24 por segundo**. No dibujas todas: guardas cómo está el objeto en algunos momentos (**fotogramas clave**) y Blender rellena el resto."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_bpi3_1",
+            "question": "Guardaste la pelota arriba en el fotograma 1 y abajo en el 12. ¿Qué pasa en el 6?",
+            "options": [
+              {
+                "id": "opt_a",
+                "text": "Blender calcula una posición intermedia",
+                "isCorrect": true
+              },
+              {
+                "id": "opt_b",
+                "text": "La pelota desaparece",
+                "isCorrect": false
+              },
+              {
+                "id": "opt_c",
+                "text": "Hay que dibujarlo a mano",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "Entre dos fotogramas clave, Blender interpola los valores."
+          }
+        ]
+      },
+      {
+        "id": "bpi3_explora",
+        "title": "El rebote y el encoger y estirar",
+        "slug": "rebote-squash-stretch",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Insertar fotogramas clave de posición y escala para un rebote con squash and stretch.",
+          "habilidades": [
+            "bl-fotograma-clave",
+            "bl-rebote",
+            "bl-squash-stretch"
+          ],
+          "prerrequisitos": [
+            "bpi3_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Animar un rebote con tres claves."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "Línea de tiempo",
+                "definition": "Abajo: los números son fotogramas. Arrastra la línea azul para moverte. Espacio reproduce."
+              },
+              {
+                "term": "Fotograma clave (I)",
+                "definition": "Guarda la posición, rotación o escala en el fotograma actual. Aparece un rombo."
+              },
+              {
+                "term": "Encoger y estirar",
+                "definition": "Al chocar, la pelota se aplasta un poco: así se siente su peso."
+              }
+            ]
+          },
+          {
+            "type": "shortcuts",
+            "title": "Los atajos del módulo",
+            "practice": true,
+            "items": [
+              {
+                "keys": [
+                  "I"
+                ],
+                "action": "Insertar fotograma clave"
+              },
+              {
+                "keys": [
+                  "Espacio"
+                ],
+                "action": "Reproducir y pausar"
+              },
+              {
+                "keys": [
+                  "G",
+                  "Z"
+                ],
+                "action": "Subir o bajar la pelota"
+              },
+              {
+                "keys": [
+                  "S",
+                  "Z"
+                ],
+                "action": "Aplastarla en altura"
+              }
+            ]
+          },
+          {
+            "type": "fill_blanks",
+            "id": "huecos_bpi3",
+            "prompt": "Completa la receta del rebote.",
+            "template": "Fotograma 1: pelota arriba y pulsa [[I]]. Fotograma 12: pelota en el [[suelo|piso]] y otra clave. Fotograma 24: arriba otra vez y clave.",
+            "code": false,
+            "explanation": "Tres claves bastan para un rebote: arriba, suelo y arriba."
+          }
+        ]
+      },
+      {
+        "id": "bpi3_practica",
+        "title": "Práctica: la pelota que rebota",
+        "slug": "practica-pelota-rebota",
+        "type": "theory_interactive",
+        "durationSeconds": 1500,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Animar una pelota que cae, se aplasta al tocar el suelo y vuelve a subir.",
+          "habilidades": [
+            "bl-linea-de-tiempo",
+            "bl-fotograma-clave",
+            "bl-rebote",
+            "bl-squash-stretch"
+          ],
+          "prerrequisitos": [
+            "bpi3_explora"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3: practices/blender/principiante-intermedio/m3-pelota/practica.json."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Tres claves de altura, toca el suelo y sube, escala Z bajo 0.9 al chocar, guardada."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### El clásico de toda escuela de animación\nAmatista arma una esfera a 4 m de altura sobre un piso. Haz que caiga, se aplaste y suba. Amatista revisa que los valores en Z cambien a lo largo de la línea de tiempo."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_pelota",
+            "practica": "blender.bpi.m3.pelota",
+            "title": "Anima la pelota en Blender",
+            "text": "Pulsa **Abrir en Blender** y luego abre Blender: la práctica aparece en la pestaña Amatista (tecla N). Tres secciones te acompañan: **Aprender** (la teoría justo cuando la necesitas), **Practicar** (los pasos con «Hazlo conmigo») y **Mi curso**. Tu avance se actualiza aquí mientras trabajas.",
+            "minutes": 35,
+            "steps": [
+              "Una pelota",
+              "Tres claves de altura",
+              "Cae, toca el suelo y sube",
+              "Se aplasta al chocar",
+              "Guarda tu animación"
+            ]
+          },
+          {
+            "type": "callout",
+            "variant": "reto",
+            "title": "Reto extra",
+            "body": "Haz tres rebotes, cada uno más bajo que el anterior, y estira un poco la pelota mientras cae rápido."
+          }
+        ]
+      },
+      {
+        "id": "bpi3_jefe",
+        "title": "Jefe final: animación",
+        "slug": "jefe-final-animacion",
+        "type": "exam",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Explicar fotogramas clave e interpolación.",
+          "habilidades": [
+            "bl-fotograma-clave",
+            "bl-squash-stretch"
+          ],
+          "prerrequisitos": [
+            "bpi3_practica"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Obtener al menos 80 puntos en el examen."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "qbpi3_1",
+              "questionText": "¿Qué tecla inserta un fotograma clave?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "I",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "K",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "F12",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "I de insert.",
+              "feedbackIncorrect": "Es I."
+            },
+            {
+              "id": "qbpi3_2",
+              "questionText": "¿Cuántos fotogramas tiene un segundo normalmente?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "24",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "1",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "100",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "24 es el estándar.",
+              "feedbackIncorrect": "Normalmente 24."
+            },
+            {
+              "id": "qbpi3_3",
+              "questionText": "¿Qué hace Blender entre dos fotogramas clave?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Interpola los valores",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Nada",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Borra el objeto",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Calcula los intermedios.",
+              "feedbackIncorrect": "Interpola."
+            },
+            {
+              "id": "qbpi3_4",
+              "questionText": "¿Para qué sirve aplastar la pelota al chocar?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Para que se sienta su peso",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Para reducir el archivo",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Para cambiar el color",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Squash and stretch da peso.",
+              "feedbackIncorrect": "Le da peso e impacto."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import mesa from '../../../practices/archivo/v2/mesa.json';
-import modulo2 from '../data/modulos/blender-modulo-2.json';
+import modulo2 from '../data/modulos/archivo/blender-modulo-2.json';
 import {
   blenderCompatible,
   compararVersiones,
@@ -101,7 +101,7 @@ describe('primera práctica en el módulo 2', () => {
     expect(practica.steps).toEqual(obligatorios);
   });
 
-  it('queda en revisión: no llega a los alumnos hasta publicarlo', () => {
-    expect(modulo2.module.estado).toBe('revision');
+  it('quedó archivado con el curso v2 (motor v3): no llega a los alumnos', () => {
+    expect(modulo2.module.estado).toBe('archivado');
   });
 });

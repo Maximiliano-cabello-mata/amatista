@@ -1,0 +1,444 @@
+{
+  "module": {
+    "id": "mod_bp_001",
+    "title": "Módulo 1: La interfaz y navegación 3D",
+    "slug": "bp-modulo-1-interfaz-y-navegacion",
+    "description": "Pierde el miedo a la pantalla de Blender: conoce sus tres zonas, los ejes X, Y y Z, y muévete por el espacio 3D. Lo demuestras armando un tren de juguete con piezas básicas.",
+    "estimatedTimeMinutes": 40,
+    "order": 1,
+    "curso": "blender_principiante",
+    "insignia": "Maquinista 3D",
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "bp1_gancho",
+        "title": "¿Dónde estoy? El espacio 3D",
+        "slug": "donde-estoy-espacio-3d",
+        "type": "theory_interactive",
+        "durationSeconds": 240,
+        "isLocked": false,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Reconocer las tres zonas de Blender y los tres ejes del espacio 3D.",
+          "habilidades": [
+            "bl-interfaz",
+            "bl-ejes"
+          ],
+          "prerrequisitos": [],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Nombrar la Vista 3D, el Outliner y Propiedades.",
+            "Decir qué eje es la altura."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tu primer vistazo a Blender\nAl abrir Blender ves muchos botones, pero solo necesitas tres zonas:\n\n- **Vista 3D** (el centro): donde ves y mueves tus objetos.\n- **Outliner** (arriba a la derecha): la lista de todo lo que hay en la escena.\n- **Propiedades** (abajo a la derecha): los detalles del objeto elegido (tamaño, material, modificadores).\n\nLo demás lo irás descubriendo cuando lo necesites."
+          },
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "Eje X (rojo)",
+                "definition": "De izquierda a derecha. El ancho de las cosas."
+              },
+              {
+                "term": "Eje Y (verde)",
+                "definition": "De adelante hacia atrás. La profundidad."
+              },
+              {
+                "term": "Eje Z (azul)",
+                "definition": "De abajo hacia arriba. La altura: en Blender, Z apunta al cielo."
+              }
+            ]
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_bp1_1",
+            "question": "Quieres hacer una torre más alta. ¿En qué eje la estiras?",
+            "options": [
+              {
+                "id": "opt_a",
+                "text": "X",
+                "isCorrect": false
+              },
+              {
+                "id": "opt_b",
+                "text": "Y",
+                "isCorrect": false
+              },
+              {
+                "id": "opt_c",
+                "text": "Z",
+                "isCorrect": true
+              }
+            ],
+            "explanation": "En Blender la altura es Z (azul). X es el ancho e Y la profundidad."
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "title": "La teoría también vive en Blender",
+            "body": "En la práctica, la pestaña **Aprender** del add-on te muestra cada idea en el momento justo, con las teclas en grande."
+          }
+        ]
+      },
+      {
+        "id": "bp1_explora",
+        "title": "Muévete y transforma: rueda, G, R y S",
+        "slug": "muevete-y-transforma",
+        "type": "theory_interactive",
+        "durationSeconds": 420,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Navegar la Vista 3D y transformar objetos con G, R y S restringidos a un eje.",
+          "habilidades": [
+            "bl-navegar",
+            "bl-transformar"
+          ],
+          "prerrequisitos": [
+            "bp1_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Orbitar, desplazar y acercar sin perder el objeto.",
+            "Mover un objeto solo en Z."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tus manos en la Vista 3D\n- **Orbitar**: arrastra con el botón central (la rueda).\n- **Desplazar**: Shift + botón central.\n- **Acercar**: gira la rueda.\n- **Vistas exactas**: 1 (frente), 3 (lado) y 7 (arriba) del teclado numérico.\n\n¿Sin teclado numérico? En **Editar › Preferencias › Entrada** activa *Emular teclado numérico*."
+          },
+          {
+            "type": "shortcuts",
+            "title": "Los atajos del módulo",
+            "practice": true,
+            "items": [
+              {
+                "keys": [
+                  "Shift",
+                  "A"
+                ],
+                "action": "Agregar una forma (Malla › Cubo, Cilindro…)"
+              },
+              {
+                "keys": [
+                  "G"
+                ],
+                "action": "Mover"
+              },
+              {
+                "keys": [
+                  "R"
+                ],
+                "action": "Rotar"
+              },
+              {
+                "keys": [
+                  "S"
+                ],
+                "action": "Escalar"
+              },
+              {
+                "keys": [
+                  "X"
+                ],
+                "action": "Después de G, R o S: solo en el eje X (igual con Y y Z)"
+              },
+              {
+                "keys": [
+                  "Shift",
+                  "D"
+                ],
+                "action": "Duplicar"
+              }
+            ]
+          },
+          {
+            "type": "matching",
+            "id": "parejas_bp1",
+            "prompt": "Une cada tecla con lo que hace (con el ratón sobre la Vista 3D).",
+            "pairs": [
+              {
+                "id": "par_g",
+                "left": "G",
+                "right": "Mover"
+              },
+              {
+                "id": "par_r",
+                "left": "R",
+                "right": "Rotar"
+              },
+              {
+                "id": "par_s",
+                "left": "S",
+                "right": "Escalar"
+              },
+              {
+                "id": "par_7",
+                "left": "7 (numérico)",
+                "right": "Mirar desde arriba"
+              }
+            ],
+            "explanation": "G de grab, R de rotate, S de scale. Las vistas del teclado numérico te ubican al instante."
+          },
+          {
+            "type": "fill_blanks",
+            "id": "huecos_bp1",
+            "prompt": "Completa: para subir una rueda sin moverla de lado…",
+            "template": "Selecciona la rueda, pulsa [[G]] para mover y luego [[Z|z]] para hacerlo solo en el eje vertical. Haz clic para confirmar.",
+            "code": false,
+            "explanation": "Restringir a un eje evita que la pieza se te escape de lado."
+          },
+          {
+            "type": "ordering",
+            "id": "orden_bp1",
+            "prompt": "Ordena los pasos para poner una rueda de pie.",
+            "items": [
+              {
+                "id": "p1",
+                "text": "Shift + A › Malla › Cilindro"
+              },
+              {
+                "id": "p2",
+                "text": "R para rotar"
+              },
+              {
+                "id": "p3",
+                "text": "Y para girar solo en el eje Y"
+              },
+              {
+                "id": "p4",
+                "text": "Escribe 90 y pulsa Enter"
+              }
+            ],
+            "explanation": "Un cilindro nace acostado como una moneda; girarlo 90° en Y lo pone de canto como una rueda."
+          }
+        ]
+      },
+      {
+        "id": "bp1_practica",
+        "title": "Práctica: arma un tren de juguete",
+        "slug": "practica-tren-de-juguete",
+        "type": "theory_interactive",
+        "durationSeconds": 1200,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Ensamblar un tren con primitivas: vagones, ruedas de pie y apoyadas en el suelo, todo unido.",
+          "habilidades": [
+            "bl-transformar",
+            "bl-duplicar",
+            "bl-ensamblar",
+            "bl-guardar-archivo"
+          ],
+          "prerrequisitos": [
+            "bp1_explora"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3: practices/blender/principiante/m1-tren/practica.json."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Dos vagones o más, cuatro ruedas de pie que tocan el suelo y el tren unido.",
+            "Archivo guardado como tren."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Un tren con piezas de juguete\nVas a armar un tren con **cubos** (vagones), **cilindros** (ruedas) y un **cono** si quieres chimenea. Nada se modela todavía: solo agregas, mueves, giras y escalas.\n\nAmatista revisa que los vagones sean largos, que las ruedas estén **de pie** y **apoyadas en el suelo**, y que todo quede **unido**."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_tren",
+            "practica": "blender.bp.m1.tren",
+            "title": "Arma tu tren de juguete en Blender",
+            "text": "Pulsa **Abrir en Blender** y luego abre Blender: la práctica aparece en la pestaña Amatista (tecla N). Tres secciones te acompañan: **Aprender** (la teoría justo cuando la necesitas), **Practicar** (los pasos con «Hazlo conmigo») y **Mi curso**. Tu avance se actualiza aquí mientras trabajas.",
+            "minutes": 25,
+            "steps": [
+              "Agrega dos vagones (cubos)",
+              "Hazlos largos",
+              "Agrega cuatro ruedas (cilindros)",
+              "Pon las ruedas de pie",
+              "Apóyalas en el suelo",
+              "Únelas a los vagones",
+              "Junta los vagones",
+              "Guarda como mi_tren.blend"
+            ]
+          },
+          {
+            "type": "callout",
+            "variant": "reto",
+            "title": "Reto extra",
+            "body": "Agrega una chimenea con un cono y una locomotora más alta. Amatista la marca como objetivo extra."
+          }
+        ]
+      },
+      {
+        "id": "bp1_jefe",
+        "title": "Jefe final: el espacio 3D",
+        "slug": "jefe-final-espacio-3d",
+        "type": "exam",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Explicar los ejes, la navegación y las transformaciones básicas.",
+          "habilidades": [
+            "bl-ejes",
+            "bl-navegar",
+            "bl-transformar"
+          ],
+          "prerrequisitos": [
+            "bp1_practica"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Obtener al menos 80 puntos en el examen."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "qbp1_1",
+              "questionText": "¿Qué eje es la altura en Blender?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "X",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o2",
+                  "text": "Y",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Z",
+                  "isCorrect": true
+                }
+              ],
+              "feedbackCorrect": "Z apunta hacia arriba.",
+              "feedbackIncorrect": "Recuerda: Z (azul) es la altura."
+            },
+            {
+              "id": "qbp1_2",
+              "questionText": "¿Cómo orbitas la Vista 3D?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Arrastrando con el botón central",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Con la tecla G",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Con F12",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "El botón central (la rueda) orbita.",
+              "feedbackIncorrect": "La rueda arrastrada orbita; G mueve objetos, no la vista."
+            },
+            {
+              "id": "qbp1_3",
+              "questionText": "Quieres girar una rueda solo en Y. ¿Qué pulsas?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "G y luego Y",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o2",
+                  "text": "R y luego Y",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o3",
+                  "text": "S y luego Y",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "R rota; Y restringe al eje.",
+              "feedbackIncorrect": "R es rotar. Después la letra del eje."
+            },
+            {
+              "id": "qbp1_4",
+              "questionText": "¿Qué hace Shift + D?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Borra el objeto",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o2",
+                  "text": "Duplica el objeto",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o3",
+                  "text": "Guarda el archivo",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Duplica y deja la copia moviéndose.",
+              "feedbackIncorrect": "Shift + D duplica."
+            },
+            {
+              "id": "qbp1_5",
+              "questionText": "¿Dónde ves la lista de todo lo que hay en la escena?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Outliner",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Propiedades",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Línea de tiempo",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "El Outliner lista la escena.",
+              "feedbackIncorrect": "Es el Outliner, arriba a la derecha."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
