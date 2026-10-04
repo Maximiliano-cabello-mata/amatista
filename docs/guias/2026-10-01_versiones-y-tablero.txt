@@ -43,6 +43,16 @@ Desde la raíz del repositorio oficial (clon completo, no superficial):
 Estado: publicados el 2026-10-01. Los cuatro tags están firmados con SSH
 (verificados en GitHub) y v0.2.0 ya se quitó del remoto.
 
+Después se agregaron al mismo script (se publican igual, desde la
+computadora del usuario, porque la nube recibe 403 al subir tags):
+
+  v2.2.0-alpha.2  88dd539  Plataforma unificada: panel de administración
+  v3.0.0-alpha.1  2337fd5  Reestructuración (PR #12)
+  v3.0.0-alpha.2  ec849d8  Amatista Engine etapa 1 (PR #13)
+
+Al 4 de octubre de 2026 estos tres siguen sin publicarse:
+    bash herramientas/crear-tags.sh && git push origin --tags
+
 Opcional: en GitHub → Releases → "Draft a new release", elegir cada tag y
 pegar su sección del CHANGELOG.md.
 

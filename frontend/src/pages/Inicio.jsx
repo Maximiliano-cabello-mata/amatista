@@ -260,11 +260,6 @@ function Inicio() {
                 {usuario ? 'Mi cuenta' : 'Entrar'}
               </a>
             </li>
-            <li>
-              <a href={rutas.laboratorio} className="hover:text-neon">
-                Laboratorio técnico ▸
-              </a>
-            </li>
           </ul>
         </nav>
       </footer>

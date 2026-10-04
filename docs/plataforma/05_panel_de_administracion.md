@@ -15,7 +15,7 @@ Antes la navegación era una lista plana (Resumen, Usuarios, Contenido, Práctic
 | | **Prácticas de Blender** | `#/admin/practicas` | Las prácticas del motor registradas en Oracle, su historial de versiones y cuál ven los alumnos (publicar, archivar, sincronizar desde el repositorio). |
 | | **Herramientas** *(nueva)* | `#/admin/herramientas` | El catálogo de bloques de lección por categoría, con vista previa y JSON ([04](04_herramientas_de_ensenanza.md)). |
 | Personas | **Usuarios** | `#/admin/usuarios` | Buscar, filtrar por rol, ver el detalle, cambiar rol, confirmar correo, cuentas de prueba. |
-| Sistema | **Estado** (solo admin) | `#/admin/sistema` | Motor de base de datos, filas por tabla y purga de sesiones y eventos viejos. |
+| Sistema | **Estado** (solo admin) | `#/admin/sistema` | Motor de base de datos, filas por tabla, purga de sesiones y eventos viejos y enlace al **Diagnóstico técnico** del dispositivo (`#/laboratorio`). |
 
 En escritorio la navegación es una columna con los títulos de grupo; en el celular, una fila de pestañas desplazable.
 

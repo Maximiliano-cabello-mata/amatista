@@ -5,6 +5,8 @@
 > contratos del frontend. Sirve para terminar lo pendiente (ver
 > `docs/bitacora/2026-10-02_estado_plataforma_unificada.txt`). Cuando el código y este documento
 > difieran, manda el código; las decisiones tomadas al implementar están en esa bitácora.
+>
+> **Después de la v2.2:** niveles y versiones de Blender (v3, [docs/reestructuracion/](../reestructuracion/README.md)), motor de prácticas y add-on ([docs/motor/](../motor/README.md)) y la plataforma por módulos con sus herramientas ([docs/plataforma/](../plataforma/README.md)) amplían este contrato sin cambiarlo.
 
 
 Idioma de código, UI, comentarios y

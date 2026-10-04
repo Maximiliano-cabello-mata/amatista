@@ -6,6 +6,12 @@ FUENTE: docs/arquitectura/2026-10-02_contrato_tecnico_plataforma.md
         (secciones 3 y 4). Este documento es la versión de consulta.
 =============================================================================
 
+ACTUALIZACIÓN 4 DE OCTUBRE DE 2026: en los módulos de Blender, después del
+Reto va la práctica dentro de Blender (bloque blender_practice) y solo el
+examen («Jefe final») puede ir después. Detalle:
+docs/plataforma/02_modulos_y_practica.md. Qué herramienta usar en cada paso:
+docs/plataforma/04_herramientas_de_ensenanza.md.
+
 1. EL CICLO DEL CRISTAL (5 PASOS)
 -----------------------------------------------------------------------------
 Cada módulo de un curso sigue cinco pasos. Cada lección indica el paso que

@@ -2,7 +2,7 @@
 
 Punto de entrada para Maximiliano como desarrollador único. Aquí se decide **qué sigue, por qué y dónde está la información**. Las carpetas técnicas y los documentos existentes conservan su ubicación.
 
-[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Reestructuración v3](docs/reestructuracion/README.md) · [Estado al 3 oct](docs/bitacora/2026-10-03_estado_y_reestructuracion.md)
+[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Reestructuración v3](docs/reestructuracion/README.md) · [Plataforma](docs/plataforma/README.md) · [Amatista Engine](docs/motor/README.md) · [Último registro (4 oct)](docs/bitacora/2026-10-04_motor_etapa_2_y_plataforma.md)
 
 ## 1. Dirección y límite de trabajo
 
@@ -12,7 +12,9 @@ Punto de entrada para Maximiliano como desarrollador único. Aquí se decide **q
 
 **Dos frentes en paralelo, sin mezclarse:** el piloto del 8 de octubre se hace con la v2.2 (servicio, HTTPS, SMTP, pruebas y seguridad: versión `v2.2.0` del tablero); la v3 avanza por fases (A base → B contenido existente en niveles → C «Mi primer espacio 3D» → D laboratorio GLB → E add-on → F especialidades y tutor). Los scripts 005 y 006 pueden ejecutarse en Oracle antes del piloto; el código nuevo se despliega después.
 
-Tutor IA, add-on y motor generativo siguen entrando por incrementos independientes: el primer recorrido de cada lección debe poder completarse sin add-on.
+**Adelantado a pedido del usuario (4 de octubre): Amatista Engine y plataforma por módulos.** El motor de prácticas y su add-on (fase E) llegaron antes que las fases B y C: etapa 1 (evalúa) en el PR #13 y etapa 2 (acompaña paso a paso) en el PR #14. La plataforma deja de tener pestañas sueltas: estructura fija **Cursos · Mi panel · Admin**, y cada módulo cierra con su práctica en Blender ([plataforma](docs/plataforma/README.md), [motor](docs/motor/README.md)). Nada de esto toca el piloto: el script 007 se ejecuta después (T-055).
+
+Tutor IA y motor generativo siguen entrando por incrementos independientes. Las lecciones de lectura e interactivas de cada módulo se completan sin add-on; la práctica en Blender es la estación final del módulo.
 
 **Regla personal:** una tarea en ejecución, hasta tres preparadas para continuar y una sola meta de entrega. Revisión cuenta dentro del trabajo activo. Estos límites son una política manual; el generador actual no los impone.
 
@@ -34,21 +36,28 @@ El README presenta el producto; sus fases describen la visión general. Para pri
 
 ## 3. Mapa de frentes y evidencia disponible
 
-Revisión documental de main del 1 de octubre de 2026, base `36db25e`. Es una fotografía del repositorio, no una certificación de funcionamiento del servidor.
+Revisión del 4 de octubre de 2026 (rama del PR #14 sobre `main` en `ec849d8`). Es una fotografía del repositorio y de lo que el usuario reportó del servidor el 3 de octubre, no una certificación del servidor.
 
-| Frente | Evidencia y ubicación | Decisión de enfoque |
+| Frente | Evidencia y ubicación | Estado y enfoque |
 |---|---|---|
-| Cursos y lecciones | [Catálogo](frontend/src/data/cursos.js), [módulos](frontend/src/data/modulos/), [formato](docs/arquitectura/2026-09-29_formato-lecciones.txt) | Consolidar el recorrido del módulo 1 antes de multiplicar contenido |
-| PWA y progreso | [Configuración PWA](frontend/vite.config.js), [almacén](frontend/src/lib/almacen.js), [progreso](frontend/src/progreso/) | Validar offline, recarga y recuperación de conexión |
-| API y Oracle | [Backend](backend/README.md), [SQL](backend/sql/001_esquema_amatista.sql), [diagnóstico](backend/diagnostico_oracle.py) | Prioridad de integración; despliegue real pendiente de comprobar |
-| Laboratorio y GLB | [Laboratorio](frontend/src/pages/Laboratorio.jsx), [vista A-Frame](frontend/src/components/leccion/VistaAFrame.jsx) | Hay base 3D; visor GLB ampliado sigue en el backlog |
-| Tutor IA | [Prompts](ai_tutor/prompts/), tarea del roadmap | Carpeta reservada; no presentar la integración como terminada |
-| Add-on de Blender | [Visión 3D Lab](docs/propuestas/2026-09-27_amatista_3d_lab.txt) | Propuesta futura con contrato de intercambio por definir |
+| Cursos y módulos | [Módulos JSON](frontend/src/data/modulos/), [módulos con práctica](docs/plataforma/02_modulos_y_practica.md), [la Fórmula](docs/arquitectura/2026-10-02_formula_modulos.txt) | Módulo 1 de Blender y A-Frame publicados; módulo 2 de Blender en revisión (no visible para alumnos) con la práctica de la mesa al final. Consolidar antes de multiplicar contenido |
+| Herramientas de enseñanza | [Catálogo](frontend/src/data/herramientas.js), [documentación](docs/plataforma/04_herramientas_de_ensenanza.md) | 20 bloques de lección, con vista previa en Admin › Herramientas |
+| PWA y progreso | [Configuración PWA](frontend/vite.config.js), [almacén](frontend/src/lib/almacen.js), [progreso](frontend/src/progreso/) | Funciona offline y sincroniza; falta probarlo de punta a punta en el servidor (T-030) |
+| API y Oracle | [Backend](backend/README.md), [scripts](backend/sql/LEEME.txt), [manual](docs/reestructuracion/02_manual_oracle.md) | En producción con 002, 003, 005 y 006 (14 tablas, usuario ADMIN). Falta servicio con HTTPS (T-003, T-005) y 007 después del piloto (T-055) |
+| Amatista Engine y add-on | [engine/](engine/README.md), [addon/](addon/README.md), [practices/](practices/README.md), [docs/motor](docs/motor/README.md) | Etapa 1 en `main`, etapa 2 en el PR #14. Falta probar el instalador en Windows y Mac reales (T-056) y la guía en un Blender con GPU (T-059) |
+| Panel de administración | [Panel](docs/plataforma/05_panel_de_administracion.md) | Agrupado por tareas (Enseñanza, Personas, Sistema); el diagnóstico técnico, antes «Laboratorio», vive en Admin › Estado |
+| Visor GLB | [Vista A-Frame](frontend/src/components/leccion/VistaAFrame.jsx) | Hay base 3D en las lecciones; el laboratorio GLB es la fase D (T-011) |
+| Tutor IA | [Prompts](ai_tutor/prompts/) | Carpeta reservada; no presentar la integración como terminada |
 | Motor generativo | [Propuesta del motor](docs/propuestas/2026-09-27_motor_generativo_3d.txt) | Investigación separada; requiere límites de ejecución y prueba de viabilidad |
 
 ## 4. Orden de ejecución propuesto
 
-> **Actualización del 3 de octubre:** el orden vigente está en el [plan maestro de la v3](docs/reestructuracion/00_plan_maestro.md) (sección 3) y en el [tablero](KANBAN.md). Primero el piloto (T-003, T-005, T-032, T-029, T-030), en paralelo T-035 (ejecutar 005 y 006) y después la fase B (T-038, T-039, T-044, T-041). La tabla siguiente es la del 1 de octubre y se conserva como historia; el tablero de entonces está en [`tablero/historico/`](tablero/historico/).
+> **Orden vigente (4 de octubre):**
+> 1. **Piloto del 8 de octubre con la v2.2:** T-003 (servicio), T-005 (HTTPS), T-032 (SMTP), T-029 y T-030 (seguridad y prueba de punta a punta).
+> 2. **Después del piloto:** T-055 (ejecutar 007 y publicar la mesa versión 2), T-056 (instalador en Windows y Mac) y T-059 (guía en Blender con GPU).
+> 3. **Fase B:** T-038 (decidir la versión LTS de Blender), T-039, T-044 y T-041.
+>
+> T-035 (005 y 006 en Oracle) ya está hecha. El detalle vive en el [plan maestro](docs/reestructuracion/00_plan_maestro.md) (sección 3) y en el [tablero](KANBAN.md). La tabla siguiente es la del 1 de octubre y se conserva como historia; cómo terminó cada tarea de entonces está en el [tablero de la v2 revisado](tablero/historico/2026-10-03_v2_KANBAN.md).
 
 Las versiones originales se conservan en el YAML. El orden de trabajo puede adelantar un habilitador de otra versión sin dar por publicada esa versión.
 
@@ -89,7 +98,7 @@ Elegir la tarea que más acerque a la meta vigente. En `tablero/tareas.yml`, una
     bloqueo: null              # causa y siguiente acción cuando corresponda
 ```
 
-El script actual admite campos adicionales pero **no los muestra ni valida dependencias o bloqueos**. Se consultan en el YAML. Son información manual, no estados nuevos del Kanban.
+Desde el 4 de octubre el generador muestra `bloqueo`, `evidencia` y `aceptacion` como notas debajo de cada tarea en el detalle por versión de `KANBAN.md`; no valida dependencias. Son información manual, no estados nuevos del Kanban. Para lo que pasa fuera de git (un script ejecutado en Oracle, una prueba en el servidor) se usa el campo `estado` como estado mínimo puesto a mano.
 
 Dividir cualquier trabajo que no pueda verificarse en una o dos sesiones. Usar el siguiente ID libre. No reutilizar IDs ni crear una tarea genérica como «terminar toda la IA».
 
@@ -107,7 +116,7 @@ No se requiere inventar roles ni reuniones. La revisión propia es una pausa del
 
 ### Bloqueos y cierre de sesión
 
-Si falta acceso, información o una dependencia, anotar causa, siguiente acción y condición de desbloqueo en la tarea. El Kanban actual no tiene columna Bloqueado: el campo manual evita ocultarlo. Puede mantenerse una tarea bloqueada y trabajar en una alternativa; nunca dos implementaciones simultáneas.
+Si falta acceso, información o una dependencia, anotar causa, siguiente acción y condición de desbloqueo en la tarea. El Kanban no tiene columna Bloqueado: el campo manual, que el tablero muestra como «⏸️ Espera», evita ocultarlo. Puede mantenerse una tarea bloqueada y trabajar en una alternativa; nunca dos implementaciones simultáneas.
 
 Al terminar una sesión, dejar en el PR o bitácora tres líneas: qué quedó comprobado, qué falta y cuál es el siguiente paso. No duplicar el mismo informe en varios archivos.
 
@@ -168,9 +177,14 @@ Registrar decisiones importantes en un documento de arquitectura fechado: contex
 
 ### Reestructuración v3
 
-- [Plan maestro](docs/reestructuracion/00_plan_maestro.md) · [Modelo de contenido](docs/reestructuracion/01_modelo_de_contenido.md) · [Manual de Oracle](docs/reestructuracion/02_manual_oracle.md) · [Add-on de Blender](docs/reestructuracion/03_addon_blender.md)
+- [Plan maestro](docs/reestructuracion/00_plan_maestro.md) · [Modelo de contenido](docs/reestructuracion/01_modelo_de_contenido.md) · [Manual de Oracle](docs/reestructuracion/02_manual_oracle.md) · [Add-on de Blender (diseño original)](docs/reestructuracion/03_addon_blender.md)
 - [Propuesta de contenido por niveles](docs/propuestas/2026-10-03_propuesta_contenido_blender.txt)
-- [Tablero de la v2 archivado](tablero/historico/2026-10-03_v2_KANBAN.md)
+- [Tablero de la v2 archivado y revisado](tablero/historico/2026-10-03_v2_KANBAN.md)
+
+### Plataforma y Amatista Engine
+
+- [Plataforma](docs/plataforma/README.md): [mapa por rol](docs/plataforma/01_mapa_de_la_plataforma.md) · [módulos con práctica](docs/plataforma/02_modulos_y_practica.md) · [etiquetas y gráficos](docs/plataforma/03_etiquetas_y_graficos.md) · [herramientas de enseñanza](docs/plataforma/04_herramientas_de_ensenanza.md) · [panel de administración](docs/plataforma/05_panel_de_administracion.md)
+- [Amatista Engine](docs/motor/README.md): [etapa 1](docs/motor/etapas/etapa-1.md) · [etapa 2](docs/motor/etapas/etapa-2.md) · [referencia técnica](docs/motor/referencia/01_arquitectura.md)
 
 ### Evidencia e historial
 
@@ -180,7 +194,8 @@ Registrar decisiones importantes en un documento de arquitectura fechado: contex
 - [Lecciones y progreso](docs/bitacora/2026-09-29_lecciones-y-progreso.txt)
 - [Estado de la plataforma unificada](docs/bitacora/2026-10-02_estado_plataforma_unificada.txt)
 - [Cierre del 2 de octubre y plan siguiente](docs/bitacora/2026-10-02_cierre_del_dia.txt)
-- [Estado al 3 de octubre y arranque de la reestructuración](docs/bitacora/2026-10-03_estado_y_reestructuracion.md)
+- [Estado al 3 de octubre y arranque de la reestructuración](docs/bitacora/2026-10-03_estado_y_reestructuracion.md) · [Bitácora técnica del servidor (3 oct)](docs/bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md)
+- [4 de octubre: Amatista Engine](docs/bitacora/2026-10-04_amatista_engine.md) · [Motor etapa 2 y plataforma por módulos](docs/bitacora/2026-10-04_motor_etapa_2_y_plataforma.md)
 - [Registro de incidencias](docs/incidencias/README.md) (índice de todas)
 - [ORA-01400](docs/incidencias/2026-09-27_ora-01400-autoincremento.txt)
 - [Puerto ocupado y CORS](docs/incidencias/2026-09-27_puerto-ocupado-y-cors.txt)

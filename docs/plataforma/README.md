@@ -16,7 +16,7 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 
 ## Resumen de cambios (v3.1)
 
-- **Sin pestaña Blender.** La barra superior queda en Cursos, Mi panel, Laboratorio y Admin (para profesores y administradores). La conexión con Blender pasa a **Mi Blender** (menú de la cuenta) y, sobre todo, a la propia práctica.
+- **Estructura fija, sin pestañas sueltas.** La barra superior queda en Cursos, Mi panel y Admin (para profesores y administradores); salen Blender y el Laboratorio técnico (que era una página de pruebas y pasa a ser un diagnóstico solo para el equipo). La conexión con Blender pasa a **Mi Blender** (menú de la cuenta) y, sobre todo, a la propia práctica.
 - **Cada módulo cierra con su práctica en Blender.** En el mapa del curso, la práctica es una estación al final de la ruta del módulo; se abre al terminar las lecciones. Solo el examen puede ir después.
 - **Preparar Blender dentro de la práctica.** Descargar, abrir Blender y escribir el código se hace en la misma tarjeta de la lección, en tres pasos.
 - **Etiquetas comunes.** El mismo idioma visual (tipo de lección, práctica, guía, nivel, duración, estado) en el mapa, la lección, el panel del alumno y el panel de administración.

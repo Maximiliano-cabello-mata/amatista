@@ -12,10 +12,11 @@ function enlacesDe(esProfesor) {
   const enlaces = [
     { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
     { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
-    { href: rutas.laboratorio, texto: 'Laboratorio', activo: (pagina) => pagina === 'laboratorio' },
   ];
+  // Estructura fija (v3.1): Cursos, Mi panel y, para el equipo, Admin.
   // Blender ya no es una pestaña: cada módulo cierra con su práctica en
-  // Blender (v3.1) y la instalación vive en la práctica y en «Mi Blender».
+  // Blender y la instalación vive en la práctica y en «Mi Blender». El
+  // diagnóstico técnico (#/laboratorio) se abre desde Admin › Estado.
   if (esProfesor) enlaces.push({ href: rutas.admin, texto: 'Admin', activo: (pagina) => pagina === 'admin' });
   return enlaces;
 }

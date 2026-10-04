@@ -24,39 +24,51 @@ src/
 ├── catalogo/               # catálogo combinado: JSON empaquetados + catálogo del servidor
 ├── data/
 │   ├── cursos.js           # cursos y títulos de módulos «Próximamente»
+│   ├── herramientas.js     # catálogo de herramientas de enseñanza (bloques) por categoría
 │   └── modulos/*.json      # contenido de cada módulo (se cargan solos)
+├── modulos/practica.js     # la práctica de Blender que cierra cada módulo (funciones puras)
 ├── progreso/               # progreso v2: proveedor, reglas de acople, XP, nivel y racha
+├── blender/                # conexión con Blender: descarga, código de vínculo, «Prepara tu Blender»
 ├── lib/                    # IndexedDB y generador de identificadores
 ├── hooks/                  # conexión y botón de instalar la PWA
-├── services/               # api.js (salud, auth, progreso, eventos) y admin.js
+├── services/               # api.js, admin.js y blender.js (API del add-on)
 ├── components/
-│   ├── leccion/            # bloques de contenido, examen y vista 3D (A-Frame)
-│   │   └── interactivos/   # los 7 bloques interactivos
+│   ├── leccion/            # los bloques de contenido (Paso a paso, Atajos, Comparar…), examen y vista A-Frame
+│   │   └── interactivos/   # bloques interactivos (quiz, ordenar, …, práctica en Blender)
+│   ├── modulo/             # ruta del módulo y estación de la práctica en Blender
+│   ├── etiquetas/          # sistema de etiquetas low poly (íconos, catálogo, chip)
 │   ├── panel/              # tarjetas del panel del alumno
 │   ├── graficas/           # anillo, barras, mapa de calor y medidor (SVG)
 │   ├── admin/              # piezas del panel de administración
 │   └── ...                 # barra superior, fondo low poly, tarjetas, íconos
 └── pages/
-    ├── Inicio, Curso, Leccion, Panel, Laboratorio
+    ├── Inicio, Curso, Leccion, Panel, Blender (Mi Blender), Vincular
+    ├── Laboratorio         # diagnóstico técnico (solo profesor y admin)
     ├── cuenta/             # Entrar, Registro, Confirmar, Recuperar, Perfil
-    └── admin/              # Resumen, Usuarios, Usuario, Contenido, EditorLeccion, Sistema
+    └── admin/              # Resumen, Contenido (Módulos), EditorLeccion, Practicas, Herramientas, Usuarios, Usuario, Sistema
 ```
 
 | Ruta | Página |
 |---|---|
-| `#/` · `#/curso/:id` · `#/curso/:id/leccion/:id` | Inicio, mapa del módulo y lección |
+| `#/` · `#/curso/:id` · `#/curso/:id/leccion/:id` | Cursos, mapa del curso (módulos con su práctica en Blender) y lección |
 | `#/panel` | Panel del alumno |
+| `#/blender` · `#/vincular?codigo=…` | Mi Blender (menú de la cuenta) y vincular el add-on |
 | `#/entrar` · `#/registro` · `#/confirmar` · `#/recuperar` · `#/perfil` | Cuenta |
-| `#/admin` · `#/admin/usuarios[/:id]` · `#/admin/contenido[/...]` · `#/admin/sistema` | Panel de administración (profesor lee, admin modifica) |
-| `#/laboratorio` | Laboratorio técnico (estado del backend y de Oracle, visor A-Frame) |
+| `#/admin` · `#/admin/contenido[/...]` · `#/admin/practicas` · `#/admin/herramientas` · `#/admin/usuarios[/:id]` · `#/admin/sistema` | Panel de administración (profesor lee, admin modifica) |
+| `#/laboratorio` | Diagnóstico técnico del dispositivo (solo profesor y admin; se abre desde Admin › Estado) |
+
+La organización de la plataforma por rol, las etiquetas y las herramientas están en [`docs/plataforma/`](../docs/plataforma/README.md).
 
 ## Contenido
 
-Para agregar un módulo o una lección no hace falta tocar componentes: el
-formato de los JSON y los bloques disponibles están en
-`docs/arquitectura/2026-09-29_formato-lecciones.txt` y cómo diseñar un módulo
-en `docs/arquitectura/2026-10-02_formula_modulos.txt`. También se puede editar
-desde `#/admin/contenido`.
+Para agregar un módulo o una lección no hace falta tocar componentes: los
+bloques disponibles y sus campos están en
+[`docs/plataforma/04_herramientas_de_ensenanza.md`](../docs/plataforma/04_herramientas_de_ensenanza.md)
+(formato base: `docs/arquitectura/2026-09-29_formato-lecciones.txt`) y cómo
+diseñar un módulo en `docs/arquitectura/2026-10-02_formula_modulos.txt`. Cada
+módulo de Blender cierra con su práctica en Blender
+([docs/plataforma/02](../docs/plataforma/02_modulos_y_practica.md)). También se
+puede editar desde `#/admin/contenido`.
 
 ## Progreso
 

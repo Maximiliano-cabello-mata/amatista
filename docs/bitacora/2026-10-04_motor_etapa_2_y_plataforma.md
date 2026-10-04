@@ -21,9 +21,29 @@ Pedido de Maximiliano (4 oct, 03:04): documentar todo lo hecho con una carpeta e
 - `docs/plataforma/` nueva: mapa por rol, módulos con práctica, etiquetas y gráficos, las 20 herramientas de enseñanza con sus campos y el panel de administración.
 - Tablero: T-057 y T-058 en revisión; nuevas T-059 (probar la guía en un Blender real con GPU) y T-060 (guardar las ayudas en Oracle con un 008).
 
+## Segunda parte: estructura fija, repositorio ordenado y tableros (mismo PR)
+
+Pedido de seguimiento (4 oct, 03:07): no reorganizar la página cada vez, sino dejarle una estructura fija y centralizada; que todo sea intuitivo; no poner cosas solo para probar; revisar el repositorio documento por documento; actualizar el tablero actual y también el viejo con lo que se estaba haciendo entonces.
+
+### Estructura fija
+- Navegación definitiva: **Cursos · Mi panel · Admin** (Admin solo para el equipo). Se quitó el enlace «Laboratorio» de la barra y del pie de la pantalla de inicio.
+- El Laboratorio técnico era una página de prueba visible para alumnos (botón «Crear nueva sesión (prueba)» y una caja de «Tutor IA» sin conectar). Ahora es el **Diagnóstico técnico** (`#/laboratorio`): solo profesores y administradores, se abre desde Admin › Estado, sin botones de prueba.
+
+### Repositorio revisado documento por documento
+- `README.md` de la raíz reescrito con el estado real, la estructura con `engine/`, `addon/`, `practices/`, `docs/motor` y `docs/plataforma`, y las 18 tablas de Oracle con 007.
+- `PROYECTO.md`: etapa actual, mapa de frentes al 4 de octubre, orden vigente (piloto → después del piloto → fase B) y biblioteca con plataforma, motor y bitácoras nuevas.
+- `docs/README.md`: tabla con el estado de cada documento (vigente o historia, y dónde está lo actual).
+- Notas de actualización en el formato de lecciones, la Fórmula y el contrato técnico; plan maestro con «Dónde estamos»; manual de Oracle, `backend/sql/LEEME.txt` y `backend/README.md` con el estado de producción (002, 003, 005 y 006 aplicados; 007 después del piloto); READMEs de frontend, motor, add-on y prácticas al día.
+- Registro de incidencias: INC-012 (la VM corre `amatista-backend`, no `amatista-api`). `despliegue/actualizar.sh` ahora detecta esa unidad sola.
+- `backend/.env.example` documenta `AMATISTA_URL_API` y `AMATISTA_URL_PWA`; `crear-tags.sh` incluye `v3.0.0-alpha.1` y `v3.0.0-alpha.2`.
+
+### Tableros
+- **Actual** (`tablero/tareas.yml`): estado real de cada tarea con evidencia y bloqueo (por ejemplo T-035 hecha: 005 y 006 en producción; T-003 en progreso: el servicio corre como `amatista-backend`). El generador ahora muestra `bloqueo`, `evidencia` y `aceptacion` debajo de cada tarea.
+- **Viejo** (`tablero/historico/2026-10-03_v2_*`): se conserva tal como se publicó y se le agregó al principio la revisión: qué decía el tablero, estado real al cierre y dónde siguió cada tarea. Al cierre de la v2 había 16 hechas, 4 a medias y 13 pendientes (el tablero mostraba 4 hechas).
+
 ## Pruebas
 
-Backend 265 (pytest), motor y add-on 43 (pytest), tablero 7, frontend 158 (vitest) con lint y build; el add-on dentro de `bpy` 5.0.1 con el recorrido de la etapa 2. Blender sin interfaz no tiene GPU: la guía 3D se probó con un `gpu` simulado y las imágenes de la documentación son maquetas (T-059 pide capturas reales).
+Backend 265 (pytest, ruff limpio), motor y add-on 43 (pytest), tablero 8, frontend 158 (vitest) con lint y build; el add-on dentro de `bpy` 5.0.1 con el recorrido de la etapa 2. Blender sin interfaz no tiene GPU: la guía 3D se probó con un `gpu` simulado y las imágenes de la documentación son maquetas (T-059 pide capturas reales).
 
 ## Sin cambios en Oracle
 
@@ -32,4 +52,5 @@ La integración en módulos usa el JSON de las lecciones; las ayudas viajan en e
 ## Después de fusionar
 
 - Borrar la rama `claude/motor-etapa-2-8z6xd8` desde la computadora del usuario.
+- Publicar los tags pendientes: `bash herramientas/crear-tags.sh && git push origin --tags`.
 - Después del piloto (junto con T-055): registrar y publicar la mesa versión 2 con `python herramientas/contenido.py practicas --publicar` (desde `backend/`).

@@ -7,7 +7,6 @@
 | Cursos | `#/` | Los cursos disponibles. |
 | Curso | `#/curso/<curso>` | El mapa: niveles, módulos con sus **etiquetas**, la **ruta** de cada módulo y su **estación de práctica en Blender**. Ver [02](02_modulos_y_practica.md). |
 | Lección | `#/curso/<curso>/leccion/<leccion>` | Los bloques de la lección ([04](04_herramientas_de_ensenanza.md)). En la lección de práctica, la tarjeta de Blender con **Prepara tu Blender** en tres pasos y el avance en vivo. |
-| Laboratorio | `#/laboratorio` | Escenas 3D libres en el navegador. |
 | Mi panel | `#/panel` | Nivel, racha, qué sigue, avance por curso, exámenes, retos y **Tus prácticas en Blender** (la práctica de cada módulo con su estado). |
 | Mi Blender | `#/blender` (menú de la cuenta) | Descargar el add-on, computadoras conectadas, compatibilidad. Ya no está en la barra superior: se llega desde el menú de la cuenta o desde cualquier práctica. |
 | Vincular | `#/vincular?codigo=…` | Confirmar el código que muestra Blender. |
@@ -17,7 +16,7 @@
 
 ## Profesor
 
-Rol `profesor`. Entra al panel de administración (`#/admin`) en **solo lectura**: ve resumen, módulos, prácticas de Blender, herramientas y usuarios, pero no publica ni edita (el servidor lo valida en cada petición). En Blender, el add-on le muestra el **modo Desarrollador** (Amatista Author) para crear y probar prácticas y subirlas como borrador. Su recorrido para preparar una clase: revisar el módulo y su práctica en el panel, abrir **Herramientas** para ver qué piezas hay y probar la práctica en Blender como alumno.
+Rol `profesor`. Ve el **Diagnóstico técnico** (`#/laboratorio`) de su dispositivo. Entra al panel de administración (`#/admin`) en **solo lectura**: ve resumen, módulos, prácticas de Blender, herramientas y usuarios, pero no publica ni edita (el servidor lo valida en cada petición). En Blender, el add-on le muestra el **modo Desarrollador** (Amatista Author) para crear y probar prácticas y subirlas como borrador. Su recorrido para preparar una clase: revisar el módulo y su práctica en el panel, abrir **Herramientas** para ver qué piezas hay y probar la práctica en Blender como alumno.
 
 ## Administrador
 
@@ -27,7 +26,9 @@ Rol `admin`. Todo lo del profesor y además: crea y edita módulos y lecciones, 
 
 | Antes (v3.0) | Ahora (v3.1) |
 |---|---|
-| Cursos · Mi panel · Laboratorio · **Blender** · Admin (profesor/admin) | Cursos · Mi panel · Laboratorio · Admin (profesor/admin) |
+| Cursos · Mi panel · **Laboratorio** · **Blender** · Admin (profesor/admin) | Cursos · Mi panel · Admin (profesor/admin) |
 | Menú de la cuenta: Perfil · Mi panel · Cerrar sesión | Menú de la cuenta: Perfil · Mi panel · **Mi Blender** · Cerrar sesión (también en el menú del celular) |
 
 La ruta `#/blender` sigue funcionando (enlaces viejos, el add-on y los correos la usan).
+
+**Estructura fija.** La barra no cambia de una pantalla a otra ni según el módulo: todo lo del alumno cuelga de *Cursos* (aprender, incluida la práctica en Blender) y de *Mi panel* (su avance). El antiguo «Laboratorio técnico» era una página de pruebas (estado del backend, una sesión de prueba y un recuadro de tutor IA que no existía): salió de la navegación y de la portada, quedó como **Diagnóstico técnico** solo para profesores y administradores (se abre desde Admin › Estado) y perdió los botones de prueba. El laboratorio 3D para alumnos es otra cosa y llega con la v3.2 (T-049).

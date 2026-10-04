@@ -13,7 +13,7 @@ Pre-lanzamientos de la v2.2.0: `v2.2.0-alpha.1` (`f68c704`: cuentas, Oracle 20 G
 contenido administrable, lecciones interactivas y panel del alumno) y `v2.2.0-alpha.2` (`88dd539`: panel
 de administración; se publica con `crear-tags.sh`).
 
-Los tags están publicados y firmados con SSH; se crearon con `bash herramientas/crear-tags.sh` (ver `docs/guias/2026-10-01_versiones-y-tablero.txt`).
+Los tags hasta `v2.2.0-alpha.1` están publicados y firmados con SSH. `v2.2.0-alpha.2`, `v3.0.0-alpha.1` (`2337fd5`, reestructuración) y `v3.0.0-alpha.2` (`ec849d8`, Amatista Engine etapa 1) ya están en `bash herramientas/crear-tags.sh` y se publican desde la computadora del usuario (ver `docs/guias/2026-10-01_versiones-y-tablero.txt`).
 
 ## [Sin publicar]
 
@@ -49,6 +49,7 @@ Los tags están publicados y firmados con SSH; se crearon con `bash herramientas
   SMTP e importación del catálogo a Oracle.
 
 ### Cambiado
+- **Estructura fija de la plataforma y orden del repositorio** (4 oct 2026): navegación Cursos · Mi panel · Admin, sin pestañas sueltas; el «Laboratorio técnico» de prueba (botón de sesión de prueba y caja de tutor IA sin conectar) pasa a ser el **Diagnóstico técnico**, solo para el equipo, desde Admin › Estado. Revisión de la documentación documento por documento: README de la raíz reescrito, PROYECTO.md al día, estado de cada documento en `docs/README.md`, notas de actualización en los documentos de arquitectura y estado de producción en los manuales de Oracle. Tablero: estados reales con evidencia y bloqueos (el generador los muestra en el detalle) y el tablero de la v2 archivado con su revisión del estado real al cierre. `despliegue/actualizar.sh` detecta la unidad `amatista-backend` de la VM; `backend/.env.example` documenta `AMATISTA_URL_API` y `AMATISTA_URL_PWA`; `crear-tags.sh` incluye `v3.0.0-alpha.1` y `v3.0.0-alpha.2`.
 - La pestaña **Blender** sale de la barra superior: la conexión pasa a «Mi Blender» (menú de la cuenta) y a la práctica de cada módulo. «Contenido» del panel se llama **Módulos**.
 - La documentación de referencia del motor pasa a `docs/motor/referencia/`.
 - `INCIDENCIAS.txt` de la raíz pasa a `docs/incidencias/` (INC-010); INC-005 y INC-006 quedan resueltas.
