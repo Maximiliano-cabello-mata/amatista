@@ -566,6 +566,8 @@ CURSOS_BASE: Dict[str, dict] = {
         "recurso_texto": "Descarga Blender gratis",
         "recurso_url": "https://www.blender.org/download/",
         "orden": 1,
+        "ruta": "blender",
+        "requisito_id": None,
     },
     "blender_principiante_intermedio": {
         "id": "blender_principiante_intermedio",
@@ -581,6 +583,8 @@ CURSOS_BASE: Dict[str, dict] = {
         "recurso_texto": "Descarga Blender gratis",
         "recurso_url": "https://www.blender.org/download/",
         "orden": 2,
+        "ruta": "blender",
+        "requisito_id": "blender_principiante",
     },
     # Curso de la v2, archivado en el motor v3 (sql/009): se conserva para el progreso guardado.
     "blender": {
@@ -597,6 +601,8 @@ CURSOS_BASE: Dict[str, dict] = {
         "recurso_texto": "Descarga Blender gratis",
         "recurso_url": "https://www.blender.org/download/",
         "orden": 4,
+        "ruta": "blender",
+        "requisito_id": None,
     },
     "aframe": {
         "id": "aframe",
@@ -612,6 +618,8 @@ CURSOS_BASE: Dict[str, dict] = {
         "recurso_texto": "Documentación de A-Frame",
         "recurso_url": "https://aframe.io/docs/",
         "orden": 5,
+        "ruta": "aframe",
+        "requisito_id": None,
     },
 }
 

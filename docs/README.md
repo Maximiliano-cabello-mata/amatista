@@ -79,6 +79,7 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 - [Resumen y orden de los scripts](base-de-datos/README.md)
 - [Esquema SQL completo](base-de-datos/esquema.md): diagrama entidad-relación, cada tabla y columna, vistas, paquete `AMATISTA_AUTOR`
 - [Esquema consolidado (solo referencia)](base-de-datos/esquema_completo.sql)
+- **Motor v3**: [rediseño y optimización](base-de-datos/01_rediseno_v3.md) · [aplicar 008 y 009](base-de-datos/02_manual_008_009.md) · [migrar a otra base](base-de-datos/03_migracion.md) · [esquema PostgreSQL](base-de-datos/esquema_postgresql.sql)
 - Los scripts reales: [`backend/sql/`](../backend/sql/LEEME.txt)
 
 ## 7. Herramientas de la plataforma
