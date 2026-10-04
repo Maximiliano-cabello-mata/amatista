@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-04 11:18 · `main` en `c85ebe0`
+Último commit: 2026-10-04 11:23 · `main` en `81e9103`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -59,13 +59,14 @@ Versiones publicadas (tags): `v2.2.0-alpha.1` · `v2.0.1` · `v2.0.0` · `v1.0.0
 > 📝 borrador → 👀 revision → ✅ publicado. Solo lo publicado llega a los alumnos
 > ([la Fórmula](docs/arquitectura/2026-10-02_formula_modulos.txt)).
 
-📝 borrador (0) → 👀 revision (1) → ✅ publicado (2)
+📝 borrador (1) → 👀 revision (1) → ✅ publicado (2)
 
 | Curso | Módulo | Título | Estado | Lecciones | Bloques interactivos | Fórmula |
 |---|---|---|---|---|---|---|
 | aframe | 1 | La Web en 3D (Tus primeros pasos en A-Frame) | ✅ publicado | 3 | 5 | — |
 | blender | 1 | El mundo 3D y la magia de Blender (Teoría esencial) | ✅ publicado | 4 | 6 | — |
 | blender | 2 | Interfaz y navegación | 👀 revision | 3 | 6 | 3/5 |
+| blender | 3 | Modelado con precisión | 📝 borrador | 5 | 5 | 5/5 |
 
 ## 🧾 Detalle por versión
 
