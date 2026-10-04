@@ -13,10 +13,10 @@ Pedido de Maximiliano (3 oct, 23:53): ordenar y documentar Amatista Engine, add-
 
 ## Pruebas
 
-Backend, motor y add-on con pytest; el add-on dentro de `bpy` 5.0.1 (instalación real de la extensión); frontend con vitest, lint y build.
+Backend (257), motor/add-on/tablero (36) con pytest; el add-on dentro de `bpy` 5.0.1 (instalación real de la extensión); frontend (148) con vitest, lint y build. 007 en Oracle 23ai real (contenedor): scripts 001→007 y 007 repetido sin errores, 18 tablas OK, importar, publicar la práctica y recorrido completo del add-on contra esa base.
 
 ## Pendiente
 
-- 007 no se probó en un Oracle real: ejecutarlo después del piloto (manual Oracle, sección 10) — T-055.
+- Ejecutar 007 en la base de producción después del piloto (manual Oracle, sección 10) — T-055.
 - Probar el instalador en Windows y macOS reales — T-056.
 - Versión principal de Blender del curso sigue abierta (T-038).

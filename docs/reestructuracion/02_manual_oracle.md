@@ -290,7 +290,7 @@ Errores propios del paquete (`ORA-200xx`) explican qué falta: módulo o nivel i
 
 ## 10. Motor de prácticas de Blender (007, 4 de octubre de 2026)
 
-[`007_motor_practicas.sql`](../../backend/sql/007_motor_practicas.sql) agrega 4 tablas (`ADDON_VINCULOS`, `PRACTICAS`, `PRACTICA_VERSIONES`, `PROGRESO_PRACTICAS`), la vista `V_AMATISTA_PRACTICAS` y las 4 habilidades `bl-*` del nivel 1. No borra ni cambia nada existente, se puede repetir y el código de `main` anterior sigue funcionando con 007 aplicado. **No se probó todavía en un Oracle real** (solo con las pruebas del backend y la revisión del script): si algo falla, corrige y vuelve a ejecutar el archivo completo.
+[`007_motor_practicas.sql`](../../backend/sql/007_motor_practicas.sql) agrega 4 tablas (`ADDON_VINCULOS`, `PRACTICAS`, `PRACTICA_VERSIONES`, `PROGRESO_PRACTICAS`), la vista `V_AMATISTA_PRACTICAS` y las 4 habilidades `bl-*` del nivel 1. No borra ni cambia nada existente, se puede repetir y el código de `main` anterior sigue funcionando con 007 aplicado. **Probado el 4 de octubre de 2026 en Oracle 23ai real** (contenedor `gvenzl/oracle-free:23-slim-faststart`): 001 → 002 → 003 → 005 → 006 → 007 y 007 otra vez, sin errores y con las 18 tablas en `OK`; luego `diagnostico_oracle.py`, `importar` (módulos 1 y 2), `practicas --publicar` y el recorrido completo del add-on con el backend sobre esa base (vincular, abrir, intento parcial 70 %, intento completo 100 % con autonomía `con_pistas`, `mi-progreso`, 403 fuera de `/api/addon`, descargas de los 3 sistemas, historial de versiones). Si algo falla en tu base, corrige y vuelve a ejecutar el archivo completo.
 
 Después del piloto del 8 de octubre:
 
