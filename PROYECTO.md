@@ -2,7 +2,7 @@
 
 Punto de entrada para Maximiliano como desarrollador único. Aquí se decide **qué sigue, por qué y dónde está la información**. Las carpetas técnicas y los documentos existentes conservan su ubicación.
 
-[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Reestructuración v3](docs/reestructuracion/README.md) · [Plataforma](docs/plataforma/README.md) · [Amatista Engine](docs/motor/README.md) · [Último registro (4 oct)](docs/bitacora/2026-10-04_motor_etapa_2_y_plataforma.md)
+[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Reestructuración v3](docs/reestructuracion/README.md) · [Plataforma](docs/plataforma/README.md) · [Amatista Engine](docs/motor/README.md) · [Último registro (4 oct)](docs/bitacora/2026-10-04_documentacion_completa.md) · [Cronología](docs/historia/01_cronologia.md) · [Manual del desarrollador](docs/desarrollador/README.md)
 
 ## 1. Dirección y límite de trabajo
 
@@ -36,7 +36,7 @@ El README presenta el producto; sus fases describen la visión general. Para pri
 
 ## 3. Mapa de frentes y evidencia disponible
 
-Revisión del 4 de octubre de 2026 (rama del PR #14 sobre `main` en `ec849d8`). Es una fotografía del repositorio y de lo que el usuario reportó del servidor el 3 de octubre, no una certificación del servidor.
+Revisión del 4 de octubre de 2026 (`main` en `c730c0e`, con el PR #14 fusionado). Es una fotografía del repositorio y de lo que el usuario reportó del servidor el 3 de octubre, no una certificación del servidor.
 
 | Frente | Evidencia y ubicación | Estado y enfoque |
 |---|---|---|
@@ -44,7 +44,7 @@ Revisión del 4 de octubre de 2026 (rama del PR #14 sobre `main` en `ec849d8`). 
 | Herramientas de enseñanza | [Catálogo](frontend/src/data/herramientas.js), [documentación](docs/plataforma/04_herramientas_de_ensenanza.md) | 20 bloques de lección, con vista previa en Admin › Herramientas |
 | PWA y progreso | [Configuración PWA](frontend/vite.config.js), [almacén](frontend/src/lib/almacen.js), [progreso](frontend/src/progreso/) | Funciona offline y sincroniza; falta probarlo de punta a punta en el servidor (T-030) |
 | API y Oracle | [Backend](backend/README.md), [scripts](backend/sql/LEEME.txt), [manual](docs/reestructuracion/02_manual_oracle.md) | En producción con 002, 003, 005 y 006 (14 tablas, usuario ADMIN). Falta servicio con HTTPS (T-003, T-005) y 007 después del piloto (T-055) |
-| Amatista Engine y add-on | [engine/](engine/README.md), [addon/](addon/README.md), [practices/](practices/README.md), [docs/motor](docs/motor/README.md) | Etapa 1 en `main`, etapa 2 en el PR #14. Falta probar el instalador en Windows y Mac reales (T-056) y la guía en un Blender con GPU (T-059) |
+| Amatista Engine y add-on | [engine/](engine/README.md), [addon/](addon/README.md), [practices/](practices/README.md), [docs/motor](docs/motor/README.md) | Etapas 1 y 2 en `main` (PR #13 y #14). Falta probar el instalador en Windows y Mac reales (T-056) y la guía en un Blender con GPU (T-059) |
 | Panel de administración | [Panel](docs/plataforma/05_panel_de_administracion.md) | Agrupado por tareas (Enseñanza, Personas, Sistema); el diagnóstico técnico, antes «Laboratorio», vive en Admin › Estado |
 | Visor GLB | [Vista A-Frame](frontend/src/components/leccion/VistaAFrame.jsx) | Hay base 3D en las lecciones; el laboratorio GLB es la fase D (T-011) |
 | Tutor IA | [Prompts](ai_tutor/prompts/) | Carpeta reservada; no presentar la integración como terminada |
@@ -161,51 +161,13 @@ Registrar decisiones importantes en un documento de arquitectura fechado: contex
 
 ## 8. Biblioteca central
 
-### Arquitectura y operación
+La lista de documentos vive en un solo lugar: el [índice de la documentación](docs/README.md), ordenado en diez secciones (historia, plataforma, motor, manual del código, manual del desarrollador, base de datos, herramientas, despliegue, dirección y registros). Accesos rápidos:
 
-- [Arquitectura general](docs/arquitectura/2026-09-27_arquitectura_general.txt)
-- [Backend y base de datos](docs/arquitectura/2026-09-27_backend_y_base_de_datos.txt)
-- [Recomendaciones de arquitectura](docs/arquitectura/2026-09-27_recomendaciones_arquitectura.txt)
-- [Mapa conceptual](docs/arquitectura/2026-09-27_mindmap.png)
-- [Identidad visual](docs/arquitectura/2026-09-28_identidad_visual_interfaz.txt)
-- [Formato de lecciones](docs/arquitectura/2026-09-29_formato-lecciones.txt)
-- [Contrato técnico de la plataforma unificada](docs/arquitectura/2026-10-02_contrato_tecnico_plataforma.md)
-- [La Fórmula Amatista](docs/arquitectura/2026-10-02_formula_modulos.txt)
-- [Plan de lanzamiento](docs/planeacion/2026-10-01_plan_lanzamiento.txt)
-- [Convención de commits](docs/guias/2026-09-27_convencion_commits.txt)
-- [Versiones y tablero](docs/guias/2026-10-01_versiones-y-tablero.txt)
-
-### Reestructuración v3
-
-- [Plan maestro](docs/reestructuracion/00_plan_maestro.md) · [Modelo de contenido](docs/reestructuracion/01_modelo_de_contenido.md) · [Manual de Oracle](docs/reestructuracion/02_manual_oracle.md) · [Add-on de Blender (diseño original)](docs/reestructuracion/03_addon_blender.md)
-- [Propuesta de contenido por niveles](docs/propuestas/2026-10-03_propuesta_contenido_blender.txt)
-- [Tablero de la v2 archivado y revisado](tablero/historico/2026-10-03_v2_KANBAN.md)
-
-### Plataforma y Amatista Engine
-
-- [Plataforma](docs/plataforma/README.md): [mapa por rol](docs/plataforma/01_mapa_de_la_plataforma.md) · [módulos con práctica](docs/plataforma/02_modulos_y_practica.md) · [etiquetas y gráficos](docs/plataforma/03_etiquetas_y_graficos.md) · [herramientas de enseñanza](docs/plataforma/04_herramientas_de_ensenanza.md) · [panel de administración](docs/plataforma/05_panel_de_administracion.md)
-- [Amatista Engine](docs/motor/README.md): [etapa 1](docs/motor/etapas/etapa-1.md) · [etapa 2](docs/motor/etapas/etapa-2.md) · [referencia técnica](docs/motor/referencia/01_arquitectura.md)
-
-### Evidencia e historial
-
-- [Investigación y desarrollo](docs/bitacora/2026-09-27_investigacion_desarrollo.txt)
-- [Reporte App Shell](docs/bitacora/2026-09-27_reporte_app_shell.txt)
-- [Resumen inicial](docs/bitacora/2026-09-27_resumen.txt)
-- [Lecciones y progreso](docs/bitacora/2026-09-29_lecciones-y-progreso.txt)
-- [Estado de la plataforma unificada](docs/bitacora/2026-10-02_estado_plataforma_unificada.txt)
-- [Cierre del 2 de octubre y plan siguiente](docs/bitacora/2026-10-02_cierre_del_dia.txt)
-- [Estado al 3 de octubre y arranque de la reestructuración](docs/bitacora/2026-10-03_estado_y_reestructuracion.md) · [Bitácora técnica del servidor (3 oct)](docs/bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md)
-- [4 de octubre: Amatista Engine](docs/bitacora/2026-10-04_amatista_engine.md) · [Motor etapa 2 y plataforma por módulos](docs/bitacora/2026-10-04_motor_etapa_2_y_plataforma.md)
-- [Registro de incidencias](docs/incidencias/README.md) (índice de todas)
-- [ORA-01400](docs/incidencias/2026-09-27_ora-01400-autoincremento.txt)
-- [Puerto ocupado y CORS](docs/incidencias/2026-09-27_puerto-ocupado-y-cors.txt)
-- [Diagnóstico Oracle/progreso](docs/incidencias/2026-09-29_diagnostico-oracle-progreso.txt)
-- [Integración FastAPI/Oracle](docs/incidencias/2026-09-29_reporte-integracion-fastapi-oracle.txt)
-
-### Expansión
-
-- [Amatista 3D Lab](docs/propuestas/2026-09-27_amatista_3d_lab.txt)
-- [Motor generativo 3D](docs/propuestas/2026-09-27_motor_generativo_3d.txt)
+- **Cómo llegamos aquí**: [cronología exacta](docs/historia/01_cronologia.md) · [ideas y cómo se implementaron](docs/historia/02_ideas_y_como_se_implementaron.md) · [la plataforma en cada versión](docs/historia/03_la_plataforma_en_cada_version.md)
+- **El código**: [manual del código](docs/manual-del-codigo/README.md) · [esquema SQL](docs/base-de-datos/README.md) · [herramientas de la plataforma](docs/herramientas-de-la-plataforma.md)
+- **Trabajar en el repo**: [manual del desarrollador](docs/desarrollador/README.md) · [despliegue en OCI](docs/despliegue/2026-10-04_despliegue_oci.md)
+- **Dirección**: [plan maestro v3](docs/reestructuracion/00_plan_maestro.md) · [plataforma](docs/plataforma/README.md) · [Amatista Engine](docs/motor/README.md) · [plan de lanzamiento](docs/planeacion/2026-10-01_plan_lanzamiento.txt)
+- **Registros**: [bitácora](docs/bitacora/) · [incidencias](docs/incidencias/README.md)
 
 ## 9. Mantenimiento de este centro
 

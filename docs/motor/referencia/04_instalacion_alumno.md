@@ -15,7 +15,7 @@
 |---|---|
 | Windows | `AMATISTA_BLENDER` → `Archivos de programa\Blender Foundation\Blender*` → Steam → `where blender` → pregunta la ruta (se puede arrastrar `blender.exe`) |
 | macOS | `AMATISTA_BLENDER` → `/Applications/Blender.app` y `~/Applications` (las `Blender*.app`, la más nueva primero) → `PATH` → pregunta |
-| Linux | `AMATISTA_BLENDER` → `PATH` → `/snap/bin/blender` → Flatpak `org.blender.Blender` → pregunta |
+| Linux | `AMATISTA_BLENDER` → `PATH` → `/snap/bin/blender` → descargas sueltas de blender.org en `~/blender-*`, `~/Descargas/blender-*`, `~/Downloads/blender-*` y `/opt/blender*` (la más nueva) → Flatpak `org.blender.Blender`. Si no lo encuentra, no pregunta: termina e indica usar `AMATISTA_BLENDER=/ruta/a/blender bash instalar-amatista.sh` |
 
 ## Códigos de salida de `instalar_en_blender.py`
 
@@ -30,13 +30,13 @@ La última línea siempre es `AMATISTA_RESULTADO=<texto>`.
 
 ## El paquete
 
-`GET /api/addon/v1/descargas/{windows|macos|linux}` arma al vuelo `Amatista-<versión>-<sistema>.zip`:
+`GET /api/addon/v1/descargas/{windows|macos|linux}` arma al vuelo `Amatista-<versión>-<sistema>.zip` (con `addon/herramientas/construir.py` desde la terminal el nombre sale en minúsculas, `amatista-…`). Dentro, todo va en la carpeta `Amatista/`:
 
 ```
-Amatista-0.2.0-windows/
+Amatista/
 ├─ Instalar Amatista.bat         (o .command / instalar-amatista.sh)
 ├─ instalar_en_blender.py
-├─ amatista-0.2.0.zip            la extensión (add-on + motor + prácticas)
+├─ amatista-0.3.0.zip            la extensión (add-on + motor + prácticas)
 └─ LEEME.txt                     instalar, qué cambia, instalar a mano, desinstalar
 ```
 
