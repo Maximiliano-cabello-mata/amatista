@@ -173,7 +173,7 @@ La diferencia entre esta unidad y la que corre hoy en la VM (`amatista-backend`)
 
 ## 7. `engine/demo.py`
 
-Demostración del motor sin Blender: carga `practices/blender/level_1/mesa.json`, arma una escena de ejemplo con la cubierta y 3 de 4 patas, y muestra el reporte. Sin opciones; funciona desde cualquier carpeta.
+Demostración del motor sin Blender: carga `practices/archivo/v2/mesa.json`, arma una escena de ejemplo con la cubierta y 3 de 4 patas, y muestra el reporte. Sin opciones; funciona desde cualquier carpeta.
 
 ```bash
 python engine/demo.py
@@ -203,7 +203,7 @@ Prueba manual del motor dentro de Blender, con la escena abierta (`capture_scene
 2. Ábrelo en Blender › Scripting.
 3. Pulsa *Run Script*; el reporte sale en la consola del sistema.
 
-**Está desactualizado respecto del repositorio** (es del prototipo v0.1): `PROJECT_ROOT` se usa a la vez para importar `amatista_engine` (que vive en `engine/`) y para buscar `practices/sandbox/table.json` (que vive en la raíz). Con la estructura actual hay que agregar **las dos** rutas a `sys.path` / apuntar la práctica a la raíz, por ejemplo poner `PROJECT_ROOT` en la raíz del repo y agregar también `PROJECT_ROOT / "engine"` a `sys.path`. Para la práctica oficial usa `practices/blender/level_1/mesa.json`. Para probar el add-on completo dentro de Blender es más práctico [`addon/tests/en_blender.py`](04_pruebas_y_ci.md#6-add-on-dentro-de-blender-addontestsen_blenderpy) o el modo Desarrollador.
+**Está desactualizado respecto del repositorio** (es del prototipo v0.1): `PROJECT_ROOT` se usa a la vez para importar `amatista_engine` (que vive en `engine/`) y para buscar `practices/archivo/v2/table.json` (que vive en la raíz). Con la estructura actual hay que agregar **las dos** rutas a `sys.path` / apuntar la práctica a la raíz, por ejemplo poner `PROJECT_ROOT` en la raíz del repo y agregar también `PROJECT_ROOT / "engine"` a `sys.path`. Para la práctica oficial usa `practices/archivo/v2/mesa.json`. Para probar el add-on completo dentro de Blender es más práctico [`addon/tests/en_blender.py`](04_pruebas_y_ci.md#6-add-on-dentro-de-blender-addontestsen_blenderpy) o el modo Desarrollador.
 
 ## 9. `addon/herramientas/construir.py`
 

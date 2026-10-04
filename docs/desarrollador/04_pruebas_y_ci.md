@@ -43,7 +43,7 @@ Todo de una vez: ver [«Tu primer día», paso 6](README.md#6-correr-todas-las-c
 | `src/catalogo/combinar.test.js` | Catálogo combinado (JSON empaquetados + servidor), búsqueda de lecciones e insignias |
 | `src/progreso/estado.test.js`, `reglas.test.js` | Progreso v2: estado, reglas de acople, XP, nivel y racha |
 | `src/modulos/practica.test.js` | La práctica de Blender que cierra cada módulo |
-| `src/blender/logica.test.js` | Conexión con Blender; usa `practices/blender/level_1/mesa.json` (los `steps` del bloque deben coincidir con los objetivos) |
+| `src/blender/logica.test.js` | Conexión con Blender; usa `practices/archivo/v2/mesa.json` (los `steps` del bloque deben coincidir con los objetivos) |
 | `src/components/leccion/interactivos/logica.test.js` | Bloques interactivos (quiz, ordenar, emparejar…) con los módulos reales |
 | `src/components/leccion/atajos.test.js` | Atajos de teclado practicables |
 | `src/components/panel/datos.test.js`, `retos.test.js` | Datos y retos del panel del alumno |

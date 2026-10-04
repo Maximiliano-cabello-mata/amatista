@@ -27,7 +27,7 @@ El pedido de Maximiliano (3 oct, 23:53) fue ordenar y documentar el motor, hacer
 
 ### La primera práctica: «Construir una mesa» (`blender.n1.mesa`)
 
-[`practices/blender/level_1/mesa.json`](../../../practices/blender/level_1/mesa.json), seis objetivos obligatorios y uno opcional:
+[`practices/archivo/v2/mesa.json`](../../../practices/archivo/v2/mesa.json), seis objetivos obligatorios y uno opcional:
 
 1. **Crea la cubierta** (`role.count` cubierta = 1).
 2. **Hazla delgada** (`dimension.range` Z entre 0.05 y 0.3).

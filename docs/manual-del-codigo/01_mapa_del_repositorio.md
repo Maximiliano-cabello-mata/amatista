@@ -46,7 +46,7 @@ flowchart TB
 | `backend/` | API FastAPI, modelos, scripts de Oracle, CLI de contenido y pruebas | 53 archivos, ~14 500 líneas | [03 Backend](03_backend.md) |
 | `engine/` | Amatista Engine: motor de prácticas en Python puro | 43 archivos, ~3 700 líneas | [04 Motor](04_motor_addon_y_practicas.md) |
 | `addon/` | Add-on «Amatista» para Blender 4.2+, constructor del `.zip` e instaladores | 38 archivos, ~5 100 líneas | [04 Motor](04_motor_addon_y_practicas.md) |
-| `practices/` | Prácticas declarativas `amatista.practice/1` (`blender/level_1/mesa.json`, `sandbox/table.json`) | 3 archivos | [04 Motor](04_motor_addon_y_practicas.md) |
+| `practices/` | Prácticas del plan de estudios (`amatista.practice/2`) en `blender/<curso>/m<n>-<nombre>/`, el mapa `blender/cursos.json` y las archivadas en `archivo/v2/` | 6 prácticas + 3 archivadas | [04 Motor](04_motor_addon_y_practicas.md) |
 | `tablero/` | Generador del Kanban (`actualizar.py`), tareas (`tareas.yml`), pruebas e histórico de la v2 | 6 archivos | [Manual del desarrollador](../desarrollador/05_flujo_de_trabajo.md) |
 | `despliegue/` | Unidad systemd, `Caddyfile` (HTTPS) y `actualizar.sh` para la VM | 3 archivos | [Despliegue en OCI](../despliegue/2026-10-04_despliegue_oci.md) |
 | `herramientas/` | `crear-tags.sh` (tags de versión) | 1 archivo | [Manual del desarrollador](../desarrollador/02_herramientas_de_linea_de_comandos.md) |
@@ -69,7 +69,7 @@ flowchart TB
 | Los datos | `backend/database/modelos.py` | `backend/sql/LEEME.txt` y [esquema](../base-de-datos/esquema.md) |
 | El motor | `engine/demo.py` | `engine/amatista_engine/engine.py`, `practice/`, `validators/`, `guide/` |
 | El add-on | `addon/amatista_blender/__init__.py` | `operadores.py`, `practicas.py`, `guia.py`, `interfaz/` |
-| Una práctica | `practices/blender/level_1/mesa.json` | [formato de práctica](../motor/referencia/02_formato_de_practica.md) |
+| Una práctica | `practices/archivo/v2/mesa.json` | [formato de práctica](../motor/referencia/02_formato_de_practica.md) |
 
 ## 4. Routers de la API
 

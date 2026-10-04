@@ -96,7 +96,7 @@ Las secciones citadas en los docstrings («sección 16», «sección 21»…) so
 
 ### 2.3 Usar el motor desde Python puro
 
-`engine/demo.py` es el ejemplo mínimo: agrega `engine/` al `sys.path`, carga `practices/blender/level_1/mesa.json`, arma una escena con una cubierta y tres patas y la evalúa.
+`engine/demo.py` es el ejemplo mínimo: agrega `engine/` al `sys.path`, carga `practices/archivo/v2/mesa.json`, arma una escena con una cubierta y tres patas y la evalúa.
 
 ```bash
 python engine/demo.py
@@ -118,7 +118,7 @@ from amatista_engine.models import SceneObject, SceneState
 from amatista_engine.guide import Companion, guidance_to_dict
 from amatista_engine.snapshot import scene_to_dict, scene_from_dict
 
-resultado = compile_practice(json.load(open("practices/blender/level_1/mesa.json")))
+resultado = compile_practice(json.load(open("practices/archivo/v2/mesa.json")))
 assert resultado.ok, resultado.errors           # resultado.warnings: avisos que no bloquean
 practica = resultado.practice                    # o load_practice(ruta): solo estructura
 
@@ -139,7 +139,7 @@ mismo = motor.evaluate(practica, scene_from_dict(foto))
 Hay dos caminos:
 
 1. **Con el add-on instalado** (lo normal): el add-on ya trae el motor (ver [3.1](#31-addonamatista_blender)) y `amatista_blender._motor` lo expone como `MOTOR`, `adapter`, `tagger`, `practica`, `pedagogia`, `foto`, `herramientas` y `guia`.
-2. **Script suelto** `engine/herramientas/run_in_blender.py`: se abre en *Blender › Scripting* y se ejecuta con *Run Script*. Agrega `PROJECT_ROOT` al `sys.path`, carga `practices/sandbox/table.json`, captura la escena con `capture_scene()` y escribe el resultado de cada objetivo en la consola (`[OK]`, `[FAIL]`, `[?]`).
+2. **Script suelto** `engine/herramientas/run_in_blender.py`: se abre en *Blender › Scripting* y se ejecuta con *Run Script*. Agrega `PROJECT_ROOT` al `sys.path`, carga `practices/archivo/v2/table.json`, captura la escena con `capture_scene()` y escribe el resultado de cada objetivo en la consola (`[OK]`, `[FAIL]`, `[?]`).
 
    Ojo: el script viene del prototipo y espera que `amatista_engine/` y `practices/` cuelguen de la misma carpeta (`PROJECT_ROOT = Path(r"C:\ruta\a\amatista_engine_starter")`). En este repositorio no es así: el paquete está en `engine/amatista_engine` y las prácticas en `practices/`. Para usarlo hay que editar dos líneas: agregar `<repo>/engine` al `sys.path` y cargar la práctica desde `<repo>/practices/...`.
 
@@ -315,20 +315,25 @@ Entrenadores de la guía (`guide/coach.py`, `ENTRENADORES`): `role.count`, `role
 
 ## 6. `practices/`
 
+> **Motor v3 (4 de octubre):** las prácticas oficiales ahora son las 6 del plan de estudios en `practices/blender/<curso>/m<n>-<nombre>/` (`practica.json` + `pruebas.json`) con el mapa `practices/blender/cursos.json`; la mesa, el podio y `table.json` se movieron a `practices/archivo/v2/`. Referencia: [prácticas v3 y herramientas de autor](../motor/referencia/08_practicas_v3_y_herramientas.md). Lo que sigue describe la v2 y sigue valiendo para las archivadas.
+
 ```
 practices/
 ├─ README.md                  qué hay y cómo se registra
 ├─ blender/
-│  └─ level_1/
-│     └─ mesa.json            blender.n1.mesa (versión 2)
-└─ sandbox/
+│  ├─ cursos.json             plan de estudios (amatista.curriculum/1)
+│  ├─ principiante/           m1-tren, m2-espada, m3-nave
+│  └─ principiante-intermedio/ m1-pinta-nave, m2-tres-puntos, m3-pelota
+└─ archivo/v2/
+   ├─ mesa.json               blender.n1.mesa (versión 2)
+   ├─ podio.json              blender.n1.podio
    └─ table.json              sandbox.table, el ejemplo del prototipo v0.1
 ```
 
-- **`blender/level_<n>/`**: prácticas oficiales. Las recogen tres lectores: `construir.py` (las copia a `practicas/` dentro del `.zip`), `backend/contenido/motor.py` (`practicas_del_repositorio()`, para `python herramientas/contenido.py practicas [--publicar]` desde `backend/` y para *Admin › Prácticas › Registrar las del repositorio*) y la prueba `test_todas_las_practicas_del_repositorio_compilan`.
-- **`sandbox/`**: no se empaqueta (`construir.py` solo copia `practices/blender/`) ni se registra en Oracle. En desarrollo, el catálogo del add-on la muestra solo con el modo desarrollador. `engine/herramientas/run_in_blender.py` la usa.
+- **`blender/`**: prácticas oficiales (solo los archivos con `"schema": "amatista.practice/…"`). Las recogen tres lectores: `construir.py` (las copia a `practicas/` dentro del `.zip`), `backend/contenido/motor.py` (`practicas_del_repositorio()`, para `python herramientas/contenido.py practicas [--publicar]` desde `backend/` y para *Admin › Prácticas › Registrar las del repositorio*) y la prueba `test_todas_las_practicas_del_repositorio_compilan`.
+- **`archivo/`**: no se empaqueta (`construir.py` solo copia `practices/blender/`) ni se registra en Oracle. En desarrollo, el catálogo del add-on la muestra solo con el modo desarrollador.
 
-### La mesa: `blender/level_1/mesa.json`
+### La mesa (archivada): `archivo/v2/mesa.json`
 
 `blender.n1.mesa`, versión 2, nivel 1, 20 min, Blender ≥ 4.2, roles `cubierta` y `pata`, habilidades `bl-transformar`, `bl-duplicar`, `bl-proporciones`, `bl-guardar-archivo`; herramientas permitidas `object.add`, `transform.move`, `transform.scale`, `object.duplicate`, `file.save`, `material.basic` y avisos para `modifier.boolean`, `geometry_nodes`, `sculpt`.
 
@@ -387,12 +392,12 @@ Las pruebas de la API del add-on están en `backend/tests/test_addon.py` (ver [0
 
 **A mano:**
 
-1. Crea `practices/blender/level_<n>/<tema>.json` con `schema`, `id` (`blender.n<nivel>.<tema>`), `version: 1`, `title`, **`level`** (el lector lo exige aunque la referencia lo marque opcional), `roles` y `targets`. Parte de `mesa.json` o del ejemplo mínimo de [02](../motor/referencia/02_formato_de_practica.md#ejemplo-mínimo).
+1. **Desde el motor v3 usa `python engine/herramientas/practicas.py nueva` ([08](../motor/referencia/08_practicas_v3_y_herramientas.md)).** A mano: crea `practices/blender/<curso>/m<n>-<tema>/practica.json` con `schema`, `id` (`blender.n<nivel>.<tema>`), `version: 1`, `title`, **`level`** (el lector lo exige aunque la referencia lo marque opcional), `roles` y `targets`. Parte de `mesa.json` o del ejemplo mínimo de [02](../motor/referencia/02_formato_de_practica.md#ejemplo-mínimo).
 2. Compílala:
 
    ```bash
    python -c "import json,sys; sys.path.insert(0,'engine'); from amatista_engine.practice import compile_practice; \
-   r=compile_practice(json.load(open('practices/blender/level_1/<tema>.json'))); print(r.summary())"
+   r=compile_practice(json.load(open('practices/blender/<curso>/m<n>-<tema>/practica.json'))); print(r.summary())"
    ```
 
    Corrige los `errors`; revisa los `warnings` (pistas faltantes, roles sin declarar).

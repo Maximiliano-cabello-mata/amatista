@@ -46,7 +46,7 @@ Referencia completa: [07 · Guía paso a paso y acompañamiento](../referencia/0
 | `engine/amatista_engine/guide/companion.py` | `Companion` (cuándo hablar) y `distance` (cuánto falta). |
 | `engine/amatista_engine/engine.py` | `motor.guide(practica, escena, reporte=None)`. |
 | `engine/amatista_engine/models.py`, `practice/` | Campo opcional `guide: {why, steps}` en cada objetivo (hasta 8 pasos, 6 teclas por paso). |
-| `practices/blender/level_1/mesa.json` | Versión 2: cada objetivo trae su `guide.why`. |
+| `practices/archivo/v2/mesa.json` | Versión 2: cada objetivo trae su `guide.why`. |
 | `addon/amatista_blender/guia.py` | Estado de la guía en la sesión, avisos, diálogos automáticos, «Hazlo conmigo», registro de ayudas. |
 | `addon/amatista_blender/interfaz/hud.py` | La tarjeta pasa a ser el acompañante (paso N de M, teclas dibujadas, avisos). |
 | `addon/amatista_blender/interfaz/visor3d.py` | Guía dibujada en la escena (POST_VIEW y POST_PIXEL). |

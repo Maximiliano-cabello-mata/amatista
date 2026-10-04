@@ -36,11 +36,13 @@ Al 4 de octubre de 2026 (`main` en `c730c0e`):
 |---|---|
 | **Plataforma v2.2** («Plataforma unificada») | En `main` y en producción con Oracle. El **piloto del 8 de octubre** se hace con ella. Falta: servicio con HTTPS, SMTP, prueba de punta a punta y revisión de seguridad (versión `v2.2.0` del [tablero](KANBAN.md)). |
 | **v3 «Reestructuración»** | Fase A (niveles, habilidades, versiones de Blender, herramientas de autor) en `main`, con los scripts 005 y 006 aplicados en Oracle. Fases B y C (contenido por niveles) sin empezar. [Plan maestro](docs/reestructuracion/00_plan_maestro.md). |
-| **Amatista Engine** | Etapa 1 (evalúa) y etapa 2 (acompaña paso a paso) en `main` (PR #13 y #14). Add-on 0.3.0 para Blender 4.2+. El script Oracle 007 se aplica después del piloto (T-055). [Documentación](docs/motor/README.md). |
+| **Amatista Engine** | Etapa 1 (evalúa) y etapa 2 (acompaña paso a paso) en `main` (PR #13 y #14). **Motor v3** (etapa 3, en PR): add-on 3.0 con pestañas Aprender · Practicar · Mi curso, píldoras de teoría, repaso espaciado, vigilantes y herramientas de autor; probado en Blender 4.2 y 5.0. Oracle 007, 008 y 009 se aplican después del piloto (T-055, T-064). [Documentación](docs/motor/README.md). |
+| **Cursos de Blender** | El [plan de estudios](docs/cursos/plan_de_estudios_blender.txt) en dos cursos: **Principiante** y **Principiante-Intermedio**, 3 módulos cada uno, con teoría en la plataforma y una práctica guiada en Blender. Intermedio y Avanzado, próximamente. El curso de la v2 quedó archivado. [Cursos](docs/cursos/README.md). |
+| **Dominio** | `amatista-3d.me` (Namecheap, 1 año). Plan con Cloudflare: PWA en `amatista-3d.me` y API en `api.amatista-3d.me` (T-065). [Guía](docs/despliegue/2026-10-04_dominio_amatista-3d.md). |
 | **Plataforma por módulos** | Estructura fija **Cursos · Mi panel · Admin**; la práctica de Blender cierra cada módulo. [Documentación](docs/plataforma/README.md). |
 | **Documentación** | Organizada por secciones, con historia, manual del código, esquema SQL y manual del desarrollador. [Índice](docs/README.md). |
 
-Contenido: Módulo 1 de Blender (4 lecciones) y Módulo 1 de A-Frame (3 lecciones) publicados; Módulo 2 de Blender (3 lecciones, con la práctica «Construir una mesa») en revisión, todavía no visible para alumnos.
+Contenido (con el motor v3): Blender Principiante y Principiante-Intermedio (6 módulos de 4 lecciones, cada uno con su práctica en Blender) y Módulo 1 de A-Frame publicados. Los módulos de Blender de la v2 están en `frontend/src/data/modulos/archivo/`.
 
 ## 2. Cómo llegamos hasta aquí
 
@@ -58,6 +60,7 @@ Amatista nació el **27 de septiembre de 2026** y en ocho días pasó de una pan
 | 3 oct | Amatista Engine | Motor de prácticas, add-on de Blender, instalador por sistema, Oracle 007, la práctica de la mesa | `v3.0.0-alpha.2` |
 | 3 oct | Motor etapa 2 | Guía paso a paso, acompañante, «Hazlo conmigo», práctica al cierre de cada módulo | `v3.0.0-alpha.3` |
 | 4 oct | Documentación completa | Historia, manuales, esquema SQL, este README | `v3.0.0-alpha.4` |
+| 4 oct | Motor v3 y plan de estudios | Add-on 3.0 como aula, 2 cursos y 6 prácticas, herramientas de autor, Oracle 008/009, migración portable y dominio `amatista-3d.me` | `v3.0.0-alpha.5` (propuesto) |
 
 Detalle con hora y commit: [cronología exacta](docs/historia/01_cronologia.md). Cómo se veía la plataforma en cada versión: [la plataforma en cada versión](docs/historia/03_la_plataforma_en_cada_version.md). De dónde salió cada idea: [ideas y cómo se implementaron](docs/historia/02_ideas_y_como_se_implementaron.md).
 
@@ -83,7 +86,7 @@ flowchart LR
 ```
 
 - **20 herramientas de enseñanza** en cuatro categorías: explicar (texto, imagen, video, aviso, código), visualizar (paso a paso, atajos, comparar, tarjetas, línea de tiempo, pipeline, capas), practicar en el navegador (pregunta rápida, ordenar, emparejar, completar, puntos en imagen, explorador 3D, reto de código) y practicar en Blender. [Detalle](docs/plataforma/04_herramientas_de_ensenanza.md).
-- **Amatista Engine** lee prácticas declarativas (`amatista.practice/1`), comprueba la escena de Blender con 18 validadores, da pistas, y en la etapa 2 guía paso a paso, felicita, avisa y ofrece «Hazlo conmigo». [Detalle](docs/motor/README.md).
+- **Amatista Engine** lee prácticas declarativas (`amatista.practice/1` y `/2`), comprueba la escena de Blender con 35 validadores, da pistas, en la etapa 2 guía paso a paso, felicita, avisa y ofrece «Hazlo conmigo», y en la etapa 3 enseña teoría en píldoras con repaso espaciado y pausa el progreso cuando algo se rompe. [Detalle](docs/motor/README.md).
 
 ## 4. Arquitectura
 
@@ -146,8 +149,10 @@ Oracle Autonomous Database 23ai en producción (esquema `ADMIN`); SQLite en desa
 | `005` | Niveles, habilidades, rúbrica y versiones de Blender |
 | `006` | Vistas y paquete `AMATISTA_AUTOR` para autores |
 | `007` | Motor de prácticas: con él son **18 tablas** |
+| `008` | Cursos por ruta: `CURSOS.RUTA` y `CURSOS.REQUISITO_ID` |
+| `009` | Archiva el curso `blender` de la v2 (no borra el progreso) |
 
-Producción: 002, 003, 005 y 006 aplicados (14 tablas); 007 después del piloto (T-055). `backend/diagnostico_oracle.py` compara las tablas reales con las que espera el backend. Diagrama entidad-relación y cada columna: [esquema SQL](docs/base-de-datos/esquema.md).
+Producción: 002, 003, 005 y 006 aplicados (14 tablas); 007, 008 y 009 después del piloto (T-055, T-064). Para cambiar de base algún día, `backend/herramientas/migrar.py` exporta e importa en JSONL y genera el esquema para PostgreSQL ([migración](docs/base-de-datos/03_migracion.md)). `backend/diagnostico_oracle.py` compara las tablas reales con las que espera el backend. Diagrama entidad-relación y cada columna: [esquema SQL](docs/base-de-datos/esquema.md).
 
 ## 7. Tecnologías
 
@@ -156,7 +161,7 @@ Producción: 002, 003, 005 y 006 aplicados (14 tablas); 007 después del piloto 
 | PWA | React 19, Vite 8, Tailwind CSS 4, vite-plugin-pwa, IndexedDB, A-Frame 1.8, Vitest, ESLint |
 | API | FastAPI, Uvicorn, SQLAlchemy 2, python-oracledb, PBKDF2, SMTP, pytest |
 | Datos | Oracle Autonomous Database 23ai, SQLite, PL/SQL (`AMATISTA_AUTOR`) |
-| Blender | Blender 4.2+ (extensión), add-on Amatista 0.3.0, Amatista Engine (Python puro) |
+| Blender | Blender 4.2+ (extensión, probada en 4.2 y 5.0), add-on Amatista 3.0.0, Amatista Engine (Python puro) |
 | Servidor | VM de Oracle Cloud, systemd, Caddy (HTTPS con Let's Encrypt) |
 | Proceso | GitHub, GitHub Actions (CI y tablero), commits firmados con SSH |
 
@@ -204,7 +209,9 @@ Paso a paso: [entorno local](docs/desarrollador/01_entorno_local.md). Servidor: 
 | `backend/herramientas/contenido.py` | Validar, importar, exportar y crear módulos y lecciones; niveles; publicar prácticas |
 | `backend/herramientas/crear_admin.py` | Dar el rol de administrador a una cuenta |
 | `backend/diagnostico_oracle.py` | Comparar las tablas de Oracle con el backend |
+| `engine/herramientas/practicas.py` | Crear, revisar, probar y simular prácticas sin Blender; mapa del plan de estudios |
 | `engine/demo.py` | Probar el motor sin Blender |
+| `backend/herramientas/migrar.py` | Respaldo JSONL, carga en otra base y esquema para PostgreSQL |
 | `addon/herramientas/construir.py` | Construir el `.zip` del add-on y los paquetes por sistema |
 | `tablero/actualizar.py` | Regenerar `KANBAN.md` |
 | `herramientas/crear-tags.sh` | Crear los tags de versión |
@@ -220,18 +227,18 @@ Todas, con cada opción y ejemplos: [manual del desarrollador](docs/desarrollado
 - **Commits**: `type(scope): descripción` ([convención](docs/guias/2026-09-27_convencion_commits.txt)), firmados con SSH.
 - **Tareas**: [`tablero/tareas.yml`](tablero/tareas.yml); las tarjetas se mueven con los commits (`T-xxx`, `cierra T-xxx`) y [KANBAN.md](KANBAN.md) se regenera solo.
 - **Bitácora**: cada sesión deja su registro en [`docs/bitacora/`](docs/bitacora/); las fallas, en el [registro de incidencias](docs/incidencias/README.md).
-- **Base de datos**: cambios de esquema solo con scripts nuevos y aditivos (`008` en adelante), ejecutados antes del código que los necesita.
+- **Base de datos**: cambios de esquema solo con scripts nuevos y aditivos (`010` en adelante), ejecutados antes del código que los necesita.
 
 Flujo completo y checklist antes de un PR: [flujo de trabajo](docs/desarrollador/05_flujo_de_trabajo.md).
 
 ## 11. Versiones
 
-Tags `v*` con `bash herramientas/crear-tags.sh` desde la computadora de Maximiliano (la nube no puede publicar tags). Publicados: `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.1`. Preparados en el script: `v2.2.0-alpha.2`, `v3.0.0-alpha.1`, `v3.0.0-alpha.2`, `v3.0.0-alpha.3`. Qué trajo cada una: [CHANGELOG.md](CHANGELOG.md).
+Tags `v*` con `bash herramientas/crear-tags.sh` desde la computadora de Maximiliano (la nube no puede publicar tags). Publicados: `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.1`. Preparados en el script: `v2.2.0-alpha.2` y `v3.0.0-alpha.1` a `v3.0.0-alpha.4`; `v3.0.0-alpha.5` (motor v3) se agrega al fusionar. Qué trajo cada una: [CHANGELOG.md](CHANGELOG.md).
 
 ## 12. Qué sigue
 
 1. **Piloto del 8 de octubre** con la v2.2: servicio y HTTPS (T-003, T-005), SMTP (T-032), seguridad y prueba de punta a punta (T-029, T-030).
-2. **Después del piloto**: Oracle 007 y la mesa publicada (T-055), instalador en Windows y Mac reales (T-056), guía en Blender con GPU (T-059).
+2. **Después del piloto**: Oracle 007 (T-055), 008 y 009 con los cursos nuevos (T-064), dominio con Cloudflare (T-065), instalador en Windows y Mac reales (T-056) y el add-on 3.0 con alumnos (T-066).
 3. **Fase B de la v3**: decidir la versión LTS de Blender (T-038), pasar el contenido a niveles y el mapa de niveles en la PWA.
 4. **Más adelante**: «Mi primer espacio 3D», laboratorio GLB, especialidades y un tutor IA local (Ollama) como capa opcional.
 

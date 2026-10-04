@@ -10,8 +10,8 @@
 # Si tienes la firma SSH de git configurada (user.signingkey), los tags se
 # firman (-s). Cada tag lleva la fecha de su commit, no la de hoy.
 # v2.2.0-alpha.1 se creó a mano; v2.2.0-alpha.2 es el cierre del 2/10 (main con el panel de administración);
-# v3.0.0-alpha.1, alpha.2 y alpha.3 son las fusiones de la reestructuración, del motor
-# y del motor etapa 2 con la plataforma por módulos.
+# v3.0.0-alpha.1 a alpha.4 son las fusiones de la reestructuración, del motor, del motor
+# etapa 2 con la plataforma por módulos y de la documentación completa.
 # Es seguro ejecutarlo varias veces: los tags que ya existen se saltan.
 # =============================================================================
 set -euo pipefail
@@ -26,10 +26,11 @@ VERSIONES=(
   "v3.0.0-alpha.1|2337fd5|Reestructuración: niveles, versiones de Blender y herramientas de autor en Oracle (PR #12)"
   "v3.0.0-alpha.2|ec849d8|Amatista Engine etapa 1: motor de prácticas, add-on de Blender, Oracle 007 y la práctica de la mesa (PR #13)"
   "v3.0.0-alpha.3|d004071|Motor etapa 2 (guía y acompañante), plataforma por módulos y estructura fija Cursos · Mi panel · Admin (PR #14)"
+  "v3.0.0-alpha.4|fe209e0|Documentación completa por secciones: historia, manual del código, esquema SQL, manual del desarrollador y README (PR #15)"
 )
-# v3.0.0-alpha.4 (documentación completa: historia, manual del código, esquema SQL,
-# manual del desarrollador y README nuevo) se agrega aquí con su commit de fusión
-# cuando llegue a main.
+# v3.0.0-alpha.5 (motor v3, plan de estudios en dos cursos, Oracle 008/009,
+# migración portable y dominio amatista-3d.me) se agrega aquí con su commit de
+# fusión cuando llegue a main.
 
 git fetch --quiet origin --tags
 

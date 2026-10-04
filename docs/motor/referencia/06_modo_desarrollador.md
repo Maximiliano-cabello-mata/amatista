@@ -1,5 +1,7 @@
 # 06 · Modo desarrollador (Amatista Author)
 
+> **Motor v3:** las prácticas nuevas usan `amatista.practice/2` (píldoras, vigilantes, escena de inicio y curso) y se crean y prueban con `engine/herramientas/practicas.py`. Ver [prácticas v3 y herramientas de autor](08_practicas_v3_y_herramientas.md). Este documento sigue valiendo para todo lo que la v2 no cambió.
+
 Crear una práctica nueva sin escribir código, desde Blender, y registrarla en Oracle. Es la versión construida del [Motor de Desarrollo v0.1](../especificaciones/2026-10-03_motor_de_desarrollo_v0.1.md).
 
 ## Activarlo
