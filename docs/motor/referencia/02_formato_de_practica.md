@@ -1,6 +1,6 @@
 # 02 · Formato de práctica: `amatista.practice/1`
 
-Una práctica es un JSON declarativo. El motor la valida al cargarla (`engine/amatista_engine/practice/loader.py`) y explica cada error en español con la ruta del campo («targets[2].params.min debe ser un número»). Ejemplo completo: [`practices/blender/level_1/mesa.json`](../../practices/blender/level_1/mesa.json).
+Una práctica es un JSON declarativo. El motor la valida al cargarla (`engine/amatista_engine/practice/loader.py`) y explica cada error en español con la ruta del campo («targets[2].params.min debe ser un número»). Ejemplo completo: [`practices/blender/level_1/mesa.json`](../../../practices/blender/level_1/mesa.json).
 
 ## Práctica
 
@@ -90,4 +90,4 @@ La lista exacta con tipos y valores por defecto es el código: `engine/amatista_
 
 ## Compatibilidad
 
-Todos los campos agregados después del prototipo v0.1 son opcionales: [`practices/sandbox/table.json`](../../practices/sandbox/table.json) (el formato original) sigue cargando. Las funciones del prototipo (`validators/builtin.file_saved` y compañía) siguen importables para el `ascii_check.py` original.
+Todos los campos agregados después del prototipo v0.1 son opcionales: [`practices/sandbox/table.json`](../../../practices/sandbox/table.json) (el formato original) sigue cargando. Las funciones del prototipo (`validators/builtin.file_saved` y compañía) siguen importables para el `ascii_check.py` original.

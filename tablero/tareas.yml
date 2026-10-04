@@ -327,7 +327,7 @@ tareas:
     version: v3.3.0
     area: blender
     depende_de: [T-051]
-    aceptacion: "El instalador encuentra Blender, avisa si es anterior a 4.2 y deja el add-on activo en un Windows y un macOS reales (docs/motor/04_instalacion_alumno.md)"
+    aceptacion: "El instalador encuentra Blender, avisa si es anterior a 4.2 y deja el add-on activo en un Windows y un macOS reales (docs/motor/referencia/04_instalacion_alumno.md)"
 
   # --- v3.4.0 · Especialidades y tutor ---------------------------------------
   - id: T-054

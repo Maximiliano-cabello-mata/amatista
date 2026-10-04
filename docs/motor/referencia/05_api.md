@@ -1,6 +1,6 @@
 # 05 · API del add-on (`/api/addon/v1`)
 
-Código: [`backend/api/addon.py`](../../backend/api/addon.py). Pruebas: `backend/tests/test_addon.py`. Todas las respuestas son JSON salvo las descargas. Los errores siguen el formato del resto de la API (`{"detail": …}`); una práctica que no compila responde 422 con `{"mensaje", "errores": [...]}`.
+Código: [`backend/api/addon.py`](../../../backend/api/addon.py). Pruebas: `backend/tests/test_addon.py`. Todas las respuestas son JSON salvo las descargas. Los errores siguen el formato del resto de la API (`{"detail": …}`); una práctica que no compila responde 422 con `{"mensaje", "errores": [...]}`.
 
 ## Permisos
 

@@ -1,6 +1,6 @@
 # 03 · El add-on «Amatista» para Blender
 
-Extensión de Blender 4.2+ en [`addon/amatista_blender/`](../../addon/amatista_blender/). Se abre en **Vista 3D › barra lateral (N) › pestaña Amatista**. Versión actual: la del [`blender_manifest.toml`](../../addon/amatista_blender/blender_manifest.toml). Licencia GPL-3.0-or-later (usa `bpy`); solo aplica a `addon/`.
+Extensión de Blender 4.2+ en [`addon/amatista_blender/`](../../../addon/amatista_blender/). Se abre en **Vista 3D › barra lateral (N) › pestaña Amatista**. Versión actual: la del [`blender_manifest.toml`](../../../addon/amatista_blender/blender_manifest.toml). Licencia GPL-3.0-or-later (usa `bpy`); solo aplica a `addon/`.
 
 ## Modos
 
