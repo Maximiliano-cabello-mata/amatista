@@ -3,7 +3,7 @@ import { leccionEsNueva } from '../../progreso/reglas';
 import { rutas } from '../../rutas';
 import Medidor from '../graficas/Medidor';
 import { ACENTOS_GRAFICA } from '../graficas/colores';
-import { ACENTOS, ICONOS_CURSO } from '../estiloCurso';
+import { ACENTOS, iconoCurso } from '../estiloCurso';
 import { CristalLogo } from '../Iconos';
 import { cursosParaContinuar } from './datos';
 import Seccion from './Seccion';
@@ -48,7 +48,7 @@ function ContinuarPanel({ progreso, cursos, className = '' }) {
   const [principal, ...otros] = lista;
   const { curso, resumen } = principal;
   const { modulo, leccion, indice } = resumen.siguiente;
-  const Icono = ICONOS_CURSO[curso.id] ?? CristalLogo;
+  const Icono = iconoCurso(curso);
   const acento = ACENTOS[curso.acento] ?? ACENTOS.neon;
   const color = (ACENTOS_GRAFICA[curso.acento] ?? ACENTOS_GRAFICA.neon).color;
   const empezado = resumen.completadas > 0;
@@ -101,7 +101,7 @@ function ContinuarPanel({ progreso, cursos, className = '' }) {
           <p className="font-mono text-[11px] uppercase tracking-widest text-white/45">También puedes seguir con</p>
           <ul className="mt-2 flex flex-col gap-2">
             {otros.map(({ curso: otro, resumen: suyo }) => {
-              const OtroIcono = ICONOS_CURSO[otro.id] ?? CristalLogo;
+              const OtroIcono = iconoCurso(otro);
               return (
                 <li key={otro.id}>
                   <a

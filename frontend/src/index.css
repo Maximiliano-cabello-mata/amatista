@@ -52,13 +52,99 @@
   100% { transform: scale(1); }
 }
 
+/* v3.2: animaciones de logros, rachas y progreso. Solo transform y opacity
+   (la GPU las compone sin recalcular el diseño) para que vayan fluidas en
+   equipos modestos. */
+@keyframes brillo {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(250%); }
+}
+@keyframes aparecer {
+  0% { transform: scale(0.6) rotate(-8deg); opacity: 0; }
+  60% { transform: scale(1.08) rotate(2deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+@keyframes llama {
+  0%, 100% { transform: scale(1) rotate(-2deg); }
+  33% { transform: scale(1.08, 0.94) rotate(2deg); }
+  66% { transform: scale(0.95, 1.06) rotate(-1deg); }
+}
+@keyframes latido {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+@keyframes dibujar {
+  from { stroke-dashoffset: var(--largo, 200); }
+  to { stroke-dashoffset: 0; }
+}
+
 .animar-flotar { animation: flotar 5s ease-in-out infinite; }
 .animar-pulso { animation: pulso 2.4s ease-in-out infinite; }
 .animar-entrar { animation: entrar 0.5s ease-out both; }
 .animar-sacudir { animation: sacudir 0.4s ease-in-out; }
 .animar-acierto { animation: acierto 0.45s ease-out both; }
+.animar-aparecer { animation: aparecer 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.3) both; }
+.animar-llama { animation: llama 1.6s ease-in-out infinite; transform-origin: 50% 90%; }
+.animar-latido { animation: latido 2s ease-in-out infinite; }
+.animar-dibujar { stroke-dasharray: var(--largo, 200); animation: dibujar 1.2s ease-out both; }
+
+/* Barra de progreso con un destello que la recorre (solo mientras avanza). */
+.barra {
+  position: relative;
+  height: 0.5rem;
+  overflow: hidden;
+  background: rgb(255 255 255 / 0.1);
+}
+.barra > .relleno {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  transition: width 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.barra > .relleno::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.35), transparent);
+  animation: brillo 2.4s ease-in-out infinite;
+}
+.barra.quieta > .relleno::after { display: none; }
+
+/* Tarjetas que se levantan al pasar el ratón (o al enfocarlas con teclado). */
+.elevar {
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+.elevar:hover,
+.elevar:focus-within {
+  transform: translateY(-3px);
+}
+
+/* Lo que está fuera de la pantalla no se dibuja hasta acercarse:
+   menos trabajo al cargar páginas largas (cursos, panel). */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 640px;
+}
+
+/* Modo ligero: equipos con poca memoria o pocos núcleos, ahorro de datos o
+   movimiento reducido (lo decide main.jsx al arrancar). Se apagan las
+   animaciones continuas, los destellos y las sombras grandes; el diseño no
+   cambia. */
+html.ligero .animar-flotar,
+html.ligero .animar-pulso,
+html.ligero .animar-llama,
+html.ligero .animar-latido,
+html.ligero .barra > .relleno::after { animation: none; }
+html.ligero .barra > .relleno::after { display: none; }
+html.ligero [class*="shadow-["] { box-shadow: none; }
+html.ligero .fondo-pesado { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .animar-flotar, .animar-pulso, .animar-entrar, .animar-sacudir, .animar-acierto { animation: none; }
+  .animar-flotar, .animar-pulso, .animar-entrar, .animar-sacudir, .animar-acierto,
+  .animar-aparecer, .animar-llama, .animar-latido, .animar-dibujar,
+  .barra > .relleno::after { animation: none; }
+  .animar-dibujar { stroke-dasharray: none; }
+  .elevar:hover, .elevar:focus-within { transform: none; }
   * { transition-duration: 0.01ms !important; }
 }

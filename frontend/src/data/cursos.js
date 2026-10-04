@@ -90,6 +90,7 @@ const CURSOS_BASE = [
     estado: 'disponible',
     nivel: 'Intermedio',
     acento: 'neon',
+    ruta: 'aframe',
     recurso: {
       texto: 'Documentación de A-Frame',
       url: 'https://aframe.io/docs/',

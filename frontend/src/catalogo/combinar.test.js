@@ -67,7 +67,7 @@ describe('armarCatalogo (data/cursos.js)', () => {
     const blender = cursos.find((c) => c.id === 'blender_principiante');
     expect(blender.modulos.map((m) => m.id)).toEqual(['mod_bp_001', 'mod_bp_002', 'mod_bp_003']);
     expect(blender.modulos[0].insignia).toBe('Maquinista 3D');
-    expect(leccionesDelCurso(blender).length).toBe(12);
+    expect(leccionesDelCurso(blender).length).toBe(15); // 5 por módulo: teoría · Blender · teoría · Blender · examen
     expect(buscarInsignia(cursos, `blender_principiante:${blender.modulos[0].id}`).nombre).toBe('Maquinista 3D');
     expect(buscarInsignia(cursos, 'blender_principiante:no-existe')).toBeNull();
     expect(cursos.find((c) => c.id === 'blender_principiante_intermedio').modulos.every((m) => m.contenido)).toBe(true);

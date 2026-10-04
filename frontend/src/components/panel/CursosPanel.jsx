@@ -2,7 +2,7 @@ import { resumenCurso } from '../../progreso/reglas';
 import { rutas } from '../../rutas';
 import AnilloProgreso from '../graficas/AnilloProgreso';
 import { ACENTOS_GRAFICA } from '../graficas/colores';
-import { ICONOS_CURSO } from '../estiloCurso';
+import { iconoCurso } from '../estiloCurso';
 import { CristalLogo, IconoCandado } from '../Iconos';
 import { estadoModulo } from './datos';
 import { IconoPalomita } from './IconosPanel';
@@ -44,7 +44,7 @@ function EstadoModulo({ estado, completadas, total, nuevas }) {
 function TarjetaAvance({ curso, progreso }) {
   const resumen = resumenCurso(progreso, curso);
   const acento = ACENTOS_GRAFICA[curso.acento] ?? ACENTOS_GRAFICA.neon;
-  const Icono = ICONOS_CURSO[curso.id] ?? CristalLogo;
+  const Icono = iconoCurso(curso);
 
   return (
     <article className="corte-poly-sm flex flex-col border border-white/10 bg-base/60 p-4 sm:p-5" aria-labelledby={`avance-${curso.id}`}>
