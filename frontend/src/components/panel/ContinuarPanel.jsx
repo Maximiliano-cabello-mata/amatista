@@ -3,8 +3,9 @@ import { leccionEsNueva } from '../../progreso/reglas';
 import { rutas } from '../../rutas';
 import Medidor from '../graficas/Medidor';
 import { ACENTOS_GRAFICA } from '../graficas/colores';
-import { ACENTOS, iconoCurso } from '../estiloCurso';
+import { ACENTOS, logoDeCurso } from '../estiloCurso';
 import { CristalLogo } from '../Iconos';
+import LogoCurso from '../LogoCurso';
 import { cursosParaContinuar } from './datos';
 import Seccion from './Seccion';
 
@@ -48,7 +49,6 @@ function ContinuarPanel({ progreso, cursos, className = '' }) {
   const [principal, ...otros] = lista;
   const { curso, resumen } = principal;
   const { modulo, leccion, indice } = resumen.siguiente;
-  const Icono = iconoCurso(curso);
   const acento = ACENTOS[curso.acento] ?? ACENTOS.neon;
   const color = (ACENTOS_GRAFICA[curso.acento] ?? ACENTOS_GRAFICA.neon).color;
   const empezado = resumen.completadas > 0;
@@ -59,7 +59,7 @@ function ContinuarPanel({ progreso, cursos, className = '' }) {
       <div className={`corte-poly bg-gradient-to-br p-[2px] ${acento.borde}`}>
         <div className="corte-poly flex flex-col gap-5 bg-base/95 p-5 sm:flex-row sm:items-center sm:p-6">
           <div className="hexagono grid h-20 w-[5.5rem] shrink-0 place-items-center bg-superficie">
-            <Icono className="animar-flotar h-12 w-12" />
+            <LogoCurso logo={logoDeCurso(curso)} className="animar-flotar h-12 w-12" />
           </div>
           <div className="min-w-0 flex-1">
             <p className="font-mono text-[11px] uppercase tracking-widest text-white/50">
@@ -101,14 +101,13 @@ function ContinuarPanel({ progreso, cursos, className = '' }) {
           <p className="font-mono text-[11px] uppercase tracking-widest text-white/45">También puedes seguir con</p>
           <ul className="mt-2 flex flex-col gap-2">
             {otros.map(({ curso: otro, resumen: suyo }) => {
-              const OtroIcono = iconoCurso(otro);
               return (
                 <li key={otro.id}>
                   <a
                     href={rutas.leccion(otro.id, suyo.siguiente.leccion.id)}
                     className="corte-poly-sm flex items-center gap-3 border border-white/5 bg-white/[0.03] px-3 py-2.5 transition-colors hover:border-white/15 hover:bg-white/5"
                   >
-                    <OtroIcono className="h-8 w-8 shrink-0" />
+                    <LogoCurso logo={logoDeCurso(otro)} className="h-8 w-8 shrink-0" />
                     <span className="min-w-0 flex-1">
                       <span className="block font-mono text-[10px] uppercase tracking-widest text-white/45">
                         {otro.titulo} · {suyo.completadas} / {suyo.total}

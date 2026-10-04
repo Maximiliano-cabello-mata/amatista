@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { XP_POR_LECCION } from '../../progreso/reglas';
-import { CristalLogo } from '../Iconos';
+import Jefe from '../temas/Jefe';
+import { TEMAS, vidaDelJefe } from '../temas/temas';
 
 // Mezcla con semilla: el mismo intento da siempre el mismo orden (función pura).
 function mezclar(lista, semilla) {
@@ -28,11 +29,68 @@ function estiloOpcion(respondida, esElegida, esCorrecta) {
   return 'border-white/5 bg-base/40 opacity-60';
 }
 
-function Examen({ quiz, registroPrevio, insignia, completaModulo, hrefCurso, alTerminar }) {
+// Barra de vida del jefe por segmentos: uno por golpe que aguanta.
+function BarraVida({ vida, restante, color }) {
+  return (
+    <div className="flex gap-1" role="meter" aria-label="Vida del jefe" aria-valuemin={0} aria-valuemax={vida} aria-valuenow={restante}>
+      {Array.from({ length: vida }, (_, i) => (
+        <span
+          key={i}
+          className={`h-3 flex-1 skew-x-[-20deg] transition-all duration-500 ${i < restante ? '' : 'scale-y-50 opacity-20'}`}
+          style={{ background: i < restante ? color : '#ffffff' }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// La arena: el jefe del módulo, su vida y lo que dice.
+function Arena({ tema, vida, golpeado, fallosPermitidos, fallos }) {
+  const { jefe } = tema;
+  const quedan = fallosPermitidos - fallos;
+  let frase = jefe.frase;
+  if (vida.derrotado) frase = '¡Nooo! Me derrotaste…';
+  else if (golpeado) frase = '¡Auch! Eso dolió.';
+  else if (quedan < 0) frase = 'Esta vez gano yo. ¡Vuelve a intentarlo!';
+  return (
+    <div className={`corte-poly-sm relative mb-6 overflow-hidden border ${tema.borde} bg-gradient-to-r ${tema.banda} p-4`}>
+      <div className="flex items-center gap-4">
+        <Jefe jefe={jefe} golpeado={golpeado} derrotado={vida.derrotado} className="h-24 w-24 shrink-0 sm:h-28 sm:w-28" />
+        <div className="min-w-0 flex-1">
+          <p className={`font-mono text-[10px] uppercase tracking-[0.25em] ${tema.texto}`}>Jefe final · {tema.nombre}</p>
+          <p className="text-xl font-extrabold text-white sm:text-2xl">{jefe.nombre}</p>
+          <p className="mt-0.5 text-sm italic text-texto/75">«{frase}»</p>
+          <div className="mt-3">
+            <BarraVida vida={vida.vida} restante={vida.restante} color={jefe.piel} />
+            <p className="mt-1.5 flex flex-wrap justify-between gap-x-3 font-mono text-[10px] uppercase tracking-widest text-white/50">
+              <span>
+                Vida {vida.restante} / {vida.vida}
+                {vida.criticos > 0 && <span className="ml-2 text-neon">+{vida.criticos} crítico{vida.criticos > 1 ? 's' : ''}</span>}
+              </span>
+              <span className={quedan < 0 ? 'text-red-300' : ''}>
+                {quedan >= 0 ? `Puedes fallar ${quedan} más` : 'Sin margen de error'}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Examen({ quiz, registroPrevio, insignia, completaModulo, hrefCurso, alTerminar, tema = { id: 'cristal', ...TEMAS.cristal } }) {
   const [intento, setIntento] = useState(0);
   const [indice, setIndice] = useState(0);
   const [respuestas, setRespuestas] = useState({});
   const [resultado, setResultado] = useState(null);
+  const [golpeado, setGolpeado] = useState(false);
+
+  // El destello del golpe dura un instante.
+  useEffect(() => {
+    if (!golpeado) return undefined;
+    const t = setTimeout(() => setGolpeado(false), 450);
+    return () => clearTimeout(t);
+  }, [golpeado]);
 
   const preguntas = quiz.questions;
   const pregunta = preguntas[indice];
@@ -43,8 +101,16 @@ function Examen({ quiz, registroPrevio, insignia, completaModulo, hrefCurso, alT
   const elegida = respuestas[pregunta.id];
   const acerto = pregunta.options.find((opcion) => opcion.id === elegida)?.isCorrect;
 
+  const esCorrecta = (p, id) => Boolean(p.options.find((opcion) => opcion.id === id)?.isCorrect);
+  const aciertosHasta = preguntas.filter((p) => esCorrecta(p, respuestas[p.id])).length;
+  const fallosHasta = preguntas.filter((p) => respuestas[p.id] && !esCorrecta(p, respuestas[p.id])).length;
+  const vida = vidaDelJefe(preguntas.length, aciertosHasta, quiz.passingScore);
+  const fallosPermitidos = preguntas.length - vida.vida;
+
   const responder = (opcionId) => {
-    if (!elegida) setRespuestas({ ...respuestas, [pregunta.id]: opcionId });
+    if (elegida) return;
+    setRespuestas({ ...respuestas, [pregunta.id]: opcionId });
+    if (esCorrecta(pregunta, opcionId)) setGolpeado(true);
   };
 
   const siguiente = () => {
@@ -71,6 +137,7 @@ function Examen({ quiz, registroPrevio, insignia, completaModulo, hrefCurso, alT
     setIndice(0);
     setRespuestas({});
     setResultado(null);
+    setGolpeado(false);
   };
 
   if (resultado) {
@@ -78,15 +145,15 @@ function Examen({ quiz, registroPrevio, insignia, completaModulo, hrefCurso, alT
       <section className="corte-poly animar-entrar border border-white/10 bg-superficie/95 p-8 text-center" role="status">
         {resultado.aprobado ? (
           <>
-            <CristalLogo className="animar-flotar mx-auto h-24 w-24 drop-shadow-[0_0_24px_rgba(0,229,255,0.45)]" />
-            <p className="mt-4 font-mono text-xs uppercase tracking-[0.3em] text-neon">Examen aprobado</p>
-            <h2 className="mt-2 text-4xl font-extrabold text-white">¡Lo lograste!</h2>
+            <Jefe jefe={tema.jefe} derrotado className="mx-auto h-28 w-28" />
+            <p className="mt-4 font-mono text-xs uppercase tracking-[0.3em] text-neon">Jefe derrotado · examen aprobado</p>
+            <h2 className="animar-aparecer mt-2 text-4xl font-extrabold text-white">¡Venciste a {tema.jefe.nombre}!</h2>
           </>
         ) : (
           <>
-            <CristalLogo className="mx-auto h-20 w-20 opacity-40 grayscale" />
-            <p className="mt-4 font-mono text-xs uppercase tracking-[0.3em] text-blender">Casi lo logras</p>
-            <h2 className="mt-2 text-4xl font-extrabold text-white">Inténtalo de nuevo</h2>
+            <Jefe jefe={tema.jefe} className="mx-auto h-28 w-28" />
+            <p className="mt-4 font-mono text-xs uppercase tracking-[0.3em] text-blender">{tema.jefe.nombre} resistió</p>
+            <h2 className="mt-2 text-4xl font-extrabold text-white">Repasa y vuelve a la pelea</h2>
           </>
         )}
         <p className="mt-4 text-lg text-texto/80">
@@ -126,6 +193,7 @@ function Examen({ quiz, registroPrevio, insignia, completaModulo, hrefCurso, alT
 
   return (
     <section className="corte-poly border border-white/10 bg-superficie/95 p-6 sm:p-8">
+      <Arena tema={tema} vida={vida} golpeado={golpeado} fallosPermitidos={fallosPermitidos} fallos={fallosHasta} />
       <div className="mb-6 flex items-center justify-between font-mono text-xs uppercase tracking-widest">
         <span className="text-neon">
           Pregunta {indice + 1} de {preguntas.length}
@@ -176,7 +244,7 @@ function Examen({ quiz, registroPrevio, insignia, completaModulo, hrefCurso, alT
           }`}
         >
           <p className={`font-bold ${acerto ? 'text-emerald-300' : 'text-red-300'}`}>
-            {acerto ? '✓ ¡Correcto!' : '✗ No es correcto'}
+            {acerto ? `✓ ¡Correcto! Golpe a ${tema.jefe.nombre}` : '✗ No es correcto: el jefe esquivó tu ataque'}
           </p>
           <p className="mt-1 text-texto/85">{acerto ? pregunta.feedbackCorrect : pregunta.feedbackIncorrect}</p>
         </div>
@@ -189,7 +257,7 @@ function Examen({ quiz, registroPrevio, insignia, completaModulo, hrefCurso, alT
           disabled={!elegida}
           className="corte-poly-sm bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white transition-[filter] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {indice < preguntas.length - 1 ? 'Siguiente ▶' : 'Ver resultado ▶'}
+          {indice < preguntas.length - 1 ? 'Siguiente ataque ▶' : 'Ver el resultado ▶'}
         </button>
       </div>
     </section>

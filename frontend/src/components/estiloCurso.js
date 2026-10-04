@@ -1,18 +1,7 @@
-import { createElement } from 'react';
-import { CristalLogo } from './Iconos';
-import LogoCurso, { LOGOS } from './LogoCurso';
-
-// Ícono de un curso: el logo de su ruta (los cuatro niveles de Blender llevan
-// el de Blender). Un curso sin logo propio usa el cristal de Amatista.
-const iconos = {};
-export function iconoCurso(curso) {
-  const logo = curso?.ruta || curso?.id;
-  if (!LOGOS[logo]) return CristalLogo;
-  iconos[logo] ??= function IconoLogo({ className = '' }) {
-    return createElement(LogoCurso, { logo, className });
-  };
-  return iconos[logo];
-}
+// Logo de un curso: el de su ruta (los cuatro niveles de Blender llevan el de
+// Blender). Úsalo con <LogoCurso logo={logoDeCurso(curso)} />; un curso sin
+// logo propio muestra el cristal de Amatista.
+export const logoDeCurso = (curso) => curso?.ruta || curso?.id;
 
 // Tailwind necesita las clases completas escritas en el código.
 export const ACENTOS = {

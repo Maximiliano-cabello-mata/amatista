@@ -1,14 +1,7 @@
-// Logotipos de los cursos (assets/logos/*.svg). Vite los incrusta en el
-// paquete (son de menos de 1 KB): no hacen peticiones y funcionan sin conexión.
-import logoAFrame from '../assets/logos/aframe.svg';
-import logoBlender from '../assets/logos/blender.svg';
 import { CristalLogo } from './Iconos';
+import { LOGOS } from './logos';
 
-export const LOGOS = {
-  blender: { src: logoBlender, nombre: 'Blender', proporcion: 128 / 104 },
-  aframe: { src: logoAFrame, nombre: 'A-Frame', proporcion: 1 },
-};
-
+// Logo de un curso (components/logos.js).
 // Un curso del servidor sin logo propio usa el cristal de Amatista.
 function LogoCurso({ logo, className = '', decorativo = true }) {
   const datos = LOGOS[logo];
