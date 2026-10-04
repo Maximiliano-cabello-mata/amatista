@@ -9,6 +9,7 @@ export const TIPOS_INTERACTIVOS = [
   'hotspots',
   'scene_explorer',
   'code_challenge',
+  'blender_practice',
 ];
 
 // Bloques que hay que resolver para completar la lección. Las tarjetas de

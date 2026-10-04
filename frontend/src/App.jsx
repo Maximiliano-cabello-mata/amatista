@@ -15,6 +15,8 @@ import { analizarRuta, rutaEntrar, rutas } from './rutas';
 const Curso = lazy(() => import('./pages/Curso'));
 const Leccion = lazy(() => import('./pages/Leccion'));
 const Laboratorio = lazy(() => import('./pages/Laboratorio'));
+const Blender = lazy(() => import('./pages/Blender'));
+const Vincular = lazy(() => import('./pages/Vincular'));
 const Panel = lazy(() => import('./pages/Panel'));
 const Admin = lazy(() => import('./pages/admin/Admin'));
 const Entrar = lazy(() => import('./pages/cuenta/Entrar'));
@@ -92,6 +94,10 @@ function Pagina({ ruta, hash }) {
       return <Laboratorio />;
     case 'panel':
       return <Panel />;
+    case 'blender':
+      return <Blender />;
+    case 'vincular':
+      return <Vincular consulta={ruta.consulta} />;
     case 'entrar':
       return <Entrar consulta={ruta.consulta} />;
     case 'registro':

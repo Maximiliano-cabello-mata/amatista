@@ -1,0 +1,200 @@
+{
+  "module": {
+    "id": "mod_blender_002",
+    "courseId": "crs_blender_fundamentos",
+    "title": "Módulo 2: Interfaz y navegación",
+    "slug": "modulo-2-interfaz-y-navegacion",
+    "description": "Conecta Blender con Amatista, aprende a moverte por la vista 3D y arma tu primer objeto: una mesa que Amatista revisa paso a paso mientras trabajas.",
+    "estimatedTimeMinutes": 45,
+    "order": 2,
+    "curso": "blender",
+    "nivel": "blender-n1",
+    "insignia": "Navegante 3D",
+    "estado": "revision",
+    "lessons": [
+      {
+        "id": "les_101",
+        "title": "Amatista dentro de tu Blender",
+        "slug": "amatista-dentro-de-blender",
+        "type": "theory_interactive",
+        "durationSeconds": 360,
+        "isLocked": false,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Instalar el add-on de Amatista y conectarlo con tu cuenta.",
+          "habilidades": [],
+          "prerrequisitos": ["les_004"],
+          "blender": { "verificadaEn": null, "notas": "El add-on necesita Blender 4.2 o más nuevo (extensiones)." },
+          "edicion": "1.0",
+          "offline": false
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Un profe que mira tu escena\nHasta ahora aprendiste en el navegador. Desde aquí practicas **dentro de Blender**: el add-on de Amatista revisa tu escena mientras trabajas, te dice qué falta y te da una pista cuando la pides.\n\nTu avance no se queda en tu computador: aparece en tu panel de Amatista, igual que las lecciones."
+          },
+          {
+            "type": "pipeline",
+            "title": "De la descarga a tu primera práctica",
+            "steps": [
+              { "icon": "monedas", "title": "Descarga", "text": "En la página Blender de Amatista, el paquete de tu sistema." },
+              { "icon": "estudio", "title": "Instala", "text": "Abre «Instalar Amatista»: busca tu Blender y comprueba la versión." },
+              { "icon": "modelar", "title": "Abre Blender", "text": "Pulsa N en la vista 3D y elige la pestaña Amatista." },
+              { "icon": "reto", "title": "Practica", "text": "La práctica de tu lección se abre sola y guarda tu avance." }
+            ]
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "title": "¿Qué versión de Blender necesito?",
+            "body": "Blender 4.2 o más nuevo: desde esa versión Blender instala **extensiones**. Si tienes una anterior, el instalador te avisa y no cambia nada."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_101",
+            "question": "Ya instalaste Amatista. ¿Dónde lo encuentras dentro de Blender?",
+            "options": [
+              { "id": "opt_a", "text": "En el menú Archivo › Exportar.", "isCorrect": false },
+              { "id": "opt_b", "text": "En la barra lateral de la vista 3D (tecla N), pestaña Amatista.", "isCorrect": true },
+              { "id": "opt_c", "text": "Solo en Preferencias › Extensiones.", "isCorrect": false }
+            ],
+            "explanation": "La barra lateral se abre y se cierra con N. Amatista tiene su propia pestaña, igual que «Elemento» o «Vista»."
+          },
+          {
+            "type": "ordering",
+            "id": "orden_101",
+            "prompt": "Ordena los pasos para conectar Blender con tu cuenta.",
+            "items": [
+              { "id": "paso_1", "text": "Pulsa «Vincular con mi cuenta» en la pestaña Amatista" },
+              { "id": "paso_2", "text": "Blender muestra un código como ABCD-2345" },
+              { "id": "paso_3", "text": "Escribe el código en la página que se abre" },
+              { "id": "paso_4", "text": "Blender muestra tu nombre: ¡conectado!" }
+            ],
+            "explanation": "Si descargaste el paquete con tu sesión abierta, ni siquiera necesitas el código: Blender se conecta solo la primera vez."
+          }
+        ]
+      },
+      {
+        "id": "les_102",
+        "title": "Muévete por la vista 3D",
+        "slug": "muevete-por-la-vista-3d",
+        "type": "theory_interactive",
+        "durationSeconds": 540,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Navegar la vista 3D y transformar objetos con atajos sin perderte.",
+          "habilidades": ["bl-transformar", "bl-proporciones"],
+          "prerrequisitos": ["les_101"],
+          "blender": { "verificadaEn": null, "notas": "" },
+          "edicion": "1.0",
+          "offline": true
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tus manos en la vista 3D\n- **Orbitar**: arrastra con el botón central del ratón (la rueda).\n- **Desplazar**: Shift + botón central.\n- **Acercar**: gira la rueda.\n- **Encuadrar lo seleccionado**: tecla `.` del teclado numérico (o Vista › Encuadrar selección).\n\n¿Usas un portátil sin ratón? En **Editar › Preferencias › Entrada** activa *Emular ratón de 3 botones* y *Emular teclado numérico*."
+          },
+          {
+            "type": "concept_cards",
+            "items": [
+              { "term": "Gizmo de navegación", "definition": "Los ejes de colores arriba a la derecha. Haz clic en X, Y o Z para mirar desde ese lado; arrástralo para orbitar." },
+              { "term": "Barra lateral (N)", "definition": "Panel a la derecha de la vista 3D. En «Elemento» ves la ubicación, la rotación, la escala y las dimensiones del objeto." },
+              { "term": "Dimensiones", "definition": "El tamaño real del objeto en metros. Para una mesa: unos 0.75 m de alto." },
+              { "term": "Modo Objeto", "definition": "El modo para mover, rotar, escalar y duplicar objetos completos. Cambia de modo con Tab." }
+            ]
+          },
+          {
+            "type": "matching",
+            "id": "parejas_102",
+            "prompt": "Une cada atajo con lo que hace (con el cursor sobre la vista 3D).",
+            "pairs": [
+              { "id": "par_g", "left": "G", "right": "Mover" },
+              { "id": "par_r", "left": "R", "right": "Rotar" },
+              { "id": "par_s", "left": "S", "right": "Escalar" },
+              { "id": "par_d", "left": "Shift + D", "right": "Duplicar" }
+            ],
+            "explanation": "G de grab, R de rotate, S de scale. Después de pulsarlos puedes escribir X, Y o Z para moverte en un solo eje."
+          },
+          {
+            "type": "fill_blanks",
+            "id": "huecos_102",
+            "prompt": "Completa el paso a paso para hacer un objeto más delgado.",
+            "template": "Selecciona el objeto, pulsa [[S]] para escalar, luego [[Z|z]] para hacerlo solo en el eje vertical, escribe 0.1 y confirma con [[Enter|intro]].",
+            "code": false,
+            "explanation": "Limitar la escala a un eje cambia una sola medida: así una tabla queda ancha y delgada."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_102",
+            "question": "Quieres saber cuánto mide de alto tu mesa. ¿Dónde lo ves?",
+            "options": [
+              { "id": "opt_a", "text": "Barra lateral (N) › Elemento › Dimensiones, valor Z.", "isCorrect": true },
+              { "id": "opt_b", "text": "En la barra de título de la ventana.", "isCorrect": false },
+              { "id": "opt_c", "text": "Solo se sabe al exportar el modelo.", "isCorrect": false }
+            ],
+            "explanation": "Dimensiones muestra el tamaño real en metros. Z es la altura."
+          }
+        ]
+      },
+      {
+        "id": "les_103",
+        "title": "Práctica: construye una mesa",
+        "slug": "practica-construye-una-mesa",
+        "type": "theory_interactive",
+        "durationSeconds": 1200,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Construir una mesa con cinco cubos, revisada por Amatista dentro de Blender.",
+          "habilidades": ["bl-transformar", "bl-duplicar", "bl-proporciones", "bl-guardar-archivo"],
+          "prerrequisitos": ["les_102"],
+          "blender": { "verificadaEn": null, "notas": "Práctica del motor: practices/blender/level_1/mesa.json." },
+          "edicion": "1.0",
+          "practica": { "archivo": "mi_mesa.blend", "evidencia": "Práctica completada en Blender (registrada por Amatista)" },
+          "offline": false
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tu primera práctica en Blender\nVas a construir una mesa: una **cubierta** y cuatro **patas**. Nombra tus objetos como quieras; lo importante es decirle a Amatista qué es cada uno con **Asignar rol** (pestaña Amatista › Roles).\n\nAmatista revisa tu escena cada vez que cambias algo. Si te atascas, pulsa **Necesito una pista**: hay tres niveles, del más general al paso a paso."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_mesa",
+            "practica": "blender.n1.mesa",
+            "title": "Construye una mesa en Blender",
+            "text": "Pulsa **Abrir en Blender** y luego abre Blender: la práctica aparece sola en la pestaña Amatista. Tu avance se actualiza aquí mientras trabajas.",
+            "minutes": 20,
+            "steps": [
+              "Crea la cubierta",
+              "Hazla delgada",
+              "Agrega cuatro patas",
+              "Coloca las patas debajo",
+              "Dales una altura de mesa",
+              "Guarda tu archivo"
+            ],
+            "allowManual": false
+          },
+          {
+            "type": "callout",
+            "variant": "reto",
+            "title": "Reto extra",
+            "body": "Dale color a la cubierta (Propiedades › Material › Nuevo) y prueba una variación: una mesa alta de bar, una mesita de centro o una banca."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_103",
+            "question": "Duplicaste una pata con Shift + D. ¿Qué pasa con su rol?",
+            "options": [
+              { "id": "opt_a", "text": "La copia conserva el rol «Pata».", "isCorrect": true },
+              { "id": "opt_b", "text": "La copia pierde el rol y hay que asignarlo otra vez.", "isCorrect": false },
+              { "id": "opt_c", "text": "Amatista borra la copia.", "isCorrect": false }
+            ],
+            "explanation": "El rol viaja con el objeto: por eso conviene asignarlo antes de duplicar."
+          }
+        ]
+      }
+    ]
+  }
+}

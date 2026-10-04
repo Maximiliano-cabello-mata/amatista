@@ -5,6 +5,8 @@ export const rutas = {
   inicio: '#/',
   panel: '#/panel',
   laboratorio: '#/laboratorio',
+  blender: '#/blender',
+  vincular: '#/vincular',
   entrar: '#/entrar',
   registro: '#/registro',
   confirmar: '#/confirmar',
@@ -13,6 +15,7 @@ export const rutas = {
   admin: '#/admin',
   adminUsuarios: '#/admin/usuarios',
   adminContenido: '#/admin/contenido',
+  adminPracticas: '#/admin/practicas',
   adminSistema: '#/admin/sistema',
   curso: (cursoId) => `#/curso/${parte(cursoId)}`,
   leccion: (cursoId, leccionId) => `#/curso/${parte(cursoId)}/leccion/${parte(leccionId)}`,
@@ -28,6 +31,7 @@ export const rutas = {
 //   #/admin/contenido                    → contenido
 //   #/admin/contenido/nueva/:modulo      → nueva-leccion  {moduloId}
 //   #/admin/contenido/:curso/:leccion    → leccion        {cursoId, leccionId}
+//   #/admin/practicas                    → practicas (motor de Blender)
 //   #/admin/sistema                      → sistema
 function rutaAdmin(partes) {
   const [seccion, a, b, c] = partes;
@@ -40,10 +44,11 @@ function rutaAdmin(partes) {
     return { seccion: 'contenido', params: {} };
   }
   if (seccion === 'sistema') return { seccion: 'sistema', params: {} };
+  if (seccion === 'practicas') return { seccion: 'practicas', params: {} };
   return { seccion: 'resumen', params: {} };
 }
 
-const PAGINAS_SIMPLES = ['panel', 'laboratorio', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil'];
+const PAGINAS_SIMPLES = ['panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil'];
 
 // Devuelve {pagina, ...}. Una consulta tras "?" (por ejemplo
 // "#/entrar?volver=%23%2Fperfil") llega en `consulta`.

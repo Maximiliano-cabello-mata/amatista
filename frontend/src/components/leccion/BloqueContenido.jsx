@@ -6,6 +6,7 @@ import Completar from './interactivos/Completar';
 import Emparejar from './interactivos/Emparejar';
 import ExploradorEscena from './interactivos/ExploradorEscena';
 import Ordenar from './interactivos/Ordenar';
+import PracticaBlender from './interactivos/PracticaBlender';
 import PuntosImagen from './interactivos/PuntosImagen';
 import QuizEnLinea from './interactivos/QuizEnLinea';
 import RetoCodigo from './interactivos/RetoCodigo';
@@ -23,6 +24,7 @@ const INTERACTIVOS = {
   hotspots: PuntosImagen,
   scene_explorer: ExploradorEscena,
   code_challenge: RetoCodigo,
+  blender_practice: PracticaBlender,
 };
 
 // Dibuja un bloque de contenido del JSON de la lección según su "type".

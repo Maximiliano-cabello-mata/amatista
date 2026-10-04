@@ -5,7 +5,7 @@ describe('rutas', () => {
   it('páginas del contrato', () => {
     expect(analizarRuta('')).toMatchObject({ pagina: 'inicio' });
     expect(analizarRuta('#/')).toMatchObject({ pagina: 'inicio' });
-    for (const pagina of ['panel', 'laboratorio', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil']) {
+    for (const pagina of ['panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil']) {
       expect(analizarRuta(`#/${pagina}`)).toMatchObject({ pagina });
     }
     expect(analizarRuta(rutas.curso('blender'))).toMatchObject({ pagina: 'curso', cursoId: 'blender' });
@@ -22,6 +22,8 @@ describe('rutas', () => {
     expect(analizarRuta(rutas.adminUsuario('usr-1'))).toMatchObject({ seccion: 'usuario', params: { id: 'usr-1' } });
     expect(analizarRuta('#/admin/contenido')).toMatchObject({ seccion: 'contenido' });
     expect(analizarRuta(rutas.adminSistema)).toMatchObject({ seccion: 'sistema', params: {} });
+    expect(analizarRuta(rutas.adminPracticas)).toMatchObject({ seccion: 'practicas', params: {} });
+    expect(analizarRuta('#/vincular?codigo=ABCD-2345')).toMatchObject({ pagina: 'vincular', consulta: { codigo: 'ABCD-2345' } });
     expect(analizarRuta(rutas.adminLeccion('blender', 'les_001'))).toMatchObject({
       seccion: 'leccion',
       params: { cursoId: 'blender', leccionId: 'les_001' },

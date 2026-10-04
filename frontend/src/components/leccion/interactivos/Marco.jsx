@@ -15,6 +15,7 @@ const ETIQUETAS = {
   hotspots: 'Explora la imagen',
   scene_explorer: 'Laboratorio 3D',
   code_challenge: 'Reto de código',
+  blender_practice: 'Práctica en Blender',
 };
 
 // Marco común de las actividades: tipo, estado (pendiente / resuelta), XP

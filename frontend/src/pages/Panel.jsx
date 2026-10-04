@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 import { useAuth } from '../auth/contexto';
 import { useCatalogo } from '../catalogo/contexto';
 import ActividadPanel from '../components/panel/ActividadPanel';
+import BlenderPanel from '../components/panel/BlenderPanel';
 import ContinuarPanel from '../components/panel/ContinuarPanel';
 import CuentaPanel from '../components/panel/CuentaPanel';
 import CursosPanel from '../components/panel/CursosPanel';
@@ -24,7 +25,7 @@ import { rutas } from '../rutas';
 function Panel() {
   const { progreso, xp, nivel } = useProgreso();
   const { cursos } = useCatalogo();
-  const { usuario, sesionVencida } = useAuth();
+  const { usuario, sesionVencida, token } = useAuth();
   const hoy = useHoy();
   // La racha se calcula con el mismo "hoy" que los retos y el mapa de calor
   // (cambia a medianoche aunque el panel siga abierto).
@@ -43,6 +44,7 @@ function Panel() {
         <CursosPanel progreso={progreso} cursos={cursos} className="lg:col-span-2" />
         <RetosPanel progreso={progreso} hoy={hoy} className="lg:row-span-2" />
         <ActividadPanel progreso={progreso} hoy={hoy} className="lg:col-span-2" />
+        <BlenderPanel token={token} className="lg:col-span-3" />
         <ExamenesPanel progreso={progreso} cursos={cursos} className="lg:col-span-3" />
         <MuroInsignias progreso={progreso} cursos={cursos} className="lg:col-span-3" />
         <Proximamente className="lg:col-span-3" />

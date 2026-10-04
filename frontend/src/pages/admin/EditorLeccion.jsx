@@ -60,6 +60,7 @@ const NOMBRES_BLOQUE = {
   hotspots: 'Puntos en imagen',
   scene_explorer: 'Explorador 3D',
   code_challenge: 'Reto de código',
+  blender_practice: 'Práctica en Blender',
 };
 
 // Elegir con qué paso de la Fórmula empieza una lección nueva.
