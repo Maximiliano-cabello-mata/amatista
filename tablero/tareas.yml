@@ -316,6 +316,18 @@ tareas:
     version: v3.3.0
     area: blender
     depende_de: [T-052, T-053]
+  - id: T-055
+    titulo: Aplicar 007 en Oracle y publicar la práctica de la mesa y el módulo 2 (después del piloto)
+    version: v3.3.0
+    area: db
+    depende_de: [T-050]
+    aceptacion: "007 ejecutado en Database Actions, diagnóstico sin faltantes, práctica blender.n1.mesa publicada y módulo 2 importado (docs/reestructuracion/02_manual_oracle.md, sección 10)"
+  - id: T-056
+    titulo: Probar el paquete de instalación en Windows y macOS reales
+    version: v3.3.0
+    area: blender
+    depende_de: [T-051]
+    aceptacion: "El instalador encuentra Blender, avisa si es anterior a 4.2 y deja el add-on activo en un Windows y un macOS reales (docs/motor/04_instalacion_alumno.md)"
 
   # --- v3.4.0 · Especialidades y tutor ---------------------------------------
   - id: T-054

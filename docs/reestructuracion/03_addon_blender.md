@@ -1,6 +1,10 @@
 # 03 · Add-on de Blender conectado a Amatista
 
-Guía técnica para construir el add-on: qué hace y qué no, cómo se conecta con la plataforma, cómo se organiza el código y en qué orden se construye. Es el diseño de la fase E del [plan maestro](00_plan_maestro.md); **todavía no hay código del add-on en el repositorio** y nada de esto se presenta como terminado.
+Guía técnica para construir el add-on: qué hace y qué no, cómo se conecta con la plataforma, cómo se organiza el código y en qué orden se construye. Es el diseño de la fase E del [plan maestro](00_plan_maestro.md), escrito antes del código.
+
+> **4 de octubre de 2026: ya está construido** (rama del rediseño de Amatista Engine). La documentación vigente es
+> [`docs/motor/`](../motor/README.md); la [sección 11](#11-lo-que-cambió-al-construirlo) resume en qué se apartó
+> la construcción de este diseño. Lo demás se conserva como registro de las decisiones.
 
 > Verificar contra la documentación oficial de Blender de la versión principal elegida (T-038) antes de
 > escribir código: la API de Python (`bpy`) cambia entre versiones. Lo de aquí corresponde a Blender 4.2 o
@@ -341,3 +345,19 @@ Un incremento por vez; cada uno debe seguir funcionando sin el siguiente (regla 
 - Distribución: zip en el repositorio y releases de GitHub, o publicación en extensions.blender.org (exige licencia GPL y revisión).
 - Licencia de la carpeta del add-on y del resto del repositorio.
 - Alcance de la evidencia: solo resultados de comprobaciones, o también una captura (`bpy.ops.render.opengl` o una captura de la ventana) subida a un almacenamiento de archivos, nunca a Oracle.
+
+## 11. Lo que cambió al construirlo
+
+| Diseño (arriba) | Construido (4 oct 2026) | Por qué |
+|---|---|---|
+| `comprobacionesAddon` dentro del JSON de la lección | Prácticas propias en `amatista.practice/1` (`practices/`, tablas `PRACTICAS` y `PRACTICA_VERSIONES`) y un bloque de lección `blender_practice` que las enlaza | Las prácticas tienen versiones, pistas, roles y un autor en Blender; la lección solo dice cuál usar |
+| Reglas propias del add-on (`comprobaciones/reglas.py`) | El motor `engine/amatista_engine` (Python puro) vendido dentro del `.zip` | El mismo motor corre en el add-on y en el servidor |
+| `POST /comprobaciones` con el resultado | `POST /intentos` con la foto de la escena: **el servidor vuelve a evaluar** y guarda su propio resultado | El resultado no depende de lo que diga el cliente |
+| `GET /vinculos/{id}` | `POST /vinculos/{id}/estado` con un secreto que solo conoce el add-on | Nadie puede canjear un código ajeno conociendo solo el id |
+| `GET /leccion-actual` | `GET /practica-actual` (la lección marca la práctica con **Abrir en Blender**) | La unidad que abre Blender es la práctica |
+| Distribución: zip en el repositorio o releases | La API arma el paquete al vuelo, con instalador por sistema y vínculo de un solo uso; también un repositorio de extensiones (`index.json`) | Sin binarios en git; el alumno no copia URLs ni códigos |
+| Licencia por decidir | `addon/` es GPL-3.0-or-later (obligado por `bpy`, en el manifiesto). El resto del repositorio sigue sin licencia | — |
+| Evidencia: ¿captura? | Solo datos de la escena (nombres, medidas, roles, materiales, modificadores, archivo guardado). Ningún archivo ni imagen | Privacidad y espacio |
+| Pruebas dentro de Blender descargando la versión principal | `bpy` de PyPI en CI (job `addon-blender`) | Rápido y reproducible |
+
+Sigue abierto: la versión principal del curso (T-038; el add-on exige 4.2 como mínimo) y publicar en extensions.blender.org. Probar el instalador en Windows y macOS reales es T-056.
