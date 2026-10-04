@@ -15,7 +15,7 @@ El contenido sigue su propio flujo en los JSON de los módulos y el tablero lo r
 
 ## Cómo se usa
 
-1. **Crear una tarea**: agrégala en [`tareas.yml`](tareas.yml) con el siguiente id libre (hoy `T-055`), su versión y su área. Opcional: `depende_de`, `aceptacion`, `evidencia`, `bloqueo` (se leen en el YAML; no cambian el estado).
+1. **Crear una tarea**: agrégala en [`tareas.yml`](tareas.yml) con el siguiente id libre (hoy `T-057`), su versión y su área. Opcional: `depende_de`, `aceptacion`, `evidencia`, `bloqueo` (se leen en el YAML; no cambian el estado).
 2. **Trabajar en ella**: menciona su id en el commit y la tarjeta se mueve sola.
 
 | En el mensaje del commit | La tarjeta pasa a |

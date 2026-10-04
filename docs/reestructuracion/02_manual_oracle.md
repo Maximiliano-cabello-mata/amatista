@@ -287,3 +287,20 @@ Errores propios del paquete (`ORA-200xx`) explican qué falta: módulo o nivel i
 
 - **Código:** `actualizar.sh` vuelve solo al commit anterior si algo falla; a mano, `git reset --keep <commit>` y reiniciar. El código de `main` funciona con 005 aplicado.
 - **Base:** no hace falta deshacer 005: lo que agrega no estorba al código anterior. Si de verdad quisieras quitar el paquete: `DROP PACKAGE amatista_autor;` y las vistas con `DROP VIEW …` (no tienen datos). Las tablas nuevas no se borran si ya tienen datos de alumnos.
+
+## 10. Motor de prácticas de Blender (007, 4 de octubre de 2026)
+
+[`007_motor_practicas.sql`](../../backend/sql/007_motor_practicas.sql) agrega 4 tablas (`ADDON_VINCULOS`, `PRACTICAS`, `PRACTICA_VERSIONES`, `PROGRESO_PRACTICAS`), la vista `V_AMATISTA_PRACTICAS` y las 4 habilidades `bl-*` del nivel 1. No borra ni cambia nada existente, se puede repetir y el código de `main` anterior sigue funcionando con 007 aplicado. **Probado el 4 de octubre de 2026 en Oracle 23ai real** (contenedor `gvenzl/oracle-free:23-slim-faststart`): 001 → 002 → 003 → 005 → 006 → 007 y 007 otra vez, sin errores y con las 18 tablas en `OK`; luego `diagnostico_oracle.py`, `importar` (módulos 1 y 2), `practicas --publicar` y el recorrido completo del add-on con el backend sobre esa base (vincular, abrir, intento parcial 70 %, intento completo 100 % con autonomía `con_pistas`, `mi-progreso`, 403 fuera de `/api/addon`, descargas de los 3 sistemas, historial de versiones). Si algo falla en tu base, corrige y vuelve a ejecutar el archivo completo.
+
+Después del piloto del 8 de octubre:
+
+1. Database Actions › SQL como ADMIN: pega `007_motor_practicas.sql` y **Ejecutar script (F5)**. Debe terminar en `007 aplicado.` y la verificación mostrar **18 tablas con `OK`**.
+2. Si usas `AMATISTA_APP`, vuelve a ejecutar `004` (ya incluye las 4 tablas nuevas).
+3. En `backend/.env` de la VM agrega las direcciones que irán dentro del paquete del alumno:
+   `AMATISTA_URL_API=https://<tu API>` y `AMATISTA_URL_PWA=https://<tu PWA>`.
+4. Actualiza el código (`bash ~/amatista/despliegue/actualizar.sh`) y comprueba `python diagnostico_oracle.py` (18 tablas).
+5. Registra y publica la práctica de la mesa: `cd ~/amatista/backend && python herramientas/contenido.py practicas --publicar` (o Admin › Prácticas › Registrar y publicar).
+6. Importa el módulo 2 (`python herramientas/contenido.py importar ../frontend/src/data/modulos/blender-modulo-2.json`), revísalo y publícalo desde Admin cuando esté listo (llega en «revisión»).
+
+Consultas útiles: `SELECT * FROM v_amatista_practicas;` y `SELECT practica_id, COUNT(*) FROM progreso_practicas GROUP BY practica_id;`.
+

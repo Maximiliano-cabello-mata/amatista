@@ -5,6 +5,7 @@ const ENTRADAS = [
   { grupo: 'resumen', texto: 'Resumen', href: rutas.admin, icono: '◆' },
   { grupo: 'usuarios', texto: 'Usuarios', href: rutas.adminUsuarios, icono: '◎' },
   { grupo: 'contenido', texto: 'Contenido', href: rutas.adminContenido, icono: '▤' },
+  { grupo: 'practicas', texto: 'Prácticas', href: rutas.adminPracticas, icono: '⬢' },
   { grupo: 'sistema', texto: 'Sistema', href: rutas.adminSistema, icono: '⚙', soloAdmin: true },
 ];
 

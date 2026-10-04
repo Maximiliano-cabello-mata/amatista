@@ -6,6 +6,7 @@ import NavAdmin from '../../components/admin/NavAdmin';
 import { Mensaje } from '../../components/admin/ui';
 import Contenido from './Contenido';
 import EditorLeccion from './EditorLeccion';
+import Practicas from './Practicas';
 import Resumen from './Resumen';
 import Sistema from './Sistema';
 import Usuario from './Usuario';
@@ -19,6 +20,7 @@ const TITULOS = {
   leccion: 'Editar lección',
   'nueva-leccion': 'Nueva lección',
   sistema: 'Sistema',
+  practicas: 'Prácticas de Blender',
 };
 
 const GRUPOS = { usuario: 'usuarios', leccion: 'contenido', 'nueva-leccion': 'contenido' };
@@ -35,6 +37,8 @@ function Seccion({ seccion, params, esAdmin }) {
       return <EditorLeccion key={`${params.cursoId}/${params.leccionId}`} cursoId={params.cursoId} leccionId={params.leccionId} esAdmin={esAdmin} />;
     case 'nueva-leccion':
       return <EditorLeccion key={`nueva/${params.moduloId}`} moduloId={params.moduloId} esAdmin={esAdmin} />;
+    case 'practicas':
+      return <Practicas esAdmin={esAdmin} />;
     case 'sistema':
       return esAdmin ? <Sistema /> : <Mensaje tono="aviso">Solo un administrador puede ver el estado del sistema.</Mensaje>;
     default:

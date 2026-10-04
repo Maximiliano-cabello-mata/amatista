@@ -13,6 +13,7 @@ function enlacesDe(esProfesor) {
     { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
     { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
     { href: rutas.laboratorio, texto: 'Laboratorio', activo: (pagina) => pagina === 'laboratorio' },
+    { href: rutas.blender, texto: 'Blender', activo: (pagina) => pagina === 'blender' || pagina === 'vincular' },
   ];
   if (esProfesor) enlaces.push({ href: rutas.admin, texto: 'Admin', activo: (pagina) => pagina === 'admin' });
   return enlaces;
