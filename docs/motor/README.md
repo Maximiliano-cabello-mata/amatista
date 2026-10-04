@@ -4,9 +4,9 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 
 | Pieza | Carpeta | Qué es |
 |---|---|---|
-| Motor | [`engine/`](../../engine/) | Python puro, sin `bpy`. Lee una práctica declarativa (`amatista.practice/1`), evalúa una foto de la escena y decide progreso, pistas y autonomía. |
+| Motor | [`engine/`](../../engine/) | Python puro, sin `bpy`. Lee una práctica declarativa (`amatista.practice/1` y `/2`), evalúa una foto de la escena y decide progreso, pistas y autonomía. |
 | Add-on | [`addon/`](../../addon/) | Extensión de Blender 4.2+ («Amatista»). Captura la escena, la evalúa con el motor (copia incluida en el `.zip`) y habla con la API. Modos **Alumno** y **Desarrollador** (Amatista Author). |
-| Prácticas | [`practices/`](../../practices/) | Las prácticas oficiales en JSON. La primera: [`blender/level_1/mesa.json`](../../practices/blender/level_1/mesa.json). |
+| Prácticas | [`practices/`](../../practices/) | Las 6 prácticas del plan de estudios (`amatista.practice/2`) con sus casos de prueba, y el mapa de cursos [`blender/cursos.json`](../../practices/blender/cursos.json). Las de la v2 (mesa, podio) están en `archivo/v2/`. |
 | Plataforma | `backend/api/addon.py`, `frontend/src/blender/`, `frontend/src/components/modulo/` | API `/api/addon/v1`, la práctica al final de cada módulo (bloque `blender_practice` con la preparación de Blender integrada), **Mi Blender** en el menú de la cuenta y **Prácticas de Blender** en el panel admin. |
 | Oracle | `backend/sql/007_motor_practicas.sql` | `ADDON_VINCULOS`, `PRACTICAS`, `PRACTICA_VERSIONES`, `PROGRESO_PRACTICAS`. Aditivo e idempotente. |
 
@@ -16,6 +16,7 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 |---|---|---|
 | 1 · El motor que evalúa | Motor declarativo, add-on con modos Alumno y Desarrollador, instalador, Oracle 007, API y la práctica de la mesa (PR #13). | [etapas/etapa-1.md](etapas/etapa-1.md) |
 | 2 · El motor que acompaña | Guía paso a paso con teclas, guía dibujada en la escena, «Hazlo conmigo», acompañante que felicita y ofrece ayuda. | [etapas/etapa-2.md](etapas/etapa-2.md) |
+| 3 · El motor que enseña | Motor v3 y add-on 3.0: pestañas Aprender · Practicar · Mi curso, píldoras de teoría con repaso espaciado, vigilantes que pausan el progreso, escenas de inicio, plan de estudios de 2 cursos y 6 prácticas, y herramientas de autor (plantillas, casos de prueba, `practicas.py`). | [etapas/etapa-3.md](etapas/etapa-3.md) |
 
 ## Referencia (estado actual)
 
@@ -26,6 +27,8 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 5. [API del add-on](referencia/05_api.md): endpoints, permisos y tablas.
 6. [Modo desarrollador](referencia/06_modo_desarrollador.md): crear, probar y subir una práctica nueva; publicarla.
 7. [Guía paso a paso y acompañamiento](referencia/07_guia_y_acompanamiento.md): entrenadores, señales en la escena, «Hazlo conmigo», acompañante y preferencias (etapa 2).
+8. [Prácticas v3 y herramientas de autor](referencia/08_practicas_v3_y_herramientas.md): `amatista.practice/2` (píldoras, vigilantes, escena de inicio, curso), `cursos.json`, `pruebas.json` y `practicas.py` (motor v3).
+9. [Catálogo de validadores](referencia/09_validadores.md): los 35, con sus parámetros (generado).
 
 Especificaciones originales (3 de octubre de 2026): [`especificaciones/`](especificaciones/) (concepto del motor, Motor de Desarrollo v0.1 y el `ascii_check.py` original).
 

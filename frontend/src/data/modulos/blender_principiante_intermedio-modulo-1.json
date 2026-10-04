@@ -1,0 +1,348 @@
+{
+  "module": {
+    "id": "mod_bpi_001",
+    "title": "Módulo 1: Materiales y sombreado",
+    "slug": "bpi-modulo-1-materiales",
+    "description": "Dale vida a tus modelos: con el Principled BSDF controlas color, metal y rugosidad. Pintas tu nave con cristal, metal brillante y metal quemado.",
+    "estimatedTimeMinutes": 40,
+    "order": 1,
+    "curso": "blender_principiante_intermedio",
+    "insignia": "Pintor de naves",
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "bpi1_gancho",
+        "title": "¿Por qué el metal brilla?",
+        "slug": "por-que-el-metal-brilla",
+        "type": "theory_interactive",
+        "durationSeconds": 240,
+        "isLocked": false,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Explicar qué es un material y cómo verlo en la Vista 3D.",
+          "habilidades": [
+            "bl-materiales",
+            "bl-vista-material"
+          ],
+          "prerrequisitos": [],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Cambiar a Vista previa de material."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### La luz rebota distinto en cada cosa\nUn **material** le dice a Blender cómo rebota la luz en una superficie: el metal refleja, la goma es mate y el vidrio deja pasar la luz.\n\nEn la vista **Sólida** todo se ve gris. Pulsa **Z › Vista previa de material** para ver los colores de verdad."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_bpi1_1",
+            "question": "Todo tu modelo se ve gris aunque le pusiste color. ¿Qué pasa?",
+            "options": [
+              {
+                "id": "opt_a",
+                "text": "Estás en vista Sólida",
+                "isCorrect": true
+              },
+              {
+                "id": "opt_b",
+                "text": "El color se borró",
+                "isCorrect": false
+              },
+              {
+                "id": "opt_c",
+                "text": "Falta guardar",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "La vista Sólida no muestra materiales. Z › Vista previa de material."
+          }
+        ]
+      },
+      {
+        "id": "bpi1_explora",
+        "title": "Tres controles del Principled BSDF",
+        "slug": "principled-bsdf",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Usar Color base, Metálico, Rugosidad y Transmisión, y asignar materiales por zonas.",
+          "habilidades": [
+            "bl-principled",
+            "bl-asignar-material"
+          ],
+          "prerrequisitos": [
+            "bpi1_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Crear un metal brillante y un vidrio."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "Color base",
+                "definition": "El color de la superficie."
+              },
+              {
+                "term": "Metálico",
+                "definition": "0 es plástico o madera; 1 es metal."
+              },
+              {
+                "term": "Rugosidad",
+                "definition": "Baja brilla como espejo; alta se ve mate."
+              },
+              {
+                "term": "Transmisión",
+                "definition": "Cerca de 1, la luz atraviesa: vidrio y cristal."
+              }
+            ]
+          },
+          {
+            "type": "matching",
+            "id": "parejas_bpi1",
+            "prompt": "Une cada material con sus valores.",
+            "pairs": [
+              {
+                "id": "a",
+                "left": "Metal brillante",
+                "right": "Metálico 1 · Rugosidad 0.2"
+              },
+              {
+                "id": "b",
+                "left": "Metal quemado",
+                "right": "Metálico 0.9 · Rugosidad 0.7"
+              },
+              {
+                "id": "c",
+                "left": "Cristal",
+                "right": "Transmisión 0.95"
+              },
+              {
+                "id": "d",
+                "left": "Plástico mate",
+                "right": "Metálico 0 · Rugosidad 0.8"
+              }
+            ],
+            "explanation": "Metálico decide si es metal; Rugosidad, cuánto brilla; Transmisión, si deja pasar la luz."
+          },
+          {
+            "type": "ordering",
+            "id": "orden_bpi1",
+            "prompt": "Ordena los pasos para pintar solo la cabina.",
+            "items": [
+              {
+                "id": "p1",
+                "text": "Pestaña Material › + para agregar una ranura"
+              },
+              {
+                "id": "p2",
+                "text": "Nuevo y ajusta Transmisión"
+              },
+              {
+                "id": "p3",
+                "text": "Tab y selecciona las caras de la cabina"
+              },
+              {
+                "id": "p4",
+                "text": "Elige la ranura y pulsa Asignar"
+              }
+            ],
+            "explanation": "Cada ranura es un material; Asignar lo pone en las caras seleccionadas."
+          }
+        ]
+      },
+      {
+        "id": "bpi1_practica",
+        "title": "Práctica: pinta tu nave",
+        "slug": "practica-pinta-tu-nave",
+        "type": "theory_interactive",
+        "durationSeconds": 1500,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Pintar la nave con tres materiales: cristal, metal brillante y metal quemado.",
+          "habilidades": [
+            "bl-materiales",
+            "bl-principled",
+            "bl-asignar-material"
+          ],
+          "prerrequisitos": [
+            "bpi1_explora"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3: practices/blender/principiante-intermedio/m1-pinta-nave/practica.json."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Tres materiales distintos aplicados, uno de cristal y dos metales (brillante y quemado), guardada."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tu nave, ahora con color\nAbre tu `mi_nave.blend` del curso Principiante. Si no lo tienes, Amatista arma una nave básica para que empieces igual."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_pinta_nave",
+            "practica": "blender.bpi.m1.pinta-nave",
+            "title": "Pinta tu nave en Blender",
+            "text": "Pulsa **Abrir en Blender** y luego abre Blender: la práctica aparece en la pestaña Amatista (tecla N). Tres secciones te acompañan: **Aprender** (la teoría justo cuando la necesitas), **Practicar** (los pasos con «Hazlo conmigo») y **Mi curso**. Tu avance se actualiza aquí mientras trabajas.",
+            "minutes": 30,
+            "steps": [
+              "Elige tu nave",
+              "Tres materiales distintos",
+              "Cabina de cristal",
+              "Metal brillante",
+              "Metal quemado",
+              "Guarda tu nave pintada"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bpi1_jefe",
+        "title": "Jefe final: materiales",
+        "slug": "jefe-final-materiales",
+        "type": "exam",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Explicar los controles del Principled BSDF.",
+          "habilidades": [
+            "bl-principled"
+          ],
+          "prerrequisitos": [
+            "bpi1_practica"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Obtener al menos 80 puntos en el examen."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "qbpi1_1",
+              "questionText": "¿Qué control vuelve metal un material?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Metálico",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Rugosidad",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Alfa",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Metálico en 1.",
+              "feedbackIncorrect": "Es Metálico."
+            },
+            {
+              "id": "qbpi1_2",
+              "questionText": "Una rugosidad baja hace que la superficie…",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Brille como espejo",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Se vea mate",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Sea transparente",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Baja rugosidad = reflejos nítidos.",
+              "feedbackIncorrect": "Baja rugosidad brilla."
+            },
+            {
+              "id": "qbpi1_3",
+              "questionText": "¿Qué control usas para un vidrio?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Transmisión",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Metálico",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Color base",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Transmisión deja pasar la luz.",
+              "feedbackIncorrect": "Es Transmisión."
+            },
+            {
+              "id": "qbpi1_4",
+              "questionText": "¿Cómo pones un material solo en algunas caras?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Asignar en Edición",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Duplicar el objeto",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Renderizar",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Selecciona caras y Asignar.",
+              "feedbackIncorrect": "En Edición, selecciona caras y Asignar."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

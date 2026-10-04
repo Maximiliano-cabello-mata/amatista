@@ -1,0 +1,362 @@
+{
+  "module": {
+    "id": "mod_bpi_002",
+    "title": "Módulo 2: Iluminación y cámara",
+    "slug": "bpi-modulo-2-iluminacion-camara",
+    "description": "Piensa como fotógrafo: encuadra con la cámara, ilumina con tres puntos y saca tu primera foto con F12 en EEVEE.",
+    "estimatedTimeMinutes": 45,
+    "order": 2,
+    "curso": "blender_principiante_intermedio",
+    "insignia": "Director de foto",
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "bpi2_gancho",
+        "title": "Sin luz no hay imagen",
+        "slug": "sin-luz-no-hay-imagen",
+        "type": "theory_interactive",
+        "durationSeconds": 240,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Distinguir la luz de Área y la de Sol.",
+          "habilidades": [
+            "bl-luces",
+            "bl-luz-area"
+          ],
+          "prerrequisitos": [
+            "bpi1_jefe"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Elegir la luz para sombras suaves."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### La luz cuenta la historia\nLa misma nave puede verse épica o aburrida según la luz. Dos luces básicas:\n\n- **Área**: un panel que da sombras suaves, como una ventana.\n- **Sol**: luz pareja desde una dirección, como un día despejado."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_bpi2_1",
+            "question": "Quieres sombras suaves para un retrato de tu nave. ¿Qué luz usas?",
+            "options": [
+              {
+                "id": "opt_a",
+                "text": "Área",
+                "isCorrect": true
+              },
+              {
+                "id": "opt_b",
+                "text": "Sol",
+                "isCorrect": false
+              },
+              {
+                "id": "opt_c",
+                "text": "Ninguna",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "El Área es una superficie grande: sus sombras son suaves."
+          }
+        ]
+      },
+      {
+        "id": "bpi2_explora",
+        "title": "Tres puntos, cámara y EEVEE",
+        "slug": "tres-puntos-camara-eevee",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Colocar principal, relleno y contraluz, encuadrar con la cámara y usar EEVEE.",
+          "habilidades": [
+            "bl-tres-puntos",
+            "bl-camara",
+            "bl-eevee"
+          ],
+          "prerrequisitos": [
+            "bpi2_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Explicar dónde va cada luz."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "Principal (key)",
+                "definition": "La más fuerte, delante y a un lado de la cámara."
+              },
+              {
+                "term": "Relleno (fill)",
+                "definition": "Más suave, del otro lado: aclara las sombras."
+              },
+              {
+                "term": "Contraluz (rim)",
+                "definition": "Detrás del modelo: dibuja un borde de luz que lo separa del fondo."
+              },
+              {
+                "term": "EEVEE",
+                "definition": "El motor de render en tiempo real: ves luces y materiales al instante."
+              }
+            ]
+          },
+          {
+            "type": "shortcuts",
+            "title": "Los atajos del módulo",
+            "practice": true,
+            "items": [
+              {
+                "keys": [
+                  "Shift",
+                  "A"
+                ],
+                "action": "Agregar una luz o una cámara"
+              },
+              {
+                "keys": [
+                  "0"
+                ],
+                "action": "Mirar por la cámara (numérico)"
+              },
+              {
+                "keys": [
+                  "Ctrl",
+                  "Alt",
+                  "0"
+                ],
+                "action": "Llevar la cámara a lo que estás viendo"
+              },
+              {
+                "keys": [
+                  "F12"
+                ],
+                "action": "Render final"
+              }
+            ]
+          },
+          {
+            "type": "ordering",
+            "id": "orden_bpi2",
+            "prompt": "Ordena el flujo para tu primera foto.",
+            "items": [
+              {
+                "id": "p1",
+                "text": "Encuadra y pulsa Ctrl + Alt + 0"
+              },
+              {
+                "id": "p2",
+                "text": "Coloca la luz principal"
+              },
+              {
+                "id": "p3",
+                "text": "Agrega el relleno y el contraluz"
+              },
+              {
+                "id": "p4",
+                "text": "F12 y guarda la imagen"
+              }
+            ],
+            "explanation": "Primero el encuadre: las luces se ubican mirando desde la cámara."
+          }
+        ]
+      },
+      {
+        "id": "bpi2_practica",
+        "title": "Práctica: tres luces y tu primer render",
+        "slug": "practica-tres-puntos",
+        "type": "theory_interactive",
+        "durationSeconds": 1500,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Iluminar con tres puntos, encuadrar y renderizar con EEVEE.",
+          "habilidades": [
+            "bl-luces",
+            "bl-camara",
+            "bl-tres-puntos",
+            "bl-eevee",
+            "bl-render"
+          ],
+          "prerrequisitos": [
+            "bpi2_explora"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3: practices/blender/principiante-intermedio/m2-tres-puntos/practica.json."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Cámara activa que encuadra el modelo, motor EEVEE, una luz de Área, iluminación de tres puntos, un render y archivo guardado."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tu estudio fotográfico\nAmatista arma un estudio con tu modelo sobre un piso, sin luces ni cámara y con el motor Workbench. Tu trabajo: convertirlo en una foto."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_tres_puntos",
+            "practica": "blender.bpi.m2.tres-puntos",
+            "title": "Ilumina y fotografía en Blender",
+            "text": "Pulsa **Abrir en Blender** y luego abre Blender: la práctica aparece en la pestaña Amatista (tecla N). Tres secciones te acompañan: **Aprender** (la teoría justo cuando la necesitas), **Practicar** (los pasos con «Hazlo conmigo») y **Mi curso**. Tu avance se actualiza aquí mientras trabajas.",
+            "minutes": 35,
+            "steps": [
+              "Elige qué fotografiar",
+              "Una cámara activa",
+              "Encuadra el modelo",
+              "Motor EEVEE",
+              "Una luz de Área",
+              "Iluminación de tres puntos",
+              "Tu primer render (F12)",
+              "Guarda tu estudio"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "bpi2_jefe",
+        "title": "Jefe final: luz y cámara",
+        "slug": "jefe-final-luz-camara",
+        "type": "exam",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Explicar la iluminación de tres puntos y el render.",
+          "habilidades": [
+            "bl-tres-puntos",
+            "bl-render"
+          ],
+          "prerrequisitos": [
+            "bpi2_practica"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Obtener al menos 80 puntos en el examen."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "qbpi2_1",
+              "questionText": "¿Dónde va el contraluz?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Detrás del modelo",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Junto a la cámara",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Debajo del piso",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Detrás, dibujando el borde.",
+              "feedbackIncorrect": "El contraluz va detrás."
+            },
+            {
+              "id": "qbpi2_2",
+              "questionText": "¿Qué tecla hace el render final?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "F12",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "F2",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Ctrl + S",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "F12.",
+              "feedbackIncorrect": "Es F12."
+            },
+            {
+              "id": "qbpi2_3",
+              "questionText": "El relleno debe ser…",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Más suave que la principal",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Más fuerte que la principal",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Igual a la principal",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Suave para aclarar sombras.",
+              "feedbackIncorrect": "El relleno es más suave."
+            },
+            {
+              "id": "qbpi2_4",
+              "questionText": "¿Qué ventaja tiene EEVEE?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Muestra luces y materiales al instante",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Solo funciona sin luces",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Exporta a GLB",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Es en tiempo real.",
+              "feedbackIncorrect": "EEVEE es tiempo real."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

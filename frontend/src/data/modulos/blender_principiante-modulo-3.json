@@ -1,0 +1,395 @@
+{
+  "module": {
+    "id": "mod_bp_003",
+    "title": "Módulo 3: Modificadores",
+    "slug": "bp-modulo-3-modificadores",
+    "description": "Trabaja como profesional sin destruir tu malla: aplica la escala, modela solo la mitad con Espejo y suaviza con Subdivisión. Cierras el curso con una nave espacial simétrica.",
+    "estimatedTimeMinutes": 45,
+    "order": 3,
+    "curso": "blender_principiante",
+    "insignia": "Ingeniero de naves",
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "bp3_gancho",
+        "title": "Filtros que no rompen nada",
+        "slug": "filtros-que-no-rompen",
+        "type": "theory_interactive",
+        "durationSeconds": 240,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Explicar qué es un modificador y dónde vive.",
+          "habilidades": [
+            "bl-modificadores"
+          ],
+          "prerrequisitos": [
+            "bp2_jefe"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Encontrar la llave inglesa en Propiedades."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Como un filtro de fotos\nUn **modificador** cambia cómo se ve tu modelo sin tocar la malla original. Puedes apagarlo, cambiarlo o quitarlo cuando quieras. Viven en la pestaña de la **llave inglesa** (azul) del panel Propiedades."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_bp3_1",
+            "question": "Pusiste un modificador y no te gustó. ¿Qué pasa con tu malla?",
+            "options": [
+              {
+                "id": "opt_a",
+                "text": "Quedó arruinada",
+                "isCorrect": false
+              },
+              {
+                "id": "opt_b",
+                "text": "Sigue intacta: quitas el modificador y listo",
+                "isCorrect": true
+              },
+              {
+                "id": "opt_c",
+                "text": "Hay que empezar de nuevo",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "Los modificadores son no destructivos: la malla original no cambia."
+          }
+        ]
+      },
+      {
+        "id": "bp3_explora",
+        "title": "Espejo, Subdivisión y escala aplicada",
+        "slug": "espejo-subdivision-escala",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Usar Espejo y Subdivisión y aplicar la escala antes de usarlos.",
+          "habilidades": [
+            "bl-espejo",
+            "bl-subdivision",
+            "bl-aplicar-escala"
+          ],
+          "prerrequisitos": [
+            "bp3_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Modelar una mitad con Espejo.",
+            "Mantener la Subdivisión entre 1 y 3."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "Espejo (Mirror)",
+                "definition": "Copia la malla al otro lado de un eje. Modelas una mitad y la otra aparece sola."
+              },
+              {
+                "term": "Subdivisión",
+                "definition": "Divide cada cara y redondea la forma. Niveles 1 a 3 bastan casi siempre."
+              },
+              {
+                "term": "Aplicar escala (Ctrl + A)",
+                "definition": "Deja la escala en 1 sin cambiar la forma. Sin esto, los modificadores se deforman."
+              }
+            ]
+          },
+          {
+            "type": "compare",
+            "title": "¿Por qué aplicar la escala?",
+            "mode": "columns",
+            "before": {
+              "label": "Escala 1, 2, 0.5",
+              "text": "El Espejo y el Bisel calculan con medidas estiradas: el resultado sale chueco."
+            },
+            "after": {
+              "label": "Ctrl + A › Escala",
+              "text": "La escala vuelve a 1, 1, 1 y la forma no cambia: los modificadores se comportan bien."
+            }
+          },
+          {
+            "type": "shortcuts",
+            "title": "Los atajos del módulo",
+            "practice": true,
+            "items": [
+              {
+                "keys": [
+                  "Ctrl",
+                  "A"
+                ],
+                "action": "Aplicar (elige Escala)"
+              },
+              {
+                "keys": [
+                  "Ctrl",
+                  "2"
+                ],
+                "action": "Agregar Subdivisión con nivel 2"
+              },
+              {
+                "keys": [
+                  "X"
+                ],
+                "action": "En Edición: borrar (elige Vértices)"
+              },
+              {
+                "keys": [
+                  "Ctrl",
+                  "R"
+                ],
+                "action": "Corte de bucle al centro"
+              }
+            ]
+          },
+          {
+            "type": "ordering",
+            "id": "orden_bp3",
+            "prompt": "Ordena el flujo para modelar con Espejo.",
+            "items": [
+              {
+                "id": "p1",
+                "text": "Ctrl + A › Escala"
+              },
+              {
+                "id": "p2",
+                "text": "Agregar modificador Espejo"
+              },
+              {
+                "id": "p3",
+                "text": "En Edición, borrar la mitad que sobra"
+              },
+              {
+                "id": "p4",
+                "text": "Modelar un solo lado"
+              }
+            ],
+            "explanation": "Primero la escala, luego el Espejo; así lo que modelas de un lado aparece bien en el otro."
+          }
+        ]
+      },
+      {
+        "id": "bp3_practica",
+        "title": "Práctica: nave espacial simétrica",
+        "slug": "practica-nave-simetrica",
+        "type": "theory_interactive",
+        "durationSeconds": 1500,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Modelar media nave con Espejo en X y suavizarla con Subdivisión entre 1 y 3.",
+          "habilidades": [
+            "bl-modificadores",
+            "bl-espejo",
+            "bl-subdivision",
+            "bl-aplicar-escala",
+            "bl-malla-limpia"
+          ],
+          "prerrequisitos": [
+            "bp3_explora"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3: practices/blender/principiante/m3-nave/practica.json."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Escala aplicada, Espejo en X, solo una mitad modelada, al menos 20 caras, Subdivisión 1–3, guardada."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Media nave, nave completa\nModela solo la mitad de una nave espacial: el Espejo dibuja la otra. Al final la suavizas con Subdivisión. Guarda bien el archivo: en el siguiente curso **la vas a pintar**."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_nave",
+            "practica": "blender.bp.m3.nave",
+            "title": "Diseña tu nave en Blender",
+            "text": "Pulsa **Abrir en Blender** y luego abre Blender: la práctica aparece en la pestaña Amatista (tecla N). Tres secciones te acompañan: **Aprender** (la teoría justo cuando la necesitas), **Practicar** (los pasos con «Hazlo conmigo») y **Mi curso**. Tu avance se actualiza aquí mientras trabajas.",
+            "minutes": 35,
+            "steps": [
+              "Elige tu nave",
+              "Aplica la escala",
+              "Espejo en X",
+              "Modela solo una mitad",
+              "Alas y cabina",
+              "Subdivisión entre 1 y 3",
+              "Guarda como mi_nave.blend"
+            ]
+          },
+          {
+            "type": "callout",
+            "variant": "reto",
+            "title": "Reto extra",
+            "body": "Activa **Recortar (Clipping)** en el Espejo para que el centro nunca se abra, y prueba el modificador Biselar en los bordes."
+          }
+        ]
+      },
+      {
+        "id": "bp3_jefe",
+        "title": "Jefe final: modificadores",
+        "slug": "jefe-final-modificadores",
+        "type": "exam",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Explicar el flujo no destructivo con Espejo, Subdivisión y escala aplicada.",
+          "habilidades": [
+            "bl-modificadores",
+            "bl-espejo",
+            "bl-subdivision"
+          ],
+          "prerrequisitos": [
+            "bp3_practica"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Obtener al menos 80 puntos en el examen."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "qbp3_1",
+              "questionText": "¿Dónde están los modificadores?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "En la llave inglesa de Propiedades",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "En el menú Archivo",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "En la línea de tiempo",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "La llave inglesa azul.",
+              "feedbackIncorrect": "Búscalos en la llave inglesa de Propiedades."
+            },
+            {
+              "id": "qbp3_2",
+              "questionText": "¿Qué hace el modificador Espejo?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Refleja la malla en un eje",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Pinta la malla",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Borra la mitad",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Copia la malla al otro lado.",
+              "feedbackIncorrect": "Espejo refleja la malla."
+            },
+            {
+              "id": "qbp3_3",
+              "questionText": "¿Qué nivel de Subdivisión conviene casi siempre?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "1 a 3",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "6",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "10",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Más de 3 vuelve todo lento.",
+              "feedbackIncorrect": "Con 1 a 3 basta."
+            },
+            {
+              "id": "qbp3_4",
+              "questionText": "¿Por qué aplicar la escala antes de los modificadores?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Para que no se deformen",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Para borrar el objeto",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Para cambiar el color",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Con escala 1 calculan bien.",
+              "feedbackIncorrect": "La escala estirada deforma los modificadores."
+            },
+            {
+              "id": "qbp3_5",
+              "questionText": "¿Un modificador cambia tu malla original?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Sí, para siempre",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o2",
+                  "text": "No, hasta que lo apliques",
+                  "isCorrect": true
+                }
+              ],
+              "feedbackCorrect": "Es no destructivo.",
+              "feedbackIncorrect": "No la cambia: es un filtro encima."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

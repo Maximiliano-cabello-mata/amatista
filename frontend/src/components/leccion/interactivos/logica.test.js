@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import aframe1 from '../../../data/modulos/aframe-modulo-1.json';
-import blender1 from '../../../data/modulos/blender-modulo-1.json';
+import blender1 from '../../../data/modulos/archivo/blender-modulo-1.json';
 import {
   actividadesDe,
   cumpleRevision,

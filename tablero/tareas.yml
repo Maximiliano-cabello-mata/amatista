@@ -394,7 +394,52 @@ tareas:
     version: v3.4.0
     area: db
     depende_de: [T-055, T-057]
-    aceptacion: "Script 008 idempotente, el intento guarda «ayudas» y el panel muestra cuántas veces cada alumno usó «Hazlo conmigo» o «Muéstrame»"
+    aceptacion: "Script aditivo idempotente (010 o el siguiente libre: 008 y 009 ya son del motor v3), el intento guarda «ayudas» y el panel muestra cuántas veces cada alumno usó «Hazlo conmigo» o «Muéstrame»"
+  - id: T-062
+    titulo: "Motor v3 y add-on 3.0: plan de estudios de Blender en dos cursos (6 prácticas con teoría, repaso y vigilantes)"
+    version: v3.3.0
+    area: blender
+    evidencia: "docs/motor/etapas/etapa-3.md, docs/cursos/README.md; 29 casos de practices/blender/*/*/pruebas.json y addon/tests/en_blender.py en Blender 4.2 y 5.0"
+  - id: T-063
+    titulo: Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas)
+    version: v3.3.0
+    area: blender
+    evidencia: "docs/motor/referencia/08_practicas_v3_y_herramientas.md; engine/tests/test_v3_herramientas.py"
+  - id: T-064
+    titulo: Aplicar 008 y 009 en Oracle e importar los cursos Principiante y Principiante-Intermedio (después del piloto)
+    version: v3.3.0
+    area: db
+    bloqueo: "Después del piloto del 8 de octubre y de T-055 (007)"
+    depende_de: [T-055, T-062]
+    aceptacion: "docs/base-de-datos/02_manual_008_009.md completo: respaldo con migrar.py, 008, importar, practicas --publicar y 009; diagnóstico sin faltantes y el progreso v2 intacto"
+  - id: T-065
+    titulo: "Dominio amatista-3d.me: Cloudflare (DNS y proxy), PWA en Pages y API con certificado de origen"
+    version: v2.2.0
+    area: lanzamiento
+    bloqueo: "Pasos 1 a 4 (DNS y Pages) se pueden hacer ya; los de la VM, después del piloto"
+    depende_de: [T-005, T-024]
+    aceptacion: "Sección 7 de docs/despliegue/2026-10-04_dominio_amatista-3d.md: /api/salud por https://api.amatista-3d.me, la PWA sincroniza desde https://amatista-3d.me y el 8000 ya no es público"
+  - id: T-066
+    titulo: Probar el add-on 3.0 con alumnos (Principiante, módulo 1) y ajustar píldoras y mensajes
+    version: v3.3.0
+    area: blender
+    depende_de: [T-062, T-064]
+  - id: T-067
+    titulo: Cursos Blender Intermedio y Avanzado (plan de estudios y prácticas)
+    version: v3.4.0
+    area: contenido
+    depende_de: [T-062]
+  - id: T-068
+    titulo: Repaso espaciado sincronizado con el servidor (tabla de repasos por alumno)
+    version: v3.4.0
+    area: db
+    depende_de: [T-064]
+    aceptacion: "Diseño de docs/base-de-datos/01_rediseno_v3.md §4: (usuario_id, item, caja, vence_en), script aditivo, API y add-on que lo usan"
+  - id: T-069
+    titulo: Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)
+    version: v3.4.0
+    area: db
+    aceptacion: "docs/base-de-datos/03_migracion.md §5 pasos 1 y 7 contra un PostgreSQL real; sql/postgresql/ con la purga y las vistas"
 
   # --- v3.4.0 · Especialidades y tutor ---------------------------------------
   - id: T-054

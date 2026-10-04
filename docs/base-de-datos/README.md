@@ -24,6 +24,10 @@ Actualizado: 4 de octubre de 2026 (main en c730c0e)
 | [`README.md`](README.md) | Este resumen: motor, scripts, orden y estado en producción. |
 | [`esquema.md`](esquema.md) | El esquema completo: diagrama entidad-relación, cada tabla con sus columnas, llaves, índices y CHECK, el modelo SQLAlchemy que la mapea, vistas, paquete `AMATISTA_AUTOR`, job de purga, usuario de aplicación y columnas JSON. |
 | [`esquema_completo.sql`](esquema_completo.sql) | **Solo referencia, no se ejecuta.** El estado final del esquema tras 001→007 escrito como `CREATE TABLE` consolidados (con los `ALTER` posteriores ya aplicados), más las vistas y la especificación del paquete. |
+| [`01_rediseno_v3.md`](01_rediseno_v3.md) | **Motor v3**: cursos por ruta (008), archivo de la v2 (009), revisión de índices y reglas de portabilidad. |
+| [`02_manual_008_009.md`](02_manual_008_009.md) | Paso a paso para aplicar 007, 008 y 009 en producción después del piloto. |
+| [`03_migracion.md`](03_migracion.md) | Cómo migrar a otra base (PostgreSQL recomendado) con `herramientas/migrar.py`. |
+| [`esquema_postgresql.sql`](esquema_postgresql.sql) | El esquema para PostgreSQL, generado desde `modelos.py` (no se edita a mano). |
 
 La fuente para instalar o actualizar la base **no** es esta carpeta: son los scripts numerados de [`backend/sql/`](../../backend/sql/) en el orden de [`backend/sql/LEEME.txt`](../../backend/sql/LEEME.txt).
 

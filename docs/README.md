@@ -11,7 +11,7 @@ Actualizado: 4 de octubre de 2026 (main en `c730c0e`). Etapa vigente: **v3 «Ree
 | # | Sección | Para quién | Empieza por |
 |---|---|---|---|
 | 1 | [Historia del proyecto](#1-historia-del-proyecto) | Quien quiere saber cómo llegamos aquí | [Cronología exacta](historia/01_cronologia.md) |
-| 2 | [La plataforma](#2-la-plataforma) | Quien diseña cursos o usa la plataforma | [Mapa por rol](plataforma/01_mapa_de_la_plataforma.md) |
+| 2 | [La plataforma](#2-la-plataforma) | Quien diseña cursos o usa la plataforma | [Mapa por rol](plataforma/01_mapa_de_la_plataforma.md) · [Cursos](cursos/README.md) |
 | 3 | [Amatista Engine](#3-amatista-engine-y-add-on-de-blender) | Quien crea prácticas de Blender | [Amatista Engine](motor/README.md) |
 | 4 | [Manual del código](#4-manual-del-código) | Quien lee o modifica el código | [Mapa del repositorio](manual-del-codigo/01_mapa_del_repositorio.md) |
 | 5 | [Manual del desarrollador](#5-manual-del-desarrollador) | Quien programa, prueba y entrega | [Tu primer día](desarrollador/README.md) |
@@ -19,7 +19,7 @@ Actualizado: 4 de octubre de 2026 (main en `c730c0e`). Etapa vigente: **v3 «Ree
 | 7 | [Herramientas de la plataforma](#7-herramientas-de-la-plataforma) | Quien quiere saber de qué está hecha | [Herramientas](herramientas-de-la-plataforma.md) |
 | 8 | [Operación y despliegue](#8-operación-y-despliegue) | Quien mantiene el servidor | [Despliegue en OCI](despliegue/2026-10-04_despliegue_oci.md) |
 | 9 | [Dirección y decisiones](#9-dirección-y-decisiones) | Quien decide qué sigue | [Plan maestro v3](reestructuracion/00_plan_maestro.md) |
-| 10 | [Registros](#10-registros-bitácora-e-incidencias) | Quien busca qué pasó en una sesión o una falla | [Última bitácora](bitacora/2026-10-04_documentacion_completa.md) |
+| 10 | [Registros](#10-registros-bitácora-e-incidencias) | Quien busca qué pasó en una sesión o una falla | [Última bitácora](bitacora/2026-10-04_motor_v3_plan_de_estudios.md) |
 
 Fuera de `docs/`: [PROYECTO.md](../PROYECTO.md) (prioridades y forma de trabajo), [KANBAN.md](../KANBAN.md) (tablero generado), [CHANGELOG.md](../CHANGELOG.md) (versiones) y los README de cada componente: [frontend](../frontend/README.md), [backend](../backend/README.md), [engine](../engine/README.md), [addon](../addon/README.md), [practices](../practices/README.md), [tablero](../tablero/README.md).
 
@@ -43,12 +43,16 @@ Carpeta [`plataforma/`](plataforma/README.md): estructura fija Cursos · Mi pane
 - [Las 20 herramientas de enseñanza](plataforma/04_herramientas_de_ensenanza.md)
 - [Panel de administración](plataforma/05_panel_de_administracion.md)
 
+### Cursos
+
+Carpeta [`cursos/`](cursos/README.md): los cuatro cursos de Blender (Principiante y Principiante-Intermedio publicados), cómo el [plan de estudios](cursos/plan_de_estudios_blender.txt) se volvió módulos y prácticas, y cómo agregar uno.
+
 ## 3. Amatista Engine y add-on de Blender
 
 Carpeta [`motor/`](motor/README.md).
 
-- Etapas: [1 · evalúa](motor/etapas/etapa-1.md) · [2 · acompaña paso a paso](motor/etapas/etapa-2.md)
-- Referencia: [arquitectura](motor/referencia/01_arquitectura.md) · [formato de práctica](motor/referencia/02_formato_de_practica.md) · [add-on](motor/referencia/03_addon.md) · [instalación del alumno](motor/referencia/04_instalacion_alumno.md) · [API](motor/referencia/05_api.md) · [modo desarrollador](motor/referencia/06_modo_desarrollador.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md)
+- Etapas: [1 · evalúa](motor/etapas/etapa-1.md) · [2 · acompaña paso a paso](motor/etapas/etapa-2.md) · [3 · enseña (motor v3, add-on 3.0)](motor/etapas/etapa-3.md)
+- Referencia: [arquitectura](motor/referencia/01_arquitectura.md) · [formato de práctica](motor/referencia/02_formato_de_practica.md) · [add-on](motor/referencia/03_addon.md) · [instalación del alumno](motor/referencia/04_instalacion_alumno.md) · [API](motor/referencia/05_api.md) · [modo desarrollador](motor/referencia/06_modo_desarrollador.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md) · [prácticas v3 y herramientas de autor](motor/referencia/08_practicas_v3_y_herramientas.md) · [validadores](motor/referencia/09_validadores.md)
 - [Especificaciones originales](motor/especificaciones/) (historia: el concepto antes del código)
 
 ## 4. Manual del código
@@ -79,6 +83,7 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 - [Resumen y orden de los scripts](base-de-datos/README.md)
 - [Esquema SQL completo](base-de-datos/esquema.md): diagrama entidad-relación, cada tabla y columna, vistas, paquete `AMATISTA_AUTOR`
 - [Esquema consolidado (solo referencia)](base-de-datos/esquema_completo.sql)
+- **Motor v3**: [rediseño y optimización](base-de-datos/01_rediseno_v3.md) · [aplicar 008 y 009](base-de-datos/02_manual_008_009.md) · [migrar a otra base](base-de-datos/03_migracion.md) · [esquema PostgreSQL](base-de-datos/esquema_postgresql.sql)
 - Los scripts reales: [`backend/sql/`](../backend/sql/LEEME.txt)
 
 ## 7. Herramientas de la plataforma
@@ -87,6 +92,7 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 
 ## 8. Operación y despliegue
 
+- [Dominio amatista-3d.me con Cloudflare](despliegue/2026-10-04_dominio_amatista-3d.md): DNS, certificados, PWA en Pages, API detrás del proxy y apéndice Fly.io. Registro de la compra: [dominio y SSL](despliegue/2026-10-04_dominio_y_dns-v2.md).
 - [Despliegue en OCI](despliegue/2026-10-04_despliegue_oci.md): VM, servicio systemd, HTTPS con Caddy, PWA, SMTP y actualizaciones.
 - [Oracle paso a paso (002–004)](despliegue/2026-10-02_oracle_paso_a_paso.md) y [manual de Oracle (005–007)](reestructuracion/02_manual_oracle.md)
 - Archivos: [`despliegue/`](../despliegue/)
@@ -101,7 +107,7 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 ## 10. Registros: bitácora e incidencias
 
 - **Bitácora** ([`bitacora/`](bitacora/)), de la más reciente a la más antigua:
-  - 4 oct: [documentación completa](bitacora/2026-10-04_documentacion_completa.md) · [motor etapa 2 y plataforma por módulos](bitacora/2026-10-04_motor_etapa_2_y_plataforma.md) · [Amatista Engine](bitacora/2026-10-04_amatista_engine.md)
+  - 4 oct: [motor v3, plan de estudios, base de datos y dominio](bitacora/2026-10-04_motor_v3_plan_de_estudios.md) · [documentación completa](bitacora/2026-10-04_documentacion_completa.md) · [motor etapa 2 y plataforma por módulos](bitacora/2026-10-04_motor_etapa_2_y_plataforma.md) · [Amatista Engine](bitacora/2026-10-04_amatista_engine.md)
   - 3 oct: [estado y reestructuración](bitacora/2026-10-03_estado_y_reestructuracion.md) · [bitácora técnica del servidor](bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md)
   - 2 oct: [cierre del día](bitacora/2026-10-02_cierre_del_dia.txt) · [ramas y cronología](bitacora/2026-10-02_ramas_y_cronologia.txt) · [estado de la plataforma unificada](bitacora/2026-10-02_estado_plataforma_unificada.txt)
   - 29 sep: [lecciones y progreso](bitacora/2026-09-29_lecciones-y-progreso.txt)
@@ -119,7 +125,8 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 | `historia/`, `manual-del-codigo/`, `desarrollador/`, `base-de-datos/`, `herramientas-de-la-plataforma.md` | Vigente (nuevos el 4 oct) | — |
 | `despliegue/2026-10-04_despliegue_oci.md` | Vigente (nuevo el 4 oct; cierra la parte de despliegue de T-031) | — |
 | `plataforma/` (01 a 05) | Vigente | — |
-| `motor/` (etapas y referencia 01 a 07) | Vigente | — |
+| `motor/` (etapas 1 a 3 y referencia 01 a 09) | Vigente | — |
+| `cursos/` (cursos y plan de estudios de Blender) | Vigente (nuevo el 4 oct) | — |
 | `motor/especificaciones/` | Historia: el concepto original del motor | `motor/referencia/` |
 | `reestructuracion/00_plan_maestro.md` | Vigente (tabla «Dónde estamos» al 4 oct) | — |
 | `reestructuracion/01_modelo_de_contenido.md` | Vigente: fase B, sin empezar | — |

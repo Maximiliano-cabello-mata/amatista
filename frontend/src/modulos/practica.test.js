@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { armarCatalogo } from '../data/cursos';
-import moduloDos from '../data/modulos/blender-modulo-2.json';
+import moduloDos from '../data/modulos/archivo/blender-modulo-2.json';
 import { estadoPractica, esPracticaBlender, partesDelModulo, practicaDelModulo, practicasDelCatalogo } from './practica';
 
 const modulo = { id: moduloDos.module.id, contenido: moduloDos.module };

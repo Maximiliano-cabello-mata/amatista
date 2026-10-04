@@ -1,0 +1,425 @@
+{
+  "module": {
+    "id": "mod_bp_002",
+    "title": "Módulo 2: Modelado poligonal básico",
+    "slug": "bp-modulo-2-modelado-poligonal",
+    "description": "Entra a la pieza: en Modo Edición cambias sus vértices, aristas y caras. Extruyes, cortas y mantienes la malla limpia para modelar una espada (o una taza) low-poly.",
+    "estimatedTimeMinutes": 45,
+    "order": 2,
+    "curso": "blender_principiante",
+    "insignia": "Forjador low-poly",
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "bp2_gancho",
+        "title": "Objeto o Edición: dos maneras de tocar",
+        "slug": "objeto-o-edicion",
+        "type": "theory_interactive",
+        "durationSeconds": 240,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Distinguir Modo Objeto y Modo Edición y los tres componentes de una malla.",
+          "habilidades": [
+            "bl-modo-edicion"
+          ],
+          "prerrequisitos": [
+            "bp1_jefe"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Decir qué cambia en cada modo."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Una pieza de juguete vs. plastilina\nEn **Modo Objeto** mueves el modelo entero, como una pieza de juguete. En **Modo Edición** entras a la pieza y la deformas como plastilina. **Tab** cambia entre los dos."
+          },
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "Vértice",
+                "definition": "Un punto. Tecla 1 en Edición para seleccionarlos."
+              },
+              {
+                "term": "Arista",
+                "definition": "La línea entre dos vértices. Tecla 2."
+              },
+              {
+                "term": "Cara",
+                "definition": "La superficie entre aristas. Tecla 3."
+              }
+            ]
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_bp2_1",
+            "question": "Quieres cambiar solo la punta de tu espada. ¿En qué modo trabajas?",
+            "options": [
+              {
+                "id": "opt_a",
+                "text": "Modo Objeto",
+                "isCorrect": false
+              },
+              {
+                "id": "opt_b",
+                "text": "Modo Edición",
+                "isCorrect": true
+              },
+              {
+                "id": "opt_c",
+                "text": "Modo Escultura",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "En Modo Edición tocas vértices, aristas y caras de la malla."
+          }
+        ]
+      },
+      {
+        "id": "bp2_explora",
+        "title": "Extruir, cortar y limpiar",
+        "slug": "extruir-cortar-limpiar",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Extruir caras, hacer cortes de bucle y limpiar vértices encimados.",
+          "habilidades": [
+            "bl-extruir",
+            "bl-corte-bucle",
+            "bl-malla-limpia"
+          ],
+          "prerrequisitos": [
+            "bp2_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Extruir una cara.",
+            "Explicar por qué una extrusión cancelada ensucia la malla."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tres herramientas para modelar casi todo\n- **E (Extruir)**: saca una cara nueva desde la seleccionada. Así crece la hoja de la espada.\n- **Ctrl + R (Corte de bucle)**: agrega un anillo de aristas para tener más detalle donde lo necesitas.\n- **M › Por distancia**: une vértices que quedaron uno encima de otro."
+          },
+          {
+            "type": "compare",
+            "title": "El error más común de quien empieza",
+            "mode": "columns",
+            "before": {
+              "label": "E y luego Esc",
+              "text": "La extrusión se cancela pero la cara nueva queda encima de la vieja: la malla tiene caras duplicadas invisibles."
+            },
+            "after": {
+              "label": "M › Por distancia",
+              "text": "Los vértices encimados se unen y la malla queda limpia. Amatista pausa tu progreso hasta que lo hagas."
+            }
+          },
+          {
+            "type": "shortcuts",
+            "title": "Los atajos del módulo",
+            "practice": true,
+            "items": [
+              {
+                "keys": [
+                  "Tab"
+                ],
+                "action": "Cambiar entre Objeto y Edición"
+              },
+              {
+                "keys": [
+                  "1",
+                  "2",
+                  "3"
+                ],
+                "action": "Seleccionar vértices, aristas o caras"
+              },
+              {
+                "keys": [
+                  "E"
+                ],
+                "action": "Extruir"
+              },
+              {
+                "keys": [
+                  "Ctrl",
+                  "R"
+                ],
+                "action": "Corte de bucle"
+              },
+              {
+                "keys": [
+                  "B"
+                ],
+                "action": "Selección con caja"
+              },
+              {
+                "keys": [
+                  "C"
+                ],
+                "action": "Selección con círculo"
+              },
+              {
+                "keys": [
+                  "M"
+                ],
+                "action": "Fusionar (elige Por distancia)"
+              }
+            ]
+          },
+          {
+            "type": "matching",
+            "id": "parejas_bp2",
+            "prompt": "Une cada herramienta con su uso.",
+            "pairs": [
+              {
+                "id": "m1",
+                "left": "E",
+                "right": "Sacar caras nuevas"
+              },
+              {
+                "id": "m2",
+                "left": "Ctrl + R",
+                "right": "Agregar un anillo de aristas"
+              },
+              {
+                "id": "m3",
+                "left": "M",
+                "right": "Unir vértices"
+              },
+              {
+                "id": "m4",
+                "left": "B",
+                "right": "Seleccionar con una caja"
+              }
+            ],
+            "explanation": "Con estas cuatro ya puedes modelar objetos low-poly completos."
+          }
+        ]
+      },
+      {
+        "id": "bp2_practica",
+        "title": "Práctica: forja una espada low-poly",
+        "slug": "practica-espada-low-poly",
+        "type": "theory_interactive",
+        "durationSeconds": 1500,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Modelar una espada (o taza) low-poly con extrusiones y un corte de bucle, sin vértices encimados.",
+          "habilidades": [
+            "bl-modo-edicion",
+            "bl-extruir",
+            "bl-corte-bucle",
+            "bl-malla-limpia",
+            "bl-guardar-archivo"
+          ],
+          "prerrequisitos": [
+            "bp2_explora"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3: practices/blender/principiante/m2-espada/practica.json."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Al menos 18 caras, forma larga (o de taza), con un corte, bajo 250 vértices y limpia."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### De un cubo a una espada\nParte del cubo de inicio. En Modo Edición extruye la cara de arriba varias veces para la hoja, haz un corte de bucle para separar el mango y afila la punta escalándola.\n\n¿Prefieres una taza? También vale: Amatista acepta las dos formas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_espada",
+            "practica": "blender.bp.m2.espada",
+            "title": "Forja tu espada en Blender",
+            "text": "Pulsa **Abrir en Blender** y luego abre Blender: la práctica aparece en la pestaña Amatista (tecla N). Tres secciones te acompañan: **Aprender** (la teoría justo cuando la necesitas), **Practicar** (los pasos con «Hazlo conmigo») y **Mi curso**. Tu avance se actualiza aquí mientras trabajas.",
+            "minutes": 30,
+            "steps": [
+              "Elige tu modelo",
+              "Extruye la forma",
+              "Dale forma de espada (o taza)",
+              "Haz un corte de bucle",
+              "Sigue siendo low-poly",
+              "Guarda como mi_espada.blend"
+            ]
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "title": "Si tu progreso se pausa",
+            "body": "Es el vigilante de malla limpia: detectó caras encimadas. Pulsa **Fusionar por distancia conmigo** y sigues donde ibas."
+          }
+        ]
+      },
+      {
+        "id": "bp2_jefe",
+        "title": "Jefe final: modelado poligonal",
+        "slug": "jefe-final-modelado-poligonal",
+        "type": "exam",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Explicar los modos, los componentes y la limpieza de una malla.",
+          "habilidades": [
+            "bl-modo-edicion",
+            "bl-extruir",
+            "bl-malla-limpia"
+          ],
+          "prerrequisitos": [
+            "bp2_practica"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Obtener al menos 80 puntos en el examen."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "qbp2_1",
+              "questionText": "¿Qué tecla cambia entre Modo Objeto y Modo Edición?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Tab",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "E",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Ctrl + R",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Tab alterna los modos.",
+              "feedbackIncorrect": "Es Tab."
+            },
+            {
+              "id": "qbp2_2",
+              "questionText": "¿Qué deja una extrusión cancelada con Esc?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Nada",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o2",
+                  "text": "Caras encimadas",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o3",
+                  "text": "Un objeto nuevo",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Quedan caras duplicadas encima.",
+              "feedbackIncorrect": "Quedan caras encimadas: hay que fusionarlas."
+            },
+            {
+              "id": "qbp2_3",
+              "questionText": "¿Para qué sirve Ctrl + R?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Rotar",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o2",
+                  "text": "Agregar un anillo de aristas",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o3",
+                  "text": "Renderizar",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Es el corte de bucle.",
+              "feedbackIncorrect": "Ctrl + R hace un corte de bucle."
+            },
+            {
+              "id": "qbp2_4",
+              "questionText": "Low-poly significa…",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Muchos polígonos",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o2",
+                  "text": "Pocos polígonos",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o3",
+                  "text": "Sin materiales",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Pocos polígonos, formas simples.",
+              "feedbackIncorrect": "Low = pocos."
+            },
+            {
+              "id": "qbp2_5",
+              "questionText": "¿Cómo seleccionas caras en Modo Edición?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Tecla 3",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Tecla 1",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Tecla 7",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "3 es selección por caras.",
+              "feedbackIncorrect": "1 vértices, 2 aristas, 3 caras."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
