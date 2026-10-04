@@ -16,6 +16,7 @@ export const rutas = {
   adminUsuarios: '#/admin/usuarios',
   adminContenido: '#/admin/contenido',
   adminPracticas: '#/admin/practicas',
+  adminHerramientas: '#/admin/herramientas',
   adminSistema: '#/admin/sistema',
   curso: (cursoId) => `#/curso/${parte(cursoId)}`,
   leccion: (cursoId, leccionId) => `#/curso/${parte(cursoId)}/leccion/${parte(leccionId)}`,
@@ -32,6 +33,7 @@ export const rutas = {
 //   #/admin/contenido/nueva/:modulo      → nueva-leccion  {moduloId}
 //   #/admin/contenido/:curso/:leccion    → leccion        {cursoId, leccionId}
 //   #/admin/practicas                    → practicas (motor de Blender)
+//   #/admin/herramientas                 → herramientas (catálogo de bloques)
 //   #/admin/sistema                      → sistema
 function rutaAdmin(partes) {
   const [seccion, a, b, c] = partes;
@@ -45,6 +47,7 @@ function rutaAdmin(partes) {
   }
   if (seccion === 'sistema') return { seccion: 'sistema', params: {} };
   if (seccion === 'practicas') return { seccion: 'practicas', params: {} };
+  if (seccion === 'herramientas') return { seccion: 'herramientas', params: {} };
   return { seccion: 'resumen', params: {} };
 }
 

@@ -1,5 +1,7 @@
-// #/blender: descargar e instalar Amatista para Blender, conectar la cuenta
-// y ver los Blender conectados y las prácticas.
+// #/blender («Mi Blender»): descargar e instalar Amatista para Blender,
+// conectar la cuenta y ver los Blender conectados y las prácticas. Desde
+// v3.1 ya no es una pestaña: las prácticas viven al cierre de cada módulo y
+// se preparan desde la misma práctica; aquí quedan las opciones y la ayuda.
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../auth/contexto';
 import FormularioCodigo from '../blender/FormularioCodigo';
@@ -174,7 +176,7 @@ function Practicas({ token }) {
   const lista = respuesta?.datos?.practicas ?? [];
   if (!respuesta?.ok || !lista.length) return null;
   return (
-    <Tarjeta antetitulo="Motor Amatista" titulo="Prácticas en Blender">
+    <Tarjeta antetitulo="Cierre de cada módulo" titulo="Tus prácticas en Blender">
       <ul className="grid gap-2 sm:grid-cols-2">
         {lista.map((p) => {
           const avance = p.mi_progreso?.completada ? 100 : (p.mi_progreso?.progreso ?? 0);
@@ -212,11 +214,14 @@ function Blender() {
           <CristalLogo className="animar-flotar h-16 w-16 shrink-0" />
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-blender">Amatista para Blender</p>
-            <h1 className="mt-1 text-3xl font-extrabold leading-tight text-white sm:text-4xl">Practica dentro de Blender</h1>
+            <h1 className="mt-1 text-3xl font-extrabold leading-tight text-white sm:text-4xl">Mi Blender</h1>
             <p className="mt-2 max-w-2xl leading-relaxed text-texto/80">
-              Instala el add-on una vez: Amatista revisa tu escena mientras trabajas, te da pistas cuando las pides y tu
-              avance aparece aquí, en tu panel.
+              Cada módulo termina con una práctica dentro de Blender. Instala el add-on una vez: Amatista te guía paso a paso,
+              resalta lo que tienes que cambiar y tu avance aparece en tu panel.
             </p>
+            <a href={rutas.inicio} className="mt-3 inline-block font-mono text-xs uppercase tracking-widest text-neon hover:underline">
+              Ir a mis módulos ▸
+            </a>
           </div>
         </div>
       </header>
