@@ -1,0 +1,99 @@
+Para implementar este plan de estudios en el add-on interactivo, el contenido debe diseñarse utilizando principios como el andamiaje (scaffolding) y el aprendizaje espaciado. El aprendizaje espaciado distribuye la práctica a lo largo del tiempo en lugar de concentrarla, lo que fortalece la retención a largo plazo sin abrumar a los estudiantes más jóvenes. La teoría no se presenta como texto largo, sino como pequeñas píldoras visuales (gifs, luces en la interfaz) que aparecen solo cuando el estudiante necesita usar una herramienta.   
+
+A continuación, se detalla el contenido exacto de los módulos, dividiendo cómo se imparte la teoría y cuál es la práctica requerida.
+
+Módulo 1: Fundamentos y Navegación Espacial
+Objetivo: Vencer el miedo a la interfaz interactuando como si fuera un videojuego.
+
+Teoría (Entregada por el add-on):
+
+Una animación superpuesta explica los ejes tridimensionales (X rojo, Y verde, Z azul).
+
+Guías visuales que iluminan las teclas numéricas y las letras G (Mover), R (Rotar) y S (Escalar) cuando el usuario selecciona un objeto.   
+
+Explicación interactiva del atajo Shift + A para agregar formas primitivas básicas (cubos, cilindros, esferas).   
+
+Práctica Guiada (Mini-Proyecto):
+
+El estudiante comienza con una escena vacía. El add-on le pide que construya un "Tren de juguete".
+
+El usuario debe agregar múltiples cubos y cilindros (Shift + A), escalarlos (S) para hacer las ruedas y moverlos (G) para ensamblar el tren. El motor del add-on valida la posición de las formas antes de felicitar al estudiante y desbloquear el siguiente nivel.   
+
+Módulo 2: Modelado (Esculpiendo Formas)
+Objetivo: Transición a la creación de topología usando herramientas destructivas.
+
+Teoría (Entregada por el add-on):
+
+Un gráfico simple muestra la diferencia entre el Modo Objeto (ver el modelo desde afuera) y el Modo Edición (modificar sus piezas internas).   
+
+Se enseñan los componentes de la malla: vértices (puntos), bordes (líneas) y caras, así como el uso de las herramientas de selección (B para caja, C para círculo).   
+
+El add-on muestra cómo usar la tecla E para extruir y sacar nuevas caras, Ctrl + R para hacer cortes de bucle, y la tecla M para fusionar vértices en caso de error.   
+
+Práctica Guiada (Mini-Proyecto):
+
+Proyecto: Crear una taza o una espada de estilo "low-poly" (baja resolución geométrica).   
+
+El add-on detecta si el estudiante presiona E y luego cancela el movimiento dejando geometría duplicada. Si esto ocurre, el add-on pausa el progreso y resalta la opción de "Fusionar por distancia" (Merge) para mantener la malla limpia.   
+
+Módulo 3: Modificadores (Trabajo Inteligente)
+Objetivo: Enseñar el flujo de trabajo no destructivo, permitiendo que la computadora haga operaciones matemáticas complejas.
+
+Teoría (Entregada por el add-on):
+
+El panel lateral resalta el icono de la "llave inglesa" (Modificadores). La teoría explica que los modificadores son como "filtros" que pueden encenderse o apagarse sin dañar el modelo base.   
+
+Se introduce el modificador de Simetría (Mirror) para ahorrar tiempo y el de Superficie de Subdivisión (Subdivision Surface) para redondear formas cuadradas.   
+
+Práctica Guiada (Mini-Proyecto):
+
+Proyecto: Modelar una nave espacial o una cara alienígena simétrica.
+
+El estudiante modela solo el lado izquierdo de la nave. El add-on valida que el modificador Mirror esté activo en el eje correcto y asegura que la escala del objeto haya sido congelada previamente para evitar deformaciones indeseadas.   
+
+Módulo 4: Materiales, Texturas y Color
+Objetivo: Entender la interacción física de la luz con las superficies a un nivel básico.
+
+Teoría (Entregada por el add-on):
+
+En lugar de abrumar con nodos complejos, el add-on aísla el sombreador Principled BSDF.   
+
+Minimiza la teoría textual y pide al usuario que mueva exclusivamente los valores de Color, Rugosidad (Roughness) y Metálico (Metallic) para ver los cambios en tiempo real.   
+
+Práctica Guiada (Mini-Proyecto):
+
+Proyecto: Pintar la nave espacial del Módulo 3.
+
+El estudiante debe asignar al menos tres materiales diferentes (ejemplo: cristal transparente para la cabina, metal brillante para las alas y metal quemado/mate para los propulsores). El add-on verifica que haya múltiples bloques de datos de material aplicados correctamente.
+
+Módulo 5: Iluminación y Cámara
+Objetivo: Dominar el espacio escénico y capturar la imagen final (render).
+
+Teoría (Entregada por el add-on):
+
+Se explican los tipos de luces básicos: Luz de Área para sombras suaves y Luz de Sol para luz direccional consistente.   
+
+Se enseña cómo posicionar la cámara virtual.
+
+Se presenta el motor EEVEE, destacando que permite ver materiales e luces de forma instantánea sin tiempos de carga pesados.   
+
+Práctica Guiada (Mini-Proyecto):
+
+Proyecto: Iluminación de tres puntos y Render Final.
+
+El add-on guía al estudiante para colocar una luz principal, una de relleno y una trasera (Three-point lighting). Luego, el estudiante presiona F12 para generar su primera fotografía digital.   
+
+Módulo 6: Animación Básica
+Objetivo: Introducir la dimensión del tiempo mediante fotogramas.
+
+Teoría (Entregada por el add-on):
+
+Explicación de la línea de tiempo (Timeline) y el concepto de Fotograma Clave (Keyframe), que sirve para guardar la posición, rotación o tamaño de un objeto en un segundo específico.   
+
+El add-on presenta principios fundamentales de la animación, como el encoger y estirar (squash and stretch) para dar la ilusión de peso.   
+
+Práctica Guiada (Mini-Proyecto):
+
+Proyecto: La pelota rebotando.
+
+El estudiante inserta fotogramas clave para que una esfera caiga desde arriba, se aplaste ligeramente al tocar el suelo y vuelva a subir. El add-on valida que haya variaciones en el eje Z a lo largo de la línea de tiempo antes de dar por completado el curso introductorio.
