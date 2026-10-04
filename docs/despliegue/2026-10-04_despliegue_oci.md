@@ -210,10 +210,10 @@ Con esta opción, `actualizar.sh` detecta sola la unidad: si `systemctl cat amat
 
 ### 7.2 Opción B: instalar `amatista-api.service` (la del repositorio)
 
-**[Sin ejecutar].** La unidad está escrita para otra disposición: repositorio en `/opt/amatista`, usuario de sistema `amatista` y `ProtectHome=true` (líneas 8-10, 23-25, 35 y 45). En la VM real el repositorio está en `/home/opc/amatista`, así que **no se puede copiar tal cual**: con `ProtectHome=true` el proceso no ve `/home` y no arranca. Hay dos caminos:
+**[Sin ejecutar].** Desde el motor v3 la unidad ya trae las rutas de la VM real (`/home/opc/amatista`, usuario `opc`, `ProtectHome=read-only`) y su `EnvironmentFile` es opcional (si `/etc/amatista/amatista-api.env` no existe, se usa `backend/.env`), así que se puede copiar tal cual. Antes de eso estaba escrita para `/opt/amatista` con `ProtectHome=true`. Los dos caminos posibles:
 
-1. **Mover el despliegue a `/opt/amatista`** con un usuario `amatista` sin shell, como dice la unidad. Es lo más aislado, pero cambia rutas que hoy funcionan y que citan la bitácora y `LEEME.txt` (`~/amatista/backend`).
-2. **Ajustar una copia** a `/home/opc/amatista`. Cambia estas líneas:
+1. **Mover el despliegue a `/opt/amatista`** con un usuario `amatista` sin shell (cambia `User`, `Group`, rutas y `ProtectHome=true` en la unidad). Es lo más aislado, pero cambia rutas que hoy funcionan y que citan la bitácora y `LEEME.txt` (`~/amatista/backend`).
+2. **Quedarse en `/home/opc/amatista`** (lo que trae la unidad hoy). Estas son las líneas que lo definen:
 
    ```ini
    User=opc
@@ -362,7 +362,7 @@ Variables opcionales: `AMATISTA_REPO` (por defecto la carpeta padre del script, 
 
 Antes de usarlo en la VM actual:
 
-- **Rama local.** Si la VM sigue en `despliegue/v3-2026-10-03` (bitácora §11), el script se detiene («el repositorio está en ..., no en main»). Pasar el nombre de esa rama tampoco sirve, porque no existe en `origin`. Hay que volver a `main` (`git switch main`) a mano, revisando antes que no haya cambios propios en esa rama.
+- **Rama local.** Si la VM sigue en `despliegue/v3-2026-10-03` (bitácora §11), el script (desde el motor v3) se cambia solo a `main` cuando todos los commits de esa rama ya están en `origin/main`. Si la rama tiene commits propios, se detiene y los lista: respáldalos (`git branch respaldo-...`) y decide a mano.
 - **No actualices a `main` antes de 007.** El código actual de `main` incluye el motor de prácticas, y `LEEME.txt` (sección 2) y T-055 piden ejecutar 007 en Oracle **antes** de desplegar ese código, después del piloto. Es la regla general del [manual de Oracle §2](../reestructuracion/02_manual_oracle.md#2-el-orden-importa-primero-oracle-después-el-código): primero Oracle, después el código.
 - **`sudo`.** El script llama `sudo systemctl restart` y `sudo journalctl`: córrelo como `opc`, que tiene `sudo`.
 

@@ -1,7 +1,23 @@
 // src/services/api.js
 // Cliente del backend. Ninguna función lanza: todas devuelven
 // {ok, status, datos, error} con el error ya escrito en español para mostrarlo.
-export const API_URL = import.meta.env.VITE_API_URL || "http://158.101.118.222:8000";
+// Dominio oficial (docs/despliegue/2026-10-04_dominio_amatista-3d.md): la PWA
+// vive en amatista-3d.me y la API en api.amatista-3d.me, las dos con HTTPS.
+export const DOMINIO = "amatista-3d.me";
+export const API_DEL_DOMINIO = `https://api.${DOMINIO}`;
+// IP de la VM, sin HTTPS: solo para compilaciones viejas sin VITE_API_URL fuera
+// del dominio (el piloto de la v2.2). Desde https el navegador la bloquea.
+const API_POR_IP = "http://158.101.118.222:8000";
+
+// VITE_API_URL manda. Sin ella: en el dominio, su API; en tu computadora, el
+// backend local; en cualquier otro lado, la IP de siempre.
+export function apiPorDefecto(host = typeof window === "undefined" ? "" : window.location.hostname) {
+  if (host === DOMINIO || host.endsWith(`.${DOMINIO}`)) return API_DEL_DOMINIO;
+  if (host === "localhost" || host === "127.0.0.1") return "http://localhost:8000";
+  return API_POR_IP;
+}
+
+export const API_URL = import.meta.env.VITE_API_URL || apiPorDefecto();
 
 const ESPERA_POR_DEFECTO = 8000;
 
