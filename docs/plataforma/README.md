@@ -1,4 +1,4 @@
-# Plataforma Amatista (v3.1 · 4 de octubre de 2026)
+# Plataforma Amatista (v3.2 · 4 de octubre de 2026)
 
 Cómo está organizada la plataforma para alumnos, profesores y administradores después de la integración de Blender en los módulos. Lo técnico del motor y del add-on está en [`docs/motor/`](../motor/README.md).
 
@@ -11,8 +11,20 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 | [03 · Etiquetas y gráficos](03_etiquetas_y_graficos.md) | El sistema de etiquetas low poly, la ruta del módulo y la estación de Blender. |
 | [04 · Herramientas de enseñanza](04_herramientas_de_ensenanza.md) | Los 20 bloques con los que se arma una lección, con sus campos y cuándo usar cada uno (3 nuevos). |
 | [05 · Panel de administración](05_panel_de_administracion.md) | Cómo se organiza el panel y el flujo para subir un módulo con su práctica. |
+| [06 · Módulo 3: modelado con precisión](06_modulo_3_modelado_precision.md) | El módulo de precisión de la v2 como ejemplo completo. |
+| [07 · Herramientas gráficas](07_herramientas_graficas.md) | Qué gráficos tenemos, qué se agregó en la v3.2 y qué conviene desarrollar (investigación). |
 
 ![Un módulo con su práctica en Blender](img/modulo_ruta.svg)
+
+## Resumen de cambios (v3.2 · curso unificado)
+
+- **Una tarjeta por curso.** «Blender» es una sola tarjeta que se ramifica en Principiante, Principiante-Intermedio, Intermedio y Avanzado; la página del curso (`#/curso/blender`) muestra el árbol de niveles, «Tu Blender» (equipos conectados y prácticas registradas) y el mapa de cada nivel. A-Frame tiene el mismo trato. Logos SVG de Blender y A-Frame.
+- **Teoría y Blender intercalados** ([02](02_modulos_y_practica.md)): exploración corta en Blender y práctica de cierre en cada módulo, todo registrado con el add-on conectado.
+- **Cada módulo con su temática** y un **jefe final** en el examen que pierde vida con cada acierto.
+- **Medallas progresivas** (5 logros × bronce, plata y oro) que se revelan al avanzar, y **racha animada**.
+- **Curso Intermedio publicado**; Avanzado bloqueado hasta tener su teoría ([ruta de aprendizaje](../cursos/03_ruta_de_aprendizaje_blender.md)).
+- **Más claro y más ligero:** el ejercicio de emparejar con más contraste, animaciones CSS nuevas y un modo ligero para equipos modestos ([07](07_herramientas_graficas.md)). Mismo diseño y misma paleta.
+- **Sin cambios en Oracle.** El curso Intermedio se crea solo al importar (`asegurar_cursos_base`).
 
 ## Resumen de cambios (v3.1)
 

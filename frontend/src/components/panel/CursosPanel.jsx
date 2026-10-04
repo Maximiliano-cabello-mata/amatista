@@ -2,8 +2,9 @@ import { resumenCurso } from '../../progreso/reglas';
 import { rutas } from '../../rutas';
 import AnilloProgreso from '../graficas/AnilloProgreso';
 import { ACENTOS_GRAFICA } from '../graficas/colores';
-import { ICONOS_CURSO } from '../estiloCurso';
-import { CristalLogo, IconoCandado } from '../Iconos';
+import { logoDeCurso } from '../estiloCurso';
+import { IconoCandado } from '../Iconos';
+import LogoCurso from '../LogoCurso';
 import { estadoModulo } from './datos';
 import { IconoPalomita } from './IconosPanel';
 import Seccion from './Seccion';
@@ -44,7 +45,6 @@ function EstadoModulo({ estado, completadas, total, nuevas }) {
 function TarjetaAvance({ curso, progreso }) {
   const resumen = resumenCurso(progreso, curso);
   const acento = ACENTOS_GRAFICA[curso.acento] ?? ACENTOS_GRAFICA.neon;
-  const Icono = ICONOS_CURSO[curso.id] ?? CristalLogo;
 
   return (
     <article className="corte-poly-sm flex flex-col border border-white/10 bg-base/60 p-4 sm:p-5" aria-labelledby={`avance-${curso.id}`}>
@@ -64,7 +64,7 @@ function TarjetaAvance({ curso, progreso }) {
         </AnilloProgreso>
         <div className="min-w-0">
           <p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/50">
-            <Icono className="h-4 w-4" /> Curso {curso.numero}
+            <LogoCurso logo={logoDeCurso(curso)} className="h-4 w-4" /> Curso {curso.numero}
           </p>
           <h3 id={`avance-${curso.id}`} className="text-2xl font-extrabold text-white">
             {curso.titulo}

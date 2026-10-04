@@ -1,0 +1,443 @@
+{
+  "module": {
+    "id": "mod_bi_003",
+    "title": "Módulo 3: Render de portafolio",
+    "slug": "bi-modulo-3-portafolio",
+    "description": "Cierra el nivel como un profesional: eliges entre EEVEE y Cycles, compones con la regla de tercios, iluminas con tres puntos y presentas tu diorama.",
+    "estimatedTimeMinutes": 55,
+    "order": 3,
+    "curso": "blender_intermedio",
+    "insignia": "Curador de galería",
+    "tema": "galeria",
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "bi3_gancho",
+        "title": "La foto vende el modelo",
+        "slug": "la-foto-vende-el-modelo",
+        "type": "theory_interactive",
+        "durationSeconds": 240,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Distinguir EEVEE y Cycles y para qué sirve cada uno.",
+          "habilidades": [
+            "bl-render",
+            "bl-cycles"
+          ],
+          "prerrequisitos": [
+            "bi2_jefe"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Distinguir EEVEE y Cycles y para qué sirve cada uno."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Dos motores, dos usos\n- **EEVEE**: tiempo real. Perfecto para probar y para animaciones rápidas.\n- **Cycles**: traza rayos de luz que rebotan. Más lento y más realista: ideal para la imagen final del portafolio."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_bi3_1",
+            "question": "Tu imagen de portafolio necesita sombras y reflejos realistas. ¿Qué motor eliges?",
+            "options": [
+              {
+                "id": "opt_a",
+                "text": "Cycles",
+                "isCorrect": true
+              },
+              {
+                "id": "opt_b",
+                "text": "Workbench",
+                "isCorrect": false
+              },
+              {
+                "id": "opt_c",
+                "text": "Ninguno",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "Cycles simula la luz real; EEVEE es más rápido para probar."
+          }
+        ]
+      },
+      {
+        "id": "bi3_blender",
+        "title": "En Blender: tu primer render en Cycles",
+        "slug": "blender-cycles",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Cambias el motor a Cycles, pones una cámara y haces un render. Amatista registra el motor y tu render.",
+          "habilidades": [
+            "bl-render",
+            "bl-cycles"
+          ],
+          "prerrequisitos": [
+            "bi3_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m3-explora/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Algo que fotografiar",
+            "Motor Cycles",
+            "Una cámara activa",
+            "Render con F12"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### En Blender, conectado\nCambia el motor a Cycles, pon una cámara y haz un render. Compara el tiempo y el resultado con EEVEE.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_bi3_blender",
+            "practica": "blender.bi.m3.explora",
+            "title": "Calentamiento: tu primer render en Cycles",
+            "text": "EEVEE es rápido; Cycles calcula la luz rebotando como en la vida real. Compáralos tú. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 8,
+            "steps": [
+              "Algo que fotografiar",
+              "Motor Cycles",
+              "Una cámara activa",
+              "Render con F12"
+            ],
+            "allowManual": false
+          }
+        ]
+      },
+      {
+        "id": "bi3_explora",
+        "title": "Composición, tres puntos y muestras",
+        "slug": "composicion-tres-puntos-muestras",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Componer, iluminar y ajustar el render final.",
+          "habilidades": [
+            "bl-camara",
+            "bl-tres-puntos",
+            "bl-portafolio"
+          ],
+          "prerrequisitos": [
+            "bi3_blender"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Componer, iluminar y ajustar el render final."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "Regla de tercios",
+                "definition": "Divide la imagen en 3 × 3: lo importante va en un cruce de líneas."
+              },
+              {
+                "term": "Tres puntos",
+                "definition": "Principal, relleno más suave y contraluz detrás."
+              },
+              {
+                "term": "Muestras",
+                "definition": "Cuántos rayos calcula Cycles por píxel: más muestras, menos ruido y más tiempo."
+              },
+              {
+                "term": "Eliminar ruido",
+                "definition": "Limpia el grano del render con pocas muestras."
+              }
+            ]
+          },
+          {
+            "type": "ordering",
+            "id": "orden_bi3",
+            "prompt": "Ordena el flujo de la imagen final.",
+            "items": [
+              {
+                "id": "p1",
+                "text": "Encuadra con la cámara y la guía de tercios"
+              },
+              {
+                "id": "p2",
+                "text": "Ilumina con tres puntos"
+              },
+              {
+                "id": "p3",
+                "text": "Elige el motor y las muestras"
+              },
+              {
+                "id": "p4",
+                "text": "F12 y guarda la imagen"
+              }
+            ],
+            "explanation": "La luz se coloca mirando desde la cámara; el motor se elige al final."
+          },
+          {
+            "type": "matching",
+            "id": "parejas_bi3",
+            "prompt": "Une cada problema con su solución.",
+            "pairs": [
+              {
+                "id": "par_ruido",
+                "left": "Render con grano",
+                "right": "Más muestras o eliminar ruido"
+              },
+              {
+                "id": "par_plano",
+                "left": "Modelo plano, sin volumen",
+                "right": "Agregar contraluz"
+              },
+              {
+                "id": "par_centro",
+                "left": "Composición aburrida",
+                "right": "Regla de tercios"
+              },
+              {
+                "id": "par_lento",
+                "left": "Pruebas muy lentas",
+                "right": "Probar en EEVEE"
+              }
+            ],
+            "explanation": "Cada ajuste resuelve un problema típico del render final."
+          }
+        ]
+      },
+      {
+        "id": "bi3_practica",
+        "title": "Práctica: tu diorama en la galería",
+        "slug": "practica-diorama",
+        "type": "theory_interactive",
+        "durationSeconds": 1800,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Montas tu aldea (o cualquier modelo tuyo) como diorama: encuadre, iluminación de tres puntos, motor de render y la imagen final guardada.",
+          "habilidades": [
+            "bl-tres-puntos",
+            "bl-camara",
+            "bl-render",
+            "bl-portafolio"
+          ],
+          "prerrequisitos": [
+            "bi3_explora"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m3-diorama/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Marca tu pieza",
+            "Cámara activa",
+            "Encuadre de portafolio",
+            "Tres puntos",
+            "EEVEE o Cycles",
+            "La foto final",
+            "Guarda el diorama"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tu proyecto\nPresenta tu aldea (o tu mejor modelo) como diorama: encuadre, tres puntos, motor y la imagen final.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_bi3_practica",
+            "practica": "blender.bi.m3.diorama",
+            "title": "Tu diorama en la galería",
+            "text": "La galería abre sus puertas: presenta tu mejor pieza como en un portafolio profesional. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 30,
+            "steps": [
+              "Marca tu pieza",
+              "Cámara activa",
+              "Encuadre de portafolio",
+              "Tres puntos",
+              "EEVEE o Cycles",
+              "La foto final",
+              "Guarda el diorama"
+            ],
+            "allowManual": false
+          },
+          {
+            "type": "callout",
+            "variant": "reto",
+            "title": "Reto extra",
+            "body": "Haz dos renders, uno en EEVEE y otro en Cycles, y compáralos lado a lado."
+          }
+        ]
+      },
+      {
+        "id": "bi3_jefe",
+        "title": "Jefe final: la galería",
+        "slug": "jefe-final-galeria",
+        "type": "exam",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Explicar cómo preparar un render de portafolio.",
+          "habilidades": [
+            "bl-render",
+            "bl-portafolio"
+          ],
+          "prerrequisitos": [
+            "bi3_practica"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Obtener al menos 80 puntos en el examen."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "qbi3_1",
+              "questionText": "¿Qué motor traza rayos de luz que rebotan?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Cycles",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "EEVEE",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Workbench",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Cycles.",
+              "feedbackIncorrect": "Es Cycles."
+            },
+            {
+              "id": "qbi3_2",
+              "questionText": "¿Dónde va lo importante con la regla de tercios?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "En un cruce de líneas",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Siempre al centro",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "En una esquina",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "En los cruces.",
+              "feedbackIncorrect": "Va en un cruce de las líneas."
+            },
+            {
+              "id": "qbi3_3",
+              "questionText": "Tu render tiene grano. ¿Qué haces?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Subir las muestras o eliminar ruido",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Bajar la luz",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Cambiar a Workbench",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Más muestras o eliminar ruido.",
+              "feedbackIncorrect": "Sube las muestras o usa eliminar ruido."
+            },
+            {
+              "id": "qbi3_4",
+              "questionText": "¿Para qué sirve el contraluz?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Separar el modelo del fondo",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Iluminar el piso",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Nada",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Dibuja el borde.",
+              "feedbackIncorrect": "El contraluz separa del fondo."
+            },
+            {
+              "id": "qbi3_5",
+              "questionText": "¿Cuándo conviene EEVEE?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Para probar rápido",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Para la imagen final siempre",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Nunca",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Para iterar rápido.",
+              "feedbackIncorrect": "EEVEE sirve para probar rápido."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

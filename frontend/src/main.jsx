@@ -5,6 +5,10 @@ import App from './App.jsx'
 import '@fontsource-variable/outfit'
 import '@fontsource-variable/jetbrains-mono'
 import './index.css'
+import { aplicarModoLigero } from './lib/rendimiento'
+
+// Equipos modestos: sin animaciones continuas ni fondo facetado (index.css › html.ligero).
+aplicarModoLigero()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

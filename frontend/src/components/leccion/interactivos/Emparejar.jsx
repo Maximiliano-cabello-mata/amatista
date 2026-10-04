@@ -5,22 +5,24 @@ import { mezclarDistinto, semillaDe, textoPlano } from './logica';
 import { BOTON_PRINCIPAL, BOTON_SECUNDARIO, MarcoActividad, Retroalimentacion } from './Marco';
 
 // Un color por pareja (con su número, para no depender solo del color).
+// v3.2: fondos más llenos y texto blanco para que las parejas se distingan
+// bien sobre el fondo oscuro, también en pantallas con poco brillo.
 const COLORES = [
-  { borde: 'border-neon', fondo: 'bg-neon/10', insignia: 'bg-neon' },
-  { borde: 'border-blender', fondo: 'bg-blender/10', insignia: 'bg-blender' },
-  { borde: 'border-amatista-claro', fondo: 'bg-amatista/15', insignia: 'bg-amatista-claro' },
-  { borde: 'border-yellow-300', fondo: 'bg-yellow-300/10', insignia: 'bg-yellow-300' },
-  { borde: 'border-pink-400', fondo: 'bg-pink-400/10', insignia: 'bg-pink-400' },
-  { borde: 'border-lime-300', fondo: 'bg-lime-300/10', insignia: 'bg-lime-300' },
-  { borde: 'border-sky-400', fondo: 'bg-sky-400/10', insignia: 'bg-sky-400' },
-  { borde: 'border-orange-300', fondo: 'bg-orange-300/10', insignia: 'bg-orange-300' },
+  { borde: 'border-neon', fondo: 'bg-neon/25', insignia: 'bg-neon' },
+  { borde: 'border-blender', fondo: 'bg-blender/25', insignia: 'bg-blender' },
+  { borde: 'border-amatista-claro', fondo: 'bg-amatista/35', insignia: 'bg-amatista-claro' },
+  { borde: 'border-yellow-300', fondo: 'bg-yellow-300/20', insignia: 'bg-yellow-300' },
+  { borde: 'border-pink-400', fondo: 'bg-pink-400/25', insignia: 'bg-pink-400' },
+  { borde: 'border-lime-300', fondo: 'bg-lime-300/20', insignia: 'bg-lime-300' },
+  { borde: 'border-sky-400', fondo: 'bg-sky-400/25', insignia: 'bg-sky-400' },
+  { borde: 'border-orange-300', fondo: 'bg-orange-300/20', insignia: 'bg-orange-300' },
 ];
 
 function Insignia({ color, numero, fija }) {
   return (
     <span
-      className={`hexagono grid h-7 w-7 shrink-0 place-items-center font-mono text-xs font-bold ${
-        color ? `${color.insignia} text-[#121212]` : 'bg-white/10 text-white/40'
+      className={`hexagono grid h-8 w-8 shrink-0 place-items-center font-mono text-sm font-extrabold ${
+        color ? `${color.insignia} text-[#121212]` : 'bg-white/20 text-white/80'
       }`}
       aria-hidden="true"
     >
@@ -30,10 +32,10 @@ function Insignia({ color, numero, fija }) {
 }
 
 function claseBoton({ color, seleccionado, fija }) {
-  if (seleccionado) return 'border-neon bg-neon/15 text-white ring-2 ring-neon/50';
+  if (seleccionado) return 'border-neon bg-neon/30 text-white ring-2 ring-neon shadow-[0_0_18px_-4px_rgba(0,229,255,0.7)]';
   if (color) return `${color.borde} ${color.fondo} text-white`;
-  if (fija) return 'border-emerald-400/60 bg-emerald-400/10 text-white';
-  return 'border-white/10 bg-base/60 text-texto hover:border-amatista hover:bg-amatista/10';
+  if (fija) return 'border-emerald-400 bg-emerald-400/25 text-white';
+  return 'border-white/30 bg-[#2a2a2e] text-white hover:border-amatista-claro hover:bg-amatista/25';
 }
 
 // Une cada concepto (izquierda) con su pareja (derecha): se toca uno de cada
@@ -137,8 +139,10 @@ function Emparejar({ bloque, alCompletar, resuelta }) {
 
   return (
     <MarcoActividad bloque={bloque} titulo={bloque.prompt} resultado={resultado} resuelta={resuelta}>
-      <p className="mb-3 font-mono text-[11px] uppercase tracking-widest text-white/45">
-        Toca un elemento de cada columna para unirlos
+      <p className="mb-3 font-mono text-[11px] uppercase tracking-widest text-white/70">
+        {seleccion
+          ? `Ahora toca su pareja en la otra columna`
+          : 'Toca un elemento de cada columna para unirlos'}
       </p>
       <div className="grid grid-cols-2 gap-3 sm:gap-5">
         <ul className="space-y-2" aria-label="Conceptos">
@@ -212,7 +216,7 @@ function Emparejar({ bloque, alCompletar, resuelta }) {
             </button>
           )}
           {!completas && (
-            <span className="font-mono text-xs text-white/45">
+            <span className="font-mono text-xs text-white/70">
               Unidas {Object.keys(uniones).length} de {pares.length}
             </span>
           )}

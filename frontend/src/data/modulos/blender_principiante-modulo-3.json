@@ -4,7 +4,7 @@
     "title": "Módulo 3: Modificadores",
     "slug": "bp-modulo-3-modificadores",
     "description": "Trabaja como profesional sin destruir tu malla: aplica la escala, modela solo la mitad con Espejo y suaviza con Subdivisión. Cierras el curso con una nave espacial simétrica.",
-    "estimatedTimeMinutes": 45,
+    "estimatedTimeMinutes": 53,
     "order": 3,
     "curso": "blender_principiante",
     "insignia": "Ingeniero de naves",
@@ -67,6 +67,58 @@
         ]
       },
       {
+        "id": "bp3_blender",
+        "title": "En Blender: tu primer modificador",
+        "slug": "blender-primer-modificador",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Estiras un cubo, aplicas su escala y le pones Subdivisión: ves en vivo cómo un modificador cambia la forma sin tocar la malla.",
+          "habilidades": [
+            "bl-modificadores",
+            "bl-aplicar-escala"
+          ],
+          "prerrequisitos": [
+            "bp3_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Exploración del motor v3.2: practices/blender/principiante/m3-explora/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Agrega un cubo",
+            "Estíralo a lo largo",
+            "Aplica la escala",
+            "Ponle Subdivisión"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### En Blender, conectado\nLos modificadores son filtros que no rompen nada. Estira un cubo, aplica la escala y ponle Subdivisión.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "exploracion_bp3",
+            "practica": "blender.bp.m3.explora",
+            "title": "Calentamiento: tu primer modificador",
+            "text": "Un modificador es un filtro que no rompe nada. Pruébalo antes de la teoría. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 8,
+            "steps": [
+              "Agrega un cubo",
+              "Estíralo a lo largo",
+              "Aplica la escala",
+              "Ponle Subdivisión"
+            ],
+            "allowManual": false
+          }
+        ]
+      },
+      {
         "id": "bp3_explora",
         "title": "Espejo, Subdivisión y escala aplicada",
         "slug": "espejo-subdivision-escala",
@@ -82,7 +134,7 @@
             "bl-aplicar-escala"
           ],
           "prerrequisitos": [
-            "bp3_gancho"
+            "bp3_blender"
           ],
           "blender": {
             "verificadaEn": null,
@@ -236,7 +288,8 @@
               "Alas y cabina",
               "Subdivisión entre 1 y 3",
               "Guarda como mi_nave.blend"
-            ]
+            ],
+            "allowManual": false
           },
           {
             "type": "callout",

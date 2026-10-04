@@ -400,13 +400,35 @@ tareas:
     version: v3.3.0
     area: blender
     evidencia: "docs/motor/etapas/etapa-3.md, docs/cursos/README.md; 29 casos de practices/blender/*/*/pruebas.json y addon/tests/en_blender.py en Blender 4.2 y 5.0"
+  - id: T-070
+    titulo: "Curso de Blender unificado (una tarjeta por curso con árbol de niveles), teoría y Blender intercalados, Intermedio publicado, temáticas, jefe final y medallas"
+    version: v3.3.0
+    area: pwa
+    depende_de: [T-062]
+    evidencia: "docs/cursos/03_ruta_de_aprendizaje_blender.md, docs/plataforma/07_herramientas_graficas.md; 18 prácticas con pruebas.json en verde; vitest, pytest (engine, backend, addon)"
+  - id: T-071
+    titulo: Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)
+    version: v3.4.0
+    area: pwa
+    depende_de: [T-070, T-064]
+    aceptacion: "docs/plataforma/07_herramientas_graficas.md §5 punto 1: carga diferida, apagado en modo ligero"
+  - id: T-072
+    titulo: Transiciones entre páginas (View Transitions), celebraciones con confeti e ilustración de fondo por temática
+    version: v3.4.0
+    area: pwa
+    depende_de: [T-070]
+  - id: T-073
+    titulo: Diseñar el laboratorio (retos abiertos sin guía después de la ruta)
+    version: v3.4.0
+    area: contenido
+    depende_de: [T-066, T-070]
   - id: T-063
     titulo: Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas)
     version: v3.3.0
     area: blender
     evidencia: "docs/motor/referencia/08_practicas_v3_y_herramientas.md; engine/tests/test_v3_herramientas.py"
   - id: T-064
-    titulo: Aplicar 008 y 009 en Oracle e importar los cursos Principiante y Principiante-Intermedio (después del piloto)
+    titulo: Aplicar 008 y 009 en Oracle e importar los cursos Principiante, Principiante-Intermedio e Intermedio (después del piloto)
     version: v3.3.0
     area: db
     bloqueo: "Después del piloto del 8 de octubre y de T-055 (007)"
@@ -425,10 +447,11 @@ tareas:
     area: blender
     depende_de: [T-062, T-064]
   - id: T-067
-    titulo: Cursos Blender Intermedio y Avanzado (plan de estudios y prácticas)
+    titulo: Curso Blender Avanzado (teoría de topología, UV, nodos y rig; prácticas y desbloqueo)
     version: v3.4.0
     area: contenido
-    depende_de: [T-062]
+    depende_de: [T-070]
+    aceptacion: "docs/cursos/03_ruta_de_aprendizaje_blender.md §8: teoría escrita, prácticas con revisar y probar en verde y el curso cambiado a disponible en los cuatro lugares"
   - id: T-068
     titulo: Repaso espaciado sincronizado con el servidor (tabla de repasos por alumno)
     version: v3.4.0

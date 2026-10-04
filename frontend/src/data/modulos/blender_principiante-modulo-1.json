@@ -4,7 +4,7 @@
     "title": "Módulo 1: La interfaz y navegación 3D",
     "slug": "bp-modulo-1-interfaz-y-navegacion",
     "description": "Pierde el miedo a la pantalla de Blender: conoce sus tres zonas, los ejes X, Y y Z, y muévete por el espacio 3D. Lo demuestras armando un tren de juguete con piezas básicas.",
-    "estimatedTimeMinutes": 40,
+    "estimatedTimeMinutes": 48,
     "order": 1,
     "curso": "blender_principiante",
     "insignia": "Maquinista 3D",
@@ -90,6 +90,61 @@
         ]
       },
       {
+        "id": "bp1_blender",
+        "title": "En Blender: date una vuelta por la vista 3D",
+        "slug": "blender-explora-la-vista",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Tu primer contacto con Blender conectado a Amatista: agregas formas, las mueves, giras y escalas mientras Amatista registra cada paso.",
+          "habilidades": [
+            "bl-navegar-vista",
+            "bl-agregar-primitivas",
+            "bl-transformar"
+          ],
+          "prerrequisitos": [
+            "bp1_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Exploración del motor v3.2: practices/blender/principiante/m1-explora/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Agrega un cubo",
+            "Súbelo",
+            "Gíralo",
+            "Agrega una esfera",
+            "Hazla más grande"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### En Blender, conectado\nYa sabes qué es el espacio 3D. Ahora pruébalo: agrega un cubo y una esfera, súbelos, gíralos y escálalos.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "exploracion_bp1",
+            "practica": "blender.bp.m1.explora",
+            "title": "Explora la vista 3D",
+            "text": "Antes de armar el tren, date una vuelta por Blender: Amatista te acompaña y registra lo que haces. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 8,
+            "steps": [
+              "Agrega un cubo",
+              "Súbelo",
+              "Gíralo",
+              "Agrega una esfera",
+              "Hazla más grande"
+            ],
+            "allowManual": false
+          }
+        ]
+      },
+      {
         "id": "bp1_explora",
         "title": "Muévete y transforma: rueda, G, R y S",
         "slug": "muevete-y-transforma",
@@ -104,7 +159,7 @@
             "bl-transformar"
           ],
           "prerrequisitos": [
-            "bp1_gancho"
+            "bp1_blender"
           ],
           "blender": {
             "verificadaEn": null,
@@ -280,7 +335,8 @@
               "Únelas a los vagones",
               "Junta los vagones",
               "Guarda como mi_tren.blend"
-            ]
+            ],
+            "allowManual": false
           },
           {
             "type": "callout",

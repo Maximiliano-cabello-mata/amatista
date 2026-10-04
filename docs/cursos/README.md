@@ -10,7 +10,7 @@ Actualizado: 4 de octubre de 2026
 2. [Del plan de estudios a los cursos](#2-del-plan-de-estudios-a-los-cursos)
 3. [Cómo es un módulo](#3-cómo-es-un-módulo)
 4. [Curso Principiante](#4-curso-principiante)
-5. [Curso Principiante-Intermedio](#5-curso-principiante-intermedio)
+5. [Curso Principiante-Intermedio](#5-curso-principiante-intermedio) y [Curso Intermedio](#5b-curso-intermedio)
 6. [Dónde vive cada curso en el código](#6-dónde-vive-cada-curso-en-el-código)
 7. [Agregar un módulo o un curso](#7-agregar-un-módulo-o-un-curso)
 
@@ -22,9 +22,11 @@ Actualizado: 4 de octubre de 2026
 |---|---|---|---|
 | 01 | **Blender Principiante** | Gente que no sabe nada de 3D ni de Blender | Publicado: 3 módulos |
 | 02 | **Blender Principiante-Intermedio** | Quien ya se mueve y modela: color, luz, render y animación | Publicado: 3 módulos |
-| 03 | Blender Intermedio | — | Próximamente (en el mapa, bloqueado) |
-| 04 | Blender Avanzado | — | Próximamente |
+| 03 | **Blender Intermedio** | Quien ya renderiza y anima: precisión, orden y portafolio | Publicado: 3 módulos |
+| 04 | Blender Avanzado | Topología, UV, nodos y rig | Bloqueado: le falta teoría ([ruta §8](03_ruta_de_aprendizaje_blender.md#8-nivel-4--avanzado-bloqueado)) |
 | 05 | A-Frame | Llevar los modelos a la web | Sin cambios |
+
+En la plataforma, los cuatro niveles son **una sola tarjeta «Blender»** que se ramifica por dentro (`frontend/src/catalogo/agrupar.js`); la página `#/curso/blender` muestra el árbol de niveles y cada nivel abre su mapa de módulos. A-Frame recibe el mismo trato con su propia tarjeta. Por qué la ruta está armada así: [Ruta de aprendizaje de Blender](03_ruta_de_aprendizaje_blender.md).
 
 Los cuatro cursos de Blender forman la **ruta** `blender`. El orden se recomienda pero no se impone: quien ya sabe lo básico puede empezar en el 02. El curso `blender` de la v2 (sus módulos 1 a 3 y la práctica de la mesa) quedó **archivado**: no se ofrece a alumnos nuevos y quien avanzó en él conserva su progreso.
 
@@ -53,14 +55,17 @@ Los principios del plan se volvieron mecánicas del motor v3 ([etapa 3](../motor
 
 ## 3. Cómo es un módulo
 
-Cada módulo tiene **4 lecciones en la plataforma** y **1 práctica en Blender**:
+Desde la v3.2 cada módulo intercala teoría y Blender: **5 lecciones**, dos de ellas en Blender con el add-on conectado (una exploración corta y la práctica de cierre):
 
 | Lección | Tipo | Qué hace |
 |---|---|---|
 | `…_gancho` | teoría interactiva | La pregunta o el problema que abre el módulo. |
+| `…_blender` | bloque `blender_practice` (exploración) | Unos minutos en Blender para probar la herramienta nueva antes de la teoría. Se registra. |
 | `…_explora` | teoría interactiva | Las herramientas del módulo, con sus teclas. |
-| `…_practica` | teoría + bloque `blender_practice` | Prepara Blender y abre la práctica guiada; al terminarla, la lección se completa. |
-| `…_jefe` | examen (aprueba con 80) | Repaso final; da la insignia del módulo. |
+| `…_practica` | teoría + bloque `blender_practice` (cierre) | Prepara Blender y abre la práctica guiada; al terminarla, la lección se completa. |
+| `…_jefe` | examen (aprueba con 80) | El jefe final del módulo: cada acierto le quita vida. Da la insignia. |
+
+Ninguna lección de Blender se puede marcar a mano (`allowManual: false`): solo cuenta lo que registra el add-on. En `practices/blender/cursos.json` cada módulo declara su `explore` y su `practice`, y el motor los recorre en ese orden (`ModuleEntry.sequence`).
 
 La primera lección de cada curso está desbloqueada; las demás se abren en orden.
 
@@ -83,6 +88,16 @@ La primera lección de cada curso está desbloqueada; las demás se abren en ord
 | 1 · Materiales y sombreado | Pintor de naves | ¿Por qué el metal brilla? · Tres controles del Principled BSDF · Práctica · Jefe final | `blender.bpi.m1.pinta-nave` (parte de la nave del curso anterior) | Materiales, Color base, Metálico, Rugosidad, Transmisión (cristal). |
 | 2 · Iluminación y cámara | Director de foto | Sin luz no hay imagen · Tres puntos, cámara y EEVEE · Práctica · Jefe final | `blender.bpi.m2.tres-puntos` | Luz de área, iluminación de tres puntos, cámara activa y encuadre, motor EEVEE, render (F12). |
 | 3 · Animación básica | Animador | 24 fotos por segundo · El rebote y el encoger y estirar · Práctica · Jefe final | `blender.bpi.m3.pelota` | Fotogramas clave (I), línea de tiempo, rebote, aplastar y estirar. |
+
+## 5b. Curso Intermedio
+
+`blender_intermedio` · archivos `frontend/src/data/modulos/blender_intermedio-modulo-{1,2,3}.json`
+
+| Módulo | Insignia | Exploración · Práctica | Aprende |
+|---|---|---|---|
+| 1 · Modelado con precisión | Arquitecto de puentes | `blender.bi.m1.explora` · `blender.bi.m1.puente` | Medidas en el panel N, Snap, Array, Bisel. |
+| 2 · Organiza tu escena | Cartógrafo de escenas | `blender.bi.m2.explora` · `blender.bi.m2.aldea` | Nombres, colecciones, materiales compartidos. |
+| 3 · Render de portafolio | Curador de galería | `blender.bi.m3.explora` · `blender.bi.m3.diorama` | Composición, Cycles, muestras, repaso de tres puntos. |
 
 ## 6. Dónde vive cada curso en el código
 

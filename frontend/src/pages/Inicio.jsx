@@ -3,7 +3,9 @@
 // crear cuenta. Todo sale del catálogo vigente y del progreso local.
 import { useAuth } from '../auth/contexto';
 import { useCatalogo } from '../catalogo/contexto';
-import { CristalLogo, IconoAFrame, IconoBlender } from '../components/Iconos';
+import { agruparPorRuta } from '../catalogo/agrupar';
+import { CristalLogo } from '../components/Iconos';
+import LogoCurso from '../components/LogoCurso';
 import TarjetaCurso from '../components/TarjetaCurso';
 import { cifrasCatalogo, cursosParaContinuar, tieneAvance } from '../components/panel/datos';
 import { FORMULA } from '../components/panel/formula';
@@ -18,7 +20,7 @@ const PILARES = [
     id: 'haciendo',
     titulo: 'Aprendes haciendo',
     texto: 'Cada módulo termina en algo tuyo: un modelo, una escena, un mundo para visitar en VR.',
-    Icono: IconoBlender,
+    Icono: ({ className }) => <LogoCurso logo="blender" className={className} />,
     tono: '',
   },
   {
@@ -47,10 +49,10 @@ function EmblemaHero() {
       <div className="hexagono absolute inset-[22%] bg-base/80" />
       <CristalLogo className="animar-flotar relative h-[42%] w-[42%] drop-shadow-[0_0_24px_rgba(155,89,182,0.55)]" />
       <div className="hexagono absolute left-[2%] top-[14%] grid h-[24%] w-[27%] place-items-center bg-superficie">
-        <IconoBlender className="animar-flotar h-[62%] w-[62%] [animation-delay:-1.5s]" />
+        <LogoCurso logo="blender" className="animar-flotar h-[58%] w-[62%] [animation-delay:-1.5s]" />
       </div>
       <div className="hexagono absolute bottom-[12%] right-[2%] grid h-[24%] w-[27%] place-items-center bg-superficie">
-        <IconoAFrame className="animar-flotar h-[62%] w-[62%] [animation-delay:-3s]" />
+        <LogoCurso logo="aframe" className="animar-flotar h-[52%] w-[52%] [animation-delay:-3s]" />
       </div>
     </div>
   );
@@ -91,6 +93,8 @@ function Inicio() {
   const hayAvance = tieneAvance(progreso);
   const [siguiente] = cursosParaContinuar(progreso, cursos);
   const cifras = cifrasCatalogo(cursos);
+  // Un curso por tarjeta: los niveles de Blender viven dentro de su tarjeta.
+  const tarjetas = agruparPorRuta(cursos);
 
   return (
     <main className="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6 sm:pt-14">
@@ -134,7 +138,7 @@ function Inicio() {
           <EmblemaHero />
           <dl className="mx-auto mt-4 grid max-w-sm grid-cols-3 gap-2 text-center">
             {[
-              ['Cursos', cifras.cursos],
+              ['Cursos', tarjetas.length],
               ['Módulos', cifras.modulos],
               ['Lecciones', cifras.lecciones],
             ].map(([etiqueta, valor]) => (
@@ -170,10 +174,10 @@ function Inicio() {
         <h2 id="inicio-cursos" className="mb-6 text-3xl font-extrabold text-white sm:text-4xl">
           Elige tu <span className="text-amatista-claro">curso</span>
         </h2>
-        {cursos.length ? (
+        {tarjetas.length ? (
           <div className="grid gap-6 md:grid-cols-2">
-            {cursos.map((curso, i) => (
-              <TarjetaCurso key={curso.id} curso={curso} indice={i} />
+            {tarjetas.map((ruta, i) => (
+              <TarjetaCurso key={ruta.id} ruta={ruta} indice={i} />
             ))}
           </div>
         ) : (

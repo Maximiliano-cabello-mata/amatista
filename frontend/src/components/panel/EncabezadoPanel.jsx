@@ -1,6 +1,6 @@
 import AnilloProgreso from '../graficas/AnilloProgreso';
 import { CristalLogo } from '../Iconos';
-import { TITULOS_NIVEL } from '../../progreso/reglas';
+import { fechaLocal, sumarDias, TITULOS_NIVEL } from '../../progreso/reglas';
 import { IconoRacha } from './IconosPanel';
 import { Cifra } from './Seccion';
 
@@ -20,8 +20,55 @@ function mensaje({ hayAvance, racha }) {
   return 'Una lección corta basta para encender tu racha de nuevo.';
 }
 
+const DIAS = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+
+// La racha como protagonista: una llama que se mueve si hoy ya practicaste,
+// los últimos siete días y la próxima meta (los logros de racha: 3, 7 y 14).
+function TarjetaRacha({ racha, actividad = {}, hoy = new Date() }) {
+  const hoyTexto = fechaLocal(hoy);
+  const semana = Array.from({ length: 7 }, (_, i) => {
+    const fecha = sumarDias(hoyTexto, i - 6);
+    const [a, m, d] = fecha.split('-').map(Number);
+    return { fecha, letra: DIAS[new Date(a, m - 1, d).getDay()], activo: (actividad[fecha] ?? 0) > 0, esHoy: i === 6 };
+  });
+  const meta = [3, 7, 14, 30].find((n) => n > racha.actual) ?? null;
+  const viva = racha.actual > 0;
+  return (
+    <div className="corte-poly-sm col-span-2 flex items-center gap-4 border border-blender/30 bg-gradient-to-br from-blender/15 via-base/70 to-base/70 px-4 py-3">
+      <div className="relative grid h-16 w-14 shrink-0 place-items-center">
+        <IconoRacha className={`h-14 w-14 ${viva ? 'text-blender' : 'text-white/25'} ${racha.hoy ? 'animar-llama' : ''}`} />
+        <span className="absolute bottom-0 text-lg font-extrabold text-white drop-shadow">{racha.actual}</span>
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+          Racha · {racha.actual} {dias(racha.actual)} · récord {racha.mejor}
+        </p>
+        <ol className="mt-1.5 flex gap-1.5" aria-label="Actividad de los últimos siete días">
+          {semana.map((dia) => (
+            <li key={dia.fecha} className="flex flex-col items-center gap-0.5">
+              <span
+                className={`hexagono block h-5 w-6 transition-colors ${
+                  dia.activo ? 'bg-blender' : dia.esHoy ? 'border border-dashed border-blender/60 bg-transparent' : 'bg-white/10'
+                } ${dia.activo && dia.esHoy ? 'animar-aparecer' : ''}`}
+              />
+              <span className={`font-mono text-[9px] ${dia.esHoy ? 'text-white' : 'text-white/40'}`}>{dia.letra}</span>
+              <span className="sr-only">
+                {dia.fecha}: {dia.activo ? 'con actividad' : 'sin actividad'}
+              </span>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-1 text-xs text-white/55">
+          {racha.hoy ? 'Hoy ya sumaste ✓' : viva ? 'Practica hoy para mantenerla' : 'Una lección enciende tu racha'}
+          {meta && ` · meta: ${meta} ${dias(meta)}`}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 // Saludo, nivel con su anillo de XP y las cifras principales (XP, racha, mejor racha, lecciones).
-function EncabezadoPanel({ usuario, xp, nivel, racha, lecciones, hayAvance }) {
+function EncabezadoPanel({ usuario, xp, nivel, racha, lecciones, hayAvance, actividad, hoy }) {
   const nombre = primerNombre(usuario);
   const siguienteTitulo = TITULOS_NIVEL[Math.min(nivel.nivel + 1, TITULOS_NIVEL.length) - 1];
 
@@ -58,19 +105,13 @@ function EncabezadoPanel({ usuario, xp, nivel, racha, lecciones, hayAvance }) {
           </div>
         </div>
 
-        <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <Cifra etiqueta="XP total" valor={xp} Icono={CristalLogo} detalle="100 por lección + bonos" />
-          <Cifra
-            etiqueta="Racha"
-            valor={racha.actual}
-            unidad={dias(racha.actual)}
-            Icono={IconoRacha}
-            tono="text-blender"
-            detalle={racha.hoy ? 'Hoy ya sumaste ✓' : racha.actual > 0 ? 'Practica hoy para mantenerla' : 'Empieza hoy'}
-          />
-          <Cifra etiqueta="Mejor racha" valor={racha.mejor} unidad={dias(racha.mejor)} detalle="Tu récord de días seguidos" />
-          <Cifra etiqueta="Lecciones" valor={lecciones} detalle="Completadas en total" />
-        </dl>
+        <div className="grid grid-cols-2 content-start gap-3 sm:grid-cols-4">
+          <TarjetaRacha racha={racha} actividad={actividad} hoy={hoy} />
+          <dl className="col-span-2 grid grid-cols-2 gap-3">
+            <Cifra etiqueta="XP total" valor={xp} Icono={CristalLogo} detalle="100 por lección + bonos" />
+            <Cifra etiqueta="Lecciones" valor={lecciones} detalle="Completadas en total" />
+          </dl>
+        </div>
       </div>
     </header>
   );

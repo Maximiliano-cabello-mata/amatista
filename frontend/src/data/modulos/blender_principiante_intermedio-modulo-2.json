@@ -4,7 +4,7 @@
     "title": "Módulo 2: Iluminación y cámara",
     "slug": "bpi-modulo-2-iluminacion-camara",
     "description": "Piensa como fotógrafo: encuadra con la cámara, ilumina con tres puntos y saca tu primera foto con F12 en EEVEE.",
-    "estimatedTimeMinutes": 45,
+    "estimatedTimeMinutes": 53,
     "order": 2,
     "curso": "blender_principiante_intermedio",
     "insignia": "Director de foto",
@@ -68,6 +68,59 @@
         ]
       },
       {
+        "id": "bpi2_blender",
+        "title": "En Blender: una luz, una cámara y F12",
+        "slug": "blender-luz-y-camara",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Agregas una luz de Área y una cámara, y sacas una foto rápida con F12. Amatista registra tu primer render.",
+          "habilidades": [
+            "bl-iluminacion",
+            "bl-camara",
+            "bl-render"
+          ],
+          "prerrequisitos": [
+            "bpi2_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Exploración del motor v3.2: practices/blender/principiante-intermedio/m2-explora/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Algo que fotografiar",
+            "Una luz de Área",
+            "Una cámara activa",
+            "Toma la foto (F12)"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### En Blender, conectado\nSin luz no hay imagen: agrega una luz de Área y una cámara, y toma tu primera foto con F12.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "exploracion_bpi2",
+            "practica": "blender.bpi.m2.explora",
+            "title": "Calentamiento: una luz y una cámara",
+            "text": "Antes de la iluminación de tres puntos, enciende una luz y toma una foto. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 8,
+            "steps": [
+              "Algo que fotografiar",
+              "Una luz de Área",
+              "Una cámara activa",
+              "Toma la foto (F12)"
+            ],
+            "allowManual": false
+          }
+        ]
+      },
+      {
         "id": "bpi2_explora",
         "title": "Tres puntos, cámara y EEVEE",
         "slug": "tres-puntos-camara-eevee",
@@ -83,7 +136,7 @@
             "bl-eevee"
           ],
           "prerrequisitos": [
-            "bpi2_gancho"
+            "bpi2_blender"
           ],
           "blender": {
             "verificadaEn": null,
@@ -228,7 +281,8 @@
               "Iluminación de tres puntos",
               "Tu primer render (F12)",
               "Guarda tu estudio"
-            ]
+            ],
+            "allowManual": false
           }
         ]
       },

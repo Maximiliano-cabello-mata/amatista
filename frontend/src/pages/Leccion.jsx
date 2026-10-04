@@ -3,6 +3,8 @@ import { useCatalogo } from '../catalogo/contexto';
 import { IconoCandado } from '../components/Iconos';
 import BloqueContenido from '../components/leccion/BloqueContenido';
 import Examen from '../components/leccion/Examen';
+import { temaDelModulo } from '../components/temas/temas';
+import { esPracticaBlender } from '../modulos/practica';
 import Figura from '../components/leccion/Figura';
 import { actividadesDe } from '../components/leccion/interactivos/logica';
 import { buscarLeccion, duracionTexto, TIPOS_LECCION } from '../data/cursos';
@@ -197,6 +199,8 @@ function Leccion({ cursoId, leccionId }) {
   const numeroModulo = modulo.numero;
   const duracion = duracionTexto(leccion.durationSeconds);
   const esUltima = indice === lecciones.length - 1;
+  const tema = temaDelModulo(modulo);
+  const enBlender = esPracticaBlender(leccion);
 
   // El examen final del módulo (el "jefe") desbloquea su insignia.
   const terminarExamen = (puntaje, aprobado) => {
@@ -218,13 +222,18 @@ function Leccion({ cursoId, leccionId }) {
       <ol className="mb-8 flex gap-1.5" aria-label="Avance del módulo">
         {lecciones.map((l, i) => {
           const hecha = estaCompletada(progreso, curso.id, l);
+          // Las lecciones en Blender se distinguen en naranja: teoría y Blender se intercalan.
+          const blender = esPracticaBlender(l);
           return (
             <li
               key={l.id}
-              className={`h-1.5 flex-1 ${i === indice ? 'bg-neon' : hecha ? 'bg-amatista' : 'bg-white/10'}`}
+              className={`h-1.5 flex-1 transition-colors duration-500 ${
+                i === indice ? 'bg-neon' : hecha ? (blender ? 'bg-blender' : 'bg-amatista') : blender ? 'bg-blender/25' : 'bg-white/10'
+              }`}
             >
               <span className="sr-only">
-                {l.title}: {hecha ? 'completada' : i === indice ? 'actual' : 'pendiente'}
+                {l.title}
+                {blender ? ' (en Blender)' : ''}: {hecha ? 'completada' : i === indice ? 'actual' : 'pendiente'}
               </span>
             </li>
           );
@@ -232,8 +241,15 @@ function Leccion({ cursoId, leccionId }) {
       </ol>
 
       <header className="animar-entrar mb-8">
+        <p className={`corte-poly-sm mb-4 inline-flex items-center gap-2 border ${tema.borde} bg-gradient-to-r ${tema.banda} px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] ${tema.texto}`}>
+          <span aria-hidden="true">◆</span> {tema.nombre}
+        </p>
         <div className="mb-3 flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-widest">
-          <span className="corte-poly-sm bg-amatista/25 px-2.5 py-1 text-amatista-claro">{TIPOS_LECCION[leccion.type]}</span>
+          {enBlender ? (
+            <span className="corte-poly-sm bg-blender/20 px-2.5 py-1 font-bold text-blender">En Blender · conectado</span>
+          ) : (
+            <span className="corte-poly-sm bg-amatista/25 px-2.5 py-1 text-amatista-claro">{TIPOS_LECCION[leccion.type]}</span>
+          )}
           {duracion && <span className="corte-poly-sm bg-white/5 px-2.5 py-1 text-white/55">{duracion}</span>}
           {completada && <span className="corte-poly-sm bg-emerald-400/10 px-2.5 py-1 text-emerald-300">✓ Completada</span>}
           {nueva && <span className="corte-poly-sm bg-neon/15 px-2.5 py-1 font-bold text-neon">Nueva</span>}
@@ -256,6 +272,7 @@ function Leccion({ cursoId, leccionId }) {
           completaModulo={esUltima}
           hrefCurso={rutas.curso(curso.id)}
           alTerminar={terminarExamen}
+          tema={tema}
         />
       ) : (
         <ContenidoLeccion

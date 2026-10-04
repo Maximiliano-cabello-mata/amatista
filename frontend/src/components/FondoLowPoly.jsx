@@ -72,8 +72,9 @@ const TRIANGULOS = generarTriangulos();
 function FondoLowPoly() {
   return (
     <div aria-hidden="true" className="fixed inset-0 -z-10 overflow-hidden">
+      {/* En modo ligero (html.ligero) no se dibujan los 320 triángulos: queda el degradado. */}
       <svg
-        className="h-full w-full"
+        className="fondo-pesado h-full w-full"
         viewBox={`0 0 ${ANCHO} ${ALTO}`}
         preserveAspectRatio="xMidYMid slice"
       >

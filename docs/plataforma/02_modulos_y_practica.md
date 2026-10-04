@@ -1,16 +1,18 @@
 # 02 · Módulos con práctica en Blender
 
-## La regla
+## La regla (v3.2: teoría y Blender intercalados)
 
-**Primero el módulo, luego la práctica.** Cada módulo de Blender termina con una práctica dentro de Blender que pone en juego lo que enseñaron sus lecciones. Después de la práctica solo puede ir el examen del módulo (el «Jefe final» de la Fórmula).
+**Teoría y Blender se alternan, y el módulo cierra en Blender.** Desde la v3.2 cada módulo de Blender tiene dos estaciones en Blender: una **exploración** corta justo después del gancho, para tocar la herramienta antes de estudiarla, y la **práctica de cierre** al final, que pone en juego todo el módulo. Después de la práctica de cierre solo va el examen (el jefe final).
 
 ```
-Gancho → Explora → Práctica → Reto → [ Práctica en Blender ] → Examen
-└──────────── lecciones del módulo ──────┘   └ estación ┘        └ insignia
+Gancho → [ En Blender: exploración ] → Explora → [ En Blender: práctica de cierre ] → Jefe final
+teoría      estación corta, se registra    teoría     proyecto del módulo, se registra     insignia
 ```
 
-- La práctica es una **lección normal** que contiene un bloque `blender_practice` (ver [04](04_herramientas_de_ensenanza.md#práctica-en-blender-blender_practice)). No hay tabla nueva ni campo nuevo en Oracle.
-- El servidor rechaza un módulo en el que una lección (que no sea examen ni otra práctica) va después de la práctica: «… va después de la práctica en Blender (lessons[i]): la práctica cierra el módulo, muévela al final (solo el examen puede ir después)». Lo valida `validar_modulo` en `backend/contenido/validacion.py`, así que aplica igual al importar un JSON, al reordenar en el panel y en la CLI.
+- Las dos estaciones son **lecciones normales** con un bloque `blender_practice` (ver [04](04_herramientas_de_ensenanza.md#práctica-en-blender-blender_practice)). No hay tabla nueva ni campo nuevo en Oracle.
+- Ninguna se puede marcar a mano (`allowManual: false`): la plataforma no supone que el alumno está en Blender; solo cuenta lo que registra el add-on conectado.
+- El servidor ya no exige que la práctica sea la última lección (eso impedía intercalar). Ahora rechaza que **la misma práctica** aparezca dos veces en un módulo: «la práctica «X» ya está en lessons[i]: cada práctica va una sola vez por módulo». Lo valida `validar_modulo` en `backend/contenido/validacion.py`, así que aplica igual al importar un JSON, al reordenar en el panel y en la CLI.
+- En el motor, cada módulo de `practices/blender/cursos.json` declara `explore` y `practice`; `ModuleEntry.sequence` los recorre en ese orden para el desbloqueo y para la pestaña «Mi curso» del add-on.
 - El desbloqueo no cambió: las lecciones se abren en orden, así que la práctica se abre cuando el alumno termina la lección anterior.
 - Un módulo **sin** práctica sigue siendo válido (los cursos de A-Frame, por ejemplo). En el panel de administración se marca con la etiqueta «Sin práctica en Blender» para que se note.
 
@@ -55,10 +57,10 @@ La tarjeta **Tus prácticas en Blender** (`components/panel/BlenderPanel.jsx`) l
 1. Crear el módulo con la Fórmula en **Admin › Módulos** (genera Gancho, Explora, Práctica, Reto y Jefe final).
 2. Escribir las lecciones con las herramientas de [04](04_herramientas_de_ensenanza.md). Antes de la práctica conviene un **Paso a paso** y unos **Atajos de teclado** con las teclas que pedirá Blender.
 3. Crear o elegir la práctica del motor (`practices/…json`, o desde Amatista Author) y publicarla en **Admin › Prácticas de Blender**.
-4. Agregar una lección con el bloque **Práctica en Blender** (`blender_practice`) que apunte al id de la práctica (por ejemplo `blender.n1.mesa`) y **dejarla al final**, antes del examen.
-5. Validar y publicar. Si la práctica quedó en otro lugar, el validador dice cuál lección moverla.
+4. Agregar una lección con el bloque **Práctica en Blender** (`blender_practice`) para la exploración (después del gancho) y otra para la práctica de cierre (antes del examen), cada una con el id de su práctica (por ejemplo `blender.bp.m1.explora` y `blender.bp.m1.tren`).
+5. Validar y publicar. Si una práctica se repite, el validador dice en qué lección.
 
-Ejemplo real: [`frontend/src/data/modulos/blender-modulo-2.json`](../../frontend/src/data/modulos/blender-modulo-2.json) (en revisión), que cierra con «Construir una mesa».
+Ejemplo real: [`frontend/src/data/modulos/blender_principiante-modulo-1.json`](../../frontend/src/data/modulos/blender_principiante-modulo-1.json): gancho, «En Blender: date una vuelta por la vista 3D», teoría, «Práctica: arma un tren de juguete» y jefe final.
 
 ## Código
 

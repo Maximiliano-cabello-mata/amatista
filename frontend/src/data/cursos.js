@@ -10,9 +10,10 @@
 // Datos de cada curso y títulos de sus módulos por número. Un JSON publicado
 // con ese número (`order`) reemplaza al marcador "Próximamente".
 const CURSOS_BASE = [
-  // Ruta de Blender (motor v3, practices/blender/cursos.json): cuatro cursos por
-  // dificultad. Hoy se publican Principiante y Principiante-Intermedio; cada
-  // módulo cierra con una práctica guiada dentro de Blender. El curso «blender»
+  // Ruta de Blender (motor v3.2, practices/blender/cursos.json): cuatro niveles
+  // dentro de una sola tarjeta «Blender» (catalogo/agrupar.js). Se publican
+  // Principiante, Principiante-Intermedio e Intermedio; Avanzado sigue
+  // bloqueado. Cada módulo intercala teoría y prácticas dentro de Blender. El curso «blender»
   // de la v2 quedó archivado (data/modulos/archivo/): el progreso se conserva.
   {
     id: 'blender_principiante',
@@ -60,25 +61,40 @@ const CURSOS_BASE = [
     id: 'blender_intermedio',
     numero: '03',
     titulo: 'Blender Intermedio',
-    subtitulo: 'Próximamente',
-    descripcion: 'Proyectos completos con un flujo profesional. Llega después del piloto.',
-    estado: 'bloqueado',
+    subtitulo: 'Trabaja como en un estudio',
+    descripcion:
+      'Precisión con medidas, Array y Bisel; una escena ordenada en colecciones y tu diorama iluminado y renderizado para el portafolio.',
+    estado: 'disponible',
     nivel: 'Intermedio',
     acento: 'blender',
     ruta: 'blender',
-    modulos: [{ titulo: 'Próximamente' }],
+    recurso: {
+      texto: 'Descarga Blender gratis',
+      url: 'https://www.blender.org/download/',
+    },
+    modulos: [
+      { titulo: 'Modelado con precisión', insignia: 'Arquitecto de puentes' },
+      { titulo: 'Organiza tu escena', insignia: 'Cartógrafo de escenas' },
+      { titulo: 'Render de portafolio', insignia: 'Curador de galería' },
+    ],
   },
   {
+    // Bloqueado a propósito: antes necesita más teoría (docs/cursos/03_ruta_de_aprendizaje_blender.md).
     id: 'blender_avanzado',
     numero: '04',
     titulo: 'Blender Avanzado',
     subtitulo: 'Próximamente',
-    descripcion: 'Ramas para web y videojuegos, animación, producto y procedimientos.',
+    descripcion:
+      'Topología limpia, UV y texturas, nodos de materiales y el primer rig. Se abre cuando tengamos la teoría que pide: por ahora, termina el Intermedio.',
     estado: 'bloqueado',
     nivel: 'Avanzado',
     acento: 'blender',
     ruta: 'blender',
-    modulos: [{ titulo: 'Próximamente' }],
+    modulos: [
+      { titulo: 'Topología y retopología' },
+      { titulo: 'UV y texturas' },
+      { titulo: 'Nodos y primer rig' },
+    ],
   },
   {
     id: 'aframe',
@@ -90,6 +106,7 @@ const CURSOS_BASE = [
     estado: 'disponible',
     nivel: 'Intermedio',
     acento: 'neon',
+    ruta: 'aframe',
     recurso: {
       texto: 'Documentación de A-Frame',
       url: 'https://aframe.io/docs/',
