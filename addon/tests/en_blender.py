@@ -194,7 +194,7 @@ def main():
         _motor.tagger.assign_role(pata, "pata")
         patas.append(pata)
     reporte = practicas.evaluar(contexto)
-    revisar(reporte.result("patas").message == "Tienes 3/4 «pata». Falta 1.", "detecta 3 de 4 patas")
+    revisar(reporte.result("patas").message == "Tienes 3/4 «Pata». Falta 1.", "detecta 3 de 4 patas")
     revisar(reporte.current_target_id == "patas", "el paso actual son las patas")
     g = guia.guia_actual()
     revisar(g.action.kind == "duplicate" and any(c.kind == "ghosts" for c in g.cues),

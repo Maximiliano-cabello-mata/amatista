@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import mesa from '../../../practices/blender/level_1/mesa.json';
+import mesa from '../../../practices/archivo/v2/mesa.json';
 import modulo2 from '../data/modulos/blender-modulo-2.json';
 import {
   blenderCompatible,

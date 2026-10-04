@@ -10,7 +10,7 @@ from amatista_engine.practice import load_practice
 
 REPO = Path(__file__).resolve().parents[2]
 motor = create_default_engine()
-practica = load_practice(REPO / "practices/blender/level_1/podio.json")
+practica = load_practice(REPO / "practices/archivo/v2/podio.json")
 
 def escena():
     # Valores de referencia independientes de los rangos del JSON.

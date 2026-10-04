@@ -26,7 +26,7 @@ from database.modelos import (
 from amatista_engine.models import SceneObject, SceneState  # noqa: E402  (contenido.motor agrega engine/ al path)
 
 API = "/api/addon/v1"
-MESA = json.loads((motor.CARPETA_PRACTICAS / "level_1" / "mesa.json").read_text(encoding="utf-8"))
+MESA = json.loads((motor.RAIZ / "practices" / "archivo" / "v2" / "mesa.json").read_text(encoding="utf-8"))
 
 
 def escena_mesa(guardada=True, patas=4, sin_roles=False):
