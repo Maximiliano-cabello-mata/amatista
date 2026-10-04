@@ -1,4 +1,4 @@
-"""Plan de estudios v3: las 12 prácticas (6 de exploración y 6 de cierre) compilan, sus casos de prueba pasan y cursos.json cuadra."""
+"""Plan de estudios v3: las 18 prácticas (9 de exploración y 9 de cierre) compilan, sus casos de prueba pasan y cursos.json cuadra."""
 import json
 from pathlib import Path
 
@@ -16,9 +16,9 @@ def _leer(ruta: Path):
     return json.loads(ruta.read_text(encoding="utf-8"))
 
 
-def test_hay_doce_practicas_del_plan():
+def test_hay_dieciocho_practicas_del_plan():
     # Cada módulo intercala teoría y Blender: una exploración corta y la práctica de cierre.
-    assert len(CARPETAS) == 12
+    assert len(CARPETAS) == 18
     ids = {_leer(c / "practica.json")["id"] for c in CARPETAS}
     assert ids == set(load_curriculum(_leer(CURSOS)).practices())
 
@@ -46,7 +46,7 @@ def test_cursos_json_coincide_con_las_practicas():
     plan = load_curriculum(_leer(CURSOS))
     assert revisar_plan(plan) == []
     assert [c.difficulty for c in plan.courses] == ["principiante", "principiante_intermedio", "intermedio", "avanzado"]
-    assert [c.status for c in plan.courses[2:]] == ["proximamente", "proximamente"]
+    assert [c.status for c in plan.courses[2:]] == ["disponible", "proximamente"]  # Avanzado sigue bloqueado
 
 
 def test_repasos_apuntan_a_pildoras_con_pregunta_de_practicas_anteriores():

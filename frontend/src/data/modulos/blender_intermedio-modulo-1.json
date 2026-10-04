@@ -1,0 +1,483 @@
+{
+  "module": {
+    "id": "mod_bi_001",
+    "title": "Módulo 1: Modelado con precisión",
+    "slug": "bi-modulo-1-precision",
+    "description": "Bienvenida al estudio: dejas de calcular a ojo. Mides con el panel N, repites con Array y redondeas con Bisel para construir un puente de madera.",
+    "estimatedTimeMinutes": 52,
+    "order": 1,
+    "curso": "blender_intermedio",
+    "insignia": "Arquitecto de puentes",
+    "tema": "aldea",
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "bi1_gancho",
+        "title": "A ojo o a medida",
+        "slug": "a-ojo-o-a-medida",
+        "type": "theory_interactive",
+        "durationSeconds": 240,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Explicar por qué un estudio modela con medidas exactas.",
+          "habilidades": [
+            "bl-medidas"
+          ],
+          "prerrequisitos": [
+            "bpi3_jefe"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Explicar por qué un estudio modela con medidas exactas."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Del juguete al estudio\nHasta ahora modelaste *a ojo*. En un estudio, una puerta mide **2 m** y una tabla **20 cm**: así las piezas encajan y se pueden reutilizar.\n\nTres herramientas cambian tu forma de trabajar:\n- **Panel N**: muestra y edita las medidas exactas.\n- **Array**: repite una pieza sin copiarla a mano.\n- **Bisel**: redondea las aristas para que atrapen la luz."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_bi1_1",
+            "question": "Tienes que poner 20 tablones iguales en un puente. ¿Qué haces?",
+            "options": [
+              {
+                "id": "opt_a",
+                "text": "Un tablón con un modificador Array",
+                "isCorrect": true
+              },
+              {
+                "id": "opt_b",
+                "text": "Copiar y pegar 20 veces",
+                "isCorrect": false
+              },
+              {
+                "id": "opt_c",
+                "text": "Modelar cada uno a mano",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "El Array repite la pieza y, si cambias el original, cambian todas las copias."
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "title": "Ahora en Blender",
+            "body": "La siguiente lección es una exploración corta en Blender: pruebas el Array antes de la teoría."
+          }
+        ]
+      },
+      {
+        "id": "bi1_blender",
+        "title": "En Blender: repite con Array",
+        "slug": "blender-array",
+        "type": "theory_interactive",
+        "durationSeconds": 600,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Una tabla, un modificador Array y un Bisel: repites piezas sin copiarlas a mano. Amatista registra cada modificador.",
+          "habilidades": [
+            "bl-modificadores",
+            "bl-array"
+          ],
+          "prerrequisitos": [
+            "bi1_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m1-explora/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Una tabla alargada",
+            "Repítela con Array",
+            "Redondea con Bisel"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### En Blender, conectado\nUna tabla, un Array y un Bisel. Mira cómo las copias siguen a la original.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_bi1_blender",
+            "practica": "blender.bi.m1.explora",
+            "title": "Calentamiento: repite con Array",
+            "text": "En el nivel Intermedio trabajas como en un estudio: menos clics, más control. Prueba el Array. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 10,
+            "steps": [
+              "Una tabla alargada",
+              "Repítela con Array",
+              "Redondea con Bisel"
+            ],
+            "allowManual": false
+          }
+        ]
+      },
+      {
+        "id": "bi1_explora",
+        "title": "Panel N, Snap, Array y Bisel",
+        "slug": "panel-n-snap-array-bisel",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Usar el panel N, el Snap, el Array y el Bisel para modelar con medidas.",
+          "habilidades": [
+            "bl-medidas",
+            "bl-array",
+            "bl-bisel",
+            "bl-snap"
+          ],
+          "prerrequisitos": [
+            "bi1_blender"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Usar el panel N, el Snap, el Array y el Bisel para modelar con medidas."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "Panel N",
+                "definition": "Ubicación, rotación, escala y dimensiones exactas del objeto. Escribe 2 m y listo."
+              },
+              {
+                "term": "Snap (Shift + Tab)",
+                "definition": "El imán: al mover, la pieza se pega a la cuadrícula, a vértices o a caras."
+              },
+              {
+                "term": "Array",
+                "definition": "Repite el objeto en fila. «Cantidad» dice cuántas copias; «Desplazamiento relativo», cada cuánto."
+              },
+              {
+                "term": "Bisel",
+                "definition": "Redondea las aristas. Con una cantidad pequeña el modelo se ve real en el render."
+              }
+            ]
+          },
+          {
+            "type": "shortcuts",
+            "title": "Los atajos del módulo",
+            "practice": true,
+            "items": [
+              {
+                "keys": [
+                  "N"
+                ],
+                "action": "Mostrar u ocultar el panel de medidas"
+              },
+              {
+                "keys": [
+                  "Shift",
+                  "Tab"
+                ],
+                "action": "Encender o apagar el Snap"
+              },
+              {
+                "keys": [
+                  "Ctrl",
+                  "A"
+                ],
+                "action": "Aplicar la escala"
+              },
+              {
+                "keys": [
+                  "Ctrl",
+                  "L"
+                ],
+                "action": "Copiar modificadores a los seleccionados"
+              }
+            ]
+          },
+          {
+            "type": "matching",
+            "id": "parejas_bi1",
+            "prompt": "Une cada herramienta con su uso en el puente.",
+            "pairs": [
+              {
+                "id": "par_array",
+                "left": "Array",
+                "right": "Repetir los tablones"
+              },
+              {
+                "id": "par_bisel",
+                "left": "Bisel",
+                "right": "Redondear los pilares"
+              },
+              {
+                "id": "par_n",
+                "left": "Panel N",
+                "right": "Escribir la altura exacta"
+              },
+              {
+                "id": "par_snap",
+                "left": "Snap",
+                "right": "Pegar el tablero sobre el pilar"
+              }
+            ],
+            "explanation": "Cada herramienta resuelve una parte: medir, repetir, redondear y encajar."
+          },
+          {
+            "type": "ordering",
+            "id": "orden_bi1",
+            "prompt": "Ordena el flujo para el tablero del puente.",
+            "items": [
+              {
+                "id": "p1",
+                "text": "Agrega un cubo y escálalo como tablón"
+              },
+              {
+                "id": "p2",
+                "text": "Ctrl + A › Escala"
+              },
+              {
+                "id": "p3",
+                "text": "Agrega el Array y ajusta la cantidad"
+              },
+              {
+                "id": "p4",
+                "text": "Súbelo sobre los pilares con el Snap"
+              }
+            ],
+            "explanation": "Primero la pieza base con la escala aplicada: así el Array calcula bien las distancias."
+          }
+        ]
+      },
+      {
+        "id": "bi1_practica",
+        "title": "Práctica: un puente de madera",
+        "slug": "practica-puente",
+        "type": "theory_interactive",
+        "durationSeconds": 1500,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Construyes un puente: tablones repetidos con Array sobre pilares biselados, con la escala aplicada y bien apoyado.",
+          "habilidades": [
+            "bl-array",
+            "bl-bisel",
+            "bl-aplicar-escala",
+            "bl-ensamblar"
+          ],
+          "prerrequisitos": [
+            "bi1_explora"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m1-puente/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "El tablero",
+            "Tablones con Array",
+            "Escala aplicada en el tablero",
+            "Dos pilares o más",
+            "Pilares en el suelo",
+            "Tablero sobre los pilares",
+            "Pilares biselados",
+            "Guarda tu puente"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tu proyecto\nConstruye un puente: tablones con Array sobre dos pilares biselados, apoyados en el suelo.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_bi1_practica",
+            "practica": "blender.bi.m1.puente",
+            "title": "Un puente de madera",
+            "text": "La aldea necesita un puente para cruzar el río. Tú eres la arquitecta o el arquitecto. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 25,
+            "steps": [
+              "El tablero",
+              "Tablones con Array",
+              "Escala aplicada en el tablero",
+              "Dos pilares o más",
+              "Pilares en el suelo",
+              "Tablero sobre los pilares",
+              "Pilares biselados",
+              "Guarda tu puente"
+            ],
+            "allowManual": false
+          },
+          {
+            "type": "callout",
+            "variant": "reto",
+            "title": "Reto extra",
+            "body": "Agrega barandas con otro Array y una curva al tablero con el modificador Simple Deform."
+          }
+        ]
+      },
+      {
+        "id": "bi1_jefe",
+        "title": "Jefe final: precisión",
+        "slug": "jefe-final-precision",
+        "type": "exam",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Explicar el modelado con medidas, Array y Bisel.",
+          "habilidades": [
+            "bl-array",
+            "bl-bisel"
+          ],
+          "prerrequisitos": [
+            "bi1_practica"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Obtener al menos 80 puntos en el examen."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "qbi1_1",
+              "questionText": "¿Qué panel muestra las dimensiones exactas?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "El panel N",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "La línea de tiempo",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "El Outliner",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "El panel N.",
+              "feedbackIncorrect": "Es el panel N (tecla N)."
+            },
+            {
+              "id": "qbi1_2",
+              "questionText": "Cambias el tablón original de un Array. ¿Qué pasa con las copias?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Cambian también",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Nada",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Se borran",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Las copias siguen al original.",
+              "feedbackIncorrect": "Las copias del Array siguen al original."
+            },
+            {
+              "id": "qbi1_3",
+              "questionText": "¿Para qué sirve un Bisel pequeño?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Para que las aristas atrapen la luz",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Para borrar caras",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Para animar",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Bordes creíbles.",
+              "feedbackIncorrect": "El Bisel redondea las aristas."
+            },
+            {
+              "id": "qbi1_4",
+              "questionText": "¿Por qué aplicar la escala antes del Array?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Para que las distancias se calculen bien",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Para cambiar el color",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "No importa",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Escala en 1 = cálculos correctos.",
+              "feedbackIncorrect": "Con la escala aplicada el Array calcula bien."
+            },
+            {
+              "id": "qbi1_5",
+              "questionText": "¿Qué atajo enciende el Snap?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Shift + Tab",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Ctrl + S",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "F12",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Shift + Tab.",
+              "feedbackIncorrect": "Es Shift + Tab."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,421 @@
+{
+  "module": {
+    "id": "mod_bi_002",
+    "title": "Módulo 2: Organiza tu escena",
+    "slug": "bi-modulo-2-organizar",
+    "description": "Una escena que cualquiera entiende: nombres claros, colecciones como carpetas y materiales compartidos. Levantas una aldea ordenada.",
+    "estimatedTimeMinutes": 49,
+    "order": 2,
+    "curso": "blender_intermedio",
+    "insignia": "Cartógrafo de escenas",
+    "tema": "archivo",
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "bi2_gancho",
+        "title": "¿Dónde quedó el Cube.047?",
+        "slug": "donde-quedo-el-cube-047",
+        "type": "theory_interactive",
+        "durationSeconds": 240,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Reconocer por qué una escena desordenada frena el trabajo.",
+          "habilidades": [
+            "bl-organizar"
+          ],
+          "prerrequisitos": [
+            "bi1_jefe"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Reconocer por qué una escena desordenada frena el trabajo."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### El caos crece solo\nUna escena con 60 objetos llamados *Cube.001…Cube.060* es un laberinto. En un estudio, otra persona tiene que abrir tu archivo y entenderlo en segundos.\n\nLa receta: **nombres claros**, **colecciones** como carpetas y **materiales compartidos**."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_bi2_1",
+            "question": "¿Cuál nombre ayuda más a encontrar un objeto?",
+            "options": [
+              {
+                "id": "opt_a",
+                "text": "Casa_roja_techo",
+                "isCorrect": true
+              },
+              {
+                "id": "opt_b",
+                "text": "Cube.047",
+                "isCorrect": false
+              },
+              {
+                "id": "opt_c",
+                "text": "Objeto",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "Un nombre que dice qué es y dónde va se encuentra al instante."
+          }
+        ]
+      },
+      {
+        "id": "bi2_blender",
+        "title": "En Blender: ordena en colecciones",
+        "slug": "blender-colecciones",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Agregas varias piezas y las guardas en una colección con nombre. Amatista registra cómo organizas tu escena.",
+          "habilidades": [
+            "bl-colecciones",
+            "bl-organizar"
+          ],
+          "prerrequisitos": [
+            "bi2_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m2-explora/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Tres piezas",
+            "En la colección «Casas»"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### En Blender, conectado\nTres piezas y una colección llamada «Casas». Mira el Outliner mientras lo haces.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_bi2_blender",
+            "practica": "blender.bi.m2.explora",
+            "title": "Calentamiento: ordena en colecciones",
+            "text": "Una escena ordenada se trabaja el doble de rápido. Prueba las colecciones con tres cubos. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 8,
+            "steps": [
+              "Tres piezas",
+              "En la colección «Casas»"
+            ],
+            "allowManual": false
+          }
+        ]
+      },
+      {
+        "id": "bi2_explora",
+        "title": "Nombres, colecciones y materiales compartidos",
+        "slug": "nombres-colecciones-materiales",
+        "type": "theory_interactive",
+        "durationSeconds": 420,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Organizar una escena con nombres, colecciones y materiales vinculados.",
+          "habilidades": [
+            "bl-colecciones",
+            "bl-organizar",
+            "bl-materiales"
+          ],
+          "prerrequisitos": [
+            "bi2_blender"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Organizar una escena con nombres, colecciones y materiales vinculados."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "F2",
+                "definition": "Cambia el nombre del objeto activo."
+              },
+              {
+                "term": "Colección (M)",
+                "definition": "Una carpeta del Outliner. El ojo la oculta; la casilla la excluye del render."
+              },
+              {
+                "term": "Ctrl + L › Materiales",
+                "definition": "Comparte el material del objeto activo con los seleccionados."
+              },
+              {
+                "term": "Selección por tipo",
+                "definition": "Shift + G selecciona objetos parecidos: mismo material, misma colección…"
+              }
+            ]
+          },
+          {
+            "type": "matching",
+            "id": "parejas_bi2",
+            "prompt": "Une cada atajo con lo que hace.",
+            "pairs": [
+              {
+                "id": "par_f2",
+                "left": "F2",
+                "right": "Renombrar"
+              },
+              {
+                "id": "par_m",
+                "left": "M",
+                "right": "Mover a una colección"
+              },
+              {
+                "id": "par_cl",
+                "left": "Ctrl + L",
+                "right": "Vincular materiales"
+              },
+              {
+                "id": "par_sg",
+                "left": "Shift + G",
+                "right": "Seleccionar parecidos"
+              }
+            ],
+            "explanation": "Cuatro atajos que convierten el caos en orden."
+          },
+          {
+            "type": "fill_blanks",
+            "id": "huecos_bi2",
+            "prompt": "Completa el flujo para ordenar los techos.",
+            "template": "Selecciona los techos, pulsa [[M|m]] y elige Nueva colección; llámala [[Techos|techos]].",
+            "code": false,
+            "explanation": "Con M y un nombre claro cada grupo queda en su carpeta."
+          }
+        ]
+      },
+      {
+        "id": "bi2_practica",
+        "title": "Práctica: una aldea ordenada",
+        "slug": "practica-aldea",
+        "type": "theory_interactive",
+        "durationSeconds": 1500,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Levantas una aldea de tres casas con techo, cada una con su material, todo ordenado en colecciones y guardado.",
+          "habilidades": [
+            "bl-colecciones",
+            "bl-materiales",
+            "bl-ensamblar"
+          ],
+          "prerrequisitos": [
+            "bi2_explora"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m2-aldea/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Tres casas",
+            "Un techo por casa",
+            "Techos sobre las casas",
+            "Casas en «Casas»",
+            "Techos en «Techos»",
+            "Tres materiales distintos",
+            "Guarda tu aldea"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tu proyecto\nLevanta tres casas con techo, cada una con su color, y ordénalas en las colecciones «Casas» y «Techos».\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_bi2_practica",
+            "practica": "blender.bi.m2.aldea",
+            "title": "Una aldea ordenada",
+            "text": "Tu puente ya cruza el río: del otro lado nace la aldea. Constrúyela y mantenla en orden. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 25,
+            "steps": [
+              "Tres casas",
+              "Un techo por casa",
+              "Techos sobre las casas",
+              "Casas en «Casas»",
+              "Techos en «Techos»",
+              "Tres materiales distintos",
+              "Guarda tu aldea"
+            ],
+            "allowManual": false
+          },
+          {
+            "type": "callout",
+            "variant": "reto",
+            "title": "Reto extra",
+            "body": "Agrega árboles en su propia colección y ocúltala mientras trabajas en las casas."
+          }
+        ]
+      },
+      {
+        "id": "bi2_jefe",
+        "title": "Jefe final: orden",
+        "slug": "jefe-final-orden",
+        "type": "exam",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Explicar cómo organizar una escena.",
+          "habilidades": [
+            "bl-colecciones",
+            "bl-organizar"
+          ],
+          "prerrequisitos": [
+            "bi2_practica"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Obtener al menos 80 puntos en el examen."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "qbi2_1",
+              "questionText": "¿Qué tecla renombra el objeto activo?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "F2",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "F12",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "R",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "F2.",
+              "feedbackIncorrect": "Es F2."
+            },
+            {
+              "id": "qbi2_2",
+              "questionText": "¿Qué hace M con objetos seleccionados?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Los mueve a una colección",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Los mezcla",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Los mide",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "M = colección.",
+              "feedbackIncorrect": "M los manda a una colección."
+            },
+            {
+              "id": "qbi2_3",
+              "questionText": "Quieres que tres casas compartan material. ¿Qué usas?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Ctrl + L › Vincular materiales",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Duplicar el material a mano",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "F12",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Ctrl + L.",
+              "feedbackIncorrect": "Ctrl + L › Vincular materiales."
+            },
+            {
+              "id": "qbi2_4",
+              "questionText": "¿Qué hace el ojo de una colección en el Outliner?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "La oculta en la vista 3D",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "La borra",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "La renderiza",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Solo la oculta.",
+              "feedbackIncorrect": "El ojo oculta, no borra."
+            },
+            {
+              "id": "qbi2_5",
+              "questionText": "¿Por qué nombrar bien los objetos?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Para que cualquiera entienda la escena",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Para que el render sea más rápido",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "No sirve",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Orden = equipo.",
+              "feedbackIncorrect": "Los nombres claros ayudan a todo el equipo."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
