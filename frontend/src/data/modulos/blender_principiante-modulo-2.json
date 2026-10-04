@@ -4,7 +4,7 @@
     "title": "Módulo 2: Modelado poligonal básico",
     "slug": "bp-modulo-2-modelado-poligonal",
     "description": "Entra a la pieza: en Modo Edición cambias sus vértices, aristas y caras. Extruyes, cortas y mantienes la malla limpia para modelar una espada (o una taza) low-poly.",
-    "estimatedTimeMinutes": 45,
+    "estimatedTimeMinutes": 53,
     "order": 2,
     "curso": "blender_principiante",
     "insignia": "Forjador low-poly",
@@ -84,6 +84,58 @@
         ]
       },
       {
+        "id": "bp2_blender",
+        "title": "En Blender: entra al Modo Edición",
+        "slug": "blender-modo-edicion",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Entras al cubo con Tab, extruyes una cara y haces un corte en bucle. Amatista registra cada cambio de la malla.",
+          "habilidades": [
+            "bl-modo-edicion",
+            "bl-extruir"
+          ],
+          "prerrequisitos": [
+            "bp2_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Exploración del motor v3.2: practices/blender/principiante/m2-explora/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Un cubo para practicar",
+            "Extruye una cara",
+            "Haz un corte en bucle",
+            "Vuelve al Modo Objeto"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### En Blender, conectado\nViste la diferencia entre Objeto y Edición. Entra al cubo con Tab, extruye una cara y haz un corte en bucle.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "exploracion_bp2",
+            "practica": "blender.bp.m2.explora",
+            "title": "Calentamiento: entra al Modo Edición",
+            "text": "Antes de la teoría de extruir y cortar, tócalo con tus manos: un cubo, una extrusión y un corte. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 8,
+            "steps": [
+              "Un cubo para practicar",
+              "Extruye una cara",
+              "Haz un corte en bucle",
+              "Vuelve al Modo Objeto"
+            ],
+            "allowManual": false
+          }
+        ]
+      },
+      {
         "id": "bp2_explora",
         "title": "Extruir, cortar y limpiar",
         "slug": "extruir-cortar-limpiar",
@@ -99,7 +151,7 @@
             "bl-malla-limpia"
           ],
           "prerrequisitos": [
-            "bp2_gancho"
+            "bp2_blender"
           ],
           "blender": {
             "verificadaEn": null,
@@ -261,7 +313,8 @@
               "Haz un corte de bucle",
               "Sigue siendo low-poly",
               "Guarda como mi_espada.blend"
-            ]
+            ],
+            "allowManual": false
           },
           {
             "type": "callout",

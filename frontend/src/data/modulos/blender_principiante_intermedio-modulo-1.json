@@ -4,7 +4,7 @@
     "title": "Módulo 1: Materiales y sombreado",
     "slug": "bpi-modulo-1-materiales",
     "description": "Dale vida a tus modelos: con el Principled BSDF controlas color, metal y rugosidad. Pintas tu nave con cristal, metal brillante y metal quemado.",
-    "estimatedTimeMinutes": 40,
+    "estimatedTimeMinutes": 48,
     "order": 1,
     "curso": "blender_principiante_intermedio",
     "insignia": "Pintor de naves",
@@ -66,6 +66,55 @@
         ]
       },
       {
+        "id": "bpi1_blender",
+        "title": "En Blender: tu primer material",
+        "slug": "blender-primer-material",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Una esfera, un material y dos perillas: Metálico y Rugosidad. Amatista registra el material que logras.",
+          "habilidades": [
+            "bl-materiales"
+          ],
+          "prerrequisitos": [
+            "bpi1_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Exploración del motor v3.2: practices/blender/principiante-intermedio/m1-explora/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Agrega una esfera",
+            "Dale un material",
+            "Hazlo metal pulido"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### En Blender, conectado\nYa sabes por qué el metal brilla. Crea una esfera, dale un material y conviértela en metal pulido.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "exploracion_bpi1",
+            "practica": "blender.bpi.m1.explora",
+            "title": "Calentamiento: tu primer material",
+            "text": "Antes de pintar tu nave, prueba el Principled BSDF en una esfera. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 8,
+            "steps": [
+              "Agrega una esfera",
+              "Dale un material",
+              "Hazlo metal pulido"
+            ],
+            "allowManual": false
+          }
+        ]
+      },
+      {
         "id": "bpi1_explora",
         "title": "Tres controles del Principled BSDF",
         "slug": "principled-bsdf",
@@ -80,7 +129,7 @@
             "bl-asignar-material"
           ],
           "prerrequisitos": [
-            "bpi1_gancho"
+            "bpi1_blender"
           ],
           "blender": {
             "verificadaEn": null,
@@ -215,7 +264,8 @@
               "Metal brillante",
               "Metal quemado",
               "Guarda tu nave pintada"
-            ]
+            ],
+            "allowManual": false
           }
         ]
       },

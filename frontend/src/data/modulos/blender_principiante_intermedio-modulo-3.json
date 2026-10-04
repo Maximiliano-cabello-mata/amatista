@@ -4,7 +4,7 @@
     "title": "Módulo 3: Animación básica",
     "slug": "bpi-modulo-3-animacion",
     "description": "Agrega el tiempo: con fotogramas clave haces que una pelota caiga, se aplaste contra el suelo y vuelva a subir.",
-    "estimatedTimeMinutes": 45,
+    "estimatedTimeMinutes": 53,
     "order": 3,
     "curso": "blender_principiante_intermedio",
     "insignia": "Animador",
@@ -68,6 +68,55 @@
         ]
       },
       {
+        "id": "bpi3_blender",
+        "title": "En Blender: tus primeros fotogramas clave",
+        "slug": "blender-primeras-claves",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Un cubo que cruza la pantalla: dos fotogramas clave con I y Blender rellena el movimiento. Amatista registra tu animación.",
+          "habilidades": [
+            "bl-animacion"
+          ],
+          "prerrequisitos": [
+            "bpi3_gancho"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Exploración del motor v3.2: practices/blender/principiante-intermedio/m3-explora/practica.json. Necesita el add-on conectado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Agrega un cubo",
+            "Dos fotogramas clave",
+            "Que de verdad se mueva"
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### En Blender, conectado\nUna animación son fotos por segundo. Haz que un cubo cruce la pantalla con dos fotogramas clave.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+          },
+          {
+            "type": "blender_practice",
+            "id": "exploracion_bpi3",
+            "practica": "blender.bpi.m3.explora",
+            "title": "Calentamiento: tus primeros fotogramas clave",
+            "text": "Antes del rebote, anima lo más simple: un cubo que se mueve de un lado al otro. Tu avance aparece aquí mientras trabajas.",
+            "minutes": 8,
+            "steps": [
+              "Agrega un cubo",
+              "Dos fotogramas clave",
+              "Que de verdad se mueva"
+            ],
+            "allowManual": false
+          }
+        ]
+      },
+      {
         "id": "bpi3_explora",
         "title": "El rebote y el encoger y estirar",
         "slug": "rebote-squash-stretch",
@@ -83,7 +132,7 @@
             "bl-squash-stretch"
           ],
           "prerrequisitos": [
-            "bpi3_gancho"
+            "bpi3_blender"
           ],
           "blender": {
             "verificadaEn": null,
@@ -203,7 +252,8 @@
               "Cae, toca el suelo y sube",
               "Se aplasta al chocar",
               "Guarda tu animación"
-            ]
+            ],
+            "allowManual": false
           },
           {
             "type": "callout",

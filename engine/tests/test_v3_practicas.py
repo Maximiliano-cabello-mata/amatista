@@ -1,4 +1,4 @@
-"""Plan de estudios v3: las 6 prácticas compilan, sus casos de prueba pasan y cursos.json cuadra."""
+"""Plan de estudios v3: las 12 prácticas (6 de exploración y 6 de cierre) compilan, sus casos de prueba pasan y cursos.json cuadra."""
 import json
 from pathlib import Path
 
@@ -16,8 +16,9 @@ def _leer(ruta: Path):
     return json.loads(ruta.read_text(encoding="utf-8"))
 
 
-def test_hay_seis_practicas_del_plan():
-    assert len(CARPETAS) == 6
+def test_hay_doce_practicas_del_plan():
+    # Cada módulo intercala teoría y Blender: una exploración corta y la práctica de cierre.
+    assert len(CARPETAS) == 12
     ids = {_leer(c / "practica.json")["id"] for c in CARPETAS}
     assert ids == set(load_curriculum(_leer(CURSOS)).practices())
 
@@ -60,3 +61,12 @@ def test_repasos_apuntan_a_pildoras_con_pregunta_de_practicas_anteriores():
             origen, _, pildora = ref.partition("#")
             assert orden.index(origen) < orden.index(pid), ref
             assert practicas[origen].pill(pildora) is not None, ref
+
+
+def test_cada_modulo_intercala_exploracion_y_cierre():
+    plan = load_curriculum(_leer(CURSOS))
+    for curso in plan.courses:
+        for modulo in curso.modules:
+            assert modulo.explore and modulo.practice, f"{curso.id} módulo {modulo.number}"
+            assert modulo.sequence == (modulo.explore, modulo.practice)
+            assert plan.locate(modulo.explore) == (curso, modulo)

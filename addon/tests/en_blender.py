@@ -382,7 +382,7 @@ def main():
 
     datos = practicas.datos_intento(contexto)
     revisar(datos["pistas"] == {"patas": 1} and datos["practica_id"] == "blender.n1.mesa", "datos del intento completos")
-    revisar(datos["version_addon"] == "3.0.0", "el intento lleva la versión 3 del add-on")
+    revisar(datos["version_addon"] == "3.1.0", "el intento lleva la versión 3.1 del add-on")
 
     # --- Amatista Author ---
     contexto.window_manager.amatista.modo = "autor"
