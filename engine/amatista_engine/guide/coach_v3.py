@@ -357,7 +357,7 @@ def coach_render_engine(ctx: Contexto) -> Parcial:
     motor = str(ctx.target.params.get("engine") or "EEVEE").upper()
     return Parcial(ctx.result.message, TONO_CERCA,
                    (Paso("Propiedades › Render (la cámara de fotos de atrás)"), Paso(f"Motor de render: {motor.title()}")),
-                   action=GuideAction("set_engine", f"Usar {motor.title()}", tab="RENDER"))
+                   action=GuideAction("set_engine", f"Usar {motor.title()}", tab="RENDER", option=motor))
 
 
 def coach_render_done(ctx: Contexto) -> Parcial:
@@ -378,18 +378,22 @@ def coach_keyframes(ctx: Contexto) -> Parcial:
         return hecho
     nombres = _fallidos(ctx)
     eje = str(ctx.target.params.get("axis", "z")).lower()
+    propiedad = str(ctx.target.params.get("property", "location")).lower()
+    menu, tecla, verbo = {"scale": ("Escala", "S", "Escálala"), "rotation_euler": ("Rotación", "R", "Gírala")}.get(
+        propiedad, ("Ubicación", "G", "Muévela"))
     return Parcial(
         ctx.result.message,
         TONO_ANIMO,
         (
             _seleccionar(nombres[0]) if nombres else Paso("Selecciona la pelota", ("Clic",)),
-            Paso("En la línea de tiempo, ve al fotograma 1 y pulsa I › Ubicación", ("I",)),
+            Paso(f"En la línea de tiempo, ve al fotograma 1 y pulsa I › {menu}", ("I",)),
             Paso("Avanza 10 fotogramas", ("↑",)),
-            Paso(f"Muévela en {eje.upper()} y vuelve a insertar", ("G", eje.upper())),
+            Paso(f"{verbo} en {eje.upper()} y vuelve a insertar", (tecla, eje.upper())),
             Paso("Insertar fotograma clave", ("I",)),
         ),
         _corregir(nombres, "Animar"),
-        action=GuideAction("insert_keyframe", "Insertar un fotograma clave conmigo", tuple(nombres[:1]), eje),
+        action=GuideAction("insert_keyframe", "Insertar un fotograma clave conmigo", tuple(nombres[:1]), eje,
+                           option=str(ctx.target.params.get("property", "location"))),
     )
 
 
@@ -416,7 +420,8 @@ def coach_varies(ctx: Contexto) -> Parcial:
          Paso("Reproduce para ver el resultado", ("Espacio",))),
         _corregir([nombre] if nombre else [], "Revisa la animación"),
         action=GuideAction("insert_keyframe", "Insertar un fotograma clave conmigo", (nombre,) if nombre else (),
-                           str(ctx.target.params.get("axis", "z")).lower()),
+                           str(ctx.target.params.get("axis", "z")).lower(),
+                           option=str(ctx.target.params.get("property", "location"))),
     )
 
 

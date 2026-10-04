@@ -78,6 +78,7 @@ class GuideAction:
     modifier: Optional[str] = None
     tab: Optional[str] = None
     light_type: Optional[str] = None
+    option: Optional[str] = None  # set_engine: EEVEE/CYCLES; insert_keyframe: location/rotation_euler/scale
 
 
 @dataclass(frozen=True)
@@ -152,6 +153,7 @@ def guidance_to_dict(g: Optional[Guidance]) -> Optional[Dict[str, Any]]:
             "modifier": g.action.modifier,
             "tab": g.action.tab,
             "light_type": g.action.light_type,
+            "option": g.action.option,
         },
         "paused": g.paused,
         "completed": g.completed,

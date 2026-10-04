@@ -46,8 +46,17 @@ def escena_mesa(guardada=True, patas=4, sin_roles=False):
 
 
 @pytest.fixture()
-def sembrar():
-    """Curso blender, habilidades de la mesa y la práctica publicada desde el repositorio."""
+def sembrar(monkeypatch, tmp_path):
+    """Curso blender, habilidades de la mesa y las prácticas v2 (mesa y podio) publicadas «desde el repositorio».
+
+    Estas pruebas cubren el mecanismo con las prácticas archivadas de la v2;
+    test_sincronizar_el_plan_de_estudios_v3 cubre las del plan de estudios.
+    """
+    for nombre in ("mesa", "podio"):
+        carpeta = tmp_path / "blender" / nombre
+        carpeta.mkdir(parents=True)
+        (carpeta / "practica.json").write_bytes((motor.RAIZ / "practices" / "archivo" / "v2" / f"{nombre}.json").read_bytes())
+    monkeypatch.setattr(motor, "CARPETA_PRACTICAS", tmp_path / "blender")
 
     def hacer(cliente, admin):
         with Session(conexion.motor()) as db:
@@ -195,6 +204,16 @@ def test_subir_practica_invalida_o_sin_permiso(cliente, crear_cuenta):
 
 
 # --- Progreso -------------------------------------------------------------------
+
+
+def test_sincronizar_el_plan_de_estudios_v3(cliente, crear_cuenta):
+    _, admin = crear_cuenta(rol="admin")
+    resumen = cliente.post(f"{API}/practicas/sincronizar", headers=admin).json()
+    assert resumen["errores"] == []
+    assert {p["id"] for p in resumen["practicas"]} == {
+        "blender.bp.m1.tren", "blender.bp.m2.espada", "blender.bp.m3.nave",
+        "blender.bpi.m1.pinta-nave", "blender.bpi.m2.tres-puntos", "blender.bpi.m3.pelota",
+    }
 
 
 def test_intentos_evaluados_por_el_servidor(cliente, crear_cuenta, sembrar):

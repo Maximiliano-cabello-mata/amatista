@@ -94,7 +94,9 @@ def varies(target: TargetDefinition, scene: SceneState) -> ValidationResult:
                 {"selector": sel, "object": obj.name, "reason": "low"},
             )
         if suelo:
-            radio = obj.dimensions[2] / 2.0
+            # El radio sale del ancho (X/Y): la altura cambia si la pelota se aplasta en ese fotograma.
+            radio = min(obj.dimensions[0], obj.dimensions[1]) / 2.0 if obj.dimensions[0] and obj.dimensions[1] \
+                else obj.dimensions[2] / 2.0
             if min(valores) > radio + tolerancia:
                 return result(
                     target, False,
