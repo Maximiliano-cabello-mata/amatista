@@ -196,9 +196,9 @@
   - 🔎 Evidencia: docs/plataforma/ (mapa, módulos con práctica, etiquetas, herramientas y panel de administración)
 - [ ] **T-059** Probar la guía de la etapa 2 en un Blender real con GPU y agregar capturas a la documentación · _pendiente_
   - 🎯 Listo cuando: Recorrido de la mesa en modo Acompañado en Windows o macOS: tarjeta, guía 3D, «Hazlo conmigo» y diálogos se ven bien; capturas reales en docs/motor/etapas/img/
-- [ ] **T-062** Motor v3 y add-on 3.0: plan de estudios de Blender en dos cursos (6 prácticas con teoría, repaso y vigilantes) · _revision_ — commits: `bc9268f` (2026-10-04)
+- [ ] **T-062** Motor v3 y add-on 3.0: plan de estudios de Blender en dos cursos (6 prácticas con teoría, repaso y vigilantes) · _revision_ — commits: `5ffe620` (2026-10-04)
   - 🔎 Evidencia: docs/motor/etapas/etapa-3.md, docs/cursos/README.md; 29 casos de practices/blender/*/*/pruebas.json y addon/tests/en_blender.py en Blender 4.2 y 5.0
-- [ ] **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas) · _en-progreso_ — commits: `bc9268f` (2026-10-04)
+- [ ] **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas) · _en-progreso_ — commits: `5ffe620` (2026-10-04)
   - 🔎 Evidencia: docs/motor/referencia/08_practicas_v3_y_herramientas.md; engine/tests/test_v3_herramientas.py
 - [ ] **T-064** Aplicar 008 y 009 en Oracle e importar los cursos Principiante y Principiante-Intermedio (después del piloto) · _pendiente_
   - ⏸️ Espera: Después del piloto del 8 de octubre y de T-055 (007)
@@ -212,7 +212,7 @@
 - [ ] **T-067** Cursos Blender Intermedio y Avanzado (plan de estudios y prácticas) · _pendiente_
 - [ ] **T-068** Repaso espaciado sincronizado con el servidor (tabla de repasos por alumno) · _pendiente_
   - 🎯 Listo cuando: Diseño de docs/base-de-datos/01_rediseno_v3.md §4: (usuario_id, item, caja, vence_en), script aditivo, API y add-on que lo usan
-- [ ] **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas) · _en-progreso_ — commits: `bc9268f` (2026-10-04)
+- [ ] **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas) · _en-progreso_ — commits: `5ffe620` (2026-10-04)
   - 🎯 Listo cuando: docs/base-de-datos/03_migracion.md §5 pasos 1 y 7 contra un PostgreSQL real; sql/postgresql/ con la purga y las vistas
 - [ ] **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos) · _en-progreso_ — commits: `53dec44` (2026-10-03)
   - ⏸️ Espera: Decisión pendiente (propuesta: web y videojuegos); el commit que la movió solo la documentó
