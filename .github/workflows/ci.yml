@@ -1,5 +1,6 @@
 # CI (T-007): revisa cada push y cada pull request.
-# - backend: pytest, validación de los módulos JSON y pruebas del tablero.
+# - backend: pytest, validación de los módulos JSON, tablero, motor y constructor del add-on.
+# - addon-blender: el add-on dentro de Blender (bpy de PyPI).
 # - frontend: lint, pruebas (vitest) y build de producción.
 # Los commits del bot del tablero solo tocan KANBAN.md: no disparan CI.
 name: CI
@@ -49,6 +50,30 @@ jobs:
       - name: Pruebas del tablero
         working-directory: .
         run: python -m pytest -q tablero
+
+      - name: Pruebas del motor y del constructor del add-on
+        working-directory: .
+        run: python -m pytest -q engine/tests addon/tests
+
+  addon-blender:
+    # El add-on dentro de Blender de verdad (módulo bpy de PyPI, sin ventana):
+    # registro, práctica de la mesa, pistas, modo Author y dibujo de paneles.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Bibliotecas que bpy necesita en Linux
+        run: sudo apt-get update && sudo apt-get install -y libxi6 libxxf86vm1 libxfixes3 libxrender1 libxkbcommon0 libsm6 libgl1 libegl1
+
+      - name: Instalar bpy (Blender 5.0 como módulo de Python)
+        run: pip install bpy==5.0.1
+
+      - name: Add-on dentro de Blender
+        run: python addon/tests/en_blender.py
 
   frontend:
     runs-on: ubuntu-latest
