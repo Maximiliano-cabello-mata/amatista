@@ -10,7 +10,7 @@ Una práctica es un JSON declarativo. El motor la valida al cargarla (`engine/am
 | `id` | sí | Minúsculas, números, `.`, `-`, `_` (hasta 80). Convención: `blender.n<nivel>.<tema>`, por ejemplo `blender.n1.mesa`. |
 | `version` | sí | Entero. Lo sube el autor; Oracle además numera cada subida en `PRACTICA_VERSIONES`. |
 | `title` | sí | Título que ve el alumno. |
-| `level` | no | 1 a 5 (los niveles del curso). |
+| `level` | sí | 1 a 5 (los niveles del curso). El cargador da error si falta. |
 | `description`, `intro`, `completion` | no | Textos: tarjeta del catálogo, bienvenida y mensaje final. Máximo 600 caracteres cada uno. |
 | `estimatedMinutes` | no | Duración estimada. |
 | `blender` | no | `{"min": "4.2"}`: versión mínima para esta práctica. |

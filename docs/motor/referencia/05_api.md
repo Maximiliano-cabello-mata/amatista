@@ -33,8 +33,8 @@ El paquete descargado con sesión trae un vínculo ya confirmado (7 días, un us
 
 | Método y ruta | Quién | Qué hace |
 |---|---|---|
-| `GET /practicas` | sesión | Catálogo. Alumnos: solo publicadas, en su versión publicada, con `mi_progreso`. Equipo: también borradores. |
-| `GET /practicas/{id}` | sesión | Definición compilada (`?version=` para el equipo). |
+| `GET /practicas` | opcional | Catálogo. Sin sesión: solo publicadas. Alumnos: solo publicadas, en su versión publicada, con `mi_progreso`. Equipo: también borradores. |
+| `GET /practicas/{id}` | opcional (sin sesión, solo publicadas) | Definición compilada (`?version=` para el equipo). |
 | `POST /practicas` `{definicion, curso_id?, leccion_id?, nota?, version_addon?, version_blender?}` | profesor/admin | Compila con el motor y crea la versión siguiente en `PRACTICA_VERSIONES`. Si la huella es igual a la última, no crea nada (`sin_cambios: true`). **Nunca publica.** |
 | `GET /practicas/{id}/versiones` | profesor/admin | Historial: versión, nota, autor, add-on y Blender con que se subió, cuál está publicada. |
 | `POST /practicas/{id}/publicar` `{version?}` | admin | Publica la última (o la indicada). |

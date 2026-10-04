@@ -22,7 +22,7 @@ El contenido sigue su propio flujo en los JSON de los módulos y el tablero lo r
 |---|---|
 | `feat(pwa): visor GLB inicial T-011` | 🔨 En progreso |
 | `revision T-011` | 👀 Revisión |
-| `cierra T-011` (o `closes`, `fix`, `resuelve`), en `dev` | 👀 Revisión (espera el merge) |
+| `cierra T-011` (o `closes`, `fix`, `resuelve`), en una rama de trabajo | 👀 Revisión (espera el merge) |
 | `cierra T-011`, ya en `main` | ✅ Hecho |
 | `reabre T-011` | 📋 Pendiente |
 

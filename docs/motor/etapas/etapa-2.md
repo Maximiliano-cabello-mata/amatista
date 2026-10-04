@@ -1,6 +1,6 @@
 # Etapa 2 · El motor que acompaña (4 de octubre de 2026)
 
-**Estado:** en la rama `claude/motor-etapa-2-8z6xd8` (PR abierto, sin fusionar).
+**Estado:** en `main` desde el PR #14 (`d004071`, 3 de octubre de 2026, hora de México).
 **Versiones:** motor `amatista_engine` 0.3.0 · add-on «Amatista» 0.3.0 · formato `amatista.practice/1` (sin cambio de versión: todo lo nuevo es opcional) · **sin cambios en Oracle**.
 
 > «Que no solamente te diga “estás menos Z mal” hasta que logres ponerlo, sino que realmente sea intuitivo y te vaya mostrando diálogos en los cuales estás mal, diálogos en los cuales te pueda ayudar, que sea un acompañamiento más que una exigencia. Que te vaya explicando paso a paso qué es lo que tienes que hacer sin necesidad de que estés viendo la tabla.» (Maximiliano, 4 oct 2026)

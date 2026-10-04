@@ -1,31 +1,123 @@
 # Documentación de Amatista
 
-Todos los documentos llevan su fecha de creación al inicio del nombre (`AAAA-MM-DD_tema.txt`),
-así se ordenan solos dentro de cada carpeta. Los reportes fechados son historia: cuando cambia una
-decisión se escribe un documento nuevo o se actualiza el de arquitectura correspondiente.
+Toda la documentación del proyecto, ordenada por secciones. Cada sección dice para quién es y por dónde empezar.
 
-**Etapa vigente: v3 «Reestructuración».** Empieza por [`reestructuracion/`](reestructuracion/README.md): plan maestro, modelo de
-contenido por niveles, manual de Oracle y guía del add-on de Blender.
+Actualizado: 4 de octubre de 2026 (main en `c730c0e`). Etapa vigente: **v3 «Reestructuración»**, con el piloto del 8 de octubre sobre la v2.2.
 
-| Carpeta | Qué contiene | Empieza por |
-|---|---|---|
-| [`plataforma/`](plataforma/) | La plataforma v3.1: qué ve cada rol, módulos con práctica en Blender, etiquetas, herramientas de enseñanza y panel de administración | [Plataforma](plataforma/README.md) |
-| [`motor/`](motor/) | Amatista Engine: etapas (1 evalúa, 2 acompaña) y referencia técnica del motor y el add-on | [Amatista Engine](motor/README.md) |
-| [`reestructuracion/`](reestructuracion/) | La etapa v3: niveles, versiones de Blender, habilidades, herramientas de autor y add-on | [Plan maestro](reestructuracion/00_plan_maestro.md) |
-| [`arquitectura/`](arquitectura/) | Decisiones técnicas vigentes: arquitectura, base de datos, formato de lecciones, la Fórmula, contrato técnico | [Contrato técnico v2.2](arquitectura/2026-10-02_contrato_tecnico_plataforma.md) |
-| [`bitacora/`](bitacora/) | Qué pasó en cada sesión de trabajo y qué sigue | [4 de octubre: motor etapa 2 y plataforma](bitacora/2026-10-04_motor_etapa_2_y_plataforma.md) |
-| [`incidencias/`](incidencias/) | Fallas diagnosticadas, su causa y su solución | [Registro de incidencias](incidencias/README.md) |
-| [`planeacion/`](planeacion/) | Planes de lanzamiento y fechas | [Plan de lanzamiento](planeacion/2026-10-01_plan_lanzamiento.txt) |
-| [`propuestas/`](propuestas/) | Propuestas y ampliaciones (contenido por niveles, 3D Lab, motor generativo) | [Propuesta de contenido y ruta de Blender](propuestas/2026-10-03_propuesta_contenido_blender.txt) |
-| [`guias/`](guias/) | Cómo se trabaja en el repo: commits, versiones y tablero | [Convención de commits](guias/2026-09-27_convencion_commits.txt) |
-| [`despliegue/`](despliegue/) | Guías para dejar el servidor listo (falta la guía de OCI, T-031) | [Oracle paso a paso (v2.2)](despliegue/2026-10-02_oracle_paso_a_paso.md); para la v3, el [manual de Oracle](reestructuracion/02_manual_oracle.md) |
+> **¿Primera vez?** Lee el [README de la raíz](../README.md), luego la [cronología](historia/01_cronologia.md) y el [mapa del repositorio](manual-del-codigo/01_mapa_del_repositorio.md). Si vas a programar, sigue con el [manual del desarrollador](desarrollador/README.md).
 
-## Estado de cada documento (revisión del 4 de octubre de 2026)
+## Secciones
 
-Se revisaron uno por uno. **Vigente**: describe lo que hay hoy y se mantiene al día. **Historia**: registro fechado que no se corrige; la última columna dice dónde está lo actual.
+| # | Sección | Para quién | Empieza por |
+|---|---|---|---|
+| 1 | [Historia del proyecto](#1-historia-del-proyecto) | Quien quiere saber cómo llegamos aquí | [Cronología exacta](historia/01_cronologia.md) |
+| 2 | [La plataforma](#2-la-plataforma) | Quien diseña cursos o usa la plataforma | [Mapa por rol](plataforma/01_mapa_de_la_plataforma.md) |
+| 3 | [Amatista Engine](#3-amatista-engine-y-add-on-de-blender) | Quien crea prácticas de Blender | [Amatista Engine](motor/README.md) |
+| 4 | [Manual del código](#4-manual-del-código) | Quien lee o modifica el código | [Mapa del repositorio](manual-del-codigo/01_mapa_del_repositorio.md) |
+| 5 | [Manual del desarrollador](#5-manual-del-desarrollador) | Quien programa, prueba y entrega | [Tu primer día](desarrollador/README.md) |
+| 6 | [Base de datos](#6-base-de-datos) | Quien toca Oracle o los modelos | [Esquema SQL](base-de-datos/esquema.md) |
+| 7 | [Herramientas de la plataforma](#7-herramientas-de-la-plataforma) | Quien quiere saber de qué está hecha | [Herramientas](herramientas-de-la-plataforma.md) |
+| 8 | [Operación y despliegue](#8-operación-y-despliegue) | Quien mantiene el servidor | [Despliegue en OCI](despliegue/2026-10-04_despliegue_oci.md) |
+| 9 | [Dirección y decisiones](#9-dirección-y-decisiones) | Quien decide qué sigue | [Plan maestro v3](reestructuracion/00_plan_maestro.md) |
+| 10 | [Registros](#10-registros-bitácora-e-incidencias) | Quien busca qué pasó en una sesión o una falla | [Última bitácora](bitacora/2026-10-04_documentacion_completa.md) |
+
+Fuera de `docs/`: [PROYECTO.md](../PROYECTO.md) (prioridades y forma de trabajo), [KANBAN.md](../KANBAN.md) (tablero generado), [CHANGELOG.md](../CHANGELOG.md) (versiones) y los README de cada componente: [frontend](../frontend/README.md), [backend](../backend/README.md), [engine](../engine/README.md), [addon](../addon/README.md), [practices](../practices/README.md), [tablero](../tablero/README.md).
+
+---
+
+## 1. Historia del proyecto
+
+Carpeta [`historia/`](historia/README.md).
+
+- [Cronología exacta](historia/01_cronologia.md): commit por commit, PR por PR, con hora, desde el 27 de septiembre.
+- [Ideas y cómo se implementaron](historia/02_ideas_y_como_se_implementaron.md): cada idea, su origen, su estado y dónde quedó en el código.
+- [La plataforma en cada versión](historia/03_la_plataforma_en_cada_version.md): cómo se veía y qué hacía Amatista en cada tag, revisando el código de los commits antiguos.
+
+## 2. La plataforma
+
+Carpeta [`plataforma/`](plataforma/README.md): estructura fija Cursos · Mi panel · Admin.
+
+- [Mapa de la plataforma por rol](plataforma/01_mapa_de_la_plataforma.md)
+- [Módulos con práctica de Blender al final](plataforma/02_modulos_y_practica.md)
+- [Etiquetas y gráficos](plataforma/03_etiquetas_y_graficos.md)
+- [Las 20 herramientas de enseñanza](plataforma/04_herramientas_de_ensenanza.md)
+- [Panel de administración](plataforma/05_panel_de_administracion.md)
+
+## 3. Amatista Engine y add-on de Blender
+
+Carpeta [`motor/`](motor/README.md).
+
+- Etapas: [1 · evalúa](motor/etapas/etapa-1.md) · [2 · acompaña paso a paso](motor/etapas/etapa-2.md)
+- Referencia: [arquitectura](motor/referencia/01_arquitectura.md) · [formato de práctica](motor/referencia/02_formato_de_practica.md) · [add-on](motor/referencia/03_addon.md) · [instalación del alumno](motor/referencia/04_instalacion_alumno.md) · [API](motor/referencia/05_api.md) · [modo desarrollador](motor/referencia/06_modo_desarrollador.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md)
+- [Especificaciones originales](motor/especificaciones/) (historia: el concepto antes del código)
+
+## 4. Manual del código
+
+Carpeta [`manual-del-codigo/`](manual-del-codigo/README.md): el código explicado como manual de uso, con recetas para los cambios típicos.
+
+- [01 · Mapa del repositorio](manual-del-codigo/01_mapa_del_repositorio.md)
+- [02 · Frontend (PWA)](manual-del-codigo/02_frontend.md)
+- [03 · Backend (API)](manual-del-codigo/03_backend.md)
+- [04 · Motor, add-on y prácticas](manual-del-codigo/04_motor_addon_y_practicas.md)
+
+## 5. Manual del desarrollador
+
+Carpeta [`desarrollador/`](desarrollador/README.md): todas las herramientas del desarrollador y cómo usarlas.
+
+- [Tu primer día y tabla de todas las herramientas](desarrollador/README.md)
+- [01 · Entorno local](desarrollador/01_entorno_local.md)
+- [02 · Herramientas de línea de comandos](desarrollador/02_herramientas_de_linea_de_comandos.md)
+- [03 · Herramientas dentro de la plataforma](desarrollador/03_herramientas_dentro_de_la_plataforma.md)
+- [04 · Pruebas y CI](desarrollador/04_pruebas_y_ci.md)
+- [05 · Flujo de trabajo](desarrollador/05_flujo_de_trabajo.md)
+- Guías de origen: [convención de commits](guias/2026-09-27_convencion_commits.txt) · [versiones y tablero](guias/2026-10-01_versiones-y-tablero.txt) · [cómo se usa el tablero](../tablero/README.md)
+
+## 6. Base de datos
+
+Carpeta [`base-de-datos/`](base-de-datos/README.md).
+
+- [Resumen y orden de los scripts](base-de-datos/README.md)
+- [Esquema SQL completo](base-de-datos/esquema.md): diagrama entidad-relación, cada tabla y columna, vistas, paquete `AMATISTA_AUTOR`
+- [Esquema consolidado (solo referencia)](base-de-datos/esquema_completo.sql)
+- Los scripts reales: [`backend/sql/`](../backend/sql/LEEME.txt)
+
+## 7. Herramientas de la plataforma
+
+- [Herramientas que usa la plataforma](herramientas-de-la-plataforma.md): React, Vite, Tailwind, FastAPI, Oracle, Blender, Caddy, GitHub Actions… para qué sirve cada una y dónde está.
+
+## 8. Operación y despliegue
+
+- [Despliegue en OCI](despliegue/2026-10-04_despliegue_oci.md): VM, servicio systemd, HTTPS con Caddy, PWA, SMTP y actualizaciones.
+- [Oracle paso a paso (002–004)](despliegue/2026-10-02_oracle_paso_a_paso.md) y [manual de Oracle (005–007)](reestructuracion/02_manual_oracle.md)
+- Archivos: [`despliegue/`](../despliegue/)
+
+## 9. Dirección y decisiones
+
+- **Plan vigente**: [reestructuración v3](reestructuracion/README.md): [plan maestro](reestructuracion/00_plan_maestro.md) · [modelo de contenido](reestructuracion/01_modelo_de_contenido.md) · [manual de Oracle](reestructuracion/02_manual_oracle.md) · [diseño del add-on](reestructuracion/03_addon_blender.md) (historia)
+- **Lanzamiento**: [plan de lanzamiento](planeacion/2026-10-01_plan_lanzamiento.txt) (piloto 8 oct, beta 15 oct)
+- **Arquitectura** (decisiones fechadas): [general](arquitectura/2026-09-27_arquitectura_general.txt) · [backend y BD](arquitectura/2026-09-27_backend_y_base_de_datos.txt) · [recomendaciones](arquitectura/2026-09-27_recomendaciones_arquitectura.txt) · [mapa conceptual](arquitectura/2026-09-27_mindmap.png) · [identidad visual](arquitectura/2026-09-28_identidad_visual_interfaz.txt) · [formato de lecciones](arquitectura/2026-09-29_formato-lecciones.txt) · [optimización de BD y autenticación](arquitectura/2026-10-01_optimizacion_bd_autenticacion_y_escalabilidad.txt) · [contrato técnico v2.2](arquitectura/2026-10-02_contrato_tecnico_plataforma.md) · [la Fórmula Amatista](arquitectura/2026-10-02_formula_modulos.txt)
+- **Propuestas** (no son compromisos): [contenido por niveles](propuestas/2026-10-03_propuesta_contenido_blender.txt) · [3D Lab](propuestas/2026-09-27_amatista_3d_lab.txt) · [motor generativo 3D](propuestas/2026-09-27_motor_generativo_3d.txt)
+
+## 10. Registros: bitácora e incidencias
+
+- **Bitácora** ([`bitacora/`](bitacora/)), de la más reciente a la más antigua:
+  - 4 oct: [documentación completa](bitacora/2026-10-04_documentacion_completa.md) · [motor etapa 2 y plataforma por módulos](bitacora/2026-10-04_motor_etapa_2_y_plataforma.md) · [Amatista Engine](bitacora/2026-10-04_amatista_engine.md)
+  - 3 oct: [estado y reestructuración](bitacora/2026-10-03_estado_y_reestructuracion.md) · [bitácora técnica del servidor](bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md)
+  - 2 oct: [cierre del día](bitacora/2026-10-02_cierre_del_dia.txt) · [ramas y cronología](bitacora/2026-10-02_ramas_y_cronologia.txt) · [estado de la plataforma unificada](bitacora/2026-10-02_estado_plataforma_unificada.txt)
+  - 29 sep: [lecciones y progreso](bitacora/2026-09-29_lecciones-y-progreso.txt)
+  - 27 sep: [investigación y desarrollo](bitacora/2026-09-27_investigacion_desarrollo.txt) · [reporte App Shell](bitacora/2026-09-27_reporte_app_shell.txt) · [resumen inicial](bitacora/2026-09-27_resumen.txt)
+- **Incidencias**: [registro de incidencias](incidencias/README.md) (índice de INC-001 en adelante, con cada archivo).
+
+---
+
+## Estado de cada documento
+
+**Vigente**: describe lo que hay hoy y se mantiene al día. **Historia**: registro fechado que no se corrige; la última columna dice dónde está lo actual.
 
 | Documento | Estado | Dónde está lo actual |
 |---|---|---|
+| `historia/`, `manual-del-codigo/`, `desarrollador/`, `base-de-datos/`, `herramientas-de-la-plataforma.md` | Vigente (nuevos el 4 oct) | — |
+| `despliegue/2026-10-04_despliegue_oci.md` | Vigente (nuevo el 4 oct; cierra la parte de despliegue de T-031) | — |
 | `plataforma/` (01 a 05) | Vigente | — |
 | `motor/` (etapas y referencia 01 a 07) | Vigente | — |
 | `motor/especificaciones/` | Historia: el concepto original del motor | `motor/referencia/` |
@@ -35,54 +127,19 @@ Se revisaron uno por uno. **Vigente**: describe lo que hay hoy y se mantiene al 
 | `reestructuracion/03_addon_blender.md` | Historia: diseño previo al código | `motor/` |
 | `arquitectura/2026-09-29_formato-lecciones.txt` | Vigente con nota del 4 oct | Bloques nuevos en `plataforma/04` |
 | `arquitectura/2026-10-02_formula_modulos.txt` | Vigente con nota del 4 oct | Práctica al final en `plataforma/02` |
-| `arquitectura/2026-10-02_contrato_tecnico_plataforma.md` | Vigente para la v2.2, con nota | `reestructuracion/` y `motor/` para lo posterior |
-| `arquitectura/2026-09-27_*` y `2026-09-28_*` | Historia: arquitectura inicial e identidad visual | `README.md` de la raíz y `plataforma/03` |
-| `arquitectura/2026-10-01_optimizacion_*` | Historia: diseño de 002 a 004 | `backend/sql/LEEME.txt` |
+| `arquitectura/2026-10-02_contrato_tecnico_plataforma.md` | Vigente para la v2.2, con nota | `manual-del-codigo/03_backend.md` |
+| `arquitectura/2026-09-27_*` y `2026-09-28_*` | Historia: arquitectura inicial e identidad visual | `README.md` de la raíz, `herramientas-de-la-plataforma.md` y `plataforma/03` |
+| `arquitectura/2026-10-01_optimizacion_*` | Historia: diseño de 002 a 004 | `base-de-datos/` |
 | `despliegue/2026-10-02_oracle_paso_a_paso.md` | Vigente para 002 a 004 | `reestructuracion/02_manual_oracle.md` para 005 a 007 |
 | `planeacion/2026-10-01_plan_lanzamiento.txt` | Vigente: piloto del 8 oct y beta | Tareas en el tablero (versión `v2.2.0`) |
-| `guias/` | Vigente | — |
-| `propuestas/` | Propuestas: no son compromisos | La de niveles ya entró al plan maestro |
+| `guias/` | Vigente; resumidas en `desarrollador/05` | — |
+| `propuestas/` | Propuestas: no son compromisos | Estado de cada idea en `historia/02` |
 | `bitacora/` e `incidencias/` | Historia | El último registro arriba |
 
-## Reestructuración (v3, vigente)
+## Reglas de la documentación
 
-- [Plan maestro](reestructuracion/00_plan_maestro.md)
-- [Modelo de contenido](reestructuracion/01_modelo_de_contenido.md)
-- [Manual de Oracle](reestructuracion/02_manual_oracle.md)
-- [Add-on de Blender](reestructuracion/03_addon_blender.md)
-- [Propuesta de contenido (fuente)](propuestas/2026-10-03_propuesta_contenido_blender.txt)
-
-## Plataforma y motor (v3.1)
-
-- [Plataforma](plataforma/README.md): [mapa por rol](plataforma/01_mapa_de_la_plataforma.md) · [módulos con práctica en Blender](plataforma/02_modulos_y_practica.md) · [etiquetas y gráficos](plataforma/03_etiquetas_y_graficos.md) · [herramientas de enseñanza](plataforma/04_herramientas_de_ensenanza.md) · [panel de administración](plataforma/05_panel_de_administracion.md)
-- [Amatista Engine](motor/README.md): [etapa 1](motor/etapas/etapa-1.md) · [etapa 2](motor/etapas/etapa-2.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md)
-
-## Arquitectura
-
-- [Arquitectura general](arquitectura/2026-09-27_arquitectura_general.txt)
-- [Backend y base de datos](arquitectura/2026-09-27_backend_y_base_de_datos.txt)
-- [Recomendaciones de arquitectura](arquitectura/2026-09-27_recomendaciones_arquitectura.txt)
-- [Mapa conceptual](arquitectura/2026-09-27_mindmap.png)
-- [Identidad visual](arquitectura/2026-09-28_identidad_visual_interfaz.txt)
-- [Formato de lecciones](arquitectura/2026-09-29_formato-lecciones.txt)
-- [Optimización de BD, autenticación y escalabilidad](arquitectura/2026-10-01_optimizacion_bd_autenticacion_y_escalabilidad.txt)
-- [Contrato técnico de la plataforma unificada](arquitectura/2026-10-02_contrato_tecnico_plataforma.md)
-- [La Fórmula Amatista](arquitectura/2026-10-02_formula_modulos.txt)
-
-Faltan (tarea T-031): base de datos optimizada, autenticación y roles, panel y administración, y la guía de despliegue en OCI.
-Mientras tanto: `backend/sql/LEEME.txt`, el encabezado de `backend/sql/002_*.sql` y el contrato técnico.
-
-## Bitácora
-
-- [Investigación y desarrollo](bitacora/2026-09-27_investigacion_desarrollo.txt) · [Reporte App Shell](bitacora/2026-09-27_reporte_app_shell.txt) · [Resumen inicial](bitacora/2026-09-27_resumen.txt)
-- [Lecciones y progreso](bitacora/2026-09-29_lecciones-y-progreso.txt)
-- [Estado de la plataforma unificada](bitacora/2026-10-02_estado_plataforma_unificada.txt)
-- [Cierre del 2 de octubre](bitacora/2026-10-02_cierre_del_dia.txt) · [Ramas y cronología](bitacora/2026-10-02_ramas_y_cronologia.txt)
-- [3 de octubre: todo lo realizado y arranque de la reestructuración](bitacora/2026-10-03_estado_y_reestructuracion.md) · [Bitácora técnica del servidor](bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md)
-- [4 de octubre: Amatista Engine](bitacora/2026-10-04_amatista_engine.md) · [Motor etapa 2 y plataforma por módulos](bitacora/2026-10-04_motor_etapa_2_y_plataforma.md)
-
-## Guías del repositorio
-
-- [Convención de commits](guias/2026-09-27_convencion_commits.txt)
-- [Versiones (tags) y tablero Kanban](guias/2026-10-01_versiones-y-tablero.txt)
-- [Cómo se usa el tablero](../tablero/README.md) · [Tableros archivados](../tablero/historico/)
+- Los documentos fechados se nombran `AAAA-MM-DD_tema` y no se corrigen: cuando algo cambia se escribe uno nuevo o se actualiza el documento vigente de su sección.
+- Los documentos vigentes llevan «Actualizado: fecha (main en commit)» al inicio.
+- Cada sección tiene su `README.md` con el índice; este archivo los reúne.
+- Las rutas `docs/...` aparecen en comentarios del código (panel de administración, add-on, scripts SQL): **no se mueven carpetas existentes** sin actualizar esas referencias en el mismo PR.
+- Un cambio que hace falso un documento lo corrige en el mismo PR.

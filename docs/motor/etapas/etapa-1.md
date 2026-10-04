@@ -52,7 +52,7 @@ El pedido de Maximiliano (3 oct, 23:53) fue ordenar y documentar el motor, hacer
 
 - Backend: 257 pruebas (pytest, SQLite).
 - Motor, add-on y tablero: 36 pruebas (pytest).
-- El add-on dentro de `bpy` 5.0.1 de PyPI: instala el `.zip` real como extensión, construye la mesa con `bpy` y llega al 100 % (job de CI `addon-blender`).
+- El add-on dentro de `bpy` 5.0.1 de PyPI: activa el add-on desde `addon/` con `addon_utils.enable`, construye la mesa con `bpy` y llega al 100 % (job de CI `addon-blender`).
 - Frontend: 148 pruebas (vitest), lint y build.
 - Oracle 23ai real en contenedor: scripts 001→007, 007 repetido sin errores, 18 tablas, importar y publicar la práctica y recorrido completo del add-on contra esa base.
 

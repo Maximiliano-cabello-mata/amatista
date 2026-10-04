@@ -184,8 +184,10 @@ tareas:
     titulo: Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)
     version: v2.2.0
     area: repo
+    estado: revision
+    evidencia: "4 oct: docs/base-de-datos/ (esquema completo), docs/manual-del-codigo/03_backend.md (autenticación y roles), docs/plataforma/05_panel_de_administracion.md y docs/despliegue/2026-10-04_despliegue_oci.md"
     aceptacion:
-      - "Los documentos pendientes de docs/README.md existen y están enlazados (incluida docs/despliegue/2026-10-02_despliegue_oci.txt)"
+      - "Los documentos pendientes de docs/README.md existen y están enlazados (incluida la guía de despliegue en OCI, que quedó en docs/despliegue/2026-10-04_despliegue_oci.md)"
   - id: T-032
     titulo: Configurar SMTP y primer admin en el servidor (confirmación y recuperación por correo)
     version: v2.2.0
@@ -228,6 +230,11 @@ tareas:
     titulo: Documentación de la reestructuración, bitácora y tablero nuevo
     version: v3.0.0
     area: repo
+  - id: T-061
+    titulo: Documentación completa por secciones (historia, manual del código, esquema SQL, manual del desarrollador y README)
+    version: v3.0.0
+    area: repo
+    evidencia: "docs/README.md (índice por secciones), docs/historia/, docs/manual-del-codigo/, docs/base-de-datos/, docs/desarrollador/, docs/herramientas-de-la-plataforma.md y README.md"
   - id: T-038
     titulo: Elegir y verificar la versión principal de Blender (LTS)
     version: v3.0.0
@@ -367,14 +374,14 @@ tareas:
     titulo: "Motor etapa 2: guía paso a paso, «Hazlo conmigo» y acompañante en el add-on"
     version: v3.3.0
     area: blender
-    estado: revision
+    estado: hecho
     depende_de: [T-051]
     evidencia: "docs/motor/etapas/etapa-2.md y docs/motor/referencia/07_guia_y_acompanamiento.md; engine/tests/test_guia.py y addon/tests/en_blender.py"
   - id: T-058
     titulo: Práctica de Blender al cierre de cada módulo, etiquetas y herramientas nuevas en la plataforma
     version: v3.3.0
     area: pwa
-    estado: revision
+    estado: hecho
     evidencia: "docs/plataforma/ (mapa, módulos con práctica, etiquetas, herramientas y panel de administración)"
   - id: T-059
     titulo: Probar la guía de la etapa 2 en un Blender real con GPU y agregar capturas a la documentación

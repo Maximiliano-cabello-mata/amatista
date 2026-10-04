@@ -5,7 +5,7 @@
 | Dónde | Ruta | Qué hace ahí |
 |---|---|---|
 | Cursos | `#/` | Los cursos disponibles. |
-| Curso | `#/curso/<curso>` | El mapa: niveles, módulos con sus **etiquetas**, la **ruta** de cada módulo y su **estación de práctica en Blender**. Ver [02](02_modulos_y_practica.md). |
+| Curso | `#/curso/<curso>` | El mapa: módulos (con la etiqueta «Nivel N» en su encabezado; el mapa de niveles completo es T-041) con sus **etiquetas**, la **ruta** de cada módulo y su **estación de práctica en Blender**. Ver [02](02_modulos_y_practica.md). |
 | Lección | `#/curso/<curso>/leccion/<leccion>` | Los bloques de la lección ([04](04_herramientas_de_ensenanza.md)). En la lección de práctica, la tarjeta de Blender con **Prepara tu Blender** en tres pasos y el avance en vivo. |
 | Mi panel | `#/panel` | Nivel, racha, qué sigue, avance por curso, exámenes, retos y **Tus prácticas en Blender** (la práctica de cada módulo con su estado). |
 | Mi Blender | `#/blender` (menú de la cuenta) | Descargar el add-on, computadoras conectadas, compatibilidad. Ya no está en la barra superior: se llega desde el menú de la cuenta o desde cualquier práctica. |
