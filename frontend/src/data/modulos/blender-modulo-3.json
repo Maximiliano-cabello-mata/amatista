@@ -1,0 +1,603 @@
+{
+  "module": {
+    "id": "mod_blender_003",
+    "courseId": "crs_blender_fundamentos",
+    "title": "Módulo 3: Modelado con precisión",
+    "slug": "modulo-3-modelado-con-precision",
+    "description": "Construye un podio de tres alturas: diferencia dimensiones y escala, duplica piezas, colócalas con precisión y guarda una entrega comprobada por Amatista.",
+    "estimatedTimeMinutes": 39,
+    "order": 3,
+    "curso": "blender",
+    "nivel": "blender-n1",
+    "insignia": "Constructor preciso",
+    "estado": "borrador",
+    "lessons": [
+      {
+        "id": "les_201",
+        "title": "¿Por qué un cubo se hunde en el suelo?",
+        "slug": "les-201",
+        "type": "theory_interactive",
+        "durationSeconds": 240,
+        "isLocked": false,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Relacionar la altura de un cubo con la ubicación de su centro.",
+          "habilidades": [
+            "bl-transformar",
+            "bl-proporciones"
+          ],
+          "prerrequisitos": [
+            "les_103"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Diseñado para Blender 4.2+ con el mapa de teclado predeterminado. Pendiente de validación manual en Blender y de prueba offline."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Relacionar la altura de un cubo con la ubicación de su centro."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tu siguiente construcción\nYa navegaste en Blender y construiste una mesa. Ahora crearás un **podio de tres alturas**, con medidas que puedas repetir.\n\nAl terminar podrás distinguir tamaño, posición y escala. Necesitas Blender con Amatista conectado y haber completado la mesa. Conserva tu mesa: usa **Archivo → Nuevo → General** después de guardar y trabaja en otro archivo."
+          },
+          {
+            "type": "image",
+            "src": "ilustraciones/podio-modulo-3.svg",
+            "alt": "Vista frontal del podio: bloque izquierdo de altura 1, central de altura 1.5 y derecho de altura 0.5. Los tres apoyan en Z igual a cero.",
+            "caption": "Referencia esquemática creada para este módulo; no es una captura de Blender."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "q201_centro",
+            "question": "Un cubo mide 1.5 unidades de alto y su origen está en el centro. ¿Qué Ubicación Z lo apoya en el plano Z = 0?",
+            "options": [
+              {
+                "id": "o1",
+                "text": "0",
+                "isCorrect": false
+              },
+              {
+                "id": "o2",
+                "text": "0.75",
+                "isCorrect": true
+              },
+              {
+                "id": "o3",
+                "text": "1.5",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "La base está a media altura por debajo del origen: 0.75 − 1.5/2 = 0."
+          },
+          {
+            "type": "compare",
+            "title": "Centro y base no son lo mismo",
+            "mode": "columns",
+            "before": {
+              "label": "Antes",
+              "text": "Altura 1.5 y Ubicación Z = 0: la mitad del cubo queda bajo el plano."
+            },
+            "after": {
+              "label": "Después",
+              "text": "Altura 1.5 y Ubicación Z = 0.75: la base queda sobre el plano."
+            }
+          },
+          {
+            "type": "markdown_text",
+            "body": "### Comprueba tu idea\nSi la altura fuera 0.5, el centro estaría en Z = 0.25. Esta regla vale aquí porque usamos cubos rectos, sin padres, con origen central; mover el origen o editar su malla cambia el razonamiento."
+          }
+        ]
+      },
+      {
+        "id": "les_202",
+        "title": "Dimensiones, ubicación y escala",
+        "slug": "les-202",
+        "type": "theory_interactive",
+        "durationSeconds": 420,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Distinguir el tamaño final de un objeto, su posición y su factor de escala.",
+          "habilidades": [
+            "bl-transformar",
+            "bl-proporciones"
+          ],
+          "prerrequisitos": [
+            "les_201"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Diseñado para Blender 4.2+ con el mapa de teclado predeterminado. Pendiente de validación manual en Blender y de prueba offline."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Distinguir el tamaño final de un objeto, su posición y su factor de escala."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tres grupos de números, tres preguntas\nEn **Modo Objeto**, selecciona un cubo y abre **N → Elemento**. Dimensiones responde «¿cuánto mide?», Ubicación responde «¿dónde está su origen?» y Escala responde «¿qué factor se aplica a la malla?».\n\nUsaremos **Propiedades de escena → Unidades → Sistema de unidades: Ninguno/None**. Introduce los valores sin sufijos. Deja la rotación en cero y no cambies el origen."
+          },
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "Dimensiones",
+                "definition": "Tamaño de la caja que contiene el objeto. Para nuestro cubo sin rotación, X es ancho, Y profundidad y Z altura."
+              },
+              {
+                "term": "Ubicación",
+                "definition": "Coordenadas del origen del objeto. En un cubo recién agregado el origen está en su centro."
+              },
+              {
+                "term": "Escala",
+                "definition": "Factor respecto a la geometría de la malla. Dos objetos pueden medir lo mismo y tener escalas distintas."
+              }
+            ]
+          },
+          {
+            "type": "matching",
+            "id": "m202_valores",
+            "prompt": "Relaciona cada necesidad con el grupo de valores correcto.",
+            "pairs": [
+              {
+                "id": "a",
+                "left": "Quiero una altura final de 1.5",
+                "right": "Dimensiones Z"
+              },
+              {
+                "id": "b",
+                "left": "Quiero centrar el origen en X = 0",
+                "right": "Ubicación X"
+              },
+              {
+                "id": "c",
+                "left": "Quiero revisar factores 1, 1, 1",
+                "right": "Escala"
+              }
+            ],
+            "explanation": "Mide con Dimensiones; ubica con Ubicación; revisa factores con Escala."
+          },
+          {
+            "type": "step_by_step",
+            "title": "Prepara el bloque central",
+            "steps": [
+              {
+                "title": "Agrega o selecciona un cubo",
+                "text": "Modo Objeto; Agregar → Malla → Cubo si lo necesitas."
+              },
+              {
+                "title": "Escribe su tamaño",
+                "text": "N → Elemento → Dimensiones: X = 1, Y = 1, Z = 1.5."
+              },
+              {
+                "title": "Coloca su centro",
+                "text": "Ubicación: X = 0, Y = 0, Z = 0.75."
+              },
+              {
+                "title": "Comprueba el apoyo",
+                "text": "Mira desde el frente con el gizmo de navegación. La base debe coincidir con Z = 0."
+              }
+            ]
+          },
+          {
+            "type": "fill_blanks",
+            "id": "f202_altura",
+            "prompt": "Completa la regla para los cubos de este ejercicio.",
+            "template": "Si un cubo mide 1 de alto, su centro debe estar en Z = [[0.5|0,5]] para apoyar su base en Z = [[0]].",
+            "code": false,
+            "explanation": "Con origen central y sin rotación, Z del centro = altura / 2."
+          }
+        ]
+      },
+      {
+        "id": "les_203",
+        "title": "Duplica y conserva el tamaño al aplicar escala",
+        "slug": "les-203",
+        "type": "theory_interactive",
+        "durationSeconds": 480,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Duplicar objetos, cambiar su rol y aplicar escala sin alterar sus dimensiones.",
+          "habilidades": [
+            "bl-transformar",
+            "bl-proporciones"
+          ],
+          "prerrequisitos": [
+            "les_202"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Diseñado para Blender 4.2+ con el mapa de teclado predeterminado. Pendiente de validación manual en Blender y de prueba offline."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Duplicar objetos, cambiar su rol y aplicar escala sin alterar sus dimensiones."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Reutiliza una pieza\nCon el cubo central seleccionado, **Shift+D** crea una copia. Pulsa **Esc** para cancelar solo su desplazamiento: la copia permanece. Después escribe sus dimensiones y ubicación en N → Elemento.\n\nSi el original tenía un rol de Amatista, la copia lo hereda. Asigna a la copia su nuevo rol: la asignación reemplaza el anterior."
+          },
+          {
+            "type": "shortcuts",
+            "title": "Atajos de esta práctica (mapa predeterminado)",
+            "practice": true,
+            "items": [
+              {
+                "keys": [
+                  "N"
+                ],
+                "action": "Abrir la barra lateral de la vista 3D"
+              },
+              {
+                "keys": [
+                  "Shift",
+                  "D"
+                ],
+                "action": "Duplicar el objeto seleccionado"
+              },
+              {
+                "keys": [
+                  "Esc"
+                ],
+                "action": "Cancelar el desplazamiento de la copia recién creada"
+              },
+              {
+                "keys": [
+                  "Ctrl",
+                  "A"
+                ],
+                "action": "Abrir Aplicar; después elige Escala"
+              },
+              {
+                "keys": [
+                  "Ctrl",
+                  "S"
+                ],
+                "action": "Guardar el archivo"
+              }
+            ]
+          },
+          {
+            "type": "compare",
+            "title": "Aplicar escala conserva las dimensiones",
+            "mode": "columns",
+            "before": {
+              "label": "Antes",
+              "text": "Un cubo puede medir 1 × 1 × 1.5 y tener Escala 0.5 × 0.5 × 0.75."
+            },
+            "after": {
+              "label": "Después",
+              "text": "Con Objeto → Aplicar → Escala sigue midiendo 1 × 1 × 1.5, pero su Escala pasa a 1 × 1 × 1."
+            }
+          },
+          {
+            "type": "ordering",
+            "id": "o203_copia",
+            "prompt": "Ordena el procedimiento para obtener el bloque izquierdo a partir del centro.",
+            "items": [
+              {
+                "id": "a",
+                "text": "Seleccionar el cubo central y duplicarlo con Shift+D"
+              },
+              {
+                "id": "b",
+                "text": "Pulsar Esc para dejar la copia donde se creó"
+              },
+              {
+                "id": "c",
+                "text": "Cambiar Dimensiones a 1, 1, 1 y Ubicación a -1.1, 0, 0.5"
+              },
+              {
+                "id": "d",
+                "text": "Asignar a la copia el rol Izquierda"
+              },
+              {
+                "id": "e",
+                "text": "Aplicar Escala y comprobar que las dimensiones se conservaron"
+              }
+            ],
+            "explanation": "La copia nace independiente; el rol y los valores finales deben corresponder a la pieza nueva."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "q203_aplicar",
+            "question": "¿Qué debería ocurrir al aplicar escala al bloque central?",
+            "options": [
+              {
+                "id": "o1",
+                "text": "Sus dimensiones se conservan y su escala queda en 1, 1, 1.",
+                "isCorrect": true
+              },
+              {
+                "id": "o2",
+                "text": "Se convierte otra vez en un cubo de 2 unidades.",
+                "isCorrect": false
+              },
+              {
+                "id": "o3",
+                "text": "Se mueve automáticamente al origen.",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "Aplicar escala incorpora el escalado a la geometría. Borrar escala es una operación diferente."
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "title": "Si se deforma o se mueve",
+            "body": "Usa Ctrl+Z y revisa qué objeto está seleccionado. Trabaja con cubos sin padres ni modificadores. No uses Borrar escala: aquí necesitamos Objeto → Aplicar → Escala."
+          }
+        ]
+      },
+      {
+        "id": "les_204",
+        "title": "Práctica: construye tu podio",
+        "slug": "les-204",
+        "type": "theory_interactive",
+        "durationSeconds": 900,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Construir los tres bloques con dimensiones y posiciones de referencia, aplicar escala y guardar.",
+          "habilidades": [
+            "bl-transformar",
+            "bl-proporciones",
+            "bl-duplicar",
+            "bl-guardar-archivo"
+          ],
+          "prerrequisitos": [
+            "les_203"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Diseñado para Blender 4.2+ con el mapa de teclado predeterminado. Pendiente de validación manual en Blender y de prueba offline."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Construir los tres bloques con dimensiones y posiciones de referencia, aplicar escala y guardar."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Entrega esperada\nAbre la práctica antes de asignar roles. Puedes continuar los cubos de entrenamiento en tu archivo nuevo. No reutilices la mesa ni sobrescribas su archivo. Usa tres cubos independientes, rotación cero, origen central y unidades Ninguno/None.\n\n| Bloque / rol | Dimensiones X, Y, Z | Ubicación X, Y, Z |\n|---|---|---|\n| Centro | 1, 1, 1.5 | 0, 0, 0.75 |\n| Izquierda | 1, 1, 1 | -1.1, 0, 0.5 |\n| Derecha | 1, 1, 0.5 | 1.1, 0, 0.25 |\n\nSon unidades de Blender, no metros obligatorios. Con los orígenes en el centro, la base de cada cubo queda en Z = 0. Hay una separación de 0.1 entre bloques."
+          },
+          {
+            "type": "image",
+            "src": "ilustraciones/podio-modulo-3.svg",
+            "alt": "Vista frontal del podio: bloque izquierdo de altura 1, central de altura 1.5 y derecho de altura 0.5. Los tres apoyan en Z igual a cero.",
+            "caption": "Referencia esquemática creada para este módulo; no es una captura de Blender."
+          },
+          {
+            "type": "step_by_step",
+            "title": "Construye, comprueba y guarda",
+            "steps": [
+              {
+                "title": "Centro",
+                "text": "Dimensiones 1, 1, 1.5; Ubicación 0, 0, 0.75. Asigna Centro y aplica escala."
+              },
+              {
+                "title": "Izquierda",
+                "text": "Duplica; Dimensiones 1, 1, 1; Ubicación -1.1, 0, 0.5. Asigna Izquierda y aplica escala."
+              },
+              {
+                "title": "Derecha",
+                "text": "Duplica; Dimensiones 1, 1, 0.5; Ubicación 1.1, 0, 0.25. Asigna Derecha y aplica escala."
+              },
+              {
+                "title": "Revisa desde dos vistas",
+                "text": "De frente: tres alturas y todas las bases en Z = 0. Desde arriba: tres bloques alineados en Y, con separación de 0.1."
+              },
+              {
+                "title": "Guarda la entrega",
+                "text": "Archivo → Guardar como → mi_podio.blend. Comprueba el progreso de Amatista."
+              }
+            ]
+          },
+          {
+            "type": "blender_practice",
+            "id": "practica_podio",
+            "practica": "blender.n1.podio",
+            "title": "Construye un podio con medidas precisas",
+            "text": "Abre el podio en Blender. El motor revisa cada rol, medida, posición y escala. Puedes pedir pistas; los 25 controles son breves comprobaciones de los tres bloques.",
+            "minutes": 15,
+            "steps": [
+              "Identifica el bloque centro",
+              "Centro: Dimensiones X = 1",
+              "Centro: Dimensiones Y = 1",
+              "Centro: Dimensiones Z = 1.5",
+              "Centro: Ubicación X = 0",
+              "Centro: Ubicación Y = 0",
+              "Centro: Ubicación Z = 0.75",
+              "Aplica la escala de centro",
+              "Identifica el bloque izquierda",
+              "Izquierda: Dimensiones X = 1",
+              "Izquierda: Dimensiones Y = 1",
+              "Izquierda: Dimensiones Z = 1",
+              "Izquierda: Ubicación X = -1.1",
+              "Izquierda: Ubicación Y = 0",
+              "Izquierda: Ubicación Z = 0.5",
+              "Aplica la escala de izquierda",
+              "Identifica el bloque derecha",
+              "Derecha: Dimensiones X = 1",
+              "Derecha: Dimensiones Y = 1",
+              "Derecha: Dimensiones Z = 0.5",
+              "Derecha: Ubicación X = 1.1",
+              "Derecha: Ubicación Y = 0",
+              "Derecha: Ubicación Z = 0.25",
+              "Aplica la escala de derecha",
+              "Guarda el podio terminado"
+            ],
+            "allowManual": false
+          },
+          {
+            "type": "callout",
+            "variant": "reto",
+            "title": "Tu variante, después de guardar",
+            "body": "Guarda una copia como podio_variante.blend. Cambia las alturas y recalcula Z = altura / 2. La variante se revisa visualmente: el evaluador de esta práctica solo acepta las medidas de referencia. Conserva mi_podio.blend como entrega."
+          },
+          {
+            "type": "markdown_text",
+            "body": "### Errores frecuentes y límites de la comprobación\n- **Dos objetos con el mismo rol:** selecciona la copia y asigna el rol que le corresponde.\n- **Un bloque flota:** revisa Ubicación Z y altura; no basta con verlo desde arriba.\n- **Escala distinta de 1:** aplica escala después de introducir las dimensiones.\n- **Guardado pendiente:** guarda tras la última modificación.\n\nEl motor comprueba roles, medidas con tolerancia de 0.01, posiciones, escala y guardado. No comprueba el color, la estética, que hayas usado duplicación ni toda la topología. Revisa visualmente que sean tres cubos sin girar.\n\n**Evidencia:** archivo mi_podio.blend y captura frontal. **Repaso:** explica con tus palabras por qué el bloque derecho usa Z = 0.25."
+          }
+        ]
+      },
+      {
+        "id": "les_205",
+        "title": "Jefe final: precisión 3D",
+        "slug": "jefe-final-precision-3d",
+        "type": "exam",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Explicar las decisiones de tamaño, posición, duplicación y escala del podio.",
+          "habilidades": [
+            "bl-transformar",
+            "bl-proporciones"
+          ],
+          "prerrequisitos": [
+            "les_204"
+          ],
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Obtener al menos 80 puntos en el examen."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "q205_1",
+              "questionText": "¿Qué grupo muestra el tamaño final del objeto?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Dimensiones",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Ubicación",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Escala",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Dimensiones expresa el tamaño; Escala es un factor.",
+              "feedbackIncorrect": "Dimensiones expresa el tamaño; Escala es un factor."
+            },
+            {
+              "id": "q205_2",
+              "questionText": "¿Qué Z apoya un cubo de altura 1.5 con origen central?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "1.5",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o2",
+                  "text": "0.75",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o3",
+                  "text": "0",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "La mitad de 1.5 es 0.75.",
+              "feedbackIncorrect": "La mitad de 1.5 es 0.75."
+            },
+            {
+              "id": "q205_3",
+              "questionText": "¿Qué ocurre al pulsar Esc inmediatamente después de Shift+D?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "La copia permanece y se cancela su desplazamiento.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "La copia se borra.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Se aplica la escala.",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Esc cancela el movimiento, no la duplicación ya realizada.",
+              "feedbackIncorrect": "Esc cancela el movimiento, no la duplicación ya realizada."
+            },
+            {
+              "id": "q205_4",
+              "questionText": "¿Qué debes revisar en una copia que heredó el rol Centro?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Asignarle el rol de la pieza nueva.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Cambiar solo su color.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Renombrarla: eso cambia automáticamente el rol.",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Amatista usa el rol asignado, no el nombre del objeto.",
+              "feedbackIncorrect": "Amatista usa el rol asignado, no el nombre del objeto."
+            },
+            {
+              "id": "q205_5",
+              "questionText": "¿Qué resultado buscas con Objeto → Aplicar → Escala?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Dimensiones iguales y Escala 1, 1, 1.",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Dimensiones iguales a cero.",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Mover todas las piezas al centro.",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "La transformación se incorpora a la geometría y el tamaño visible se conserva.",
+              "feedbackIncorrect": "La transformación se incorpora a la geometría y el tamaño visible se conserva."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
