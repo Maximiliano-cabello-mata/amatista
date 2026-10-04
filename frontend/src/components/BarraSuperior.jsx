@@ -12,9 +12,11 @@ function enlacesDe(esProfesor) {
   const enlaces = [
     { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
     { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
-    { href: rutas.laboratorio, texto: 'Laboratorio', activo: (pagina) => pagina === 'laboratorio' },
-    { href: rutas.blender, texto: 'Blender', activo: (pagina) => pagina === 'blender' || pagina === 'vincular' },
   ];
+  // Estructura fija (v3.1): Cursos, Mi panel y, para el equipo, Admin.
+  // Blender ya no es una pestaña: cada módulo cierra con su práctica en
+  // Blender y la instalación vive en la práctica y en «Mi Blender». El
+  // diagnóstico técnico (#/laboratorio) se abre desde Admin › Estado.
   if (esProfesor) enlaces.push({ href: rutas.admin, texto: 'Admin', activo: (pagina) => pagina === 'admin' });
   return enlaces;
 }
@@ -121,6 +123,11 @@ function MenuCuenta({ usuario, alCerrarSesion }) {
             <li>
               <a href={rutas.panel} onClick={() => setAbierto(false)} className="block px-3 py-2 text-sm text-white hover:bg-white/5">
                 Mi panel
+              </a>
+            </li>
+            <li>
+              <a href={rutas.blender} onClick={() => setAbierto(false)} className="block px-3 py-2 text-sm text-white hover:bg-white/5">
+                Mi Blender
               </a>
             </li>
             <li>
@@ -273,6 +280,14 @@ function BarraSuperior({ ruta, hash = '' }) {
                     className="corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest text-white/70 hover:text-neon"
                   >
                     Perfil
+                  </a>
+                  <a
+                    href={rutas.blender}
+                    onClick={() => setMenuAbierto(false)}
+                    aria-current={pagina === 'blender' ? 'page' : undefined}
+                    className="corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest text-white/70 hover:text-neon"
+                  >
+                    Mi Blender
                   </a>
                   <button
                     type="button"

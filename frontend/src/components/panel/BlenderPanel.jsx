@@ -1,21 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { resumenPractica } from '../../blender/logica';
+import { tituloCorto } from '../../data/cursos';
+import { practicasDelCatalogo } from '../../modulos/practica';
+import { estaCompletada } from '../../progreso/reglas';
 import { rutas } from '../../rutas';
 import { listarDispositivos, listarPracticas } from '../../services/blender';
+import { IconoCubo } from '../etiquetas/IconosEtiqueta';
 import Seccion from './Seccion';
 
-// Prácticas dentro de Blender: si el add-on está conectado y cómo van.
-// Sin cuenta o sin servidor muestra solo la invitación a instalarlo.
-function BlenderPanel({ token, className = '' }) {
-  const [datos, setDatos] = useState({ practicas: [], conectados: 0 });
+// Las prácticas en Blender de tus módulos (v3.1): una por módulo, en el
+// orden del curso. El avance real viene del servidor (lo calcula con la foto
+// de la escena); sin cuenta o sin servidor se usa el progreso local.
+function BlenderPanel({ token, progreso, cursos, className = '' }) {
+  const [datos, setDatos] = useState({ porId: {}, conectados: 0 });
+  const practicas = useMemo(() => practicasDelCatalogo(cursos), [cursos]);
 
   useEffect(() => {
     if (!token) return undefined;
     let vigente = true;
-    Promise.all([listarPracticas(token), listarDispositivos(token)]).then(([practicas, dispositivos]) => {
+    Promise.all([listarPracticas(token), listarDispositivos(token)]).then(([lista, dispositivos]) => {
       if (!vigente) return;
       setDatos({
-        practicas: practicas.ok ? practicas.datos.practicas.filter((p) => p.mi_progreso) : [],
+        porId: lista.ok ? Object.fromEntries(lista.datos.practicas.map((p) => [p.id, p])) : {},
         conectados: dispositivos.ok ? dispositivos.datos.dispositivos.length : 0,
       });
     });
@@ -24,40 +30,50 @@ function BlenderPanel({ token, className = '' }) {
     };
   }, [token]);
 
+  if (!practicas.length) return null;
+
   return (
     <Seccion
       id="panel-blender"
-      etiqueta="Amatista para Blender"
+      etiqueta="Cierre de cada módulo"
       titulo="Prácticas en Blender"
       className={className}
       accion={
         <a href={rutas.blender} className="font-mono text-xs font-bold uppercase tracking-widest text-neon hover:underline">
-          {datos.conectados ? `${datos.conectados} Blender conectado${datos.conectados > 1 ? 's' : ''}` : 'Instalar ▸'}
+          {datos.conectados ? `${datos.conectados} Blender conectado${datos.conectados > 1 ? 's' : ''}` : 'Mi Blender ▸'}
         </a>
       }
     >
-      {datos.practicas.length ? (
-        <ul className="grid gap-2 sm:grid-cols-2">
-          {datos.practicas.map((p) => {
-            const avance = p.mi_progreso.completada ? 100 : p.mi_progreso.progreso;
-            return (
-              <li key={p.id} className="corte-poly-sm border border-white/10 bg-base/60 p-3">
-                <a href={p.curso_id && p.leccion_id ? rutas.leccion(p.curso_id, p.leccion_id) : rutas.blender} className="block">
-                  <p className="font-bold text-white">{p.titulo}</p>
-                  <div className="mt-2 h-1.5 overflow-hidden bg-white/10" aria-hidden="true">
-                    <div className={`h-full ${avance === 100 ? 'bg-emerald-400' : 'bg-neon'}`} style={{ width: `${avance}%` }} />
-                  </div>
-                  <p className="mt-1.5 text-xs text-white/55">{resumenPractica(p.mi_progreso)}</p>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
-        <p className="text-sm leading-relaxed text-texto/75">
-          Instala el add-on de Amatista en tu Blender: revisa tu escena mientras trabajas y tus prácticas aparecen aquí.
-        </p>
-      )}
+      <ul className="grid gap-2 sm:grid-cols-2">
+        {practicas.map(({ curso, modulo, leccion, bloque }) => {
+          const servidor = datos.porId[bloque.practica]?.mi_progreso;
+          const hecha = Boolean(servidor?.completada) || estaCompletada(progreso, curso.id, leccion);
+          const avance = hecha ? 100 : (servidor?.progreso ?? 0);
+          return (
+            <li key={`${curso.id}:${leccion.id}`} className="corte-poly-sm border border-white/10 bg-base/60 p-3">
+              <a href={rutas.leccion(curso.id, leccion.id)} className="flex gap-3">
+                <span
+                  className={`hexagono grid h-10 w-11 shrink-0 place-items-center ${hecha ? 'bg-emerald-400 text-base' : 'bg-blender/20 text-blender'}`}
+                >
+                  <IconoCubo className="h-5 w-5" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-mono text-[10px] uppercase tracking-widest text-white/45">
+                    {curso.titulo} · Módulo {modulo.numero} · {tituloCorto(modulo.titulo)}
+                  </span>
+                  <span className="block truncate font-bold text-white">{bloque.title ?? leccion.title}</span>
+                  <span className="mt-2 block h-1.5 overflow-hidden bg-white/10" aria-hidden="true">
+                    <span className={`block h-full ${hecha ? 'bg-emerald-400' : 'bg-blender'}`} style={{ width: `${avance}%` }} />
+                  </span>
+                  <span className="mt-1.5 block text-xs text-white/55">
+                    {hecha ? '¡Completada!' : servidor ? resumenPractica(servidor) : 'Se abre al terminar las lecciones del módulo.'}
+                  </span>
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
     </Seccion>
   );
 }

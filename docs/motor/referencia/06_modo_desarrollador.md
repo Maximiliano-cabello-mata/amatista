@@ -1,6 +1,6 @@
 # 06 · Modo desarrollador (Amatista Author)
 
-Crear una práctica nueva sin escribir código, desde Blender, y registrarla en Oracle. Es la versión construida del [Motor de Desarrollo v0.1](especificaciones/2026-10-03_motor_de_desarrollo_v0.1.md).
+Crear una práctica nueva sin escribir código, desde Blender, y registrarla en Oracle. Es la versión construida del [Motor de Desarrollo v0.1](../especificaciones/2026-10-03_motor_de_desarrollo_v0.1.md).
 
 ## Activarlo
 

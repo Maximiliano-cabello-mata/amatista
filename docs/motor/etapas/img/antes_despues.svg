@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Antes y después: la misma escena en la etapa 1 y en la etapa 2</title>
+  <rect width="960" height="300" fill="#0d0d10"/>
+  <text x="24" y="34" fill="#8a8a95" font-size="12" font-weight="700" letter-spacing="2">ETAPA 1 · EXIGE</text>
+  <rect x="24" y="48" width="440" height="228" fill="#1b1b20" stroke="#33333b"/>
+  <g font-size="13" fill="#cfcfcf">
+    <text x="44" y="80">✓  Crea la cubierta</text>
+    <text x="44" y="110" fill="#ff7b7b">✗  Hazla delgada</text>
+    <text x="70" y="130" fill="#8a8a95" font-size="12">Cube: dimensión Z = 2.00 fuera de [0.05, 0.30]</text>
+    <text x="44" y="160" fill="#6d6d78">◻  Agrega cuatro patas (bloqueado)</text>
+    <text x="44" y="190" fill="#6d6d78">◻  Coloca las patas debajo (bloqueado)</text>
+    <text x="44" y="220" fill="#6d6d78">◻  Guarda tu archivo (bloqueado)</text>
+    <rect x="44" y="238" width="96" height="24" fill="#2d2d33"/><text x="60" y="255" font-size="12">Comprobar</text>
+    <rect x="148" y="238" width="140" height="24" fill="#2d2d33"/><text x="160" y="255" font-size="12">Necesito una pista</text>
+  </g>
+  <text x="496" y="34" fill="#00e5ff" font-size="12" font-weight="700" letter-spacing="2">ETAPA 2 · ACOMPAÑA</text>
+  <rect x="496" y="48" width="440" height="228" fill="#1b1b20" stroke="#9b59b6"/>
+  <g font-size="13" fill="#ebebeb">
+    <text x="516" y="76" fill="#00e5ff" font-size="11" font-weight="700" letter-spacing="2">AHORA · PASO 2 DE 6</text>
+    <text x="516" y="100" font-size="16" font-weight="700">Hazla delgada</text>
+    <text x="516" y="124" fill="#ffcf8a" font-size="12">Tu cubierta mide 2 de alto; tiene que quedar entre 0.05 y 0.3.</text>
+    <text x="516" y="148" fill="#8a8a95" font-size="12">Por qué: una mesa real tiene la tabla delgada.</text>
+    <text x="516" y="176" font-size="12">1  Selecciona «Cubierta»   2  [S] › [Z]   3  [0.1] › [Enter]</text>
+    <rect x="516" y="194" width="400" height="30" fill="#9b59b6"/><text x="616" y="214" font-size="13" font-weight="700">▶  Hazlo conmigo: escalar en Z</text>
+    <rect x="516" y="232" width="120" height="24" fill="#2d2d33"/><text x="540" y="249" font-size="12">Muéstrame</text>
+    <rect x="644" y="232" width="120" height="24" fill="#2d2d33"/><text x="676" y="249" font-size="12">Pista</text>
+  </g>
+</svg>

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../../auth/contexto';
 import { pasosConEstado, textoAutonomia } from '../../../blender/logica';
+import PrepararBlender from '../../../blender/PrepararBlender';
+import { IconoGuia } from '../../etiquetas/IconosEtiqueta';
 import { rutaEntrar, rutas } from '../../../rutas';
 import { abrirPractica, obtenerPractica, progresoPractica } from '../../../services/blender';
 import { TextoEnLinea } from '../Markdown';
@@ -44,9 +46,11 @@ function Pasos({ pasos }) {
   );
 }
 
-// Práctica del motor Amatista dentro de Blender. El alumno la abre desde aquí,
-// trabaja en Blender con el add-on y esta tarjeta muestra su avance real (lo
-// calcula el servidor con la foto de la escena). Se resuelve al completarla.
+// Práctica del motor Amatista dentro de Blender: el cierre de cada módulo
+// (v3.1). El alumno prepara Blender aquí mismo (sin ir a otra página), la
+// abre, trabaja en Blender acompañado por la guía paso a paso del add-on y
+// esta tarjeta muestra su avance real (lo calcula el servidor con la foto de
+// la escena). Se resuelve al completarla.
 function PracticaBlender({ bloque, alCompletar, resuelta }) {
   const { token, usuario } = useAuth();
   const { resultado, resolver } = useActividad(alCompletar);
@@ -100,7 +104,8 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
       setAviso({
         tipo: 'info',
         titulo: 'Lista en Blender',
-        texto: 'Abre Blender y pulsa N › pestaña Amatista: la práctica se abre sola. Tu avance aparece aquí mientras trabajas.',
+        texto:
+          'Abre Blender y pulsa N › pestaña Amatista: la práctica se abre sola y Amatista te guía paso a paso. Tu avance aparece aquí mientras trabajas.',
       });
     } else {
       setAviso({ tipo: 'mal', titulo: 'No se pudo abrir', texto: r.error });
@@ -129,6 +134,14 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
           <TextoEnLinea texto={bloque.text} />
         </p>
       )}
+
+      <div className="corte-poly-sm mt-4 flex gap-3 border border-neon/20 bg-neon/5 p-3 text-sm text-texto/80">
+        <IconoGuia className="mt-0.5 h-4 w-4 shrink-0 text-neon" />
+        <p>
+          <strong className="text-white">En Blender no estás solo:</strong> Amatista resalta el objeto que tienes que cambiar, te
+          dice las teclas exactas, celebra cada paso y, si te atascas, te ofrece «Hazlo conmigo».
+        </p>
+      </div>
 
       <div className="mt-5 grid gap-5 md:grid-cols-[minmax(0,1fr)_12rem]">
         <div>
@@ -161,15 +174,18 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
             Entra para registrar tu avance
           </a>
         )}
-        <a href={rutas.blender} className={BOTON_SECUNDARIO}>
-          Instalar el add-on
-        </a>
         {bloque.allowManual && !completa && !resultado && (
           <button type="button" onClick={() => resolver(true, 1)} className={BOTON_SECUNDARIO}>
             La hice sin el add-on
           </button>
         )}
       </div>
+      {usuario && !completa && <PrepararBlender token={token} />}
+      {!usuario && (
+        <a href={rutas.blender} className={`${BOTON_SECUNDARIO} mt-3 inline-block`}>
+          Cómo instalar Amatista en Blender
+        </a>
+      )}
       <Retroalimentacion retro={retro} />
     </MarcoActividad>
   );

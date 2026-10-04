@@ -15,7 +15,7 @@ El contenido sigue su propio flujo en los JSON de los módulos y el tablero lo r
 
 ## Cómo se usa
 
-1. **Crear una tarea**: agrégala en [`tareas.yml`](tareas.yml) con el siguiente id libre (hoy `T-057`), su versión y su área. Opcional: `depende_de`, `aceptacion`, `evidencia`, `bloqueo` (se leen en el YAML; no cambian el estado).
+1. **Crear una tarea**: agrégala en [`tareas.yml`](tareas.yml) con el siguiente id libre (hoy `T-061`), su versión y su área. Opcional: `estado` (estado mínimo puesto a mano, para lo que ocurre fuera de git, como un script ejecutado en Oracle), `depende_de`, `aceptacion`, `evidencia`, `bloqueo`. Los tres últimos aparecen como notas debajo de la tarea en el detalle por versión de `KANBAN.md`.
 2. **Trabajar en ella**: menciona su id en el commit y la tarjeta se mueve sola.
 
 | En el mensaje del commit | La tarjeta pasa a |
@@ -65,7 +65,7 @@ y haz commit del JSON.
 
 Cada etapa del proyecto tiene su tablero. Al cambiar de etapa:
 
-1. Copiar `tareas.yml` y el `KANBAN.md` publicado en `main` a [`historico/`](historico/) con la fecha (`AAAA-MM-DD_v2_tareas.yml`, `AAAA-MM-DD_v2_KANBAN.md`). No se editan después.
+1. Copiar `tareas.yml` y el `KANBAN.md` publicado en `main` a [`historico/`](historico/) con la fecha (`AAAA-MM-DD_v2_tareas.yml`, `AAAA-MM-DD_v2_KANBAN.md`). El contenido no se edita después; solo se agrega al principio un bloque de revisión con el estado real al cierre (así se hizo con el de la v2 el 4 de octubre).
 2. Reescribir `tareas.yml` con el bloque `etapa` (nombre, fecha, plan, enlace al histórico) y el roadmap nuevo. Las tareas abiertas conservan su id; las cerradas quedan solo en el histórico y se listan en `etapa.archivadas` para que sus commits viejos no salgan como desconocidos.
 
 | Etapa | Desde | Histórico |

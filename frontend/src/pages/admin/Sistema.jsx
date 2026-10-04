@@ -7,6 +7,7 @@ import { numero } from '../../components/admin/logica';
 import { Boton, CampoAdmin, CargandoAdmin, Confirmacion, ErrorAdmin, Kpi, Mensaje, Tarjeta } from '../../components/admin/ui';
 import { useConfirmacion } from '../../components/admin/useConfirmacion';
 import { useDatosAdmin } from '../../components/admin/useDatosAdmin';
+import { rutas } from '../../rutas';
 import { obtenerSaludDetallada, purgarDatos } from '../../services/admin';
 
 const MOTORES = { oracle: 'Oracle', sqlite: 'SQLite (desarrollo)' };
@@ -117,7 +118,7 @@ function Sistema() {
                     {tabla}
                   </th>
                   <td className="py-2 text-right tabular-nums">
-                    {filas === null ? <span className="text-red-300">No existe (ejecuta sql/002)</span> : numero(filas)}
+                    {filas === null ? <span className="text-red-300">No existe: falta una migración (backend/sql/LEEME.txt)</span> : numero(filas)}
                   </td>
                 </tr>
               ))}
@@ -126,6 +127,15 @@ function Sistema() {
         </Tarjeta>
       )}
       <Purga alTerminar={recargar} />
+      <Tarjeta etiqueta="Este dispositivo" titulo="Diagnóstico técnico">
+        <p className="text-sm text-white/65">
+          Conexión de este navegador con el backend, cuenta, catálogo, cambios pendientes de sincronizar y una prueba del visor
+          A-Frame. Los alumnos no ven esta página.
+        </p>
+        <a href={rutas.laboratorio} className="corte-poly-sm mt-4 inline-block bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white/85 hover:bg-white/10">
+          Abrir diagnóstico ▸
+        </a>
+      </Tarjeta>
     </div>
   );
 }

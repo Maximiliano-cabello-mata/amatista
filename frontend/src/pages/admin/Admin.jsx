@@ -6,6 +6,7 @@ import NavAdmin from '../../components/admin/NavAdmin';
 import { Mensaje } from '../../components/admin/ui';
 import Contenido from './Contenido';
 import EditorLeccion from './EditorLeccion';
+import Herramientas from './Herramientas';
 import Practicas from './Practicas';
 import Resumen from './Resumen';
 import Sistema from './Sistema';
@@ -16,11 +17,12 @@ const TITULOS = {
   resumen: 'Resumen',
   usuarios: 'Usuarios',
   usuario: 'Usuario',
-  contenido: 'Contenido',
+  contenido: 'Módulos',
   leccion: 'Editar lección',
   'nueva-leccion': 'Nueva lección',
   sistema: 'Sistema',
   practicas: 'Prácticas de Blender',
+  herramientas: 'Herramientas de enseñanza',
 };
 
 const GRUPOS = { usuario: 'usuarios', leccion: 'contenido', 'nueva-leccion': 'contenido' };
@@ -37,6 +39,8 @@ function Seccion({ seccion, params, esAdmin }) {
       return <EditorLeccion key={`${params.cursoId}/${params.leccionId}`} cursoId={params.cursoId} leccionId={params.leccionId} esAdmin={esAdmin} />;
     case 'nueva-leccion':
       return <EditorLeccion key={`nueva/${params.moduloId}`} moduloId={params.moduloId} esAdmin={esAdmin} />;
+    case 'herramientas':
+      return <Herramientas />;
     case 'practicas':
       return <Practicas esAdmin={esAdmin} />;
     case 'sistema':
@@ -57,7 +61,7 @@ function Admin({ seccion = 'resumen', params = {} }) {
       {!esAdmin && (
         <p className="mt-2 text-sm text-white/55">Entraste como profesor: puedes consultar todo, pero solo un administrador hace cambios.</p>
       )}
-      <div className="mt-6 grid gap-6 lg:grid-cols-[12rem_minmax(0,1fr)]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[15rem_minmax(0,1fr)]">
         <NavAdmin grupo={grupo} esAdmin={esAdmin} />
         <div className="min-w-0">
           <Seccion seccion={seccion} params={params} esAdmin={esAdmin} />

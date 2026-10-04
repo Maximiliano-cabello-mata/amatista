@@ -1,6 +1,8 @@
+import Atajos from './Atajos';
 import Aviso from './Aviso';
 import BloqueCodigo from './BloqueCodigo';
 import Capas from './Capas';
+import Comparar from './Comparar';
 import Figura from './Figura';
 import Completar from './interactivos/Completar';
 import Emparejar from './interactivos/Emparejar';
@@ -12,6 +14,7 @@ import QuizEnLinea from './interactivos/QuizEnLinea';
 import RetoCodigo from './interactivos/RetoCodigo';
 import LineaTiempo from './LineaTiempo';
 import Markdown from './Markdown';
+import PasoAPaso from './PasoAPaso';
 import Pipeline from './Pipeline';
 import TarjetasConcepto from './TarjetasConcepto';
 
@@ -60,6 +63,12 @@ function BloqueContenido({ bloque, alCompletar, alDescubrirTodas, resuelta = fal
       return <Aviso variant={bloque.variant} title={bloque.title} body={bloque.body} />;
     case 'code_snippet':
       return <BloqueCodigo code={bloque.code} language={bloque.language} preview={bloque.preview} />;
+    case 'step_by_step':
+      return <PasoAPaso title={bloque.title} steps={bloque.steps} />;
+    case 'shortcuts':
+      return <Atajos title={bloque.title} items={bloque.items} practice={bloque.practice} />;
+    case 'compare':
+      return <Comparar title={bloque.title} before={bloque.before} after={bloque.after} mode={bloque.mode} caption={bloque.caption} />;
     case 'video_player':
       return (
         <video controls preload="none" src={bloque.url} className="corte-poly aspect-video w-full bg-black">

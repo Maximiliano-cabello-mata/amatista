@@ -32,6 +32,7 @@ import { useDatosAdmin } from '../../components/admin/useDatosAdmin';
 import BloqueContenido from '../../components/leccion/BloqueContenido';
 import Examen from '../../components/leccion/Examen';
 import { TIPOS_LECCION } from '../../data/cursos';
+import { agruparHerramientas, HERRAMIENTAS, nombreHerramienta } from '../../data/herramientas';
 import { navegar, rutas } from '../../rutas';
 import {
   crearLeccion,
@@ -43,25 +44,6 @@ import {
   validarLeccion,
 } from '../../services/admin';
 
-const NOMBRES_BLOQUE = {
-  markdown_text: 'Texto',
-  image: 'Imagen',
-  concept_cards: 'Tarjetas de concepto',
-  timeline: 'Línea de tiempo',
-  pipeline: 'Pipeline',
-  layers: 'Capas',
-  callout: 'Aviso',
-  code_snippet: 'Código',
-  video_player: 'Video',
-  quiz_inline: 'Pregunta rápida',
-  ordering: 'Ordenar',
-  matching: 'Emparejar',
-  fill_blanks: 'Completar',
-  hotspots: 'Puntos en imagen',
-  scene_explorer: 'Explorador 3D',
-  code_challenge: 'Reto de código',
-  blender_practice: 'Práctica en Blender',
-};
 
 // Elegir con qué paso de la Fórmula empieza una lección nueva.
 function ElegirPlantilla({ plantillas, modulo, alElegir }) {
@@ -180,7 +162,7 @@ function EditorBloque({ indice, total, texto, error, errorServidor, soloLectura,
       <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
         <span className="flex items-center gap-2">
           <span className="font-mono text-xs text-white/45">#{indice + 1}</span>
-          <Pastilla tono="bg-amatista/20 text-amatista-claro">{NOMBRES_BLOQUE[tipo] ?? tipo ?? 'Sin tipo'}</Pastilla>
+          <Pastilla tono="bg-amatista/20 text-amatista-claro">{tipo ? nombreHerramienta(tipo) : 'Sin tipo'}</Pastilla>
         </span>
         {!soloLectura && (
           <span className="flex gap-1">
@@ -222,13 +204,18 @@ function Paleta({ bloques, alAgregar }) {
   const [tipo, setTipo] = useState('markdown_text');
   return (
     <div className="flex flex-wrap items-end gap-2">
-      <CampoAdmin etiqueta="Agregar bloque" className="min-w-[14rem] flex-1">
+      <CampoAdmin etiqueta="Agregar bloque" ayuda={<a href={rutas.adminHerramientas} className="text-neon hover:underline">Ver todas las herramientas</a>} className="min-w-[14rem] flex-1">
         {({ id }) => (
           <select id={id} value={tipo} onChange={(e) => setTipo(e.target.value)} className={claseControl}>
-            {Object.keys(bloques).map((t) => (
-              <option key={t} value={t}>
-                {NOMBRES_BLOQUE[t] ?? t} ({t})
-              </option>
+            {agruparHerramientas(Object.keys(bloques)).map((grupo) => (
+              <optgroup key={grupo.id} label={grupo.nombre}>
+                {grupo.tipos.map((t) => (
+                  <option key={t} value={t}>
+                    {nombreHerramienta(t)}
+                    {HERRAMIENTAS[t]?.nueva ? ' · nueva' : ''} ({t})
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
         )}

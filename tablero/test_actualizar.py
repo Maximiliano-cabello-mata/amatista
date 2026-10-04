@@ -97,3 +97,12 @@ def test_seccion_contenido_es_determinista(tmp_path):
 
 def test_seccion_contenido_sin_modulos():
     assert "Todavía no hay módulos" in "\n".join(actualizar.seccion_contenido([]))
+
+
+def test_notas_del_yaml_en_el_detalle():
+    tarea = {"id": "T-001", "bloqueo": "después del piloto", "evidencia": ["PR #1", "bitácora"], "aceptacion": ""}
+    assert actualizar.notas_de(tarea) == [
+        "  - ⏸️ Espera: después del piloto",
+        "  - 🔎 Evidencia: PR #1; bitácora",
+    ]
+    assert actualizar.notas_de({"id": "T-002"}) == []

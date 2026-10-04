@@ -23,6 +23,7 @@ describe('rutas', () => {
     expect(analizarRuta('#/admin/contenido')).toMatchObject({ seccion: 'contenido' });
     expect(analizarRuta(rutas.adminSistema)).toMatchObject({ seccion: 'sistema', params: {} });
     expect(analizarRuta(rutas.adminPracticas)).toMatchObject({ seccion: 'practicas', params: {} });
+    expect(analizarRuta(rutas.adminHerramientas)).toMatchObject({ seccion: 'herramientas', params: {} });
     expect(analizarRuta('#/vincular?codigo=ABCD-2345')).toMatchObject({ pagina: 'vincular', consulta: { codigo: 'ABCD-2345' } });
     expect(analizarRuta(rutas.adminLeccion('blender', 'les_001'))).toMatchObject({
       seccion: 'leccion',

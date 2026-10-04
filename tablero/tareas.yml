@@ -56,10 +56,14 @@ tareas:
     titulo: Desplegar el backend nuevo como servicio systemd
     version: v2.2.0
     area: api
+    bloqueo: "Comprobar que arranca sola tras reiniciar la VM y decidir si se instala despliegue/amatista-api.service o se adopta el nombre amatista-backend"
+    evidencia: "La VM corre la API como servicio systemd con la unidad que ya tenía, amatista-backend (docs/bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md §20); actualizar.sh la detecta sola"
+    estado: en-progreso
   - id: T-004
     titulo: Usuario de aplicación en Oracle (dejar de usar ADMIN)
     version: v2.2.0
     area: db
+    bloqueo: "El script 004 está listo y probado, pero producción sigue con el usuario ADMIN (3 oct). Ejecutar 004 y cambiar DB_USER en el servidor"
   - id: T-005
     titulo: HTTPS en el backend para publicar en Cloudflare Pages
     version: v2.2.0
@@ -68,6 +72,8 @@ tareas:
     titulo: Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)
     version: v2.2.0
     area: api
+    evidencia: "En main desde el 2 oct (PR #4, #6 y #7)"
+    estado: hecho
   - id: T-008
     titulo: Proteger main (solo cambios por PR)
     version: v2.2.0
@@ -76,30 +82,44 @@ tareas:
     titulo: Esquema incremental 002–004 (8 tablas, 20 GB) y diagnóstico ampliado
     version: v2.2.0
     area: db
+    evidencia: "En main (cd7c7bc); 002 y 003 en producción desde el 2 oct (INC-010). 004 sigue en T-004"
+    estado: hecho
   - id: T-015
     titulo: Catálogo dinámico y progreso adaptable (acople, replaces, % recalculado)
     version: v2.2.0
     area: pwa
+    evidencia: "En main desde el 2 oct (cd7c7bc)"
+    estado: hecho
   - id: T-016
     titulo: Panel del alumno (nivel, racha, retos, actividad e insignias)
     version: v2.2.0
     area: pwa
+    evidencia: "En main desde el 2 oct (cd7c7bc)"
+    estado: hecho
   - id: T-017
     titulo: Eventos de aprendizaje y métricas de alumnos activos (API)
     version: v2.2.0
     area: api
+    evidencia: "En main desde el 2 oct (cd7c7bc)"
+    estado: hecho
   - id: T-019
     titulo: Contenido administrable (API borrador → publicado, validación y CLI)
     version: v2.2.0
     area: contenido
+    evidencia: "En main desde el 2 oct (cd7c7bc); catálogo importado en producción (T-033)"
+    estado: hecho
   - id: T-021
     titulo: Bloques interactivos en las lecciones (7 tipos nuevos)
     version: v2.2.0
     area: pwa
+    evidencia: "En main desde el 2 oct (cd7c7bc); la v3.1 suma 3 bloques más (docs/plataforma/04_herramientas_de_ensenanza.md)"
+    estado: hecho
   - id: T-022
     titulo: Aplicar la Fórmula Amatista al módulo 1 (bloques interactivos en los JSON)
     version: v2.2.0
     area: contenido
+    evidencia: "En main desde el 2 oct (cd7c7bc); contenido.py validar en CI"
+    estado: hecho
     depende_de: [T-021]
     aceptacion:
       - "python herramientas/contenido.py validar sin errores"
@@ -145,6 +165,7 @@ tareas:
     titulo: Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)
     version: v2.2.0
     area: lanzamiento
+    bloqueo: "Empieza con la beta (T-027); el commit que la movió solo preparó las métricas"
     depende_de: [T-027]
   - id: T-029
     titulo: Prueba de punta a punta en navegador (anónimo → cuenta → offline → admin publica → acople)
@@ -191,6 +212,8 @@ tareas:
     titulo: Ejecutar 005 y 006 en producción y sembrar los niveles
     version: v3.0.0
     area: db
+    evidencia: "005 y 006 ejecutados en producción el 3 oct: 14 tablas, 8 niveles de Blender en borrador (docs/bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md §14–§22)"
+    estado: hecho
     depende_de: [T-034, T-036]
     aceptacion:
       - "diagnostico_oracle.py dice «Las tablas coinciden» (14 tablas)"
@@ -209,6 +232,7 @@ tareas:
     titulo: Elegir y verificar la versión principal de Blender (LTS)
     version: v3.0.0
     area: contenido
+    bloqueo: "Decisión de Maximiliano pendiente (versión LTS principal); hasta entonces VERSIONES_BLENDER queda vacía en producción"
     depende_de: [T-035]
     aceptacion:
       - "Una fila principal en VERSIONES_BLENDER con nota del soporte oficial consultado"
@@ -296,44 +320,81 @@ tareas:
     titulo: Contrato de API del add-on y vinculación de cuenta por código
     version: v3.3.0
     area: api
+    evidencia: "API /api/addon/v1 y vínculo por código en main (PR #13, ec849d8); docs/motor/referencia/05_api.md"
+    estado: hecho
   - id: T-051
     titulo: Esqueleto del add-on (manifiesto 4.2+, preferencias, panel de la lección)
     version: v3.3.0
     area: blender
+    evidencia: "Extensión 4.2+ con preferencias y paneles en main (PR #13); etapa 2 en PR #14"
+    estado: hecho
     depende_de: [T-050]
   - id: T-052
     titulo: Comprobaciones locales de la lección 03 en el add-on
     version: v3.3.0
     area: blender
+    bloqueo: "El motor ya evalúa la práctica de la mesa; faltan las comprobaciones de la lección 03 de «Mi primer espacio 3D», que todavía no existe (T-009)"
     depende_de: [T-051]
   - id: T-053
     titulo: Registrar verificaciones de versión desde Blender
     version: v3.3.0
     area: blender
+    evidencia: "Amatista Author › Registrar verificación envía POST /api/blender/verificaciones (PR #13)"
+    estado: hecho
     depende_de: [T-051]
   - id: T-013
     titulo: Add-on de Blender conectado con la plataforma (MVP publicado)
     version: v3.3.0
     area: blender
+    bloqueo: "Código listo (PR #13 y #14); se publica cuando 007 esté en producción (T-055) y el instalador se pruebe en equipos reales (T-056)"
     depende_de: [T-052, T-053]
   - id: T-055
     titulo: Aplicar 007 en Oracle y publicar la práctica de la mesa y el módulo 2 (después del piloto)
     version: v3.3.0
     area: db
+    bloqueo: "Después del piloto del 8 de octubre"
     depende_de: [T-050]
     aceptacion: "007 ejecutado en Database Actions, diagnóstico sin faltantes, práctica blender.n1.mesa publicada y módulo 2 importado (docs/reestructuracion/02_manual_oracle.md, sección 10)"
   - id: T-056
     titulo: Probar el paquete de instalación en Windows y macOS reales
     version: v3.3.0
     area: blender
+    bloqueo: "Necesita una computadora Windows y una Mac con Blender 4.2 o más nuevo"
     depende_de: [T-051]
-    aceptacion: "El instalador encuentra Blender, avisa si es anterior a 4.2 y deja el add-on activo en un Windows y un macOS reales (docs/motor/04_instalacion_alumno.md)"
+    aceptacion: "El instalador encuentra Blender, avisa si es anterior a 4.2 y deja el add-on activo en un Windows y un macOS reales (docs/motor/referencia/04_instalacion_alumno.md)"
+
+  - id: T-057
+    titulo: "Motor etapa 2: guía paso a paso, «Hazlo conmigo» y acompañante en el add-on"
+    version: v3.3.0
+    area: blender
+    estado: revision
+    depende_de: [T-051]
+    evidencia: "docs/motor/etapas/etapa-2.md y docs/motor/referencia/07_guia_y_acompanamiento.md; engine/tests/test_guia.py y addon/tests/en_blender.py"
+  - id: T-058
+    titulo: Práctica de Blender al cierre de cada módulo, etiquetas y herramientas nuevas en la plataforma
+    version: v3.3.0
+    area: pwa
+    estado: revision
+    evidencia: "docs/plataforma/ (mapa, módulos con práctica, etiquetas, herramientas y panel de administración)"
+  - id: T-059
+    titulo: Probar la guía de la etapa 2 en un Blender real con GPU y agregar capturas a la documentación
+    version: v3.3.0
+    area: blender
+    depende_de: [T-057]
+    aceptacion: "Recorrido de la mesa en modo Acompañado en Windows o macOS: tarjeta, guía 3D, «Hazlo conmigo» y diálogos se ven bien; capturas reales en docs/motor/etapas/img/"
+  - id: T-060
+    titulo: Guardar en Oracle las ayudas usadas en cada práctica (008 aditivo) y mostrarlas al profesor
+    version: v3.4.0
+    area: db
+    depende_de: [T-055, T-057]
+    aceptacion: "Script 008 idempotente, el intento guarda «ayudas» y el panel muestra cuántas veces cada alumno usó «Hazlo conmigo» o «Muéstrame»"
 
   # --- v3.4.0 · Especialidades y tutor ---------------------------------------
   - id: T-054
     titulo: Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)
     version: v3.4.0
     area: contenido
+    bloqueo: "Decisión pendiente (propuesta: web y videojuegos); el commit que la movió solo la documentó"
   - id: T-012
     titulo: Tutor IA con Ollama dentro de las lecciones
     version: v3.4.0

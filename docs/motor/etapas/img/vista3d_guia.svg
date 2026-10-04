@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Etapa 2: tarjeta del acompañante y guía dibujada en la vista 3D de Blender (maqueta)</title>
+  <!-- Fondo de la vista 3D -->
+  <rect width="960" height="560" fill="#3a3a3a"/>
+  <g stroke="#454545" stroke-width="1">
+    <path d="M0 420 L960 300 M0 480 L960 360 M0 540 L960 420 M120 560 L520 240 M320 560 L680 240 M520 560 L840 240 M720 560 L960 330"/>
+  </g>
+  <path d="M0 450 L960 330" stroke="#8a3b3b" stroke-width="1.5"/>
+  <path d="M430 560 L760 250" stroke="#5f7d2c" stroke-width="1.5"/>
+  <text x="12" y="22" fill="#cfcfcf" font-size="12">Perspectiva de usuario · (1) Colección | Cubierta</text>
+
+  <!-- Cubierta (gruesa: hay que aplanarla) -->
+  <g>
+    <polygon points="430,250 610,215 700,250 520,290" fill="#9a9a9a"/>
+    <polygon points="430,250 520,290 520,390 430,350" fill="#7d7d7d"/>
+    <polygon points="520,290 700,250 700,350 520,390" fill="#6c6c6c"/>
+    <!-- contorno naranja: corregir -->
+    <g fill="none" stroke="#ff9e42" stroke-width="2.5">
+      <polygon points="430,250 610,215 700,250 520,290"/>
+      <path d="M430 250 L430 350 L520 390 L700 350 L700 250 M520 290 L520 390"/>
+    </g>
+  </g>
+  <!-- Regla: naranja lo que mide, verde el rango pedido -->
+  <g stroke-width="3">
+    <path d="M725 350 L725 250" stroke="#ff9e42"/>
+    <path d="M717 350 L733 350 M717 250 L733 250" stroke="#ff9e42"/>
+    <path d="M745 350 L745 335" stroke="#59d68c"/>
+    <path d="M737 350 L753 350 M737 335 L753 335" stroke="#59d68c"/>
+  </g>
+  <!-- Pastillas de texto proyectadas -->
+  <g font-size="12" font-weight="600">
+    <rect x="492" y="182" width="104" height="24" rx="2" fill="#121214" fill-opacity="0.9" stroke="#ff9e42"/>
+    <text x="503" y="199" fill="#ebebeb">Aplánala en Z</text>
+    <rect x="762" y="230" width="150" height="24" rx="2" fill="#121214" fill-opacity="0.9" stroke="#ff9e42"/>
+    <text x="772" y="247" fill="#ebebeb">Mide 2 · pide 0.05–0.3</text>
+  </g>
+
+  <!-- Piezas fantasma (ejemplo del paso «patas») -->
+  <g opacity="0.9">
+    <rect x="300" y="400" width="26" height="80" fill="#00e5ff" fill-opacity="0.12" stroke="#00e5ff" stroke-dasharray="5 4"/>
+    <rect x="372" y="420" width="26" height="80" fill="#00e5ff" fill-opacity="0.12" stroke="#00e5ff" stroke-dasharray="5 4"/>
+    <rect x="258" y="378" width="124" height="22" rx="2" fill="#121214" fill-opacity="0.9" stroke="#00e5ff"/>
+    <text x="268" y="394" fill="#ebebeb" font-size="12" font-weight="600">Faltan patas aquí</text>
+  </g>
+
+  <!-- Aviso del acompañante (se desvanece) -->
+  <g>
+    <rect x="16" y="40" width="330" height="54" fill="#121214" fill-opacity="0.92"/>
+    <rect x="16" y="40" width="5" height="54" fill="#59d68c"/>
+    <text x="32" y="62" fill="#59d68c" font-size="14" font-weight="700">¡Listo! Crea la cubierta</text>
+    <text x="32" y="82" fill="#cfcfcf" font-size="12">Ya tienes la cubierta de tu mesa.</text>
+  </g>
+
+  <!-- Tarjeta del acompañante -->
+  <g>
+    <rect x="16" y="104" width="330" height="236" fill="#121214" fill-opacity="0.92"/>
+    <rect x="16" y="104" width="330" height="4" fill="#9b59b6"/>
+    <text x="32" y="130" fill="#00e5ff" font-size="11" font-weight="700" letter-spacing="2">AMATISTA · PASO 2 DE 6</text>
+    <rect x="236" y="121" width="70" height="8" fill="#2a2a2e"/>
+    <rect x="236" y="121" width="12" height="8" fill="#9b59b6"/>
+    <text x="312" y="130" fill="#cfcfcf" font-size="11">17 %</text>
+    <text x="32" y="156" fill="#ffffff" font-size="17" font-weight="700">Hazla delgada</text>
+    <text x="32" y="178" fill="#ffcf8a" font-size="12">Tu cubierta mide 2 de alto;</text>
+    <text x="32" y="194" fill="#ffcf8a" font-size="12">tiene que quedar entre 0.05 y 0.3.</text>
+    <g font-size="12" fill="#ebebeb">
+      <text x="32" y="222">1</text>
+      <rect x="46" y="209" width="34" height="18" rx="2" fill="#2d2d33" stroke="#6d6d78"/><text x="52" y="222" font-size="11">Clic</text>
+      <text x="88" y="222">Selecciona «Cubierta»</text>
+      <text x="32" y="250">2</text>
+      <rect x="46" y="237" width="20" height="18" rx="2" fill="#2d2d33" stroke="#6d6d78"/><text x="52" y="250" font-size="11">S</text>
+      <text x="70" y="250" fill="#8a8a95">›</text>
+      <rect x="80" y="237" width="20" height="18" rx="2" fill="#2d2d33" stroke="#6d6d78"/><text x="86" y="250" font-size="11">Z</text>
+      <text x="108" y="250">Escala solo en Z</text>
+      <text x="32" y="278">3</text>
+      <rect x="46" y="265" width="28" height="18" rx="2" fill="#2d2d33" stroke="#6d6d78"/><text x="51" y="278" font-size="11">0.1</text>
+      <text x="78" y="278" fill="#8a8a95">›</text>
+      <rect x="88" y="265" width="42" height="18" rx="2" fill="#2d2d33" stroke="#6d6d78"/><text x="94" y="278" font-size="11">Enter</text>
+      <text x="138" y="278">Escribe 0.1 y confirma</text>
+    </g>
+    <text x="32" y="318" fill="#8a8a95" font-size="11">N › Amatista: «Hazlo conmigo» lo hace contigo</text>
+  </g>
+</svg>

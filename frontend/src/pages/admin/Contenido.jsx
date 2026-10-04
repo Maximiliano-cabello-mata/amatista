@@ -19,7 +19,9 @@ import {
 } from '../../components/admin/ui';
 import { useConfirmacion } from '../../components/admin/useConfirmacion';
 import { useDatosAdmin } from '../../components/admin/useDatosAdmin';
-import { duracionTexto, TIPOS_LECCION } from '../../data/cursos';
+import Etiqueta from '../../components/etiquetas/Etiqueta';
+import { ETIQUETAS, etiquetaLeccion } from '../../components/etiquetas/catalogo';
+import { duracionTexto } from '../../data/cursos';
 import { rutas } from '../../rutas';
 import {
   archivarLeccion,
@@ -127,9 +129,12 @@ function FilaLeccion({ leccion, indice, total, esAdmin, ocupado, accion }) {
         <a href={rutas.adminLeccion(leccion.curso_id, leccion.id)} className="block truncate font-semibold text-white hover:text-neon">
           {leccion.titulo || leccion.id}
         </a>
-        <span className="block font-mono text-[11px] text-white/45">
-          {leccion.id} · {TIPOS_LECCION[leccion.tipo] ?? leccion.tipo}
-          {leccion.duracion_segundos ? ` · ${duracionTexto(leccion.duracion_segundos)}` : ''} · v{leccion.version}
+        <span className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-white/45">
+          <Etiqueta {...etiquetaLeccion({ type: leccion.tipo }, leccion.practica_blender)} />
+          <span>
+            {leccion.id}
+            {leccion.duracion_segundos ? ` · ${duracionTexto(leccion.duracion_segundos)}` : ''} · v{leccion.version}
+          </span>
         </span>
       </div>
       <EtiquetaEstado estado={leccion.estado} />
@@ -160,6 +165,8 @@ function FilaLeccion({ leccion, indice, total, esAdmin, ocupado, accion }) {
 function Modulo({ modulo, esAdmin, verArchivados, ocupado, accionModulo, accionLeccion }) {
   const lecciones = modulo.lecciones.filter((l) => verArchivados || l.estado !== 'archivado');
   const archivadas = modulo.lecciones.length - lecciones.length;
+  // Cada módulo cierra con su práctica en Blender (docs/plataforma/02_modulos_y_practica.md).
+  const conPractica = modulo.lecciones.some((l) => l.practica_blender && l.estado !== 'archivado');
   return (
     <div className="corte-poly-sm border border-white/10 bg-base/50 p-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -171,6 +178,7 @@ function Modulo({ modulo, esAdmin, verArchivados, ocupado, accionModulo, accionL
           <p className="mt-1 flex flex-wrap items-center gap-2 text-xs text-white/50">
             <EtiquetaEstado estado={modulo.estado} />
             {modulo.insignia && <Pastilla tono="bg-amatista/20 text-amatista-claro">◆ {modulo.insignia}</Pastilla>}
+            <Etiqueta {...(conPractica ? ETIQUETAS.practica : ETIQUETAS.sinPractica)} />
             <span>Actualizado {fechaTexto(modulo.actualizado_en)}</span>
           </p>
         </div>

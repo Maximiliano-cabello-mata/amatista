@@ -4,6 +4,13 @@ PROYECTO: AMATISTA PWA
 FECHA: 29 DE SEPTIEMBRE DE 2026 (UTC-6)
 =============================================================================
 
+ACTUALIZACIÓN 4 DE OCTUBRE DE 2026: este documento describe el formato base.
+La lista vigente de bloques (20, con Paso a paso, Atajos de teclado y
+Comparar) y sus campos está en docs/plataforma/04_herramientas_de_ensenanza.md;
+la regla «la práctica en Blender cierra el módulo» en
+docs/plataforma/02_modulos_y_practica.md. Si difieren, manda el código
+(backend/contenido/validacion.py).
+
 1. DÓNDE VIVE EL CONTENIDO
 -----------------------------------------------------------------------------
 frontend/src/data/modulos/*.json     Un archivo por módulo (lecciones y examen).

@@ -16,6 +16,8 @@
 
 ## 1. Punto de partida
 
+> **Estado al 4 de octubre de 2026:** 005 y 006 ya se ejecutaron en producción el 3 de octubre (Oracle 23.26, esquema ADMIN, 14 tablas, 8 niveles de Blender en borrador, `VERSIONES_BLENDER` vacía; [bitácora técnica del 3 de octubre](../bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md), secciones 14 a 22). Lo que queda para después del piloto es la [sección 10](#10-motor-de-prácticas-de-blender-007-4-de-octubre-de-2026) (007, 18 tablas). Los pasos de 005 y 006 se conservan para una base nueva o de pruebas.
+
 Según la [incidencia del 2 de octubre](../incidencias/2026-10-02_despliegue-sql-v2.2-en-produccion.txt), la base de producción ya tiene **002 y 003** aplicados (8 tablas, purga diaria, catálogo importado). Para la v3 solo faltan:
 
 | Script | Qué hace | ¿Borra algo? | ¿Se puede repetir? |

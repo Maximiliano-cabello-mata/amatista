@@ -41,6 +41,19 @@ Reglas que no cambian: migraciones solo aditivas (nunca se borran usuarios ni pr
 
 ## 3. Fases y orden de ejecución
 
+> **Dónde estamos (4 de octubre de 2026).** Lo que pasó de verdad, para no confundir el plan con lo hecho:
+>
+> | Fase | Estado real | Evidencia |
+> |---|---|---|
+> | 0 · Piloto v2.2 | Sigue abierta: faltan HTTPS (T-005), SMTP (T-032), prueba de punta a punta (T-029) y revisión de seguridad (T-030). La API ya corre como servicio en la VM con la unidad `amatista-backend` (T-003 en progreso). | [Bitácora técnica del 3 oct](../bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md) §20 |
+> | A · Estructura | Hecha, incluida T-035: 005 y 006 corren en producción desde el 3 oct (14 tablas, 8 niveles en borrador). Solo queda T-038 (versión principal de Blender), que espera decisión. | Misma bitácora, §14–§22 |
+> | B · El alumno ve la ruta | Sin empezar. | — |
+> | C · «Mi primer espacio 3D» | Sin empezar como tal; existe el módulo 2 de Blender en revisión con la práctica de la mesa. | `frontend/src/data/modulos/blender-modulo-2.json` |
+> | E · Add-on | **Adelantada a pedido de Maximiliano** (3 y 4 oct): motor de prácticas y add-on (PR #13, etapa 1) y el acompañamiento paso a paso con la práctica integrada en cada módulo (PR #14, etapa 2). En código está; en producción falta 007 (T-055) y probar el instalador en equipos reales (T-056). | [docs/motor/etapas/](../motor/etapas/etapa-1.md) |
+>
+> El orden B → C → D sigue siendo el recomendado para el contenido. El add-on ya no espera a la fase C. La regla «el primer recorrido debe poder completarse sin add-on» queda en manos de cada práctica: el bloque admite `allowManual: true` para quien no puede instalar Blender (en la mesa está en `false`; decidirlo antes de publicar el módulo 2).
+
+
 Una fase empieza cuando la anterior tiene evidencia. Las tareas viven en el [tablero](../../tablero/tareas.yml); aquí solo va el orden.
 
 ### Fase 0 · Piloto v2.2 (hasta el 8 de octubre) — no se interrumpe
@@ -79,7 +92,7 @@ T-010, T-011 y T-049: visor GLB, escena de ejemplo con reinicio, avisos cuando f
 
 ### Fase E · Add-on de Blender (v3.3.0)
 
-T-013 (MVP), T-050…T-053, en el orden de la [guía del add-on](03_addon_blender.md), sección 9: contrato de API → vincular cuenta → panel de la lección → comprobaciones locales → registrar verificaciones. **El primer recorrido debe poder completarse sin add-on.**
+T-013 (MVP), T-050…T-053, en el orden de la [guía del add-on](03_addon_blender.md), sección 9: contrato de API → vincular cuenta → panel de la lección → comprobaciones locales → registrar verificaciones. **El primer recorrido debe poder completarse sin add-on.** Construido antes de lo previsto (ver el recuadro de arriba); sigue con T-055, T-056, T-057, T-059 y T-060.
 
 ### Fase F · Especialidades y tutor (v3.4.0 en adelante)
 

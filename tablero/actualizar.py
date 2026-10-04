@@ -188,6 +188,27 @@ def barra(hechas, total, ancho=10):
     return "▰" * llenos + "▱" * (ancho - llenos)
 
 
+def _texto(valor):
+    if isinstance(valor, (list, tuple)):
+        return "; ".join(str(v) for v in valor if v)
+    return str(valor).strip() if valor else ""
+
+
+def notas_de(tarea):
+    """Sub-líneas con lo que el YAML dice a mano: bloqueo, evidencia y criterio.
+
+    No cambian el estado (lo calculan los commits); sirven para que el tablero
+    diga la verdad cuando la tarea espera una acción humana o ya se comprobó
+    fuera del repositorio (por ejemplo, un script ejecutado en Oracle).
+    """
+    notas = []
+    for clave, etiqueta in (("bloqueo", "⏸️ Espera"), ("evidencia", "🔎 Evidencia"), ("aceptacion", "🎯 Listo cuando")):
+        texto = _texto(tarea.get(clave))
+        if texto:
+            notas.append(f"  - {etiqueta}: {texto}")
+    return notas
+
+
 def generar(datos, estado, actividad, publicadas, principal, modulos=()):
     tareas = datos["tareas"]
     por_id = {t["id"]: t for t in tareas}
@@ -254,6 +275,7 @@ def generar(datos, estado, actividad, publicadas, principal, modulos=()):
             ultimos = actividad[t["id"]][-3:]
             commits = f" — commits: {', '.join(f'`{s}` ({f})' for s, f in ultimos)}" if ultimos else ""
             lineas.append(f"- [{marca}] **{t['id']}** {t['titulo']} · _{estado[t['id']]}_{commits}")
+            lineas += notas_de(t)
         lineas.append("")
     return "\n".join(lineas).rstrip() + "\n"
 

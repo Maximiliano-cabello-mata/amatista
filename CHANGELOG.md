@@ -13,12 +13,14 @@ Pre-lanzamientos de la v2.2.0: `v2.2.0-alpha.1` (`f68c704`: cuentas, Oracle 20 G
 contenido administrable, lecciones interactivas y panel del alumno) y `v2.2.0-alpha.2` (`88dd539`: panel
 de administración; se publica con `crear-tags.sh`).
 
-Los tags están publicados y firmados con SSH; se crearon con `bash herramientas/crear-tags.sh` (ver `docs/guias/2026-10-01_versiones-y-tablero.txt`).
+Los tags hasta `v2.2.0-alpha.1` están publicados y firmados con SSH. `v2.2.0-alpha.2`, `v3.0.0-alpha.1` (`2337fd5`, reestructuración) y `v3.0.0-alpha.2` (`ec849d8`, Amatista Engine etapa 1) ya están en `bash herramientas/crear-tags.sh` y se publican desde la computadora del usuario (ver `docs/guias/2026-10-01_versiones-y-tablero.txt`).
 
 ## [Sin publicar]
 
 ### Agregado
 
+- **Amatista Engine, etapa 2** (4 oct 2026, docs/motor/etapas/etapa-2.md): guía paso a paso en el motor (`guide/`: qué hacer, teclas, resaltados, señales en la escena y acción «Hazlo conmigo») y acompañante que felicita, avisa y ofrece ayuda; campo opcional `guide` en los objetivos; add-on 0.3.0 con tarjeta del acompañante, guía dibujada en la vista 3D, diálogos y preferencias de acompañamiento. Sin cambios en Oracle.
+- **Plataforma por módulos (v3.1)** (docs/plataforma/): la práctica de Blender cierra cada módulo (ruta del módulo y estación de Blender, preparación de Blender dentro de la práctica, regla validada en el servidor); sistema de etiquetas común; herramientas nuevas Paso a paso, Atajos de teclado y Comparar; panel de administración agrupado con página Herramientas.
 - **Amatista Engine** (4 oct 2026, docs/motor/): motor declarativo `amatista.practice/1` en `engine/`; add-on «Amatista» para Blender 4.2+ con modos Alumno y Desarrollador (Amatista Author), tarjetas y diálogos; paquete descargable con instalador por sistema que comprueba la versión de Blender y conecta la cuenta; Oracle 007 (`ADDON_VINCULOS`, `PRACTICAS`, `PRACTICA_VERSIONES`, `PROGRESO_PRACTICAS`); API `/api/addon/v1`; página Blender, vinculación por código, bloque de lección `blender_practice` y Admin › Prácticas; primera práctica «Construir una mesa» en el módulo 2 de Blender (en revisión).
 - **Reestructuración (v3.0.0, en curso; primer tag `v3.0.0-alpha.1`):** el curso se organiza por niveles.
   Oracle `005` (aditivo, conserva usuarios y progreso): tablas `NIVELES`, `HABILIDADES`,
@@ -47,6 +49,9 @@ Los tags están publicados y firmados con SSH; se crearon con `bash herramientas
   SMTP e importación del catálogo a Oracle.
 
 ### Cambiado
+- **Estructura fija de la plataforma y orden del repositorio** (4 oct 2026): navegación Cursos · Mi panel · Admin, sin pestañas sueltas; el «Laboratorio técnico» de prueba (botón de sesión de prueba y caja de tutor IA sin conectar) pasa a ser el **Diagnóstico técnico**, solo para el equipo, desde Admin › Estado. Revisión de la documentación documento por documento: README de la raíz reescrito, PROYECTO.md al día, estado de cada documento en `docs/README.md`, notas de actualización en los documentos de arquitectura y estado de producción en los manuales de Oracle. Tablero: estados reales con evidencia y bloqueos (el generador los muestra en el detalle) y el tablero de la v2 archivado con su revisión del estado real al cierre. `despliegue/actualizar.sh` detecta la unidad `amatista-backend` de la VM; `backend/.env.example` documenta `AMATISTA_URL_API` y `AMATISTA_URL_PWA`; `crear-tags.sh` incluye `v3.0.0-alpha.1` y `v3.0.0-alpha.2`.
+- La pestaña **Blender** sale de la barra superior: la conexión pasa a «Mi Blender» (menú de la cuenta) y a la práctica de cada módulo. «Contenido» del panel se llama **Módulos**.
+- La documentación de referencia del motor pasa a `docs/motor/referencia/`.
 - `INCIDENCIAS.txt` de la raíz pasa a `docs/incidencias/` (INC-010); INC-005 y INC-006 quedan resueltas.
 - La convención de commits y la guía de versiones y tablero pasan a `docs/guias/`.
 - README, `backend/README.md` (rutas nuevas, despliegue con `despliegue/`) y `frontend/README.md` (estructura,

@@ -1,6 +1,6 @@
 # 02 · Formato de práctica: `amatista.practice/1`
 
-Una práctica es un JSON declarativo. El motor la valida al cargarla (`engine/amatista_engine/practice/loader.py`) y explica cada error en español con la ruta del campo («targets[2].params.min debe ser un número»). Ejemplo completo: [`practices/blender/level_1/mesa.json`](../../practices/blender/level_1/mesa.json).
+Una práctica es un JSON declarativo. El motor la valida al cargarla (`engine/amatista_engine/practice/loader.py`) y explica cada error en español con la ruta del campo («targets[2].params.min debe ser un número»). Ejemplo completo: [`practices/blender/level_1/mesa.json`](../../../practices/blender/level_1/mesa.json).
 
 ## Práctica
 
@@ -35,6 +35,7 @@ Una práctica es un JSON declarativo. El motor la valida al cargarla (`engine/am
 | `hints` | De 1 a 6 pistas, de la más general al paso a paso. Se revelan de una en una con **Necesito una pista**; llegar a la tercera cuenta como «con guía». |
 | `messages` | `{pass, fail}`: textos propios para cumplido / no cumplido. |
 | `watch` | Eventos que reevalúan este objetivo (por defecto los del validador). |
+| `guide` | *(etapa 2, opcional)* `{why, steps}`: el porqué del paso y hasta 8 pasos (`"texto"` o `{"text", "keys": [hasta 6 teclas]}`) que reemplazan las instrucciones que genera el motor. Ver [07_guia_y_acompanamiento.md](07_guia_y_acompanamiento.md). |
 
 ## Validadores incluidos
 
@@ -86,8 +87,9 @@ La lista exacta con tipos y valores por defecto es el código: `engine/amatista_
 - **Progreso**: suma de pesos cumplidos / suma de pesos obligatorios (0 a 100).
 - **Paso actual**: el primer objetivo obligatorio no cumplido y no bloqueado.
 - **Completada**: todos los obligatorios cumplidos.
-- **Autonomía** al completar (`pedagogy/skills.py`): `autonoma` sin pistas ni correcciones; `con_pistas` si usó pistas; `con_guia` si llegó al paso a paso. El servidor nunca sube una habilidad a «autónoma» solo por una práctica.
+- **Guía** (etapa 2): para el paso actual, el motor arma qué hacer, con qué teclas, qué resaltar y qué acción ofrece «Hazlo conmigo» (`motor.guide(...)`, [07](07_guia_y_acompanamiento.md)). No cambia el progreso.
+- **Autonomía** al completar (`pedagogy/skills.py`): `autonoma` sin pistas ni correcciones; `con_pistas` si usó pistas; `con_guia` si llegó al paso a paso o usó **Hazlo conmigo** en algún paso (Muéstrame cuenta como una pista). El servidor nunca sube una habilidad a «autónoma» solo por una práctica.
 
 ## Compatibilidad
 
-Todos los campos agregados después del prototipo v0.1 son opcionales: [`practices/sandbox/table.json`](../../practices/sandbox/table.json) (el formato original) sigue cargando. Las funciones del prototipo (`validators/builtin.file_saved` y compañía) siguen importables para el `ascii_check.py` original.
+Todos los campos agregados después del prototipo v0.1 son opcionales (también `guide`, de la etapa 2): [`practices/sandbox/table.json`](../../../practices/sandbox/table.json) (el formato original) sigue cargando. Las funciones del prototipo (`validators/builtin.file_saved` y compañía) siguen importables para el `ascii_check.py` original.

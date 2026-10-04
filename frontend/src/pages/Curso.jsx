@@ -1,8 +1,13 @@
 import { useCatalogo } from '../catalogo/contexto';
 import { IconoCandado, CristalLogo } from '../components/Iconos';
 import EstadoGuardado from '../components/EstadoGuardado';
+import Etiqueta, { Etiquetas } from '../components/etiquetas/Etiqueta';
+import { etiquetaLeccion, etiquetasModulo } from '../components/etiquetas/catalogo';
 import { ACENTOS, ICONOS_CURSO } from '../components/estiloCurso';
-import { duracionTexto, tituloCorto, TIPOS_LECCION } from '../data/cursos';
+import EstacionBlender from '../components/modulo/EstacionBlender';
+import RutaModulo from '../components/modulo/RutaModulo';
+import { duracionTexto, tituloCorto } from '../data/cursos';
+import { estadoPractica, partesDelModulo } from '../modulos/practica';
 import { useProgreso } from '../progreso/contexto';
 import {
   estaCompletada,
@@ -14,9 +19,6 @@ import {
   tieneInsignia,
 } from '../progreso/reglas';
 import { rutas } from '../rutas';
-
-const ETIQUETA_NUEVA =
-  'corte-poly-sm shrink-0 bg-neon/15 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest text-neon';
 
 function NodoLeccion({ numero, hecha, abierta, acento }) {
   if (hecha) {
@@ -40,82 +42,103 @@ function NodoLeccion({ numero, hecha, abierta, acento }) {
   );
 }
 
+function FilaLeccion({ curso, modulo, leccion, indice, acento, progreso }) {
+  const hecha = estaCompletada(progreso, curso.id, leccion);
+  const abierta = estaDesbloqueada(progreso, curso.id, modulo, indice);
+  const nueva = leccionEsNueva(progreso, curso.id, modulo, indice);
+  const actual = abierta && !hecha;
+  const etiqueta = etiquetaLeccion(leccion);
+  const fila = (
+    <>
+      <NodoLeccion numero={indice + 1} hecha={hecha} abierta={abierta} acento={acento} />
+      <span className="min-w-0 flex-1">
+        <span className={`flex flex-wrap items-center gap-2 font-semibold ${abierta ? 'text-white' : 'text-white/45'}`}>
+          {leccion.title}
+          {nueva && <Etiqueta texto="Nueva" tono="neon" />}
+        </span>
+        <span className="mt-1 flex flex-wrap items-center gap-2">
+          <Etiqueta {...etiqueta} tono={abierta ? etiqueta.tono : 'gris'} />
+          {leccion.durationSeconds ? (
+            <span className="font-mono text-[11px] uppercase tracking-wider text-white/40">
+              {duracionTexto(leccion.durationSeconds)}
+            </span>
+          ) : null}
+        </span>
+      </span>
+      <span
+        className={`shrink-0 font-mono text-xs uppercase tracking-widest ${
+          actual ? 'text-neon animar-pulso' : `hidden sm:inline ${hecha ? 'text-white/50' : 'text-white/30'}`
+        }`}
+      >
+        {actual ? 'Jugar ▶' : hecha ? 'Repasar' : 'Bloqueada'}
+      </span>
+    </>
+  );
+  return (
+    <li>
+      {abierta ? (
+        <a
+          href={rutas.leccion(curso.id, leccion.id)}
+          className={`corte-poly-sm flex items-center gap-4 px-3 py-3 transition-colors hover:bg-white/5 ${
+            actual ? 'bg-neon/5' : ''
+          }`}
+        >
+          {fila}
+        </a>
+      ) : (
+        <div className="flex items-center gap-4 px-3 py-3" aria-disabled="true">
+          {fila}
+        </div>
+      )}
+    </li>
+  );
+}
+
+function ListaLecciones({ items, ...props }) {
+  if (!items.length) return null;
+  return (
+    <ol className="relative mt-5 space-y-2">
+      <span className="absolute bottom-6 left-6 top-6 w-px bg-white/10" aria-hidden="true" />
+      {items.map(({ leccion, indice }) => (
+        <FilaLeccion key={leccion.id} leccion={leccion} indice={indice} {...props} />
+      ))}
+    </ol>
+  );
+}
+
+// Un módulo: primero sus lecciones y al final la práctica en Blender (si la
+// tiene). El examen final, si existe, va después de la práctica.
 function MapaModulo({ curso, modulo, acento, progreso }) {
   const contenido = modulo.contenido;
   const numero = modulo.numero;
   const titulo = tituloCorto(contenido.title);
   const { total, completadas, nuevas } = resumenModulo(progreso, curso.id, modulo);
   const insigniaGanada = tieneInsignia(progreso.insignias, idInsignia(curso.id, modulo));
+  const { antes, despues } = partesDelModulo(modulo);
+  const practica = estadoPractica(progreso, curso.id, modulo);
+  const props = { curso, modulo, acento, progreso };
 
   return (
     <section className={`corte-poly bg-gradient-to-br p-[2px] ${acento.borde}`} aria-labelledby={`modulo-${numero}`}>
       <div className="corte-poly bg-superficie/95 p-6 sm:p-8">
-        <div className="flex flex-wrap items-center gap-3">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-neon">Módulo {numero}</p>
-          {nuevas > 0 && (
-            <span className={ETIQUETA_NUEVA}>
-              Nuevo contenido · {nuevas} {nuevas === 1 ? 'lección' : 'lecciones'}
-            </span>
-          )}
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="min-w-0">
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-neon">Módulo {numero}</p>
+            <h2 id={`modulo-${numero}`} className="mt-1 text-2xl font-extrabold text-white sm:text-3xl">
+              {titulo}
+            </h2>
+          </div>
+          <p className="font-mono text-xs uppercase tracking-wider text-white/45">
+            {completadas} / {total} lecciones
+          </p>
         </div>
-        <h2 id={`modulo-${numero}`} className="mt-1 text-2xl font-extrabold text-white sm:text-3xl">
-          {titulo}
-        </h2>
+        <Etiquetas className="mt-3" lista={etiquetasModulo(contenido, { conPractica: Boolean(practica), nuevas })} />
         <p className="mt-3 leading-relaxed text-texto/75">{contenido.description}</p>
-        <p className="mt-3 font-mono text-xs uppercase tracking-wider text-white/45">
-          {contenido.estimatedTimeMinutes ? `${contenido.estimatedTimeMinutes} min · ` : ''}
-          {completadas} / {total} lecciones
-        </p>
+        <RutaModulo className="mt-4" lecciones={contenido.lessons} progreso={progreso} cursoId={curso.id} />
 
-        <ol className="relative mt-7 space-y-2">
-          <span className="absolute bottom-6 left-6 top-6 w-px bg-white/10" aria-hidden="true" />
-          {contenido.lessons.map((leccion, i) => {
-            const hecha = estaCompletada(progreso, curso.id, leccion);
-            const abierta = estaDesbloqueada(progreso, curso.id, modulo, i);
-            const nueva = leccionEsNueva(progreso, curso.id, modulo, i);
-            const actual = abierta && !hecha;
-            const fila = (
-              <>
-                <NodoLeccion numero={i + 1} hecha={hecha} abierta={abierta} acento={acento} />
-                <span className="min-w-0 flex-1">
-                  <span className={`flex flex-wrap items-center gap-2 font-semibold ${abierta ? 'text-white' : 'text-white/45'}`}>
-                    {leccion.title}
-                    {nueva && <span className={ETIQUETA_NUEVA}>Nueva</span>}
-                  </span>
-                  <span className="block font-mono text-[11px] uppercase tracking-wider text-white/45">
-                    {TIPOS_LECCION[leccion.type]}
-                    {leccion.durationSeconds ? ` · ${duracionTexto(leccion.durationSeconds)}` : ''}
-                  </span>
-                </span>
-                <span
-                  className={`shrink-0 font-mono text-xs uppercase tracking-widest ${
-                    actual ? 'text-neon animar-pulso' : `hidden sm:inline ${hecha ? 'text-white/50' : 'text-white/30'}`
-                  }`}
-                >
-                  {actual ? 'Jugar ▶' : hecha ? 'Repasar' : 'Bloqueada'}
-                </span>
-              </>
-            );
-            return (
-              <li key={leccion.id}>
-                {abierta ? (
-                  <a
-                    href={rutas.leccion(curso.id, leccion.id)}
-                    className={`corte-poly-sm flex items-center gap-4 px-3 py-3 transition-colors hover:bg-white/5 ${
-                      actual ? 'bg-neon/5' : ''
-                    }`}
-                  >
-                    {fila}
-                  </a>
-                ) : (
-                  <div className="flex items-center gap-4 px-3 py-3" aria-disabled="true">
-                    {fila}
-                  </div>
-                )}
-              </li>
-            );
-          })}
-        </ol>
+        <ListaLecciones items={antes} {...props} />
+        <EstacionBlender cursoId={curso.id} estado={practica} />
+        <ListaLecciones items={despues} {...props} />
 
         {modulo.insignia && (
           <div className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">

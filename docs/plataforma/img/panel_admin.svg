@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Panel de administración reorganizado: navegación por tareas y página Herramientas (maqueta)</title>
+  <rect width="960" height="420" fill="#0d0d10"/>
+  <text x="24" y="36" fill="#00e5ff" font-size="11" font-weight="700" letter-spacing="3">ADMINISTRACIÓN</text>
+  <text x="24" y="66" fill="#fff" font-size="26" font-weight="800">Herramientas de enseñanza</text>
+  <g font-size="11" font-weight="700" letter-spacing="1.5">
+    <rect x="24" y="90" width="200" height="30" fill="#ffffff" fill-opacity="0.05"/><text x="38" y="110" fill="#bdbdc6">◆ RESUMEN</text>
+    <text x="28" y="142" fill="#6d6d78" font-size="9" letter-spacing="3">ENSEÑANZA</text>
+    <rect x="24" y="150" width="200" height="30" fill="#ffffff" fill-opacity="0.05"/><text x="38" y="170" fill="#bdbdc6">▤ MÓDULOS</text>
+    <rect x="24" y="184" width="200" height="30" fill="#ffffff" fill-opacity="0.05"/><text x="38" y="204" fill="#bdbdc6">⬢ PRÁCTICAS DE BLENDER</text>
+    <rect x="24" y="218" width="200" height="30" fill="#9b59b6"/><text x="38" y="238" fill="#fff">✦ HERRAMIENTAS</text>
+    <text x="28" y="270" fill="#6d6d78" font-size="9" letter-spacing="3">PERSONAS</text>
+    <rect x="24" y="278" width="200" height="30" fill="#ffffff" fill-opacity="0.05"/><text x="38" y="298" fill="#bdbdc6">◎ USUARIOS</text>
+    <text x="28" y="330" fill="#6d6d78" font-size="9" letter-spacing="3">SISTEMA</text>
+    <rect x="24" y="338" width="200" height="30" fill="#ffffff" fill-opacity="0.05"/><text x="38" y="358" fill="#bdbdc6">⚙ ESTADO</text>
+  </g>
+  <!-- lista de herramientas -->
+  <g font-size="12">
+    <text x="250" y="104" fill="#00e5ff" font-size="10" font-weight="700" letter-spacing="2">VISUALIZAR</text>
+    <rect x="250" y="112" width="200" height="28" fill="#9b59b6"/><text x="262" y="131" fill="#fff">Paso a paso</text><text x="400" y="131" fill="#00e5ff" font-size="9" font-weight="700">NUEVA</text>
+    <rect x="250" y="144" width="200" height="28" fill="#ffffff" fill-opacity="0.05"/><text x="262" y="163" fill="#ccc">Atajos de teclado</text><text x="400" y="163" fill="#00e5ff" font-size="9" font-weight="700">NUEVA</text>
+    <rect x="250" y="176" width="200" height="28" fill="#ffffff" fill-opacity="0.05"/><text x="262" y="195" fill="#ccc">Comparar</text><text x="400" y="195" fill="#00e5ff" font-size="9" font-weight="700">NUEVA</text>
+    <rect x="250" y="208" width="200" height="28" fill="#ffffff" fill-opacity="0.05"/><text x="262" y="227" fill="#ccc">Tarjetas de concepto</text>
+    <text x="250" y="262" fill="#00e5ff" font-size="10" font-weight="700" letter-spacing="2">PRACTICAR EN BLENDER</text>
+    <rect x="250" y="270" width="200" height="28" fill="#ffffff" fill-opacity="0.05"/><text x="262" y="289" fill="#ccc">Práctica en Blender</text>
+  </g>
+  <!-- detalle -->
+  <polygon points="470,90 936,90 936,396 490,396 470,376" fill="#16161b" stroke="#2c2c34"/>
+  <text x="490" y="114" fill="#00e5ff" font-size="10" font-weight="700" letter-spacing="2">STEP_BY_STEP</text>
+  <text x="490" y="138" fill="#fff" font-size="18" font-weight="800">Paso a paso</text>
+  <rect x="772" y="120" width="70" height="22" fill="#ffffff" fill-opacity="0.06"/><text x="784" y="135" fill="#ddd" font-size="10" font-weight="700">VER JSON</text>
+  <rect x="848" y="120" width="76" height="22" fill="#00e5ff"/><text x="856" y="135" fill="#0d0d10" font-size="10" font-weight="700">COPIAR JSON</text>
+  <text x="490" y="166" fill="#8a8a95" font-size="10" letter-spacing="1.5">PARA QUÉ</text>
+  <text x="490" y="182" fill="#ddd" font-size="12">Guiar un procedimiento con las teclas de cada paso.</text>
+  <text x="490" y="206" fill="#8a8a95" font-size="10" letter-spacing="1.5">CUÁNDO USARLA</text>
+  <text x="490" y="222" fill="#ddd" font-size="12">Antes de la práctica en Blender.</text>
+  <rect x="490" y="238" width="426" height="140" fill="#101014" stroke="#2c2c34"/>
+  <text x="504" y="258" fill="#6d6d78" font-size="9" letter-spacing="2">ASÍ LO VE EL ALUMNO (EJEMPLO)</text>
+  <g font-size="12" fill="#eee">
+    <circle cx="514" cy="284" r="10" fill="#9b59b6"/><text x="510" y="288" font-size="11">1</text><text x="534" y="288">Selecciona el objeto</text>
+    <rect x="760" y="274" width="34" height="18" fill="#2d2d33" stroke="#6d6d78"/><text x="766" y="287" font-size="10">Clic</text>
+    <circle cx="514" cy="318" r="10" fill="#9b59b6"/><text x="510" y="322" font-size="11">2</text><text x="534" y="322">Duplícalo</text>
+    <rect x="760" y="308" width="38" height="18" fill="#2d2d33" stroke="#6d6d78"/><text x="764" y="321" font-size="10">Shift</text>
+    <rect x="802" y="308" width="20" height="18" fill="#2d2d33" stroke="#6d6d78"/><text x="808" y="321" font-size="10">D</text>
+    <circle cx="514" cy="352" r="10" fill="#3a3a44"/><text x="510" y="356" font-size="11">3</text><text x="534" y="356" fill="#999">Colócalo</text>
+  </g>
+</svg>
