@@ -19,6 +19,8 @@ Los tags están publicados y firmados con SSH; se crearon con `bash herramientas
 
 ### Agregado
 
+- **Amatista Engine, etapa 2** (4 oct 2026, docs/motor/etapas/etapa-2.md): guía paso a paso en el motor (`guide/`: qué hacer, teclas, resaltados, señales en la escena y acción «Hazlo conmigo») y acompañante que felicita, avisa y ofrece ayuda; campo opcional `guide` en los objetivos; add-on 0.3.0 con tarjeta del acompañante, guía dibujada en la vista 3D, diálogos y preferencias de acompañamiento. Sin cambios en Oracle.
+- **Plataforma por módulos (v3.1)** (docs/plataforma/): la práctica de Blender cierra cada módulo (ruta del módulo y estación de Blender, preparación de Blender dentro de la práctica, regla validada en el servidor); sistema de etiquetas común; herramientas nuevas Paso a paso, Atajos de teclado y Comparar; panel de administración agrupado con página Herramientas.
 - **Amatista Engine** (4 oct 2026, docs/motor/): motor declarativo `amatista.practice/1` en `engine/`; add-on «Amatista» para Blender 4.2+ con modos Alumno y Desarrollador (Amatista Author), tarjetas y diálogos; paquete descargable con instalador por sistema que comprueba la versión de Blender y conecta la cuenta; Oracle 007 (`ADDON_VINCULOS`, `PRACTICAS`, `PRACTICA_VERSIONES`, `PROGRESO_PRACTICAS`); API `/api/addon/v1`; página Blender, vinculación por código, bloque de lección `blender_practice` y Admin › Prácticas; primera práctica «Construir una mesa» en el módulo 2 de Blender (en revisión).
 - **Reestructuración (v3.0.0, en curso; primer tag `v3.0.0-alpha.1`):** el curso se organiza por niveles.
   Oracle `005` (aditivo, conserva usuarios y progreso): tablas `NIVELES`, `HABILIDADES`,
@@ -47,6 +49,8 @@ Los tags están publicados y firmados con SSH; se crearon con `bash herramientas
   SMTP e importación del catálogo a Oracle.
 
 ### Cambiado
+- La pestaña **Blender** sale de la barra superior: la conexión pasa a «Mi Blender» (menú de la cuenta) y a la práctica de cada módulo. «Contenido» del panel se llama **Módulos**.
+- La documentación de referencia del motor pasa a `docs/motor/referencia/`.
 - `INCIDENCIAS.txt` de la raíz pasa a `docs/incidencias/` (INC-010); INC-005 y INC-006 quedan resueltas.
 - La convención de commits y la guía de versiones y tablero pasan a `docs/guias/`.
 - README, `backend/README.md` (rutas nuevas, despliegue con `despliegue/`) y `frontend/README.md` (estructura,

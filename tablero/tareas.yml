@@ -329,6 +329,32 @@ tareas:
     depende_de: [T-051]
     aceptacion: "El instalador encuentra Blender, avisa si es anterior a 4.2 y deja el add-on activo en un Windows y un macOS reales (docs/motor/referencia/04_instalacion_alumno.md)"
 
+  - id: T-057
+    titulo: "Motor etapa 2: guía paso a paso, «Hazlo conmigo» y acompañante en el add-on"
+    version: v3.3.0
+    area: blender
+    estado: revision
+    depende_de: [T-051]
+    evidencia: "docs/motor/etapas/etapa-2.md y docs/motor/referencia/07_guia_y_acompanamiento.md; engine/tests/test_guia.py y addon/tests/en_blender.py"
+  - id: T-058
+    titulo: Práctica de Blender al cierre de cada módulo, etiquetas y herramientas nuevas en la plataforma
+    version: v3.3.0
+    area: pwa
+    estado: revision
+    evidencia: "docs/plataforma/ (mapa, módulos con práctica, etiquetas, herramientas y panel de administración)"
+  - id: T-059
+    titulo: Probar la guía de la etapa 2 en un Blender real con GPU y agregar capturas a la documentación
+    version: v3.3.0
+    area: blender
+    depende_de: [T-057]
+    aceptacion: "Recorrido de la mesa en modo Acompañado en Windows o macOS: tarjeta, guía 3D, «Hazlo conmigo» y diálogos se ven bien; capturas reales en docs/motor/etapas/img/"
+  - id: T-060
+    titulo: Guardar en Oracle las ayudas usadas en cada práctica (008 aditivo) y mostrarlas al profesor
+    version: v3.4.0
+    area: db
+    depende_de: [T-055, T-057]
+    aceptacion: "Script 008 idempotente, el intento guarda «ayudas» y el panel muestra cuántas veces cada alumno usó «Hazlo conmigo» o «Muéstrame»"
+
   # --- v3.4.0 · Especialidades y tutor ---------------------------------------
   - id: T-054
     titulo: Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)

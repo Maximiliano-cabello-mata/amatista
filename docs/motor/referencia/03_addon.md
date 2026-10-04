@@ -14,11 +14,13 @@ El selector de modo aparece arriba del panel cuando la cuenta es de profesor o a
 ## Paneles del modo Alumno
 
 - **Amatista**: estado de la cuenta (vinculada o no, con el código para conectar), acceso en línea, **Abrir mi lección actual**, **Elegir otra práctica** y **Abrir la plataforma**.
-- **Práctica**: tarjeta con título, barra de progreso, el paso actual con su consejo y los botones **Comprobar**, **Necesito una pista** y **Enviar mi progreso**. Muestra si el progreso está sincronizado, pendiente o guardado sin conexión.
-- **Objetivos**: lista de tarjetas con icono por estado (completado, actual, pendiente, bloqueado) y el mensaje de cada validador.
+- **Práctica**: título, barra de progreso y el bloque **Ahora** (etapa 2): el paso actual con lo que pasa, el porqué y las instrucciones con teclas; botones **Hazlo conmigo**, **Muéstrame**, **Comprobar** y **¿Cómo lo hago?** (en modo Silencioso, **Necesito una pista** como en la etapa 1) y **Enviar mi progreso**. Muestra si el progreso está sincronizado, pendiente o guardado sin conexión.
 - **Asignar rol**: elige un rol de la práctica y aplícalo a los objetos seleccionados (o quítalo). El rol viaja con el objeto al duplicarlo.
+- **Todos los pasos** (plegado): la lista de tarjetas con icono por estado (completado, actual, pendiente, bloqueado) y el mensaje de cada validador. En la etapa 1 era el panel principal «Objetivos»; ahora es una consulta.
 
-Diálogos: **Bienvenida** (intro de la práctica), **Necesito una pista** (revela el siguiente nivel; avisa cuando ya se vieron todas), **¡Práctica completada!** (mensaje final y autonomía) y el aviso de **herramienta de otro nivel**. La **tarjeta en la vista 3D** (HUD) muestra el paso actual y el porcentaje sin abrir la barra lateral; se apaga en preferencias.
+Diálogos: **Bienvenida** (intro de la práctica), **Así se hace este paso** (porqué, qué pasa, cómo hacerlo con teclas; se abre solo al empezar cada paso en modo Acompañado), **¿Te ayudo con este paso?** (cuando el acompañante ve que el alumno lleva rato), **Necesito una pista** (revela el siguiente nivel), **¡Práctica completada!** (mensaje final y autonomía) y el aviso de **herramienta de otro nivel**.
+
+En la **vista 3D**: la **tarjeta del acompañante** (paso N de M, progreso, qué hacer con teclas dibujadas y avisos que se desvanecen) y la **guía en la escena** (contornos verde/naranja/neón, regla, plano, piezas fantasma y flechas con etiquetas). Detalle en [07_guia_y_acompanamiento.md](07_guia_y_acompanamiento.md).
 
 ## Cuándo evalúa
 
@@ -35,7 +37,7 @@ Diálogos: **Bienvenida** (intro de la práctica), **Necesito una pista** (revel
 
 ## Preferencias
 
-*Editar › Preferencias › Complementos › Amatista*: Servidor y Plataforma (vacío = las del paquete descargado), cuenta vinculada, Modo desarrollador, Comprobar mientras trabajo, Enviar mi progreso automáticamente, Tarjeta en la vista 3D, Avisar herramientas de otro nivel. El token se guarda oculto en las preferencias de Blender y se borra con **Desvincular esta computadora**.
+*Editar › Preferencias › Complementos › Amatista*: Servidor y Plataforma (vacío = las del paquete descargado), cuenta vinculada, Modo desarrollador, Comprobar mientras trabajo, Enviar mi progreso automáticamente, Tarjeta en la vista 3D, Avisar herramientas de otro nivel y la caja **Acompañamiento** (Acompañado / Solo tarjeta / Silencioso, Mostrar en la vista 3D, Explicarme cada paso nuevo, Ofrecer ayuda tras N cambios o S segundos). El token se guarda oculto en las preferencias de Blender y se borra con **Desvincular esta computadora**.
 
 ## Estructura
 
@@ -48,11 +50,12 @@ Diálogos: **Bienvenida** (intro de la práctica), **Necesito una pista** (revel
 | `estado.py` | Propiedades de escena y ventana (práctica abierta, borrador del autor, modo). |
 | `cuenta.py`, `red.py` | Vínculo, sesión, cliente HTTP y cola. |
 | `practicas.py` | Captura, evaluación, pistas, intentos y manejadores de Blender. |
+| `guia.py` | *(etapa 2)* Guía y acompañante de la sesión: avisos, diálogos automáticos, «Hazlo conmigo» y registro de ayudas. |
 | `operadores.py`, `desarrollo.py`, `autor.py` | Acciones del modo Alumno y del modo Desarrollador. |
-| `interfaz/` | `estilo.py` (colores, iconos, escala), `paneles.py`, `dialogos.py`, `hud.py`. |
+| `interfaz/` | `estilo.py` (colores, iconos, escala, teclas), `paneles.py`, `dialogos.py`, `hud.py` (tarjeta del acompañante), `visor3d.py` (guía dibujada en la escena). |
 | `iconos/` | PNG generados con `addon/herramientas/generar_iconos.py`. |
 
 ## Pruebas
 
 - `addon/tests/test_construir.py` (pytest, sin Blender): extensión, paquetes por sistema, índice del repositorio, `.bat` con CRLF, lanzadores ejecutables, bytes reproducibles.
-- `addon/tests/en_blender.py`: dentro de Blender sin interfaz. Instala el `.zip` como extensión, registra, abre la práctica de la mesa, construye la mesa con `bpy`, comprueba 100 %, prueba el modo autor y dibuja todos los paneles. En CI corre con `bpy==5.0.1` de PyPI (job `addon-blender`).
+- `addon/tests/en_blender.py`: dentro de Blender sin interfaz. Instala el `.zip` como extensión, registra, abre la práctica de la mesa, construye la mesa con `bpy`, comprueba 100 %, prueba el modo autor y dibuja todos los paneles. Etapa 2: agrega un cubo, asigna el rol y escala con «Hazlo conmigo», comprueba las ayudas registradas, los avisos y dibuja la guía 3D con un `gpu` simulado. En CI corre con `bpy==5.0.1` de PyPI (job `addon-blender`).

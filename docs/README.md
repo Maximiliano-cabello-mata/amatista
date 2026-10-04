@@ -9,9 +9,11 @@ contenido por niveles, manual de Oracle y guía del add-on de Blender.
 
 | Carpeta | Qué contiene | Empieza por |
 |---|---|---|
+| [`plataforma/`](plataforma/) | La plataforma v3.1: qué ve cada rol, módulos con práctica en Blender, etiquetas, herramientas de enseñanza y panel de administración | [Plataforma](plataforma/README.md) |
+| [`motor/`](motor/) | Amatista Engine: etapas (1 evalúa, 2 acompaña) y referencia técnica del motor y el add-on | [Amatista Engine](motor/README.md) |
 | [`reestructuracion/`](reestructuracion/) | La etapa v3: niveles, versiones de Blender, habilidades, herramientas de autor y add-on | [Plan maestro](reestructuracion/00_plan_maestro.md) |
 | [`arquitectura/`](arquitectura/) | Decisiones técnicas vigentes: arquitectura, base de datos, formato de lecciones, la Fórmula, contrato técnico | [Contrato técnico v2.2](arquitectura/2026-10-02_contrato_tecnico_plataforma.md) |
-| [`bitacora/`](bitacora/) | Qué pasó en cada sesión de trabajo y qué sigue | [3 de octubre: estado y reestructuración](bitacora/2026-10-03_estado_y_reestructuracion.md) |
+| [`bitacora/`](bitacora/) | Qué pasó en cada sesión de trabajo y qué sigue | [4 de octubre: motor etapa 2 y plataforma](bitacora/2026-10-04_motor_etapa_2_y_plataforma.md) |
 | [`incidencias/`](incidencias/) | Fallas diagnosticadas, su causa y su solución | [Registro de incidencias](incidencias/README.md) |
 | [`planeacion/`](planeacion/) | Planes de lanzamiento y fechas | [Plan de lanzamiento](planeacion/2026-10-01_plan_lanzamiento.txt) |
 | [`propuestas/`](propuestas/) | Propuestas y ampliaciones (contenido por niveles, 3D Lab, motor generativo) | [Propuesta de contenido y ruta de Blender](propuestas/2026-10-03_propuesta_contenido_blender.txt) |
@@ -25,6 +27,11 @@ contenido por niveles, manual de Oracle y guía del add-on de Blender.
 - [Manual de Oracle](reestructuracion/02_manual_oracle.md)
 - [Add-on de Blender](reestructuracion/03_addon_blender.md)
 - [Propuesta de contenido (fuente)](propuestas/2026-10-03_propuesta_contenido_blender.txt)
+
+## Plataforma y motor (v3.1)
+
+- [Plataforma](plataforma/README.md): [mapa por rol](plataforma/01_mapa_de_la_plataforma.md) · [módulos con práctica en Blender](plataforma/02_modulos_y_practica.md) · [etiquetas y gráficos](plataforma/03_etiquetas_y_graficos.md) · [herramientas de enseñanza](plataforma/04_herramientas_de_ensenanza.md) · [panel de administración](plataforma/05_panel_de_administracion.md)
+- [Amatista Engine](motor/README.md): [etapa 1](motor/etapas/etapa-1.md) · [etapa 2](motor/etapas/etapa-2.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md)
 
 ## Arquitectura
 
@@ -48,6 +55,7 @@ Mientras tanto: `backend/sql/LEEME.txt`, el encabezado de `backend/sql/002_*.sql
 - [Estado de la plataforma unificada](bitacora/2026-10-02_estado_plataforma_unificada.txt)
 - [Cierre del 2 de octubre](bitacora/2026-10-02_cierre_del_dia.txt) · [Ramas y cronología](bitacora/2026-10-02_ramas_y_cronologia.txt)
 - [3 de octubre: todo lo realizado y arranque de la reestructuración](bitacora/2026-10-03_estado_y_reestructuracion.md)
+- [4 de octubre: Amatista Engine](bitacora/2026-10-04_amatista_engine.md) · [Motor etapa 2 y plataforma por módulos](bitacora/2026-10-04_motor_etapa_2_y_plataforma.md)
 
 ## Guías del repositorio
 

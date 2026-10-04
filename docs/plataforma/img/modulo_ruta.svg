@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Un módulo en el mapa del curso: etiquetas, ruta, lecciones y la estación de práctica en Blender (maqueta)</title>
+  <rect width="960" height="520" fill="#0d0d10"/>
+  <polygon points="24,20 936,20 936,500 44,500 24,480" fill="#16161b" stroke="#2c2c34"/>
+  <text x="56" y="62" fill="#00e5ff" font-size="12" font-weight="700" letter-spacing="3">MÓDULO 2</text>
+  <text x="56" y="94" fill="#ffffff" font-size="26" font-weight="800">Transformar objetos</text>
+  <!-- Etiquetas -->
+  <g font-size="10" font-weight="700" letter-spacing="1.5">
+    <rect x="56" y="110" width="78" height="20" fill="#9b59b6" fill-opacity="0.18" stroke="#9b59b6" stroke-opacity="0.5"/><text x="66" y="124" fill="#d7b4e8">◆ NIVEL 1</text>
+    <rect x="142" y="110" width="70" height="20" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.18"/><text x="152" y="124" fill="#bdbdc6">◷ 45 MIN</text>
+    <rect x="220" y="110" width="210" height="20" fill="#ea7600" fill-opacity="0.15" stroke="#ea7600" stroke-opacity="0.5"/><text x="230" y="124" fill="#ffa64d">⬢ INCLUYE PRÁCTICA EN BLENDER</text>
+  </g>
+  <!-- Ruta de nodos -->
+  <g>
+    <path d="M90 180 L250 180 L410 180 L570 180 L760 180" stroke="#3a3a44" stroke-width="3"/>
+    <path d="M90 180 L410 180" stroke="#9b59b6" stroke-width="3"/>
+    <g font-size="12" fill="#0d0d10" font-weight="800">
+      <polygon points="90,162 106,171 106,189 90,198 74,189 74,171" fill="#59d68c"/><text x="86" y="185">✓</text>
+      <polygon points="250,162 266,171 266,189 250,198 234,189 234,171" fill="#59d68c"/><text x="246" y="185">✓</text>
+      <polygon points="410,162 426,171 426,189 410,198 394,189 394,171" fill="#9b59b6" stroke="#00e5ff" stroke-width="2"/><text x="406" y="185" fill="#fff">3</text>
+      <polygon points="570,162 586,171 586,189 570,198 554,189 554,171" fill="#2a2a30"/><text x="566" y="185" fill="#777">4</text>
+      <polygon points="760,154 784,168 784,192 760,206 736,192 736,168" fill="#2a2a30" stroke="#ea7600" stroke-width="2"/><text x="752" y="186" fill="#ea7600" font-size="14">⬢</text>
+    </g>
+    <g font-size="11" fill="#8a8a95">
+      <text x="62" y="222">Gancho</text><text x="222" y="222">Explora</text><text x="380" y="222">Práctica</text><text x="548" y="222">Reto</text><text x="712" y="226" fill="#ea7600">Blender</text>
+    </g>
+  </g>
+  <!-- Lecciones -->
+  <g font-size="14">
+    <rect x="56" y="246" width="560" height="38" fill="#1d1d23"/><text x="70" y="270" fill="#59d68c">✓</text><text x="92" y="270" fill="#fff">Mover, rotar y escalar</text>
+    <rect x="470" y="255" width="76" height="20" fill="#00e5ff" fill-opacity="0.12" stroke="#00e5ff" stroke-opacity="0.35"/><text x="478" y="269" fill="#00e5ff" font-size="10" font-weight="700">INTERACTIVA</text>
+    <rect x="56" y="290" width="560" height="38" fill="#1d1d23"/><text x="70" y="314" fill="#59d68c">✓</text><text x="92" y="314" fill="#fff">Los atajos G, R y S</text>
+    <rect x="470" y="299" width="76" height="20" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.18"/><text x="482" y="313" fill="#bdbdc6" font-size="10" font-weight="700">LECTURA</text>
+    <rect x="56" y="334" width="560" height="38" fill="#26202d" stroke="#9b59b6"/><text x="70" y="358" fill="#00e5ff">▶</text><text x="92" y="358" fill="#fff">Escalar en un solo eje</text>
+    <rect x="56" y="378" width="560" height="38" fill="#1a1a1f"/><text x="70" y="402" fill="#666">◻</text><text x="92" y="402" fill="#777">Reto: una caja a medida</text>
+  </g>
+  <!-- Estación Blender -->
+  <g>
+    <polygon points="640,246 912,246 912,416 660,416 640,396" fill="#1d1a16" stroke="#ea7600" stroke-opacity="0.6"/>
+    <text x="660" y="274" fill="#ea7600" font-size="11" font-weight="700" letter-spacing="2">PRÁCTICA EN BLENDER</text>
+    <text x="660" y="300" fill="#fff" font-size="17" font-weight="800">Construir una mesa</text>
+    <text x="660" y="326" fill="#bdbdc6" font-size="12">Termina las 2 lecciones del</text>
+    <text x="660" y="342" fill="#bdbdc6" font-size="12">módulo para abrirla.</text>
+    <text x="660" y="372" fill="#8a8a95" font-size="10" letter-spacing="1.5">◷ 20 MIN · 6 PASOS · CON GUÍA</text>
+    <rect x="660" y="384" width="100" height="22" fill="#2a2a2a"/><text x="676" y="399" fill="#777" font-size="11" font-weight="700">BLOQUEADA</text>
+  </g>
+  <rect x="56" y="436" width="560" height="38" fill="#1a1a1f"/><text x="70" y="460" fill="#666">◻</text><text x="92" y="460" fill="#777">Examen del módulo</text>
+  <rect x="470" y="445" width="70" height="20" fill="#ffc94d" fill-opacity="0.12" stroke="#ffc94d" stroke-opacity="0.35"/><text x="480" y="459" fill="#ffd98a" font-size="10" font-weight="700">EXAMEN</text>
+</svg>
