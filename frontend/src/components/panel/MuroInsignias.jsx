@@ -1,4 +1,5 @@
 import { CristalLogo, IconoCandado } from '../Iconos';
+import { temaDelModulo } from '../temas/temas';
 import { insigniasDelMuro } from './datos';
 import Seccion from './Seccion';
 
@@ -17,18 +18,25 @@ function textoRequisito(requisito) {
 
 function Insignia({ insignia }) {
   const { nombre, modulo, ganada, proximamente, requisito } = insignia;
+  // Cada insignia lleva los colores de la temática de su módulo.
+  const tema = modulo ? temaDelModulo(modulo) : null;
   return (
     <li
-      className={`corte-poly-sm flex flex-col items-center gap-2 border p-4 text-center ${
-        ganada ? 'border-amatista/40 bg-amatista/10' : 'border-white/5 bg-base/50'
+      className={`corte-poly-sm elevar flex flex-col items-center gap-2 border p-4 text-center ${
+        ganada ? `${tema?.borde ?? 'border-amatista/40'} bg-gradient-to-b ${tema?.banda ?? 'from-amatista/20 to-transparent'}` : 'border-white/5 bg-base/50'
       }`}
     >
-      <div className={`hexagono relative grid h-16 w-[4.5rem] place-items-center ${ganada ? 'bg-amatista-oscuro' : 'bg-white/5'}`}>
+      <div className={`hexagono relative grid h-16 w-[4.5rem] place-items-center ${ganada ? 'bg-amatista-oscuro animar-aparecer' : 'bg-white/5'}`}>
         <CristalLogo className={`h-11 w-11 ${ganada ? 'animar-flotar' : 'opacity-25 grayscale'}`} />
         {!ganada && <IconoCandado className="absolute h-5 w-5 text-white/55" />}
       </div>
       <p className={`font-bold leading-tight ${ganada ? 'text-white' : 'text-white/60'}`}>{nombre}</p>
-      {modulo && <p className="font-mono text-[10px] uppercase tracking-widest text-white/40">Módulo {modulo.numero}</p>}
+      {modulo && (
+        <p className={`font-mono text-[10px] uppercase tracking-widest ${ganada && tema ? tema.texto : 'text-white/40'}`}>
+          Módulo {modulo.numero}
+          {tema ? ` · ${tema.nombre}` : ''}
+        </p>
+      )}
       <p className={`text-xs leading-snug ${ganada ? 'text-amatista-claro' : 'text-white/50'}`}>
         {ganada && <>✓ Ganada el {fecha(ganada)}</>}
         {!ganada && proximamente && 'Próximamente: el módulo aún no se publica.'}
