@@ -56,7 +56,7 @@ function FormularioCodigo({ codigoInicial = '', alConectar }) {
         <button
           type="submit"
           disabled={estado.enviando}
-          className="corte-poly-sm bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white transition-[filter] hover:brightness-110 disabled:cursor-wait disabled:opacity-50"
+          className="corte-poly-sm destello bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white transition-[filter] hover:brightness-110 disabled:cursor-wait disabled:opacity-50"
         >
           {estado.enviando ? 'Conectando…' : 'Conectar'}
         </button>

@@ -157,7 +157,7 @@ function RetoCodigo({ bloque, alCompletar, resuelta }) {
             type="button"
             onClick={alternarVista}
             aria-expanded={verVista}
-            className="corte-poly-sm bg-neon px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-widest text-[#121212] transition-[filter] hover:brightness-110"
+            className="corte-poly-sm destello bg-neon px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-widest text-[#121212] transition-[filter] hover:brightness-110"
           >
             {verVista ? 'Ocultar 3D' : '▶ Ver en 3D'}
           </button>

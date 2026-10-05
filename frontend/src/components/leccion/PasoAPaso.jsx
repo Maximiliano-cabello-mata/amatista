@@ -49,7 +49,7 @@ function PasoAPaso({ title, steps = [] }) {
           type="button"
           onClick={() => setActual((i) => Math.min(steps.length - 1, i + 1))}
           disabled={ultimo}
-          className="corte-poly-sm bg-amatista px-4 py-2 font-mono text-xs font-bold uppercase tracking-widest text-white hover:brightness-110 disabled:opacity-40"
+          className="corte-poly-sm destello bg-amatista px-4 py-2 font-mono text-xs font-bold uppercase tracking-widest text-white hover:brightness-110 disabled:opacity-40"
         >
           {ultimo ? '¡Listo!' : 'Siguiente ▸'}
         </button>

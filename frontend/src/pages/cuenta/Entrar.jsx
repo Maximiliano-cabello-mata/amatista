@@ -22,7 +22,7 @@ function Entrar({ consulta = {} }) {
           Estás usando la cuenta de <strong className="text-white">{usuario.nombre || usuario.email}</strong>.
         </p>
         <div className="mt-6 grid gap-3">
-          <a href={destino} className="corte-poly-sm block bg-amatista px-6 py-3 text-center font-extrabold uppercase tracking-widest text-white hover:brightness-110">
+          <a href={destino} className="corte-poly-sm destello block bg-amatista px-6 py-3 text-center font-extrabold uppercase tracking-widest text-white hover:brightness-110">
             Continuar ▶
           </a>
           <button

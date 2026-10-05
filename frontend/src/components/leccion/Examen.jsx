@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { XP_POR_LECCION } from '../../progreso/reglas';
+import Escenario from '../temas/Escenario';
 import Jefe from '../temas/Jefe';
+import { SpriteMascota } from '../temas/Mascota';
 import { TEMAS, vidaDelJefe } from '../temas/temas';
 
 // Mezcla con semilla: el mismo intento da siempre el mismo orden (función pura).
@@ -53,8 +55,18 @@ function Arena({ tema, vida, golpeado, fallosPermitidos, fallos }) {
   else if (golpeado) frase = '¡Auch! Eso dolió.';
   else if (quedan < 0) frase = 'Esta vez gano yo. ¡Vuelve a intentarlo!';
   return (
-    <div className={`corte-poly-sm relative mb-6 overflow-hidden border ${tema.borde} bg-gradient-to-r ${tema.banda} p-4`}>
-      <div className="flex items-center gap-4">
+    <div className={`corte-poly-sm relative mb-6 overflow-hidden border ${tema.borde} bg-base p-4`}>
+      <Escenario tema={tema} className="pointer-events-none absolute inset-0 h-full w-full opacity-70" />
+      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-r ${tema.banda}`} aria-hidden="true" />
+      {tema.mascota && (
+        <p className="absolute bottom-2 right-3 hidden items-end gap-1.5 sm:flex" aria-hidden="true">
+          <span className="globo bg-base/85 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-white/80">
+            {vida.derrotado ? '¡Lo lograste!' : golpeado ? '¡Otro golpe!' : '¡Tú puedes!'}
+          </span>
+          <SpriteMascota tema={tema} className={`h-9 w-9 ${golpeado || vida.derrotado ? 'animar-aparecer' : 'esc-flotar'}`} />
+        </p>
+      )}
+      <div className="relative flex items-center gap-4">
         <Jefe jefe={jefe} golpeado={golpeado} derrotado={vida.derrotado} className="h-24 w-24 shrink-0 sm:h-28 sm:w-28" />
         <div className="min-w-0 flex-1">
           <p className={`font-mono text-[10px] uppercase tracking-[0.25em] ${tema.texto}`}>Jefe final · {tema.nombre}</p>
@@ -142,50 +154,53 @@ function Examen({ quiz, registroPrevio, insignia, completaModulo, hrefCurso, alT
 
   if (resultado) {
     return (
-      <section className="corte-poly animar-entrar border border-white/10 bg-superficie/95 p-8 text-center" role="status">
-        {resultado.aprobado ? (
-          <>
-            <Jefe jefe={tema.jefe} derrotado className="mx-auto h-28 w-28" />
-            <p className="mt-4 font-mono text-xs uppercase tracking-[0.3em] text-neon">Jefe derrotado · examen aprobado</p>
-            <h2 className="animar-aparecer mt-2 text-4xl font-extrabold text-white">¡Venciste a {tema.jefe.nombre}!</h2>
-          </>
-        ) : (
-          <>
-            <Jefe jefe={tema.jefe} className="mx-auto h-28 w-28" />
-            <p className="mt-4 font-mono text-xs uppercase tracking-[0.3em] text-blender">{tema.jefe.nombre} resistió</p>
-            <h2 className="mt-2 text-4xl font-extrabold text-white">Repasa y vuelve a la pelea</h2>
-          </>
-        )}
-        <p className="mt-4 text-lg text-texto/80">
-          Obtuviste <strong className="text-white">{resultado.puntaje}%</strong> ({resultado.aciertos} de{' '}
-          {preguntas.length} correctas). {resultado.aprobado ? '' : `Necesitas ${quiz.passingScore}% para aprobar.`}
-        </p>
-        {resultado.xpGanada > 0 && (
-          <p className="mt-3 font-mono text-xl font-bold text-neon">+{resultado.xpGanada} XP</p>
-        )}
-        {resultado.aprobado && completaModulo && insignia && (
-          <p className="corte-poly-sm mx-auto mt-5 inline-block bg-amatista/20 px-4 py-2 font-mono text-sm uppercase tracking-widest text-amatista-claro">
-            ◆ Insignia desbloqueada: {insignia}
-          </p>
-        )}
-        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          {!resultado.aprobado && (
-            <button
-              type="button"
-              onClick={reintentar}
-              className="corte-poly-sm bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
-            >
-              ↻ Intentar de nuevo
-            </button>
+      <section className="corte-poly animar-entrar relative overflow-hidden border border-white/10 bg-superficie/95 p-8 text-center" role="status">
+        <Escenario tema={tema} className="pointer-events-none absolute inset-x-0 top-0 h-40 w-full opacity-60" />
+        <div className="relative">
+          {resultado.aprobado ? (
+            <>
+              <Jefe jefe={tema.jefe} derrotado className="mx-auto h-28 w-28" />
+              <p className="mt-4 font-mono text-xs uppercase tracking-[0.3em] text-neon">Jefe derrotado · examen aprobado</p>
+              <h2 className="animar-aparecer mt-2 text-4xl font-extrabold text-white">¡Venciste a {tema.jefe.nombre}!</h2>
+            </>
+          ) : (
+            <>
+              <Jefe jefe={tema.jefe} className="mx-auto h-28 w-28" />
+              <p className="mt-4 font-mono text-xs uppercase tracking-[0.3em] text-blender">{tema.jefe.nombre} resistió</p>
+              <h2 className="mt-2 text-4xl font-extrabold text-white">Repasa y vuelve a la pelea</h2>
+            </>
           )}
-          <a
-            href={hrefCurso}
-            className={`corte-poly-sm px-6 py-3 font-extrabold uppercase tracking-widest ${
-              resultado.aprobado ? 'bg-neon text-base hover:brightness-110' : 'bg-white/5 text-white/80 hover:bg-white/10'
-            }`}
-          >
-            {resultado.aprobado ? 'Volver al curso ▶' : 'Repasar lecciones'}
-          </a>
+          <p className="mt-4 text-lg text-texto/80">
+            Obtuviste <strong className="text-white">{resultado.puntaje}%</strong> ({resultado.aciertos} de{' '}
+            {preguntas.length} correctas). {resultado.aprobado ? '' : `Necesitas ${quiz.passingScore}% para aprobar.`}
+          </p>
+          {resultado.xpGanada > 0 && (
+            <p className="mt-3 font-mono text-xl font-bold text-neon">+{resultado.xpGanada} XP</p>
+          )}
+          {resultado.aprobado && completaModulo && insignia && (
+            <p className="corte-poly-sm mx-auto mt-5 inline-block bg-amatista/20 px-4 py-2 font-mono text-sm uppercase tracking-widest text-amatista-claro">
+              ◆ Insignia desbloqueada: {insignia}
+            </p>
+          )}
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            {!resultado.aprobado && (
+              <button
+                type="button"
+                onClick={reintentar}
+                className="corte-poly-sm destello bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
+              >
+                ↻ Intentar de nuevo
+              </button>
+            )}
+            <a
+              href={hrefCurso}
+              className={`corte-poly-sm destello px-6 py-3 font-extrabold uppercase tracking-widest ${
+                resultado.aprobado ? 'bg-neon text-base hover:brightness-110' : 'bg-white/5 text-white/80 hover:bg-white/10'
+              }`}
+            >
+              {resultado.aprobado ? 'Volver al curso ▶' : 'Repasar lecciones'}
+            </a>
+          </div>
         </div>
       </section>
     );
@@ -255,7 +270,7 @@ function Examen({ quiz, registroPrevio, insignia, completaModulo, hrefCurso, alT
           type="button"
           onClick={siguiente}
           disabled={!elegida}
-          className="corte-poly-sm bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white transition-[filter] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+          className="corte-poly-sm destello bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white transition-[filter] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {indice < preguntas.length - 1 ? 'Siguiente ataque ▶' : 'Ver el resultado ▶'}
         </button>

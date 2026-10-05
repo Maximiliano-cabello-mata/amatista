@@ -88,7 +88,7 @@ function ContinuarPanel({ progreso, cursos, className = '' }) {
           </div>
           <a
             href={rutas.leccion(curso.id, leccion.id)}
-            className={`corte-poly-sm shrink-0 px-7 py-4 text-center text-lg font-extrabold uppercase tracking-widest text-base transition-[filter] hover:brightness-110 ${acento.fondo}`}
+            className={`corte-poly-sm destello shrink-0 px-7 py-4 text-center text-lg font-extrabold uppercase tracking-widest text-base transition-[filter] hover:brightness-110 ${acento.fondo}`}
           >
             ▶ {empezado ? 'Continuar' : 'Comenzar'}
             <span className="sr-only">: {leccion.title}</span>

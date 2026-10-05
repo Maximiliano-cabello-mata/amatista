@@ -56,7 +56,10 @@ python herramientas/contenido.py nueva-leccion ../frontend/src/data/modulos/blen
 python herramientas/contenido.py mapa blender
 python herramientas/contenido.py sembrar-niveles
 python herramientas/contenido.py practicas --publicar
+python herramientas/contenido.py practicas --revisar   # cuáles faltan en la base o están sin publicar
 ```
+
+Desde la v3.3 la API registra sola, al arrancar, los `practica.json` nuevos o cambiados de `practices/blender/` y publica los nuevos (los que el equipo dejó en borrador se quedan así). Se apaga con `AMATISTA_SINCRONIZAR_PRACTICAS=0` en `backend/.env`.
 
 **Cuidado con `nueva-leccion` en un módulo que ya tiene práctica en Blender.** La lección se agrega siempre **al final**, y la validación exige que la práctica cierre el módulo (solo el examen puede ir después). Probado sobre una copia de `blender-modulo-2.json`: después de `nueva-leccion ... les_104`, `validar` responde «lessons[3]: va después de la práctica en Blender (lessons[2])… muévela al final». Mueve la lección nueva antes de la práctica a mano en el JSON (o reordénala en Admin › Módulos) y vuelve a validar. El ejemplo del docstring de `contenido.py` y del [manual de Oracle §6](../reestructuracion/02_manual_oracle.md#6-lo-mismo-sin-oracle-sqlite-en-tu-computadora) usa justo `blender-modulo-2.json`, así que deja el archivo sin validar.
 

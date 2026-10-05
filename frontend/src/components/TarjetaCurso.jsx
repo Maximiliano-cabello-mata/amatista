@@ -162,7 +162,7 @@ function TarjetaCurso({ ruta, indice }) {
           ) : (
             <a
               href={rutas.curso(ruta.id)}
-              className={`corte-poly-sm block w-full py-3 text-center font-extrabold uppercase tracking-widest text-base transition-[filter] hover:brightness-110 ${acento.fondo}`}
+              className={`corte-poly-sm destello block w-full py-3 text-center font-extrabold uppercase tracking-widest text-base transition-[filter] hover:brightness-110 ${acento.fondo}`}
             >
               {textoBoton}
             </a>

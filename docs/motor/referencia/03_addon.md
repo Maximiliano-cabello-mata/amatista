@@ -22,6 +22,20 @@ Diálogos: **Bienvenida** (intro de la práctica), **Así se hace este paso** (p
 
 En la **vista 3D**: la **tarjeta del acompañante** (paso N de M, progreso, qué hacer con teclas dibujadas y avisos que se desvanecen) y la **guía en la escena** (contornos verde/naranja/neón, regla, plano, piezas fantasma y flechas con etiquetas). Detalle en [07_guia_y_acompanamiento.md](07_guia_y_acompanamiento.md).
 
+## Nombre del descargable: Amatista Motor 3.2
+
+Desde la 3.2 el add-on se llama **Amatista Motor** (`name` en `blender_manifest.toml`). La plataforma lo descarga como `Amatista-Motor-3.2-<sistema>.zip`, con la carpeta «Amatista Motor 3.2» (instalador, `amatista-3.2.0.zip` y LEEME). El servidor arma el paquete al vuelo con el código que tiene, así que entrega siempre la versión de su copia del repositorio; `GET /api/addon/v1/estado` devuelve `nombre` y `version_addon`, y la página «Mi Blender» avisa si el servidor entrega una versión vieja.
+
+## Temática por práctica (add-on 3.2)
+
+Cada módulo tiene su mundo, igual que en la plataforma. La fuente es [`practices/blender/temas.json`](../../../practices/blender/temas.json) (schema `amatista.temas/1`), compartida con `frontend/src/components/temas/temas.js`; `construir.py` la empaqueta como `practicas/temas.json` y el catálogo de prácticas la ignora porque no es `amatista.practice/`.
+
+- **Qué tema toca**: `temas.tema_de_practica(id)` busca el prefijo más largo de `practicas` (`blender.bp.m1.tren` → `blender.bp.m1` → **El taller de juguetes**). Lo que no está mapeado (por ejemplo la mesa archivada) usa **La cueva del cristal** (`cristal`). Sin `temas.json` el add-on sigue con un tema de respaldo.
+- **Tarjeta de la vista 3D** (`hud.py`): franja con el color de acento del tema, su nombre, la mascota en pixel art (10×10, diseños originales) y la barra de progreso; si la práctica cierra el módulo, el **jefe final** («JEFE: ROBO-TREN REBELDE», y «¡JEFE VENCIDO!» al terminar). Encima, el **globo de la mascota** con el saludo, consejos y datos curiosos que cambian solos cada 12 s (un temporizador ligero pide un redibujado cada 3 s; no evalúa nada). Los avisos llevan la mascota. En modo Silencioso no hay globo. Paneles con esquinas redondeadas, esquina facetada, sombra suave y teclas con canto.
+- **Paneles**: en *Practicar*, una tarjeta con el tema, su lema, el jefe final (si toca) y el mensaje de la mascota con **Otro dato** (`amatista.mascota_siguiente`); en *Mi curso*, el nombre del tema junto a cada módulo y el de la siguiente práctica. El diálogo de práctica completada celebra al jefe vencido.
+- **Cielo de la vista 3D**: al abrir una práctica, `World.color` toma el color `cielo` del tema (convertido a lineal) y las vistas 3D en Sólido usan el fondo del mundo. El valor anterior se guarda en la escena (`amatista_cielo_previo`; si no había mundo se crea «Amatista · Cielo» y se anota en `amatista_mundo_creado`) y se restaura al cerrar la práctica o al desactivar el add-on. No se agregan ni quitan objetos (los validadores los cuentan) y la foto del motor no incluye el mundo: el tema no cambia ninguna evaluación.
+- **Voz de la mascota**: el aviso «Escena lista» y el diálogo final hablan con la mascota del tema («Tuerca: Listo: …»).
+
 ## Cuándo evalúa
 
 - Cada cambio en objetos, mallas, materiales o colecciones marca la escena como «sucia»; un temporizador la reevalúa cuando lleva 0.4 s sin cambios (si **Comprobar mientras trabajo** está activo).
@@ -50,6 +64,8 @@ En la **vista 3D**: la **tarjeta del acompañante** (paso N de M, progreso, qué
 | `estado.py` | Propiedades de escena y ventana (práctica abierta, borrador del autor, modo). |
 | `cuenta.py`, `red.py` | Vínculo, sesión, cliente HTTP y cola. |
 | `practicas.py` | Captura, evaluación, pistas, intentos y manejadores de Blender. |
+| `temas.py` | *(3.2)* Temática por módulo leída de `temas.json`: tema de una práctica, colores, mensajes de la mascota y su dibujo en pixel art. Python puro (sin `bpy`). |
+| `escenarios.py` | Escenas de inicio de las prácticas y, desde la 3.2, el cielo del tema (`aplicar_ambiente` / `restaurar_ambiente`). |
 | `guia.py` | *(etapa 2)* Guía y acompañante de la sesión: avisos, diálogos automáticos, «Hazlo conmigo» y registro de ayudas. |
 | `operadores.py`, `desarrollo.py`, `autor.py` | Acciones del modo Alumno y del modo Desarrollador. |
 | `interfaz/` | `estilo.py` (colores, iconos, escala, teclas), `paneles.py`, `dialogos.py`, `hud.py` (tarjeta del acompañante), `visor3d.py` (guía dibujada en la escena). |
@@ -58,4 +74,5 @@ En la **vista 3D**: la **tarjeta del acompañante** (paso N de M, progreso, qué
 ## Pruebas
 
 - `addon/tests/test_construir.py` (pytest, sin Blender): extensión, paquetes por sistema, índice del repositorio, `.bat` con CRLF, lanzadores ejecutables, bytes reproducibles.
-- `addon/tests/en_blender.py`: dentro de Blender sin interfaz. Activa el add-on desde la carpeta `addon/` con `addon_utils.enable` (no instala el `.zip`; el `.zip` lo prueban `addon/tests/` con pytest), registra, abre la práctica de la mesa, construye la mesa con `bpy`, comprueba 100 %, prueba el modo autor y dibuja todos los paneles. Etapa 2: agrega un cubo, asigna el rol y escala con «Hazlo conmigo», comprueba las ayudas registradas, los avisos y dibuja la guía 3D con un `gpu` simulado. En CI corre con `bpy==5.0.1` de PyPI (job `addon-blender`).
+- `addon/tests/test_temas.py` (pytest, sin Blender): carga de `temas.json` (repositorio y paquete), tema por prefijo y de respaldo, colores, rotación de mensajes de la mascota y dibujos 10×10.
+- `addon/tests/en_blender.py`: dentro de Blender sin interfaz. Activa el add-on desde la carpeta `addon/` con `addon_utils.enable` (no instala el `.zip`; el `.zip` lo prueban `addon/tests/` con pytest), registra, abre la práctica de la mesa, construye la mesa con `bpy`, comprueba 100 %, prueba el modo autor y dibuja todos los paneles. Etapa 2: agrega un cubo, asigna el rol y escala con «Hazlo conmigo», comprueba las ayudas registradas, los avisos y dibuja la guía 3D con un `gpu` simulado. 3.2: el tema del tren, el cielo que se pinta al abrir y se restaura al cerrar (también sin mundo), que el mundo no entra en la foto y que paneles y tarjeta se dibujan con un tema activo. En CI corre con `bpy==5.0.1` de PyPI (job `addon-blender`).

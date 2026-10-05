@@ -47,7 +47,19 @@ Todos los módulos de Blender tienen el mismo ritmo, para que el alumno sepa qu�
 | 4 | **Práctica de cierre** | Blender, conectado | 15 a 30 min | El proyecto del módulo, guiado paso a paso por el motor. |
 | 5 | **Jefe final** | Plataforma | 5 min | Examen de 5 preguntas con aprobado en 80: cada acierto le baja vida al jefe del módulo. |
 
-Cada módulo tiene además su **temática** (colores, ambientación y jefe propio) para que cada sesión se sienta distinta. La lista completa está en `frontend/src/components/temas/temas.js`.
+Cada módulo tiene además su **temática** para que cada sesión se sienta distinta: un escenario animado, una **mascota** original (personaje en pixel art, estilo videojuego retro) que da consejos y datos curiosos, y un **jefe final** con su propia silueta. El add-on usa la misma temática en Blender. Todo vive en `practices/blender/temas.json`.
+
+| Módulo | Temática | Mascota | Jefe |
+|---|---|---|---|
+| Principiante 1 | El taller de juguetes | Tuerca, robot de cuerda | Robo-Tren Rebelde |
+| Principiante 2 | La herrería | Chispa, salamandra de fuego | Gólem de Hierro |
+| Principiante 3 | El hangar espacial | Orbi, satélite curioso | Nave Nodriza Glitch |
+| Principiante-Intermedio 1 | El estudio de pintura | Gotita, gota de pintura | La Mancha Gris |
+| Principiante-Intermedio 2 | El set de cine | Foco, reflector con patas | La Sombra del Apagón |
+| Principiante-Intermedio 3 | El circo animado | Boing, pelota saltarina | El Payaso Congelado |
+| Intermedio 1 | La aldea de precisión | Cota, castor arquitecto | El Arquitecto Torcido |
+| Intermedio 2 | El archivo del cartógrafo | Índigo, búho cartógrafo | El Caos de los «Cube.047» |
+| Intermedio 3 | La galería | Marco, camaleón curador | El Crítico Implacable |
 
 ## 4. Los cuatro niveles
 

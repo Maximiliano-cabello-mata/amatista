@@ -7,6 +7,7 @@ import { agruparPorRuta } from '../catalogo/agrupar';
 import { CristalLogo } from '../components/Iconos';
 import LogoCurso from '../components/LogoCurso';
 import TarjetaCurso from '../components/TarjetaCurso';
+import MundosModulos from '../components/temas/MundosModulos';
 import { cifrasCatalogo, cursosParaContinuar, tieneAvance } from '../components/panel/datos';
 import { FORMULA } from '../components/panel/formula';
 import { IconoDispositivo, IconoPuntero, IconoRacha } from '../components/panel/IconosPanel';
@@ -185,6 +186,19 @@ function Inicio() {
         )}
       </section>
 
+      {/* Un mundo por módulo */}
+      <section className="mt-16" aria-labelledby="inicio-mundos">
+        <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Un mundo por módulo</p>
+        <h2 id="inicio-mundos" className="mb-2 text-3xl font-extrabold text-white sm:text-4xl">
+          Cada módulo, una <span className="text-amatista-claro">aventura</span>
+        </h2>
+        <p className="mb-6 max-w-2xl text-texto/75">
+          Un escenario distinto, un guía que te da consejos y datos curiosos, y un jefe final que pierde vida con cada respuesta
+          correcta.
+        </p>
+        <MundosModulos cursos={cursos} />
+      </section>
+
       {/* La fórmula Amatista */}
       <section className="mt-16" aria-labelledby="inicio-formula">
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">El ciclo del cristal</p>
@@ -248,9 +262,12 @@ function Inicio() {
       )}
 
       <footer className="mt-16 flex flex-col gap-4 border-t border-white/5 pt-6 font-mono text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
-        <span className="flex items-center gap-2">
+        <span className="flex flex-wrap items-center gap-2">
           <CristalLogo className="h-5 w-5" />
           Amatista · plataforma offline-first de creación 3D
+          <span className="ml-1 inline-flex items-center gap-2 border-l border-white/10 pl-3">
+            con <LogoCurso logo="blender" className="h-4 w-5" decorativo={false} /> y <LogoCurso logo="aframe" className="h-4 w-5" decorativo={false} />
+          </span>
         </span>
         <nav aria-label="Enlaces del pie">
           <ul className="flex flex-wrap gap-x-5 gap-y-2 uppercase tracking-widest">

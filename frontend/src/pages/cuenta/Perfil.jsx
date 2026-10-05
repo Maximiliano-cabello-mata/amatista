@@ -180,7 +180,7 @@ function CerrarSesiones() {
         <button
           type="button"
           onClick={salir}
-          className="corte-poly-sm bg-amatista px-5 py-2.5 font-bold uppercase tracking-widest text-white hover:brightness-110"
+          className="corte-poly-sm destello bg-amatista px-5 py-2.5 font-bold uppercase tracking-widest text-white hover:brightness-110"
         >
           Cerrar sesión
         </button>
@@ -226,7 +226,7 @@ function Perfil() {
       <PaginaCuenta titulo="Tu perfil" descripcion="Entra con tu cuenta para ver y editar tus datos.">
         <a
           href={rutaEntrar(rutas.perfil)}
-          className="corte-poly-sm block bg-amatista px-6 py-3 text-center font-extrabold uppercase tracking-widest text-white hover:brightness-110"
+          className="corte-poly-sm destello block bg-amatista px-6 py-3 text-center font-extrabold uppercase tracking-widest text-white hover:brightness-110"
         >
           Entrar ▶
         </a>

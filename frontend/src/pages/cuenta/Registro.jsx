@@ -21,7 +21,7 @@ function Registro({ consulta = {} }) {
         <p className="text-texto/80">
           Entraste como <strong className="text-white">{usuario.nombre || usuario.email}</strong>.
         </p>
-        <a href={rutas.panel} className="corte-poly-sm mt-6 block bg-amatista px-6 py-3 text-center font-extrabold uppercase tracking-widest text-white hover:brightness-110">
+        <a href={rutas.panel} className="corte-poly-sm destello mt-6 block bg-amatista px-6 py-3 text-center font-extrabold uppercase tracking-widest text-white hover:brightness-110">
           Ir a mi panel ▶
         </a>
       </PaginaCuenta>

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { cursos } from '../../data/cursos';
-import { TEMAS, temaDelModulo, vidaDelJefe } from './temas';
+import { SPRITES } from './sprites';
+import { mensajesDeMascota, TEMAS, temaDelModulo, vidaDelJefe } from './temas';
 
 describe('temáticas por módulo', () => {
   it('cada módulo publicado tiene un tema distinto con su jefe', () => {
@@ -20,5 +21,25 @@ describe('temáticas por módulo', () => {
     expect(vidaDelJefe(5, 0, 80)).toMatchObject({ vida: 4, restante: 4, porcentaje: 100, derrotado: false });
     expect(vidaDelJefe(5, 3, 80)).toMatchObject({ restante: 1, porcentaje: 25, derrotado: false });
     expect(vidaDelJefe(5, 5, 80)).toMatchObject({ restante: 0, derrotado: true, criticos: 1 });
+  });
+
+  it('cada temática trae escenario, colores, mascota con sprite 10 × 10 y jefe con forma', () => {
+    for (const [id, tema] of Object.entries(TEMAS)) {
+      expect(tema.escena, id).toBeTruthy();
+      for (const color of ['acento', 'suave', 'cielo', 'suelo']) expect(tema.colores[color], `${id}.${color}`).toMatch(/^#[0-9A-F]{6}$/i);
+      expect(tema.mascota.consejos.length, id).toBeGreaterThan(0);
+      expect(tema.mascota.datos.length, id).toBeGreaterThan(0);
+      expect(['bloque', 'robusto', 'flotante', 'redondo', 'alto'], id).toContain(tema.jefe.forma);
+      expect(SPRITES[id], id).toHaveLength(10);
+      for (const fila of SPRITES[id]) expect(fila, id).toMatch(/^[.askwo]{10}$/);
+    }
+  });
+
+  it('las mascotas tienen nombres distintos y saludan primero', () => {
+    const nombres = Object.values(TEMAS).map((t) => t.mascota.nombre);
+    expect(new Set(nombres).size).toBe(nombres.length);
+    const mensajes = mensajesDeMascota(TEMAS.taller.mascota);
+    expect(mensajes[0].tipo).toBe('hola');
+    expect(mensajes.map((m) => m.tipo)).toContain('dato');
   });
 });

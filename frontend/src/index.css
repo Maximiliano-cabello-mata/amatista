@@ -88,6 +88,64 @@
 .animar-latido { animation: latido 2s ease-in-out infinite; }
 .animar-dibujar { stroke-dasharray: var(--largo, 200); animation: dibujar 1.2s ease-out both; }
 
+/* Escenarios de las temáticas (components/temas/Escenario.jsx) y mascotas.
+   Solo transform y opacity: el navegador no recalcula el diseño. */
+@keyframes esc-girar { to { transform: rotate(360deg); } }
+@keyframes esc-subir {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(-46px); opacity: 0; }
+}
+@keyframes esc-titilar { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+@keyframes esc-caer {
+  0% { transform: translateY(-14px); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translateY(84px); opacity: 0; }
+}
+@keyframes esc-barrer { 0%, 100% { transform: rotate(-14deg); } 50% { transform: rotate(14deg); } }
+@keyframes esc-rebotar {
+  0%, 100% { transform: translateY(-46px) scale(0.95, 1.05); }
+  48% { transform: translateY(0) scale(1, 1); }
+  55% { transform: translateY(0) scale(1.2, 0.8); }
+}
+@keyframes esc-anillo { 0% { transform: scale(0.4); opacity: 0.9; } 100% { transform: scale(1.5); opacity: 0; } }
+@keyframes esc-ruta { to { stroke-dashoffset: -40; } }
+@keyframes esc-flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes esc-pulso { 0%, 100% { opacity: 0.05; } 50% { opacity: 0.16; } }
+@keyframes pagina { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+.escenario * { transform-box: fill-box; transform-origin: center; }
+.esc-girar { animation: esc-girar 22s linear infinite; }
+.esc-girar-inverso { animation: esc-girar 16s linear infinite reverse; }
+.esc-girar-lento { animation: esc-girar 60s linear infinite; }
+.esc-subir { animation: esc-subir 3.2s ease-out infinite; }
+.esc-titilar { animation: esc-titilar 3.5s ease-in-out infinite; }
+.esc-caer { animation: esc-caer 4s ease-in infinite; }
+.escenario .esc-barrer { transform-box: view-box; animation: esc-barrer 9s ease-in-out infinite; }
+.escenario .esc-barrer-inverso { transform-box: view-box; animation: esc-barrer 11s ease-in-out infinite reverse; }
+.esc-rebotar { animation: esc-rebotar 1.6s ease-in infinite; transform-origin: 50% 100%; }
+.esc-anillo { animation: esc-anillo 3.3s ease-out infinite; }
+.esc-ruta { animation: esc-ruta 3s linear infinite; }
+.esc-flotar { animation: esc-flotar 3s ease-in-out infinite; }
+.esc-pulso { animation: esc-pulso 4s ease-in-out infinite; }
+.animar-pagina { animation: pagina 0.35s ease-out both; }
+
+/* Globo de la mascota: esquina recortada hacia el personaje. */
+.globo { clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 12px)); }
+
+/* Botones principales: un destello que cruza al pasar el ratón. */
+.destello { position: relative; overflow: hidden; }
+.destello::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.35) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+.destello:hover::after, .destello:focus-visible::after { transform: translateX(120%); }
+
 /* Barra de progreso con un destello que la recorre (solo mientras avanza). */
 .barra {
   position: relative;
@@ -139,11 +197,15 @@ html.ligero .barra > .relleno::after { animation: none; }
 html.ligero .barra > .relleno::after { display: none; }
 html.ligero [class*="shadow-["] { box-shadow: none; }
 html.ligero .fondo-pesado { display: none; }
+html.ligero .escenario *, html.ligero .esc-flotar { animation: none !important; }
+html.ligero .destello::after { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .animar-flotar, .animar-pulso, .animar-entrar, .animar-sacudir, .animar-acierto,
   .animar-aparecer, .animar-llama, .animar-latido, .animar-dibujar,
   .barra > .relleno::after { animation: none; }
+  .escenario *, .esc-flotar, .animar-pagina { animation: none !important; }
+  .destello::after { display: none; }
   .animar-dibujar { stroke-dasharray: none; }
   .elevar:hover, .elevar:focus-within { transform: none; }
   * { transition-duration: 0.01ms !important; }

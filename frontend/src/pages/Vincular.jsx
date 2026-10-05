@@ -29,7 +29,7 @@ function Vincular({ consulta }) {
           <p className="text-sm text-texto/80">Primero entra con tu cuenta; volverás aquí con el código listo.</p>
           <a
             href={rutaEntrar(volver)}
-            className="corte-poly-sm block bg-amatista px-6 py-3 text-center font-extrabold uppercase tracking-widest text-white hover:brightness-110"
+            className="corte-poly-sm destello block bg-amatista px-6 py-3 text-center font-extrabold uppercase tracking-widest text-white hover:brightness-110"
           >
             Entrar ▶
           </a>
