@@ -22,9 +22,9 @@ Diálogos: **Bienvenida** (intro de la práctica), **Así se hace este paso** (p
 
 En la **vista 3D**: la **tarjeta del acompañante** (paso N de M, progreso, qué hacer con teclas dibujadas y avisos que se desvanecen) y la **guía en la escena** (contornos verde/naranja/neón, regla, plano, piezas fantasma y flechas con etiquetas). Detalle en [07_guia_y_acompanamiento.md](07_guia_y_acompanamiento.md).
 
-## Nombre del descargable: Amatista Motor 3.2
+## Nombre del descargable: Amatista Motor 3.3
 
-Desde la 3.2 el add-on se llama **Amatista Motor** (`name` en `blender_manifest.toml`). La plataforma lo descarga como `Amatista-Motor-3.2-<sistema>.zip`, con la carpeta «Amatista Motor 3.2» (instalador, `amatista-3.2.0.zip` y LEEME). El servidor arma el paquete al vuelo con el código que tiene, así que entrega siempre la versión de su copia del repositorio; `GET /api/addon/v1/estado` devuelve `nombre` y `version_addon`, y la página «Mi Blender» avisa si el servidor entrega una versión vieja.
+Desde la 3.2 el add-on se llama **Amatista Motor** (`name` en `blender_manifest.toml`). La plataforma lo descarga como `Amatista-Motor-3.3-<sistema>.zip`, con la carpeta «Amatista Motor 3.3» (instalador, `amatista-3.3.0.zip` y LEEME). El servidor arma el paquete al vuelo con el código que tiene, así que entrega siempre la versión de su copia del repositorio; `GET /api/addon/v1/estado` devuelve `nombre` y `version_addon`, y la página «Mi Blender» avisa si el servidor entrega una versión vieja.
 
 ## Temática por práctica (add-on 3.2)
 

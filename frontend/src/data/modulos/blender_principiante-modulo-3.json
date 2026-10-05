@@ -75,7 +75,7 @@
         "isLocked": true,
         "formula": "practica",
         "ficha": {
-          "objetivo": "Estiras un cubo, aplicas su escala y le pones Subdivisión: ves en vivo cómo un modificador cambia la forma sin tocar la malla.",
+          "objetivo": "Aplastas un cubo para hacer un cojín, aplicas su escala y le pones Subdivisión: ves en vivo cómo un modificador redondea la forma sin tocar la malla.",
           "habilidades": [
             "bl-modificadores",
             "bl-aplicar-escala"
@@ -91,7 +91,7 @@
           "offline": false,
           "comprobacion": [
             "Agrega un cubo",
-            "Estíralo a lo largo",
+            "Aplástalo como cojín",
             "Aplica la escala",
             "Ponle Subdivisión"
           ]
@@ -99,7 +99,7 @@
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### En Blender, conectado\nLos modificadores son filtros que no rompen nada. Estira un cubo, aplica la escala y ponle Subdivisión.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+            "body": "### En Blender, conectado\nLos modificadores son filtros que no rompen nada. Aplasta un cubo como cojín (S Z 0.3), aplica la escala y ponle Subdivisión: verás cómo se redondea.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
           },
           {
             "type": "blender_practice",
@@ -110,7 +110,7 @@
             "minutes": 8,
             "steps": [
               "Agrega un cubo",
-              "Estíralo a lo largo",
+              "Aplástalo como cojín",
               "Aplica la escala",
               "Ponle Subdivisión"
             ],

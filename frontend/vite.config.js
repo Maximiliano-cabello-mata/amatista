@@ -50,8 +50,16 @@ export default defineConfig({
           '**/aframe-master*.js',
           // Alfabetos que no usamos: el navegador no los descarga y no deben precachearse.
           '**/*-{cyrillic,cyrillic-ext,greek,vietnamese}-*.woff2',
+          // Planos de los modelos de referencia: se guardan al verlos (abajo).
+          '**/plano-*.svg',
         ],
         runtimeCaching: [
+          {
+            // Imagen y plano de «Así se debe ver» (practices/blender/*/referencia.jpg y plano.svg).
+            urlPattern: ({ url }) => /\/assets\/(referencia|plano)-[^/]+\.(jpg|svg)$/.test(url.pathname),
+            handler: 'CacheFirst',
+            options: { cacheName: 'amatista-referencias', expiration: { maxEntries: 60 } },
+          },
           {
             urlPattern: ({ url }) => url.pathname.startsWith('/assets/aframe-master'),
             handler: 'CacheFirst',
