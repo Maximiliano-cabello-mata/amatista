@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-05 00:11 · `main` en `573ea89`
+Último commit: 2026-10-05 00:19 · `main` en `573ea89`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -21,18 +21,18 @@
 
 ## 📌 Kanban
 
-| 📋 Pendiente (37) | 🔨 En progreso (10) | 👀 Revisión (1) | ✅ Hecho (22) |
+| 📋 Pendiente (37) | 🔨 En progreso (9) | 👀 Revisión (2) | ✅ Hecho (22) |
 |---|---|---|---|
 | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)<br><sub>v2.2.0 · repo</sub> | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> |
-| **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> | **T-029** Prueba de punta a punta en navegador (anónimo → cuenta → offline → admin publica → acople)<br><sub>v2.2.0 · lanzamiento</sub> |   | **T-006** Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)<br><sub>v2.2.0 · api</sub> |
+| **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> | **T-029** Prueba de punta a punta en navegador (anónimo → cuenta → offline → admin publica → acople)<br><sub>v2.2.0 · lanzamiento</sub> | **T-074** Prácticas detectadas al arrancar el servidor, y temática completa por módulo: escenario animado, mascota original, jefe con silueta propia y add-on 3.2 con la misma temática<br><sub>v3.3.0 · pwa</sub> | **T-006** Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)<br><sub>v2.2.0 · api</sub> |
 | **T-008** Proteger main (solo cambios por PR)<br><sub>v2.2.0 · repo</sub> | **T-052** Comprobaciones locales de la lección 03 en el add-on<br><sub>v3.3.0 · blender</sub> |   | **T-014** Esquema incremental 002–004 (8 tablas, 20 GB) y diagnóstico ampliado<br><sub>v2.2.0 · db</sub> |
 | **T-023** Respaldo de Oracle y restauración ensayada en pruebas<br><sub>v2.2.0 · db</sub> | **T-055** Aplicar 007 en Oracle y publicar la práctica de la mesa y el módulo 2 (después del piloto)<br><sub>v3.3.0 · db</sub> |   | **T-015** Catálogo dinámico y progreso adaptable (acople, replaces, % recalculado)<br><sub>v2.2.0 · pwa</sub> |
 | **T-024** Publicar el frontend en Cloudflare Pages contra la API HTTPS<br><sub>v2.2.0 · pwa</sub> | **T-056** Probar el paquete de instalación en Windows y macOS reales<br><sub>v3.3.0 · blender</sub> |   | **T-016** Panel del alumno (nivel, racha, retos, actividad e insignias)<br><sub>v2.2.0 · pwa</sub> |
 | **T-025** Pruebas P01–P10 del plan de lanzamiento con evidencia<br><sub>v2.2.0 · lanzamiento</sub> | **T-060** Guardar en Oracle las ayudas usadas en cada práctica (008 aditivo) y mostrarlas al profesor<br><sub>v3.4.0 · db</sub> |   | **T-017** Eventos de aprendizaje y métricas de alumnos activos (API)<br><sub>v2.2.0 · api</sub> |
-| **T-026** Piloto por invitación con 10 alumnos (8 de octubre, 18:00)<br><sub>v2.2.0 · lanzamiento</sub> | **T-074** Prácticas detectadas al arrancar el servidor, y temática completa por módulo: escenario animado, mascota original, jefe con silueta propia y add-on 3.2 con la misma temática<br><sub>v3.3.0 · pwa</sub> |   | **T-019** Contenido administrable (API borrador → publicado, validación y CLI)<br><sub>v2.2.0 · contenido</sub> |
-| **T-027** Beta pública con cohorte inicial de 30 cuentas (15 de octubre, 18:00)<br><sub>v2.2.0 · lanzamiento</sub> | **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas)<br><sub>v3.3.0 · blender</sub> |   | **T-021** Bloques interactivos en las lecciones (7 tipos nuevos)<br><sub>v2.2.0 · pwa</sub> |
-| **T-028** Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)<br><sub>v2.2.0 · lanzamiento</sub> | **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)<br><sub>v3.4.0 · db</sub> |   | **T-022** Aplicar la Fórmula Amatista al módulo 1 (bloques interactivos en los JSON)<br><sub>v2.2.0 · contenido</sub> |
-| **T-030** Revisión de seguridad e integridad (permisos, tokens, XSS en contenido, fusión y sincronización)<br><sub>v2.2.0 · api</sub> | **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)<br><sub>v3.4.0 · contenido</sub> |   | **T-033** Importar el catálogo a Oracle (herramientas/contenido.py importar)<br><sub>v2.2.0 · contenido</sub> |
+| **T-026** Piloto por invitación con 10 alumnos (8 de octubre, 18:00)<br><sub>v2.2.0 · lanzamiento</sub> | **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas)<br><sub>v3.3.0 · blender</sub> |   | **T-019** Contenido administrable (API borrador → publicado, validación y CLI)<br><sub>v2.2.0 · contenido</sub> |
+| **T-027** Beta pública con cohorte inicial de 30 cuentas (15 de octubre, 18:00)<br><sub>v2.2.0 · lanzamiento</sub> | **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)<br><sub>v3.4.0 · db</sub> |   | **T-021** Bloques interactivos en las lecciones (7 tipos nuevos)<br><sub>v2.2.0 · pwa</sub> |
+| **T-028** Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)<br><sub>v2.2.0 · lanzamiento</sub> | **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)<br><sub>v3.4.0 · contenido</sub> |   | **T-022** Aplicar la Fórmula Amatista al módulo 1 (bloques interactivos en los JSON)<br><sub>v2.2.0 · contenido</sub> |
+| **T-030** Revisión de seguridad e integridad (permisos, tokens, XSS en contenido, fusión y sincronización)<br><sub>v2.2.0 · api</sub> |   |   | **T-033** Importar el catálogo a Oracle (herramientas/contenido.py importar)<br><sub>v2.2.0 · contenido</sub> |
 | **T-032** Configurar SMTP y primer admin en el servidor (confirmación y recuperación por correo)<br><sub>v2.2.0 · api</sub> |   |   | **T-034** Estructura de niveles, habilidades y versiones de Blender en código y esquema (005)<br><sub>v3.0.0 · db</sub> |
 | **T-038** Elegir y verificar la versión principal de Blender (LTS)<br><sub>v3.0.0 · contenido</sub> |   |   | **T-035** Ejecutar 005 y 006 en producción y sembrar los niveles<br><sub>v3.0.0 · db</sub> |
 | **T-039** Inventario de lecciones existentes → niveles y fichas<br><sub>v3.0.0 · contenido</sub> |   |   | **T-036** Herramientas de autor en Oracle (006, vistas y paquete AMATISTA_AUTOR)<br><sub>v3.0.0 · db</sub> |
@@ -205,9 +205,9 @@
   - 🎯 Listo cuando: Recorrido de la mesa en modo Acompañado en Windows o macOS: tarjeta, guía 3D, «Hazlo conmigo» y diálogos se ven bien; capturas reales en docs/motor/etapas/img/
 - [x] **T-062** Motor v3 y add-on 3.0: plan de estudios de Blender en dos cursos (6 prácticas con teoría, repaso y vigilantes) · _hecho_ — commits: `34af6f3` (2026-10-04)
   - 🔎 Evidencia: docs/motor/etapas/etapa-3.md, docs/cursos/README.md; 29 casos de practices/blender/*/*/pruebas.json y addon/tests/en_blender.py en Blender 4.2 y 5.0
-- [x] **T-070** Curso de Blender unificado (una tarjeta por curso con árbol de niveles), teoría y Blender intercalados, Intermedio publicado, temáticas, jefe final y medallas · _hecho_ — commits: `28e135d` (2026-10-04), `86acbc9` (2026-10-04), `191a888` (2026-10-04)
+- [x] **T-070** Curso de Blender unificado (una tarjeta por curso con árbol de niveles), teoría y Blender intercalados, Intermedio publicado, temáticas, jefe final y medallas · _hecho_ — commits: `191a888` (2026-10-04)
   - 🔎 Evidencia: docs/cursos/03_ruta_de_aprendizaje_blender.md, docs/plataforma/07_herramientas_graficas.md; 18 prácticas con pruebas.json en verde; vitest, pytest (engine, backend, addon)
-- [ ] **T-074** Prácticas detectadas al arrancar el servidor, y temática completa por módulo: escenario animado, mascota original, jefe con silueta propia y add-on 3.2 con la misma temática · _en-progreso_ — commits: `91fabfc` (2026-10-05)
+- [ ] **T-074** Prácticas detectadas al arrancar el servidor, y temática completa por módulo: escenario animado, mascota original, jefe con silueta propia y add-on 3.2 con la misma temática · _revision_ — commits: `91fabfc` (2026-10-05), `9d01521` (2026-10-05)
   - 🔎 Evidencia: practices/blender/temas.json; backend/tests/test_practicas_al_arrancar.py; frontend/src/components/temas/; docs/plataforma/07_herramientas_graficas.md
 - [ ] **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas) · _en-progreso_ — commits: `34af6f3` (2026-10-04)
   - 🔎 Evidencia: docs/motor/referencia/08_practicas_v3_y_herramientas.md; engine/tests/test_v3_herramientas.py
