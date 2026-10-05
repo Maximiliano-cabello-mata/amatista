@@ -2,7 +2,7 @@
 
 Cada script del repositorio: qué hace, desde dónde se ejecuta, todos sus subcomandos y opciones (leídos del `argparse` o del código real) y ejemplos. Para desarrolladores y para quien administra el servidor.
 
-Actualizado: 4 de octubre de 2026 (main en c730c0e)
+Actualizado: 5 de octubre de 2026 (main en 2402549)
 
 | § | Herramienta | Se ejecuta desde |
 |---|---|---|
@@ -19,6 +19,13 @@ Actualizado: 4 de octubre de 2026 (main en c730c0e)
 | 11 | [`addon/herramientas/instalador/`](#11-addonherramientasinstalador) | dentro del paquete del alumno |
 | 12 | [`frontend/scripts/ilustraciones.mjs`](#12-frontendscriptsilustracionesmjs) | `frontend/` |
 | 13 | [Scripts npm del frontend](#13-scripts-npm-del-frontend) | `frontend/` |
+| 14 | [`engine/herramientas/referencias.py`](#14-engineherramientasreferenciaspy) | raíz (con `bpy`) |
+| 15 | [`engine/herramientas/formato_json.py`](#15-engineherramientasformato_jsonpy) | raíz |
+| 16 | [`backend/herramientas/auditoria_seguridad.py`](#16-backendherramientasauditoria_seguridadpy) | `backend/` |
+| 17 | [`backend/herramientas/rendimiento.py`](#17-backendherramientasrendimientopy) | `backend/` (nunca contra producción) |
+| 18 | [`frontend/scripts/rendimiento.mjs`](#18-frontendscriptsrendimientomjs) | `frontend/` |
+| 19 | [`backend/herramientas/verificar_licencia.py`](#19-backendherramientasverificar_licenciapy) | `backend/` (en la VM) |
+| — | `backend/herramientas/migrar.py` y `engine/herramientas/practicas.py` | ver [migración](../base-de-datos/03_migracion.md) y [prácticas v3](../motor/referencia/08_practicas_v3_y_herramientas.md) |
 
 Las herramientas de Python del backend usan la base configurada en `backend/.env` (o `DATABASE_URL` en la línea): actívalas con el venv del backend (`source venv/bin/activate`). Ver [01 · Entorno local](01_entorno_local.md).
 
@@ -271,10 +278,75 @@ Definidos en [`frontend/package.json`](../../frontend/package.json). Desde `fron
 | Comando | Ejecuta | Para qué |
 |---|---|---|
 | `npm run dev` | `vite` | Desarrollo con recarga en `http://localhost:5173` (sin service worker) |
-| `npm run build` | `vite build` | Producción en `dist/` con manifest y service worker (CI lo exige) |
+| `npm run build` | `vite build` y después `node scripts/revisar-publicacion.mjs` (`postbuild`) | Producción en `dist/` con manifest y service worker (CI lo exige). La revisión falla si `dist/` trae mapas de fuente, rutas locales, comentarios de desarrollo o secretos ([protección del código](../seguridad/02_proteccion_del_codigo.md)) |
 | `npm run preview` | `vite preview` | Sirve `dist/` para probar la PWA instalada y el modo sin conexión |
 | `npm run lint` | `eslint .` | ESLint (`eslint.config.js`); CI lo exige |
 | `npm test` | `vitest run` | Pruebas unitarias ([04 §2](04_pruebas_y_ci.md#2-frontend-vitest)); CI lo exige |
 | `npm run ilustraciones` | `node scripts/ilustraciones.mjs` | §12 |
 
 Para Vitest en modo observador: `npx vitest`. Estructura del frontend: [frontend/README.md](../../frontend/README.md).
+
+## 14. `engine/herramientas/referencias.py`
+
+Construye en Blender el **modelo de referencia** de cada práctica (bloque `reference` del `practica.json`), lo califica con el propio motor (debe sacar 100 % en `figure.resembles`) y genera `referencia.jpg` (render Cycles 800×500) y `plano.svg` (tres vistas con medidas aproximadas). Actualiza `practices/blender/referencias.json`. Necesita `bpy` (Blender como módulo de Python). Detalle: [modelo de referencia](../motor/referencia/10_modelo_de_referencia.md).
+
+| Opción | Por defecto | Qué hace |
+|---|---|---|
+| `practicas…` | todas con `reference` | Carpetas (`m1-tren`) o ids de las prácticas a generar |
+| `--sin-render` | — | Solo arma, califica y escribe `plano.svg` (rápido, sin imagen) |
+| `--muestras N` | 24 | Muestras de Cycles (más = más calidad y más tiempo) |
+
+```bash
+pip install bpy
+python engine/herramientas/referencias.py m1-tren          # una práctica
+python engine/herramientas/referencias.py --sin-render     # solo planos
+```
+
+## 15. `engine/herramientas/formato_json.py`
+
+Reescribe archivos JSON con el formato compacto del repositorio (listas cortas en una línea, ancho 118) para que los cambios en las prácticas den diferencias pequeñas. Sin opciones: recibe las rutas.
+
+```bash
+python engine/herramientas/formato_json.py practices/blender/temas.json
+```
+
+## 16. `backend/herramientas/auditoria_seguridad.py`
+
+Recorre todas las rutas de la API (las lee de FastAPI) y les manda inyección SQL (clásica, UNION y a ciegas por tiempo), XSS, recorrido de rutas, cuerpos gigantes y fuerza bruta; revisa permisos con tres identidades y las cabeceras de seguridad. Termina con código 1 si hay hallazgos altos o críticos. Detalle: [auditoría](../seguridad/01_auditoria_2026-10-05.md).
+
+| Opción | Qué hace |
+|---|---|
+| `--url` | API a revisar (por defecto `http://localhost:8000`) |
+| `--token-admin`, `--token-alumno` | Sesiones de cuentas **de prueba** para la matriz de permisos |
+| `--salida archivo.json` | Guarda el informe |
+| `--sin-tiempo` | Omite la inyección a ciegas por tiempo (más rápido) |
+
+Bloquea cuentas a propósito (fuerza bruta): contra producción solo con cuentas de prueba, respaldo reciente y fuera de horario.
+
+## 17. `backend/herramientas/rendimiento.py`
+
+Pruebas de carga del backend en tres pasos. **Nunca contra producción.**
+
+| Subcomando | Opciones | Qué hace |
+|---|---|---|
+| `sembrar` | `--alumnos 2000 --eventos 60000` | Crea alumnos de prueba (`rend-…`, `es_prueba = 1`) con progreso y eventos; guarda sus sesiones en `rendimiento_tokens.json` (ignorado por git) |
+| `medir` | `--url`, `--concurrencia 1,10,40`, `--peticiones 200`, `--solo texto`, `--salida rendimiento.json` | Golpea cada ruta importante y anota p50, p95, p99, peticiones por segundo y errores |
+| `limpiar` | — | Borra todo lo que creó `sembrar` |
+
+## 18. `frontend/scripts/rendimiento.mjs`
+
+Mide la PWA compilada en una computadora y en un «teléfono modesto» (CPU 4 veces más lenta y 4G lenta): FCP, LCP, TBT, CLS, fps y KB descargados. Necesita Playwright y Chromium (`CHROMIUM=ruta`). Solo lee: se puede correr contra producción.
+
+```bash
+cd frontend && npm run build && npx vite preview --port 4173 &
+node scripts/rendimiento.mjs --url http://localhost:4173 --salida web.json --paginas "#/,#/panel"
+```
+
+## 19. `backend/herramientas/verificar_licencia.py`
+
+Dice de qué cuenta salió una copia del add-on (marca de agua `licencia.json` firmada con `AMATISTA_SECRETO_FIRMA`), si la firma es válida y si los archivos son los originales. Se corre en el servidor, donde está el secreto.
+
+```bash
+python herramientas/verificar_licencia.py Amatista-Motor-3.3-windows.zip
+```
+

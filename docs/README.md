@@ -52,7 +52,7 @@ Carpeta [`cursos/`](cursos/README.md): los cuatro cursos de Blender (Principiant
 
 Carpeta [`motor/`](motor/README.md).
 
-- Etapas: [1 · evalúa](motor/etapas/etapa-1.md) · [2 · acompaña paso a paso](motor/etapas/etapa-2.md) · [3 · enseña (motor v3, add-on 3.0)](motor/etapas/etapa-3.md)
+- Etapas: [1 · evalúa](motor/etapas/etapa-1.md) · [2 · acompaña paso a paso](motor/etapas/etapa-2.md) · [3 · enseña (motor v3, add-on 3.0)](motor/etapas/etapa-3.md) · [3.3 · modelo de referencia](motor/referencia/10_modelo_de_referencia.md)
 - Referencia: [arquitectura](motor/referencia/01_arquitectura.md) · [formato de práctica](motor/referencia/02_formato_de_practica.md) · [add-on](motor/referencia/03_addon.md) · [instalación del alumno](motor/referencia/04_instalacion_alumno.md) · [API](motor/referencia/05_api.md) · [modo desarrollador](motor/referencia/06_modo_desarrollador.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md) · [prácticas v3 y herramientas de autor](motor/referencia/08_practicas_v3_y_herramientas.md) · [validadores](motor/referencia/09_validadores.md) · [modelo de referencia](motor/referencia/10_modelo_de_referencia.md)
 - [Especificaciones originales](motor/especificaciones/) (historia: el concepto antes del código)
 

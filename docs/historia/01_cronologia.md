@@ -45,7 +45,13 @@ Actualizado: 4 de octubre de 2026 (main en `c730c0e`).
 | 3 oct | Reestructuración v3 | Niveles, versiones de Blender, herramientas de autor (005, 006), tablero nuevo | PR #12 (`2337fd5`) | `v3.0.0-alpha.1` (sin publicar) |
 | 3 oct | Amatista Engine 1 | Motor, add-on de Blender, Oracle 007, práctica de la mesa | PR #13 (`ec849d8`) | `v3.0.0-alpha.2` (sin publicar) |
 | 3 oct | Motor 2 y módulos | Guía paso a paso, acompañante, práctica al cierre de cada módulo, navegación fija | PR #14 (`d004071`) | `v3.0.0-alpha.3` (sin publicar) |
-| 4 oct | Documentación | Historia, manual del código, esquema SQL, manual del desarrollador, README nuevo | este PR | `v3.0.0-alpha.4` (propuesto) |
+| 4 oct | Documentación | Historia, manual del código, esquema SQL, manual del desarrollador, README nuevo | PR #15 (`fe209e0`) | `v3.0.0-alpha.4` (sin publicar) |
+| 4 oct | Contenido | Módulo 3 de Blender y la práctica del podio (luego archivados por el plan de estudios v3) | PR #16 (`81e9103`) | — |
+| 4 oct | Motor v3 | Plan de estudios en dos cursos, add-on 3.0, Oracle 008/009, migración portable, dominio | PR #17 (`34af6f3`) | `v3.0.0-alpha.5` (sin publicar) |
+| 4 oct | Curso unificado | Una tarjeta por curso con niveles, Intermedio publicado, jefes y medallas | PR #18 (`191a888`) | `v3.0.0-alpha.6` (sin publicar) |
+| 4 oct | Temáticas | Un mundo por módulo, mascotas originales, Amatista Motor 3.2, prácticas registradas al arrancar | PR #19 (`927248c`) | `v3.0.0-alpha.7` (sin publicar) |
+| 4 oct, noche | Seguridad, rendimiento y Motor 3.3 | Auditoría y rendimiento automáticos, modelo de referencia, personajes interactivos, plan de despliegue | PR #20 (`de22ee6`) | — |
+| 4 oct, noche | Historia | Archivo histórico de la plataforma | PR #22 (`4576463`), `main` en `2402549` | `v3.0.0-alpha.8` (sin publicar) |
 
 ---
 
@@ -165,26 +171,34 @@ Ampliación, no reinicio: el curso se organiza por niveles y cada lección decla
 
 Esta entrega: toda la documentación organizada por secciones ([índice](../README.md)), esta cronología, el documento de ideas, la revisión de cómo era la plataforma en los commits antiguos, el [manual del código](../manual-del-codigo/README.md), el [esquema SQL](../base-de-datos/README.md), las [herramientas de la plataforma](../herramientas-de-la-plataforma.md), el [manual del desarrollador](../desarrollador/README.md), la [bitácora del día](../bitacora/2026-10-04_documentacion_completa.md) y el README de la raíz reescrito. Tag propuesto **`v3.0.0-alpha.4`**. No cambia el comportamiento de la plataforma.
 
+## Etapa 8 · Motor v3, cursos por niveles y temáticas (4 de octubre)
+
+En un solo día, cuatro entregas sobre el motor y los cursos. El **PR #17** (16:02) llevó el plan de estudios de Blender a dos cursos con el add-on 3.0 como aula (Aprender · Practicar · Mi curso), los scripts 008 y 009, `migrar.py` y el dominio `amatista-3d.me`. El **PR #18** (16:58) juntó todo en una tarjeta «Blender» con árbol de niveles, publicó Intermedio, intercaló teoría y Blender y agregó jefes finales y medallas. El **PR #19** (18:21) arregló que solo apareciera la práctica de la mesa (el servidor ahora registra las prácticas al arrancar) y dio a cada módulo su mundo, su mascota y su jefe, con el add-on renombrado **Amatista Motor 3.2**. Detalle: [bitácora del motor v3](../bitacora/2026-10-04_motor_v3_plan_de_estudios.md) y [bitácora de temáticas](../bitacora/2026-10-05_temas_y_motor_3_2.md).
+
+## Etapa 9 · Seguridad, rendimiento y Motor 3.3 (4 de octubre, noche)
+
+El **PR #20** (23:20, hora de México; 5 de octubre en UTC) respondió a un pedido largo de Maximiliano: auditoría de seguridad automática (1,449 ataques, 0 hallazgos tras los arreglos), informe de rendimiento con optimizaciones (catálogo con 40 alumnos de 747 a 77 ms), protección del código del add-on y de la PWA, **Motor 3.3** con modelo de referencia (las figuras deben tener sentido y las medidas son aproximadas), cada lección vestida con el mundo de su módulo y un personaje interactivo, y un [plan de despliegue por fases](../despliegue/2026-10-05_plan_de_despliegue.md). El **PR #22** (23:35, de Copilot) agregó el [archivo histórico](04_archivo_historico_hasta_hoy.md). Detalle: [bitácora](../bitacora/2026-10-05_seguridad_rendimiento_motor.md).
+
 ## Lo que viene
 
 | Fecha | Qué |
 |---|---|
 | 7 oct | Decisión del piloto ([plan de lanzamiento](../planeacion/2026-10-01_plan_lanzamiento.txt)) |
-| **8 oct** | **Piloto con la v2.2**: antes, servicio con HTTPS (T-003, T-005), SMTP (T-032), seguridad y prueba de punta a punta (T-029, T-030) |
-| después del piloto | Oracle 007 en producción y la mesa publicada (T-055), instalador en Windows y Mac reales (T-056), guía en Blender con GPU (T-059) |
+| **8 oct** | **Piloto con la v2.2**, sin tocar la VM antes; hasta el 7, solo la fase 0 del plan (Cloudflare, Pages, tags) |
+| después del piloto | Subir `main` y el Motor 3.3 a producción (T-078, fase 1 del [plan de despliegue](../despliegue/2026-10-05_plan_de_despliegue.md)), HTTPS con el dominio (T-065), instalador en Windows y Mac reales (T-056) |
 | 15 oct | Beta |
 | v3.x | Fase B (contenido por niveles, T-038 decide la LTS de Blender), «Mi primer espacio 3D», laboratorio GLB, especialidades y tutor IA |
 
 ## Números del proyecto
 
-| Dato | Valor (4 oct) |
+| Dato | Valor (5 oct, `main` en `2402549`) |
 |---|---|
-| Días con commits | 6 (27, 28 y 29 de septiembre; 1, 2 y 3 de octubre, en hora de México) |
+| Días con commits | 7 (27, 28 y 29 de septiembre; 1, 2, 3 y 4 de octubre, en hora de México) |
 | Commits en el repositorio original (`v2.0.1`) | 36 |
-| Commits en `main` | 82, de ellos 40 del bot del tablero |
-| PR fusionados en el repositorio oficial | 12 de 14 (#5 cerrado sin fusionar; #9 y #10 reunidos en #11) |
-| Scripts de Oracle | 7 (`001`–`007`); 18 tablas con 007 |
+| Commits en `main` | 176, de ellos 70 del bot del tablero |
+| PR fusionados en el repositorio oficial | 19 de 22 (#5 cerrado sin fusionar; #9 y #10 reunidos en #11; #21, del bot, cerrado) |
+| Scripts de Oracle | 9 (`001`–`009`); 18 tablas con 007 |
 | Tags publicados | `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.1` |
-| Tags preparados en `herramientas/crear-tags.sh` | `v2.2.0-alpha.2`, `v3.0.0-alpha.1`, `v3.0.0-alpha.2`, `v3.0.0-alpha.3`, `v3.0.0-alpha.4` |
+| Tags preparados en `herramientas/crear-tags.sh` | `v2.2.0-alpha.2` y `v3.0.0-alpha.1` a `v3.0.0-alpha.8` |
 
 Para reproducir cualquier dato: `TZ=America/Mexico_City git log --date=format-local:'%Y-%m-%d %H:%M' --format='%h %ad %an %s' v2.0.1` (historial original) y lo mismo con `main`.

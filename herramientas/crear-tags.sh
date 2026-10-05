@@ -12,7 +12,8 @@
 # v2.2.0-alpha.1 se creó a mano; v2.2.0-alpha.2 es el cierre del 2/10 (main con el panel de administración);
 # v3.0.0-alpha.1 a alpha.4 son las fusiones de la reestructuración, del motor, del motor
 # etapa 2 con la plataforma por módulos y de la documentación completa; alpha.5 a
-# alpha.7, motor v3, curso unificado y temáticas con Motor 3.2.
+# alpha.7, motor v3, curso unificado y temáticas con Motor 3.2; alpha.8, seguridad,
+# rendimiento y Motor 3.3 (main al 5 de octubre).
 # Es seguro ejecutarlo varias veces: los tags que ya existen se saltan.
 # =============================================================================
 set -euo pipefail
@@ -31,9 +32,8 @@ VERSIONES=(
   "v3.0.0-alpha.5|34af6f3|Motor v3: plan de estudios en dos cursos, add-on 3.0, Oracle 008/009, migración portable y dominio amatista-3d.me (PR #17)"
   "v3.0.0-alpha.6|191a888|Curso de Blender unificado: una tarjeta por curso, jefes, medallas y modo claro (PR #18)"
   "v3.0.0-alpha.7|927248c|Temáticas por módulo, mascotas y Amatista Motor 3.2; las prácticas se registran solas (PR #19)"
+  "v3.0.0-alpha.8|2402549|Seguridad y rendimiento, Motor 3.3 con modelo de referencia, personajes interactivos y plan de despliegue (PR #20 y #22)"
 )
-# v3.0.0-alpha.8 (seguridad, rendimiento, Motor 3.3 con modelo de referencia y
-# mundos por módulo) se agrega aquí con su commit de fusión cuando llegue a main.
 
 git fetch --quiet origin --tags
 

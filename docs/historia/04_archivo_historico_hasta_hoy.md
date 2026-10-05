@@ -2,7 +2,7 @@
 
 Resumen en lenguaje simple de cómo empezó Amatista, cuántas veces cambió y en qué se convirtió al 5 de octubre de 2026.
 
-Actualizado: 5 de octubre de 2026 (main en `34ed82d`).
+Actualizado: 5 de octubre de 2026 (main en `34ed82d`; revisado con `main` en `2402549`).
 
 ## 1) La idea inicial vs. lo que es hoy
 
@@ -26,9 +26,9 @@ Actualizado: 5 de octubre de 2026 (main en `34ed82d`).
 
 Tomando los cortes de versión del `CHANGELOG.md` y tags preparados:
 
-- **12 cambios de versión en total**:
+- **14 cambios de versión en total**:
   - **4 versiones base**: `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`.
-  - **8 pre-lanzamientos**: `v2.2.0-alpha.1`, `v2.2.0-alpha.2`, `v3.0.0-alpha.1` a `v3.0.0-alpha.8`.
+  - **10 pre-lanzamientos**: `v2.2.0-alpha.1`, `v2.2.0-alpha.2`, `v3.0.0-alpha.1` a `v3.0.0-alpha.8`.
 
 ### Cambios por etapa de producto
 
@@ -53,7 +53,7 @@ Según `docs/historia/02_ideas_y_como_se_implementaron.md`:
 4. **1 oct:** pasa al repositorio oficial (`v2.0.1`) y comienza la plataforma unificada.
 5. **1–3 oct:** llegan cuentas/roles, panel admin, reestructuración v3 y motor de prácticas con add-on.
 6. **4 oct:** se consolida la documentación y el plan técnico.
-7. **5 oct:** mejoras fuertes de seguridad, rendimiento, motor 3.3 y experiencia temática por módulo (`v3.0.0-alpha.8` propuesto).
+7. **5 oct:** mejoras fuertes de seguridad, rendimiento, motor 3.3 y experiencia temática por módulo (`v3.0.0-alpha.8`, preparado en `crear-tags.sh`).
 
 ## 6) Conclusión corta
 

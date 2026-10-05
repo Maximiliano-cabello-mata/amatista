@@ -55,7 +55,7 @@ Scopes de la guía: `pwa`, `api`, `db`, `ia`, `repo`. En el historial también a
 
 Guía completa: [tablero/README.md](../../tablero/README.md). Archivos: [`tablero/tareas.yml`](../../tablero/tareas.yml) (lo editan las personas), [`tablero/actualizar.py`](../../tablero/actualizar.py) (calcula), [`KANBAN.md`](../../KANBAN.md) (generado; **no se edita a mano ni se hace commit en ramas**) y [`tablero/historico/`](../../tablero/historico/) (tablero de la v2).
 
-**Crear una tarea**: agrégala en `tareas.yml` con el siguiente id libre (hoy el último es `T-069`, así que la siguiente es `T-070`), `titulo`, `version` (del `roadmap`) y `area`.
+**Crear una tarea**: agrégala en `tareas.yml` con el siguiente id libre (al 5 de octubre el último es `T-083`, así que la siguiente es `T-084`), `titulo`, `version` (del `roadmap`) y `area`.
 
 | Campo | Obligatorio | Efecto |
 |---|---|---|
