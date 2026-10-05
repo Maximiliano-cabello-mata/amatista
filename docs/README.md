@@ -17,9 +17,9 @@ Actualizado: 4 de octubre de 2026 (main en `c730c0e`). Etapa vigente: **v3 «Ree
 | 5 | [Manual del desarrollador](#5-manual-del-desarrollador) | Quien programa, prueba y entrega | [Tu primer día](desarrollador/README.md) |
 | 6 | [Base de datos](#6-base-de-datos) | Quien toca Oracle o los modelos | [Esquema SQL](base-de-datos/esquema.md) |
 | 7 | [Herramientas de la plataforma](#7-herramientas-de-la-plataforma) | Quien quiere saber de qué está hecha | [Herramientas](herramientas-de-la-plataforma.md) |
-| 8 | [Operación y despliegue](#8-operación-y-despliegue) | Quien mantiene el servidor | [Despliegue en OCI](despliegue/2026-10-04_despliegue_oci.md) |
+| 8 | [Operación y despliegue](#8-operación-y-despliegue) | Quien mantiene el servidor | [Plan de despliegue](despliegue/2026-10-05_plan_de_despliegue.md) |
 | 9 | [Dirección y decisiones](#9-dirección-y-decisiones) | Quien decide qué sigue | [Plan maestro v3](reestructuracion/00_plan_maestro.md) |
-| 10 | [Registros](#10-registros-bitácora-e-incidencias) | Quien busca qué pasó en una sesión o una falla | [Última bitácora](bitacora/2026-10-04_motor_v3_plan_de_estudios.md) |
+| 10 | [Registros](#10-registros-bitácora-e-incidencias) | Quien busca qué pasó en una sesión o una falla | [Última bitácora](bitacora/2026-10-05_seguridad_rendimiento_motor.md) |
 
 Fuera de `docs/`: [PROYECTO.md](../PROYECTO.md) (prioridades y forma de trabajo), [KANBAN.md](../KANBAN.md) (tablero generado), [CHANGELOG.md](../CHANGELOG.md) (versiones) y los README de cada componente: [frontend](../frontend/README.md), [backend](../backend/README.md), [engine](../engine/README.md), [addon](../addon/README.md), [practices](../practices/README.md), [tablero](../tablero/README.md).
 
@@ -52,7 +52,7 @@ Carpeta [`cursos/`](cursos/README.md): los cuatro cursos de Blender (Principiant
 Carpeta [`motor/`](motor/README.md).
 
 - Etapas: [1 · evalúa](motor/etapas/etapa-1.md) · [2 · acompaña paso a paso](motor/etapas/etapa-2.md) · [3 · enseña (motor v3, add-on 3.0)](motor/etapas/etapa-3.md)
-- Referencia: [arquitectura](motor/referencia/01_arquitectura.md) · [formato de práctica](motor/referencia/02_formato_de_practica.md) · [add-on](motor/referencia/03_addon.md) · [instalación del alumno](motor/referencia/04_instalacion_alumno.md) · [API](motor/referencia/05_api.md) · [modo desarrollador](motor/referencia/06_modo_desarrollador.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md) · [prácticas v3 y herramientas de autor](motor/referencia/08_practicas_v3_y_herramientas.md) · [validadores](motor/referencia/09_validadores.md)
+- Referencia: [arquitectura](motor/referencia/01_arquitectura.md) · [formato de práctica](motor/referencia/02_formato_de_practica.md) · [add-on](motor/referencia/03_addon.md) · [instalación del alumno](motor/referencia/04_instalacion_alumno.md) · [API](motor/referencia/05_api.md) · [modo desarrollador](motor/referencia/06_modo_desarrollador.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md) · [prácticas v3 y herramientas de autor](motor/referencia/08_practicas_v3_y_herramientas.md) · [validadores](motor/referencia/09_validadores.md) · [modelo de referencia](motor/referencia/10_modelo_de_referencia.md)
 - [Especificaciones originales](motor/especificaciones/) (historia: el concepto antes del código)
 
 ## 4. Manual del código
@@ -92,6 +92,8 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 
 ## 8. Operación y despliegue
 
+- **[Plan de despliegue (5 de octubre)](despliegue/2026-10-05_plan_de_despliegue.md)**: el orden de trabajo desde hoy hasta HTTPS, por fases y sin tocar la VM antes del piloto.
+- [Auditoría de seguridad](seguridad/01_auditoria_2026-10-05.md), [protección del código del add-on](seguridad/02_proteccion_del_codigo.md) e [informe de rendimiento](rendimiento/2026-10-05_informe.md).
 - [Dominio amatista-3d.me con Cloudflare](despliegue/2026-10-04_dominio_amatista-3d.md): DNS, certificados, PWA en Pages, API detrás del proxy y apéndice Fly.io. Registro de la compra: [dominio y SSL](despliegue/2026-10-04_dominio_y_dns-v2.md).
 - [Despliegue en OCI](despliegue/2026-10-04_despliegue_oci.md): VM, servicio systemd, HTTPS con Caddy, PWA, SMTP y actualizaciones.
 - [Oracle paso a paso (002–004)](despliegue/2026-10-02_oracle_paso_a_paso.md) y [manual de Oracle (005–007)](reestructuracion/02_manual_oracle.md)
