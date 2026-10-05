@@ -170,7 +170,7 @@ function Inicio() {
       </ul>
 
       {/* Catálogo */}
-      <section className="revelar mt-16" aria-labelledby="inicio-cursos">
+      <section className="revelar diferido mt-16" aria-labelledby="inicio-cursos">
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Catálogo</p>
         <h2 id="inicio-cursos" className="mb-6 text-3xl font-extrabold text-white sm:text-4xl">
           Elige tu <span className="text-amatista-claro">curso</span>
@@ -187,7 +187,7 @@ function Inicio() {
       </section>
 
       {/* Un mundo por módulo */}
-      <section className="revelar mt-16" aria-labelledby="inicio-mundos">
+      <section className="revelar diferido mt-16" aria-labelledby="inicio-mundos">
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Un mundo por módulo</p>
         <h2 id="inicio-mundos" className="mb-2 text-3xl font-extrabold text-white sm:text-4xl">
           Cada módulo, una <span className="text-amatista-claro">aventura</span>
@@ -200,7 +200,7 @@ function Inicio() {
       </section>
 
       {/* La fórmula Amatista */}
-      <section className="revelar mt-16" aria-labelledby="inicio-formula">
+      <section className="revelar diferido mt-16" aria-labelledby="inicio-formula">
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">El ciclo del cristal</p>
         <h2 id="inicio-formula" className="text-3xl font-extrabold text-white sm:text-4xl">
           Cómo aprendes en <span className="text-amatista-claro">Amatista</span>

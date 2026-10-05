@@ -520,6 +520,19 @@ button:not(:disabled):active, a.corte-poly-sm:active { transform: translateY(1px
 }
 .elevar:hover::before { transform: translateX(100%); }
 
+/* Secciones de la portada fuera de la pantalla: el navegador no las pinta
+   hasta que se acercan (en un teléfono modesto, la portada pintaba los nueve
+   mundos animados al cargar). contain-intrinsic-size guarda el alto para que
+   la barra de desplazamiento no salte. */
+.diferido {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
+.diferido--corto {
+  contain-intrinsic-size: auto 360px;
+}
+
 /* Modo ligero: equipos con poca memoria o pocos núcleos, ahorro de datos o
    movimiento reducido (lo decide main.jsx al arrancar). Se apagan las
    animaciones continuas, los destellos y las sombras grandes; el diseño no
