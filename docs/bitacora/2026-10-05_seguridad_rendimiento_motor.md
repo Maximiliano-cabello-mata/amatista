@@ -61,9 +61,14 @@ La plataforma sigue siendo PWA. El build ya salía minificado y sin mapas de fue
 - `temas.json`: charla y reacciones para las 11 mascotas (también en el add-on).
 - Animaciones de entrada al hacer scroll, botones con presión, brillo en tarjetas, subrayado animado de títulos. Todo se apaga en modo ligero y con «reducir movimiento».
 
+### Personaje de cada módulo (aclaración de Maximiliano, 03:30)
+
+El personaje de cada módulo ya no es un dibujo quieto: `Personaje.jsx` lo hace parpadear, seguir el puntero con la mirada, estirarse o dar saltitos solo, y al tocarlo responde con una acción distinta cada vez (salto, giro, baile, saludo) y chispas del color del módulo. En la página del curso camina de un lado a otro por su carril y al tocarlo cuenta otra cosa; en la lección celebra los aciertos, se pone triste con un fallo y da una voltereta al terminar; en el examen festeja cada golpe al jefe; en la portada mira al puntero y saluda al pasar encima. Solo anima transform y opacity (se quitó un `drop-shadow` que costaba cuadros) y se apaga en modo ligero y con «reducir movimiento».
+
 ### Despliegue
 
 - `docs/despliegue/2026-10-05_plan_de_despliegue.md`: fase 0 (hasta el 7/10, sin tocar la VM), piloto, fase 1 (actualizar), fase 2 (HTTPS), fase 3 (correo), fase 4 (auditoría contra producción, HSTS, repositorio privado).
+- Sección «Subir el Motor 3.3 a Oracle»: sin SQL nuevo; las prácticas entran como versión nueva al reiniciar, con consultas para comprobarlo antes y después, qué pasa con el progreso de los alumnos y cómo volver atrás.
 - Pasos exactos para el servidor: `/mnt/project-files/despliegue/2026-10-05_pasos_despliegue.md` (reemplaza `oracle/2026-10-05_pasos_motor_3_2.md`).
 - `backend/.env.example` con las variables nuevas; `crear-tags.sh` con `v3.0.0-alpha.5` a `alpha.7`.
 - Los dos hallazgos de despliegue de la revisión del 4 de octubre (rama de la VM y nombre de la unidad) ya estaban resueltos en `actualizar.sh`; quedó escrito en el plan.
@@ -80,7 +85,7 @@ T-075 (auditorías y optimización), T-076 (Motor 3.3) y T-077 (mundos y mascota
 | Motor | pytest 119 (19 nuevas de figuras) |
 | Add-on | pytest 36; `en_blender.py` con bpy 5.0.1: panel con la imagen de referencia |
 | Prácticas | 71 de 71 casos de `pruebas.json` |
-| Frontend | vitest 183, ESLint limpio, build correcto |
+| Frontend | vitest 186, ESLint limpio, build correcto |
 | Oracle real (Free 23) | Sincronización «0 nuevas, 13 actualizadas»; intento del tren calificado 100 % por la API; auditoría 0 hallazgos |
 
 ## Pendiente para Maximiliano

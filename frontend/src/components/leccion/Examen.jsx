@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { XP_POR_LECCION } from '../../progreso/reglas';
 import Escenario from '../temas/Escenario';
 import Jefe from '../temas/Jefe';
-import { SpriteMascota } from '../temas/Mascota';
+import Personaje from '../temas/Personaje';
 import { TEMAS, vidaDelJefe } from '../temas/temas';
 
 // Mezcla con semilla: el mismo intento da siempre el mismo orden (función pura).
@@ -63,7 +63,7 @@ function Arena({ tema, vida, golpeado, fallosPermitidos, fallos }) {
           <span className="globo bg-base/85 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-white/80">
             {vida.derrotado ? '¡Lo lograste!' : golpeado ? '¡Otro golpe!' : '¡Tú puedes!'}
           </span>
-          <SpriteMascota tema={tema} className={`h-9 w-9 ${golpeado || vida.derrotado ? 'animar-aparecer' : 'esc-flotar'}`} />
+          <Personaje tema={tema} interactivo={false} forzar={vida.derrotado ? 'voltereta' : golpeado ? 'festejo' : ''} className="personaje--mini" />
         </p>
       )}
       <div className="relative flex items-center gap-4">

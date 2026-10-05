@@ -2,7 +2,7 @@
 // escenario, su mascota y el jefe que espera al final.
 import { rutas } from '../../rutas';
 import Escenario from './Escenario';
-import { SpriteMascota } from './Mascota';
+import Personaje from './Personaje';
 import { mundosDelCatalogo } from './temas';
 
 function MundosModulos({ cursos }) {
@@ -19,7 +19,7 @@ function MundosModulos({ cursos }) {
             <Escenario tema={tema} className="pointer-events-none absolute inset-0 h-full w-full opacity-60 transition-opacity group-hover:opacity-90" />
             <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-base/95 via-base/50 to-transparent" aria-hidden="true" />
             <span className="relative flex items-end gap-3 pt-10">
-              <SpriteMascota tema={tema} className="esc-flotar h-12 w-12 shrink-0" />
+              <Personaje tema={tema} interactivo={false} className="personaje--chico shrink-0" />
               <span className="min-w-0">
                 <span className={`block truncate font-mono text-[10px] uppercase tracking-[0.15em] ${tema.texto}`}>
                   {curso.ruta === 'blender' ? curso.nivel : curso.titulo} · Módulo {modulo.numero}
