@@ -217,7 +217,7 @@ function BarraSuperior({ ruta, hash = '' }) {
               !enCuenta && (
                 <a
                   href={rutaEntrar(hash)}
-                  className="corte-poly-sm block bg-neon px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-base hover:brightness-110"
+                  className="corte-poly-sm destello block bg-neon px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-base hover:brightness-110"
                 >
                   Entrar
                 </a>

@@ -3,7 +3,11 @@ import { useCatalogo } from '../catalogo/contexto';
 import { IconoCandado } from '../components/Iconos';
 import BloqueContenido from '../components/leccion/BloqueContenido';
 import Examen from '../components/leccion/Examen';
+import Escenario from '../components/temas/Escenario';
+import Mascota from '../components/temas/Mascota';
 import { temaDelModulo } from '../components/temas/temas';
+import LogoCurso from '../components/LogoCurso';
+import { logoDeCurso } from '../components/estiloCurso';
 import { esPracticaBlender } from '../modulos/practica';
 import Figura from '../components/leccion/Figura';
 import { actividadesDe } from '../components/leccion/interactivos/logica';
@@ -27,7 +31,7 @@ function Aviso({ titulo, texto, enlace, textoEnlace }) {
       <p className="mt-3 text-texto/75">{texto}</p>
       <a
         href={enlace}
-        className="corte-poly-sm mt-8 inline-block bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
+        className="corte-poly-sm destello mt-8 inline-block bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
       >
         {textoEnlace}
       </a>
@@ -121,7 +125,7 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, res
             onClick={continuar}
             disabled={bloqueado}
             aria-describedby={completada ? undefined : `estado-${leccion.id}`}
-            className="corte-poly-sm bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white transition-[filter] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+            className="corte-poly-sm destello bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white transition-[filter] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {textoBoton}
           </button>
@@ -211,8 +215,8 @@ function Leccion({ cursoId, leccionId }) {
   return (
     <main className="mx-auto max-w-3xl px-4 pb-24 pt-6 sm:px-6">
       <nav className="mb-4 flex items-center justify-between gap-3 font-mono text-xs uppercase tracking-widest">
-        <a href={rutas.curso(curso.id)} className="text-white/50 hover:text-neon">
-          ◂ {curso.titulo} · Módulo {numeroModulo}
+        <a href={rutas.curso(curso.id)} className="inline-flex items-center gap-2 text-white/50 hover:text-neon">
+          ◂ <LogoCurso logo={logoDeCurso(curso)} className="h-4 w-5" /> {curso.titulo} · Módulo {numeroModulo}
         </a>
         <span className="shrink-0 text-white/40">
           Lección {indice + 1} de {lecciones.length}
@@ -240,22 +244,28 @@ function Leccion({ cursoId, leccionId }) {
         })}
       </ol>
 
-      <header className="animar-entrar mb-8">
-        <p className={`corte-poly-sm mb-4 inline-flex items-center gap-2 border ${tema.borde} bg-gradient-to-r ${tema.banda} px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] ${tema.texto}`}>
-          <span aria-hidden="true">◆</span> {tema.nombre}
-        </p>
-        <div className="mb-3 flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-widest">
-          {enBlender ? (
-            <span className="corte-poly-sm bg-blender/20 px-2.5 py-1 font-bold text-blender">En Blender · conectado</span>
-          ) : (
-            <span className="corte-poly-sm bg-amatista/25 px-2.5 py-1 text-amatista-claro">{TIPOS_LECCION[leccion.type]}</span>
-          )}
-          {duracion && <span className="corte-poly-sm bg-white/5 px-2.5 py-1 text-white/55">{duracion}</span>}
-          {completada && <span className="corte-poly-sm bg-emerald-400/10 px-2.5 py-1 text-emerald-300">✓ Completada</span>}
-          {nueva && <span className="corte-poly-sm bg-neon/15 px-2.5 py-1 font-bold text-neon">Nueva</span>}
+      <header className={`corte-poly animar-entrar relative mb-6 overflow-hidden border ${tema.borde} bg-superficie/80 px-5 pb-6 pt-5 sm:px-7`}>
+        <Escenario tema={tema} className="pointer-events-none absolute inset-0 h-full w-full opacity-80" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-base/90 via-base/60 to-transparent" aria-hidden="true" />
+        <div className="relative">
+          <p className={`corte-poly-sm mb-4 inline-flex items-center gap-2 border ${tema.borde} bg-gradient-to-r ${tema.banda} px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] ${tema.texto}`}>
+            <span aria-hidden="true">◆</span> {tema.nombre}
+          </p>
+          <div className="mb-3 flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-widest">
+            {enBlender ? (
+              <span className="corte-poly-sm bg-blender/20 px-2.5 py-1 font-bold text-blender">En Blender · conectado</span>
+            ) : (
+              <span className="corte-poly-sm bg-amatista/25 px-2.5 py-1 text-amatista-claro">{TIPOS_LECCION[leccion.type]}</span>
+            )}
+            {duracion && <span className="corte-poly-sm bg-white/5 px-2.5 py-1 text-white/55">{duracion}</span>}
+            {completada && <span className="corte-poly-sm bg-emerald-400/10 px-2.5 py-1 text-emerald-300">✓ Completada</span>}
+            {nueva && <span className="corte-poly-sm bg-neon/15 px-2.5 py-1 font-bold text-neon">Nueva</span>}
+          </div>
+          <h1 className="text-3xl font-extrabold leading-tight text-white sm:text-5xl">{leccion.title}</h1>
         </div>
-        <h1 className="text-3xl font-extrabold leading-tight text-white sm:text-5xl">{leccion.title}</h1>
       </header>
+
+      {leccion.type !== 'exam' && <Mascota key={`${modulo.id}-${indice}`} tema={tema} inicial={indice} className="mb-10" />}
 
       {leccion.cover && (
         <div className="mb-10">

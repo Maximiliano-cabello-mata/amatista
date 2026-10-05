@@ -42,7 +42,12 @@ El detalle de cada pieza está en el compendio (`/mnt/project-files/compendio/he
 |---|---|---|
 | Logos de curso | `frontend/src/assets/logos/*.svg`, `components/LogoCurso.jsx` | Logo de Blender y de A-Frame en tarjetas, página del curso y panel. |
 | Árbol de niveles | `pages/Curso.jsx`, `components/TarjetaCurso.jsx` | Un curso, sus niveles como ramas, cada uno con su estado. |
-| Temáticas por módulo | `components/temas/temas.js` | Colores, ambientación y jefe propio para cada módulo. |
+| Temáticas por módulo | `practices/blender/temas.json` (compartido con el add-on), `components/temas/temas.js` | Nombre, colores, escenario, mascota y jefe de cada módulo. |
+| Escenarios animados (v3.3) | `components/temas/Escenario.jsx` | Paisaje low poly por temática (engranes, chispas, estrellas, gotas, reflectores, carpa, aldea, mapa, galería, portal, cristales) detrás del módulo, la lección y la arena del jefe. |
+| Mascotas (v3.3) | `components/temas/Mascota.jsx`, `sprites.js` | Un personaje original en pixel art por módulo que da consejos y datos curiosos. |
+| Jefes con silueta propia (v3.3) | `components/temas/Jefe.jsx` | Cinco siluetas (bloque, robusto, flotante, redondo, alto) además de colores y adornos. |
+| «Un mundo por módulo» (v3.3) | `components/temas/MundosModulos.jsx` | En la portada, cada módulo con su escenario, guía y jefe. |
+| Destello y transición de página (v3.3) | `index.css` (`.destello`, `.animar-pagina`) | Brillo al pasar sobre los botones principales y fundido corto al cambiar de página. |
 | Jefe final | `components/temas/Jefe.jsx`, `leccion/Examen.jsx` | Criatura low poly paramétrica (un solo SVG, 10 adornos) con barra de vida; se sacude con cada acierto y cae al aprobar. |
 | Medallas progresivas | `components/panel/LogrosPanel.jsx`, `progreso/logros.js` | 5 logros con bronce, plata y oro (15 en total) que se revelan al acercarse. |
 | Racha animada | `components/panel/EncabezadoPanel.jsx` | Llama que late, franja de 7 días y la siguiente meta. |
@@ -71,7 +76,7 @@ Pesos aproximados (minificado y comprimido) según la documentación pública de
 1. **Visor del modelo del alumno** con `<model-viewer>`: al terminar una práctica, el add-on sube una exportación glTF ligera y la plataforma la muestra girando en el mapa del módulo y en el panel. Es lo que más conecta Blender con la plataforma. Necesita: exportar en el add-on, guardar el archivo en el backend y un bloque nuevo `model_viewer`. Carga diferida y apagado en modo ligero (se muestra el render fijo).
 2. **Transiciones entre páginas** con View Transitions: la tarjeta «Blender» se expande hacia la página del curso. Sin dependencias.
 3. **Celebraciones** con canvas-confetti al vencer al jefe y al ganar una medalla de oro.
-4. **Ilustraciones por temática**: una escena de fondo SVG por módulo (taller, herrería, hangar…) generada con `scripts/ilustraciones.mjs`, del mismo estilo que el jefe.
+4. ~~**Ilustraciones por temática**~~: hecho en la v3.3 con `Escenario.jsx` (SVG propio, sin librerías).
 5. **Jefes con Rive**, solo si después de probar con alumnos el SVG se queda corto.
 
 Las tareas están en el tablero (`tablero/tareas.yml`).

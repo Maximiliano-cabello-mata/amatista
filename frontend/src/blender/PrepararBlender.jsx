@@ -81,7 +81,7 @@ function PrepararBlender({ token }) {
                 type="button"
                 onClick={descargar}
                 disabled={descarga.estado === 'descargando' || !sincronizacionDisponible()}
-                className="corte-poly-sm bg-blender px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-base hover:brightness-110 disabled:opacity-50"
+                className="corte-poly-sm destello bg-blender px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-base hover:brightness-110 disabled:opacity-50"
               >
                 {descarga.estado === 'descargando' ? 'Preparando…' : `Descargar para ${nombre}`}
               </button>

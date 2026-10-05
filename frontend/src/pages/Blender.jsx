@@ -277,7 +277,7 @@ function Blender() {
             <p className="text-sm text-texto/75">Entra para que tus prácticas cuenten en tu panel y en tus insignias.</p>
             <a
               href={rutaEntrar(rutas.blender)}
-              className="corte-poly-sm mt-4 inline-block bg-amatista px-5 py-2.5 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
+              className="corte-poly-sm destello mt-4 inline-block bg-amatista px-5 py-2.5 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
             >
               Entrar ▶
             </a>

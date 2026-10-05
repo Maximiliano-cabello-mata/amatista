@@ -76,7 +76,7 @@ function Restablecer({ email, codigoDev, alReenviar }) {
         <Alerta tipo="exito">Listo: cambiaste tu contraseña. Ya puedes entrar con la nueva.</Alerta>
         <a
           href={`${rutas.entrar}?email=${encodeURIComponent(email)}`}
-          className="corte-poly-sm mt-6 block bg-amatista px-6 py-3 text-center font-extrabold uppercase tracking-widest text-white hover:brightness-110"
+          className="corte-poly-sm destello mt-6 block bg-amatista px-6 py-3 text-center font-extrabold uppercase tracking-widest text-white hover:brightness-110"
         >
           Entrar ▶
         </a>

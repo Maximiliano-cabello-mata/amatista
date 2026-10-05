@@ -68,7 +68,7 @@ function RutaAdmin({ ruta, hash }) {
         {!usuario && (
           <a
             href={rutaEntrar(hash)}
-            className="corte-poly-sm inline-block bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
+            className="corte-poly-sm destello inline-block bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
           >
             Entrar ▶
           </a>
@@ -126,7 +126,10 @@ function App() {
           <ProgresoProvider>
             <BarraSuperior ruta={ruta} hash={hash} />
             <Suspense fallback={<Cargando />}>
-              <Pagina ruta={ruta} hash={hash} />
+              {/* Cada cambio de página entra con un fundido corto (sin animación en modo ligero). */}
+              <div key={`${ruta.pagina}:${ruta.cursoId ?? ''}:${ruta.leccionId ?? ''}`} className="animar-pagina">
+                <Pagina ruta={ruta} hash={hash} />
+              </div>
             </Suspense>
           </ProgresoProvider>
         </CatalogoProvider>

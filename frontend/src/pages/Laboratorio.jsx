@@ -86,7 +86,7 @@ function Laboratorio() {
       <main className="mx-auto max-w-xl px-4 py-16 text-center sm:px-6">
         <h1 className="text-2xl font-extrabold text-white">Esta página es para el equipo de Amatista</h1>
         <p className="mt-2 text-sm text-white/60">Tus cursos y tu avance están en tu panel.</p>
-        <a href={rutas.inicio} className="corte-poly-sm mt-6 inline-block bg-amatista px-5 py-2.5 text-sm font-bold text-white hover:brightness-110">
+        <a href={rutas.inicio} className="corte-poly-sm destello mt-6 inline-block bg-amatista px-5 py-2.5 text-sm font-bold text-white hover:brightness-110">
           Ir a mis cursos
         </a>
       </main>

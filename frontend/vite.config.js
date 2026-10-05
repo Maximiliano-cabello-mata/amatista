@@ -4,6 +4,8 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
+  // temas.json vive en practices/blender/ (lo comparte con el add-on).
+  server: { fs: { allow: ['..'] } },
   build: {
     // El chunk de A-Frame (~1.3 MB) se carga bajo demanda.
     chunkSizeWarningLimit: 1400,
