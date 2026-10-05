@@ -17,11 +17,11 @@
 | **v3.1.0** | Mi primer espacio 3D | Primera entrega de contenido por niveles (lecciones 01–11 de la propuesta) con fichas, rúbrica y versión verificada. | ▱▱▱▱▱▱▱▱▱▱ 0/5 |
 | **v3.2.0** | Laboratorio 3D | Visor GLB en las lecciones, escena de ejemplo y lección 12 (exportar y comprobar). | ▱▱▱▱▱▱▱▱▱▱ 0/3 |
 | **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▰▰▰▱▱▱▱▱▱ 8/21 |
-| **v3.4.0** | Especialidades y tutor | Primera rama del nivel 5 y tutor IA dentro de las lecciones. | ▱▱▱▱▱▱▱▱▱▱ 0/12 |
+| **v3.4.0** | Especialidades y tutor | Primera rama del nivel 5 y tutor IA dentro de las lecciones. | ▱▱▱▱▱▱▱▱▱▱ 0/13 |
 
 ## 📌 Kanban
 
-| 📋 Pendiente (42) | 🔨 En progreso (9) | 👀 Revisión (4) | ✅ Hecho (23) |
+| 📋 Pendiente (43) | 🔨 En progreso (9) | 👀 Revisión (4) | ✅ Hecho (23) |
 |---|---|---|---|
 | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)<br><sub>v2.2.0 · repo</sub> | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> |
 | **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> | **T-052** Comprobaciones locales de la lección 03 en el add-on<br><sub>v3.3.0 · blender</sub> | **T-075** Auditoría de seguridad y de rendimiento automáticas, y optimización de los puntos débiles (catálogo, panel, descarga del add-on, animaciones)<br><sub>v3.3.0 · api</sub> | **T-006** Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)<br><sub>v2.2.0 · api</sub> |
@@ -59,6 +59,7 @@
 | **T-073** Diseñar el laboratorio (retos abiertos sin guía después de la ruta)<br><sub>v3.4.0 · contenido</sub> |   |   |   |
 | **T-080** Portada más ligera en teléfono: el texto de cada módulo se carga al abrir su curso (hoy va en el paquete principal)<br><sub>v3.4.0 · pwa</sub> |   |   |   |
 | **T-081** Varias aulas a la vez: dos procesos de uvicorn con los límites por IP y las cachés compartidos (Oracle)<br><sub>v3.4.0 · api</sub> |   |   |   |
+| **T-083** Examen final (jefe) calificado por el servidor: las respuestas dejan de viajar en el JavaScript de la PWA<br><sub>v3.4.0 · api</sub> |   |   |   |
 | **T-064** Aplicar 008 y 009 en Oracle e importar los cursos Principiante, Principiante-Intermedio e Intermedio (después del piloto)<br><sub>v3.3.0 · db</sub> |   |   |   |
 | **T-065** Dominio amatista-3d.me: Cloudflare (DNS y proxy), PWA en Pages y API con certificado de origen<br><sub>v2.2.0 · lanzamiento</sub> |   |   |   |
 | **T-066** Probar el add-on 3.0 con alumnos (Principiante, módulo 1) y ajustar píldoras y mensajes<br><sub>v3.3.0 · blender</sub> |   |   |   |
@@ -244,6 +245,8 @@
   - 🎯 Listo cuando: docs/rendimiento/2026-10-05_informe.md: portada en teléfono modesto con TBT menor a 300 ms y LCP menor a 2.5 s (frontend/scripts/rendimiento.mjs)
 - [ ] **T-081** Varias aulas a la vez: dos procesos de uvicorn con los límites por IP y las cachés compartidos (Oracle) · _pendiente_
   - 🎯 Listo cuando: rendimiento.py medir con 80 alumnos a la vez: guardar progreso y eventos con p50 menor a 250 ms
+- [ ] **T-083** Examen final (jefe) calificado por el servidor: las respuestas dejan de viajar en el JavaScript de la PWA · _pendiente_
+  - 🎯 Listo cuando: docs/seguridad/02_proteccion_del_codigo.md: buscar el texto de una respuesta correcta del examen en dist/ no da resultados; el examen se califica con /api y los quizzes de práctica siguen funcionando sin conexión
 - [ ] **T-082** Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages · _en-progreso_ — commits: `90a95aa` (2026-10-05)
   - 🎯 Listo cuando: frontend/public/_headers con CSP probada en todas las páginas (lección, Blender, admin, visor A-Frame) sin errores en la consola
 - [ ] **T-067** Curso Blender Avanzado (teoría de topología, UV, nodos y rig; prácticas y desbloqueo) · _pendiente_

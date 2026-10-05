@@ -9,7 +9,13 @@ export default defineConfig({
   build: {
     // El chunk de A-Frame (~1.3 MB) se carga bajo demanda.
     chunkSizeWarningLimit: 1400,
+    // Protección del código de la PWA (docs/seguridad/02_proteccion_del_codigo.md):
+    // nunca publicar mapas de fuente (devolverían el código original con sus
+    // comentarios). scripts/revisar-publicacion.mjs lo comprueba en cada build.
+    sourcemap: false,
   },
+  // Sin comentarios de licencia ni de autor en el JS publicado.
+  esbuild: { legalComments: 'none' },
   // Pruebas de funciones puras (reglas del progreso, catálogo): `npm test`.
   test: {
     include: ['src/**/*.test.js'],

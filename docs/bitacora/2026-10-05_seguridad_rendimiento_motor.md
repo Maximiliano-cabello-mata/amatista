@@ -36,6 +36,10 @@ Rama `claude/seguridad-rendimiento-motor-dd3iuh`. Producción no se tocó (pilot
 - Add-on: `integridad.json` por paquete y chequeo sin red, cabeceras de integridad en cada intento, `licencia.json` firmada con `AMATISTA_SECRETO_FIRMA`, `verificar_licencia.py`.
 - bandit, pip-audit y npm audit: sin vulnerabilidades; 2 falsos positivos revisados.
 
+### Protección del código de la PWA (aclaración de Maximiliano, 03:29)
+
+La plataforma sigue siendo PWA. El build ya salía minificado y sin mapas de fuente; ahora queda fijo en `vite.config.js` (`sourcemap: false`, sin comentarios de licencia) y `npm run build` corre `scripts/revisar-publicacion.mjs`, que falla si se cuelan mapas de fuente, rutas locales, comentarios de desarrollo o secretos. Las dos fugas reales son el repositorio público (T-079) y las respuestas de los exámenes dentro del JavaScript (T-083, decisión pendiente). Ofuscar se descartó: se revierte fácil y vuelve lenta la PWA en teléfonos. Detalle en `docs/seguridad/02_proteccion_del_codigo.md`.
+
 ### Rendimiento
 
 - `backend/herramientas/rendimiento.py` (sembrar, medir, limpiar) y `frontend/scripts/rendimiento.mjs` (FCP, LCP, TBT, CLS, fps en computadora y teléfono modesto).
@@ -66,7 +70,7 @@ Rama `claude/seguridad-rendimiento-motor-dd3iuh`. Producción no se tocó (pilot
 
 ### Tablero
 
-T-075 (auditorías y optimización), T-076 (Motor 3.3) y T-077 (mundos y mascota) cerradas con este PR; T-078 (aplicar en producción), T-079 (secreto, repositorio privado, «exigir»), T-080 (portada en teléfono), T-081 (varias aulas) y T-082 (CSP) nuevas. Siguiente id libre: T-083.
+T-075 (auditorías y optimización), T-076 (Motor 3.3) y T-077 (mundos y mascota) cerradas con este PR; T-078 (aplicar en producción), T-079 (secreto, repositorio privado, «exigir»), T-080 (portada en teléfono), T-081 (varias aulas) y T-082 (CSP) nuevas. Siguiente id libre: T-084.
 
 ## Pruebas
 

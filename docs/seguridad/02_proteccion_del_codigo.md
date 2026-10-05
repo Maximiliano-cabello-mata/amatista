@@ -11,7 +11,23 @@ Un programa que corre en la computadora de alguien se puede leer, copiar y modif
 3. **Saber de quién salió una copia** que circule por fuera (marca de agua firmada).
 4. **La licencia**: el add-on se publica como GPL-3.0-or-later, como pide Blender para los add-ons que usan su API de Python (y exige su plataforma de extensiones). Esa licencia permite copiar y modificar el add-on; lo que protege la propiedad de Amatista es el servidor, las prácticas y el contenido de los cursos, que no van en el add-on con esa licencia. Si se quiere otra licencia para el contenido, hay que decidirlo (pendiente con Max).
 
-## Qué se hizo
+## La PWA (la plataforma web)
+
+Amatista sigue siendo una PWA: se instala y funciona sin conexión, así que su JavaScript se descarga completo al navegador del alumno y se queda guardado en el service worker. Igual que con el add-on, cualquiera puede abrirlo con las herramientas del navegador. Lo que sí se controla es **cuánto se entrega y en qué forma**:
+
+| Medida | Estado |
+|---|---|
+| Código compilado y minificado: nombres cortos, sin espacios, sin comentarios, sin licencias ni autores incrustados | Hecho (`vite build`, `esbuild.legalComments: 'none'`) |
+| **Sin mapas de fuente**: el navegador no puede reconstruir los archivos originales de `src/` | Hecho (`build.sourcemap: false`) |
+| Revisión automática en cada build (`npm run build` → `scripts/revisar-publicacion.mjs`): falla si aparecen mapas de fuente, rutas de la computadora, comentarios de desarrollo o algo que parezca un secreto | Hecho; corre también en CI y en Cloudflare Pages |
+| Ningún secreto en la PWA: contraseñas, llaves y el secreto de firma viven solo en el servidor | Revisado |
+| La lógica que importa vive en el servidor: cuentas, permisos, progreso oficial y calificación de las prácticas de Blender | Hecho |
+| **Repositorio privado**: hoy el código original completo, con comentarios, se puede leer en GitHub. Es la fuga más grande | Pendiente (T-079, fase 4 del plan; primero mover la PWA a Cloudflare Pages) |
+| **Respuestas de los exámenes**: hoy viajan dentro del JavaScript para que el examen funcione sin conexión; un alumno curioso puede encontrarlas | Pendiente de decisión (T-083) |
+
+Ofuscar el JavaScript (renombrar todo, cifrar textos, código basura) se descartó: hace la PWA más lenta y pesada justo en los teléfonos modestos que optimizamos hoy, y se revierte con herramientas gratuitas.
+
+## Qué se hizo en el add-on
 
 | Pieza | Qué hace | Dónde |
 |---|---|---|

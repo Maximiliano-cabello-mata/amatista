@@ -469,6 +469,12 @@ tareas:
     area: api
     depende_de: [T-078]
     aceptacion: "rendimiento.py medir con 80 alumnos a la vez: guardar progreso y eventos con p50 menor a 250 ms"
+  - id: T-083
+    titulo: "Examen final (jefe) calificado por el servidor: las respuestas dejan de viajar en el JavaScript de la PWA"
+    version: v3.4.0
+    area: api
+    depende_de: [T-078]
+    aceptacion: "docs/seguridad/02_proteccion_del_codigo.md: buscar el texto de una respuesta correcta del examen en dist/ no da resultados; el examen se califica con /api y los quizzes de práctica siguen funcionando sin conexión"
   - id: T-082
     titulo: "Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages"
     version: v3.4.0
