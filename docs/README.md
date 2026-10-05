@@ -2,7 +2,7 @@
 
 Toda la documentación del proyecto, ordenada por secciones. Cada sección dice para quién es y por dónde empezar.
 
-Actualizado: 4 de octubre de 2026 (main en `c730c0e`). Etapa vigente: **v3 «Reestructuración»**, con el piloto del 8 de octubre sobre la v2.2.
+Actualizado: 5 de octubre de 2026 (main en `34ed82d`). Etapa vigente: **v3 «Reestructuración»**, con el piloto del 8 de octubre sobre la v2.2.
 
 > **¿Primera vez?** Lee el [README de la raíz](../README.md), luego la [cronología](historia/01_cronologia.md) y el [mapa del repositorio](manual-del-codigo/01_mapa_del_repositorio.md). Si vas a programar, sigue con el [manual del desarrollador](desarrollador/README.md).
 
@@ -32,6 +32,7 @@ Carpeta [`historia/`](historia/README.md).
 - [Cronología exacta](historia/01_cronologia.md): commit por commit, PR por PR, con hora, desde el 27 de septiembre.
 - [Ideas y cómo se implementaron](historia/02_ideas_y_como_se_implementaron.md): cada idea, su origen, su estado y dónde quedó en el código.
 - [La plataforma en cada versión](historia/03_la_plataforma_en_cada_version.md): cómo se veía y qué hacía Amatista en cada tag, revisando el código de los commits antiguos.
+- [Archivo histórico hasta hoy](historia/04_archivo_historico_hasta_hoy.md): resumen general de la evolución, cambios de versión e ideas.
 
 ## 2. La plataforma
 
