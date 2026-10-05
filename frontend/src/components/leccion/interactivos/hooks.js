@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { avisarMascota } from '../../temas/temas';
 
 // Estado común de una actividad: se resuelve una sola vez y avisa a la lección
 // con alCompletar({correcto, intentos}). `correcto` es false si se vio la solución.
@@ -9,6 +10,8 @@ export function useActividad(alCompletar) {
     if (resultado) return;
     const final = { correcto: Boolean(correcto), intentos: Math.max(1, intentos) };
     setResultado(final);
+    // La mascota del módulo celebra el acierto o anima tras ver la solución.
+    avisarMascota(final.correcto ? 'acierto' : 'fallo');
     alCompletar?.(final);
   };
 

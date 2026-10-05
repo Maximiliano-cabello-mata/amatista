@@ -185,6 +185,341 @@
   contain-intrinsic-size: auto 640px;
 }
 
+/* ===================================================================
+   v3.4 · El mundo del módulo en toda la página (components/temas/MundoTema.jsx)
+   Colores de la temática en variables (--tema-*). Solo transform y opacity
+   en lo que se mueve; el resto es color fijo que el navegador pinta una vez.
+   =================================================================== */
+.mundo-tema {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 70% at 85% -10%, color-mix(in srgb, var(--tema-acento) 26%, transparent), transparent 60%),
+    radial-gradient(90% 60% at 0% 100%, color-mix(in srgb, var(--tema-suave) 10%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--tema-cielo) 85%, #121212), #121212 75%);
+}
+.mundo-tema--dentro { position: absolute; z-index: 0; background: none; }
+.mundo-tema__luz {
+  position: absolute;
+  top: -30vh;
+  right: -10vw;
+  width: 70vw;
+  height: 70vh;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--tema-acento) 22%, transparent), transparent);
+  /* Quieta a propósito: animar una capa tan grande costaba ~8 cuadros por segundo sin GPU. */
+}
+.mundo-tema--dentro .mundo-tema__luz { top: -40%; right: -20%; width: 80%; height: 90%; }
+.mundo-tema__suelo {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 22vh;
+  background:
+    linear-gradient(170deg, transparent 40%, color-mix(in srgb, var(--tema-suelo) 80%, transparent) 41%),
+    linear-gradient(190deg, transparent 55%, color-mix(in srgb, var(--tema-acento) 10%, transparent) 56%);
+  opacity: 0.9;
+}
+.mundo-tema--dentro .mundo-tema__suelo { display: none; }
+.mundo-tema__particulas { position: absolute; inset: 0; }
+
+.particula {
+  position: absolute;
+  top: 0;
+  display: block;
+  width: 14px;
+  height: 14px;
+  opacity: 0;
+  background: var(--tema-acento);
+  animation: particula-subir 14s linear infinite;
+  will-change: transform, opacity;
+}
+@keyframes particula-subir {
+  0% { transform: translate3d(0, 105vh, 0) rotate(0deg) scale(var(--escala, 1)); opacity: 0; }
+  10% { opacity: 0.32; }
+  85% { opacity: 0.26; }
+  100% { transform: translate3d(3vw, -8vh, 0) rotate(240deg) scale(var(--escala, 1)); opacity: 0; }
+}
+@keyframes particula-caer {
+  0% { transform: translate3d(0, -8vh, 0) rotate(0deg) scale(var(--escala, 1)); opacity: 0; }
+  10% { opacity: 0.34; }
+  100% { transform: translate3d(-4vw, 105vh, 0) rotate(420deg) scale(var(--escala, 1)); opacity: 0; }
+}
+@keyframes particula-titilar {
+  0%, 100% { opacity: 0.1; transform: translate3d(0, var(--y, 30vh), 0) scale(calc(var(--escala, 1) * 0.6)); }
+  50% { opacity: 0.9; transform: translate3d(0, var(--y, 30vh), 0) scale(var(--escala, 1)); }
+}
+@keyframes particula-anillo {
+  0% { opacity: 0.6; transform: translate3d(0, var(--y, 40vh), 0) scale(0.2); }
+  100% { opacity: 0; transform: translate3d(0, var(--y, 40vh), 0) scale(2.4); }
+}
+@keyframes particula-barrer {
+  0%, 100% { transform: rotate(-22deg); opacity: 0.18; }
+  50% { transform: rotate(22deg); opacity: 0.32; }
+}
+/* Taller: engranes que suben girando */
+.particula--engrane {
+  width: 22px; height: 22px;
+  clip-path: polygon(50% 0, 61% 14%, 79% 9%, 80% 27%, 97% 33%, 88% 50%, 97% 67%, 80% 73%, 79% 91%, 61% 86%, 50% 100%, 39% 86%, 21% 91%, 20% 73%, 3% 67%, 12% 50%, 3% 33%, 20% 27%, 21% 9%, 39% 14%);
+  animation-duration: 18s;
+}
+/* Herrería: chispas rápidas */
+.particula--chispa {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--tema-suave);
+  box-shadow: 0 0 8px 2px var(--tema-acento);
+  animation-duration: 6s;
+}
+/* Hangar: estrellas que titilan en su lugar */
+.particula--estrella {
+  width: 4px; height: 4px; border-radius: 50%; background: #fff;
+  animation-name: particula-titilar; animation-duration: 4s; animation-timing-function: ease-in-out;
+}
+.particula--estrella:nth-child(odd) { --y: 12vh; }
+.particula--estrella:nth-child(3n) { --y: 48vh; }
+.particula--estrella:nth-child(4n) { --y: 70vh; width: 6px; height: 6px; }
+/* Pintura: gotas de colores que caen */
+.particula--gota {
+  width: 12px; height: 16px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  animation-name: particula-caer; animation-duration: 11s;
+}
+.particula--gota:nth-child(3n) { background: #00E5FF; }
+.particula--gota:nth-child(3n + 1) { background: #F5D90A; }
+/* Cine: haces de luz que barren */
+.particula--haz {
+  top: -10vh; width: 16vw; height: 120vh; opacity: 0.25;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--tema-suave) 45%, transparent), transparent 75%);
+  clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%);
+  transform-origin: 50% 0;
+  animation: particula-barrer 12s ease-in-out infinite;
+}
+.particula--haz:nth-child(n + 4) { display: none; }
+.particula--haz:nth-child(2) { animation-duration: 15s; animation-direction: reverse; }
+/* Circo: confeti */
+.particula--confeti { width: 8px; height: 13px; animation-name: particula-caer; animation-duration: 9s; }
+.particula--confeti:nth-child(3n) { background: #FF7EDB; }
+.particula--confeti:nth-child(3n + 1) { background: #00E5FF; }
+/* Aldea: hojas que caen meciéndose */
+.particula--hoja {
+  width: 14px; height: 9px; border-radius: 0 100% 0 100%;
+  animation-name: particula-caer; animation-duration: 16s;
+}
+/* Archivo: fichas de papel que flotan */
+.particula--papel {
+  width: 14px; height: 18px; background: var(--tema-suave); opacity: 0.4;
+  clip-path: polygon(0 0, 72% 0, 100% 24%, 100% 100%, 0 100%);
+  animation-duration: 20s;
+}
+/* Galería: marcos vacíos que suben */
+.particula--marco {
+  width: 26px; height: 20px; background: transparent;
+  border: 2px solid var(--tema-acento);
+  animation-duration: 22s;
+}
+/* Portal: anillos que se expanden */
+.particula--anillo {
+  width: 60px; height: 60px; border-radius: 50%; background: transparent;
+  border: 2px solid var(--tema-acento);
+  animation-name: particula-anillo; animation-duration: 6s; animation-timing-function: ease-out;
+}
+.particula--anillo:nth-child(odd) { --y: 20vh; }
+.particula--anillo:nth-child(3n) { --y: 65vh; }
+/* Cristal: diamantes que suben */
+.particula--cristal {
+  width: 12px; height: 18px;
+  clip-path: polygon(50% 0, 100% 40%, 50% 100%, 0 40%);
+  animation-duration: 17s;
+}
+.particula:nth-child(even) { background-color: var(--tema-suave); }
+.particula--marco:nth-child(even), .particula--anillo:nth-child(even) { background: transparent; border-color: var(--tema-suave); }
+.particula:nth-child(3n) { animation-duration: calc(var(--d, 1) * 21s); }
+.mundo-tema--dentro .particula { animation-name: particula-subir-dentro; }
+.mundo-tema--dentro .particula--gota, .mundo-tema--dentro .particula--confeti,
+.mundo-tema--dentro .particula--hoja { animation-name: particula-caer-dentro; }
+.mundo-tema--dentro .particula--estrella { animation-name: particula-titilar; --y: 30%; }
+.mundo-tema--dentro .particula--anillo { animation-name: particula-anillo; --y: 40%; }
+.mundo-tema--dentro .particula--haz { animation-name: particula-barrer; }
+@keyframes particula-subir-dentro {
+  0% { transform: translate3d(0, 900px, 0) rotate(0) scale(var(--escala, 1)); opacity: 0; }
+  12% { opacity: 0.35; }
+  100% { transform: translate3d(12px, -40px, 0) rotate(240deg) scale(var(--escala, 1)); opacity: 0; }
+}
+@keyframes particula-caer-dentro {
+  0% { transform: translate3d(0, -40px, 0) rotate(0) scale(var(--escala, 1)); opacity: 0; }
+  12% { opacity: 0.4; }
+  100% { transform: translate3d(-16px, 900px, 0) rotate(380deg) scale(var(--escala, 1)); opacity: 0; }
+}
+
+/* La página del módulo toma el color de su mundo. */
+html[data-tema] ::selection { background: color-mix(in srgb, var(--tema-acento) 55%, transparent); color: #fff; }
+html[data-tema] { scrollbar-color: color-mix(in srgb, var(--tema-acento) 60%, #333) #121212; }
+html[data-tema] body { background: transparent; }
+.mundo-pagina h2, .mundo-pagina h3 { text-wrap: balance; }
+.mundo-pagina .prose h2::after, .mundo-pagina article h2::after {
+  content: '';
+  display: block;
+  width: 3.5rem;
+  height: 3px;
+  margin-top: 0.4rem;
+  background: linear-gradient(90deg, var(--tema-acento), transparent);
+  transform-origin: left;
+  animation: subrayar 0.8s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes subrayar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Las actividades de la lección toman el color del mundo y una luz en la esquina. */
+.mundo-pagina .marco-actividad:not(.marco-actividad--hecha) {
+  border-color: color-mix(in srgb, var(--tema-acento) 45%, transparent);
+  background:
+    radial-gradient(60% 80% at 100% 0%, color-mix(in srgb, var(--tema-acento) 9%, transparent), transparent 70%),
+    rgb(30 30 30 / 0.95);
+}
+.mundo-pagina .marco-actividad--hecha { animation: acierto 0.45s ease-out both; }
+
+/* El módulo en la página del curso: toda la tarjeta es su mundo. */
+.modulo-mundo {
+  position: relative;
+  background: linear-gradient(135deg, var(--tema-acento), color-mix(in srgb, var(--tema-suave) 30%, transparent) 35%, transparent 55%, var(--tema-acento));
+}
+.modulo-mundo__interior {
+  isolation: isolate;
+  background:
+    radial-gradient(70% 50% at 100% 0%, color-mix(in srgb, var(--tema-acento) 16%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--tema-cielo) 70%, #181818), color-mix(in srgb, var(--tema-suelo) 85%, #121212));
+}
+.modulo-mundo__interior > :not(.mundo-tema):not(.absolute) { position: relative; z-index: 1; }
+.escenario--quieto * { animation: none !important; }
+
+/* Compañero: la mascota que vive en la esquina durante la lección. */
+.companero {
+  position: fixed;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  max-width: min(22rem, calc(100vw - 24px));
+  pointer-events: none;
+}
+.companero > * { pointer-events: auto; }
+.companero__globo-zona { min-height: 0; }
+.companero__globo {
+  position: relative;
+  padding: 0.75rem 1rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--acento) 55%, transparent);
+  background: rgb(18 18 18 / 0.94);
+  color: #e8e8e8;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.45);
+  animation: globo-entrar 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
+  transform-origin: 90% 100%;
+}
+.companero__quien {
+  display: block;
+  margin-bottom: 0.2rem;
+  font: 700 10px/1.4 ui-monospace, monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+.companero__acciones { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.3rem; }
+.companero__acciones button, .companero__silencio {
+  font: 600 10px/1 ui-monospace, monospace;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.55);
+  transition: color 0.2s ease;
+}
+.companero__acciones button:hover, .companero__silencio:hover { color: #fff; }
+.companero__cuerpo { display: flex; align-items: flex-end; gap: 8px; }
+.companero__silencio { order: -1; padding-bottom: 6px; }
+.companero__boton {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--acento) 35%, transparent), rgb(18 18 18 / 0.85) 70%);
+  border: 2px solid color-mix(in srgb, var(--acento) 60%, transparent);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.4);
+  transition: transform 0.2s ease;
+}
+.companero__boton:hover { transform: translateY(-3px) rotate(-4deg); }
+.companero__boton:active { transform: scale(0.94); }
+.companero__sprite { width: 52px; height: 52px; animation: companero-respirar 2.8s ease-in-out infinite; }
+.companero__boton--salto .companero__sprite { animation: companero-salto 0.7s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.companero__sombra {
+  position: absolute;
+  bottom: 9px;
+  width: 34px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.45);
+  animation: companero-sombra 2.8s ease-in-out infinite;
+}
+@keyframes companero-respirar { 0%, 100% { transform: translateY(0) scale(1, 1); } 50% { transform: translateY(-4px) scale(1.03, 0.97); } }
+@keyframes companero-sombra { 0%, 100% { transform: scaleX(1); opacity: 0.45; } 50% { transform: scaleX(0.8); opacity: 0.3; } }
+@keyframes companero-salto {
+  0% { transform: translateY(0) scale(1, 1); }
+  30% { transform: translateY(-14px) scale(0.92, 1.1); }
+  60% { transform: translateY(0) scale(1.12, 0.88); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+@keyframes globo-entrar {
+  from { opacity: 0; transform: translateY(10px) scale(0.85); }
+  to { opacity: 1; transform: none; }
+}
+/* En pantallas anchas la mascota vive en el margen, sin tapar la lección. */
+@media (min-width: 1100px) {
+  .companero { max-width: min(22rem, calc((100vw - 48rem) / 2 - 20px)); }
+}
+@media (max-width: 640px) {
+  .companero__boton { width: 56px; height: 56px; }
+  .companero__sprite { width: 40px; height: 40px; }
+  .companero__globo { font-size: 0.8125rem; }
+}
+
+/* «Así se debe ver»: la imagen del modelo se acerca un poco al pasar. */
+.modelo-referencia__lienzo { overflow: hidden; }
+.modelo-referencia__lienzo img { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.modelo-referencia:hover .modelo-referencia__lienzo img { transform: scale(1.04); }
+
+/* Bloques que aparecen al bajar (animación ligada al scroll, sin JavaScript;
+   en navegadores sin soporte simplemente se ven). */
+@supports (animation-timeline: view()) {
+  .revelar {
+    animation: revelar linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 55%;
+  }
+}
+@keyframes revelar {
+  from { opacity: 0; transform: translateY(28px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Botones: se hunden al presionarlos. */
+button:not(:disabled):active, a.corte-poly-sm:active { transform: translateY(1px) scale(0.985); }
+
+/* Tarjetas de curso y del panel: brillo que cruza al pasar el ratón. */
+.elevar { position: relative; }
+.elevar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, rgb(255 255 255 / 0.08) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+}
+.elevar:hover::before { transform: translateX(100%); }
+
 /* Modo ligero: equipos con poca memoria o pocos núcleos, ahorro de datos o
    movimiento reducido (lo decide main.jsx al arrancar). Se apagan las
    animaciones continuas, los destellos y las sombras grandes; el diseño no
@@ -199,12 +534,21 @@ html.ligero [class*="shadow-["] { box-shadow: none; }
 html.ligero .fondo-pesado { display: none; }
 html.ligero .escenario *, html.ligero .esc-flotar { animation: none !important; }
 html.ligero .destello::after { display: none; }
+html.ligero .mundo-tema__particulas, html.ligero .particula { display: none; }
+html.ligero .companero__sprite, html.ligero .companero__sombra { animation: none; }
+html.ligero .revelar { animation: none; }
+html.ligero .elevar::before { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .animar-flotar, .animar-pulso, .animar-entrar, .animar-sacudir, .animar-acierto,
   .animar-aparecer, .animar-llama, .animar-latido, .animar-dibujar,
   .barra > .relleno::after { animation: none; }
   .escenario *, .esc-flotar, .animar-pagina { animation: none !important; }
+  .mundo-tema__particulas { display: none; }
+  .companero__sprite, .companero__sombra, .companero__globo, .revelar,
+  .companero__boton--salto .companero__sprite, .mundo-pagina h2::after { animation: none !important; }
+  .elevar::before { display: none; }
+  button:active, a.corte-poly-sm:active { transform: none; }
   .destello::after { display: none; }
   .animar-dibujar { stroke-dasharray: none; }
   .elevar:hover, .elevar:focus-within { transform: none; }

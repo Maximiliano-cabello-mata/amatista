@@ -173,8 +173,10 @@ function BarraSuperior({ ruta, hash = '' }) {
     if (pagina === 'perfil' || pagina === 'admin') navegar(rutas.inicio);
   };
 
+  // Sin backdrop-blur: desenfocar lo que se anima detrás costaba ~15 cuadros
+  // por segundo en equipos sin GPU (informe de rendimiento 2026-10-05).
   return (
-    <header ref={barra} className="sticky top-0 z-20 border-b border-white/5 bg-base/80 backdrop-blur-md">
+    <header ref={barra} className="sticky top-0 z-20 border-b border-white/5 bg-base/95">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <a href={rutas.inicio} className="flex shrink-0 items-center gap-3" aria-label="Amatista, inicio">
           <CristalLogo className="h-9 w-9 drop-shadow-[0_0_10px_rgba(155,89,182,0.6)]" />

@@ -4,8 +4,9 @@ import { IconoCandado } from '../components/Iconos';
 import BloqueContenido from '../components/leccion/BloqueContenido';
 import Examen from '../components/leccion/Examen';
 import Escenario from '../components/temas/Escenario';
-import Mascota from '../components/temas/Mascota';
-import { temaDelModulo } from '../components/temas/temas';
+import CompaneroMascota from '../components/temas/CompaneroMascota';
+import MundoTema from '../components/temas/MundoTema';
+import { avisarMascota, temaDelModulo } from '../components/temas/temas';
 import LogoCurso from '../components/LogoCurso';
 import { logoDeCurso } from '../components/estiloCurso';
 import { esPracticaBlender } from '../modulos/practica';
@@ -56,6 +57,9 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, res
   const resolver = (actividad, resultado) => {
     if (resueltas.has(actividad.clave)) return;
     setResueltas((previas) => new Set(previas).add(actividad.clave));
+    // Con la última actividad requerida, la mascota festeja (después de reaccionar al acierto).
+    const faltaban = requeridas.filter((a) => !resueltas.has(a.clave));
+    if (faltaban.length === 1 && faltaban[0].clave === actividad.clave) window.setTimeout(() => avisarMascota('final'), 2600);
     if (actividad.registrable) alResolver(actividad.bloque.id, resultado);
   };
 
@@ -83,9 +87,14 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, res
       <div className="space-y-8">
         {bloques.map((bloque, i) => {
           const actividad = porIndice.get(i);
-          if (!actividad) return <BloqueContenido key={i} bloque={bloque} />;
+          if (!actividad)
+            return (
+              <div key={i} className="revelar">
+                <BloqueContenido bloque={bloque} />
+              </div>
+            );
           return (
-            <div key={actividad.clave} id={`actividad-${actividad.clave}`} tabIndex={-1} className="scroll-mt-24 outline-none">
+            <div key={actividad.clave} id={`actividad-${actividad.clave}`} tabIndex={-1} className="revelar scroll-mt-24 outline-none">
               <BloqueContenido
                 bloque={bloque}
                 resuelta={resueltas.has(actividad.clave)}
@@ -213,7 +222,9 @@ function Leccion({ cursoId, leccionId }) {
   };
 
   return (
-    <main className="mx-auto max-w-3xl px-4 pb-24 pt-6 sm:px-6">
+    <main className="mundo-pagina mx-auto max-w-3xl px-4 pb-24 pt-6 sm:px-6">
+      <MundoTema tema={tema} />
+      {leccion.type !== 'exam' && <CompaneroMascota key={`${modulo.id}-${leccion.id}`} tema={tema} titulo={leccion.title} />}
       <nav className="mb-4 flex items-center justify-between gap-3 font-mono text-xs uppercase tracking-widest">
         <a href={rutas.curso(curso.id)} className="inline-flex items-center gap-2 text-white/50 hover:text-neon">
           ◂ <LogoCurso logo={logoDeCurso(curso)} className="h-4 w-5" /> {curso.titulo} · Módulo {numeroModulo}
@@ -265,7 +276,6 @@ function Leccion({ cursoId, leccionId }) {
         </div>
       </header>
 
-      {leccion.type !== 'exam' && <Mascota key={`${modulo.id}-${indice}`} tema={tema} inicial={indice} className="mb-10" />}
 
       {leccion.cover && (
         <div className="mb-10">

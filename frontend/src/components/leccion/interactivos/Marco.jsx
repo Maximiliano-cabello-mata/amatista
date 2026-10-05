@@ -38,8 +38,8 @@ export function MarcoActividad({ bloque, titulo, resultado, resuelta, children }
     <section
       aria-labelledby={titulo ? idTitulo : undefined}
       aria-label={titulo ? undefined : etiqueta}
-      className={`corte-poly border p-5 transition-colors duration-500 sm:p-7 ${
-        hecha ? 'border-emerald-400/35 bg-superficie/95' : 'border-amatista/40 bg-superficie/95'
+      className={`marco-actividad corte-poly border p-5 transition-colors duration-500 sm:p-7 ${
+        hecha ? 'marco-actividad--hecha border-emerald-400/35 bg-superficie/95' : 'border-amatista/40 bg-superficie/95'
       }`}
     >
       <header className="mb-4 flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] uppercase tracking-widest">

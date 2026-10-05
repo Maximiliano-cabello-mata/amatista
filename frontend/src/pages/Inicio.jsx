@@ -170,7 +170,7 @@ function Inicio() {
       </ul>
 
       {/* Catálogo */}
-      <section className="mt-16" aria-labelledby="inicio-cursos">
+      <section className="revelar mt-16" aria-labelledby="inicio-cursos">
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Catálogo</p>
         <h2 id="inicio-cursos" className="mb-6 text-3xl font-extrabold text-white sm:text-4xl">
           Elige tu <span className="text-amatista-claro">curso</span>
@@ -187,7 +187,7 @@ function Inicio() {
       </section>
 
       {/* Un mundo por módulo */}
-      <section className="mt-16" aria-labelledby="inicio-mundos">
+      <section className="revelar mt-16" aria-labelledby="inicio-mundos">
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Un mundo por módulo</p>
         <h2 id="inicio-mundos" className="mb-2 text-3xl font-extrabold text-white sm:text-4xl">
           Cada módulo, una <span className="text-amatista-claro">aventura</span>
@@ -200,7 +200,7 @@ function Inicio() {
       </section>
 
       {/* La fórmula Amatista */}
-      <section className="mt-16" aria-labelledby="inicio-formula">
+      <section className="revelar mt-16" aria-labelledby="inicio-formula">
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">El ciclo del cristal</p>
         <h2 id="inicio-formula" className="text-3xl font-extrabold text-white sm:text-4xl">
           Cómo aprendes en <span className="text-amatista-claro">Amatista</span>
@@ -211,7 +211,7 @@ function Inicio() {
         </p>
         <ol className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {FORMULA.map(({ paso, nombre, duracion, descripcion, Icono }, i) => (
-            <li key={paso} className="corte-poly-sm relative flex gap-4 border border-white/10 bg-superficie/90 p-4 lg:flex-col lg:gap-3 lg:p-5">
+            <li key={paso} className="revelar elevar corte-poly-sm relative flex gap-4 border border-white/10 bg-superficie/90 p-4 lg:flex-col lg:gap-3 lg:p-5">
               <span className="hexagono grid h-14 w-16 shrink-0 place-items-center bg-amatista-oscuro text-amatista-claro">
                 <Icono className="h-7 w-7" />
               </span>
