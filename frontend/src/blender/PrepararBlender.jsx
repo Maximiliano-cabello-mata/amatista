@@ -7,7 +7,7 @@ import { rutas } from '../rutas';
 import { sincronizacionDisponible } from '../services/api';
 import { descargarPaquete, listarDispositivos } from '../services/blender';
 import FormularioCodigo from './FormularioCodigo';
-import { BLENDER_MINIMO, detectarSistema, SISTEMAS } from './logica';
+import { BLENDER_MINIMO, detectarSistema, NOMBRE_MOTOR, SISTEMAS } from './logica';
 
 function Paso({ numero, titulo, hecho, children }) {
   return (
@@ -74,7 +74,7 @@ function PrepararBlender({ token }) {
         Prepara tu Blender (una sola vez)
       </h4>
       <ol className="mt-3 grid gap-2 md:grid-cols-3">
-        <Paso numero="1" titulo="Instala Amatista" hecho={descarga.estado === 'hecha'}>
+        <Paso numero="1" titulo={`Instala ${NOMBRE_MOTOR}`} hecho={descarga.estado === 'hecha'}>
           {sistema ? (
             <>
               <button

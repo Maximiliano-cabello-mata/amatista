@@ -14,6 +14,18 @@ export const SISTEMAS = {
 // Blender 4.2 es la primera versión con extensiones (blender_manifest.toml).
 export const BLENDER_MINIMO = '4.2';
 
+// El descargable: Amatista Motor (add-on + motor de prácticas). La versión
+// coincide con addon/amatista_blender/blender_manifest.toml (lo revisa logica.test.js).
+export const MOTOR = { nombre: 'Amatista Motor', version: '3.2.0' };
+export const NOMBRE_MOTOR = `${MOTOR.nombre} ${MOTOR.version.split('.').slice(0, 2).join('.')}`;
+
+// ¿El servidor entrega la misma versión que espera esta plataforma?
+export function versionDelServidor(estado) {
+  const version = estado?.version_addon;
+  if (!version) return { conocida: false };
+  return { conocida: true, version, alDia: compararVersiones(version, MOTOR.version) >= 0 };
+}
+
 // Sistema del visitante a partir del navegador. null en celulares y tabletas:
 // Blender solo corre en computadores.
 export function detectarSistema({ userAgent = '', plataforma = '' } = {}) {

@@ -280,6 +280,7 @@ def estado(request: Request):
     servidor = url_api(request)
     return {
         "api": "v1",
+        "nombre": motor.construir.NOMBRE_COMPLETO,
         "version_addon": motor.VERSION_ADDON,
         "version_motor": motor.VERSION_MOTOR,
         "blender_minimo": motor.BLENDER_MINIMO,
@@ -926,7 +927,7 @@ def descargar(sistema: str, request: Request, db: Session = Depends(obtener_db),
     if sistema not in SISTEMAS:
         raise HTTPException(status_code=404, detail=f"Elige uno de: {', '.join(SISTEMAS)}.")
     servidor, plataforma = url_api(request), url_pwa(request)
-    nombre = f"Amatista-{motor.VERSION_ADDON}-{sistema}.zip"
+    nombre = motor.construir.nombre_descarga(sistema)
     if usuario is None:
         return _zip(_paquete_publico(sistema, servidor, plataforma), nombre, privado=False)
     fila, secreto = crear_vinculo(db, f"{PREFIJO_DISPOSITIVO} · paquete {sistema}", ahora(),

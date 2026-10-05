@@ -5,13 +5,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../auth/contexto';
 import FormularioCodigo from '../blender/FormularioCodigo';
-import { BLENDER_MINIMO, detectarSistema, resumenPractica, SISTEMAS } from '../blender/logica';
+import { BLENDER_MINIMO, detectarSistema, NOMBRE_MOTOR, resumenPractica, SISTEMAS, versionDelServidor } from '../blender/logica';
 import { CristalLogo } from '../components/Iconos';
 import { useConexion } from '../hooks/useConexion';
 import { Alerta } from './cuenta/Formulario';
 import { rutaEntrar, rutas } from '../rutas';
 import { sincronizacionDisponible } from '../services/api';
-import { descargarPaquete, desconectarDispositivo, listarDispositivos, listarPracticas } from '../services/blender';
+import { descargarPaquete, estadoAddon, desconectarDispositivo, listarDispositivos, listarPracticas } from '../services/blender';
 
 const fecha = (iso) => (iso ? new Date(iso).toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' }) : '—');
 
@@ -49,6 +49,16 @@ function Descarga({ token, usuario }) {
   const sistema = SISTEMAS[elegido];
   const disponible = sincronizacionDisponible();
 
+  // Qué versión entrega el servidor: así se nota si todavía no se actualizó.
+  const [servidor, setServidor] = useState({ conocida: false });
+  useEffect(() => {
+    let vigente = true;
+    estadoAddon().then((r) => vigente && r.ok && setServidor(versionDelServidor(r.datos)));
+    return () => {
+      vigente = false;
+    };
+  }, []);
+
   const descargar = async () => {
     setEstado({ descargando: true, error: null, nombre: null });
     const resultado = await descargarPaquete(token, elegido);
@@ -56,7 +66,7 @@ function Descarga({ token, usuario }) {
   };
 
   return (
-    <Tarjeta antetitulo="Paso 1" titulo="Descarga Amatista para Blender" acento="border-amatista/50">
+    <Tarjeta antetitulo="Paso 1" titulo={`Descarga ${NOMBRE_MOTOR}`} acento="border-amatista/50">
       {!detectado && (
         <Alerta tipo="info">Blender funciona en computadores: abre esta página desde Windows, macOS o Linux.</Alerta>
       )}
@@ -86,6 +96,13 @@ function Descarga({ token, usuario }) {
         <span aria-hidden="true">⬇</span>
         {estado.descargando ? 'Preparando tu paquete…' : `Descargar para ${sistema.nombre}`}
       </button>
+      {servidor.conocida && (
+        <p className={`mt-3 font-mono text-xs uppercase tracking-wider ${servidor.alDia ? 'text-emerald-300' : 'text-blender'}`}>
+          {servidor.alDia
+            ? `✓ El servidor entrega ${NOMBRE_MOTOR} (versión ${servidor.version})`
+            : `El servidor todavía entrega la versión ${servidor.version}: falta actualizarlo a ${NOMBRE_MOTOR}`}
+        </p>
+      )}
       <p className="mt-3 text-sm text-texto/70">
         {usuario
           ? 'Tu paquete trae un acceso de un solo uso: al abrir Blender, Amatista ya estará conectado con tu cuenta.'
@@ -213,7 +230,7 @@ function Blender() {
         <div className="corte-poly flex flex-col gap-5 bg-superficie/95 p-6 sm:flex-row sm:items-center sm:p-8">
           <CristalLogo className="animar-flotar h-16 w-16 shrink-0" />
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-blender">Amatista para Blender</p>
+            <p className="font-mono text-xs uppercase tracking-[0.3em] text-blender">{NOMBRE_MOTOR} para Blender</p>
             <h1 className="mt-1 text-3xl font-extrabold leading-tight text-white sm:text-4xl">Mi Blender</h1>
             <p className="mt-2 max-w-2xl leading-relaxed text-texto/80">
               Cada módulo termina con una práctica dentro de Blender. Instala el add-on una vez: Amatista te guía paso a paso,
