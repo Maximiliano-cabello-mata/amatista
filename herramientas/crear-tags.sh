@@ -11,7 +11,8 @@
 # firman (-s). Cada tag lleva la fecha de su commit, no la de hoy.
 # v2.2.0-alpha.1 se creó a mano; v2.2.0-alpha.2 es el cierre del 2/10 (main con el panel de administración);
 # v3.0.0-alpha.1 a alpha.4 son las fusiones de la reestructuración, del motor, del motor
-# etapa 2 con la plataforma por módulos y de la documentación completa.
+# etapa 2 con la plataforma por módulos y de la documentación completa; alpha.5 a
+# alpha.7, motor v3, curso unificado y temáticas con Motor 3.2.
 # Es seguro ejecutarlo varias veces: los tags que ya existen se saltan.
 # =============================================================================
 set -euo pipefail
@@ -27,10 +28,12 @@ VERSIONES=(
   "v3.0.0-alpha.2|ec849d8|Amatista Engine etapa 1: motor de prácticas, add-on de Blender, Oracle 007 y la práctica de la mesa (PR #13)"
   "v3.0.0-alpha.3|d004071|Motor etapa 2 (guía y acompañante), plataforma por módulos y estructura fija Cursos · Mi panel · Admin (PR #14)"
   "v3.0.0-alpha.4|fe209e0|Documentación completa por secciones: historia, manual del código, esquema SQL, manual del desarrollador y README (PR #15)"
+  "v3.0.0-alpha.5|34af6f3|Motor v3: plan de estudios en dos cursos, add-on 3.0, Oracle 008/009, migración portable y dominio amatista-3d.me (PR #17)"
+  "v3.0.0-alpha.6|191a888|Curso de Blender unificado: una tarjeta por curso, jefes, medallas y modo claro (PR #18)"
+  "v3.0.0-alpha.7|927248c|Temáticas por módulo, mascotas y Amatista Motor 3.2; las prácticas se registran solas (PR #19)"
 )
-# v3.0.0-alpha.5 (motor v3, plan de estudios en dos cursos, Oracle 008/009,
-# migración portable y dominio amatista-3d.me) se agrega aquí con su commit de
-# fusión cuando llegue a main.
+# v3.0.0-alpha.8 (seguridad, rendimiento, Motor 3.3 con modelo de referencia y
+# mundos por módulo) se agrega aquí con su commit de fusión cuando llegue a main.
 
 git fetch --quiet origin --tags
 

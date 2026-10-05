@@ -19,8 +19,9 @@ import EstacionBlender from '../components/modulo/EstacionBlender';
 import RutaModulo from '../components/modulo/RutaModulo';
 import Jefe from '../components/temas/Jefe';
 import Escenario from '../components/temas/Escenario';
+import MundoTema from '../components/temas/MundoTema';
 import Mascota from '../components/temas/Mascota';
-import { temaDelModulo } from '../components/temas/temas';
+import { temaDelModulo, variablesDeTema } from '../components/temas/temas';
 import { duracionTexto, tituloCorto } from '../data/cursos';
 import { estadoPracticaEn, practicasDelModulo, secuenciaDelModulo } from '../modulos/practica';
 import { useProgreso } from '../progreso/contexto';
@@ -122,10 +123,16 @@ function MapaModulo({ curso, modulo, acento, progreso }) {
   const props = { curso, modulo, acento, progreso, tema };
 
   return (
-    <section className={`corte-poly cv-auto bg-gradient-to-br p-[2px] ${acento.borde}`} aria-labelledby={`modulo-${curso.id}-${numero}`}>
-      <div className="corte-poly relative overflow-hidden bg-superficie/95 p-6 sm:p-8">
-        <Escenario tema={tema} className="pointer-events-none absolute inset-x-0 top-0 h-40 w-full opacity-60 [mask-image:linear-gradient(to_bottom,black_45%,transparent)] sm:h-44" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-gradient-to-r from-superficie via-superficie/70 to-transparent" aria-hidden="true" />
+    <section
+      className="modulo-mundo corte-poly cv-auto p-[2px]"
+      style={variablesDeTema(tema)}
+      aria-labelledby={`modulo-${curso.id}-${numero}`}
+    >
+      <div className="modulo-mundo__interior corte-poly relative overflow-hidden p-6 sm:p-8">
+        <MundoTema tema={tema} dentro />
+        <Escenario tema={tema} className="pointer-events-none absolute inset-x-0 top-0 h-48 w-full opacity-70 [mask-image:linear-gradient(to_bottom,black_55%,transparent)] sm:h-56" />
+        <Escenario tema={tema} className="modulo-mundo__eco escenario--quieto pointer-events-none absolute inset-x-0 bottom-0 h-40 w-full -scale-x-100 opacity-25 [mask-image:linear-gradient(to_top,black_40%,transparent)]" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-r from-superficie/95 via-superficie/60 to-transparent" aria-hidden="true" />
         <div className="relative flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
             <p className="font-mono text-xs uppercase tracking-[0.25em] text-neon">
@@ -143,7 +150,7 @@ function MapaModulo({ curso, modulo, acento, progreso }) {
         </div>
         <Etiquetas className="relative mt-3" lista={etiquetasModulo(contenido, { conPractica: enBlender > 0, nuevas })} />
         <p className="relative mt-3 leading-relaxed text-texto/75">{contenido.description}</p>
-        <Mascota tema={tema} automatico={false} className="relative mt-4" />
+        <Mascota tema={tema} paseo className="relative mt-4" />
         <RutaModulo className="relative mt-4" lecciones={contenido.lessons} progreso={progreso} cursoId={curso.id} />
 
         <ol className="relative mt-5 space-y-2">

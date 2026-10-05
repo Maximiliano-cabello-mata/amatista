@@ -10,3 +10,9 @@ env/
 # SO
 .DS_Store
 Thumbs.db
+
+# Sesiones de prueba de backend/herramientas/rendimiento.py y resultados de las auditorías
+rendimiento_tokens.json
+auditoria*.json
+rendimiento*.json
+!frontend/scripts/*.json

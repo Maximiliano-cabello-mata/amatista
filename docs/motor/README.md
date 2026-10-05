@@ -28,7 +28,8 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 6. [Modo desarrollador](referencia/06_modo_desarrollador.md): crear, probar y subir una práctica nueva; publicarla.
 7. [Guía paso a paso y acompañamiento](referencia/07_guia_y_acompanamiento.md): entrenadores, señales en la escena, «Hazlo conmigo», acompañante y preferencias (etapa 2).
 8. [Prácticas v3 y herramientas de autor](referencia/08_practicas_v3_y_herramientas.md): `amatista.practice/2` (píldoras, vigilantes, escena de inicio, curso), `cursos.json`, `pruebas.json` y `practicas.py` (motor v3).
-9. [Catálogo de validadores](referencia/09_validadores.md): los 35, con sus parámetros (generado).
+9. [Catálogo de validadores](referencia/09_validadores.md): los 38, con sus parámetros (generado).
+10. [Modelo de referencia](referencia/10_modelo_de_referencia.md): la figura terminada, su imagen y su plano, y cómo `figure.resembles` califica figuras con sentido (motor 3.3).
 
 Especificaciones originales (3 de octubre de 2026): [`especificaciones/`](especificaciones/) (concepto del motor, Motor de Desarrollo v0.1 y el `ascii_check.py` original).
 

@@ -8,6 +8,7 @@ import { abrirPractica, obtenerPractica, progresoPractica } from '../../../servi
 import { TextoEnLinea } from '../Markdown';
 import { useActividad } from './hooks';
 import { BOTON_PRINCIPAL, BOTON_SECUNDARIO, MarcoActividad, Retroalimentacion } from './Marco';
+import ModeloReferencia from './ModeloReferencia';
 
 // Cada cuánto se pregunta al servidor por el avance mientras la lección está abierta.
 const INTERVALO_MS = 6000;
@@ -134,6 +135,8 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
           <TextoEnLinea texto={bloque.text} />
         </p>
       )}
+
+      <ModeloReferencia practicaId={bloque.practica} />
 
       <div className="corte-poly-sm mt-4 flex gap-3 border border-neon/20 bg-neon/5 p-3 text-sm text-texto/80">
         <IconoGuia className="mt-0.5 h-4 w-4 shrink-0 text-neon" />

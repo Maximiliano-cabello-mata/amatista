@@ -57,6 +57,19 @@ def carpeta_paquete():
 
 
 _carpeta_paquete = carpeta_paquete
+_CARPETAS_PRACTICA = {}
+
+
+def archivo_de_referencia(practica_id, nombre):
+    """referencia.jpg o plano.svg que viene en el paquete junto a la práctica (motor 3.3)."""
+    if not _CARPETAS_PRACTICA:
+        for ruta in carpeta_paquete().rglob("practica.json"):
+            datos = _leer_json(ruta) or {}
+            if datos.get("id"):
+                _CARPETAS_PRACTICA[datos["id"]] = ruta.parent
+    carpeta = _CARPETAS_PRACTICA.get(practica_id)
+    archivo = carpeta / nombre if carpeta else None
+    return archivo if archivo and archivo.is_file() else None
 # Solo el modo desarrollador ve las prácticas de prueba y las archivadas (v2).
 CARPETAS_DESARROLLO = ("sandbox", "archivo")
 
@@ -160,7 +173,7 @@ def practica_activa(context=None):
     texto = sc.amatista.practica_json if sc else ""
     if not texto:
         return None
-    clave = hashlib.sha1(texto.encode("utf-8")).hexdigest()
+    clave = hashlib.sha1(texto.encode("utf-8"), usedforsecurity=False).hexdigest()
     if ESTADO["clave"] != clave:
         try:
             ESTADO["practica"] = _motor.practica.parse_practice(json.loads(texto))

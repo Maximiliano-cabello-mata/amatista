@@ -412,6 +412,36 @@ tareas:
     area: pwa
     depende_de: [T-070]
     evidencia: "practices/blender/temas.json; backend/tests/test_practicas_al_arrancar.py; frontend/src/components/temas/; docs/plataforma/07_herramientas_graficas.md"
+  - id: T-075
+    titulo: "Auditoría de seguridad y de rendimiento automáticas, y optimización de los puntos débiles (catálogo, panel, descarga del add-on, animaciones)"
+    version: v3.3.0
+    area: api
+    evidencia: "docs/seguridad/01_auditoria_2026-10-05.md, docs/rendimiento/2026-10-05_informe.md; backend/herramientas/auditoria_seguridad.py y rendimiento.py; 1,449 ataques con 0 hallazgos; catálogo con 40 alumnos 747 → 77 ms"
+  - id: T-076
+    titulo: "Motor 3.3: modelo de referencia (imagen y plano por práctica) y figure.resembles, figuras con sentido y medidas aproximadas"
+    version: v3.3.0
+    area: blender
+    depende_de: [T-062]
+    evidencia: "docs/motor/referencia/10_modelo_de_referencia.md; engine/tests/test_figura.py; 71 casos de pruebas.json en verde; engine/herramientas/referencias.py"
+  - id: T-077
+    titulo: "Mundos por módulo en toda la lección y mascota que acompaña (platica, celebra, anima, avisa a la mitad y al final)"
+    version: v3.3.0
+    area: pwa
+    depende_de: [T-074]
+    evidencia: "frontend/src/components/temas/MundoTema.jsx y CompaneroMascota.jsx; practices/blender/temas.json (charla y reacciones); lección 54–60 fps en computadora"
+  - id: T-078
+    titulo: "Aplicar la v3.4 en producción: respaldo, 007/008/009, variables nuevas, actualizar.sh y Amatista Motor 3.3 (fase 1 del plan de despliegue)"
+    version: v3.3.0
+    area: lanzamiento
+    bloqueo: "Después del piloto del 8 de octubre"
+    depende_de: [T-055, T-075, T-076, T-077]
+    aceptacion: "docs/despliegue/2026-10-05_plan_de_despliegue.md fase 1: 18 tablas, 18 de 18 prácticas publicadas, /docs responde 404 y Mi Blender entrega Amatista Motor 3.3"
+  - id: T-079
+    titulo: "Proteger el código y las cuentas en producción: AMATISTA_SECRETO_FIRMA, repositorio privado y copias del add-on en «exigir»"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-078, T-065]
+    aceptacion: "docs/seguridad/02_proteccion_del_codigo.md: descargas con licencia firmada (verificar_licencia.py dice FIRMA VÁLIDA), repositorio privado con Cloudflare Pages funcionando y AMATISTA_ADDON_VERIFICADO=exigir"
   - id: T-071
     titulo: Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)
     version: v3.4.0
@@ -428,6 +458,29 @@ tareas:
     version: v3.4.0
     area: contenido
     depende_de: [T-066, T-070]
+  - id: T-080
+    titulo: "Portada más ligera en teléfono: el texto de cada módulo se carga al abrir su curso (hoy va en el paquete principal)"
+    version: v3.4.0
+    area: pwa
+    aceptacion: "docs/rendimiento/2026-10-05_informe.md: portada en teléfono modesto con TBT menor a 300 ms y LCP menor a 2.5 s (frontend/scripts/rendimiento.mjs)"
+  - id: T-081
+    titulo: "Varias aulas a la vez: dos procesos de uvicorn con los límites por IP y las cachés compartidos (Oracle)"
+    version: v3.4.0
+    area: api
+    depende_de: [T-078]
+    aceptacion: "rendimiento.py medir con 80 alumnos a la vez: guardar progreso y eventos con p50 menor a 250 ms"
+  - id: T-083
+    titulo: "Examen final (jefe) calificado por el servidor: las respuestas dejan de viajar en el JavaScript de la PWA"
+    version: v3.4.0
+    area: api
+    depende_de: [T-078]
+    aceptacion: "docs/seguridad/02_proteccion_del_codigo.md: buscar el texto de una respuesta correcta del examen en dist/ no da resultados; el examen se califica con /api y los quizzes de práctica siguen funcionando sin conexión"
+  - id: T-082
+    titulo: "Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages"
+    version: v3.4.0
+    area: pwa
+    depende_de: [T-065]
+    aceptacion: "frontend/public/_headers con CSP probada en todas las páginas (lección, Blender, admin, visor A-Frame) sin errores en la consola"
   - id: T-063
     titulo: Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas)
     version: v3.3.0

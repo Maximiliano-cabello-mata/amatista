@@ -1,6 +1,6 @@
 # Catálogo de validadores
 
-Generado con `python engine/herramientas/practicas.py validadores --md` (Amatista Engine 3.0.0). No se edita a mano: cambia la descripción en `engine/amatista_engine/validators/builtin.py` y vuelve a generarlo.
+Generado con `python engine/herramientas/practicas.py validadores --md` (Amatista Engine 3.3.0). No se edita a mano: cambia la descripción en `engine/amatista_engine/validators/builtin.py` y vuelve a generarlo.
 
 Los validadores que aceptan **selector** (`role`, `name`, `name_prefix`, `type`, `tag`, `collection`, `primitive`) se aplican a los objetos que cumplen todos los criterios; sin selector, a todos.
 
@@ -147,6 +147,21 @@ La escena tiene luces (de un tipo, si se indica: AREA, SUN, POINT, SPOT).
 Se vuelve a revisar con: OBJECT_ADDED, OBJECT_DATA.
 
 ## Forma
+
+### `figure.resembles` — La figura se parece al modelo
+
+Compara la figura con el modelo de referencia de la práctica («reference»): mismas piezas, tamaños y lugares parecidos (±tolerancia) y proporciones de la figura. No pide medidas exactas; acepta la figura más grande o chica, girada o en espejo.
+
+| Parámetro | Tipo | Qué es | Obligatorio | Por defecto |
+|---|---|---|---|---|
+| `tolerance` | float | Holgura de medidas (0.35 = ±35 %) |  | `0.35` |
+| `min_score` | float | Parecido mínimo (0 a 1) |  | `0.7` |
+| `scale_range` | float | Veces más grande o chica permitido |  | `2.5` |
+| `parts` | reference | Piezas del modelo (de «reference») |  |  |
+| `labels` | reference | Nombres de los roles (de «roles») |  |  |
+| `flexible` | reference | Grupos con cantidad libre (de «reference») |  |  |
+
+Se vuelve a revisar con: OBJECT_TRANSFORM, OBJECT_ADDED, ROLE_CHANGED, OBJECT_DATA.
 
 ### `shape.proportion` — Proporción
 
@@ -435,6 +450,24 @@ La parte más baja del objeto queda a una altura (0 = el suelo).
 
 Se vuelve a revisar con: OBJECT_TRANSFORM, OBJECT_ADDED, ROLE_CHANGED, OBJECT_DATA.
 
+### `spatial.on_top` — Encima de
+
+Cada objeto descansa encima de uno de referencia (un techo sobre su casa), no a un lado.
+
+| Parámetro | Tipo | Qué es | Obligatorio | Por defecto |
+|---|---|---|---|---|
+| `role` | role | Rol |  |  |
+| `name` | text | Nombre exacto |  |  |
+| `name_prefix` | text | Nombre empieza con |  |  |
+| `type` | object_type | Tipo de objeto |  |  |
+| `primitive` | primitive | Primitiva (cube, cylinder…) |  |  |
+| `reference_role` | role | Rol de referencia |  |  |
+| `reference` | text | Nombre de referencia |  |  |
+| `reference_primitive` | primitive | Primitiva de referencia |  |  |
+| `tolerance` | float | Holgura (parte de la altura del objeto) |  | `0.25` |
+
+Se vuelve a revisar con: OBJECT_TRANSFORM, OBJECT_ADDED, ROLE_CHANGED, OBJECT_DATA.
+
 ### `spatial.touching` — Toca a
 
 Cada objeto toca (por su caja) al menos un objeto de referencia: piezas ensambladas.
@@ -479,6 +512,23 @@ Algún objeto tiene el rol educativo.
 Se vuelve a revisar con: OBJECT_ADDED, ROLE_CHANGED.
 
 ## Transformaciones
+
+### `dimension.approx` — Medida aproximada
+
+Una medida queda CERCA de un valor (±tolerancia), en un eje o en su lado más largo o más corto.
+
+| Parámetro | Tipo | Qué es | Obligatorio | Por defecto |
+|---|---|---|---|---|
+| `role` | role | Rol |  |  |
+| `name` | text | Nombre exacto |  |  |
+| `name_prefix` | text | Nombre empieza con |  |  |
+| `type` | object_type | Tipo de objeto |  |  |
+| `primitive` | primitive | Primitiva (cube, cylinder…) |  |  |
+| `axis` | text | Eje (x, y, z, largest, smallest) |  | `largest` |
+| `value` | float | Valor aproximado | sí |  |
+| `tolerance` | float | Holgura (0.35 = ±35 %) |  | `0.35` |
+
+Se vuelve a revisar con: OBJECT_TRANSFORM, OBJECT_ADDED, ROLE_CHANGED, OBJECT_DATA.
 
 ### `dimension.range` — Dimensión
 

@@ -5,15 +5,17 @@
 // vive en amatista-3d.me y la API en api.amatista-3d.me, las dos con HTTPS.
 export const DOMINIO = "amatista-3d.me";
 export const API_DEL_DOMINIO = `https://api.${DOMINIO}`;
-// IP de la VM, sin HTTPS: solo para compilaciones viejas sin VITE_API_URL fuera
-// del dominio (el piloto de la v2.2). Desde https el navegador la bloquea.
+// IP de la VM, sin HTTPS: compilaciones sin VITE_API_URL fuera del dominio y
+// `npm run dev` en tu computadora (habla con el servidor real). Desde https el
+// navegador la bloquea.
 const API_POR_IP = "http://158.101.118.222:8000";
 
-// VITE_API_URL manda. Sin ella: en el dominio, su API; en tu computadora, el
-// backend local; en cualquier otro lado, la IP de siempre.
+// VITE_API_URL manda (para tu backend local: frontend/.env con
+// VITE_API_URL=http://localhost:8000). Sin ella: en el dominio, su API; en
+// cualquier otro lado, incluida tu computadora, la VM. Así `npm run dev` sin
+// .env ya no dice «No se pudo contactar al servidor» (incidencia 2026-10-05).
 export function apiPorDefecto(host = typeof window === "undefined" ? "" : window.location.hostname) {
   if (host === DOMINIO || host.endsWith(`.${DOMINIO}`)) return API_DEL_DOMINIO;
-  if (host === "localhost" || host === "127.0.0.1") return "http://localhost:8000";
   return API_POR_IP;
 }
 

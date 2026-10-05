@@ -97,7 +97,7 @@
           "edicion": "1.0",
           "offline": false,
           "comprobacion": [
-            "Una tabla alargada",
+            "Una tabla plana",
             "Repítela con Array",
             "Redondea con Bisel"
           ]
@@ -318,6 +318,7 @@
               "Pilares en el suelo",
               "Tablero sobre los pilares",
               "Pilares biselados",
+              "Que se parezca al puente del modelo",
               "Guarda tu puente"
             ],
             "allowManual": false

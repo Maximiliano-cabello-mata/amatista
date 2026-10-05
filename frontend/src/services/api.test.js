@@ -7,9 +7,9 @@ describe('apiPorDefecto', () => {
     expect(apiPorDefecto('www.amatista-3d.me')).toBe(API_DEL_DOMINIO);
   });
 
-  it('en la computadora del desarrollador usa el backend local', () => {
-    expect(apiPorDefecto('localhost')).toBe('http://localhost:8000');
-    expect(apiPorDefecto('127.0.0.1')).toBe('http://localhost:8000');
+  it('en la computadora, sin VITE_API_URL, habla con la VM', () => {
+    expect(apiPorDefecto('localhost')).toBe('http://158.101.118.222:8000');
+    expect(apiPorDefecto('127.0.0.1')).toBe('http://158.101.118.222:8000');
   });
 
   it('un dominio parecido no se confunde con el oficial', () => {

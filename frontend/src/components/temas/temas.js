@@ -52,17 +52,46 @@ export function vidaDelJefe(total, aciertos, minimo = 70) {
   };
 }
 
-// Mensaje de la mascota: primero saluda y luego alterna consejos y datos curiosos.
+// Mensaje de la mascota: primero saluda y luego alterna consejos, charla y datos curiosos.
 export function mensajesDeMascota(mascota) {
   if (!mascota) return [];
   const consejos = (mascota.consejos ?? []).map((texto) => ({ tipo: 'consejo', texto }));
+  const charla = (mascota.charla ?? []).map((texto) => ({ tipo: 'charla', texto }));
   const datos = (mascota.datos ?? []).map((texto) => ({ tipo: 'dato', texto }));
   const mezcla = [];
-  for (let i = 0; i < Math.max(consejos.length, datos.length); i += 1) {
+  for (let i = 0; i < Math.max(consejos.length, charla.length, datos.length); i += 1) {
     if (consejos[i]) mezcla.push(consejos[i]);
+    if (charla[i]) mezcla.push(charla[i]);
     if (datos[i]) mezcla.push(datos[i]);
   }
   return [{ tipo: 'hola', texto: mascota.hola }, ...mezcla];
+}
+
+// Lo que dice la mascota cuando pasa algo en la lección (acierto, fallo, mitad,
+// final, inactivo). Si el tema no trae esa reacción, no dice nada.
+export function reaccionDeMascota(mascota, tipo) {
+  const texto = mascota?.reacciones?.[tipo];
+  return texto ? { tipo, texto } : null;
+}
+
+// Las actividades y la lección avisan a la mascota con un evento del navegador:
+// así no hace falta pasar funciones por todos los componentes.
+export const EVENTO_MASCOTA = 'amatista:mascota';
+
+export function avisarMascota(tipo) {
+  if (typeof window === 'undefined') return;
+  window.dispatchEvent(new CustomEvent(EVENTO_MASCOTA, { detail: { tipo } }));
+}
+
+// Variables CSS de la temática (index.css › .mundo-tema, [data-tema]).
+export function variablesDeTema(tema) {
+  const c = tema?.colores ?? {};
+  return {
+    '--tema-acento': c.acento ?? '#B57EDC',
+    '--tema-suave': c.suave ?? '#E2C6F5',
+    '--tema-cielo': c.cielo ?? '#1E0F29',
+    '--tema-suelo': c.suelo ?? '#0F0815',
+  };
 }
 
 // Los módulos publicados con su temática (portada: «un mundo por módulo»).

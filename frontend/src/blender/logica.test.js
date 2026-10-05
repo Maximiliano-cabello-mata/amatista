@@ -110,16 +110,16 @@ describe('primera práctica en el módulo 2', () => {
 });
 
 describe('Amatista Motor', () => {
-  it('se llama «Amatista Motor 3.2» y coincide con el manifiesto del add-on', async () => {
+  it('se llama «Amatista Motor 3.3» y coincide con el manifiesto del add-on', async () => {
     const { readFileSync } = await import('node:fs');
     const manifiesto = readFileSync(new URL('../../../addon/amatista_blender/blender_manifest.toml', import.meta.url), 'utf8');
     expect(manifiesto).toContain(`version = "${MOTOR.version}"`);
     expect(manifiesto).toContain(`name = "${MOTOR.nombre}"`);
-    expect(NOMBRE_MOTOR).toBe('Amatista Motor 3.2');
+    expect(NOMBRE_MOTOR).toBe('Amatista Motor 3.3');
   });
 
   it('avisa si el servidor entrega una versión vieja', () => {
-    expect(versionDelServidor({ version_addon: '3.2.0' })).toEqual({ conocida: true, version: '3.2.0', alDia: true });
+    expect(versionDelServidor({ version_addon: '3.3.0' })).toEqual({ conocida: true, version: '3.3.0', alDia: true });
     expect(versionDelServidor({ version_addon: '3.0.0' }).alDia).toBe(false);
     expect(versionDelServidor(null).conocida).toBe(false);
   });

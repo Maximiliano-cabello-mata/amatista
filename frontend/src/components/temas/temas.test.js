@@ -1,7 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { cursos } from '../../data/cursos';
 import { SPRITES } from './sprites';
-import { mensajesDeMascota, TEMAS, temaDelModulo, vidaDelJefe } from './temas';
+import {
+  avisarMascota,
+  EVENTO_MASCOTA,
+  mensajesDeMascota,
+  reaccionDeMascota,
+  TEMAS,
+  temaDelModulo,
+  variablesDeTema,
+  vidaDelJefe,
+} from './temas';
 
 describe('temáticas por módulo', () => {
   it('cada módulo publicado tiene un tema distinto con su jefe', () => {
@@ -41,5 +50,31 @@ describe('temáticas por módulo', () => {
     const mensajes = mensajesDeMascota(TEMAS.taller.mascota);
     expect(mensajes[0].tipo).toBe('hola');
     expect(mensajes.map((m) => m.tipo)).toContain('dato');
+  });
+
+  it('cada mascota platica y reacciona a lo que pasa en la lección', () => {
+    for (const [id, tema] of Object.entries(TEMAS)) {
+      expect(tema.mascota.charla?.length, id).toBeGreaterThan(0);
+      for (const tipo of ['acierto', 'fallo', 'mitad', 'final', 'inactivo']) {
+        expect(reaccionDeMascota(tema.mascota, tipo)?.texto, `${id} ${tipo}`).toBeTruthy();
+      }
+    }
+    expect(mensajesDeMascota(TEMAS.taller.mascota).map((m) => m.tipo)).toContain('charla');
+    expect(reaccionDeMascota(TEMAS.taller.mascota, 'otro')).toBeNull();
+  });
+
+  it('avisa a la mascota con un evento y pasa los colores del tema al CSS', () => {
+    const recibidos = [];
+    globalThis.window = new EventTarget();
+    try {
+      window.addEventListener(EVENTO_MASCOTA, (e) => recibidos.push(e.detail.tipo));
+      avisarMascota('acierto');
+    } finally {
+      delete globalThis.window;
+    }
+    expect(recibidos).toEqual(['acierto']);
+    expect(() => avisarMascota('fallo')).not.toThrow();
+    expect(variablesDeTema(TEMAS.taller)['--tema-acento']).toBe(TEMAS.taller.colores.acento);
+    expect(variablesDeTema(null)['--tema-acento']).toBe('#B57EDC');
   });
 });

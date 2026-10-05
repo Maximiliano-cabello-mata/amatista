@@ -17,7 +17,7 @@ import time
 
 import bpy
 
-from .. import _motor, ajustes, aprendizaje, autor, cuenta, guia, practicas, red, temas
+from .. import _motor, ajustes, aprendizaje, autor, cuenta, guia, integridad, practicas, red, temas
 from . import aprender, dialogos, estilo
 
 CATEGORIA = "Amatista"
@@ -71,7 +71,7 @@ ICONO_ESCENA = {
     "portal": "URL",
     "cristales": "SHADERFX",
 }
-ICONO_MENSAJE = {"hola": "HEART", "consejo": "LIGHT", "dato": "INFO"}
+ICONO_MENSAJE = {"hola": "HEART", "consejo": "LIGHT", "charla": "OUTLINER_OB_SPEAKER", "dato": "INFO"}
 
 
 def icono_tema(tema):
@@ -142,6 +142,11 @@ class AMATISTA_PT_principal(_Base, bpy.types.Panel):
             estilo.parrafo(cuerpo, context, "Blender tiene desactivado el acceso en línea. Amatista lo necesita para "
                            "descargar prácticas y guardar tu progreso.")
             cuerpo.operator("amatista.permitir_internet", icon="WORLD")
+
+        if integridad.revisar()["estado"] == "modificada":
+            cuerpo = estilo.tarjeta(layout, "Copia modificada", icon="ERROR")
+            estilo.parrafo(cuerpo, context, "Algunos archivos de Amatista Motor no son los originales. Tus intentos "
+                           "se guardan como «sin verificar». Vuelve a descargarlo desde la plataforma (Mi Blender).")
 
         if cuenta.VINCULO["activo"]:
             self._dibujar_codigo(layout, context)
@@ -246,6 +251,8 @@ class AMATISTA_PT_practica(_Base, bpy.types.Panel):
         if reporte.paused:
             self._tarjeta_pausa(layout, context, practica, reporte)
 
+        self._modelo(layout, context, practica, reporte)
+
         g = guia.guia_actual()
         pildora = aprendizaje.pildora_principal()
         if pildora is not None and not reporte.completed:
@@ -283,6 +290,24 @@ class AMATISTA_PT_practica(_Base, bpy.types.Panel):
         fila = layout.row(align=True)
         fila.operator("amatista.abrir_plataforma", text="Plataforma", icon="URL").ruta = "#/panel"
         fila.operator("amatista.elegir_practica", text="Otra práctica", icon="FILE_REFRESH")
+
+    def _modelo(self, layout, context, practica, reporte):
+        """«Así se debe ver»: la imagen del modelo de referencia (motor 3.3)."""
+        referencia = getattr(practica, "reference", None)
+        imagen = practicas.archivo_de_referencia(practica.id, "referencia.jpg")
+        if referencia is None or imagen is None:
+            return
+        cuerpo = estilo.seccion(layout, context, "modelo", "Así se debe ver", icon="IMAGE_DATA",
+                                cerrada=reporte.completed)
+        if cuerpo is None:
+            return
+        cuerpo.template_icon(icon_value=estilo.imagen(imagen), scale=9.0)
+        if referencia.description:
+            estilo.parrafo(cuerpo, context, referencia.description)
+        fila = cuerpo.row(align=True)
+        fila.operator("amatista.ver_referencia", text="Ver grande", icon="ZOOM_IN").archivo = "referencia.jpg"
+        if practicas.archivo_de_referencia(practica.id, "plano.svg"):
+            fila.operator("amatista.ver_referencia", text="Plano con medidas", icon="DRIVER_DISTANCE").archivo = "plano.svg"
 
     def _tarjeta_pausa(self, layout, context, practica, reporte):
         """Un vigilante detuvo el progreso: aviso rojo con el arreglo a un clic."""
