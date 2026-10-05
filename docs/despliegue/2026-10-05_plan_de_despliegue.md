@@ -14,7 +14,7 @@ Actualizado: 5 de octubre de 2026. Reemplaza el orden de trabajo de los document
 |---|---|---|---|---|
 | 0. Preparar sin tocar la VM | Hasta el 7/10 | Cloudflare, PWA en Pages, secretos | Max, desde su PC y el navegador | Sí |
 | Piloto | 8/10 | Nada | — | — |
-| 1. Actualizar la plataforma | 9/10 | Código de `main` en la VM, Motor 3.3 | Max, por SSH | Sí (`actualizar.sh` vuelve solo) |
+| 1. Actualizar la plataforma | 9/10 | Código de `main` en la VM y Motor 3.3 en Oracle ([sección propia](#subir-el-motor-33-a-oracle-parte-de-la-fase-1)) | Max, por SSH | Sí (`actualizar.sh` vuelve solo) |
 | 2. HTTPS con el dominio | 9–10/10 | Caddy, firewall, `api.amatista-3d.me` | Max, por SSH y en OCI | Sí (volver a abrir el 8000) |
 | 3. Correo y cuentas | Después de la fase 2 | SMTP, administrador, confirmación de correo | Max | Sí |
 | 4. Comprobar y cerrar | Una semana después | Auditoría contra producción, HSTS, repo privado | Max | HSTS no se deshace rápido |
@@ -75,6 +75,32 @@ Sigue el archivo de pasos del servidor (`/mnt/project-files/despliegue/2026-10-0
 **Comprobación:** `curl -s http://127.0.0.1:8000/api/salud` → `{"estado":"ok","motor":"oracle"}`; `curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8000/docs` → `404`; una práctica entregada desde Blender aparece calificada en el panel.
 
 **Si falla:** `actualizar.sh` vuelve solo al commit anterior. La base no se revierte, pero ningún script borra datos; el respaldo del paso 1 se puede cargar en una base vacía con `migrar.py importar` y comprobar con `migrar.py verificar`.
+
+## Subir el Motor 3.3 a Oracle (parte de la fase 1)
+
+El motor nuevo **no cambia el esquema**: no hay script SQL nuevo (el siguiente libre sigue siendo el 010). Lo que cambia en Oracle son **filas**: las prácticas rehechas (tren, muñeco de nieve, cojín, puente, aldea…) entran como una versión nueva en `PRACTICAS` y quedan en el historial de `PRACTICA_VERSIONES`. El servidor lo hace solo al arrancar con el código nuevo.
+
+1. **Antes**: respaldo (`migrar.py exportar`) y anota cómo están las prácticas hoy, en Database Actions:
+
+   ```sql
+   SELECT id, version, version_publicada, estado, actualizado_en FROM practicas ORDER BY id;
+   ```
+
+2. **Subir**: `actualizar.sh` trae el código del motor 3.3 y reinicia `amatista-backend`. Al arrancar, el registro dice cuántas prácticas son nuevas y cuántas se actualizaron:
+
+   ```bash
+   sudo journalctl -u amatista-backend -n 80 --no-pager | grep -i "prácticas"
+   ```
+
+   En la prueba sobre Oracle Free 23 salió «0 nuevas, 13 actualizadas».
+3. **Comprobar**:
+   - `python herramientas/contenido.py practicas --revisar` → **18 de 18** publicadas y al día.
+   - La misma consulta del paso 1: las 13 prácticas cambiadas tienen `version` y `version_publicada` una más alta y `actualizado_en` de hoy.
+   - `SELECT practica_id, version, version_addon, creado_en FROM practica_versiones WHERE creado_en > SYSDATE - 1 ORDER BY practica_id;` muestra una fila nueva por práctica actualizada.
+   - En la plataforma, **Mi Blender** ofrece **Amatista Motor 3.3** y la práctica del tren muestra «Así se debe ver».
+   - En Blender, con el add-on 3.3 instalado, entrega el tren: debe calificarse y aparecer en el panel.
+4. **Qué pasa con los alumnos**: su progreso en `PROGRESO_PRACTICAS` se conserva. Un alumno que tenía el tren aprobado con las reglas viejas lo sigue teniendo aprobado; los intentos nuevos se califican con las reglas nuevas. El add-on 3.2 sigue funcionando (`AMATISTA_ADDON_VERIFICADO=registrar`), pero sin la imagen de referencia: pide a los alumnos que lo reinstalen desde Mi Blender.
+5. **Si hay que volver atrás**: `actualizar.sh` regresa el código solo si fallan las pruebas o `/api/salud`. Para regresar a mano al motor 3.2, vuelve al commit anterior y reinicia: el servidor registra otra vez las prácticas del repositorio viejo como versión nueva. El historial de `PRACTICA_VERSIONES` nunca se borra.
 
 ## Fase 2. HTTPS con el dominio (9 y 10 de octubre)
 

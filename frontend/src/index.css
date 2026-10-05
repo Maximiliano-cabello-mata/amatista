@@ -437,39 +437,163 @@ html[data-tema] body { background: transparent; }
 .companero__acciones button:hover, .companero__silencio:hover { color: #fff; }
 .companero__cuerpo { display: flex; align-items: flex-end; gap: 8px; }
 .companero__silencio { order: -1; padding-bottom: 6px; }
-.companero__boton {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 72px;
-  height: 72px;
+/* Círculo del compañero: el personaje se para encima. */
+.personaje.companero__personaje {
+  --talla: 54px;
+  width: 74px;
+  height: 74px;
+  padding-bottom: 9px;
   border-radius: 9999px;
-  background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--acento) 35%, transparent), rgb(18 18 18 / 0.85) 70%);
+  background: radial-gradient(circle at 50% 62%, color-mix(in srgb, var(--acento) 35%, transparent), rgb(18 18 18 / 0.85) 70%);
   border: 2px solid color-mix(in srgb, var(--acento) 60%, transparent);
   box-shadow: 0 6px 18px rgb(0 0 0 / 0.4);
-  transition: transform 0.2s ease;
 }
-.companero__boton:hover { transform: translateY(-3px) rotate(-4deg); }
-.companero__boton:active { transform: scale(0.94); }
-.companero__sprite { width: 52px; height: 52px; animation: companero-respirar 2.8s ease-in-out infinite; }
-.companero__boton--salto .companero__sprite { animation: companero-salto 0.7s cubic-bezier(0.3, 1.6, 0.5, 1); }
-.companero__sombra {
+.companero__personaje .personaje__sprite { width: var(--talla); height: var(--talla); }
+.companero__personaje .personaje__paso, .companero__personaje .personaje__accion { width: auto; height: auto; }
+
+/* --- Personaje de cada módulo (v3.4, components/temas/Personaje.jsx) ---------
+   Parpadea, sigue el puntero con la mirada (--mirar-x/y, --inclinar), se
+   mueve solo de vez en cuando y responde al tocarlo. Solo transform y
+   opacity: corre en la tarjeta gráfica. */
+.personaje {
+  --talla: 56px;
+  position: relative;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: var(--talla);
+  height: var(--talla);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  transform: rotate(var(--inclinar, 0deg));
+  transition: transform 0.35s ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+button.personaje { cursor: pointer; }
+button.personaje:focus-visible { outline: 2px solid var(--acento, #b57edc); outline-offset: 4px; }
+.personaje--chico { --talla: 48px; }
+.personaje--mini { --talla: 36px; }
+.personaje__paso, .personaje__accion { display: block; width: 100%; height: 100%; transform-origin: 50% 100%; }
+.personaje__paso { animation: personaje-respirar 2.8s ease-in-out infinite; }
+/* Sin filter: drop-shadow re-pintaba el sprite en cada cuadro (la sombra ya es .personaje__sombra). */
+.personaje__sprite { display: block; width: 100%; height: 100%; }
+.personaje__sombra {
   position: absolute;
-  bottom: 9px;
-  width: 34px;
+  bottom: -3px;
+  left: 50%;
+  width: 62%;
   height: 6px;
+  margin-left: -31%;
   border-radius: 50%;
-  background: rgb(0 0 0 / 0.45);
-  animation: companero-sombra 2.8s ease-in-out infinite;
+  background: rgb(0 0 0 / 0.42);
+  animation: personaje-sombra 2.8s ease-in-out infinite;
 }
-@keyframes companero-respirar { 0%, 100% { transform: translateY(0) scale(1, 1); } 50% { transform: translateY(-4px) scale(1.03, 0.97); } }
-@keyframes companero-sombra { 0%, 100% { transform: scaleX(1); opacity: 0.45; } 50% { transform: scaleX(0.8); opacity: 0.3; } }
-@keyframes companero-salto {
+.companero__personaje .personaje__sombra { bottom: 8px; width: 46%; margin-left: -23%; }
+/* Ojos: parpadeo y mirada. */
+.sprite__mirada { transform: translate(var(--mirar-x, 0px), var(--mirar-y, 0px)); transition: transform 0.18s ease-out; }
+.sprite__ojos { transform-box: fill-box; transform-origin: center; animation: personaje-parpadeo 4.6s infinite; }
+
+/* Al pasar el puntero: saluda. */
+button.personaje:hover .personaje__paso, .group:hover .personaje__paso { animation: personaje-saludo 1s ease-in-out infinite; }
+
+/* Acciones (una sola vez cada una). */
+.personaje--salto .personaje__accion { animation: personaje-salto 0.7s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.personaje--giro .personaje__accion { animation: personaje-giro 0.8s ease-in-out; }
+.personaje--baile .personaje__accion { animation: personaje-baile 1.2s ease-in-out; }
+.personaje--saludo .personaje__accion { animation: personaje-saludo 1s ease-in-out; }
+.personaje--festejo .personaje__accion { animation: personaje-festejo 1.3s ease-in-out; }
+.personaje--triste .personaje__accion { animation: personaje-triste 1.4s ease-in-out; }
+.personaje--voltereta .personaje__accion { animation: personaje-voltereta 1.1s cubic-bezier(0.3, 1.3, 0.5, 1); }
+.personaje--saltito .personaje__accion { animation: personaje-saltito 0.6s ease-out; }
+.personaje--estirar .personaje__accion { animation: personaje-estirar 1.1s ease-in-out; }
+.personaje--mirar .sprite__ojos { animation: personaje-mirar 1.6s ease-in-out; }
+.personaje--salto .personaje__sombra, .personaje--voltereta .personaje__sombra,
+.personaje--festejo .personaje__sombra { animation: personaje-sombra-salto 0.7s ease-in-out 2; }
+
+/* Chispas al tocarlo: cuadritos de pixel art del color del módulo. */
+.personaje__chispa {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 6px;
+  height: 6px;
+  background: var(--acento, #b57edc);
+  box-shadow: 0 0 6px var(--acento, #b57edc);
+  pointer-events: none;
+  animation: personaje-chispa 0.75s ease-out forwards;
+}
+
+/* Paseo: el personaje cruza su carril, da la vuelta y regresa. */
+.paseo { position: relative; pointer-events: none; }
+.paseo__andar { width: calc(100% - 56px); height: 100%; animation: paseo-ir 22s ease-in-out infinite alternate; }
+.paseo__voltear { display: inline-flex; height: 100%; align-items: flex-end; animation: paseo-voltear 44s step-end infinite; }
+.paseo .personaje { pointer-events: auto; }
+.personaje--camina .personaje__paso { animation: personaje-pasito 0.45s ease-in-out infinite; }
+.paseo__andar:has(.personaje:hover), .paseo__andar:has(.personaje:hover) .paseo__voltear,
+.paseo__andar:has(.personaje:focus-visible), .paseo__andar:has(.personaje:focus-visible) .paseo__voltear { animation-play-state: paused; }
+.paseo::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 -2px;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--tema-acento, #b57edc) 45%, transparent) 0 6px, transparent 6px 14px);
+  opacity: 0.6;
+}
+
+@keyframes personaje-respirar { 0%, 100% { transform: translateY(0) scale(1, 1); } 50% { transform: translateY(-3px) scale(1.03, 0.97); } }
+@keyframes personaje-sombra { 0%, 100% { transform: scaleX(1); opacity: 0.42; } 50% { transform: scaleX(0.82); opacity: 0.3; } }
+@keyframes personaje-sombra-salto { 0%, 100% { transform: scaleX(1); } 40% { transform: scaleX(0.55); opacity: 0.2; } }
+@keyframes personaje-parpadeo { 0%, 91%, 97%, 100% { transform: scaleY(1); } 94% { transform: scaleY(0.1); } }
+@keyframes personaje-mirar { 0%, 100% { transform: translateX(0); } 25%, 40% { transform: translateX(-0.6px); } 60%, 80% { transform: translateX(0.6px); } }
+@keyframes personaje-salto {
   0% { transform: translateY(0) scale(1, 1); }
-  30% { transform: translateY(-14px) scale(0.92, 1.1); }
-  60% { transform: translateY(0) scale(1.12, 0.88); }
+  20% { transform: translateY(0) scale(1.15, 0.85); }
+  45% { transform: translateY(-18px) scale(0.92, 1.1); }
+  75% { transform: translateY(0) scale(1.12, 0.88); }
   100% { transform: translateY(0) scale(1, 1); }
 }
+@keyframes personaje-saltito { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-7px); } 70% { transform: translateY(0) scale(1.06, 0.94); } }
+@keyframes personaje-giro { 0% { transform: perspective(200px) rotateY(0); } 100% { transform: perspective(200px) rotateY(360deg); } }
+@keyframes personaje-baile {
+  0%, 100% { transform: rotate(0) translateX(0); }
+  15% { transform: rotate(-12deg) translateX(-4px); }
+  30% { transform: rotate(10deg) translateX(4px) scale(1.05, 0.95); }
+  45% { transform: rotate(-10deg) translateX(-4px); }
+  60% { transform: rotate(12deg) translateX(4px) scale(1.05, 0.95); }
+  80% { transform: translateY(-8px) rotate(0); }
+}
+@keyframes personaje-saludo { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-10deg); } 40% { transform: rotate(9deg); } 60% { transform: rotate(-7deg); } 80% { transform: rotate(5deg); } }
+@keyframes personaje-festejo {
+  0%, 100% { transform: translateY(0) scale(1); }
+  20% { transform: translateY(-16px) scale(1.08); }
+  40% { transform: translateY(0) scale(1.1, 0.9); }
+  60% { transform: translateY(-12px) rotate(-8deg) scale(1.06); }
+  80% { transform: translateY(0) rotate(0) scale(1.08, 0.92); }
+}
+@keyframes personaje-triste {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+  25% { transform: translateY(3px) scale(1.04, 0.9); opacity: 0.8; }
+  40% { transform: translateY(3px) scale(1.04, 0.9) translateX(-2px); }
+  55% { transform: translateY(3px) scale(1.04, 0.9) translateX(2px); }
+  75% { transform: translateY(3px) scale(1.04, 0.9); opacity: 0.8; }
+}
+@keyframes personaje-voltereta {
+  0% { transform: translateY(0) rotate(0); }
+  15% { transform: translateY(0) scale(1.15, 0.85); }
+  55% { transform: translateY(-24px) rotate(-200deg); }
+  85% { transform: translateY(0) rotate(-360deg) scale(1.1, 0.9); }
+  100% { transform: translateY(0) rotate(-360deg); }
+}
+@keyframes personaje-estirar { 0%, 100% { transform: scale(1, 1); } 35%, 55% { transform: scale(0.92, 1.12); } 75% { transform: scale(1.06, 0.94); } }
+@keyframes personaje-pasito { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-3px) rotate(4deg); } }
+@keyframes personaje-chispa {
+  from { transform: translate(-50%, -50%) scale(1) rotate(0); opacity: 1; }
+  to { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.3) rotate(180deg); opacity: 0; }
+}
+@keyframes paseo-ir { 0%, 8% { transform: translateX(0); } 92%, 100% { transform: translateX(100%); } }
+@keyframes paseo-voltear { 0% { transform: scaleX(1); } 50% { transform: scaleX(-1); } }
 @keyframes globo-entrar {
   from { opacity: 0; transform: translateY(10px) scale(0.85); }
   to { opacity: 1; transform: none; }
@@ -479,8 +603,7 @@ html[data-tema] body { background: transparent; }
   .companero { max-width: min(22rem, calc((100vw - 48rem) / 2 - 20px)); }
 }
 @media (max-width: 640px) {
-  .companero__boton { width: 56px; height: 56px; }
-  .companero__sprite { width: 40px; height: 40px; }
+  .personaje.companero__personaje { --talla: 42px; width: 58px; height: 58px; padding-bottom: 7px; }
   .companero__globo { font-size: 0.8125rem; }
 }
 
@@ -548,7 +671,8 @@ html.ligero .fondo-pesado { display: none; }
 html.ligero .escenario *, html.ligero .esc-flotar { animation: none !important; }
 html.ligero .destello::after { display: none; }
 html.ligero .mundo-tema__particulas, html.ligero .particula { display: none; }
-html.ligero .companero__sprite, html.ligero .companero__sombra { animation: none; }
+html.ligero .personaje *, html.ligero .paseo * { animation: none !important; }
+html.ligero .personaje__chispa { display: none; }
 html.ligero .revelar { animation: none; }
 html.ligero .elevar::before { display: none; }
 
@@ -558,8 +682,9 @@ html.ligero .elevar::before { display: none; }
   .barra > .relleno::after { animation: none; }
   .escenario *, .esc-flotar, .animar-pagina { animation: none !important; }
   .mundo-tema__particulas { display: none; }
-  .companero__sprite, .companero__sombra, .companero__globo, .revelar,
-  .companero__boton--salto .companero__sprite, .mundo-pagina h2::after { animation: none !important; }
+  .companero__globo, .revelar, .mundo-pagina h2::after,
+  .personaje *, .paseo * { animation: none !important; }
+  .personaje__chispa { display: none; }
   .elevar::before { display: none; }
   button:active, a.corte-poly-sm:active { transform: none; }
   .destello::after { display: none; }

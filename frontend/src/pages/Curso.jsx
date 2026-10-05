@@ -150,7 +150,7 @@ function MapaModulo({ curso, modulo, acento, progreso }) {
         </div>
         <Etiquetas className="relative mt-3" lista={etiquetasModulo(contenido, { conPractica: enBlender > 0, nuevas })} />
         <p className="relative mt-3 leading-relaxed text-texto/75">{contenido.description}</p>
-        <Mascota tema={tema} className="relative mt-4" />
+        <Mascota tema={tema} paseo className="relative mt-4" />
         <RutaModulo className="relative mt-4" lecciones={contenido.lessons} progreso={progreso} cursoId={curso.id} />
 
         <ol className="relative mt-5 space-y-2">

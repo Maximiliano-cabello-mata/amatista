@@ -5,7 +5,7 @@
 // actividad. Se puede callar (queda solo el personaje) y lo recuerda.
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { SpriteMascota } from './Mascota';
+import Personaje from './Personaje';
 import { EVENTO_MASCOTA, mensajesDeMascota, reaccionDeMascota } from './temas';
 
 const CADA_MS = 24000; // cada cuánto platica sola
@@ -45,7 +45,6 @@ function CompaneroMascota({ tema, titulo }) {
   const mascota = tema?.mascota;
   const [mensaje, setMensaje] = useState(null);
   const [callada, setCallada] = useState(leerSilencio);
-  const [saltando, setSaltando] = useState(false);
   const indice = useRef(0);
   const ocultar = useRef(null);
   const yaDijo = useRef(new Set());
@@ -53,10 +52,8 @@ function CompaneroMascota({ tema, titulo }) {
   const decir = useCallback((nuevo, ms = VISIBLE_MS) => {
     if (!nuevo) return;
     setMensaje({ ...nuevo, clave: Date.now() });
-    setSaltando(true);
     window.clearTimeout(ocultar.current);
     ocultar.current = window.setTimeout(() => setMensaje(null), ms);
-    window.setTimeout(() => setSaltando(false), 700);
   }, []);
 
   const siguiente = useCallback(() => {
@@ -173,16 +170,14 @@ function CompaneroMascota({ tema, titulo }) {
         )}
       </div>
       <div className="companero__cuerpo">
-        <button
-          type="button"
-          className={`companero__boton ${saltando ? 'companero__boton--salto' : ''}`}
-          onClick={() => (mensaje ? setMensaje(null) : siguiente())}
-          aria-label={`Hablar con ${mascota.nombre}`}
-          title={`${mascota.nombre} · ${mascota.especie ?? 'tu guía'}`}
-        >
-          <span className="companero__sombra" aria-hidden="true" />
-          <SpriteMascota tema={tema} className="companero__sprite" />
-        </button>
+        {/* Al tocarlo hace algo distinto cada vez y cuenta otra cosa; reacciona solo a la lección. */}
+        <Personaje
+          tema={tema}
+          reacciona
+          className="companero__personaje"
+          onToque={siguiente}
+          etiqueta={`Hablar con ${mascota.nombre}`}
+        />
         <button type="button" className="companero__silencio" onClick={cambiarSilencio}>
           {callada ? 'Que platique' : 'Callar'}
         </button>
