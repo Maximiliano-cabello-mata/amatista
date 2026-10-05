@@ -45,6 +45,9 @@ El detalle de cada pieza está en el compendio (`/mnt/project-files/compendio/he
 | Temáticas por módulo | `practices/blender/temas.json` (compartido con el add-on), `components/temas/temas.js` | Nombre, colores, escenario, mascota y jefe de cada módulo. |
 | Escenarios animados (v3.3) | `components/temas/Escenario.jsx` | Paisaje low poly por temática (engranes, chispas, estrellas, gotas, reflectores, carpa, aldea, mapa, galería, portal, cristales) detrás del módulo, la lección y la arena del jefe. |
 | Mascotas (v3.3) | `components/temas/Mascota.jsx`, `sprites.js` | Un personaje original en pixel art por módulo que da consejos y datos curiosos. |
+| Personaje interactivo (v3.4) | `components/temas/Personaje.jsx`, `personaje.js` | El personaje de cada módulo parpadea, sigue el puntero con la mirada, se mueve solo y responde al tocarlo (salto, giro, baile, saludo) con chispas del color del módulo. `Paseo`: camina por su carril en la página del curso. Reacciona a aciertos, fallos y al final de la lección, y festeja los golpes al jefe. |
+| Mundo de la lección (v3.4) | `components/temas/MundoTema.jsx` | Cielo, luz, suelo y partículas propias del módulo detrás de toda la lección y dentro de la tarjeta del módulo. |
+| Compañero de la lección (v3.4) | `components/temas/CompaneroMascota.jsx` | El personaje en la esquina durante toda la lección: saluda, platica (`charla` de `temas.json`), reacciona y se puede callar. |
 | Jefes con silueta propia (v3.3) | `components/temas/Jefe.jsx` | Cinco siluetas (bloque, robusto, flotante, redondo, alto) además de colores y adornos. |
 | «Un mundo por módulo» (v3.3) | `components/temas/MundosModulos.jsx` | En la portada, cada módulo con su escenario, guía y jefe. |
 | Destello y transición de página (v3.3) | `index.css` (`.destello`, `.animar-pagina`) | Brillo al pasar sobre los botones principales y fundido corto al cambiar de página. |

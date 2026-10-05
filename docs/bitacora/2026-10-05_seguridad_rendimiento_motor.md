@@ -100,3 +100,16 @@ T-075 (auditorías y optimización), T-076 (Motor 3.3) y T-077 (mundos y mascota
 - Portada en teléfono: LCP ~2.7 s y TBT ~650 ms (T-080).
 - Escrituras con 40 alumnos a la vez: 400–500 ms con un proceso (T-081).
 - «Mi Blender» en teléfono mueve el contenido al cargar (CLS 0.087).
+
+## Cierre (5 oct, después de fusionar)
+
+Maximiliano fusionó el PR #20 (de22ee6) y el #22 de Copilot (4576463). Después se revisó todo el repositorio buscando lo desactualizado:
+
+- `README.md`, `PROYECTO.md`, `CHANGELOG.md`: estado al 5 de octubre, orden vigente, 38 validadores, herramientas nuevas, rama `dev` que ya no existe.
+- Cronología (`docs/historia/01_cronologia.md`): PR #15 a #22, etapas 8 y 9, números al día; archivo histórico con alpha.8.
+- Manual de herramientas: `referencias.py`, `formato_json.py`, `auditoria_seguridad.py`, `rendimiento.py`, `rendimiento.mjs`, `verificar_licencia.py`.
+- Plan de despliegue, fase 4: ya no manda correr `rendimiento.py` contra producción (lo prohíbe la propia herramienta); solo se mide la web.
+- `addon/README.md` y `practices/README.md` al Motor 3.3.
+- Tag `v3.0.0-alpha.8` en `herramientas/crear-tags.sh`, en 2402549 (main con #20 y #22).
+
+Quedan sin modelo de referencia los «explora» de intermedio (módulos 2 y 3) y de principiante-intermedio (módulos 1 a 3).

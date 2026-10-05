@@ -17,6 +17,7 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 | 1 · El motor que evalúa | Motor declarativo, add-on con modos Alumno y Desarrollador, instalador, Oracle 007, API y la práctica de la mesa (PR #13). | [etapas/etapa-1.md](etapas/etapa-1.md) |
 | 2 · El motor que acompaña | Guía paso a paso con teclas, guía dibujada en la escena, «Hazlo conmigo», acompañante que felicita y ofrece ayuda. | [etapas/etapa-2.md](etapas/etapa-2.md) |
 | 3 · El motor que enseña | Motor v3 y add-on 3.0: pestañas Aprender · Practicar · Mi curso, píldoras de teoría con repaso espaciado, vigilantes que pausan el progreso, escenas de inicio, plan de estudios de 2 cursos y 6 prácticas, y herramientas de autor (plantillas, casos de prueba, `practicas.py`). | [etapas/etapa-3.md](etapas/etapa-3.md) |
+| 3.2 y 3.3 · Mundos y figuras con sentido | Amatista Motor 3.2 (temática por módulo en el add-on) y 3.3: modelo de referencia por práctica (imagen y plano), `figure.resembles` con medidas aproximadas, `spatial.on_top` y `dimension.approx`. | [referencia/10_modelo_de_referencia.md](referencia/10_modelo_de_referencia.md) |
 
 ## Referencia (estado actual)
 

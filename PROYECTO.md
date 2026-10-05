@@ -2,7 +2,7 @@
 
 Punto de entrada para Maximiliano como desarrollador único. Aquí se decide **qué sigue, por qué y dónde está la información**. Las carpetas técnicas y los documentos existentes conservan su ubicación.
 
-[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Reestructuración v3](docs/reestructuracion/README.md) · [Plataforma](docs/plataforma/README.md) · [Amatista Engine](docs/motor/README.md) · [Último registro (4 oct)](docs/bitacora/2026-10-04_documentacion_completa.md) · [Cronología](docs/historia/01_cronologia.md) · [Manual del desarrollador](docs/desarrollador/README.md)
+[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Reestructuración v3](docs/reestructuracion/README.md) · [Plataforma](docs/plataforma/README.md) · [Amatista Engine](docs/motor/README.md) · [Último registro (5 oct)](docs/bitacora/2026-10-05_seguridad_rendimiento_motor.md) · [Plan de despliegue](docs/despliegue/2026-10-05_plan_de_despliegue.md) · [Cronología](docs/historia/01_cronologia.md) · [Manual del desarrollador](docs/desarrollador/README.md)
 
 ## 1. Dirección y límite de trabajo
 
@@ -13,6 +13,8 @@ Punto de entrada para Maximiliano como desarrollador único. Aquí se decide **q
 **Dos frentes en paralelo, sin mezclarse:** el piloto del 8 de octubre se hace con la v2.2 (servicio, HTTPS, SMTP, pruebas y seguridad: versión `v2.2.0` del tablero); la v3 avanza por fases (A base → B contenido existente en niveles → C «Mi primer espacio 3D» → D laboratorio GLB → E add-on → F especialidades y tutor). Los scripts 005 y 006 pueden ejecutarse en Oracle antes del piloto; el código nuevo se despliega después.
 
 **Adelantado a pedido del usuario (4 de octubre): Amatista Engine y plataforma por módulos.** El motor de prácticas y su add-on (fase E) llegaron antes que las fases B y C: etapa 1 (evalúa) en el PR #13 y etapa 2 (acompaña paso a paso) en el PR #14. La plataforma deja de tener pestañas sueltas: estructura fija **Cursos · Mi panel · Admin**, y cada módulo cierra con su práctica en Blender ([plataforma](docs/plataforma/README.md), [motor](docs/motor/README.md)). Nada de esto toca el piloto: el script 007 se ejecuta después (T-055).
+
+**4 y 5 de octubre: motor v3, cursos por niveles, temáticas, seguridad y rendimiento.** En `main` (PR #17 a #20): plan de estudios de Blender en tres cursos publicados (Principiante, Principiante-Intermedio, Intermedio) con Avanzado bloqueado, un mundo por módulo con su personaje interactivo y su jefe, **Motor 3.3** con modelo de referencia (figuras con sentido y medidas aproximadas), auditoría de seguridad y de rendimiento, y un [plan de despliegue por fases](docs/despliegue/2026-10-05_plan_de_despliegue.md). Nada de esto está en producción todavía: se sube después del piloto (T-078).
 
 Tutor IA y motor generativo siguen entrando por incrementos independientes. Las lecciones de lectura e interactivas de cada módulo se completan sin add-on; la práctica en Blender es la estación final del módulo.
 
@@ -36,15 +38,15 @@ El README presenta el producto; sus fases describen la visión general. Para pri
 
 ## 3. Mapa de frentes y evidencia disponible
 
-Revisión del 4 de octubre de 2026 (`main` en `c730c0e`, con el PR #14 fusionado). Es una fotografía del repositorio y de lo que el usuario reportó del servidor el 3 de octubre, no una certificación del servidor.
+Revisión del 4 de octubre de 2026 (`main` en `c730c0e`, con el PR #14 fusionado); las filas de cursos, motor y seguridad se actualizaron el 5 de octubre (`main` en `2402549`). Es una fotografía del repositorio y de lo que el usuario reportó del servidor el 3 de octubre, no una certificación del servidor.
 
 | Frente | Evidencia y ubicación | Estado y enfoque |
 |---|---|---|
-| Cursos y módulos | [Módulos JSON](frontend/src/data/modulos/), [módulos con práctica](docs/plataforma/02_modulos_y_practica.md), [la Fórmula](docs/arquitectura/2026-10-02_formula_modulos.txt) | Módulo 1 de Blender y A-Frame publicados; módulo 2 de Blender en revisión (no visible para alumnos) con la práctica de la mesa al final. Consolidar antes de multiplicar contenido |
+| Cursos y módulos | [Módulos JSON](frontend/src/data/modulos/), [módulos con práctica](docs/plataforma/02_modulos_y_practica.md), [la Fórmula](docs/arquitectura/2026-10-02_formula_modulos.txt) | Blender Principiante, Principiante-Intermedio e Intermedio publicados (9 módulos, 18 prácticas); Avanzado bloqueado (T-067); A-Frame módulo 1. La mesa y el curso v2, archivados (009). Consolidar con alumnos antes de multiplicar contenido (T-066) |
 | Herramientas de enseñanza | [Catálogo](frontend/src/data/herramientas.js), [documentación](docs/plataforma/04_herramientas_de_ensenanza.md) | 20 bloques de lección, con vista previa en Admin › Herramientas |
 | PWA y progreso | [Configuración PWA](frontend/vite.config.js), [almacén](frontend/src/lib/almacen.js), [progreso](frontend/src/progreso/) | Funciona offline y sincroniza; falta probarlo de punta a punta en el servidor (T-030) |
 | API y Oracle | [Backend](backend/README.md), [scripts](backend/sql/LEEME.txt), [manual](docs/reestructuracion/02_manual_oracle.md) | En producción con 002, 003, 005 y 006 (14 tablas, usuario ADMIN). Falta servicio con HTTPS (T-003, T-005) y 007 después del piloto (T-055) |
-| Amatista Engine y add-on | [engine/](engine/README.md), [addon/](addon/README.md), [practices/](practices/README.md), [docs/motor](docs/motor/README.md) | Etapas 1 y 2 en `main` (PR #13 y #14). Falta probar el instalador en Windows y Mac reales (T-056) y la guía en un Blender con GPU (T-059) |
+| Amatista Engine y add-on | [engine/](engine/README.md), [addon/](addon/README.md), [practices/](practices/README.md), [docs/motor](docs/motor/README.md) | Motor 3.3 y add-on Amatista Motor 3.3 en `main` (modelo de referencia, 38 validadores). Falta subirlo a producción (T-078), probar el instalador en Windows y Mac reales (T-056) y la guía en un Blender con GPU (T-059) |
 | Panel de administración | [Panel](docs/plataforma/05_panel_de_administracion.md) | Agrupado por tareas (Enseñanza, Personas, Sistema); el diagnóstico técnico, antes «Laboratorio», vive en Admin › Estado |
 | Visor GLB | [Vista A-Frame](frontend/src/components/leccion/VistaAFrame.jsx) | Hay base 3D en las lecciones; el laboratorio GLB es la fase D (T-011) |
 | Tutor IA | [Prompts](ai_tutor/prompts/) | Carpeta reservada; no presentar la integración como terminada |
@@ -52,7 +54,13 @@ Revisión del 4 de octubre de 2026 (`main` en `c730c0e`, con el PR #14 fusionado
 
 ## 4. Orden de ejecución propuesto
 
-> **Orden vigente (4 de octubre):**
+> **Orden vigente (5 de octubre):**
+> 1. **Hasta el 7 de octubre, sin tocar la VM:** fase 0 del [plan de despliegue](docs/despliegue/2026-10-05_plan_de_despliegue.md) (Cloudflare, PWA en Pages, secreto de firma, tags).
+> 2. **8 de octubre:** piloto con la v2.2 tal como está.
+> 3. **Después del piloto:** T-078 (subir `main` y el Motor 3.3), T-065 (HTTPS con el dominio), T-032 (SMTP), T-079 (proteger producción y repositorio privado), T-056 y T-066.
+> 4. **Siguiente versión:** T-083 (examen final en el servidor, decisión pendiente), T-080, T-081, T-067.
+>
+> **Orden anterior (4 de octubre), como historia:**
 > 1. **Piloto del 8 de octubre con la v2.2:** T-003 (servicio), T-005 (HTTPS), T-032 (SMTP), T-029 y T-030 (seguridad y prueba de punta a punta).
 > 2. **Después del piloto:** T-055 (ejecutar 007 y publicar la mesa versión 2), T-056 (instalador en Windows y Mac) y T-059 (guía en Blender con GPU).
 > 3. **Fase B:** T-038 (decidir la versión LTS de Blender), T-039, T-044 y T-041.
@@ -138,10 +146,10 @@ Una línea de producto es un frente del roadmap; una rama Git es un cambio tempo
 | `feat/T-XXX-descripcion` | Un resultado nuevo |
 | `fix/T-XXX-descripcion` | Una corrección |
 | `docs/descripcion` | Centralización o documentación |
-| `dev` | Rama existente; conservarla y decidir su uso explícitamente, sin exigir pasar por ella para cada cambio |
+| `claude/...` | La rama de trabajo de una sesión de Claude: solo una a la vez además de `main`; se borra al fusionar |
 | Rama experimental | Solo durante una prueba acotada, con criterio de salida y fecha de revisión |
 
-En la consulta inicial, dev estaba ocho commits detrás de main y no tenía commits exclusivos. Es un dato histórico, no un estado permanente. No se elimina ni se sincroniza automáticamente.
+La rama `dev` ya no existe en GitHub (al 5 de octubre solo quedan `main` y una rama vieja de Claude por borrar).
 
 Cerrar una versión exige: tareas aceptadas, evidencia del recorrido de usuario, notas en CHANGELOG y tag conforme a la [convención existente](docs/guias/2026-10-01_versiones-y-tablero.txt). Un tag por sí solo no demuestra que un despliegue esté operativo.
 

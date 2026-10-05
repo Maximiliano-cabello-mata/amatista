@@ -136,7 +136,7 @@ Hoy la API viaja en **HTTP plano** por el puerto 8000: contraseñas y tokens cru
 
 ## Fase 4. Comprobar contra producción y cerrar
 
-1. **Auditoría de seguridad contra el dominio** (desde tu PC o la VM, con dos cuentas de prueba: una de administrador y una de alumno):
+1. **Auditoría de seguridad contra el dominio** (desde tu PC, con dos cuentas de prueba: una de administrador y una de alumno; con un respaldo reciente y fuera del horario de clases, porque manda ~1,500 peticiones y bloquea cuentas a propósito):
 
    ```bash
    cd backend && source venv/bin/activate
@@ -145,7 +145,7 @@ Hoy la API viaja en **HTTP plano** por el puerto 8000: contraseñas y tokens cru
    ```
 
    Debe terminar con **0 hallazgos**, como en la prueba del 5 de octubre (1,449 ataques).
-2. **Rendimiento**: `python herramientas/rendimiento.py medir --url https://api.amatista-3d.me --salida rendimiento_produccion.json`. **Nunca** corras `sembrar` ni `limpiar` en producción: crean y borran alumnos de prueba.
+2. **Rendimiento**: `rendimiento.py` **no se corre contra producción** (su `medir` manda miles de peticiones y necesita las sesiones de prueba que crea `sembrar`). Contra producción solo se mide la web, que no escribe nada: desde `frontend/`, `CHROMIUM=<ruta de Chrome> node scripts/rendimiento.mjs --url https://amatista-3d.me --salida web_produccion.json`. El backend se mide contra una copia (respaldo de la fase 1 cargado con `migrar.py importar` en el contenedor de Oracle de las pruebas).
 3. **HSTS en Cloudflare** cuando todo lleve una semana bien (6 meses, sin `preload`).
 4. **Repositorio privado**: hoy es público, así que cualquiera puede leer el código del servidor y del add-on. Hazlo privado **después** de mover la PWA a Cloudflare Pages: GitHub Pages en un repositorio privado necesita un plan de pago, y Pages de Cloudflare no. Revisa antes que Cloudflare Pages siga teniendo acceso al repositorio.
 5. `AMATISTA_ADDON_VERIFICADO=exigir` cuando todos los alumnos usen el Motor 3.3.
