@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-05 05:00 · `main` en `573ea89`
+Último commit: 2026-10-05 05:07 · `main` en `573ea89`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -21,17 +21,17 @@
 
 ## 📌 Kanban
 
-| 📋 Pendiente (46) | 🔨 En progreso (8) | 👀 Revisión (1) | ✅ Hecho (23) |
+| 📋 Pendiente (42) | 🔨 En progreso (9) | 👀 Revisión (4) | ✅ Hecho (23) |
 |---|---|---|---|
 | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)<br><sub>v2.2.0 · repo</sub> | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> |
-| **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> | **T-052** Comprobaciones locales de la lección 03 en el add-on<br><sub>v3.3.0 · blender</sub> |   | **T-006** Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)<br><sub>v2.2.0 · api</sub> |
-| **T-008** Proteger main (solo cambios por PR)<br><sub>v2.2.0 · repo</sub> | **T-055** Aplicar 007 en Oracle y publicar la práctica de la mesa y el módulo 2 (después del piloto)<br><sub>v3.3.0 · db</sub> |   | **T-014** Esquema incremental 002–004 (8 tablas, 20 GB) y diagnóstico ampliado<br><sub>v2.2.0 · db</sub> |
-| **T-023** Respaldo de Oracle y restauración ensayada en pruebas<br><sub>v2.2.0 · db</sub> | **T-056** Probar el paquete de instalación en Windows y macOS reales<br><sub>v3.3.0 · blender</sub> |   | **T-015** Catálogo dinámico y progreso adaptable (acople, replaces, % recalculado)<br><sub>v2.2.0 · pwa</sub> |
+| **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> | **T-052** Comprobaciones locales de la lección 03 en el add-on<br><sub>v3.3.0 · blender</sub> | **T-075** Auditoría de seguridad y de rendimiento automáticas, y optimización de los puntos débiles (catálogo, panel, descarga del add-on, animaciones)<br><sub>v3.3.0 · api</sub> | **T-006** Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)<br><sub>v2.2.0 · api</sub> |
+| **T-008** Proteger main (solo cambios por PR)<br><sub>v2.2.0 · repo</sub> | **T-055** Aplicar 007 en Oracle y publicar la práctica de la mesa y el módulo 2 (después del piloto)<br><sub>v3.3.0 · db</sub> | **T-076** Motor 3.3: modelo de referencia (imagen y plano por práctica) y figure.resembles, figuras con sentido y medidas aproximadas<br><sub>v3.3.0 · blender</sub> | **T-014** Esquema incremental 002–004 (8 tablas, 20 GB) y diagnóstico ampliado<br><sub>v2.2.0 · db</sub> |
+| **T-023** Respaldo de Oracle y restauración ensayada en pruebas<br><sub>v2.2.0 · db</sub> | **T-056** Probar el paquete de instalación en Windows y macOS reales<br><sub>v3.3.0 · blender</sub> | **T-077** Mundos por módulo en toda la lección y mascota que acompaña (platica, celebra, anima, avisa a la mitad y al final)<br><sub>v3.3.0 · pwa</sub> | **T-015** Catálogo dinámico y progreso adaptable (acople, replaces, % recalculado)<br><sub>v2.2.0 · pwa</sub> |
 | **T-024** Publicar el frontend en Cloudflare Pages contra la API HTTPS<br><sub>v2.2.0 · pwa</sub> | **T-060** Guardar en Oracle las ayudas usadas en cada práctica (008 aditivo) y mostrarlas al profesor<br><sub>v3.4.0 · db</sub> |   | **T-016** Panel del alumno (nivel, racha, retos, actividad e insignias)<br><sub>v2.2.0 · pwa</sub> |
-| **T-025** Pruebas P01–P10 del plan de lanzamiento con evidencia<br><sub>v2.2.0 · lanzamiento</sub> | **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas)<br><sub>v3.3.0 · blender</sub> |   | **T-017** Eventos de aprendizaje y métricas de alumnos activos (API)<br><sub>v2.2.0 · api</sub> |
-| **T-026** Piloto por invitación con 10 alumnos (8 de octubre, 18:00)<br><sub>v2.2.0 · lanzamiento</sub> | **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)<br><sub>v3.4.0 · db</sub> |   | **T-019** Contenido administrable (API borrador → publicado, validación y CLI)<br><sub>v2.2.0 · contenido</sub> |
-| **T-027** Beta pública con cohorte inicial de 30 cuentas (15 de octubre, 18:00)<br><sub>v2.2.0 · lanzamiento</sub> | **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)<br><sub>v3.4.0 · contenido</sub> |   | **T-021** Bloques interactivos en las lecciones (7 tipos nuevos)<br><sub>v2.2.0 · pwa</sub> |
-| **T-028** Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)<br><sub>v2.2.0 · lanzamiento</sub> |   |   | **T-022** Aplicar la Fórmula Amatista al módulo 1 (bloques interactivos en los JSON)<br><sub>v2.2.0 · contenido</sub> |
+| **T-025** Pruebas P01–P10 del plan de lanzamiento con evidencia<br><sub>v2.2.0 · lanzamiento</sub> | **T-082** Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages<br><sub>v3.4.0 · pwa</sub> |   | **T-017** Eventos de aprendizaje y métricas de alumnos activos (API)<br><sub>v2.2.0 · api</sub> |
+| **T-026** Piloto por invitación con 10 alumnos (8 de octubre, 18:00)<br><sub>v2.2.0 · lanzamiento</sub> | **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas)<br><sub>v3.3.0 · blender</sub> |   | **T-019** Contenido administrable (API borrador → publicado, validación y CLI)<br><sub>v2.2.0 · contenido</sub> |
+| **T-027** Beta pública con cohorte inicial de 30 cuentas (15 de octubre, 18:00)<br><sub>v2.2.0 · lanzamiento</sub> | **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)<br><sub>v3.4.0 · db</sub> |   | **T-021** Bloques interactivos en las lecciones (7 tipos nuevos)<br><sub>v2.2.0 · pwa</sub> |
+| **T-028** Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)<br><sub>v2.2.0 · lanzamiento</sub> | **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)<br><sub>v3.4.0 · contenido</sub> |   | **T-022** Aplicar la Fórmula Amatista al módulo 1 (bloques interactivos en los JSON)<br><sub>v2.2.0 · contenido</sub> |
 | **T-029** Prueba de punta a punta en navegador (anónimo → cuenta → offline → admin publica → acople)<br><sub>v2.2.0 · lanzamiento</sub> |   |   | **T-033** Importar el catálogo a Oracle (herramientas/contenido.py importar)<br><sub>v2.2.0 · contenido</sub> |
 | **T-030** Revisión de seguridad e integridad (permisos, tokens, XSS en contenido, fusión y sincronización)<br><sub>v2.2.0 · api</sub> |   |   | **T-034** Estructura de niveles, habilidades y versiones de Blender en código y esquema (005)<br><sub>v3.0.0 · db</sub> |
 | **T-032** Configurar SMTP y primer admin en el servidor (confirmación y recuperación por correo)<br><sub>v2.2.0 · api</sub> |   |   | **T-035** Ejecutar 005 y 006 en producción y sembrar los niveles<br><sub>v3.0.0 · db</sub> |
@@ -52,9 +52,6 @@
 | **T-049** Laboratorio mínimo (escena de ejemplo, reinicio, avisos de recurso faltante) y lección 12<br><sub>v3.2.0 · pwa</sub> |   |   |   |
 | **T-013** Add-on de Blender conectado con la plataforma (MVP publicado)<br><sub>v3.3.0 · blender</sub> |   |   |   |
 | **T-059** Probar la guía de la etapa 2 en un Blender real con GPU y agregar capturas a la documentación<br><sub>v3.3.0 · blender</sub> |   |   |   |
-| **T-075** Auditoría de seguridad y de rendimiento automáticas, y optimización de los puntos débiles (catálogo, panel, descarga del add-on, animaciones)<br><sub>v3.3.0 · api</sub> |   |   |   |
-| **T-076** Motor 3.3: modelo de referencia (imagen y plano por práctica) y figure.resembles, figuras con sentido y medidas aproximadas<br><sub>v3.3.0 · blender</sub> |   |   |   |
-| **T-077** Mundos por módulo en toda la lección y mascota que acompaña (platica, celebra, anima, avisa a la mitad y al final)<br><sub>v3.3.0 · pwa</sub> |   |   |   |
 | **T-078** Aplicar la v3.4 en producción: respaldo, 007/008/009, variables nuevas, actualizar.sh y Amatista Motor 3.3 (fase 1 del plan de despliegue)<br><sub>v3.3.0 · lanzamiento</sub> |   |   |   |
 | **T-079** Proteger el código y las cuentas en producción: AMATISTA_SECRETO_FIRMA, repositorio privado y copias del add-on en «exigir»<br><sub>v3.3.0 · lanzamiento</sub> |   |   |   |
 | **T-071** Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)<br><sub>v3.4.0 · pwa</sub> |   |   |   |
@@ -62,7 +59,6 @@
 | **T-073** Diseñar el laboratorio (retos abiertos sin guía después de la ruta)<br><sub>v3.4.0 · contenido</sub> |   |   |   |
 | **T-080** Portada más ligera en teléfono: el texto de cada módulo se carga al abrir su curso (hoy va en el paquete principal)<br><sub>v3.4.0 · pwa</sub> |   |   |   |
 | **T-081** Varias aulas a la vez: dos procesos de uvicorn con los límites por IP y las cachés compartidos (Oracle)<br><sub>v3.4.0 · api</sub> |   |   |   |
-| **T-082** Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages<br><sub>v3.4.0 · pwa</sub> |   |   |   |
 | **T-064** Aplicar 008 y 009 en Oracle e importar los cursos Principiante, Principiante-Intermedio e Intermedio (después del piloto)<br><sub>v3.3.0 · db</sub> |   |   |   |
 | **T-065** Dominio amatista-3d.me: Cloudflare (DNS y proxy), PWA en Pages y API con certificado de origen<br><sub>v2.2.0 · lanzamiento</sub> |   |   |   |
 | **T-066** Probar el add-on 3.0 con alumnos (Principiante, módulo 1) y ajustar píldoras y mensajes<br><sub>v3.3.0 · blender</sub> |   |   |   |
@@ -218,11 +214,11 @@
   - 🔎 Evidencia: docs/cursos/03_ruta_de_aprendizaje_blender.md, docs/plataforma/07_herramientas_graficas.md; 18 prácticas con pruebas.json en verde; vitest, pytest (engine, backend, addon)
 - [x] **T-074** Prácticas detectadas al arrancar el servidor, y temática completa por módulo: escenario animado, mascota original, jefe con silueta propia y add-on 3.2 con la misma temática · _hecho_ — commits: `927248c` (2026-10-04)
   - 🔎 Evidencia: practices/blender/temas.json; backend/tests/test_practicas_al_arrancar.py; frontend/src/components/temas/; docs/plataforma/07_herramientas_graficas.md
-- [ ] **T-075** Auditoría de seguridad y de rendimiento automáticas, y optimización de los puntos débiles (catálogo, panel, descarga del add-on, animaciones) · _pendiente_
+- [ ] **T-075** Auditoría de seguridad y de rendimiento automáticas, y optimización de los puntos débiles (catálogo, panel, descarga del add-on, animaciones) · _revision_ — commits: `90a95aa` (2026-10-05)
   - 🔎 Evidencia: docs/seguridad/01_auditoria_2026-10-05.md, docs/rendimiento/2026-10-05_informe.md; backend/herramientas/auditoria_seguridad.py y rendimiento.py; 1,449 ataques con 0 hallazgos; catálogo con 40 alumnos 747 → 77 ms
-- [ ] **T-076** Motor 3.3: modelo de referencia (imagen y plano por práctica) y figure.resembles, figuras con sentido y medidas aproximadas · _pendiente_
+- [ ] **T-076** Motor 3.3: modelo de referencia (imagen y plano por práctica) y figure.resembles, figuras con sentido y medidas aproximadas · _revision_ — commits: `90a95aa` (2026-10-05)
   - 🔎 Evidencia: docs/motor/referencia/10_modelo_de_referencia.md; engine/tests/test_figura.py; 71 casos de pruebas.json en verde; engine/herramientas/referencias.py
-- [ ] **T-077** Mundos por módulo en toda la lección y mascota que acompaña (platica, celebra, anima, avisa a la mitad y al final) · _pendiente_
+- [ ] **T-077** Mundos por módulo en toda la lección y mascota que acompaña (platica, celebra, anima, avisa a la mitad y al final) · _revision_ — commits: `90a95aa` (2026-10-05)
   - 🔎 Evidencia: frontend/src/components/temas/MundoTema.jsx y CompaneroMascota.jsx; practices/blender/temas.json (charla y reacciones); lección 54–60 fps en computadora
 - [ ] **T-078** Aplicar la v3.4 en producción: respaldo, 007/008/009, variables nuevas, actualizar.sh y Amatista Motor 3.3 (fase 1 del plan de despliegue) · _pendiente_
   - ⏸️ Espera: Después del piloto del 8 de octubre
@@ -248,7 +244,7 @@
   - 🎯 Listo cuando: docs/rendimiento/2026-10-05_informe.md: portada en teléfono modesto con TBT menor a 300 ms y LCP menor a 2.5 s (frontend/scripts/rendimiento.mjs)
 - [ ] **T-081** Varias aulas a la vez: dos procesos de uvicorn con los límites por IP y las cachés compartidos (Oracle) · _pendiente_
   - 🎯 Listo cuando: rendimiento.py medir con 80 alumnos a la vez: guardar progreso y eventos con p50 menor a 250 ms
-- [ ] **T-082** Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages · _pendiente_
+- [ ] **T-082** Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages · _en-progreso_ — commits: `90a95aa` (2026-10-05)
   - 🎯 Listo cuando: frontend/public/_headers con CSP probada en todas las páginas (lección, Blender, admin, visor A-Frame) sin errores en la consola
 - [ ] **T-067** Curso Blender Avanzado (teoría de topología, UV, nodos y rig; prácticas y desbloqueo) · _pendiente_
   - 🎯 Listo cuando: docs/cursos/03_ruta_de_aprendizaje_blender.md §8: teoría escrita, prácticas con revisar y probar en verde y el curso cambiado a disponible en los cuatro lugares
