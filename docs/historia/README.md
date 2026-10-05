@@ -2,13 +2,14 @@
 
 Cómo llegó Amatista hasta aquí: cuándo pasó cada cosa, de dónde salió cada idea y cómo se veía la plataforma en cada versión. Para quien quiera entender el proyecto completo o retomar una decisión antigua.
 
-Actualizado: 4 de octubre de 2026 (main en `c730c0e`).
+Actualizado: 5 de octubre de 2026 (main en `34ed82d`).
 
 | # | Documento | Qué responde |
 |---|---|---|
 | 01 | [Cronología exacta](01_cronologia.md) | Qué se hizo, cuándo, quién y en qué orden: commit por commit, PR por PR, con hora |
 | 02 | [Ideas y cómo se implementaron](02_ideas_y_como_se_implementaron.md) | Todas las ideas que surgieron, de dónde salieron, si se hicieron, cómo y qué falta |
 | 03 | [La plataforma en cada versión](03_la_plataforma_en_cada_version.md) | Revisión del código de los commits antiguos: qué pantallas, funciones, datos y herramientas había en cada versión |
+| 04 | [Archivo histórico hasta hoy](04_archivo_historico_hasta_hoy.md) | Resumen ejecutivo: qué es hoy la plataforma, cuántas veces cambió y cuántas ideas surgieron |
 
 ## Las etapas en una línea
 
