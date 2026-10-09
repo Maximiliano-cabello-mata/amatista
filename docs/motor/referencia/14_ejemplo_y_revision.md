@@ -1,4 +1,4 @@
-# 14 · El ejemplo manda: revisión autónoma de cualquier práctica (motor 3.5)
+# 14 · El ejemplo manda: revisión de los aspectos definidos en la práctica (motor 3.5)
 
 Pedido de Maximiliano (9 oct 2026): «la espada es un ejemplo; lo que se necesita es que el motor tenga un sistema autónomo que realmente revise lo que se está realizando en cualquier práctica, teniendo en código un ejemplo claro de lo que se espera, con el enfoque de PWA».
 
@@ -12,12 +12,12 @@ Hasta el motor 3.4, lo que se revisaba dependía de qué objetivos escribió el 
 
 ## El nuevo enfoque
 
-**Cada práctica trae su ejemplo resuelto, escrito en código.** Es la única descripción de lo que se espera, y de ella sale todo lo demás:
+**Cada práctica trae su ejemplo resuelto, escrito en código.** Define la solución esperada para los aspectos compatibles con el motor; los objetivos explícitos de la práctica siguen evaluándose. De ella salen:
 
 | De un solo ejemplo… | …sale |
 |---|---|
 | La escena esperada | El motor arma con los pasos la escena que dejaría el ejemplo (`ejemplo/pasos.py` › `escena_esperada`). |
-| La revisión | El motor compara la escena del alumno con la esperada, aspecto por aspecto (`ejemplo/revision.py`). Nadie escribe a mano qué revisar. |
+| La revisión | El motor compara la escena del alumno con la esperada, aspecto por aspecto (`ejemplo/revision.py`). El autor define el ejemplo y puede seleccionar los aspectos con `check`; el motor aplica sus validadores implementados. |
 | Las instrucciones | Cada paso se lee como una instrucción con sus teclas (`describir`): «Agrega una esfera «Pelota» (Shift + A › Malla › Esfera UV).» |
 | El ejemplo en Blender | El add-on lo arma en su propia escena con «Ver el ejemplo» (`addon/amatista_blender/ejemplo.py`). |
 | El ejemplo en la plataforma | La lección muestra la tarjeta «El ejemplo resuelto» con los pasos, qué compara Amatista y el código («Ver en código»). |
@@ -112,7 +112,7 @@ El servidor repite la revisión con la misma foto de la escena, como con todos l
 - La tarjeta **Ahora en Blender** muestra la lista agrupada por aspecto. Mientras Blender muestra el ejemplo, avisa y solo ofrece «Volver a mi práctica».
 - Órdenes nuevas: `ver_ejemplo` y `volver_practica` (`POST /api/addon/v1/ordenes`). `GET /practicas/{id}` devuelve `ejemplo` con `{titulo, descripcion, pasos, revisa, codigo}`. El latido lleva `aspecto` en cada punto de la lista y `modo: "EJEMPLO"` mientras se ve el ejemplo ([05](05_api.md)).
 
-Sin cambios en Oracle.
+Motor 3.5.0 no cambió Oracle. La corrección 3.5.1 requiere `011_detalle_instructor.sql` antes del backend; consulta [la guía de actualización](../../despliegue/2026-10-09_correcciones_3_5_1.md).
 
 ## Escribir el ejemplo de una práctica nueva
 
@@ -129,3 +129,9 @@ Sin cambios en Oracle.
 - `frontend/src/blender/logica.test.js`: la lista por aspecto y los controles mientras se ve el ejemplo.
 
 Límite conocido: si el `.blend` ya tiene una colección con el nombre de la del ejemplo, Blender le pone `.001` («Casas.001»). Solo cambia el nombre que se ve.
+
+## Alcance de la revisión
+
+La revisión es determinista: no interpreta cualquier creación 3D ni evalúa calidad artística general. Solo comprueba los aspectos implementados y presentes en el ejemplo (o elegidos en `check`). Un ejemplo incompleto produce una evaluación incompleta; el autor debe probar soluciones válidas y casos incorrectos.
+
+Desde 3.5.1, si falta la captura de silueta, tanto `figure.silhouette` como `example.matches` dejan la comprobación pendiente, sin aprobarla. Hay que actualizar el complemento y volver a comprobar; si la captura supera el límite de 20,000 vértices, simplificar la malla. Esto no borra aprobaciones históricas.

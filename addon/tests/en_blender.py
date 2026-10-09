@@ -507,6 +507,11 @@ def probar_motor_35(contexto):
     practicas.activar(contexto, catalogo["blender.bp.m2.espada"]["definicion"], "paquete")
     revisar(any("si" in o for o in practicas.datos_intento(contexto)["escena"]["objetos"]),
             "el intento de la espada sí manda la silueta")
+    import dataclasses
+    espada = practicas.practica_activa(contexto)
+    solo_ejemplo = dataclasses.replace(espada, targets=tuple(t for t in espada.targets if t.validator != "figure.silhouette"))
+    revisar(any("si" in o for o in practicas._foto_para_enviar(contexto.scene, solo_ejemplo)["objetos"]),
+            "example.matches conserva la silueta incluso sin un objetivo figure.silhouette")
     datos = json.loads(json.dumps(_motor.foto.scene_to_dict(foto)))
     llegada, enviada = _motor.foto.scene_from_dict(datos).objects[0].silhouette, foto.objects[0].silhouette
     revisar(llegada.eje == enviada.eje and all(abs(a - b) < 1e-3 for x, y in zip(llegada.anchos, enviada.anchos)
@@ -571,6 +576,9 @@ def probar_ejemplo(contexto):
         r = coincide(dataclasses.replace(objetivo, params={**objetivo.params, "aspects": aspectos}),
                      _motor.adapter.capture_scene(sc))
         revisar(r.passed, f"{practica_id}: el ejemplo armado en Blender coincide en {aspectos} ({r.message})")
+        enviada = _motor.foto.scene_from_dict(practicas._foto_para_enviar(sc, practica))
+        revisada = coincide(dataclasses.replace(objetivo, params={**objetivo.params, "aspects": aspectos}), enviada)
+        revisar(revisada.passed, f"{practica_id}: la foto enviada conserva la evidencia del ejemplo")
         datos = enlace._datos()
         revisar(datos.get("practica_id") == practica_id and (datos.get("detalle") or {}).get("modo") == "EJEMPLO",
                 f"{practica_id}: el latido dice que Blender muestra el ejemplo ({datos})")
@@ -688,7 +696,7 @@ def main():
 
     datos = practicas.datos_intento(contexto)
     revisar(datos["pistas"] == {"patas": 1} and datos["practica_id"] == "blender.n1.mesa", "datos del intento completos")
-    revisar(datos["version_addon"] == "3.5.0", "el intento lleva la versión 3.5 del add-on")
+    revisar(datos["version_addon"] == "3.5.1", "el intento lleva la versión 3.5 del add-on")
 
     # --- Amatista Author ---
     contexto.window_manager.amatista.modo = "autor"

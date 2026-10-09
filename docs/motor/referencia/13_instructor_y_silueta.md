@@ -48,7 +48,7 @@ Cada problema trae su arreglo con las teclas y el eje de la malla del alumno. Po
  "params": {"type": "MESH"}, "weight": 45, "requires": ["alargar"]}
 ```
 
-El cargador inyecta las piezas, el nivel y el título desde `reference`, como en `figure.recognize`. Mira la malla más larga, y si hay más de una pide unirlas con Ctrl + J. Una foto sin silueta (add-on 3.4 o una malla enorme) no bloquea al alumno: pasa con un aviso para actualizar el add-on. Cada evaluación tarda entre 13 y 25 ms.
+El cargador inyecta las piezas, el nivel y el título desde `reference`, como en `figure.recognize`. Mira la malla más larga, y si hay más de una pide unirlas con Ctrl + J. Desde 3.5.1 una foto sin silueta no aprueba la comprobación: pide actualizar el complemento o simplificar la malla y volver a comprobar. Cada evaluación tarda entre 13 y 25 ms.
 
 ## 3. La espada, con propósito
 
@@ -67,10 +67,10 @@ Desaparecieron la alternativa «o una taza», el rol «modelo» que había que a
 `figure.silhouette` y `figure.recognize` devuelven `details.checklist`, una lista de `{texto, ok, estado, consejo}`. Por ejemplo, en el tren: «Rueda: bien», «Chimenea: falta (Shift + A › Malla › Cilindro)» y las relaciones rotas.
 
 - **En Blender**: el panel **Tu figura** en Practicar muestra cada parte con ✓, ! o una bombilla (detalle) y deja abiertos los dos primeros consejos. La guía del paso usa el primer pendiente, con sus teclas.
-- **En la plataforma**: el latido (`POST /api/addon/v1/enlace`) lleva un `detalle` con el paso, el mensaje del instructor, la lista, el modo de Blender, las pistas que quedan y el «Hazlo conmigo». La lección lo muestra en la tarjeta **Ahora en Blender**, que se refresca cada 3 s mientras Blender está en esa práctica. El servidor guarda el detalle en memoria (no en Oracle) porque cambia cada pocos segundos. Hoy corre un solo proceso de uvicorn; con dos (T-081) habría que compartirlo.
+- **En la plataforma**: el latido (`POST /api/addon/v1/enlace`) lleva un `detalle` con el paso, el mensaje del instructor, la lista, el modo de Blender, las pistas que quedan y el «Hazlo conmigo». La lección lo muestra en la tarjeta **Ahora en Blender**, que se refresca cada 3 s mientras Blender está en esa práctica. Desde 3.5.1 el servidor guarda el último detalle en `ADDON_ENLACES.DETALLE` (011), junto con el estado de la práctica. Todos los procesos consultan la misma fila; el detalle deja de mostrarse a los 25 segundos sin latido.
 - **Órdenes nuevas** (`POST /api/addon/v1/ordenes`): `comprobar`, `pista`, `hazlo_conmigo`, `guardar` y `reiniciar`. `reiniciar` exige `confirmar: true`, y la lección pregunta antes. Llevan `practica_id` y Blender solo las cumple si sigue en esa práctica. `guardar` usa el archivo abierto o, si es nuevo, `Documentos/Amatista/mi_espada.blend`, sin pisar uno que ya exista.
 
-Sin cambios en Oracle: el detalle vive en memoria y las órdenes usan la columna `ORDEN` de `ADDON_ENLACES` (010).
+3.5.0 no cambió Oracle. Para 3.5.1 se requiere 011: añade `DETALLE` a `ADDON_ENLACES`. Las órdenes siguen usando `ORDEN` (010).
 
 ## Pruebas
 

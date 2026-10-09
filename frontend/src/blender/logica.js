@@ -16,7 +16,7 @@ export const BLENDER_MINIMO = '4.2';
 
 // El descargable: Amatista Motor (add-on + motor de prácticas). La versión
 // coincide con addon/amatista_blender/blender_manifest.toml (lo revisa logica.test.js).
-export const MOTOR = { nombre: 'Amatista Motor', version: '3.5.0' };
+export const MOTOR = { nombre: 'Amatista Motor', version: '3.5.1' };
 export const NOMBRE_MOTOR = `${MOTOR.nombre} ${MOTOR.version.split('.').slice(0, 2).join('.')}`;
 
 // ¿El servidor entrega la misma versión que espera esta plataforma?

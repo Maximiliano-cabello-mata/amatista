@@ -187,6 +187,7 @@ CREATE TABLE addon_enlaces (
 	version_blender VARCHAR(20), 
 	orden VARCHAR(1000), 
 	orden_en TIMESTAMP WITHOUT TIME ZONE, 
+	detalle TEXT, 
 	PRIMARY KEY (sesion_id), 
 	FOREIGN KEY(sesion_id) REFERENCES sesiones (id) ON DELETE CASCADE, 
 	FOREIGN KEY(usuario_id) REFERENCES usuarios (id)
