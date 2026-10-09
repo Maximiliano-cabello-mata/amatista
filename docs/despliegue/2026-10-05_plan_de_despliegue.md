@@ -55,7 +55,7 @@ No se actualiza nada. Si algo se cae, la única acción es `sudo systemctl resta
 Sigue el archivo de pasos del servidor (`/mnt/project-files/despliegue/2026-10-05_pasos_despliegue.md`, el mismo contenido que esta sección con los comandos exactos). En corto:
 
 1. **Respaldo**: `python herramientas/migrar.py exportar ~/respaldos/$(date +%F)`; debe terminar con `manifiesto.json`.
-2. **Oracle** (Database Actions como ADMIN, **F5**): `007_motor_practicas.sql` y `008_cursos_por_ruta.sql`. Hoy no hay script nuevo: el Motor 3.3 y los mundos no cambian el esquema (el siguiente libre sigue siendo el **010**).
+2. **Oracle** (Database Actions como ADMIN, **F5**): `007_motor_practicas.sql`, `008_cursos_por_ruta.sql` y, desde el Motor 3.4 (9 de octubre), `010_enlace_blender.sql` (enlace en vivo con Blender: `ADDON_ENLACES` y `ADDON_AJUSTES`). 010 se puede dejar para después: sin él la plataforma funciona igual, solo sin el estado de Blender en vivo. El siguiente libre es el **011**.
 3. **Variables nuevas** en `backend/.env` (todas explicadas en `backend/.env.example`):
 
    ```
@@ -67,10 +67,10 @@ Sigue el archivo de pasos del servidor (`/mnt/project-files/despliegue/2026-10-0
 
    `AMATISTA_OCULTAR_DOCS=1` esconde `/docs` mientras la API siga expuesta sin Caddy. `AMATISTA_ADDON_VERIFICADO` se queda en `registrar` (acepta y marca las copias modificadas); pásalo a `exigir` solo cuando todos los alumnos tengan el Motor 3.3.
 4. **Código**: `bash /home/opc/amatista/despliegue/actualizar.sh`. El script ya resuelve los dos problemas que encontró la revisión del 4 de octubre: si la VM está en la rama local `despliegue/v3-2026-10-03` sin commits propios, se cambia sola a `main`; y si no existe la unidad `amatista-api`, reinicia `amatista-backend`.
-5. **Tablas y contenido**: `python diagnostico_oracle.py` (18 tablas), `python herramientas/contenido.py validar` y `importar`.
+5. **Tablas y contenido**: `python diagnostico_oracle.py` (20 tablas con 010; si solo falta 010, el diagnóstico lo dice), `python herramientas/contenido.py validar` y `importar`.
 6. **Prácticas**: al reiniciar, el servidor registra y actualiza las 18 prácticas solo (en la prueba sobre Oracle: «0 nuevas, 13 actualizadas»). `python herramientas/contenido.py practicas --revisar` debe decir **18 de 18**.
 7. **Archivar lo viejo**: `009_archivar_blender_v2.sql` con F5.
-8. **Add-on**: en la plataforma, **Mi Blender** debe ofrecer **Amatista Motor 3.3**. Reinstálalo en tu Blender y abre la práctica del tren: el panel muestra «Así se debe ver» con la imagen y el plano.
+8. **Add-on**: en la plataforma, **Mi Blender** debe ofrecer **Amatista Motor 3.4** (si se fusiona el PR del 9 de octubre; si no, 3.3). Reinstálalo en tu Blender y abre la práctica del tren: el panel muestra «Así se debe ver» con la imagen y el plano y, con 3.4, Blender se enfoca y la lección dice «Tu Blender está en esta práctica».
 
 **Comprobación:** `curl -s http://127.0.0.1:8000/api/salud` → `{"estado":"ok","motor":"oracle"}`; `curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8000/docs` → `404`; una práctica entregada desde Blender aparece calificada en el panel.
 

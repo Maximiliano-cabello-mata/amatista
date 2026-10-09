@@ -8,7 +8,7 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 | Add-on | [`addon/`](../../addon/) | Extensión de Blender 4.2+ («Amatista»). Captura la escena, la evalúa con el motor (copia incluida en el `.zip`) y habla con la API. Modos **Alumno** y **Desarrollador** (Amatista Author). |
 | Prácticas | [`practices/`](../../practices/) | Las 6 prácticas del plan de estudios (`amatista.practice/2`) con sus casos de prueba, y el mapa de cursos [`blender/cursos.json`](../../practices/blender/cursos.json). Las de la v2 (mesa, podio) están en `archivo/v2/`. |
 | Plataforma | `backend/api/addon.py`, `frontend/src/blender/`, `frontend/src/components/modulo/` | API `/api/addon/v1`, la práctica al final de cada módulo (bloque `blender_practice` con la preparación de Blender integrada), **Mi Blender** en el menú de la cuenta y **Prácticas de Blender** en el panel admin. |
-| Oracle | `backend/sql/007_motor_practicas.sql` | `ADDON_VINCULOS`, `PRACTICAS`, `PRACTICA_VERSIONES`, `PROGRESO_PRACTICAS`. Aditivo e idempotente. |
+| Oracle | `backend/sql/007_motor_practicas.sql`, `010_enlace_blender.sql` | `ADDON_VINCULOS`, `PRACTICAS`, `PRACTICA_VERSIONES`, `PROGRESO_PRACTICAS`; desde el motor 3.4, `ADDON_ENLACES` y `ADDON_AJUSTES` (enlace en vivo). Aditivos e idempotentes. |
 
 ## Etapas
 
@@ -18,6 +18,7 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 | 2 · El motor que acompaña | Guía paso a paso con teclas, guía dibujada en la escena, «Hazlo conmigo», acompañante que felicita y ofrece ayuda. | [etapas/etapa-2.md](etapas/etapa-2.md) |
 | 3 · El motor que enseña | Motor v3 y add-on 3.0: pestañas Aprender · Practicar · Mi curso, píldoras de teoría con repaso espaciado, vigilantes que pausan el progreso, escenas de inicio, plan de estudios de 2 cursos y 6 prácticas, y herramientas de autor (plantillas, casos de prueba, `practicas.py`). | [etapas/etapa-3.md](etapas/etapa-3.md) |
 | 3.2 y 3.3 · Mundos y figuras con sentido | Amatista Motor 3.2 (temática por módulo en el add-on) y 3.3: modelo de referencia por práctica (imagen y plano), `figure.resembles` con medidas aproximadas, `spatial.on_top` y `dimension.approx`. | [referencia/10_modelo_de_referencia.md](referencia/10_modelo_de_referencia.md) |
+| 3.4 · La plataforma maneja Blender | `figure.recognize`: el motor reconoce la figura sin roles, revisa que tenga sentido y exige según el nivel. Enlace en vivo (Blender late, la plataforma le abre prácticas y decide cómo se ve), modo enfocado y panel «Tus herramientas» con «¿Cómo se usa?». Oracle 010. | [referencia/11_reconocer_figuras.md](referencia/11_reconocer_figuras.md), [referencia/12_plataforma_y_blender.md](referencia/12_plataforma_y_blender.md) |
 
 ## Referencia (estado actual)
 
@@ -29,8 +30,10 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 6. [Modo desarrollador](referencia/06_modo_desarrollador.md): crear, probar y subir una práctica nueva; publicarla.
 7. [Guía paso a paso y acompañamiento](referencia/07_guia_y_acompanamiento.md): entrenadores, señales en la escena, «Hazlo conmigo», acompañante y preferencias (etapa 2).
 8. [Prácticas v3 y herramientas de autor](referencia/08_practicas_v3_y_herramientas.md): `amatista.practice/2` (píldoras, vigilantes, escena de inicio, curso), `cursos.json`, `pruebas.json` y `practicas.py` (motor v3).
-9. [Catálogo de validadores](referencia/09_validadores.md): los 38, con sus parámetros (generado).
+9. [Catálogo de validadores](referencia/09_validadores.md): los 39, con sus parámetros (generado).
 10. [Modelo de referencia](referencia/10_modelo_de_referencia.md): la figura terminada, su imagen y su plano, y cómo `figure.resembles` califica figuras con sentido (motor 3.3).
+11. [Reconocer figuras](referencia/11_reconocer_figuras.md): `figure.recognize`, roles deducidos por la forma, relaciones con sentido y exigencia por nivel (motor 3.4).
+12. [La plataforma maneja Blender](referencia/12_plataforma_y_blender.md): enlace en vivo, órdenes y ajustes desde «Mi Blender», modo enfocado y «Tus herramientas» (motor 3.4).
 
 Especificaciones originales (3 de octubre de 2026): [`especificaciones/`](especificaciones/) (concepto del motor, Motor de Desarrollo v0.1 y el `ascii_check.py` original).
 

@@ -56,6 +56,14 @@ CREATE TABLE versiones_blender (
 	CONSTRAINT ck_versiones_blender_categoria CHECK (categoria IN ('principal', 'compatible', 'sin_verificar', 'retirada'))
 );
 
+CREATE TABLE addon_ajustes (
+	usuario_id VARCHAR(100) NOT NULL, 
+	datos VARCHAR(1000) NOT NULL, 
+	actualizado_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (usuario_id), 
+	FOREIGN KEY(usuario_id) REFERENCES usuarios (id)
+);
+
 CREATE TABLE addon_vinculos (
 	id VARCHAR(36) NOT NULL, 
 	codigo VARCHAR(9) NOT NULL, 
@@ -166,6 +174,25 @@ CREATE TABLE sesiones (
 );
 
 CREATE INDEX ix_sesiones_usuario_id ON sesiones (usuario_id);
+
+CREATE TABLE addon_enlaces (
+	sesion_id VARCHAR(64) NOT NULL, 
+	usuario_id VARCHAR(100) NOT NULL, 
+	visto_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	practica_id VARCHAR(80), 
+	paso VARCHAR(80), 
+	progreso INTEGER, 
+	enfocado INTEGER NOT NULL, 
+	version_addon VARCHAR(20), 
+	version_blender VARCHAR(20), 
+	orden VARCHAR(1000), 
+	orden_en TIMESTAMP WITHOUT TIME ZONE, 
+	PRIMARY KEY (sesion_id), 
+	FOREIGN KEY(sesion_id) REFERENCES sesiones (id) ON DELETE CASCADE, 
+	FOREIGN KEY(usuario_id) REFERENCES usuarios (id)
+);
+
+CREATE INDEX ix_addon_enlaces_usuario ON addon_enlaces (usuario_id);
 
 CREATE TABLE evaluaciones_rubrica (
 	usuario_id VARCHAR(100) NOT NULL, 

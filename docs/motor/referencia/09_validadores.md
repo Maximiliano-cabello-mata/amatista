@@ -1,6 +1,6 @@
 # Catálogo de validadores
 
-Generado con `python engine/herramientas/practicas.py validadores --md` (Amatista Engine 3.3.0). No se edita a mano: cambia la descripción en `engine/amatista_engine/validators/builtin.py` y vuelve a generarlo.
+Generado con `python engine/herramientas/practicas.py validadores --md` (Amatista Engine 3.4.0). No se edita a mano: cambia la descripción en `engine/amatista_engine/validators/builtin.py` y vuelve a generarlo.
 
 Los validadores que aceptan **selector** (`role`, `name`, `name_prefix`, `type`, `tag`, `collection`, `primitive`) se aplican a los objetos que cumplen todos los criterios; sin selector, a todos.
 
@@ -147,6 +147,22 @@ La escena tiene luces (de un tipo, si se indica: AREA, SUN, POINT, SPOT).
 Se vuelve a revisar con: OBJECT_ADDED, OBJECT_DATA.
 
 ## Forma
+
+### `figure.recognize` — Amatista reconoce la figura
+
+Reconoce la figura del modelo de referencia sin roles: deduce qué es cada pieza por su forma, revisa que las piezas se apoyen, se toquen y vayan a los lados como en el modelo, que nada flote y dice qué figura parece. La exigencia sube con el nivel (forma identificable en el 1, medidas exactas en el 5); las piezas de adorno no restan.
+
+| Parámetro | Tipo | Qué es | Obligatorio | Por defecto |
+|---|---|---|---|---|
+| `strictness` | text | Exigencia (forma, proporcion, cercana, medidas, exacta; vacío = la del nivel) |  |  |
+| `min_score` | float | Parecido mínimo (0 a 1; vacío = el de la exigencia) |  |  |
+| `parts` | reference | Piezas del modelo (de «reference») |  |  |
+| `labels` | reference | Nombres de los roles (de «roles») |  |  |
+| `flexible` | reference | Grupos con cantidad libre (de «reference») |  |  |
+| `level` | reference | Nivel de la práctica (de «level») |  |  |
+| `title` | reference | Nombre de la figura (de «reference.title») |  |  |
+
+Se vuelve a revisar con: OBJECT_TRANSFORM, OBJECT_ADDED, ROLE_CHANGED, OBJECT_DATA.
 
 ### `figure.resembles` — La figura se parece al modelo
 

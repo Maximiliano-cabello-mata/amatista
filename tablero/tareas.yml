@@ -442,6 +442,30 @@ tareas:
     area: lanzamiento
     depende_de: [T-078, T-065]
     aceptacion: "docs/seguridad/02_proteccion_del_codigo.md: descargas con licencia firmada (verificar_licencia.py dice FIRMA VÁLIDA), repositorio privado con Cloudflare Pages funcionando y AMATISTA_ADDON_VERIFICADO=exigir"
+  - id: T-084
+    titulo: "Motor 3.4: el motor reconoce la figura (figure.recognize): roles deducidos por la forma, relaciones con sentido y exigencia por nivel"
+    version: v3.3.0
+    area: blender
+    depende_de: [T-076]
+    evidencia: "docs/motor/referencia/11_reconocer_figuras.md; engine/tests/test_reconocer.py (33 casos); tren, muñeco de nieve y puente con figure.recognize"
+  - id: T-085
+    titulo: "Enlace en vivo plataforma ↔ Blender: latido del add-on, órdenes (abrir práctica, enfocar) y ajustes de Blender desde «Mi Blender» (Oracle 010)"
+    version: v3.3.0
+    area: api
+    depende_de: [T-055]
+    evidencia: "backend/api/enlace.py; backend/sql/010_enlace_blender.sql; backend/tests/test_enlace.py; addon/amatista_blender/enlace.py"
+  - id: T-086
+    titulo: "Modo enfocado en Blender: solo las herramientas de la práctica, panel «Tus herramientas» con «¿Cómo se usa?» y «Ver todo Blender»"
+    version: v3.3.0
+    area: blender
+    evidencia: "addon/amatista_blender/enfoque.py e interfaz/herramientas.py; engine/tests/test_herramientas_enfoque.py; addon/tests/en_blender.py (probar_motor_34)"
+  - id: T-087
+    titulo: "Aplicar 010 en Oracle y entregar Amatista Motor 3.4 en producción"
+    version: v3.3.0
+    area: lanzamiento
+    bloqueo: "Después del piloto del 8 de octubre y de T-078 (007, 008 y 009)"
+    depende_de: [T-078, T-085]
+    aceptacion: "docs/despliegue/2026-10-05_plan_de_despliegue.md fase 1: 20 tablas en diagnostico_oracle.py, Mi Blender entrega Amatista Motor 3.4 y la lección muestra «Tu Blender está en esta práctica»"
   - id: T-071
     titulo: Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)
     version: v3.4.0
