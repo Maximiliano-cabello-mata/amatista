@@ -60,6 +60,19 @@ El paquete descargado con sesión trae un vínculo ya confirmado (7 días, un us
 
 Las URL que van dentro del paquete salen de `AMATISTA_URL_API` y `AMATISTA_URL_PWA` (en `backend/.env`). Si no están, se usa la dirección de la petición y, para la PWA, el `Origin` si está en la lista de CORS.
 
+## Enlace en vivo (motor 3.4, script 010)
+
+Código: [`backend/api/enlace.py`](../../../backend/api/enlace.py). Pruebas: `backend/tests/test_enlace.py`. Detalle en [12_plataforma_y_blender.md](12_plataforma_y_blender.md).
+
+| Método y ruta | Quién | Qué hace |
+|---|---|---|
+| `POST /enlace` | add-on | Latido: `{practica_id, paso, progreso, enfocado, version_addon, version_blender, orden_hecha}`. Responde `{enlace, intervalo, orden, ajustes}`. 40 por minuto por cuenta. |
+| `GET /enlace` | alumno | `{enlace, en_linea, blender: [{practica_id, practica, paso, progreso, enfocado, version_addon, version_blender, en_linea, orden_pendiente}], ajustes}` |
+| `POST /ordenes` | alumno | `{tipo: abrir_practica \| enfocar \| ver_todo \| actualizar, practica_id?}` → `{entregada}` (false si no hay Blender abierto). |
+| `GET /ajustes` · `PUT /ajustes` | alumno (PUT: solo la plataforma) | `enfoque`, `acompanamiento`, `avisos_herramientas`, `tarjeta_3d`. PUT deja una orden `actualizar` y responde 503 sin 010. |
+
+`POST /practicas/{id}/abrir` (desde la plataforma) además deja la orden `abrir_practica` y responde `abierta_en_blender`. Sin 010 todo responde con `enlace: false` y nada se rompe.
+
 ## Tablas (Oracle, script 007)
 
 | Tabla | Una fila por | Columnas principales |
@@ -68,5 +81,7 @@ Las URL que van dentro del paquete salen de `AMATISTA_URL_API` y `AMATISTA_URL_P
 | `PRACTICAS` | práctica | `TITULO`, `NIVEL`, `VERSION`, `VERSION_PUBLICADA`, `ESTADO` (borrador, publicado, archivado), `ORIGEN` (repositorio, addon, panel), `CURSO_ID`, `LECCION_ID`, `DEFINICION` |
 | `PRACTICA_VERSIONES` | versión subida | `DEFINICION`, `HUELLA`, `NOTA`, `AUTOR_ID`, `VERSION_ADDON`, `VERSION_BLENDER` |
 | `PROGRESO_PRACTICAS` | alumno y práctica | `VERSION`, `PROGRESO`, `COMPLETADA`, `AUTONOMIA`, `PISTAS`, `CORRECCIONES`, `INTENTOS`, `PASO_ACTUAL`, `OBJETIVOS`, `ABIERTA_EN`, `COMPLETADA_EN` |
+
+Script 010: `ADDON_ENLACES` (una fila por sesión de Blender: `SESION_ID`, `USUARIO_ID`, `VISTO_EN`, `PRACTICA_ID`, `PASO`, `PROGRESO`, `ENFOCADO`, `VERSION_ADDON`, `VERSION_BLENDER`, `ORDEN`, `ORDEN_EN`; se borra con la sesión) y `ADDON_AJUSTES` (una fila por alumno: `DATOS` en JSON).
 
 Vista `V_AMATISTA_PRACTICAS`: cada práctica con su lección, autor, versión publicada, alumnos que la abrieron, cuántos la completaron y el progreso promedio.

@@ -15,16 +15,17 @@ El selector de modo aparece arriba del panel cuando la cuenta es de profesor o a
 
 - **Amatista**: estado de la cuenta (vinculada o no, con el código para conectar), acceso en línea, **Abrir mi lección actual**, **Elegir otra práctica** y **Abrir la plataforma**.
 - **Práctica**: título, barra de progreso y el bloque **Ahora** (etapa 2): el paso actual con lo que pasa, el porqué y las instrucciones con teclas; botones **Hazlo conmigo**, **Muéstrame**, **Comprobar** y **¿Cómo lo hago?** (en modo Silencioso, **Necesito una pista** como en la etapa 1) y **Enviar mi progreso**. Muestra si el progreso está sincronizado, pendiente o guardado sin conexión.
-- **Asignar rol**: elige un rol de la práctica y aplícalo a los objetos seleccionados (o quítalo). El rol viaja con el objeto al duplicarlo.
+- **Tus herramientas** (motor 3.4): solo las herramientas de la práctica, las del paso actual primero, cada una con **Usar** y **¿Cómo se usa?**; arriba, **Enfocar** o **Ver todo** (modo enfocado). Detalle en [12_plataforma_y_blender.md](12_plataforma_y_blender.md).
+- **Asignar rol**: elige un rol de la práctica y aplícalo a los objetos seleccionados (o quítalo). El rol viaja con el objeto al duplicarlo. En las prácticas con `figure.recognize` no hace falta: el panel muestra el rol que Amatista dedujo por la forma («Rueda (por su forma)», «Adorno») y solo sirve para corregirlo.
 - **Todos los pasos** (plegado): la lista de tarjetas con icono por estado (completado, actual, pendiente, bloqueado) y el mensaje de cada validador. En la etapa 1 era el panel principal «Objetivos»; ahora es una consulta.
 
 Diálogos: **Bienvenida** (intro de la práctica), **Así se hace este paso** (porqué, qué pasa, cómo hacerlo con teclas; se abre solo al empezar cada paso en modo Acompañado), **¿Te ayudo con este paso?** (cuando el acompañante ve que el alumno lleva rato), **Necesito una pista** (revela el siguiente nivel), **¡Práctica completada!** (mensaje final y autonomía) y el aviso de **herramienta de otro nivel**.
 
 En la **vista 3D**: la **tarjeta del acompañante** (paso N de M, progreso, qué hacer con teclas dibujadas y avisos que se desvanecen) y la **guía en la escena** (contornos verde/naranja/neón, regla, plano, piezas fantasma y flechas con etiquetas). Detalle en [07_guia_y_acompanamiento.md](07_guia_y_acompanamiento.md).
 
-## Nombre del descargable: Amatista Motor 3.3
+## Nombre del descargable: Amatista Motor 3.4
 
-Desde la 3.2 el add-on se llama **Amatista Motor** (`name` en `blender_manifest.toml`). La plataforma lo descarga como `Amatista-Motor-3.3-<sistema>.zip`, con la carpeta «Amatista Motor 3.3» (instalador, `amatista-3.3.0.zip` y LEEME). El servidor arma el paquete al vuelo con el código que tiene, así que entrega siempre la versión de su copia del repositorio; `GET /api/addon/v1/estado` devuelve `nombre` y `version_addon`, y la página «Mi Blender» avisa si el servidor entrega una versión vieja.
+Desde la 3.2 el add-on se llama **Amatista Motor** (`name` en `blender_manifest.toml`). La plataforma lo descarga como `Amatista-Motor-3.4-<sistema>.zip`, con la carpeta «Amatista Motor 3.4» (instalador, `amatista-3.4.0.zip` y LEEME). El servidor arma el paquete al vuelo con el código que tiene, así que entrega siempre la versión de su copia del repositorio; `GET /api/addon/v1/estado` devuelve `nombre` y `version_addon`, y la página «Mi Blender» avisa si el servidor entrega una versión vieja.
 
 ## Temática por práctica (add-on 3.2)
 
@@ -35,6 +36,12 @@ Cada módulo tiene su mundo, igual que en la plataforma. La fuente es [`practice
 - **Paneles**: en *Practicar*, una tarjeta con el tema, su lema, el jefe final (si toca) y el mensaje de la mascota con **Otro dato** (`amatista.mascota_siguiente`); en *Mi curso*, el nombre del tema junto a cada módulo y el de la siguiente práctica. El diálogo de práctica completada celebra al jefe vencido.
 - **Cielo de la vista 3D**: al abrir una práctica, `World.color` toma el color `cielo` del tema (convertido a lineal) y las vistas 3D en Sólido usan el fondo del mundo. El valor anterior se guarda en la escena (`amatista_cielo_previo`; si no había mundo se crea «Amatista · Cielo» y se anota en `amatista_mundo_creado`) y se restaura al cerrar la práctica o al desactivar el add-on. No se agregan ni quitan objetos (los validadores los cuentan) y la foto del motor no incluye el mundo: el tema no cambia ninguna evaluación.
 - **Voz de la mascota**: el aviso «Escena lista» y el diálogo final hablan con la mascota del tema («Tuerca: Listo: …»).
+
+## Enlace en vivo y modo enfocado (motor 3.4)
+
+- `enlace.py` late cada 5 s con la práctica, el paso, el progreso y si Blender está enfocado; cumple las órdenes de la plataforma (abrir una práctica, enfocar, ver todo, releer ajustes) una sola vez y aplica los ajustes de «Mi Blender». Sin cuenta, sin internet o con un servidor sin 010 no hace nada visible.
+- `enfoque.py` esconde la barra T y la de ajustes, filtra los menús de la cabecera y Shift+A, y lo devuelve todo como estaba con «Ver todo Blender», al cerrar la práctica, al abrir otro archivo o al desinstalar.
+- Preferencia nueva **Modo enfocado** (Según el nivel / Siempre / Nunca); la plataforma la puede cambiar.
 
 ## Cuándo evalúa
 

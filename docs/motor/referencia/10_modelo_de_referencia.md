@@ -45,6 +45,9 @@ Cada pieza:
 
 ## Cómo califica `figure.resembles`
 
+> Motor 3.4: las prácticas nuevas usan `figure.recognize` ([11_reconocer_figuras.md](11_reconocer_figuras.md)), que no necesita roles, revisa que la figura tenga sentido y exige según el nivel. `figure.resembles` sigue igual para las prácticas que ya lo usan.
+
+
 El cargador inyecta en cada objetivo `figure.resembles` las piezas, la tolerancia, los grupos flexibles y los nombres de los roles; en el JSON basta `"params": {}`.
 
 1. **Escala libre.** La figura del alumno y la del modelo se miden relativas a su lado más largo: un tren el doble de grande está bien. Si es más de `scale_range` veces (2.5) más grande o más chico que el modelo, pide escalarlo.
