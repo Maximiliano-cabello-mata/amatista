@@ -5,13 +5,32 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../auth/contexto';
 import FormularioCodigo from '../blender/FormularioCodigo';
-import { BLENDER_MINIMO, detectarSistema, NOMBRE_MOTOR, resumenPractica, SISTEMAS, versionDelServidor } from '../blender/logica';
+import {
+  AJUSTES_POR_DEFECTO,
+  BLENDER_MINIMO,
+  detectarSistema,
+  estadoBlender,
+  NOMBRE_MOTOR,
+  OPCIONES_ACOMPANAMIENTO,
+  OPCIONES_ENFOQUE,
+  resumenPractica,
+  SISTEMAS,
+  versionDelServidor,
+} from '../blender/logica';
 import { CristalLogo } from '../components/Iconos';
 import { useConexion } from '../hooks/useConexion';
 import { Alerta } from './cuenta/Formulario';
 import { rutaEntrar, rutas } from '../rutas';
 import { sincronizacionDisponible } from '../services/api';
-import { descargarPaquete, estadoAddon, desconectarDispositivo, listarDispositivos, listarPracticas } from '../services/blender';
+import {
+  descargarPaquete,
+  desconectarDispositivo,
+  estadoAddon,
+  estadoEnlace,
+  guardarAjustesBlender,
+  listarDispositivos,
+  listarPracticas,
+} from '../services/blender';
 
 const fecha = (iso) => (iso ? new Date(iso).toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' }) : '—');
 
@@ -181,6 +200,131 @@ function Dispositivos({ token }) {
   );
 }
 
+function Opciones({ nombre, opciones, valor, alElegir, desactivado }) {
+  return (
+    <div className="grid gap-2 sm:grid-cols-3" role="radiogroup">
+      {opciones.map((o) => {
+        const elegida = valor === o.id;
+        return (
+          <label
+            key={o.id}
+            className={`corte-poly-sm cursor-pointer border p-3 text-sm transition ${
+              elegida ? 'border-neon/60 bg-neon/10' : 'border-white/10 bg-black/25 hover:border-white/30'
+            } ${desactivado ? 'pointer-events-none opacity-50' : ''}`}
+          >
+            <input
+              type="radio"
+              name={nombre}
+              value={o.id}
+              checked={elegida}
+              disabled={desactivado}
+              onChange={() => alElegir(o.id)}
+              className="sr-only"
+            />
+            <span className="block font-bold text-white">{o.titulo}</span>
+            <span className="mt-1 block text-xs leading-relaxed text-texto/70">{o.texto}</span>
+          </label>
+        );
+      })}
+    </div>
+  );
+}
+
+// Motor 3.4: la plataforma decide cómo se ve Blender y ve el Blender abierto en vivo.
+function AjustesBlender({ token }) {
+  const [enlace, setEnlace] = useState(null);
+  const [ajustes, setAjustes] = useState(AJUSTES_POR_DEFECTO);
+  const [guardando, setGuardando] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let vigente = true;
+    const consultar = async () => {
+      if (document.visibilityState !== 'visible') return;
+      const r = await estadoEnlace(token);
+      if (!vigente || !r.ok) return;
+      setEnlace(r.datos);
+      setAjustes((actuales) => (guardando ? actuales : { ...AJUSTES_POR_DEFECTO, ...r.datos.ajustes }));
+    };
+    consultar();
+    const temporizador = setInterval(consultar, 8000);
+    return () => {
+      vigente = false;
+      clearInterval(temporizador);
+    };
+  }, [token, guardando]);
+
+  const sinEnlace = enlace?.enlace === false;
+  const cambiar = async (cambios) => {
+    const anteriores = ajustes;
+    setAjustes({ ...ajustes, ...cambios });
+    setGuardando(true);
+    setError(null);
+    const r = await guardarAjustesBlender(token, cambios);
+    setGuardando(false);
+    if (r.ok) {
+      setAjustes({ ...AJUSTES_POR_DEFECTO, ...r.datos.ajustes });
+    } else {
+      setAjustes(anteriores);
+      setError(r.error);
+    }
+  };
+
+  const vivo = estadoBlender(enlace);
+  return (
+    <Tarjeta antetitulo="Cómo se ve Blender" titulo="Tu Blender, desde aquí" className="lg:col-span-2">
+      {enlace && !sinEnlace && (
+        <p className="mb-4 flex items-center gap-2 text-sm text-texto/80">
+          <span
+            className={`h-2.5 w-2.5 rounded-full ${vivo.estado === 'cerrado' ? 'bg-white/30' : 'bg-emerald-400 animar-pulso'}`}
+            aria-hidden="true"
+          />
+          {vivo.estado === 'cerrado' ? 'Tu Blender está cerrado. Los cambios le llegan al abrirlo.' : `${vivo.texto} Los cambios le llegan en segundos.`}
+        </p>
+      )}
+      {sinEnlace && (
+        <Alerta tipo="info">El servidor todavía no tiene el enlace en vivo: estas opciones se eligen por ahora en Blender (Preferencias › Add-ons › Amatista).</Alerta>
+      )}
+      {error && <Alerta>{error}</Alerta>}
+      <h3 className="mt-2 font-mono text-[11px] uppercase tracking-widest text-white/50">Modo enfocado</h3>
+      <p className="mb-2 mt-1 text-sm text-texto/75">
+        Blender completo abruma al empezar: enfocado, solo ves las herramientas de la práctica y cada una explica cómo se usa.
+      </p>
+      <Opciones nombre="enfoque" opciones={OPCIONES_ENFOQUE} valor={ajustes.enfoque} alElegir={(enfoque) => cambiar({ enfoque })} desactivado={sinEnlace} />
+      <h3 className="mt-5 font-mono text-[11px] uppercase tracking-widest text-white/50">Acompañamiento</h3>
+      <div className="mt-2">
+        <Opciones
+          nombre="acompanamiento"
+          opciones={OPCIONES_ACOMPANAMIENTO}
+          valor={ajustes.acompanamiento}
+          alElegir={(acompanamiento) => cambiar({ acompanamiento })}
+          desactivado={sinEnlace}
+        />
+      </div>
+      <div className="mt-4 grid gap-2 text-sm text-texto/85 sm:grid-cols-2">
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={ajustes.tarjeta_3d}
+            disabled={sinEnlace}
+            onChange={(e) => cambiar({ tarjeta_3d: e.target.checked })}
+          />
+          Tarjeta con el paso actual en la vista 3D
+        </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={ajustes.avisos_herramientas}
+            disabled={sinEnlace}
+            onChange={(e) => cambiar({ avisos_herramientas: e.target.checked })}
+          />
+          Avisarme si uso una herramienta de otro nivel
+        </label>
+      </div>
+    </Tarjeta>
+  );
+}
+
 function Practicas({ token }) {
   const [respuesta, setRespuesta] = useState(null);
   useEffect(() => {
@@ -287,6 +431,7 @@ function Blender() {
       </section>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        {usuario && <AjustesBlender token={token} />}
         {usuario ? (
           <Dispositivos token={token} />
         ) : (

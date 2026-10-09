@@ -16,7 +16,7 @@ export const BLENDER_MINIMO = '4.2';
 
 // El descargable: Amatista Motor (add-on + motor de prácticas). La versión
 // coincide con addon/amatista_blender/blender_manifest.toml (lo revisa logica.test.js).
-export const MOTOR = { nombre: 'Amatista Motor', version: '3.3.0' };
+export const MOTOR = { nombre: 'Amatista Motor', version: '3.4.0' };
 export const NOMBRE_MOTOR = `${MOTOR.nombre} ${MOTOR.version.split('.').slice(0, 2).join('.')}`;
 
 // ¿El servidor entrega la misma versión que espera esta plataforma?
@@ -87,4 +87,47 @@ export function resumenPractica(progreso) {
   if (progreso.completada) return 'Completada';
   if (!progreso.intentos) return 'Abierta: continúa en Blender';
   return `${progreso.progreso} % en Blender`;
+}
+
+// --- Enlace en vivo (motor 3.4) -----------------------------------------------------------
+
+// Cómo se ve Blender: lo elige el alumno en «Mi Blender» y le llega al add-on en vivo.
+export const OPCIONES_ENFOQUE = [
+  { id: 'auto', titulo: 'Según mi nivel', texto: 'Enfocado en los niveles 1 y 2; Blender completo después.' },
+  { id: 'siempre', titulo: 'Siempre enfocado', texto: 'Solo las herramientas de cada práctica, con «¿Cómo se usa?».' },
+  { id: 'nunca', titulo: 'Blender completo', texto: 'Todos los menús y la barra de herramientas, como siempre.' },
+];
+export const OPCIONES_ACOMPANAMIENTO = [
+  { id: 'acompanado', titulo: 'Acompañado', texto: 'Tarjeta guía, avisos y diálogos que explican cada paso.' },
+  { id: 'tarjeta', titulo: 'Solo tarjeta', texto: 'La tarjeta guía y los avisos, sin diálogos.' },
+  { id: 'silencioso', titulo: 'Silencioso', texto: 'Solo los objetivos y las pistas que pidas.' },
+];
+export const AJUSTES_POR_DEFECTO = { enfoque: 'auto', acompanamiento: 'acompanado', avisos_herramientas: true, tarjeta_3d: true };
+
+// Estado del Blender del alumno para una práctica (o en general sin practicaId):
+//   sin_enlace   el servidor todavía no tiene el enlace (Oracle 010 sin ejecutar)
+//   cerrado      ningún Blender abierto
+//   otra         Blender abierto, con otra práctica (o ninguna)
+//   aqui         Blender abierto en esta práctica
+export function estadoBlender(datos, practicaId = null) {
+  if (!datos || datos.enlace === false) return { estado: 'sin_enlace', blender: null, texto: '' };
+  const abiertos = (datos.blender ?? []).filter((b) => b.en_linea);
+  if (!abiertos.length) {
+    return { estado: 'cerrado', blender: null, texto: 'Tu Blender está cerrado. Ábrelo y la práctica te espera ahí.' };
+  }
+  const aqui = practicaId ? abiertos.find((b) => b.practica_id === practicaId) : null;
+  if (aqui) {
+    const enfoque = aqui.enfocado ? ' · enfocado' : '';
+    return {
+      estado: 'aqui',
+      blender: aqui,
+      texto: `Tu Blender está en esta práctica${aqui.progreso != null ? ` (${aqui.progreso} %)` : ''}${enfoque}.`,
+    };
+  }
+  const uno = abiertos[0];
+  return {
+    estado: 'otra',
+    blender: uno,
+    texto: uno.practica ? `Tu Blender está abierto en «${uno.practica}».` : 'Tu Blender está abierto.',
+  };
 }

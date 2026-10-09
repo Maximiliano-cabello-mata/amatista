@@ -66,6 +66,24 @@ export const abrirPractica = (token, practicaId) =>
 export const progresoPractica = (token, practicaId) =>
   pedirJSON(`${BASE}/mi-progreso?practica_id=${parte(practicaId)}`, { token });
 
+// --- Enlace en vivo con Blender (motor 3.4) --------------------------------------------
+// El add-on late cada pocos segundos: la plataforma ve si Blender está abierto,
+// qué practica y en qué paso va, y le puede dejar órdenes.
+
+export const estadoEnlace = (token) => pedirJSON(`${BASE}/enlace`, { token });
+
+export const ordenarBlender = (token, tipo, practicaId) =>
+  pedirJSON(`${BASE}/ordenes`, {
+    metodo: "POST",
+    token,
+    cuerpo: practicaId ? { tipo, practica_id: practicaId } : { tipo },
+  });
+
+export const leerAjustesBlender = (token) => pedirJSON(`${BASE}/ajustes`, { token });
+
+export const guardarAjustesBlender = (token, cambios) =>
+  pedirJSON(`${BASE}/ajustes`, { metodo: "PUT", token, cuerpo: cambios });
+
 // --- Administración -----------------------------------------------------------------
 
 export const sincronizarPracticas = (token, { publicar = false } = {}) =>

@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../../auth/contexto';
-import { pasosConEstado, textoAutonomia } from '../../../blender/logica';
+import { estadoBlender, pasosConEstado, textoAutonomia } from '../../../blender/logica';
 import PrepararBlender from '../../../blender/PrepararBlender';
 import { IconoGuia } from '../../etiquetas/IconosEtiqueta';
 import { rutaEntrar, rutas } from '../../../rutas';
-import { abrirPractica, obtenerPractica, progresoPractica } from '../../../services/blender';
+import { abrirPractica, estadoEnlace, obtenerPractica, ordenarBlender, progresoPractica } from '../../../services/blender';
 import { TextoEnLinea } from '../Markdown';
 import { useActividad } from './hooks';
 import { BOTON_PRINCIPAL, BOTON_SECUNDARIO, MarcoActividad, Retroalimentacion } from './Marco';
@@ -52,6 +52,46 @@ function Pasos({ pasos }) {
 // abre, trabaja en Blender acompañado por la guía paso a paso del add-on y
 // esta tarjeta muestra su avance real (lo calcula el servidor con la foto de
 // la escena). Se resuelve al completarla.
+// Motor 3.4: la plataforma ve el Blender del alumno en vivo y le puede pedir
+// que enfoque (solo las herramientas de la práctica) o muestre todo.
+function BlenderEnVivo({ enlace, token, practicaId }) {
+  const [enviando, setEnviando] = useState(false);
+  const { estado, blender, texto } = estadoBlender(enlace, practicaId);
+  if (estado === 'sin_enlace') return null;
+  const ordenar = async (tipo) => {
+    setEnviando(true);
+    await ordenarBlender(token, tipo, tipo === 'abrir_practica' ? practicaId : undefined);
+    setEnviando(false);
+  };
+  const color = estado === 'cerrado' ? 'bg-white/30' : 'bg-emerald-400 animar-pulso';
+  return (
+    <div className="corte-poly-sm mt-4 flex flex-wrap items-center gap-3 border border-white/10 bg-base/60 px-3 py-2 text-sm">
+      <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${color}`} aria-hidden="true" />
+      <span className="text-texto/85">{texto}</span>
+      {estado === 'aqui' && (
+        <button
+          type="button"
+          disabled={enviando}
+          onClick={() => ordenar(blender.enfocado ? 'ver_todo' : 'enfocar')}
+          className="ml-auto font-mono text-[11px] uppercase tracking-widest text-neon hover:underline disabled:opacity-50"
+        >
+          {blender.enfocado ? 'Ver todo Blender' : 'Enfocar Blender'}
+        </button>
+      )}
+      {estado === 'otra' && (
+        <button
+          type="button"
+          disabled={enviando}
+          onClick={() => ordenar('abrir_practica')}
+          className="ml-auto font-mono text-[11px] uppercase tracking-widest text-neon hover:underline disabled:opacity-50"
+        >
+          Cambiar a esta práctica
+        </button>
+      )}
+    </div>
+  );
+}
+
 function PracticaBlender({ bloque, alCompletar, resuelta }) {
   const { token, usuario } = useAuth();
   const { resultado, resolver } = useActividad(alCompletar);
@@ -59,6 +99,7 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
   const [progreso, setProgreso] = useState(null);
   const [aviso, setAviso] = useState(null);
   const [abriendo, setAbriendo] = useState(false);
+  const [enlace, setEnlace] = useState(null);
   const resolverRef = useRef(resolver);
   useEffect(() => {
     resolverRef.current = resolver;
@@ -96,18 +137,44 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
     if (completa) resolverRef.current(true, 1);
   }, [completa]);
 
+  // Blender en vivo: si está abierto, en qué práctica y paso va (el add-on late cada 5 s).
+  useEffect(() => {
+    if (!token) return undefined;
+    let vigente = true;
+    const consultar = async () => {
+      if (document.visibilityState !== 'visible') return;
+      const r = await estadoEnlace(token);
+      if (vigente && r.ok) setEnlace(r.datos);
+    };
+    consultar();
+    const temporizador = setInterval(consultar, INTERVALO_MS);
+    return () => {
+      vigente = false;
+      clearInterval(temporizador);
+    };
+  }, [token]);
+
   const abrir = async () => {
     setAbriendo(true);
     const r = await abrirPractica(token, bloque.practica);
     setAbriendo(false);
     if (r.ok) {
-      setProgreso(r.datos);
-      setAviso({
-        tipo: 'info',
-        titulo: 'Lista en Blender',
-        texto:
-          'Abre Blender y pulsa N › pestaña Amatista: la práctica se abre sola y Amatista te guía paso a paso. Tu avance aparece aquí mientras trabajas.',
-      });
+      const { abierta_en_blender: enVivo, ...fila } = r.datos;
+      setProgreso(fila);
+      setAviso(
+        enVivo
+          ? {
+              tipo: 'info',
+              titulo: 'Abriendo en tu Blender',
+              texto: 'Mira tu Blender: la práctica se abre ahí en unos segundos y Amatista te guía paso a paso. Tu avance aparece aquí mientras trabajas.',
+            }
+          : {
+              tipo: 'info',
+              titulo: 'Lista en Blender',
+              texto:
+                'Abre Blender y pulsa N › pestaña Amatista: la práctica se abre sola y Amatista te guía paso a paso. Tu avance aparece aquí mientras trabajas.',
+            },
+      );
     } else {
       setAviso({ tipo: 'mal', titulo: 'No se pudo abrir', texto: r.error });
     }
@@ -183,6 +250,7 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
           </button>
         )}
       </div>
+      {usuario && !completa && <BlenderEnVivo enlace={enlace} token={token} practicaId={bloque.practica} />}
       {usuario && !completa && <PrepararBlender token={token} />}
       {!usuario && (
         <a href={rutas.blender} className={`${BOTON_SECUNDARIO} mt-3 inline-block`}>

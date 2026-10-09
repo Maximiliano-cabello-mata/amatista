@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import mesa from '../../../practices/archivo/v2/mesa.json';
 import modulo2 from '../data/modulos/archivo/blender-modulo-2.json';
 import {
+  estadoBlender,
+  OPCIONES_ENFOQUE,
   blenderCompatible,
   compararVersiones,
   detectarSistema,
@@ -110,17 +112,41 @@ describe('primera práctica en el módulo 2', () => {
 });
 
 describe('Amatista Motor', () => {
-  it('se llama «Amatista Motor 3.3» y coincide con el manifiesto del add-on', async () => {
+  it('se llama «Amatista Motor 3.4» y coincide con el manifiesto del add-on', async () => {
     const { readFileSync } = await import('node:fs');
     const manifiesto = readFileSync(new URL('../../../addon/amatista_blender/blender_manifest.toml', import.meta.url), 'utf8');
     expect(manifiesto).toContain(`version = "${MOTOR.version}"`);
     expect(manifiesto).toContain(`name = "${MOTOR.nombre}"`);
-    expect(NOMBRE_MOTOR).toBe('Amatista Motor 3.3');
+    expect(NOMBRE_MOTOR).toBe('Amatista Motor 3.4');
   });
 
   it('avisa si el servidor entrega una versión vieja', () => {
-    expect(versionDelServidor({ version_addon: '3.3.0' })).toEqual({ conocida: true, version: '3.3.0', alDia: true });
+    expect(versionDelServidor({ version_addon: '3.4.0' })).toEqual({ conocida: true, version: '3.4.0', alDia: true });
     expect(versionDelServidor({ version_addon: '3.0.0' }).alDia).toBe(false);
     expect(versionDelServidor(null).conocida).toBe(false);
+  });
+});
+
+describe('enlace en vivo con Blender (motor 3.4)', () => {
+  const blender = (extra) => ({ en_linea: true, practica_id: 'blender.bp.m1.tren', practica: 'Tren de juguete', progreso: 40, enfocado: true, ...extra });
+
+  it('sin 010 en el servidor no muestra nada', () => {
+    expect(estadoBlender({ enlace: false }).estado).toBe('sin_enlace');
+    expect(estadoBlender(null).estado).toBe('sin_enlace');
+  });
+
+  it('distingue cerrado, otra práctica y esta práctica', () => {
+    expect(estadoBlender({ enlace: true, blender: [] }).estado).toBe('cerrado');
+    expect(estadoBlender({ enlace: true, blender: [blender({ en_linea: false })] }).estado).toBe('cerrado');
+    const aqui = estadoBlender({ enlace: true, blender: [blender()] }, 'blender.bp.m1.tren');
+    expect(aqui.estado).toBe('aqui');
+    expect(aqui.texto).toBe('Tu Blender está en esta práctica (40 %) · enfocado.');
+    const otra = estadoBlender({ enlace: true, blender: [blender()] }, 'blender.bp.m2.espada');
+    expect(otra.estado).toBe('otra');
+    expect(otra.texto).toContain('«Tren de juguete»');
+  });
+
+  it('las opciones de enfoque son las que acepta el servidor', () => {
+    expect(OPCIONES_ENFOQUE.map((o) => o.id)).toEqual(['auto', 'siempre', 'nunca']);
   });
 });
