@@ -1,5 +1,6 @@
 import Barras from '../graficas/Barras';
 import { fechaCorta } from '../graficas/fechas';
+import LineaTendencia from '../graficas/LineaTendencia';
 import MapaCalor from '../graficas/MapaCalor';
 import { resumenSemana, seriePorSemana } from './retos';
 import Seccion, { Cifra } from './Seccion';
@@ -65,18 +66,25 @@ function ActividadPanel({ progreso, hoy, className = '' }) {
       <div className="mt-7 border-t border-white/5 pt-5">
         <h3 className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-white/55">Lecciones completadas por semana</h3>
         {hayLecciones ? (
-          <Barras
-            titulo={`Lecciones completadas por semana (últimas ${SEMANAS} semanas)`}
-            unidad={['lección', 'lecciones']}
-            encabezados={['Semana', 'Lecciones']}
-            resaltar={semana.desde}
-            datos={serie.map((s) => ({
-              clave: s.desde,
-              etiqueta: fechaCorta(s.desde, { conDia: false }),
-              detalle: s.actual ? 'Esta semana' : `Semana del ${fechaCorta(s.desde, { conDia: false })}`,
-              valor: s.lecciones,
-            }))}
-          />
+          <>
+            <Barras
+              titulo={`Lecciones completadas por semana (últimas ${SEMANAS} semanas)`}
+              unidad={['lección', 'lecciones']}
+              encabezados={['Semana', 'Lecciones']}
+              resaltar={semana.desde}
+              datos={serie.map((s) => ({
+                clave: s.desde,
+                etiqueta: fechaCorta(s.desde, { conDia: false }),
+                detalle: s.actual ? 'Esta semana' : `Semana del ${fechaCorta(s.desde, { conDia: false })}`,
+                valor: s.lecciones,
+              }))}
+            />
+            <LineaTendencia
+              className="mt-4"
+              titulo="Tendencia de constancia"
+              datos={serie.map((s) => s.lecciones)}
+            />
+          </>
         ) : (
           <p className="corte-poly-sm border border-dashed border-white/10 px-4 py-6 text-center text-sm text-texto/65">
             Aquí verás cuántas lecciones completas cada semana. ¡Termina tu primera lección para levantar la primera barra!

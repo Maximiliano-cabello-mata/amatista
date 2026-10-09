@@ -2,7 +2,7 @@
 
 Punto de entrada para Maximiliano como desarrollador único. Aquí se decide **qué sigue, por qué y dónde está la información**. Las carpetas técnicas y los documentos existentes conservan su ubicación.
 
-[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Reestructuración v3](docs/reestructuracion/README.md) · [Plataforma](docs/plataforma/README.md) · [Amatista Engine](docs/motor/README.md) · [Último registro (5 oct)](docs/bitacora/2026-10-05_seguridad_rendimiento_motor.md) · [Plan de despliegue](docs/despliegue/2026-10-05_plan_de_despliegue.md) · [Cronología](docs/historia/01_cronologia.md) · [Manual del desarrollador](docs/desarrollador/README.md)
+[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Reestructuración v3](docs/reestructuracion/README.md) · [Plataforma](docs/plataforma/README.md) · [Amatista Engine](docs/motor/README.md) · [Último registro (9 oct)](docs/bitacora/2026-10-09_el_ejemplo_manda.md) · [Plan de despliegue](docs/despliegue/2026-10-05_plan_de_despliegue.md) · [Cronología](docs/historia/01_cronologia.md) · [Manual del desarrollador](docs/desarrollador/README.md)
 
 ## 1. Dirección y límite de trabajo
 
@@ -14,7 +14,7 @@ Punto de entrada para Maximiliano como desarrollador único. Aquí se decide **q
 
 **Adelantado a pedido del usuario (4 de octubre): Amatista Engine y plataforma por módulos.** El motor de prácticas y su add-on (fase E) llegaron antes que las fases B y C: etapa 1 (evalúa) en el PR #13 y etapa 2 (acompaña paso a paso) en el PR #14. La plataforma deja de tener pestañas sueltas: estructura fija **Cursos · Mi panel · Admin**, y cada módulo cierra con su práctica en Blender ([plataforma](docs/plataforma/README.md), [motor](docs/motor/README.md)). Nada de esto toca el piloto: el script 007 se ejecuta después (T-055).
 
-**4 y 5 de octubre: motor v3, cursos por niveles, temáticas, seguridad y rendimiento.** En `main` (PR #17 a #20): plan de estudios de Blender en tres cursos publicados (Principiante, Principiante-Intermedio, Intermedio) con Avanzado bloqueado, un mundo por módulo con su personaje interactivo y su jefe, **Motor 3.3** con modelo de referencia (figuras con sentido y medidas aproximadas), auditoría de seguridad y de rendimiento, y un [plan de despliegue por fases](docs/despliegue/2026-10-05_plan_de_despliegue.md). Nada de esto está en producción todavía: se sube después del piloto (T-078).
+**9 de octubre: integración educativa plataforma ↔ Blender reforzada.** En bitácoras del 9 oct (motor 3.4, 3.5 y 3.5.1) el flujo se consolidó: reconocimiento de figura, instructor por checklist y revisión autónoma contra ejemplo (`example.matches`). Referencias: [plataforma y blender integrados](docs/bitacora/2026-10-09_plataforma_y_blender_integrados.md), [blender como instructor](docs/bitacora/2026-10-09_blender_como_instructor.md), [el ejemplo manda](docs/bitacora/2026-10-09_el_ejemplo_manda.md).
 
 Tutor IA y motor generativo siguen entrando por incrementos independientes. Las lecciones de lectura e interactivas de cada módulo se completan sin add-on; la práctica en Blender es la estación final del módulo.
 
@@ -54,11 +54,11 @@ Revisión del 4 de octubre de 2026 (`main` en `c730c0e`, con el PR #14 fusionado
 
 ## 4. Orden de ejecución propuesto
 
-> **Orden vigente (5 de octubre):**
-> 1. **Hasta el 7 de octubre, sin tocar la VM:** fase 0 del [plan de despliegue](docs/despliegue/2026-10-05_plan_de_despliegue.md) (Cloudflare, PWA en Pages, secreto de firma, tags).
-> 2. **8 de octubre:** piloto con la v2.2 tal como está.
-> 3. **Después del piloto:** T-078 (subir `main` y el Motor 3.3), T-065 (HTTPS con el dominio), T-032 (SMTP), T-079 (proteger producción y repositorio privado), T-056 y T-066.
-> 4. **Siguiente versión:** T-083 (examen final en el servidor, decisión pendiente), T-080, T-081, T-067.
+> **Orden vigente (9 de octubre):**
+> 1. **Alinear verdad operativa:** documentación base + auditoría educativa + UI de alumno sin placeholders.
+> 2. **Cerrar integración Blender:** T-087, T-091, T-092 y T-093 con evidencia funcional.
+> 3. **Operación y despliegue:** T-065, T-078, T-079, T-032.
+> 4. **Siguiente bloque:** T-083, T-080, T-081, T-067.
 >
 > **Orden anterior (4 de octubre), como historia:**
 > 1. **Piloto del 8 de octubre con la v2.2:** T-003 (servicio), T-005 (HTTPS), T-032 (SMTP), T-029 y T-030 (seguridad y prueba de punta a punta).
@@ -182,4 +182,3 @@ La lista de documentos vive en un solo lugar: el [índice de la documentación](
 Al agregar un frente, registrar aquí su objetivo y documento de referencia. Al crear una tarea, hacerlo en el YAML. Al cambiar su estado, usar el flujo de commits. Al terminar una entrega, actualizar el historial. Revisar los enlaces y la prioridad semanalmente.
 
 Este centro es el módulo documental de gestión del desarrollador. Una pantalla administrativa en la PWA puede ser una ampliación posterior si aporta valor; la organización diaria ya puede operar desde GitHub.
-
