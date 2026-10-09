@@ -30,15 +30,15 @@ El alumno avanza por cursos y módulos en una PWA. Cada módulo termina con una 
 
 ## 1. Estado actual
 
-Al 5 de octubre de 2026 (`main` en `2402549`, con el PR #20 fusionado):
+Al 9 de octubre de 2026:
 
 | Frente | Dónde está |
 |---|---|
-| **Plataforma v2.2** («Plataforma unificada») | En producción con Oracle. El **piloto del 8 de octubre** se hace con ella y **no se toca la VM antes**. |
-| **Lo nuevo en `main` (v3, sin desplegar)** | Cursos de Blender por niveles, temáticas por módulo, Motor 3.3, seguridad y rendimiento. Se sube a producción **después del piloto** siguiendo el [plan de despliegue](docs/despliegue/2026-10-05_plan_de_despliegue.md) (fase 1, T-078). |
-| **Amatista Engine** | **Motor 3.3** y add-on **Amatista Motor 3.3**: cada práctica trae su modelo de referencia (imagen y plano, «Así se debe ver») y el motor califica que la figura tenga sentido con medidas aproximadas (±35 %); 38 validadores. Etapas 1 a 3 y [modelo de referencia](docs/motor/referencia/10_modelo_de_referencia.md). |
+| **Plataforma educativa** | Ruta por módulos en PWA, práctica al cierre de cada módulo, progreso local y sincronización con backend. |
+| **Integración con Blender** | Flujo plataforma ↔ Blender en evolución activa (motor 3.4, 3.5 y 3.5.1 en documentación técnica y bitácora del 9 de octubre). |
+| **Amatista Engine** | Revisión por validadores y por ejemplo resuelto en código (`example.matches`), con checklist pedagógico y acompañamiento dentro de Blender. |
 | **Cursos de Blender** | Una tarjeta «Blender» con su árbol de niveles: **Principiante**, **Principiante-Intermedio** e **Intermedio** publicados (3 módulos cada uno, 18 prácticas en Blender) y **Avanzado** bloqueado. Teoría y Blender intercalados; cada módulo cierra con su práctica y un jefe final. [Ruta de aprendizaje](docs/cursos/03_ruta_de_aprendizaje_blender.md). |
-| **Temáticas por módulo** | Cada módulo es un mundo (escenario, partículas, colores) con un **personaje original** que camina, sigue el cursor con la mirada, reacciona al tocarlo y acompaña toda la lección. [Herramientas gráficas](docs/plataforma/07_herramientas_graficas.md). |
+| **Temáticas por módulo** | Cada módulo es un mundo (escenario, partículas, colores) con un personaje original que acompaña la lección. [Herramientas gráficas](docs/plataforma/07_herramientas_graficas.md). |
 | **Seguridad y rendimiento** | Auditoría automática (1,449 ataques, 0 hallazgos), informe de rendimiento antes y después, add-on con integridad y marca de agua, PWA sin mapas de fuente. [Auditoría](docs/seguridad/01_auditoria_2026-10-05.md) · [informe](docs/rendimiento/2026-10-05_informe.md) · [protección del código](docs/seguridad/02_proteccion_del_codigo.md). |
 | **Dominio** | `amatista-3d.me`. Plan con Cloudflare: PWA en `amatista-3d.me` y API en `api.amatista-3d.me` (T-065), en la fase 2 del plan de despliegue. |
 | **Plataforma por módulos** | Estructura fija **Cursos · Mi panel · Admin**. [Documentación](docs/plataforma/README.md). |
@@ -245,10 +245,10 @@ Tags `v*` con `bash herramientas/crear-tags.sh` desde la computadora de Maximili
 
 ## 12. Qué sigue
 
-1. **Piloto del 8 de octubre** con la v2.2, sin tocar la VM antes. Antes solo lo que no toca el servidor: Cloudflare, PWA en Cloudflare Pages, secreto de firma, tags ([plan, fase 0](docs/despliegue/2026-10-05_plan_de_despliegue.md#fase-0-preparar-sin-tocar-la-vm-hasta-el-7-de-octubre)).
-2. **Después del piloto**: subir `main` y el Motor 3.3 a Oracle (T-078), HTTPS con el dominio (T-065), SMTP (T-032), proteger producción y hacer privado el repositorio (T-079), instalador en Windows y Mac reales (T-056) y el add-on con alumnos (T-066).
-3. **Siguiente versión**: examen final calificado por el servidor (T-083), portada más ligera en teléfono (T-080), varias aulas a la vez (T-081), curso Avanzado (T-067).
-4. **Más adelante**: «Mi primer espacio 3D», laboratorio GLB, especialidades y un tutor IA local (Ollama) como capa opcional.
+1. Consolidar la integración plataforma-Blender con evidencia real de aprendizaje (T-087, T-091, T-092, T-093).
+2. Cerrar despliegue y operación pendiente (T-065, T-078, T-079, T-032).
+3. Fortalecer evaluación pedagógica en servidor (T-083) y ruta avanzada (T-067).
+4. Continuar laboratorio GLB y líneas opcionales (especialidades y tutor IA) sin romper el enfoque educativo principal.
 
 Las ideas grandes entran primero como propuesta fechada en [`docs/propuestas/`](docs/propuestas/). Orden vigente y razones: [PROYECTO.md](PROYECTO.md).
 

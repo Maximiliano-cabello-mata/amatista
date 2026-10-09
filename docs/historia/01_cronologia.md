@@ -2,7 +2,7 @@
 
 Cómo avanzó el proyecto, commit por commit, desde el primer archivo (27 de septiembre de 2026) hasta hoy. Para quien quiera saber **qué se hizo, cuándo, quién y en qué orden**.
 
-Actualizado: 4 de octubre de 2026 (main en `c730c0e`).
+Actualizado: 9 de octubre de 2026.
 
 - [Cómo leer esta cronología](#cómo-leer-esta-cronología)
 - [Resumen en una tabla](#resumen-en-una-tabla)
@@ -16,6 +16,7 @@ Actualizado: 4 de octubre de 2026 (main en `c730c0e`).
 - [Etapa 5 · Amatista Engine (3 oct)](#etapa-5--amatista-engine-3-de-octubre-tarde)
 - [Etapa 6 · Motor etapa 2 y plataforma por módulos (3 oct)](#etapa-6--motor-etapa-2-y-plataforma-por-módulos-3-de-octubre-noche)
 - [Etapa 7 · Documentación completa (4 oct)](#etapa-7--documentación-completa-4-de-octubre)
+- [Etapa 10 · Integración plataforma-Blender (9 oct)](#etapa-10--integración-plataforma-blender-9-de-octubre)
 - [Lo que viene](#lo-que-viene)
 - [Números del proyecto](#números-del-proyecto)
 
@@ -179,15 +180,26 @@ En un solo día, cuatro entregas sobre el motor y los cursos. El **PR #17** (16:
 
 El **PR #20** (23:20, hora de México; 5 de octubre en UTC) respondió a un pedido largo de Maximiliano: auditoría de seguridad automática (1,449 ataques, 0 hallazgos tras los arreglos), informe de rendimiento con optimizaciones (catálogo con 40 alumnos de 747 a 77 ms), protección del código del add-on y de la PWA, **Motor 3.3** con modelo de referencia (las figuras deben tener sentido y las medidas son aproximadas), cada lección vestida con el mundo de su módulo y un personaje interactivo, y un [plan de despliegue por fases](../despliegue/2026-10-05_plan_de_despliegue.md). El **PR #22** (23:35, de Copilot) agregó el [archivo histórico](04_archivo_historico_hasta_hoy.md). Detalle: [bitácora](../bitacora/2026-10-05_seguridad_rendimiento_motor.md).
 
+## Etapa 10 · Integración plataforma-Blender (9 de octubre)
+
+Bitácoras del 9 de octubre documentan tres avances seguidos:
+
+- **Motor 3.4**: plataforma y Blender conectados con más control desde la PWA y modo enfocado para practicar.
+- **Motor 3.5**: Blender como instructor, checklist de figura y práctica por escena.
+- **Motor 3.5.1 / enfoque “el ejemplo manda”**: cada práctica con ejemplo resuelto en código y revisión autónoma contra ese ejemplo.
+
+Referencias:
+- [plataforma y Blender integrados](../bitacora/2026-10-09_plataforma_y_blender_integrados.md)
+- [Blender como instructor](../bitacora/2026-10-09_blender_como_instructor.md)
+- [el ejemplo manda](../bitacora/2026-10-09_el_ejemplo_manda.md)
+
 ## Lo que viene
 
 | Fecha | Qué |
 |---|---|
-| 7 oct | Decisión del piloto ([plan de lanzamiento](../planeacion/2026-10-01_plan_lanzamiento.txt)) |
-| **8 oct** | **Piloto con la v2.2**, sin tocar la VM antes; hasta el 7, solo la fase 0 del plan (Cloudflare, Pages, tags) |
-| después del piloto | Subir `main` y el Motor 3.3 a producción (T-078, fase 1 del [plan de despliegue](../despliegue/2026-10-05_plan_de_despliegue.md)), HTTPS con el dominio (T-065), instalador en Windows y Mac reales (T-056) |
-| 15 oct | Beta |
-| v3.x | Fase B (contenido por niveles, T-038 decide la LTS de Blender), «Mi primer espacio 3D», laboratorio GLB, especialidades y tutor IA |
+| 9 oct (estado actual) | Motor 3.4, 3.5 y 3.5.1 documentados en bitácora; foco en integración educativa plataforma-Blender |
+| próximo bloque | Cierre operativo y despliegue: T-065, T-078, T-079, T-032 |
+| siguiente versión | Examen final en servidor (T-083), optimización de portada móvil (T-080), varias aulas (T-081), curso avanzado (T-067) |
 
 ## Números del proyecto
 

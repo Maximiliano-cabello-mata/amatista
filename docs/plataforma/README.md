@@ -1,6 +1,6 @@
-# Plataforma Amatista (v3.2 · 4 de octubre de 2026)
+# Plataforma Amatista (v3.5.1 · 9 de octubre de 2026)
 
-Cómo está organizada la plataforma para alumnos, profesores y administradores después de la integración de Blender en los módulos. Lo técnico del motor y del add-on está en [`docs/motor/`](../motor/README.md).
+Cómo está organizada la plataforma para alumnos, profesores y administradores en el estado actual de integración con Blender. Lo técnico del motor y del add-on está en [`docs/motor/`](../motor/README.md).
 
 > «La plataforma la siento muy dispersa… esa parte que le agregamos como una pestaña a Blender no está bien, sino hacerlo en una integración en los módulos: que cada módulo cuente con una práctica de Blender en la cual primero realices el módulo y ya luego realices la práctica en Blender.» (Maximiliano, 4 oct 2026)
 
@@ -13,6 +13,7 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 | [05 · Panel de administración](05_panel_de_administracion.md) | Cómo se organiza el panel y el flujo para subir un módulo con su práctica. |
 | [06 · Módulo 3: modelado con precisión](06_modulo_3_modelado_precision.md) | El módulo de precisión de la v2 como ejemplo completo. |
 | [07 · Herramientas gráficas](07_herramientas_graficas.md) | Qué gráficos tenemos, qué se agregó en la v3.2 y qué conviene desarrollar (investigación). |
+| [08 · Auditoría educativa (9 oct)](08_auditoria_educativa_2026-10-09.md) | Qué está bien, qué está fallando y qué se corrige primero en documentación y producto. |
 
 ![Un módulo con su práctica en Blender](img/modulo_ruta.svg)
 
@@ -25,6 +26,13 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 - **Curso Intermedio publicado**; Avanzado bloqueado hasta tener su teoría ([ruta de aprendizaje](../cursos/03_ruta_de_aprendizaje_blender.md)).
 - **Más claro y más ligero:** el ejercicio de emparejar con más contraste, animaciones CSS nuevas y un modo ligero para equipos modestos ([07](07_herramientas_graficas.md)). Mismo diseño y misma paleta.
 - **Sin cambios en Oracle.** El curso Intermedio se crea solo al importar (`asegurar_cursos_base`).
+
+## Estado vigente (9 de octubre)
+
+- La plataforma y Blender se trabajan como un flujo único de aprendizaje: la plataforma guía el recorrido y Blender ejecuta práctica con acompañamiento.
+- El motor ya incluye etapas 3.4, 3.5 y 3.5.1 (reconocimiento de figura, instructor por checklist y revisión contra ejemplo).
+- El panel del alumno se centra en estado real de avance y práctica, sin promesas visuales de funciones no cerradas.
+- El roadmap histórico (piloto y fases previas) se mantiene en bitácora y cronología; la operación diaria vive en `KANBAN.md` y `PROYECTO.md`.
 
 ## Resumen de cambios (v3.1)
 

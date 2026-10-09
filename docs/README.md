@@ -2,7 +2,7 @@
 
 Toda la documentación del proyecto, ordenada por secciones. Cada sección dice para quién es y por dónde empezar.
 
-Actualizado: 5 de octubre de 2026 (main en `34ed82d`). Etapa vigente: **v3 «Reestructuración»**, con el piloto del 8 de octubre sobre la v2.2.
+Actualizado: 9 de octubre de 2026. Etapa vigente: **v3 «Reestructuración»** con integración plataforma + Blender en operación de desarrollo.
 
 > **¿Primera vez?** Lee el [README de la raíz](../README.md), luego la [cronología](historia/01_cronologia.md) y el [mapa del repositorio](manual-del-codigo/01_mapa_del_repositorio.md). Si vas a programar, sigue con el [manual del desarrollador](desarrollador/README.md).
 
@@ -19,7 +19,7 @@ Actualizado: 5 de octubre de 2026 (main en `34ed82d`). Etapa vigente: **v3 «Ree
 | 7 | [Herramientas de la plataforma](#7-herramientas-de-la-plataforma) | Quien quiere saber de qué está hecha | [Herramientas](herramientas-de-la-plataforma.md) |
 | 8 | [Operación y despliegue](#8-operación-y-despliegue) | Quien mantiene el servidor | [Plan de despliegue](despliegue/2026-10-05_plan_de_despliegue.md) |
 | 9 | [Dirección y decisiones](#9-dirección-y-decisiones) | Quien decide qué sigue | [Plan maestro v3](reestructuracion/00_plan_maestro.md) |
-| 10 | [Registros](#10-registros-bitácora-e-incidencias) | Quien busca qué pasó en una sesión o una falla | [Última bitácora](bitacora/2026-10-05_seguridad_rendimiento_motor.md) |
+| 10 | [Registros](#10-registros-bitácora-e-incidencias) | Quien busca qué pasó en una sesión o una falla | [Última bitácora](bitacora/2026-10-09_el_ejemplo_manda.md) |
 
 Fuera de `docs/`: [PROYECTO.md](../PROYECTO.md) (prioridades y forma de trabajo), [KANBAN.md](../KANBAN.md) (tablero generado), [CHANGELOG.md](../CHANGELOG.md) (versiones) y los README de cada componente: [frontend](../frontend/README.md), [backend](../backend/README.md), [engine](../engine/README.md), [addon](../addon/README.md), [practices](../practices/README.md), [tablero](../tablero/README.md).
 
@@ -43,6 +43,7 @@ Carpeta [`plataforma/`](plataforma/README.md): estructura fija Cursos · Mi pane
 - [Etiquetas y gráficos](plataforma/03_etiquetas_y_graficos.md)
 - [Las 20 herramientas de enseñanza](plataforma/04_herramientas_de_ensenanza.md)
 - [Panel de administración](plataforma/05_panel_de_administracion.md)
+- [Auditoría educativa (9 oct)](plataforma/08_auditoria_educativa_2026-10-09.md)
 
 ### Cursos
 
@@ -110,6 +111,7 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 ## 10. Registros: bitácora e incidencias
 
 - **Bitácora** ([`bitacora/`](bitacora/)), de la más reciente a la más antigua:
+  - 9 oct: [la plataforma maneja Blender (motor 3.4)](bitacora/2026-10-09_plataforma_y_blender_integrados.md) · [Blender como instructor (motor 3.5)](bitacora/2026-10-09_blender_como_instructor.md) · [el ejemplo manda (motor 3.5)](bitacora/2026-10-09_el_ejemplo_manda.md)
   - 4 oct: [motor v3, plan de estudios, base de datos y dominio](bitacora/2026-10-04_motor_v3_plan_de_estudios.md) · [documentación completa](bitacora/2026-10-04_documentacion_completa.md) · [motor etapa 2 y plataforma por módulos](bitacora/2026-10-04_motor_etapa_2_y_plataforma.md) · [Amatista Engine](bitacora/2026-10-04_amatista_engine.md)
   - 3 oct: [estado y reestructuración](bitacora/2026-10-03_estado_y_reestructuracion.md) · [bitácora técnica del servidor](bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md)
   - 2 oct: [cierre del día](bitacora/2026-10-02_cierre_del_dia.txt) · [ramas y cronología](bitacora/2026-10-02_ramas_y_cronologia.txt) · [estado de la plataforma unificada](bitacora/2026-10-02_estado_plataforma_unificada.txt)

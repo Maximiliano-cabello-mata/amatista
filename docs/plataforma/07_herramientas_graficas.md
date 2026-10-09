@@ -1,8 +1,8 @@
-# Herramientas gráficas: qué tenemos y qué conviene desarrollar
+# Herramientas gráficas: estado actual y catálogo educativo v2
 
-Investigación de las herramientas gráficas que mejor encajan en la PWA de Amatista, con lo que ya se hizo en la v3.2 y un orden recomendado para lo que sigue. Para quien desarrolla la interfaz.
+Investigación de las herramientas gráficas que mejor encajan en la PWA de Amatista, con lo que ya está activo y el plan inmediato para ampliar la lectura pedagógica sin romper el modo ligero.
 
-Actualizado: 4 de octubre de 2026
+Actualizado: 9 de octubre de 2026
 
 ## Índice
 
@@ -10,8 +10,9 @@ Actualizado: 4 de octubre de 2026
 2. [Lo que ya tenemos](#2-lo-que-ya-tenemos)
 3. [Nuevo en la v3.2](#3-nuevo-en-la-v32)
 4. [Opciones evaluadas](#4-opciones-evaluadas)
-5. [Recomendación y orden](#5-recomendación-y-orden)
-6. [Reglas para equipos modestos](#6-reglas-para-equipos-modestos)
+5. [Catálogo gráfico educativo v2](#5-catálogo-gráfico-educativo-v2)
+6. [Recomendación y orden](#6-recomendación-y-orden)
+7. [Reglas para equipos modestos](#7-reglas-para-equipos-modestos)
 
 ---
 
@@ -26,7 +27,7 @@ Cada herramienta se juzgó con cuatro preguntas, en este orden:
 
 ## 2. Lo que ya tenemos
 
-El detalle de cada pieza está en el compendio (`/mnt/project-files/compendio/herramientas-visuales.md`) y en [03 Etiquetas y gráficos](03_etiquetas_y_graficos.md).
+El detalle de cada pieza está en [03 Etiquetas y gráficos](03_etiquetas_y_graficos.md) y en los componentes de `frontend/src/components/graficas/`.
 
 | Familia | Piezas | Tecnología |
 |---|---|---|
@@ -74,7 +75,23 @@ Pesos aproximados (minificado y comprimido) según la documentación pública de
 | **Rough.js** | Dibujos a mano alzada | ~ 9 KB | Bueno | No: rompe la identidad low poly. |
 | **D3 completo** | Gráficas | ~ 90 KB | Bueno | No: las gráficas propias ya cubren lo necesario. |
 
-## 5. Recomendación y orden
+## 5. Catálogo gráfico educativo v2
+
+Objetivo: pasar de “progreso general” a “progreso pedagógico observable”.
+
+| Pieza v2 | Para qué | Estado |
+|---|---|---|
+| Tendencia de constancia (línea) | Ver si el ritmo semanal/subdiario mejora o cae | **Activo** (panel alumno + admin) |
+| Progreso por habilidad | Ver avance por habilidad declarada en ficha | Diseñado |
+| Dominio por objetivo | Ver qué objetivos están dominados, en riesgo o sin evidencia | Diseñado |
+| Errores recurrentes por práctica | Detectar en qué paso/aspecto se repite el fallo | Diseñado |
+| Evolución alumno ↔ grupo | Comparar ritmo individual con cohorte equivalente | Diseñado |
+
+Notas:
+- Las piezas “diseñadas” dependen de telemetría pedagógica más fina del motor y backend.
+- Todo el catálogo v2 debe mantener degradación para modo ligero y carga diferida.
+
+## 6. Recomendación y orden
 
 1. **Visor del modelo del alumno** con `<model-viewer>`: al terminar una práctica, el add-on sube una exportación glTF ligera y la plataforma la muestra girando en el mapa del módulo y en el panel. Es lo que más conecta Blender con la plataforma. Necesita: exportar en el add-on, guardar el archivo en el backend y un bloque nuevo `model_viewer`. Carga diferida y apagado en modo ligero (se muestra el render fijo).
 2. **Transiciones entre páginas** con View Transitions: la tarjeta «Blender» se expande hacia la página del curso. Sin dependencias.
@@ -84,7 +101,7 @@ Pesos aproximados (minificado y comprimido) según la documentación pública de
 
 Las tareas están en el tablero (`tablero/tareas.yml`).
 
-## 6. Reglas para equipos modestos
+## 7. Reglas para equipos modestos
 
 - Todo lo pesado se carga **solo donde se usa** (`import()` diferido), nunca en la portada.
 - `html.ligero` (lo pone `lib/rendimiento.js`) apaga: fondo low poly, sombras grandes, brillos en barras y animaciones continuas (flotar, pulso, llama, latido).
