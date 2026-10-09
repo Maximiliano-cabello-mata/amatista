@@ -4,6 +4,7 @@ import modulo2 from '../data/modulos/archivo/blender-modulo-2.json';
 import {
   estadoBlender,
   CONTROLES_BLENDER,
+  agruparPorAspecto,
   controlesDisponibles,
   instructorEnVivo,
   OPCIONES_ENFOQUE,
@@ -173,10 +174,28 @@ describe('el instructor en vivo (motor 3.5)', () => {
 
   it('ofrece solo los controles que sirven ahora', () => {
     const todos = controlesDisponibles(instructorEnVivo({ detalle })).map((c) => c.tipo);
-    expect(todos).toEqual(['comprobar', 'pista', 'hazlo_conmigo', 'guardar', 'reiniciar']);
+    expect(todos).toEqual(['comprobar', 'pista', 'hazlo_conmigo', 'guardar', 'reiniciar', 'ver_ejemplo']);
     const sinAyuda = controlesDisponibles(instructorEnVivo({ detalle: { ...detalle, pistas: 0, accion: '' } })).map((c) => c.tipo);
-    expect(sinAyuda).toEqual(['comprobar', 'guardar', 'reiniciar']);
+    expect(sinAyuda).toEqual(['comprobar', 'guardar', 'reiniciar', 'ver_ejemplo']);
     expect(controlesDisponibles(null).map((c) => c.tipo)).toEqual(['comprobar']);
+  });
+
+  it('mientras Blender muestra el ejemplo solo ofrece volver a la práctica', () => {
+    const viendo = instructorEnVivo({ detalle: { ...detalle, modo: 'EJEMPLO' } });
+    expect(viendo.viendoEjemplo).toBe(true);
+    expect(controlesDisponibles(viendo).map((c) => c.tipo)).toEqual(['volver_practica']);
+  });
+
+  it('agrupa la lista por aspecto del ejemplo', () => {
+    const grupos = agruparPorAspecto([
+      { texto: 'Rueda', ok: true, aspecto: 'La figura' },
+      { texto: '«Cromo»: metálico', ok: false, aspecto: 'Materiales' },
+      { texto: 'Chimenea', ok: true, aspecto: 'La figura' },
+      { texto: 'Sin aspecto', ok: true },
+    ]);
+    expect(grupos.map((g) => [g.nombre, g.items.length, g.ok])).toEqual([
+      ['La figura', 2, true], ['Materiales', 1, false], ['Tu práctica', 1, true],
+    ]);
   });
 
   it('empezar de nuevo pregunta antes', () => {

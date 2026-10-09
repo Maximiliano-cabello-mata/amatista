@@ -496,7 +496,14 @@ tareas:
     area: lanzamiento
     bloqueo: "Después del piloto y de T-087 (010)"
     depende_de: [T-087, T-090]
-    aceptacion: "Mi Blender entrega Amatista Motor 3.5 y la lección muestra «Ahora en Blender» con la lista «Tu figura»"
+    aceptacion: "Mi Blender entrega Amatista Motor 3.5 y la lección muestra «Ahora en Blender» con la lista «Comparado con el ejemplo»"
+  - id: T-093
+    titulo: "El ejemplo manda: cada práctica con su ejemplo resuelto en código y revisión autónoma contra él (motor, Blender «Ver el ejemplo» y lección)"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-090]
+    aceptacion: "Las 18 prácticas tienen example; el ejemplo completa su práctica en CI (practicas.py probar: 95 casos) y en Blender; la lección muestra el ejemplo con su código"
+    evidencia: "engine/amatista_engine/ejemplo/; validators/example.py; addon/amatista_blender/ejemplo.py; docs/motor/referencia/14_ejemplo_y_revision.md"
   - id: T-071
     titulo: Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)
     version: v3.4.0

@@ -63,6 +63,26 @@ El .blend está guardado y sin cambios pendientes.
 
 Se vuelve a revisar con: FILE_SAVED, OBJECT_DATA.
 
+## Ejemplo
+
+### `example.matches` — Coincide con el ejemplo
+
+Revisa la escena del alumno contra el ejemplo resuelto de la práctica («example»), aspecto por aspecto: la figura (o su silueta), el trabajo en la malla, los modificadores, los materiales, las colecciones, las luces, la cámara, la animación, el render y el archivo. Solo revisa lo que el ejemplo tiene y deja una lista con qué coincide y cómo hacer lo que falta. El cargador lo agrega al final de toda práctica con ejemplo.
+
+| Parámetro | Tipo | Qué es | Obligatorio | Por defecto |
+|---|---|---|---|---|
+| `aspects` | reference | Aspectos que revisa este paso (vacío = todos los del ejemplo) |  |  |
+| `strictness` | text | Exigencia (forma, proporcion, cercana, medidas, exacta; vacío = la del nivel) |  |  |
+| `steps` | reference | Pasos del ejemplo (de «example.steps») |  |  |
+| `check` | reference | Aspectos de la práctica (de «example.check») |  |  |
+| `parts` | reference | Piezas del modelo (de «reference») |  |  |
+| `labels` | reference | Nombres de los roles (de «roles») |  |  |
+| `flexible` | reference | Grupos con cantidad libre (de «reference») |  |  |
+| `level` | reference | Nivel de la práctica (de «level») |  |  |
+| `title` | reference | Nombre de la figura (de «example.title») |  |  |
+
+Se vuelve a revisar con: OBJECT_ADDED, OBJECT_TRANSFORM, OBJECT_MODIFIER, OBJECT_DATA, FILE_SAVED, ROLE_CHANGED.
+
 ## Escena
 
 ### `camera.active` — Cámara activa

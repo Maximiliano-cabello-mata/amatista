@@ -4,6 +4,8 @@ Pedido de Maximiliano (9 oct 2026): la plataforma y el add-on se seguían sintie
 
 Hay cuatro cambios.
 
+> **Después (mismo día):** la espada era solo un ejemplo. Lo que hacía falta era que **cualquier** práctica se revisara sola contra un ejemplo resuelto escrito en código. Eso es [14_ejemplo_y_revision.md](14_ejemplo_y_revision.md). La lista «Tu figura» pasó a ser «Comparado con el ejemplo» y abarca todos los aspectos de la práctica, no solo la figura.
+
 ## 1. Cada práctica en su propia escena
 
 **Antes:** `practicas.activar` cargaba la práctica nueva en la escena abierta y la escena solo se vaciaba la primera vez. Por eso el tren aparecía dentro de la espada, y en las pruebas aparecía hasta la mesa de la práctica archivada. La prueba que lo reproduce está en `addon/tests/en_blender.py` › `probar_escena_por_practica`.

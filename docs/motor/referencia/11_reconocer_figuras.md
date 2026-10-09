@@ -51,7 +51,7 @@ El cargador inyecta las piezas del modelo, el nivel, el título y las etiquetas 
 
 Motor 3.5: el resultado trae `details.checklist`, la lista del instructor con cada pieza del modelo («Chimenea: falta», con la primitiva que hay que agregar) y las relaciones rotas. Para figuras hechas en **una sola malla** (la espada) está `figure.silhouette`: [13_instructor_y_silueta.md](13_instructor_y_silueta.md).
 
-Usan `figure.recognize`: el tren y el muñeco de nieve (principiante, módulo 1) y el puente (intermedio, módulo 1). El resto sigue con `figure.resembles`, que no cambia.
+Usan `figure.recognize` como objetivo propio: el tren y el muñeco de nieve (principiante, módulo 1) y el puente (intermedio, módulo 1). Desde el motor 3.5, además, toda práctica cuyo ejemplo resuelto use el paso `referencia` revisa la figura con `figure.recognize` (o con la silueta si las piezas están unidas) dentro de «Tu práctica coincide con el ejemplo»: la aldea, la nave, el diorama… Ver [14_ejemplo_y_revision.md](14_ejemplo_y_revision.md). `figure.resembles` sigue disponible, aunque ninguna práctica del plan lo usa ya.
 
 ## Pruebas
 

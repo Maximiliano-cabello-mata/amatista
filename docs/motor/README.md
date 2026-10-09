@@ -6,7 +6,7 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 |---|---|---|
 | Motor | [`engine/`](../../engine/) | Python puro, sin `bpy`. Lee una práctica declarativa (`amatista.practice/1` y `/2`), evalúa una foto de la escena y decide progreso, pistas y autonomía. |
 | Add-on | [`addon/`](../../addon/) | Extensión de Blender 4.2+ («Amatista»). Captura la escena, la evalúa con el motor (copia incluida en el `.zip`) y habla con la API. Modos **Alumno** y **Desarrollador** (Amatista Author). |
-| Prácticas | [`practices/`](../../practices/) | Las 6 prácticas del plan de estudios (`amatista.practice/2`) con sus casos de prueba, y el mapa de cursos [`blender/cursos.json`](../../practices/blender/cursos.json). Las de la v2 (mesa, podio) están en `archivo/v2/`. |
+| Prácticas | [`practices/`](../../practices/) | Las 18 prácticas del plan de estudios (`amatista.practice/2`), cada una con su ejemplo resuelto y sus casos de prueba, y el mapa de cursos [`blender/cursos.json`](../../practices/blender/cursos.json). Las de la v2 (mesa, podio) están en `archivo/v2/`. |
 | Plataforma | `backend/api/addon.py`, `frontend/src/blender/`, `frontend/src/components/modulo/` | API `/api/addon/v1`, la práctica al final de cada módulo (bloque `blender_practice` con la preparación de Blender integrada), **Mi Blender** en el menú de la cuenta y **Prácticas de Blender** en el panel admin. |
 | Oracle | `backend/sql/007_motor_practicas.sql`, `010_enlace_blender.sql` | `ADDON_VINCULOS`, `PRACTICAS`, `PRACTICA_VERSIONES`, `PROGRESO_PRACTICAS`; desde el motor 3.4, `ADDON_ENLACES` y `ADDON_AJUSTES` (enlace en vivo). Aditivos e idempotentes. |
 
@@ -20,6 +20,7 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 | 3.2 y 3.3 · Mundos y figuras con sentido | Amatista Motor 3.2 (temática por módulo en el add-on) y 3.3: modelo de referencia por práctica (imagen y plano), `figure.resembles` con medidas aproximadas, `spatial.on_top` y `dimension.approx`. | [referencia/10_modelo_de_referencia.md](referencia/10_modelo_de_referencia.md) |
 | 3.4 · La plataforma maneja Blender | `figure.recognize`: el motor reconoce la figura sin roles, revisa que tenga sentido y exige según el nivel. Enlace en vivo (Blender late, la plataforma le abre prácticas y decide cómo se ve), modo enfocado y panel «Tus herramientas» con «¿Cómo se usa?». Oracle 010. | [referencia/11_reconocer_figuras.md](referencia/11_reconocer_figuras.md), [referencia/12_plataforma_y_blender.md](referencia/12_plataforma_y_blender.md) |
 | 3.5 · Blender como instructor | Cada práctica en su propia escena (abrir otra ya no arrastra lo de la anterior). `figure.silhouette`: la silueta de una figura hecha en una sola malla (la espada), parte por parte, con lo que falta y su tecla. Lista «Tu figura» en Blender y en la lección, y la plataforma maneja la práctica (comprobar, pista, «Hazlo conmigo», guardar, empezar de nuevo). Sin cambios en Oracle. | [referencia/13_instructor_y_silueta.md](referencia/13_instructor_y_silueta.md) |
+| 3.5 · El ejemplo manda | Cada práctica trae su **ejemplo resuelto en código**. El motor arma con él la escena esperada y revisa sola la del alumno aspecto por aspecto (figura, malla, modificadores, materiales, colecciones, luces, cámara, animación, render y archivo), con exigencia según el nivel: objetivo `example.matches`, que se agrega a toda práctica. «Ver el ejemplo» lo arma en Blender en su propia escena, y la lección lo muestra con su código. Sin cambios en Oracle. | [referencia/14_ejemplo_y_revision.md](referencia/14_ejemplo_y_revision.md) |
 
 ## Referencia (estado actual)
 
@@ -31,11 +32,12 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 6. [Modo desarrollador](referencia/06_modo_desarrollador.md): crear, probar y subir una práctica nueva; publicarla.
 7. [Guía paso a paso y acompañamiento](referencia/07_guia_y_acompanamiento.md): entrenadores, señales en la escena, «Hazlo conmigo», acompañante y preferencias (etapa 2).
 8. [Prácticas v3 y herramientas de autor](referencia/08_practicas_v3_y_herramientas.md): `amatista.practice/2` (píldoras, vigilantes, escena de inicio, curso), `cursos.json`, `pruebas.json` y `practicas.py` (motor v3).
-9. [Catálogo de validadores](referencia/09_validadores.md): los 39, con sus parámetros (generado).
+9. [Catálogo de validadores](referencia/09_validadores.md): los 41, con sus parámetros (generado).
 10. [Modelo de referencia](referencia/10_modelo_de_referencia.md): la figura terminada, su imagen y su plano, y cómo `figure.resembles` califica figuras con sentido (motor 3.3).
 11. [Reconocer figuras](referencia/11_reconocer_figuras.md): `figure.recognize`, roles deducidos por la forma, relaciones con sentido y exigencia por nivel (motor 3.4).
 12. [La plataforma maneja Blender](referencia/12_plataforma_y_blender.md): enlace en vivo, órdenes y ajustes desde «Mi Blender», modo enfocado y «Tus herramientas» (motor 3.4).
 13. [Blender como instructor](referencia/13_instructor_y_silueta.md): una escena por práctica, `figure.silhouette`, la lista «Tu figura» y la plataforma que maneja la práctica (motor 3.5).
+14. [El ejemplo manda](referencia/14_ejemplo_y_revision.md): el ejemplo resuelto en código de cada práctica y la revisión autónoma contra él, en el motor, en Blender y en la plataforma (motor 3.5).
 
 Especificaciones originales (3 de octubre de 2026): [`especificaciones/`](especificaciones/) (concepto del motor, Motor de Desarrollo v0.1 y el `ascii_check.py` original).
 

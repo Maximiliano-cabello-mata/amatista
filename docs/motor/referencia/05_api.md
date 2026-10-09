@@ -34,7 +34,7 @@ El paquete descargado con sesión trae un vínculo ya confirmado (7 días, un us
 | Método y ruta | Quién | Qué hace |
 |---|---|---|
 | `GET /practicas` | opcional | Catálogo. Sin sesión: solo publicadas. Alumnos: solo publicadas, en su versión publicada, con `mi_progreso`. Equipo: también borradores. |
-| `GET /practicas/{id}` | opcional (sin sesión, solo publicadas) | Definición compilada (`?version=` para el equipo). |
+| `GET /practicas/{id}` | opcional (sin sesión, solo publicadas) | Definición compilada (`?version=` para el equipo). Desde el motor 3.5 trae `ejemplo`: `{titulo, descripcion, pasos, revisa, codigo}` (los pasos en palabras, los aspectos que se comparan y el código del ejemplo). |
 | `POST /practicas` `{definicion, curso_id?, leccion_id?, nota?, version_addon?, version_blender?}` | profesor/admin | Compila con el motor y crea la versión siguiente en `PRACTICA_VERSIONES`. Si la huella es igual a la última, no crea nada (`sin_cambios: true`). **Nunca publica.** |
 | `GET /practicas/{id}/versiones` | profesor/admin | Historial: versión, nota, autor, add-on y Blender con que se subió, cuál está publicada. |
 | `POST /practicas/{id}/publicar` `{version?}` | admin | Publica la última (o la indicada). |
@@ -63,6 +63,8 @@ Las URL que van dentro del paquete salen de `AMATISTA_URL_API` y `AMATISTA_URL_P
 ## Enlace en vivo (motor 3.4, script 010)
 
 Motor 3.5: el latido acepta `detalle` (paso, mensaje del instructor, lista de la figura, modo, pistas y «Hazlo conmigo», con límites de tamaño) y `GET /enlace` lo devuelve en cada Blender en línea. `POST /ordenes` acepta además `comprobar`, `pista`, `hazlo_conmigo`, `guardar` y `reiniciar` (este último con `confirmar: true`); con `practica_id`, Blender solo la cumple si sigue en esa práctica.
+
+Motor 3.5 (el ejemplo manda, [14](14_ejemplo_y_revision.md)): `POST /ordenes` acepta `ver_ejemplo` (Blender arma el ejemplo resuelto en su propia escena) y `volver_practica` (vuelve a la escena del alumno). Cada punto de la lista del `detalle` puede llevar `aspecto` (hasta 40 caracteres: `figura`, `materiales`, `animacion`…), y `detalle.modo` es `EJEMPLO` mientras Blender muestra el ejemplo.
 
 Código: [`backend/api/enlace.py`](../../../backend/api/enlace.py). Pruebas: `backend/tests/test_enlace.py`. Detalle en [12_plataforma_y_blender.md](12_plataforma_y_blender.md) y [13_instructor_y_silueta.md](13_instructor_y_silueta.md).
 

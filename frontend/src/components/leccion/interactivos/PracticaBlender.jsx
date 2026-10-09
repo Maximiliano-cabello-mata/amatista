@@ -62,34 +62,77 @@ function Pasos({ pasos }) {
 // Motor 3.4: la plataforma ve el Blender del alumno en vivo y le puede pedir
 // que enfoque (solo las herramientas de la práctica) o muestre todo.
 // Motor 3.5: además muestra lo que dice el instructor en Blender (paso, mensaje y
-// la lista de la figura) y maneja la práctica: comprobar, pista, «Hazlo conmigo»,
-// guardar y empezar de nuevo.
+// la lista comparada con el ejemplo resuelto) y maneja la práctica: comprobar,
+// pista, «Hazlo conmigo», guardar, empezar de nuevo y ver el ejemplo en Blender.
 function ListaFigura({ instructor }) {
   if (!instructor.lista.length) return null;
   const abiertas = instructor.lista.filter((i) => i.consejo).slice(0, 2);
   return (
     <div className="mt-3">
       <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">
-        Tu figura · {instructor.hechas} de {instructor.lista.length} partes
+        Comparado con el ejemplo · {instructor.hechas} de {instructor.lista.length}
       </p>
-      <ul className="mt-1.5 flex flex-wrap gap-1.5">
-        {instructor.lista.map((item) => {
-          const estilo = ICONOS_LISTA[item.estado] ?? { icono: '!', clase: 'text-rose-300' };
-          return (
-            <li key={item.texto} className="corte-poly-sm flex items-center gap-1.5 bg-base/70 px-2 py-1 text-xs">
-              <span className={`font-bold ${estilo.clase}`} aria-hidden="true">{estilo.icono}</span>
-              <span className="text-texto/90">{item.texto}</span>
-              <span className="sr-only">: {item.estado}</span>
-            </li>
-          );
-        })}
-      </ul>
+      {instructor.aspectos.map((grupo) => (
+        <div key={grupo.nombre} className="mt-1.5">
+          <p className={`text-[11px] font-bold ${grupo.ok ? 'text-emerald-300/80' : 'text-white/70'}`}>{grupo.nombre}</p>
+          <ul className="mt-1 flex flex-wrap gap-1.5">
+            {grupo.items.map((item) => {
+              const estilo = ICONOS_LISTA[item.estado] ?? { icono: '!', clase: 'text-rose-300' };
+              return (
+                <li key={item.texto} className="corte-poly-sm flex items-center gap-1.5 bg-base/70 px-2 py-1 text-xs">
+                  <span className={`font-bold ${estilo.clase}`} aria-hidden="true">{estilo.icono}</span>
+                  <span className="text-texto/90">{item.texto}</span>
+                  <span className="sr-only">: {item.estado}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
       {abiertas.map((item) => (
         <p key={item.texto} className="mt-2 text-sm leading-relaxed text-texto/80">
           <strong className="text-white">{item.texto}:</strong> {item.consejo}
         </p>
       ))}
     </div>
+  );
+}
+
+// Motor 3.5: el ejemplo resuelto de la práctica (lo que espera, paso a paso y en código) y qué revisa Amatista.
+function EjemploResuelto({ ejemplo }) {
+  const [codigo, setCodigo] = useState(false);
+  if (!ejemplo?.pasos?.length) return null;
+  return (
+    <details className="corte-poly-sm mt-4 border border-white/10 bg-base/60 p-3">
+      <summary className="cursor-pointer font-bold text-white">El ejemplo resuelto: {ejemplo.titulo}</summary>
+      {ejemplo.descripcion && <p className="mt-2 text-sm leading-relaxed text-texto/85">{ejemplo.descripcion}</p>}
+      <ol className="mt-2 grid list-decimal gap-1 pl-5 text-sm leading-relaxed text-texto/85">
+        {ejemplo.pasos.map((paso) => (
+          <li key={paso}>{paso}</li>
+        ))}
+      </ol>
+      {ejemplo.revisa?.length > 0 && (
+        <p className="mt-3 text-xs text-white/60">
+          Amatista compara tu escena con este ejemplo en: <strong className="text-white/85">{ejemplo.revisa.join(' · ')}</strong>. Los
+          nombres, el lugar, el tamaño y los colores son tuyos.
+        </p>
+      )}
+      <div className="mt-3 flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          onClick={() => setCodigo((v) => !v)}
+          className="font-mono text-[11px] uppercase tracking-widest text-neon hover:underline"
+        >
+          {codigo ? 'Ocultar el código' : 'Ver en código'}
+        </button>
+        <span className="text-xs text-white/50">Con tu Blender en esta práctica, «Ver el ejemplo» lo arma ahí.</span>
+      </div>
+      {codigo && (
+        <pre className="mt-2 max-h-72 overflow-auto bg-black/40 p-3 font-mono text-[11px] leading-snug text-texto/80">
+          {JSON.stringify(ejemplo.codigo, null, 1)}
+        </pre>
+      )}
+    </details>
   );
 }
 
@@ -105,6 +148,9 @@ function InstructorEnVivo({ instructor, ordenar, enviando }) {
       <p className="font-mono text-[10px] uppercase tracking-widest text-neon">
         Ahora en Blender{instructor.paso ? ` · ${instructor.paso}` : ''}{instructor.modo ? ` · ${instructor.modo}` : ''}
       </p>
+      {instructor.viendoEjemplo && (
+        <p className="mt-1 text-sm text-amber-200">Tu Blender muestra el ejemplo resuelto en su propia escena: nada de ahí cuenta para tu práctica.</p>
+      )}
       {instructor.titulo && <p className="mt-1 font-bold text-white">{instructor.titulo}</p>}
       {instructor.mensaje && <p className="mt-1 text-sm leading-relaxed text-texto/85">{instructor.mensaje}</p>}
       <ListaFigura instructor={instructor} />
@@ -284,6 +330,7 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
       )}
 
       <ModeloReferencia practicaId={bloque.practica} />
+      <EjemploResuelto ejemplo={practica?.ejemplo} />
 
       <div className="corte-poly-sm mt-4 flex gap-3 border border-neon/20 bg-neon/5 p-3 text-sm text-texto/80">
         <IconoGuia className="mt-0.5 h-4 w-4 shrink-0 text-neon" />

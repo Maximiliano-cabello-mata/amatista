@@ -147,7 +147,10 @@ export const CONTROLES_BLENDER = [
     texto: 'Empezar de nuevo',
     confirmar: '¿Empezar la práctica de nuevo? Lo que hiciste no se borra: queda en una escena «(anterior)» de tu archivo.',
   },
+  { tipo: 'ver_ejemplo', texto: 'Ver el ejemplo' },
 ];
+// Mientras Blender muestra el ejemplo resuelto solo se puede volver a la práctica.
+export const CONTROL_VOLVER = { tipo: 'volver_practica', texto: 'Volver a mi práctica' };
 
 const MODOS = { OBJECT: 'Modo Objeto', EDIT_MESH: 'Modo Edición', SCULPT: 'Esculpir', POSE: 'Pose' };
 
@@ -163,15 +166,34 @@ export function instructorEnVivo(blender) {
     lista,
     hechas: lista.filter((i) => i.ok).length,
     modo: MODOS[d.modo] ?? '',
+    viendoEjemplo: d.modo === 'EJEMPLO',
+    aspectos: agruparPorAspecto(lista),
     pistas: d.pistas ?? 0,
     accion: d.accion || '',
     completada: Boolean(d.completada),
   };
 }
 
+// La lista del instructor agrupada por aspecto del ejemplo (la figura, materiales, luces…), en orden.
+export function agruparPorAspecto(lista) {
+  const grupos = [];
+  for (const item of lista ?? []) {
+    const nombre = item.aspecto || 'Tu práctica';
+    let grupo = grupos.find((g) => g.nombre === nombre);
+    if (!grupo) {
+      grupo = { nombre, items: [], ok: true };
+      grupos.push(grupo);
+    }
+    grupo.items.push(item);
+    grupo.ok = grupo.ok && Boolean(item.ok);
+  }
+  return grupos;
+}
+
 // Qué controles tienen sentido ahora (sin pistas no se ofrece «Pista», sin acción no hay «Hazlo conmigo»).
 export function controlesDisponibles(instructor) {
   if (!instructor) return CONTROLES_BLENDER.filter((c) => c.tipo === 'comprobar');
+  if (instructor.viendoEjemplo) return [CONTROL_VOLVER];
   return CONTROLES_BLENDER.filter((c) => {
     if (c.tipo === 'pista') return instructor.pistas > 0 && !instructor.completada;
     if (c.tipo === 'hazlo_conmigo') return Boolean(instructor.accion) && !instructor.completada;
