@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../../auth/contexto';
-import { estadoBlender, pasosConEstado, textoAutonomia } from '../../../blender/logica';
+import { controlesDisponibles, estadoBlender, instructorEnVivo, pasosConEstado, textoAutonomia } from '../../../blender/logica';
 import PrepararBlender from '../../../blender/PrepararBlender';
 import { IconoGuia } from '../../etiquetas/IconosEtiqueta';
 import { rutaEntrar, rutas } from '../../../rutas';
@@ -12,6 +12,13 @@ import ModeloReferencia from './ModeloReferencia';
 
 // Cada cuánto se pregunta al servidor por el avance mientras la lección está abierta.
 const INTERVALO_MS = 6000;
+// Con Blender en esta práctica, el instructor en vivo se refresca más seguido (el add-on late cada 5 s).
+const INTERVALO_VIVO_MS = 3000;
+
+const ICONOS_LISTA = {
+  Bien: { icono: '✓', clase: 'text-emerald-300' },
+  Detalle: { icono: '✦', clase: 'text-amber-300' },
+};
 
 const ICONOS_PASO = {
   completado: { icono: '✓', clase: 'bg-emerald-400 text-base' },
@@ -54,40 +61,112 @@ function Pasos({ pasos }) {
 // la escena). Se resuelve al completarla.
 // Motor 3.4: la plataforma ve el Blender del alumno en vivo y le puede pedir
 // que enfoque (solo las herramientas de la práctica) o muestre todo.
+// Motor 3.5: además muestra lo que dice el instructor en Blender (paso, mensaje y
+// la lista de la figura) y maneja la práctica: comprobar, pista, «Hazlo conmigo»,
+// guardar y empezar de nuevo.
+function ListaFigura({ instructor }) {
+  if (!instructor.lista.length) return null;
+  const abiertas = instructor.lista.filter((i) => i.consejo).slice(0, 2);
+  return (
+    <div className="mt-3">
+      <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+        Tu figura · {instructor.hechas} de {instructor.lista.length} partes
+      </p>
+      <ul className="mt-1.5 flex flex-wrap gap-1.5">
+        {instructor.lista.map((item) => {
+          const estilo = ICONOS_LISTA[item.estado] ?? { icono: '!', clase: 'text-rose-300' };
+          return (
+            <li key={item.texto} className="corte-poly-sm flex items-center gap-1.5 bg-base/70 px-2 py-1 text-xs">
+              <span className={`font-bold ${estilo.clase}`} aria-hidden="true">{estilo.icono}</span>
+              <span className="text-texto/90">{item.texto}</span>
+              <span className="sr-only">: {item.estado}</span>
+            </li>
+          );
+        })}
+      </ul>
+      {abiertas.map((item) => (
+        <p key={item.texto} className="mt-2 text-sm leading-relaxed text-texto/80">
+          <strong className="text-white">{item.texto}:</strong> {item.consejo}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+// Motor 3.5: lo que dice el instructor en Blender, aquí mismo, y los botones para manejar la práctica.
+function InstructorEnVivo({ instructor, ordenar, enviando }) {
+  const controles = controlesDisponibles(instructor);
+  const pedir = (control) => {
+    if (control.confirmar && !window.confirm(control.confirmar)) return;
+    ordenar(control.tipo, { confirmar: Boolean(control.confirmar) });
+  };
+  return (
+    <div className="corte-poly-sm mt-3 border border-neon/25 bg-neon/5 p-3">
+      <p className="font-mono text-[10px] uppercase tracking-widest text-neon">
+        Ahora en Blender{instructor.paso ? ` · ${instructor.paso}` : ''}{instructor.modo ? ` · ${instructor.modo}` : ''}
+      </p>
+      {instructor.titulo && <p className="mt-1 font-bold text-white">{instructor.titulo}</p>}
+      {instructor.mensaje && <p className="mt-1 text-sm leading-relaxed text-texto/85">{instructor.mensaje}</p>}
+      <ListaFigura instructor={instructor} />
+      <div className="mt-3 flex flex-wrap gap-2">
+        {controles.map((control) => (
+          <button
+            key={control.tipo}
+            type="button"
+            disabled={enviando}
+            onClick={() => pedir(control)}
+            className="corte-poly-sm border border-white/15 bg-base/70 px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest text-texto hover:border-neon/60 hover:text-neon disabled:opacity-50"
+          >
+            {control.texto}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function BlenderEnVivo({ enlace, token, practicaId }) {
   const [enviando, setEnviando] = useState(false);
+  const [aviso, setAviso] = useState('');
   const { estado, blender, texto } = estadoBlender(enlace, practicaId);
   if (estado === 'sin_enlace') return null;
-  const ordenar = async (tipo) => {
+  const ordenar = async (tipo, opciones = {}) => {
     setEnviando(true);
-    await ordenarBlender(token, tipo, tipo === 'abrir_practica' ? practicaId : undefined);
+    const r = await ordenarBlender(token, tipo, tipo === 'abrir_practica' || estado === 'aqui' ? practicaId : undefined, opciones);
     setEnviando(false);
+    setAviso(r.ok && r.datos?.entregada ? 'Enviado a tu Blender.' : r.ok ? 'Tu Blender no respondió: ¿sigue abierto?' : r.error);
+    setTimeout(() => setAviso(''), 4000);
   };
   const color = estado === 'cerrado' ? 'bg-white/30' : 'bg-emerald-400 animar-pulso';
+  const instructor = estado === 'aqui' ? instructorEnVivo(blender) : null;
   return (
-    <div className="corte-poly-sm mt-4 flex flex-wrap items-center gap-3 border border-white/10 bg-base/60 px-3 py-2 text-sm">
-      <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${color}`} aria-hidden="true" />
-      <span className="text-texto/85">{texto}</span>
-      {estado === 'aqui' && (
-        <button
-          type="button"
-          disabled={enviando}
-          onClick={() => ordenar(blender.enfocado ? 'ver_todo' : 'enfocar')}
-          className="ml-auto font-mono text-[11px] uppercase tracking-widest text-neon hover:underline disabled:opacity-50"
-        >
-          {blender.enfocado ? 'Ver todo Blender' : 'Enfocar Blender'}
-        </button>
-      )}
-      {estado === 'otra' && (
-        <button
-          type="button"
-          disabled={enviando}
-          onClick={() => ordenar('abrir_practica')}
-          className="ml-auto font-mono text-[11px] uppercase tracking-widest text-neon hover:underline disabled:opacity-50"
-        >
-          Cambiar a esta práctica
-        </button>
-      )}
+    <div className="mt-4">
+      <div className="corte-poly-sm flex flex-wrap items-center gap-3 border border-white/10 bg-base/60 px-3 py-2 text-sm">
+        <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${color}`} aria-hidden="true" />
+        <span className="text-texto/85">{texto}</span>
+        {aviso && <span className="font-mono text-[11px] text-neon" role="status">{aviso}</span>}
+        {estado === 'aqui' && (
+          <button
+            type="button"
+            disabled={enviando}
+            onClick={() => ordenar(blender.enfocado ? 'ver_todo' : 'enfocar')}
+            className="ml-auto font-mono text-[11px] uppercase tracking-widest text-neon hover:underline disabled:opacity-50"
+          >
+            {blender.enfocado ? 'Ver todo Blender' : 'Enfocar Blender'}
+          </button>
+        )}
+        {estado === 'otra' && (
+          <button
+            type="button"
+            disabled={enviando}
+            onClick={() => ordenar('abrir_practica')}
+            className="ml-auto font-mono text-[11px] uppercase tracking-widest text-neon hover:underline disabled:opacity-50"
+          >
+            Cambiar a esta práctica
+          </button>
+        )}
+      </div>
+      {instructor && <InstructorEnVivo instructor={instructor} ordenar={ordenar} enviando={enviando} />}
     </div>
   );
 }
@@ -138,6 +217,7 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
   }, [completa]);
 
   // Blender en vivo: si está abierto, en qué práctica y paso va (el add-on late cada 5 s).
+  const enVivoAqui = estadoBlender(enlace, bloque.practica).estado === 'aqui';
   useEffect(() => {
     if (!token) return undefined;
     let vigente = true;
@@ -147,12 +227,12 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
       if (vigente && r.ok) setEnlace(r.datos);
     };
     consultar();
-    const temporizador = setInterval(consultar, INTERVALO_MS);
+    const temporizador = setInterval(consultar, enVivoAqui ? INTERVALO_VIVO_MS : INTERVALO_MS);
     return () => {
       vigente = false;
       clearInterval(temporizador);
     };
-  }, [token]);
+  }, [token, enVivoAqui]);
 
   const abrir = async () => {
     setAbriendo(true);

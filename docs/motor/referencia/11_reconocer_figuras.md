@@ -49,6 +49,8 @@ El cargador inyecta las piezas del modelo, el nivel, el título y las etiquetas 
 
 `EvaluationReport.inferred_roles` lleva lo deducido; el add-on lo muestra en el panel de roles («Rueda (por su forma)», «Adorno»).
 
+Motor 3.5: el resultado trae `details.checklist`, la lista del instructor con cada pieza del modelo («Chimenea: falta», con la primitiva que hay que agregar) y las relaciones rotas. Para figuras hechas en **una sola malla** (la espada) está `figure.silhouette`: [13_instructor_y_silueta.md](13_instructor_y_silueta.md).
+
 Usan `figure.recognize`: el tren y el muñeco de nieve (principiante, módulo 1) y el puente (intermedio, módulo 1). El resto sigue con `figure.resembles`, que no cambia.
 
 ## Pruebas

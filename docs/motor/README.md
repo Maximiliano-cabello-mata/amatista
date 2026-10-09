@@ -19,6 +19,7 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 | 3 · El motor que enseña | Motor v3 y add-on 3.0: pestañas Aprender · Practicar · Mi curso, píldoras de teoría con repaso espaciado, vigilantes que pausan el progreso, escenas de inicio, plan de estudios de 2 cursos y 6 prácticas, y herramientas de autor (plantillas, casos de prueba, `practicas.py`). | [etapas/etapa-3.md](etapas/etapa-3.md) |
 | 3.2 y 3.3 · Mundos y figuras con sentido | Amatista Motor 3.2 (temática por módulo en el add-on) y 3.3: modelo de referencia por práctica (imagen y plano), `figure.resembles` con medidas aproximadas, `spatial.on_top` y `dimension.approx`. | [referencia/10_modelo_de_referencia.md](referencia/10_modelo_de_referencia.md) |
 | 3.4 · La plataforma maneja Blender | `figure.recognize`: el motor reconoce la figura sin roles, revisa que tenga sentido y exige según el nivel. Enlace en vivo (Blender late, la plataforma le abre prácticas y decide cómo se ve), modo enfocado y panel «Tus herramientas» con «¿Cómo se usa?». Oracle 010. | [referencia/11_reconocer_figuras.md](referencia/11_reconocer_figuras.md), [referencia/12_plataforma_y_blender.md](referencia/12_plataforma_y_blender.md) |
+| 3.5 · Blender como instructor | Cada práctica en su propia escena (abrir otra ya no arrastra lo de la anterior). `figure.silhouette`: la silueta de una figura hecha en una sola malla (la espada), parte por parte, con lo que falta y su tecla. Lista «Tu figura» en Blender y en la lección, y la plataforma maneja la práctica (comprobar, pista, «Hazlo conmigo», guardar, empezar de nuevo). Sin cambios en Oracle. | [referencia/13_instructor_y_silueta.md](referencia/13_instructor_y_silueta.md) |
 
 ## Referencia (estado actual)
 
@@ -34,6 +35,7 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 10. [Modelo de referencia](referencia/10_modelo_de_referencia.md): la figura terminada, su imagen y su plano, y cómo `figure.resembles` califica figuras con sentido (motor 3.3).
 11. [Reconocer figuras](referencia/11_reconocer_figuras.md): `figure.recognize`, roles deducidos por la forma, relaciones con sentido y exigencia por nivel (motor 3.4).
 12. [La plataforma maneja Blender](referencia/12_plataforma_y_blender.md): enlace en vivo, órdenes y ajustes desde «Mi Blender», modo enfocado y «Tus herramientas» (motor 3.4).
+13. [Blender como instructor](referencia/13_instructor_y_silueta.md): una escena por práctica, `figure.silhouette`, la lista «Tu figura» y la plataforma que maneja la práctica (motor 3.5).
 
 Especificaciones originales (3 de octubre de 2026): [`especificaciones/`](especificaciones/) (concepto del motor, Motor de Desarrollo v0.1 y el `ascii_check.py` original).
 

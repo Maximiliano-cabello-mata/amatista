@@ -3,6 +3,9 @@ import mesa from '../../../practices/archivo/v2/mesa.json';
 import modulo2 from '../data/modulos/archivo/blender-modulo-2.json';
 import {
   estadoBlender,
+  CONTROLES_BLENDER,
+  controlesDisponibles,
+  instructorEnVivo,
   OPCIONES_ENFOQUE,
   blenderCompatible,
   compararVersiones,
@@ -112,16 +115,17 @@ describe('primera práctica en el módulo 2', () => {
 });
 
 describe('Amatista Motor', () => {
-  it('se llama «Amatista Motor 3.4» y coincide con el manifiesto del add-on', async () => {
+  it('se llama «Amatista Motor 3.5» y coincide con el manifiesto del add-on', async () => {
     const { readFileSync } = await import('node:fs');
     const manifiesto = readFileSync(new URL('../../../addon/amatista_blender/blender_manifest.toml', import.meta.url), 'utf8');
     expect(manifiesto).toContain(`version = "${MOTOR.version}"`);
     expect(manifiesto).toContain(`name = "${MOTOR.nombre}"`);
-    expect(NOMBRE_MOTOR).toBe('Amatista Motor 3.4');
+    expect(NOMBRE_MOTOR).toBe('Amatista Motor 3.5');
   });
 
   it('avisa si el servidor entrega una versión vieja', () => {
-    expect(versionDelServidor({ version_addon: '3.4.0' })).toEqual({ conocida: true, version: '3.4.0', alDia: true });
+    expect(versionDelServidor({ version_addon: '3.5.0' })).toEqual({ conocida: true, version: '3.5.0', alDia: true });
+    expect(versionDelServidor({ version_addon: '3.4.0' }).alDia).toBe(false);
     expect(versionDelServidor({ version_addon: '3.0.0' }).alDia).toBe(false);
     expect(versionDelServidor(null).conocida).toBe(false);
   });
@@ -148,5 +152,34 @@ describe('enlace en vivo con Blender (motor 3.4)', () => {
 
   it('las opciones de enfoque son las que acepta el servidor', () => {
     expect(OPCIONES_ENFOQUE.map((o) => o.id)).toEqual(['auto', 'siempre', 'nunca']);
+  });
+});
+
+describe('el instructor en vivo (motor 3.5)', () => {
+  const detalle = {
+    titulo: 'Forja la silueta', mensaje: 'Falta la parte «Guarda»', numero: 3, total: 5, modo: 'EDIT_MESH', pistas: 1,
+    accion: 'Entrar a Edición conmigo',
+    lista: [{ texto: 'Mango', ok: true, estado: 'Bien' }, { texto: 'Guarda', ok: false, estado: 'Falta', consejo: 'Ctrl + R…' }],
+  };
+
+  it('resume lo que muestra Blender', () => {
+    const i = instructorEnVivo({ detalle });
+    expect(i.paso).toBe('Paso 3 de 5');
+    expect(i.modo).toBe('Modo Edición');
+    expect(i.hechas).toBe(1);
+    expect(instructorEnVivo({ detalle: null })).toBeNull();
+    expect(instructorEnVivo(null)).toBeNull();
+  });
+
+  it('ofrece solo los controles que sirven ahora', () => {
+    const todos = controlesDisponibles(instructorEnVivo({ detalle })).map((c) => c.tipo);
+    expect(todos).toEqual(['comprobar', 'pista', 'hazlo_conmigo', 'guardar', 'reiniciar']);
+    const sinAyuda = controlesDisponibles(instructorEnVivo({ detalle: { ...detalle, pistas: 0, accion: '' } })).map((c) => c.tipo);
+    expect(sinAyuda).toEqual(['comprobar', 'guardar', 'reiniciar']);
+    expect(controlesDisponibles(null).map((c) => c.tipo)).toEqual(['comprobar']);
+  });
+
+  it('empezar de nuevo pregunta antes', () => {
+    expect(CONTROLES_BLENDER.find((c) => c.tipo === 'reiniciar').confirmar).toContain('no se borra');
   });
 });

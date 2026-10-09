@@ -62,7 +62,9 @@ Las URL que van dentro del paquete salen de `AMATISTA_URL_API` y `AMATISTA_URL_P
 
 ## Enlace en vivo (motor 3.4, script 010)
 
-Código: [`backend/api/enlace.py`](../../../backend/api/enlace.py). Pruebas: `backend/tests/test_enlace.py`. Detalle en [12_plataforma_y_blender.md](12_plataforma_y_blender.md).
+Motor 3.5: el latido acepta `detalle` (paso, mensaje del instructor, lista de la figura, modo, pistas y «Hazlo conmigo», con límites de tamaño) y `GET /enlace` lo devuelve en cada Blender en línea. `POST /ordenes` acepta además `comprobar`, `pista`, `hazlo_conmigo`, `guardar` y `reiniciar` (este último con `confirmar: true`); con `practica_id`, Blender solo la cumple si sigue en esa práctica.
+
+Código: [`backend/api/enlace.py`](../../../backend/api/enlace.py). Pruebas: `backend/tests/test_enlace.py`. Detalle en [12_plataforma_y_blender.md](12_plataforma_y_blender.md) y [13_instructor_y_silueta.md](13_instructor_y_silueta.md).
 
 | Método y ruta | Quién | Qué hace |
 |---|---|---|

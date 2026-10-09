@@ -466,6 +466,37 @@ tareas:
     bloqueo: "Después del piloto del 8 de octubre y de T-078 (007, 008 y 009)"
     depende_de: [T-078, T-085]
     aceptacion: "docs/despliegue/2026-10-05_plan_de_despliegue.md fase 1: 20 tablas en diagnostico_oracle.py, Mi Blender entrega Amatista Motor 3.4 y la lección muestra «Tu Blender está en esta práctica»"
+  - id: T-088
+    titulo: "Cada práctica en su propia escena de Blender: abrir otra ya no arrastra lo de la anterior y «De nuevo» empieza limpio"
+    version: v3.3.0
+    area: blender
+    depende_de: [T-085]
+    evidencia: "addon/amatista_blender/practicas.py (_escena_para, reiniciar); addon/tests/en_blender.py (probar_escena_por_practica)"
+  - id: T-089
+    titulo: "Motor 3.5: la silueta de una figura hecha en una sola malla (figure.silhouette) y la espada con propósito"
+    version: v3.3.0
+    area: blender
+    depende_de: [T-084]
+    evidencia: "engine/amatista_engine/figures/silueta.py; engine/tests/test_silueta.py; practices/blender/principiante/m2-espada (versión 3, 8 casos)"
+  - id: T-090
+    titulo: "Blender como instructor: lista «Tu figura» en Blender y en la lección, y la plataforma maneja la práctica (comprobar, pista, Hazlo conmigo, guardar, empezar de nuevo)"
+    version: v3.3.0
+    area: pwa
+    depende_de: [T-085]
+    evidencia: "backend/api/enlace.py (detalle y órdenes); frontend PracticaBlender.jsx (Ahora en Blender); docs/motor/referencia/13_instructor_y_silueta.md"
+  - id: T-091
+    titulo: "La nave y las demás prácticas con el mismo trato: propósito claro, sin roles a mano y lista del instructor"
+    version: v3.4.0
+    area: contenido
+    depende_de: [T-089]
+    aceptacion: "La nave (bp.m3) reconoce cabina, alas y motores con la silueta o figure.recognize (con el Espejo aplicado a la medida); revisar en verde"
+  - id: T-092
+    titulo: "Entregar Amatista Motor 3.5 en producción (reinstalar el add-on; sin SQL nuevo)"
+    version: v3.3.0
+    area: lanzamiento
+    bloqueo: "Después del piloto y de T-087 (010)"
+    depende_de: [T-087, T-090]
+    aceptacion: "Mi Blender entrega Amatista Motor 3.5 y la lección muestra «Ahora en Blender» con la lista «Tu figura»"
   - id: T-071
     titulo: Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)
     version: v3.4.0
