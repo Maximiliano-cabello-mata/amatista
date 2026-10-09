@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-09 03:37 · `main` en `15bbcf8`
+Último commit: 2026-10-08 21:56 · `main` en `255d054`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -16,14 +16,14 @@
 | **v3.0.0** | Reestructuración | Niveles, habilidades, versiones de Blender y herramientas de autor en Oracle; documentación y tablero nuevos. | ▰▰▰▰▱▱▱▱▱▱ 5/12 |
 | **v3.1.0** | Mi primer espacio 3D | Primera entrega de contenido por niveles (lecciones 01–11 de la propuesta) con fichas, rúbrica y versión verificada. | ▱▱▱▱▱▱▱▱▱▱ 0/5 |
 | **v3.2.0** | Laboratorio 3D | Visor GLB en las lecciones, escena de ejemplo y lección 12 (exportar y comprobar). | ▱▱▱▱▱▱▱▱▱▱ 0/3 |
-| **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▰▰▰▰▱▱▱▱▱ 11/21 |
+| **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▰▰▰▰▰▱▱▱▱ 14/25 |
 | **v3.4.0** | Especialidades y tutor | Primera rama del nivel 5 y tutor IA dentro de las lecciones. | ▱▱▱▱▱▱▱▱▱▱ 0/13 |
 
 Versiones publicadas (tags): `v2.2.0-alpha.1` · `v2.0.1` · `v2.0.0` · `v1.0.0` · `v0.1.0`
 
 ## 📌 Kanban
 
-| 📋 Pendiente (39) | 🔨 En progreso (12) | 👀 Revisión (2) | ✅ Hecho (26) |
+| 📋 Pendiente (40) | 🔨 En progreso (12) | 👀 Revisión (2) | ✅ Hecho (29) |
 |---|---|---|---|
 | **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> |
 | **T-008** Proteger main (solo cambios por PR)<br><sub>v2.2.0 · repo</sub> | **T-028** Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)<br><sub>v2.2.0 · lanzamiento</sub> | **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)<br><sub>v2.2.0 · repo</sub> | **T-006** Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)<br><sub>v2.2.0 · api</sub> |
@@ -51,8 +51,9 @@ Versiones publicadas (tags): `v2.2.0-alpha.1` · `v2.0.1` · `v2.0.0` · `v1.0.0
 | **T-049** Laboratorio mínimo (escena de ejemplo, reinicio, avisos de recurso faltante) y lección 12<br><sub>v3.2.0 · pwa</sub> |   |   | **T-075** Auditoría de seguridad y de rendimiento automáticas, y optimización de los puntos débiles (catálogo, panel, descarga del add-on, animaciones)<br><sub>v3.3.0 · api</sub> |
 | **T-013** Add-on de Blender conectado con la plataforma (MVP publicado)<br><sub>v3.3.0 · blender</sub> |   |   | **T-076** Motor 3.3: modelo de referencia (imagen y plano por práctica) y figure.resembles, figuras con sentido y medidas aproximadas<br><sub>v3.3.0 · blender</sub> |
 | **T-059** Probar la guía de la etapa 2 en un Blender real con GPU y agregar capturas a la documentación<br><sub>v3.3.0 · blender</sub> |   |   | **T-077** Mundos por módulo en toda la lección y mascota que acompaña (platica, celebra, anima, avisa a la mitad y al final)<br><sub>v3.3.0 · pwa</sub> |
-| **T-078** Aplicar la v3.4 en producción: respaldo, 007/008/009, variables nuevas, actualizar.sh y Amatista Motor 3.3 (fase 1 del plan de despliegue)<br><sub>v3.3.0 · lanzamiento</sub> |   |   |   |
-| **T-079** Proteger el código y las cuentas en producción: AMATISTA_SECRETO_FIRMA, repositorio privado y copias del add-on en «exigir»<br><sub>v3.3.0 · lanzamiento</sub> |   |   |   |
+| **T-078** Aplicar la v3.4 en producción: respaldo, 007/008/009, variables nuevas, actualizar.sh y Amatista Motor 3.3 (fase 1 del plan de despliegue)<br><sub>v3.3.0 · lanzamiento</sub> |   |   | **T-084** Motor 3.4: el motor reconoce la figura (figure.recognize): roles deducidos por la forma, relaciones con sentido y exigencia por nivel<br><sub>v3.3.0 · blender</sub> |
+| **T-079** Proteger el código y las cuentas en producción: AMATISTA_SECRETO_FIRMA, repositorio privado y copias del add-on en «exigir»<br><sub>v3.3.0 · lanzamiento</sub> |   |   | **T-085** Enlace en vivo plataforma ↔ Blender: latido del add-on, órdenes (abrir práctica, enfocar) y ajustes de Blender desde «Mi Blender» (Oracle 010)<br><sub>v3.3.0 · api</sub> |
+| **T-087** Aplicar 010 en Oracle y entregar Amatista Motor 3.4 en producción<br><sub>v3.3.0 · lanzamiento</sub> |   |   | **T-086** Modo enfocado en Blender: solo las herramientas de la práctica, panel «Tus herramientas» con «¿Cómo se usa?» y «Ver todo Blender»<br><sub>v3.3.0 · blender</sub> |
 | **T-071** Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)<br><sub>v3.4.0 · pwa</sub> |   |   |   |
 | **T-072** Transiciones entre páginas (View Transitions), celebraciones con confeti e ilustración de fondo por temática<br><sub>v3.4.0 · pwa</sub> |   |   |   |
 | **T-073** Diseñar el laboratorio (retos abiertos sin guía después de la ruta)<br><sub>v3.4.0 · contenido</sub> |   |   |   |
@@ -224,6 +225,15 @@ Versiones publicadas (tags): `v2.2.0-alpha.1` · `v2.0.1` · `v2.0.0` · `v1.0.0
   - 🎯 Listo cuando: docs/despliegue/2026-10-05_plan_de_despliegue.md fase 1: 18 tablas, 18 de 18 prácticas publicadas, /docs responde 404 y Mi Blender entrega Amatista Motor 3.3
 - [ ] **T-079** Proteger el código y las cuentas en producción: AMATISTA_SECRETO_FIRMA, repositorio privado y copias del add-on en «exigir» · _pendiente_
   - 🎯 Listo cuando: docs/seguridad/02_proteccion_del_codigo.md: descargas con licencia firmada (verificar_licencia.py dice FIRMA VÁLIDA), repositorio privado con Cloudflare Pages funcionando y AMATISTA_ADDON_VERIFICADO=exigir
+- [x] **T-084** Motor 3.4: el motor reconoce la figura (figure.recognize): roles deducidos por la forma, relaciones con sentido y exigencia por nivel · _hecho_ — commits: `255d054` (2026-10-08)
+  - 🔎 Evidencia: docs/motor/referencia/11_reconocer_figuras.md; engine/tests/test_reconocer.py (33 casos); tren, muñeco de nieve y puente con figure.recognize
+- [x] **T-085** Enlace en vivo plataforma ↔ Blender: latido del add-on, órdenes (abrir práctica, enfocar) y ajustes de Blender desde «Mi Blender» (Oracle 010) · _hecho_ — commits: `255d054` (2026-10-08)
+  - 🔎 Evidencia: backend/api/enlace.py; backend/sql/010_enlace_blender.sql; backend/tests/test_enlace.py; addon/amatista_blender/enlace.py
+- [x] **T-086** Modo enfocado en Blender: solo las herramientas de la práctica, panel «Tus herramientas» con «¿Cómo se usa?» y «Ver todo Blender» · _hecho_ — commits: `255d054` (2026-10-08)
+  - 🔎 Evidencia: addon/amatista_blender/enfoque.py e interfaz/herramientas.py; engine/tests/test_herramientas_enfoque.py; addon/tests/en_blender.py (probar_motor_34)
+- [ ] **T-087** Aplicar 010 en Oracle y entregar Amatista Motor 3.4 en producción · _pendiente_
+  - ⏸️ Espera: Después del piloto del 8 de octubre y de T-078 (007, 008 y 009)
+  - 🎯 Listo cuando: docs/despliegue/2026-10-05_plan_de_despliegue.md fase 1: 20 tablas en diagnostico_oracle.py, Mi Blender entrega Amatista Motor 3.4 y la lección muestra «Tu Blender está en esta práctica»
 - [ ] **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas) · _en-progreso_ — commits: `34af6f3` (2026-10-04)
   - 🔎 Evidencia: docs/motor/referencia/08_practicas_v3_y_herramientas.md; engine/tests/test_v3_herramientas.py
 - [ ] **T-064** Aplicar 008 y 009 en Oracle e importar los cursos Principiante, Principiante-Intermedio e Intermedio (después del piloto) · _pendiente_
