@@ -125,7 +125,7 @@ describe('Amatista Motor', () => {
   });
 
   it('avisa si el servidor entrega una versión vieja', () => {
-    expect(versionDelServidor({ version_addon: '3.5.0' })).toEqual({ conocida: true, version: '3.5.0', alDia: true });
+    expect(versionDelServidor({ version_addon: '3.5.1' })).toEqual({ conocida: true, version: '3.5.1', alDia: true });
     expect(versionDelServidor({ version_addon: '3.4.0' }).alDia).toBe(false);
     expect(versionDelServidor({ version_addon: '3.0.0' }).alDia).toBe(false);
     expect(versionDelServidor(null).conocida).toBe(false);
