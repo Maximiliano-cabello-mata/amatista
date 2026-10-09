@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.5.1 · Correcciones de evaluación y detalle del instructor
+
+- Siluetas sin evidencia quedan pendientes, también al comparar con el ejemplo.
+- El complemento conserva la silueta en intentos con `example.matches`.
+- Detalle del instructor compartido en la base, sin caché por proceso. Requiere 011 antes del backend.
+- Documentación delimita los aspectos que el motor puede evaluar.
+
 Todas las versiones de Amatista. Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y [versionado semántico](https://semver.org/lang/es/).
 
 | Versión | Fecha | Fase | Commit |
