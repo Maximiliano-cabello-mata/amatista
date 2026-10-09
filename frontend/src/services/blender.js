@@ -72,11 +72,13 @@ export const progresoPractica = (token, practicaId) =>
 
 export const estadoEnlace = (token) => pedirJSON(`${BASE}/enlace`, { token });
 
-export const ordenarBlender = (token, tipo, practicaId) =>
+// practicaId: «abrir_practica» la abre; las órdenes de la práctica (comprobar, pista…) solo se cumplen si
+// Blender sigue en ella. confirmar: «reiniciar» lo exige.
+export const ordenarBlender = (token, tipo, practicaId, { confirmar = false } = {}) =>
   pedirJSON(`${BASE}/ordenes`, {
     metodo: "POST",
     token,
-    cuerpo: practicaId ? { tipo, practica_id: practicaId } : { tipo },
+    cuerpo: { tipo, ...(practicaId ? { practica_id: practicaId } : {}), ...(confirmar ? { confirmar: true } : {}) },
   });
 
 export const leerAjustesBlender = (token) => pedirJSON(`${BASE}/ajustes`, { token });

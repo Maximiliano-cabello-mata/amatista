@@ -184,7 +184,7 @@ Desde Blender, el modo Desarrollador guarda la escena actual como caso (§10). T
 | `revisar [rutas]` | Compila y muestra errores y avisos de pedagogía. Sin rutas, revisa todo `practices/blender/`. | hay errores (no avisos) |
 | `probar [rutas] [--detalle]` | Corre los casos de `pruebas.json`. | falla un caso |
 | `simular <ruta> [--escena archivo]` | Lo que vería el alumno paso a paso. | — |
-| `validadores [--md archivo]` | Catálogo de los validadores (38 con el motor 3.3) con sus parámetros ([09_validadores.md](09_validadores.md) se genera así). | — |
+| `validadores [--md archivo]` | Catálogo de los validadores (41 con el motor 3.5) con sus parámetros ([09_validadores.md](09_validadores.md) se genera así). | — |
 | `plan [--completadas id …]` | El mapa del plan y qué queda desbloqueado. | una práctica del plan no existe o no coincide |
 
 Las pruebas del motor (`engine/tests/test_v3_*.py`) corren `revisar`, `probar` y `plan` sobre las prácticas reales: CI falla si una práctica se rompe.

@@ -70,7 +70,7 @@ Sigue el archivo de pasos del servidor (`/mnt/project-files/despliegue/2026-10-0
 5. **Tablas y contenido**: `python diagnostico_oracle.py` (20 tablas con 010; si solo falta 010, el diagnóstico lo dice), `python herramientas/contenido.py validar` y `importar`.
 6. **Prácticas**: al reiniciar, el servidor registra y actualiza las 18 prácticas solo (en la prueba sobre Oracle: «0 nuevas, 13 actualizadas»). `python herramientas/contenido.py practicas --revisar` debe decir **18 de 18**.
 7. **Archivar lo viejo**: `009_archivar_blender_v2.sql` con F5.
-8. **Add-on**: en la plataforma, **Mi Blender** debe ofrecer **Amatista Motor 3.4** (si se fusiona el PR del 9 de octubre; si no, 3.3). Reinstálalo en tu Blender y abre la práctica del tren: el panel muestra «Así se debe ver» con la imagen y el plano y, con 3.4, Blender se enfoca y la lección dice «Tu Blender está en esta práctica».
+8. **Add-on**: en la plataforma, **Mi Blender** debe ofrecer **Amatista Motor 3.5** (3.4 si solo se fusionó el PR #24; 3.3 si ninguno). Con 3.5, abrir otra práctica empieza en su propia escena y la lección muestra «Ahora en Blender» con la lista «Tu figura»; no hay SQL nuevo. Reinstálalo en tu Blender y abre la práctica del tren: el panel muestra «Así se debe ver» con la imagen y el plano y, con 3.4, Blender se enfoca y la lección dice «Tu Blender está en esta práctica».
 
 **Comprobación:** `curl -s http://127.0.0.1:8000/api/salud` → `{"estado":"ok","motor":"oracle"}`; `curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8000/docs` → `404`; una práctica entregada desde Blender aparece calificada en el panel.
 

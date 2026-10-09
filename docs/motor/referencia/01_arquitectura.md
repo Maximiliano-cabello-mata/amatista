@@ -34,6 +34,8 @@
 
 **Prácticas declarativas, nunca código del servidor.** Una práctica es un JSON (`amatista.practice/1`) que nombra validadores ya incluidos en el motor (`role.count`, `dimension.range`, `spatial.below`, `file.saved`…). El add-on nunca ejecuta Python que venga de la red. Agregar una capacidad nueva es agregar un validador al motor y publicar una versión nueva del add-on.
 
+**El ejemplo manda (motor 3.5).** Cada práctica trae su ejemplo resuelto en código (`example.steps`). De ese ejemplo salen la escena esperada, la revisión automática aspecto por aspecto (`example.matches`), las instrucciones que lee el alumno, el ejemplo armado en Blender y la tarjeta de la lección. La plataforma, el add-on y el motor hablan del mismo resultado, y lo que se revisa ya no depende de que el autor recuerde escribir cada objetivo. Ver [14_ejemplo_y_revision.md](14_ejemplo_y_revision.md).
+
 **Un motor, dos lugares.** El add-on evalúa en vivo para dar respuesta inmediata (sin red). Cuando manda un intento, envía la *foto* de la escena (nombres, tipos, roles, medidas, materiales, modificadores, si el archivo está guardado) y el servidor la vuelve a evaluar con el mismo motor y la misma versión de la práctica. Lo que guarda Oracle es lo que calculó el servidor, no lo que dijo el add-on. `snapshot.py` rechaza números no finitos o no numéricos.
 
 **El motor no conoce Blender.** `engine/amatista_engine` es Python puro (3.11+). El único módulo que toca `bpy` es `amatista_engine/blender/adapter.py` (captura) y el add-on. Por eso las pruebas del motor corren con pytest normal y el backend lo importa sin Blender.
@@ -60,6 +62,7 @@
 |---|---|
 | `engine/amatista_engine/engine.py` | Evalúa objetivos en orden, respeta `requires`, calcula progreso ponderado. |
 | `engine/amatista_engine/practice/loader.py`, `compiler.py` | Valida y compila la práctica (errores en español, con la ruta del campo). |
+| `engine/amatista_engine/ejemplo/` | El ejemplo resuelto: arma la escena esperada (`pasos.py`) y revisa la del alumno contra ella (`revision.py`); validador `example.matches`. |
 | `engine/amatista_engine/pedagogy/` | Pistas por niveles, autonomía, grafo de habilidades. |
 | `addon/amatista_blender/practicas.py` | Captura, evaluación en vivo, intentos, manejadores de Blender. |
 | `addon/amatista_blender/cuenta.py`, `red.py` | Vínculo, sesión, red sin congelar Blender, cola sin conexión. |

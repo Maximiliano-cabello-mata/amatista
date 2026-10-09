@@ -21,6 +21,7 @@ Una práctica es un JSON declarativo. El motor la valida al cargarla (`engine/am
 | `tags` | no | Etiquetas libres para el catálogo. |
 | `tools` | no | `{allowed: [...], warn: [...]}`: herramientas esperadas y las que generan un aviso (no bloquean). Catálogo en `engine/amatista_engine/tools/catalogo.json`. |
 | `targets` | sí | Los objetivos, en el orden en que se enseñan (máximo 40). |
+| `example` | no (`practice/2`; las 18 del plan lo tienen) | El ejemplo resuelto en código: `{title, description, steps, check?}`. El motor arma con él la escena esperada y agrega el objetivo «Tu práctica coincide con el ejemplo» (`example.matches`). Ver [14_ejemplo_y_revision.md](14_ejemplo_y_revision.md). |
 
 ## Objetivo (`targets[]`)
 

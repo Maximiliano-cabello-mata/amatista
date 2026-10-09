@@ -16,7 +16,7 @@ export const BLENDER_MINIMO = '4.2';
 
 // El descargable: Amatista Motor (add-on + motor de prácticas). La versión
 // coincide con addon/amatista_blender/blender_manifest.toml (lo revisa logica.test.js).
-export const MOTOR = { nombre: 'Amatista Motor', version: '3.4.0' };
+export const MOTOR = { nombre: 'Amatista Motor', version: '3.5.0' };
 export const NOMBRE_MOTOR = `${MOTOR.nombre} ${MOTOR.version.split('.').slice(0, 2).join('.')}`;
 
 // ¿El servidor entrega la misma versión que espera esta plataforma?
@@ -130,4 +130,73 @@ export function estadoBlender(datos, practicaId = null) {
     blender: uno,
     texto: uno.practica ? `Tu Blender está abierto en «${uno.practica}».` : 'Tu Blender está abierto.',
   };
+}
+
+// --- El instructor en vivo (motor 3.5) ------------------------------------------------------
+// El add-on manda en su latido lo que el instructor muestra en Blender (paso, mensaje y la lista
+// de la figura) y la plataforma le puede pedir que compruebe, dé una pista, lo haga con el alumno,
+// guarde o empiece de nuevo.
+
+export const CONTROLES_BLENDER = [
+  { tipo: 'comprobar', texto: 'Comprobar' },
+  { tipo: 'pista', texto: 'Pista' },
+  { tipo: 'hazlo_conmigo', texto: 'Hazlo conmigo' },
+  { tipo: 'guardar', texto: 'Guardar' },
+  {
+    tipo: 'reiniciar',
+    texto: 'Empezar de nuevo',
+    confirmar: '¿Empezar la práctica de nuevo? Lo que hiciste no se borra: queda en una escena «(anterior)» de tu archivo.',
+  },
+  { tipo: 'ver_ejemplo', texto: 'Ver el ejemplo' },
+];
+// Mientras Blender muestra el ejemplo resuelto solo se puede volver a la práctica.
+export const CONTROL_VOLVER = { tipo: 'volver_practica', texto: 'Volver a mi práctica' };
+
+const MODOS = { OBJECT: 'Modo Objeto', EDIT_MESH: 'Modo Edición', SCULPT: 'Esculpir', POSE: 'Pose' };
+
+export function instructorEnVivo(blender) {
+  const d = blender?.detalle;
+  if (!d) return null;
+  const lista = Array.isArray(d.lista) ? d.lista : [];
+  return {
+    titulo: d.titulo || '',
+    paso: d.total ? `Paso ${d.numero} de ${d.total}` : '',
+    mensaje: d.mensaje || '',
+    figura: d.figura || '',
+    lista,
+    hechas: lista.filter((i) => i.ok).length,
+    modo: MODOS[d.modo] ?? '',
+    viendoEjemplo: d.modo === 'EJEMPLO',
+    aspectos: agruparPorAspecto(lista),
+    pistas: d.pistas ?? 0,
+    accion: d.accion || '',
+    completada: Boolean(d.completada),
+  };
+}
+
+// La lista del instructor agrupada por aspecto del ejemplo (la figura, materiales, luces…), en orden.
+export function agruparPorAspecto(lista) {
+  const grupos = [];
+  for (const item of lista ?? []) {
+    const nombre = item.aspecto || 'Tu práctica';
+    let grupo = grupos.find((g) => g.nombre === nombre);
+    if (!grupo) {
+      grupo = { nombre, items: [], ok: true };
+      grupos.push(grupo);
+    }
+    grupo.items.push(item);
+    grupo.ok = grupo.ok && Boolean(item.ok);
+  }
+  return grupos;
+}
+
+// Qué controles tienen sentido ahora (sin pistas no se ofrece «Pista», sin acción no hay «Hazlo conmigo»).
+export function controlesDisponibles(instructor) {
+  if (!instructor) return CONTROLES_BLENDER.filter((c) => c.tipo === 'comprobar');
+  if (instructor.viendoEjemplo) return [CONTROL_VOLVER];
+  return CONTROLES_BLENDER.filter((c) => {
+    if (c.tipo === 'pista') return instructor.pistas > 0 && !instructor.completada;
+    if (c.tipo === 'hazlo_conmigo') return Boolean(instructor.accion) && !instructor.completada;
+    return true;
+  });
 }

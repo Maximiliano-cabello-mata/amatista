@@ -82,4 +82,4 @@ Construye cada modelo en Blender, **lo califica con el propio motor** (debe saca
 
 ## Prácticas con modelo
 
-Tren, muñeco de nieve, cojín, puente y aldea califican la figura. Explora (módulo 2), espada, nave, nave pintada, tres puntos de luz, pelota y diorama traen la imagen como guía.
+13 de las 18 prácticas traen modelo de referencia. Desde el motor 3.5 el modelo no es solo una imagen de guía: si el ejemplo resuelto de la práctica usa el paso `referencia`, la figura del modelo se revisa sola dentro de «Tu práctica coincide con el ejemplo» ([14_ejemplo_y_revision.md](14_ejemplo_y_revision.md)). `reference.strictness` fija la exigencia (la aldea usa `forma`).

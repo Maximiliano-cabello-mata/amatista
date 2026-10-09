@@ -1,6 +1,6 @@
 # Catálogo de validadores
 
-Generado con `python engine/herramientas/practicas.py validadores --md` (Amatista Engine 3.4.0). No se edita a mano: cambia la descripción en `engine/amatista_engine/validators/builtin.py` y vuelve a generarlo.
+Generado con `python engine/herramientas/practicas.py validadores --md` (Amatista Engine 3.5.0). No se edita a mano: cambia la descripción en `engine/amatista_engine/validators/builtin.py` y vuelve a generarlo.
 
 Los validadores que aceptan **selector** (`role`, `name`, `name_prefix`, `type`, `tag`, `collection`, `primitive`) se aplican a los objetos que cumplen todos los criterios; sin selector, a todos.
 
@@ -62,6 +62,26 @@ Se vuelve a revisar con: FILE_SAVED.
 El .blend está guardado y sin cambios pendientes.
 
 Se vuelve a revisar con: FILE_SAVED, OBJECT_DATA.
+
+## Ejemplo
+
+### `example.matches` — Coincide con el ejemplo
+
+Revisa la escena del alumno contra el ejemplo resuelto de la práctica («example»), aspecto por aspecto: la figura (o su silueta), el trabajo en la malla, los modificadores, los materiales, las colecciones, las luces, la cámara, la animación, el render y el archivo. Solo revisa lo que el ejemplo tiene y deja una lista con qué coincide y cómo hacer lo que falta. El cargador lo agrega al final de toda práctica con ejemplo.
+
+| Parámetro | Tipo | Qué es | Obligatorio | Por defecto |
+|---|---|---|---|---|
+| `aspects` | reference | Aspectos que revisa este paso (vacío = todos los del ejemplo) |  |  |
+| `strictness` | text | Exigencia (forma, proporcion, cercana, medidas, exacta; vacío = la del nivel) |  |  |
+| `steps` | reference | Pasos del ejemplo (de «example.steps») |  |  |
+| `check` | reference | Aspectos de la práctica (de «example.check») |  |  |
+| `parts` | reference | Piezas del modelo (de «reference») |  |  |
+| `labels` | reference | Nombres de los roles (de «roles») |  |  |
+| `flexible` | reference | Grupos con cantidad libre (de «reference») |  |  |
+| `level` | reference | Nivel de la práctica (de «level») |  |  |
+| `title` | reference | Nombre de la figura (de «example.title») |  |  |
+
+Se vuelve a revisar con: OBJECT_ADDED, OBJECT_TRANSFORM, OBJECT_MODIFIER, OBJECT_DATA, FILE_SAVED, ROLE_CHANGED.
 
 ## Escena
 
@@ -176,6 +196,24 @@ Compara la figura con el modelo de referencia de la práctica («reference»): m
 | `parts` | reference | Piezas del modelo (de «reference») |  |  |
 | `labels` | reference | Nombres de los roles (de «roles») |  |  |
 | `flexible` | reference | Grupos con cantidad libre (de «reference») |  |  |
+
+Se vuelve a revisar con: OBJECT_TRANSFORM, OBJECT_ADDED, ROLE_CHANGED, OBJECT_DATA.
+
+### `figure.silhouette` — Amatista reconoce la silueta
+
+Para figuras modeladas en una sola malla (una espada): corta la malla en rebanadas a lo largo y compara su silueta con la del modelo parte por parte (pomo, mango, guarda, hoja, punta). Dice qué parte falta o no tiene la medida y con qué tecla se arregla, y deja una lista de revisión. Lo que da sentido a la figura (una parte mucho más ancha que su vecina, la punta que se afila) se exige en todos los niveles; las medidas, según el nivel.
+
+| Parámetro | Tipo | Qué es | Obligatorio | Por defecto |
+|---|---|---|---|---|
+| `role` | role | Rol |  |  |
+| `name` | text | Nombre exacto |  |  |
+| `name_prefix` | text | Nombre empieza con |  |  |
+| `type` | object_type | Tipo de objeto |  |  |
+| `primitive` | primitive | Primitiva (cube, cylinder…) |  |  |
+| `strictness` | text | Exigencia (forma, proporcion, cercana, medidas, exacta; vacío = la del nivel) |  |  |
+| `parts` | reference | Piezas del modelo (de «reference») |  |  |
+| `level` | reference | Nivel de la práctica (de «level») |  |  |
+| `title` | reference | Nombre de la figura (de «reference.title») |  |  |
 
 Se vuelve a revisar con: OBJECT_TRANSFORM, OBJECT_ADDED, ROLE_CHANGED, OBJECT_DATA.
 

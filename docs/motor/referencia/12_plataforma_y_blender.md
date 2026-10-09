@@ -17,7 +17,7 @@ Blender (add-on)                                  Plataforma
    │                       PUT /api/addon/v1/ajustes  │ ◄── Mi Blender › «Cómo se ve Blender»
 ```
 
-- **Órdenes** (`abrir_practica`, `enfocar`, `ver_todo`, `actualizar`): se guardan en la fila del Blender abierto y se repiten en cada latido hasta que el add-on manda `orden_hecha` con su id. Un latido perdido no pierde la orden; una orden repetida se cumple una sola vez. Caducan a los 10 minutos.
+- **Órdenes** (`abrir_practica`, `enfocar`, `ver_todo`, `actualizar`; desde el motor 3.5 también `comprobar`, `pista`, `hazlo_conmigo`, `guardar` y `reiniciar`, ver [13_instructor_y_silueta.md](13_instructor_y_silueta.md)): se guardan en la fila del Blender abierto y se repiten en cada latido hasta que el add-on manda `orden_hecha` con su id. Un latido perdido no pierde la orden; una orden repetida se cumple una sola vez. Caducan a los 10 minutos.
 - **Abrir en Blender** desde la lección deja la orden si hay un Blender abierto y responde `abierta_en_blender: true`: la práctica aparece sola en Blender, en la pestaña Amatista › Practicar.
 - **Ajustes** (`ADDON_AJUSTES`): `enfoque` (`auto`, `siempre`, `nunca`), `acompanamiento` (`acompanado`, `tarjeta`, `silencioso`), `avisos_herramientas` y `tarjeta_3d`. La plataforma manda sobre las preferencias de Blender; solo la plataforma los cambia (el add-on recibe 403).
 - **En línea** = último latido hace menos de 25 s. Las filas de más de 2 días se borran al consultar.
