@@ -491,11 +491,11 @@ tareas:
     depende_de: [T-089]
     aceptacion: "La nave (bp.m3) reconoce cabina, alas y motores con la silueta o figure.recognize (con el Espejo aplicado a la medida); revisar en verde"
   - id: T-092
-    titulo: "Entregar Amatista Motor 3.5 en producción (reinstalar el add-on; sin SQL nuevo)"
+    titulo: "Entregar Amatista Motor 3.5.1 en producción (reinstalar el add-on; requiere 011, T-094)"
     version: v3.3.0
     area: lanzamiento
-    bloqueo: "Después del piloto y de T-087 (010)"
-    depende_de: [T-087, T-090]
+    bloqueo: "Después del piloto, de T-087 (010) y de T-094 (011)"
+    depende_de: [T-087, T-090, T-094]
     aceptacion: "Mi Blender entrega Amatista Motor 3.5 y la lección muestra «Ahora en Blender» con la lista «Comparado con el ejemplo»"
   - id: T-093
     titulo: "El ejemplo manda: cada práctica con su ejemplo resuelto en código y revisión autónoma contra él (motor, Blender «Ver el ejemplo» y lección)"
@@ -504,6 +504,19 @@ tareas:
     depende_de: [T-090]
     aceptacion: "Las 18 prácticas tienen example; el ejemplo completa su práctica en CI (practicas.py probar: 95 casos) y en Blender; la lección muestra el ejemplo con su código"
     evidencia: "engine/amatista_engine/ejemplo/; validators/example.py; addon/amatista_blender/ejemplo.py; docs/motor/referencia/14_ejemplo_y_revision.md"
+  - id: T-094
+    titulo: "Aplicar 011_detalle_instructor.sql en Oracle (ADDON_ENLACES.DETALLE, motor 3.5.1)"
+    version: v3.3.0
+    area: lanzamiento
+    bloqueo: "Después de T-087 (010) y antes del backend 3.5.1"
+    depende_de: [T-087]
+    aceptacion: "diagnostico_oracle.py muestra la columna DETALLE en ADDON_ENLACES y la lección muestra «Ahora en Blender» con el detalle del instructor"
+  - id: T-095
+    titulo: "Revisión completa del repositorio (documentación y código al día con «el ejemplo manda» y 3.5.1) y tag v3.0.0-alpha.10"
+    version: v3.3.0
+    area: repo
+    depende_de: [T-093]
+    aceptacion: "Auditoría de docs, motor, add-on, backend y PWA corregida; todas las pruebas en verde; v3.0.0-alpha.10 en herramientas/crear-tags.sh tras la fusión"
   - id: T-071
     titulo: Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)
     version: v3.4.0
@@ -547,7 +560,8 @@ tareas:
     titulo: Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas)
     version: v3.3.0
     area: blender
-    evidencia: "docs/motor/referencia/08_practicas_v3_y_herramientas.md; engine/tests/test_v3_herramientas.py"
+    estado: hecho
+    evidencia: "docs/motor/referencia/08_practicas_v3_y_herramientas.md; engine/herramientas/practicas.py (nueva, revisar, probar, simular, validadores, plan); addon/amatista_blender/interfaz/paneles.py (panel «Teoría y casos de prueba»); engine/tests/test_v3_herramientas.py"
   - id: T-064
     titulo: Aplicar 008 y 009 en Oracle e importar los cursos Principiante, Principiante-Intermedio e Intermedio (después del piloto)
     version: v3.3.0
