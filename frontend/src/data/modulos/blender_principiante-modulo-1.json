@@ -91,14 +91,14 @@
       },
       {
         "id": "bp1_blender",
-        "title": "En Blender: date una vuelta por la vista 3D",
+        "title": "Taller en Blender: agrega, mueve, escala y gira",
         "slug": "blender-explora-la-vista",
         "type": "theory_interactive",
         "durationSeconds": 480,
         "isLocked": true,
         "formula": "practica",
         "ficha": {
-          "objetivo": "Tu primer contacto con Blender conectado a Amatista: agregas formas, las mueves, giras y escalas mientras Amatista registra cada paso.",
+          "objetivo": "Aprender en Blender cada habilidad del módulo (agregar formas, moverlas, estirarlas en un eje, girarlas, duplicarlas y guardar): mirarla, hacerla con ayuda y hacerla sin ayuda, hasta que salga sola.",
           "habilidades": [
             "bl-navegar-vista",
             "bl-agregar-primitivas",
@@ -109,37 +109,25 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Exploración en Blender: practices/blender/principiante/m1-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Taller en Blender (motor 5): blender.bp.m1, en practices/blender/habilidades.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
           "comprobacion": [
-            "Tres bolas de nieve, de mayor a menor",
-            "Una nariz de cono girada al frente",
-            "Comparado con el ejemplo resuelto, se reconoce el muñeco"
+            "Cada habilidad del taller sale sin ayuda («Ya te sale» o «Dominada»).",
+            "Se abre el proyecto del módulo."
           ]
         },
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### En Blender, conectado\nYa sabes qué es el espacio 3D. Ahora pruébalo armando un muñeco de nieve: tres esferas de mayor a menor (S para escalar, G Z para subirlas) y una nariz de cono que giras con R. Mira el ejemplo resuelto: las medidas no tienen que ser exactas.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+            "body": "### Tu taller en Blender\nAquí aprendes cada habilidad del módulo (agregar formas, moverlas, estirarlas en un eje, girarlas, duplicarlas y guardar) como en un taller: primero la miras en tu vista 3D, después la haces con ayuda y al final la haces sin ayuda. Cuando todas te salgan, se abre el proyecto: el tren que llega a la estación de tu isla."
           },
           {
-            "type": "blender_practice",
-            "id": "exploracion_bp1",
-            "practica": "blender.bp.m1.explora",
-            "title": "Explora la vista 3D: un muñeco de nieve",
-            "text": "Antes de armar el tren, date una vuelta por Blender: Amatista te acompaña y registra lo que haces. Tu avance aparece aquí mientras trabajas.",
-            "minutes": 8,
-            "steps": [
-              "Una bola de nieve",
-              "Tres bolas de nieve",
-              "Una nariz de zanahoria",
-              "La nariz apunta al frente",
-              "Amatista reconoce tu muñeco",
-              "Tu práctica coincide con el ejemplo"
-            ],
-            "allowManual": false
+            "type": "blender_taller",
+            "id": "taller_bp1",
+            "taller": "blender.bp.m1",
+            "title": "Tu taller: agrega, mueve, escala y gira"
           }
         ]
       },
@@ -339,6 +327,13 @@
               "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
+          },
+          {
+            "type": "blender_taller",
+            "id": "isla_bp1",
+            "taller": "blender.bp.m1",
+            "vista": "proyecto",
+            "title": "Úsalo · tu pieza para la isla"
           },
           {
             "type": "callout",

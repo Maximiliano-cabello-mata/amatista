@@ -68,14 +68,14 @@
       },
       {
         "id": "bp3_blender",
-        "title": "En Blender: tu primer modificador",
+        "title": "Taller en Blender: espejo, subdivisión y escala aplicada",
         "slug": "blender-primer-modificador",
         "type": "theory_interactive",
         "durationSeconds": 480,
         "isLocked": true,
         "formula": "practica",
         "ficha": {
-          "objetivo": "Aplastas un cubo para hacer un cojín, aplicas su escala y le pones Subdivisión: ves en vivo cómo un modificador redondea la forma sin tocar la malla.",
+          "objetivo": "Aprender en Blender cada habilidad del módulo (usar el Espejo, la Subdivisión y aplicar la escala): mirarla, hacerla con ayuda y hacerla sin ayuda, hasta que salga sola.",
           "habilidades": [
             "bl-modificadores",
             "bl-aplicar-escala"
@@ -85,37 +85,25 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Exploración en Blender: practices/blender/principiante/m3-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Taller en Blender (motor 5): blender.bp.m3, en practices/blender/habilidades.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
           "comprobacion": [
-            "Agrega un cubo",
-            "Aplástalo como cojín",
-            "Aplica la escala",
-            "Ponle Subdivisión"
+            "Cada habilidad del taller sale sin ayuda («Ya te sale» o «Dominada»).",
+            "Se abre el proyecto del módulo."
           ]
         },
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### En Blender, conectado\nLos modificadores son filtros que no rompen nada. Aplasta un cubo como cojín (S Z 0.3), aplica la escala y ponle Subdivisión: verás cómo se redondea.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+            "body": "### Tu taller en Blender\nAquí aprendes cada habilidad del módulo (usar el Espejo, la Subdivisión y aplicar la escala) como en un taller: primero la miras en tu vista 3D, después la haces con ayuda y al final la haces sin ayuda. Cuando todas te salgan, se abre el proyecto: la nave para el puerto espacial de tu isla."
           },
           {
-            "type": "blender_practice",
-            "id": "exploracion_bp3",
-            "practica": "blender.bp.m3.explora",
-            "title": "Calentamiento: tu primer modificador",
-            "text": "Un modificador es un filtro que no rompe nada. Pruébalo antes de la teoría. Tu avance aparece aquí mientras trabajas.",
-            "minutes": 8,
-            "steps": [
-              "Agrega un cubo",
-              "Un cojín plano",
-              "Aplica la escala",
-              "Ponle Subdivisión",
-              "Tu práctica coincide con el ejemplo"
-            ],
-            "allowManual": false
+            "type": "blender_taller",
+            "id": "taller_bp3",
+            "taller": "blender.bp.m3",
+            "title": "Tu taller: espejo, subdivisión y escala aplicada"
           }
         ]
       },
@@ -292,6 +280,13 @@
               "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
+          },
+          {
+            "type": "blender_taller",
+            "id": "isla_bp3",
+            "taller": "blender.bp.m3",
+            "vista": "proyecto",
+            "title": "Úsalo · tu pieza para la isla"
           },
           {
             "type": "callout",
