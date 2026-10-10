@@ -1,3 +1,4 @@
+import ImagenLigera from '../ImagenLigera';
 import { useState } from 'react';
 
 // Herramienta «Comparar» (compare, v3.1): antes y después lado a lado o, con
@@ -6,7 +7,7 @@ function Lado({ lado, tono }) {
   return (
     <figure className={`corte-poly-sm border bg-base/70 p-4 ${tono}`}>
       <figcaption className="font-mono text-[11px] font-bold uppercase tracking-widest">{lado.label}</figcaption>
-      {lado.image && <img src={lado.image} alt={lado.alt} className="mt-3 w-full object-contain" />}
+      {lado.image && <ImagenLigera src={lado.image} alt={lado.alt} className="mt-3 block w-full" imgClassName="block w-full object-contain" />}
       {lado.text && <p className="mt-2 leading-relaxed text-texto/85">{lado.text}</p>}
     </figure>
   );

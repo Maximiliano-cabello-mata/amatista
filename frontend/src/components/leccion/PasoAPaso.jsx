@@ -1,3 +1,4 @@
+import ImagenLigera from '../ImagenLigera';
 import { useState } from 'react';
 import { Teclas } from './Tecla';
 
@@ -34,7 +35,7 @@ function PasoAPaso({ title, steps = [] }) {
           {paso.keys?.length > 0 && <Teclas lista={paso.keys} luego={paso.then} className="mt-3" />}
           {paso.text && <p className="mt-3 leading-relaxed text-texto/80">{paso.text}</p>}
         </div>
-        {paso.image && <img src={paso.image} alt={paso.alt} className="corte-poly-sm w-full bg-black/30 object-contain" />}
+        {paso.image && <ImagenLigera src={paso.image} alt={paso.alt} className="corte-poly-sm block w-full bg-black/30" imgClassName="block w-full object-contain" />}
       </div>
       <div className="mt-6 flex gap-3">
         <button

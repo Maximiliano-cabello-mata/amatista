@@ -517,6 +517,19 @@ tareas:
     area: repo
     depende_de: [T-093]
     aceptacion: "Auditoría de docs, motor, add-on, backend y PWA corregida; todas las pruebas en verde; v3.0.0-alpha.10 en herramientas/crear-tags.sh tras la fusión"
+  - id: T-096
+    titulo: "Herramientas gráficas v3.6: medir librerías, crear visor de malla, diagrama de nodos e imagen ligera, y diseño CSS para condiciones difíciles"
+    version: v3.3.0
+    area: pwa
+    depende_de: [T-070]
+    aceptacion: "docs/plataforma/07_herramientas_graficas.md §8 y §9; mesh_viewer y node_graph validan en el servidor y se usan en el curso; vitest, pytest y build en verde"
+    evidencia: "frontend/src/components/leccion/VisorMalla.jsx, DiagramaNodos.jsx; frontend/src/components/ImagenLigera.jsx; frontend/src/index.css"
+  - id: T-097
+    titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
+    version: v3.4.0
+    area: pwa
+    depende_de: [T-096]
+    aceptacion: "docs/plataforma/07_herramientas_graficas.md §8 «Visor del modelo del alumno»: opción elegida y T-071 ajustada"
   - id: T-071
     titulo: Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)
     version: v3.4.0

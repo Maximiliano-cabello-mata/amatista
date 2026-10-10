@@ -165,6 +165,87 @@
             ]
           },
           {
+            "type": "node_graph",
+            "title": "Así se ve tu material en el editor de shaders",
+            "nodes": [
+              {
+                "id": "color",
+                "kind": "input",
+                "title": "RGB",
+                "outputs": [
+                  {
+                    "id": "color",
+                    "label": "Color",
+                    "socket": "color"
+                  }
+                ],
+                "note": "Un color fijo. Aquí eliges el color base de tu nave."
+              },
+              {
+                "id": "bsdf",
+                "kind": "shader",
+                "title": "Principled BSDF",
+                "outputs": [
+                  {
+                    "id": "bsdf",
+                    "label": "BSDF",
+                    "socket": "shader"
+                  }
+                ],
+                "inputs": [
+                  {
+                    "id": "base",
+                    "label": "Base Color",
+                    "socket": "color"
+                  },
+                  {
+                    "id": "metal",
+                    "label": "Metallic",
+                    "socket": "float",
+                    "value": 1
+                  },
+                  {
+                    "id": "rough",
+                    "label": "Roughness",
+                    "socket": "float",
+                    "value": 0.2
+                  },
+                  {
+                    "id": "trans",
+                    "label": "Transmission",
+                    "socket": "float",
+                    "value": 0
+                  }
+                ],
+                "note": "El nodo que ya conoces: recibe el color y decide si la superficie es metal (Metallic), cuánto brilla (Roughness) y si deja pasar la luz (Transmission)."
+              },
+              {
+                "id": "salida",
+                "kind": "output",
+                "title": "Material Output",
+                "inputs": [
+                  {
+                    "id": "surface",
+                    "label": "Surface",
+                    "socket": "shader"
+                  }
+                ],
+                "note": "Lo que llega a Surface es lo que ves en el render. Sin esta conexión el objeto se ve rosa o negro."
+              }
+            ],
+            "links": [
+              {
+                "from": "color.color",
+                "to": "bsdf.base"
+              },
+              {
+                "from": "bsdf.bsdf",
+                "to": "salida.surface"
+              }
+            ],
+            "caption": "En Blender lo abres en el espacio de trabajo Shading. El cable amarillo lleva color; el verde lleva el shader completo."
+          },
+          {
             "type": "matching",
             "id": "parejas_bpi1",
             "prompt": "Une cada material con sus valores.",

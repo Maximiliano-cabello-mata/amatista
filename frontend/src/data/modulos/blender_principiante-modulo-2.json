@@ -59,6 +59,13 @@
             ]
           },
           {
+            "type": "mesh_viewer",
+            "title": "Toca la malla como en Modo Edición",
+            "shape": "cube",
+            "mode": "vertex",
+            "caption": "Prueba las teclas 1, 2 y 3: el mismo cubo tiene 8 vértices, 12 aristas y 6 caras. Selecciona las 4 caras de los lados y fíjate que el panel lo cuenta igual que Blender."
+          },
+          {
             "type": "quiz_inline",
             "id": "quiz_bp2_1",
             "question": "Quieres cambiar solo la punta de tu espada. ¿En qué modo trabajas?",

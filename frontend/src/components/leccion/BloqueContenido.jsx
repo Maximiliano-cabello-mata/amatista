@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import Atajos from './Atajos';
 import Aviso from './Aviso';
 import BloqueCodigo from './BloqueCodigo';
@@ -17,6 +18,15 @@ import Markdown from './Markdown';
 import PasoAPaso from './PasoAPaso';
 import Pipeline from './Pipeline';
 import TarjetasConcepto from './TarjetasConcepto';
+
+// Herramientas gráficas v3.6: solo se cargan en las lecciones que las usan
+// (el service worker ya las tiene guardadas, así que también van sin conexión).
+const VisorMalla = lazy(() => import('./VisorMalla'));
+const DiagramaNodos = lazy(() => import('./DiagramaNodos'));
+
+function Diferido({ children, alto }) {
+  return <Suspense fallback={<div className="esqueleto corte-poly" style={{ minHeight: alto }} role="status" aria-label="Cargando" />}>{children}</Suspense>;
+}
 
 // Bloques interactivos: todos reciben {bloque, alCompletar, resuelta}.
 const INTERACTIVOS = {
@@ -69,6 +79,18 @@ function BloqueContenido({ bloque, alCompletar, alDescubrirTodas, resuelta = fal
       return <Atajos title={bloque.title} items={bloque.items} practice={bloque.practice} />;
     case 'compare':
       return <Comparar title={bloque.title} before={bloque.before} after={bloque.after} mode={bloque.mode} caption={bloque.caption} />;
+    case 'mesh_viewer':
+      return (
+        <Diferido alto="26rem">
+          <VisorMalla bloque={bloque} />
+        </Diferido>
+      );
+    case 'node_graph':
+      return (
+        <Diferido alto="20rem">
+          <DiagramaNodos bloque={bloque} />
+        </Diferido>
+      );
     case 'video_player':
       return (
         <video controls preload="none" src={bloque.url} className="corte-poly aspect-video w-full bg-black">
