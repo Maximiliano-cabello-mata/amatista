@@ -537,6 +537,27 @@ tareas:
     area: motor
     depende_de: [T-098]
     aceptacion: "El alumno de prueba termina el tren y la espada solo con la tarjeta de la misión; los ajustes que salgan quedan en el mismo PR"
+    bloqueo: "Reemplazada por T-102: el add-on 5.0 (Amatista Taller) cambia la experiencia que se iba a probar"
+  - id: T-100
+    titulo: "Amatista Taller (motor 5, add-on 5.0): la habilidad como unidad con Mira, Hazlo conmigo, Hazlo tú, Úsalo y Recuérdalo, modelo del alumno, molde, pistas con freno, Mi isla y la lección del taller en la plataforma"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-098]
+    aceptacion: "33 habilidades y 9 talleres en practices/blender/habilidades.json; el add-on, la plataforma y el servidor siguen el mismo plan; pytest, vitest, build y en_blender.py en verde"
+    evidencia: "engine/amatista_engine/taller/; addon/amatista_blender/taller/; backend/api/taller.py; backend/sql/012_taller.sql; frontend/src/components/leccion/interactivos/TallerBlender.jsx; docs/motor/referencia/16_amatista_taller.md"
+  - id: T-101
+    titulo: "Aplicar 012 en Oracle, actualizar el backend e instalar Amatista Motor 5.0 (después de probarlo)"
+    version: v3.3.0
+    area: db
+    depende_de: [T-100, T-102]
+    aceptacion: "012 ejecutado en Database Actions, diagnóstico con 21 tablas, log con «Habilidades del taller», GET /api/addon/v1/talleres con 9 talleres y guardado true (docs/despliegue/2026-10-10_amatista_taller_motor_5.md)"
+    bloqueo: "Lo ejecuta el usuario en Database Actions y en la VM"
+  - id: T-102
+    titulo: "Probar Amatista Taller en Blender con ventana (tarjeta y sus botones, molde, Mira, pistas, Saltar, el tren, Mi isla y Continuar desde la lección) hasta acordar que el add-on funciona"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-100]
+    aceptacion: "El alumno de prueba termina el taller del módulo 1 y el tren solo con la tarjeta; los ajustes que salgan quedan en el mismo PR"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
