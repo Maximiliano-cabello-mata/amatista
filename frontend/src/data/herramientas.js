@@ -55,7 +55,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Guiar un procedimiento paso por paso, con las teclas de cada paso.',
     cuando: 'Antes de la práctica en Blender: el alumno ve el camino que luego hará.',
     formula: ['explora', 'practica'],
-    nueva: true,
   },
   shortcuts: {
     nombre: 'Atajos de teclado',
@@ -63,7 +62,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Reunir los atajos del módulo y practicarlos con el teclado («Pruébate»).',
     cuando: 'Al final de la teoría, para fijar las teclas que pedirá la práctica.',
     formula: ['practica'],
-    nueva: true,
   },
   compare: {
     nombre: 'Comparar',
@@ -71,6 +69,21 @@ export const HERRAMIENTAS = {
     paraQue: 'Poner dos cosas lado a lado (bien y mal, antes y después), en columnas o con deslizador.',
     cuando: 'Para errores típicos: el alumno ve la diferencia en vez de leerla.',
     formula: ['explora', 'reto'],
+  },
+  mesh_viewer: {
+    nombre: 'Visor de malla',
+    categoria: 'visualizar',
+    paraQue: 'Girar una malla low poly y seleccionar sus vértices, aristas o caras como en el Modo Edición (1, 2, 3).',
+    cuando: 'Para presentar vértices, aristas y caras, o comparar cuántas caras tiene cada primitiva antes de modelar.',
+    formula: ['gancho', 'explora'],
+    nueva: true,
+  },
+  node_graph: {
+    nombre: 'Diagrama de nodos',
+    categoria: 'visualizar',
+    paraQue: 'Mostrar un árbol de nodos de Blender (materiales, Geometry Nodes) y recorrerlo nodo por nodo.',
+    cuando: 'Antes de que el alumno conecte nodos en Blender: ve el flujo completo y qué hace cada nodo.',
+    formula: ['explora'],
     nueva: true,
   },
   concept_cards: {
