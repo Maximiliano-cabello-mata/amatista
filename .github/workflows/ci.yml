@@ -57,7 +57,7 @@ jobs:
 
   addon-blender:
     # El add-on dentro de Blender de verdad (módulo bpy de PyPI, sin ventana):
-    # registro, práctica de la mesa, pistas, modo Author y dibujo de paneles.
+    # registro, prácticas del tren y la espada, «Ver el ejemplo», modo Author y paneles.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
