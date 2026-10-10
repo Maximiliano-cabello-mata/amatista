@@ -15,7 +15,7 @@ El contenido sigue su propio flujo en los JSON de los módulos y el tablero lo r
 
 ## Cómo se usa
 
-1. **Crear una tarea**: agrégala en [`tareas.yml`](tareas.yml) con el siguiente id libre (hoy `T-096`), su versión y su área. Opcional: `estado` (estado mínimo puesto a mano, para lo que ocurre fuera de git, como un script ejecutado en Oracle), `depende_de`, `aceptacion`, `evidencia`, `bloqueo`. Los tres últimos aparecen como notas debajo de la tarea en el detalle por versión de `KANBAN.md`.
+1. **Crear una tarea**: agrégala en [`tareas.yml`](tareas.yml) con el siguiente id libre (hoy `T-098`), su versión y su área. Opcional: `estado` (estado mínimo puesto a mano, para lo que ocurre fuera de git, como un script ejecutado en Oracle), `depende_de`, `aceptacion`, `evidencia`, `bloqueo`. Los tres últimos aparecen como notas debajo de la tarea en el detalle por versión de `KANBAN.md`.
 2. **Trabajar en ella**: menciona su id en el commit y la tarjeta se mueve sola.
 
 | En el mensaje del commit | La tarjeta pasa a |

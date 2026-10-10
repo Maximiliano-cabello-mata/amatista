@@ -1,6 +1,6 @@
 # 04 · Herramientas de enseñanza
 
-Una lección de Amatista se arma con **bloques** (`contentBlocks`). Cada bloque es una herramienta: explica, visualiza, hace practicar o lleva a Blender. Hay **20**; tres son nuevas en la v3.1 (Paso a paso, Atajos de teclado y Comparar). El examen del módulo es un tipo de lección aparte (`type: "exam"` con `quizData`).
+Una lección de Amatista se arma con **bloques** (`contentBlocks`). Cada bloque es una herramienta: explica, visualiza, hace practicar o lleva a Blender. Hay **22**; dos son nuevas en la v3.6 (Visor de malla y Diagrama de nodos, ver [07 Herramientas gráficas](07_herramientas_graficas.md) §8). El examen del módulo es un tipo de lección aparte (`type: "exam"` con `quizData`).
 
 - **En el panel**: *Admin › Enseñanza › Herramientas* (`#/admin/herramientas`) muestra cada una con para qué sirve, cuándo usarla, en qué paso de la Fórmula encaja, la vista previa tal como la ve el alumno y su JSON para copiar. En el editor de lecciones, **Agregar bloque** las agrupa con las mismas categorías.
 - **La forma exacta** la valida el servidor (`backend/contenido/validacion.py`); los ejemplos son los de `backend/contenido/plantillas.py` (`GET /api/contenido/plantillas`). Si un campo está mal, el error dice dónde: «contentBlocks[2] (shortcuts): «items[0].keys» debe ser una lista de 1 a 6 teclas».
@@ -18,8 +18,10 @@ Una lección de Amatista se arma con **bloques** (`contentBlocks`). Cada bloque 
 | | Aviso | `callout` | Un consejo, dato o error típico (una vez por lección). | Reto |
 | | Código | `code_snippet` | Código con colores y botón de copiar. | Explora |
 | Visualizar | **Paso a paso** *(nueva)* | `step_by_step` | Un procedimiento paso por paso, con las teclas de cada paso. | Explora, Práctica |
-| | **Atajos de teclado** *(nueva)* | `shortcuts` | Los atajos del módulo y un modo «Pruébate» para practicarlos. | Práctica |
-| | **Comparar** *(nueva)* | `compare` | Dos cosas lado a lado (bien/mal, antes/después). | Explora, Reto |
+| | Atajos de teclado | `shortcuts` | Los atajos del módulo y un modo «Pruébate» para practicarlos. | Práctica |
+| | Comparar | `compare` | Dos cosas lado a lado (bien/mal, antes/después). | Explora, Reto |
+| | **Visor de malla** *(nueva)* | `mesh_viewer` | Girar una malla y seleccionar vértices, aristas o caras (1, 2, 3) como en el Modo Edición. | Gancho, Explora |
+| | **Diagrama de nodos** *(nueva)* | `node_graph` | Un árbol de nodos de Blender que se recorre nodo por nodo. | Explora |
 | | Tarjetas de concepto | `concept_cards` | Descubrir 3 a 6 términos volteando tarjetas. | Explora |
 | | Línea de tiempo | `timeline` | Hechos o etapas en el tiempo. | Explora |
 | | Pipeline | `pipeline` | Un proceso como cadena de etapas. | Explora |
@@ -51,6 +53,49 @@ Paso a paso y Atajos de teclado comparten la forma de escribir teclas:
 Los nombres son libres (hasta 20 caracteres): `Ctrl`, `Shift`, `Alt`, `Tab`, `Enter`, `Supr`, `Clic`, `Rueda`, letras y números. En el modo «Pruébate» solo se practican los atajos sin `then` (las secuencias se muestran pero no se piden).
 
 ## Herramientas nuevas en detalle
+
+### Visor de malla (`mesh_viewer`)
+
+Una malla low poly en SVG (sin WebGL). El alumno la gira arrastrando o con las flechas y selecciona vértices, aristas o caras con 1, 2 y 3 (como en el Modo Edición); Z cambia entre sólido y alambre. El panel de la esquina cuenta como el de Estadísticas de Blender.
+
+| Campo | Obligatorio | Qué es |
+|---|---|---|
+| `title` | no | Título. |
+| `shape` | sí | `cube`, `plane`, `cylinder`, `cone`, `uv_sphere`, `ico_sphere`, `torus` o `custom`. |
+| `segments` | no | Lados del cilindro y del cono (16), segmentos de la esfera UV (16) y del toroide (24); de 3 a 64. |
+| `rings` | no | Anillos de la esfera UV (8) y del toroide (8); de 3 a 24. Nunca pasa de 600 caras. |
+| `subdivisions` | no | Subdivisiones de la icoesfera (2), de 1 a 3, como en Blender. |
+| `mode` | no | Modo inicial: `vertex` (por defecto), `edge` o `face`. |
+| `wireframe` | no | `true` para empezar en alambre. |
+| `mesh` | con `custom` | `{vertices: [[x, y, z], …], faces: [[0, 1, 2, 3], …]}`, Z hacia arriba, hasta 400 vértices y 600 caras. |
+| `caption` | no | Qué hacer con la malla. |
+
+```json
+{"type": "mesh_viewer", "title": "Vértices, aristas y caras", "shape": "cube", "mode": "vertex",
+ "caption": "Gira el cubo y cuenta: 8 vértices, 12 aristas y 6 caras."}
+```
+
+### Diagrama de nodos (`node_graph`)
+
+Un árbol de nodos con los colores de Blender. Los nodos se acomodan solos en columnas siguiendo los enlaces (`col` fija una columna a mano). Al tocar un nodo se lee su `note`; «Recorrer el flujo» los explica en orden.
+
+| Campo | Obligatorio | Qué es |
+|---|---|---|
+| `title`, `caption` | no | Título y nota al pie. |
+| `nodes` | sí | De 1 a 12: `{id, title, kind, inputs?, outputs?, note?, col?}`. `kind`: `input`, `output`, `shader`, `texture`, `color`, `vector`, `converter`, `geometry`, `group` o `layout` (da el color del encabezado). `title` hasta 28 caracteres. |
+| `inputs`, `outputs` | no | Hasta 8 conectores `{id, label, socket, value?}`. `socket`: `float`, `int`, `boolean`, `vector`, `color`, `shader`, `geometry`, `string`, `object` o `material`. `value` (solo entradas) se muestra en el campo, como `0.5`. |
+| `links` | no | Hasta 24 `{from: "nodo.salida", to: "nodo.entrada"}`. Una entrada recibe un solo enlace y no puede haber ciclos. |
+
+```json
+{"type": "node_graph", "title": "Un material con textura",
+ "nodes": [
+  {"id": "ruido", "kind": "texture", "title": "Noise Texture", "outputs": [{"id": "color", "label": "Color", "socket": "color"}]},
+  {"id": "bsdf", "kind": "shader", "title": "Principled BSDF", "outputs": [{"id": "bsdf", "label": "BSDF", "socket": "shader"}],
+   "inputs": [{"id": "base", "label": "Base Color", "socket": "color"}, {"id": "rough", "label": "Roughness", "socket": "float", "value": 0.5}]},
+  {"id": "salida", "kind": "output", "title": "Material Output", "inputs": [{"id": "surface", "label": "Surface", "socket": "shader"}]}],
+ "links": [{"from": "ruido.color", "to": "bsdf.base"}, {"from": "bsdf.bsdf", "to": "salida.surface"}]}
+```
+
 
 ### Paso a paso (`step_by_step`)
 
