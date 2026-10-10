@@ -10,11 +10,18 @@ export const TIPOS_INTERACTIVOS = [
   'scene_explorer',
   'code_challenge',
   'blender_practice',
+  // Motor 5: el taller de habilidades del módulo. Se resuelve cuando se abre el proyecto.
+  'blender_taller',
 ];
+
+// La tarjeta del proyecto (blender_taller con vista «proyecto») solo informa: la
+// práctica del proyecto, en la misma lección, es la que se resuelve.
+export const esVistaProyecto = (bloque) => bloque?.type === 'blender_taller' && bloque.vista === 'proyecto';
 
 // Bloques que hay que resolver para completar la lección. Las tarjetas de
 // concepto (anteriores a los interactivos) también cuentan.
-export const esActividad = (bloque) => TIPOS_INTERACTIVOS.includes(bloque?.type) || bloque?.type === 'concept_cards';
+export const esActividad = (bloque) =>
+  (TIPOS_INTERACTIVOS.includes(bloque?.type) && !esVistaProyecto(bloque)) || bloque?.type === 'concept_cards';
 
 // Actividades de una lección: {clave, indice, bloque, requerida, registrable}.
 // `registrable` = se envía al progreso con registrarActividad (necesita id).

@@ -16,6 +16,7 @@ const ETIQUETAS = {
   scene_explorer: 'Laboratorio 3D',
   code_challenge: 'Reto de código',
   blender_practice: 'Práctica en Blender',
+  blender_taller: 'Taller en Blender',
 };
 
 // Marco común de las actividades: tipo, estado (pendiente / resuelta), XP

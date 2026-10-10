@@ -35,6 +35,7 @@ export const ETIQUETAS_LECCION = {
   code_interactive: { texto: 'Código', Icono: IconoCodigo, tono: 'neon' },
   exam: { texto: 'Examen', Icono: IconoExamen, tono: 'aviso' },
   blender: { texto: 'Práctica en Blender', Icono: IconoCubo, tono: 'blender' },
+  taller: { texto: 'Taller en Blender', Icono: IconoCubo, tono: 'blender' },
 };
 
 // Etiquetas del módulo y de estado.
@@ -58,7 +59,9 @@ export function textoNivel(nivelId) {
 }
 
 // Etiqueta de una lección: la práctica en Blender gana sobre el tipo.
+// esPractica: true (práctica) o 'taller' (el taller de habilidades del módulo).
 export function etiquetaLeccion(leccion, esPractica = false) {
+  if (esPractica === 'taller') return ETIQUETAS_LECCION.taller;
   if (esPractica) return ETIQUETAS_LECCION.blender;
   return ETIQUETAS_LECCION[leccion?.type] ?? ETIQUETAS_LECCION.theory_reading;
 }

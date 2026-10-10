@@ -17,6 +17,7 @@ import { CristalLogo, IconoCandado } from '../components/Iconos';
 import LogoCurso from '../components/LogoCurso';
 import EstacionBlender from '../components/modulo/EstacionBlender';
 import RutaModulo from '../components/modulo/RutaModulo';
+import TuIsla from '../components/modulo/TuIsla';
 import Jefe from '../components/temas/Jefe';
 import Escenario from '../components/temas/Escenario';
 import MundoTema from '../components/temas/MundoTema';
@@ -258,6 +259,7 @@ function ArbolNiveles({ ruta, elegido, progreso, acento }) {
 
 // Tu Blender, dentro del curso: si está conectado y cuántas prácticas lleva
 // registradas. Lo que se hace en Blender cuenta solo con Blender conectado.
+// Motor 5: cada módulo tiene su taller de habilidades y su proyecto.
 function TuBlender({ niveles }) {
   const { token, usuario } = useAuth();
   const [datos, setDatos] = useState(null);
@@ -278,10 +280,9 @@ function TuBlender({ niveles }) {
     };
   }, [token]);
 
-  const total = niveles.reduce(
-    (suma, curso) => suma + curso.modulos.reduce((s, m) => s + (m.contenido ? practicasDelModulo(m).length : 0), 0),
-    0,
-  );
+  const estaciones = niveles.flatMap((curso) => curso.modulos.flatMap((m) => (m.contenido ? practicasDelModulo(m) : [])));
+  const talleres = estaciones.filter((p) => p.taller).length;
+  const proyectos = estaciones.length - talleres;
   const conectado = Boolean(datos?.conectados?.length);
   let estado = 'Entra con tu cuenta para conectar Blender y registrar tus prácticas.';
   if (usuario && !datos) estado = 'Revisando tu Blender…';
@@ -299,7 +300,9 @@ function TuBlender({ niveles }) {
         <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-blender">Tu Blender</p>
         <p className="font-bold text-white">{estado}</p>
         <p className="mt-0.5 text-sm text-texto/70">
-          {total} prácticas en Blender en este curso
+          {talleres > 0
+            ? `${talleres} ${talleres === 1 ? 'taller' : 'talleres'} de habilidades y ${proyectos} ${proyectos === 1 ? 'proyecto' : 'proyectos'} en Blender en este curso`
+            : `${proyectos} prácticas en Blender en este curso`}
           {datos && datos.registradas > 0 ? ` · ${datos.completadas} completadas y ${datos.registradas} registradas en tu cuenta` : ''}.
         </p>
       </div>
@@ -413,6 +416,7 @@ function Curso({ cursoId }) {
 
       {varios && <ArbolNiveles ruta={ruta} elegido={nivel} progreso={progreso} acento={acento} />}
       {conBlender && <TuBlender niveles={ruta.niveles} />}
+      {conBlender && <TuIsla className="mt-4" />}
 
       {/* El nivel elegido */}
       <section className="mt-10" aria-labelledby="nivel-titulo">

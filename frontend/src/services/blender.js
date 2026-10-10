@@ -79,6 +79,29 @@ export const ordenarBlender = (token, tipo, practicaId, { confirmar = false } = 
     cuerpo: { tipo, ...(practicaId ? { practica_id: practicaId } : {}), ...(confirmar ? { confirmar: true } : {}) },
   });
 
+// --- Amatista Taller (motor 5) ---------------------------------------------------------
+// La habilidad es la unidad: Mira → Hazlo conmigo → Hazlo tú → Úsalo → Recuérdalo. El plan
+// (qué toca ahora, el dominio de cada habilidad y la pieza de la isla) lo calcula el servidor.
+// Un servidor viejo responde 404: la plataforma lo muestra sin trabar la lección.
+
+export const obtenerTaller = (token, tallerId) => pedirJSON(`${BASE}/talleres/${parte(tallerId)}`, { token });
+
+export const listarTalleres = (token) => pedirJSON(`${BASE}/talleres`, { token });
+
+// tipo: taller_abrir · taller_continuar · taller_pausa · taller_pista · taller_mirame ·
+// taller_probar · taller_repaso · isla. Solo viajan los campos con valor.
+export const ordenarTaller = (token, tipo, { taller, actividad, habilidad } = {}) =>
+  pedirJSON(`${BASE}/ordenes`, {
+    metodo: "POST",
+    token,
+    cuerpo: {
+      tipo,
+      ...(taller ? { taller } : {}),
+      ...(actividad ? { actividad } : {}),
+      ...(habilidad ? { habilidad } : {}),
+    },
+  });
+
 export const leerAjustesBlender = (token) => pedirJSON(`${BASE}/ajustes`, { token });
 
 export const guardarAjustesBlender = (token, cambios) =>

@@ -13,6 +13,7 @@ import PracticaBlender from './interactivos/PracticaBlender';
 import PuntosImagen from './interactivos/PuntosImagen';
 import QuizEnLinea from './interactivos/QuizEnLinea';
 import RetoCodigo from './interactivos/RetoCodigo';
+import TallerBlender from './interactivos/TallerBlender';
 import LineaTiempo from './LineaTiempo';
 import Markdown from './Markdown';
 import PasoAPaso from './PasoAPaso';
@@ -38,6 +39,7 @@ const INTERACTIVOS = {
   scene_explorer: ExploradorEscena,
   code_challenge: RetoCodigo,
   blender_practice: PracticaBlender,
+  blender_taller: TallerBlender,
 };
 
 // Dibuja un bloque de contenido del JSON de la lección según su "type".

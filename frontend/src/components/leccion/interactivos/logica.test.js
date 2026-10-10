@@ -185,8 +185,8 @@ describe('actividades de los módulos 1', () => {
   });
 
   it('usan los 7 tipos interactivos del navegador', () => {
-    // blender_practice se resuelve en Blender: vive en el módulo 2 (blender-modulo-2.json).
-    const delNavegador = TIPOS_INTERACTIVOS.filter((tipo) => tipo !== 'blender_practice');
+    // blender_practice y blender_taller se resuelven en Blender: viven en los módulos de Blender.
+    const delNavegador = TIPOS_INTERACTIVOS.filter((tipo) => !['blender_practice', 'blender_taller'].includes(tipo));
     expect(new Set(bloques.map((b) => b.type).filter((tipo) => TIPOS_INTERACTIVOS.includes(tipo)))).toEqual(
       new Set(delNavegador),
     );
