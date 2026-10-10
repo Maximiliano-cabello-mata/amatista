@@ -2,7 +2,7 @@
 
 Qué es la base de datos de Amatista, qué scripts la crean y en qué estado está en producción. Para quien mantiene el backend, aplica scripts en Oracle o necesita saber dónde vive cada dato.
 
-Actualizado: 10 de octubre de 2026 (main con el script 011 de Amatista Motor 3.5.1)
+Actualizado: 10 de octubre de 2026 (script 012 de Amatista Taller, motor 5)
 
 ## Índice
 
@@ -40,7 +40,7 @@ La fuente para instalar o actualizar la base **no** es esta carpeta: son los scr
 | Usuario con el que se conecta el backend | Hoy `ADMIN` (T-004 pendiente). Opcional: `AMATISTA_APP` (script 004) con `DB_ESQUEMA=ADMIN` en `backend/.env`; [`backend/database/conexion.py`](../../backend/database/conexion.py) hace `ALTER SESSION SET CURRENT_SCHEMA` en cada conexión. |
 | Desarrollo y pruebas | SQLite. Con `DATABASE_URL=sqlite:///./amatista_local.db` el backend crea las tablas solo con `Base.metadata.create_all` al arrancar ([`backend/main.py`](../../backend/main.py), también `herramientas/crear_admin.py` y `herramientas/contenido.py`). Las pruebas (`backend/tests/conftest.py`) usan una SQLite temporal por prueba. |
 | Fuente de verdad de tablas y columnas | [`backend/database/modelos.py`](../../backend/database/modelos.py) (lo dice `LEEME.txt:3`). En Oracle las tablas **no** las crea SQLAlchemy: las crean los scripts. |
-| Tablas | 20 al aplicar 001→011 (18 con 007; 14 hoy en producción). 011 no crea tablas: agrega una columna. |
+| Tablas | 21 al aplicar 001→012 (20 con 010 y 011, 18 con 007; 14 hoy en producción). 011 no crea tablas: agrega una columna; 012 agrega 10 columnas a `HABILIDADES_ALUMNO` y la tabla `TALLERES_ALUMNO`. |
 | Vistas | 6: `V_AMATISTA_ESPACIO` (003), `V_AMATISTA_MAPA`, `V_AMATISTA_FICHAS_INCOMPLETAS`, `V_AMATISTA_COMPATIBILIDAD` (006), `V_AMATISTA_PRACTICAS` (007). |
 | Código PL/SQL | Procedimiento `AMATISTA_PURGAR` y job `AMATISTA_PURGA_DIARIA` (003); paquete `AMATISTA_AUTOR` (006). |
 | Secuencias y triggers | Ninguno. Todos los ids los genera la aplicación (UUID o ids de texto legibles). |
@@ -54,17 +54,17 @@ Tomado de [`backend/sql/LEEME.txt`](../../backend/sql/LEEME.txt), sección 2:
 
 ```text
 Base NUEVA (sin tablas, o prototipo que se puede borrar):
-    001 -> 002 -> 003 -> 005 -> 006 -> 007 -> 008 -> 010 -> 011 -> 004 (opcional)
+    001 -> 002 -> 003 -> 005 -> 006 -> 007 -> 008 -> 010 -> 011 -> 012 -> 004 (opcional)
     (009 solo si hay datos de la v2 que archivar)
 
 Base EXISTENTE CON DATOS (alumnos reales):
-    002 -> 003 -> 005 -> 006 -> 007 -> 008 -> 010 -> 011 -> 004 (opcional) -> 009
+    002 -> 003 -> 005 -> 006 -> 007 -> 008 -> 010 -> 011 -> 012 -> 004 (opcional) -> 009
     NUNCA 001: borra usuarios, sesiones y progreso.
 ```
 
 - **001 es destructivo**: borra `PROGRESO_LECCIONES`, `SESIONES_WEB` (tabla de un diseño antiguo), `SESIONES`, `USUARIOS`, `LOGROS`, `EVENTOS_APRENDIZAJE`, `LECCIONES`, `MODULOS` y `CURSOS` con `CASCADE CONSTRAINTS PURGE` y crea limpias las tres tablas base.
-- **002 a 011 son idempotentes**: antes de cada cambio consultan `USER_TABLES`, `USER_TAB_COLUMNS`, `USER_CONSTRAINTS` o `USER_INDEXES`, o usan `CREATE OR REPLACE`. Se pueden repetir.
-- **004 requiere 002 y 005.** Da permisos sobre las 20 tablas; las de 007 y 010 son opcionales (`v_opcional`): si ya existen reciben permisos y, si no, 007 y 010 los dan al ejecutarse. Por eso 004 se puede ejecutar hoy en producción. Va al final del orden para dar todos los permisos de una vez.
+- **002 a 012 son idempotentes**: antes de cada cambio consultan `USER_TABLES`, `USER_TAB_COLUMNS`, `USER_CONSTRAINTS` o `USER_INDEXES`, o usan `CREATE OR REPLACE`. Se pueden repetir.
+- **004 requiere 002 y 005.** Da permisos sobre las 21 tablas; las de 007, 010 y 012 son opcionales (`v_opcional`): si ya existen reciben permisos y, si no, 007, 010 y 012 los dan al ejecutarse. Por eso 004 se puede ejecutar hoy en producción. Va al final del orden para dar todos los permisos de una vez.
 - **009 va después de importar** los cursos nuevos (`python herramientas/contenido.py importar`): si se archiva antes, el catálogo se queda sin Blender.
 - Cada script avisa con `RAISE_APPLICATION_ERROR(-20001 …)` si falta un script anterior.
 
@@ -75,7 +75,7 @@ Base EXISTENTE CON DATOS (alumnos reales):
 | [`001_esquema_amatista.sql`](../../backend/sql/001_esquema_amatista.sql) | Destructivo | Borra las tablas de la app. Crea `USUARIOS` (3 columnas), `SESIONES` (5), `PROGRESO_LECCIONES` (7) y el índice `IX_SESIONES_USUARIO`. | 3 |
 | [`002_autenticacion_contenido_eventos.sql`](../../backend/sql/002_autenticacion_contenido_eventos.sql) | Incremental | `USUARIOS` +14 columnas, `UQ_USUARIOS_EMAIL` y 3 CHECK. `SESIONES.ID` se amplía a `VARCHAR2(64)`, +`CREADO_EN`, `EXPIRA_EN`; cierra las sesiones antiguas (`activa = 0` si `LENGTH(id) <> 64`). `PROGRESO_LECCIONES` +`DATOS_LIGEROS` (IS JSON), `COMPLETADA_EN` (rellena con `actualizado_en` las completadas). Tablas nuevas: `LOGROS` (IOT), `EVENTOS_APRENDIZAJE` (particionada por mes, con 2 índices LOCAL), `CURSOS`, `MODULOS`, `LECCIONES` (+ `IX_MODULOS_CURSO`, `IX_LECCIONES_MODULO`). | 8 |
 | [`003_mantenimiento.sql`](../../backend/sql/003_mantenimiento.sql) | Idempotente | Procedimiento `AMATISTA_PURGAR(p_dias_sesiones DEFAULT 90, p_dias_eventos DEFAULT 400)`, job `AMATISTA_PURGA_DIARIA` (todos los días a las 09:15 UTC), vista `V_AMATISTA_ESPACIO`, consultas de espacio y de filas. No crea tablas. | 8 |
-| [`004_usuario_aplicacion.sql`](../../backend/sql/004_usuario_aplicacion.sql) | Opcional (T-004) | Usuario `AMATISTA_APP` con `CREATE SESSION` y `SELECT, INSERT, UPDATE, DELETE` sobre las 20 tablas. Exige las de 002 y 005; las de 007 y 010 reciben permisos si ya existen. | — |
+| [`004_usuario_aplicacion.sql`](../../backend/sql/004_usuario_aplicacion.sql) | Opcional (T-004) | Usuario `AMATISTA_APP` con `CREATE SESSION` y `SELECT, INSERT, UPDATE, DELETE` sobre las 21 tablas. Exige las de 002 y 005; las de 007, 010 y 012 reciben permisos si ya existen. | — |
 | [`005_niveles_habilidades_versiones.sql`](../../backend/sql/005_niveles_habilidades_versiones.sql) | Incremental (v3.0.0) | Tablas `NIVELES`, `HABILIDADES`, `HABILIDADES_ALUMNO` (IOT), `EVALUACIONES_RUBRICA`, `VERSIONES_BLENDER`, `VERIFICACIONES_BLENDER`; columna `MODULOS.NIVEL_ID` con `FK_MODULOS_NIVEL`; índices `IX_HABILIDADES_CURSO`, `IX_VERIFICACIONES_LECCION`. Si existe `AMATISTA_APP`, le da permisos. | 14 |
 | [`006_herramientas_autor.sql`](../../backend/sql/006_herramientas_autor.sql) | Idempotente | Vistas `V_AMATISTA_MAPA`, `V_AMATISTA_FICHAS_INCOMPLETAS`, `V_AMATISTA_COMPATIBILIDAD` y el paquete `AMATISTA_AUTOR` (función `ahora` y 9 procedimientos). No crea tablas. | 14 |
 | [`007_motor_practicas.sql`](../../backend/sql/007_motor_practicas.sql) | Incremental | Tablas `ADDON_VINCULOS`, `PRACTICAS`, `PRACTICA_VERSIONES`, `PROGRESO_PRACTICAS`; índices `IX_PRACTICAS_LECCION`, `IX_PROG_PRACTICAS_PRACTICA`; vista `V_AMATISTA_PRACTICAS`; inserta (con `MERGE` que solo inserta) 4 habilidades `bl-*` de la práctica de la mesa si existe el nivel `blender-n1`. Si existe `AMATISTA_APP`, le da permisos. | 18 |
@@ -83,6 +83,7 @@ Base EXISTENTE CON DATOS (alumnos reales):
 | [`009_archivar_blender_v2.sql`](../../backend/sql/009_archivar_blender_v2.sql) | Idempotente | Archiva (no borra) el curso `blender` de la v2, sus niveles y módulos y las prácticas `blender.n1.*`. No crea tablas. | 18 |
 | [`010_enlace_blender.sql`](../../backend/sql/010_enlace_blender.sql) | Incremental (motor 3.4) | Tablas `ADDON_ENLACES` (el latido de cada Blender conectado y su orden pendiente) y `ADDON_AJUSTES` (cómo se ve Blender para cada alumno); índice `IX_ADDON_ENLACES_USUARIO`. Si existe `AMATISTA_APP`, le da permisos. Sin 010 el backend sigue funcionando, sin enlace en vivo. | 20 |
 | [`011_detalle_instructor.sql`](../../backend/sql/011_detalle_instructor.sql) | Incremental (motor 3.5.1) | Columna `ADDON_ENLACES.DETALLE` (`CLOB`, anulable) con `CK_ENLACES_DETALLE` (`IS JSON`): lo que muestra el instructor del add-on, para que «Ahora en Blender» lo vea aunque el backend corra en varios procesos. Exige 010. ADDON_ENLACES pasa de 11 a 12 columnas. Los permisos que ya tiene `AMATISTA_APP` cubren la columna nueva. | 20 |
+| [`012_taller.sql`](../../backend/sql/012_taller.sql) | Incremental (motor 5) | Amatista Taller: 10 columnas anulables en `HABILIDADES_ALUMNO` (el modelo del alumno: dominio, intentos, aciertos, repaso…) con 3 CHECK y la tabla `TALLERES_ALUMNO` (reto final y pieza de la isla de cada taller). Si existe `AMATISTA_APP`, le da permisos. Sin 012 el backend sigue funcionando: el taller se guarda en Blender y se envía después. | 21 |
 
 El detalle de cada tabla, columna y restricción está en [`esquema.md`](esquema.md).
 
@@ -103,6 +104,7 @@ Según [`backend/sql/LEEME.txt`](../../backend/sql/LEEME.txt) (líneas 60-64) y 
 | 009 | **Pendiente.** Después de importar los cursos nuevos (T-064). |
 | 010 | **Pendiente.** Después del piloto (T-087). Sin 010 la API responde «sin enlace en vivo» y lo demás funciona igual. |
 | 011 | **Pendiente.** Va después de 010 y antes del backend 3.5.1 ([correcciones 3.5.1](../despliegue/2026-10-09_correcciones_3_5_1.md)). |
+| 012 | **Pendiente.** Va después de 011 y antes del backend del motor 5 ([Amatista Taller](../despliegue/2026-10-10_amatista_taller_motor_5.md)). |
 
 **Verificación de los números contra el SQL** (hecha leyendo los `CREATE TABLE` de cada script):
 
@@ -115,8 +117,9 @@ Según [`backend/sql/LEEME.txt`](../../backend/sql/LEEME.txt) (líneas 60-64) y 
 | 008 | Ninguna (`CURSOS` +2 columnas) | 18 | Sí: la verificación de 008 espera 14 columnas en `CURSOS`. |
 | 010 | `ADDON_ENLACES`, `ADDON_AJUSTES` | **20** | Sí: coincide con la verificación de 010, la lista de 004 y los 20 modelos de `modelos.py`. |
 | 011 | Ninguna (`ADDON_ENLACES` +1 columna) | 20 | Sí: la verificación de 011 espera 12 columnas en `ADDON_ENLACES`. |
+| 012 | `TALLERES_ALUMNO` (y `HABILIDADES_ALUMNO` +10 columnas) | **21** | Sí: la verificación de 012 espera 21 tablas y 15 columnas en `HABILIDADES_ALUMNO`. |
 
-003, 006, 008, 009 y 011 no crean tablas, por eso no cambian la cuenta. Los conteos de columnas esperados por las consultas de verificación (USUARIOS 17, SESIONES 7, PROGRESO_LECCIONES 9, LOGROS 3, EVENTOS_APRENDIZAJE 11, CURSOS 12 con 007 y 14 con 008, MODULOS 12, LECCIONES 14, NIVELES 10, HABILIDADES 7, HABILIDADES_ALUMNO 5, EVALUACIONES_RUBRICA 8, VERSIONES_BLENDER 6, VERIFICACIONES_BLENDER 12, ADDON_VINCULOS 8, PRACTICAS 13, PRACTICA_VERSIONES 9, PROGRESO_PRACTICAS 16, ADDON_ENLACES 11 con 010 y 12 con 011, ADDON_AJUSTES 3) también cuadran con las columnas de los `CREATE TABLE` y `ALTER TABLE ... ADD`.
+003, 006, 008, 009 y 011 no crean tablas, por eso no cambian la cuenta. Los conteos de columnas esperados por las consultas de verificación (USUARIOS 17, SESIONES 7, PROGRESO_LECCIONES 9, LOGROS 3, EVENTOS_APRENDIZAJE 11, CURSOS 12 con 007 y 14 con 008, MODULOS 12, LECCIONES 14, NIVELES 10, HABILIDADES 7, HABILIDADES_ALUMNO 5 y 15 con 012, EVALUACIONES_RUBRICA 8, VERSIONES_BLENDER 6, VERIFICACIONES_BLENDER 12, ADDON_VINCULOS 8, PRACTICAS 13, PRACTICA_VERSIONES 9, PROGRESO_PRACTICAS 16, ADDON_ENLACES 11 con 010 y 12 con 011, ADDON_AJUSTES 3, TALLERES_ALUMNO 5) también cuadran con las columnas de los `CREATE TABLE` y `ALTER TABLE ... ADD`.
 
 Consecuencia práctica: **004 se puede ejecutar hoy en producción**. Solo exige las tablas de 002 y 005; las de 007 y 010 reciben permisos cuando existan (o al volver a ejecutar 004).
 
@@ -128,7 +131,7 @@ La regla 6 de `LEEME.txt` pide cambiar tres lugares en el mismo commit:
 2. Un script nuevo numerado en `backend/sql/` (nunca se edita uno ya ejecutado en producción).
 3. `ESPERADO` en [`backend/diagnostico_oracle.py`](../../backend/diagnostico_oracle.py).
 
-[`backend/tests/test_esquema.py`](../../backend/tests/test_esquema.py) lee los scripts como texto, reconstruye el estado final de 001→011 y falla si modelos, scripts y diagnóstico no coinciden (tablas, columnas, tipos, largos, nulos, valores de los CHECK, columnas IS JSON e índices). Para comprobar la base real se usa `python diagnostico_oracle.py` en el servidor (solo lee; la ACL de Oracle solo acepta la IP del servidor).
+[`backend/tests/test_esquema.py`](../../backend/tests/test_esquema.py) lee los scripts como texto, reconstruye el estado final de 001→012 y falla si modelos, scripts y diagnóstico no coinciden (tablas, columnas, tipos, largos, nulos, valores de los CHECK, columnas IS JSON e índices). Para comprobar la base real se usa `python diagnostico_oracle.py` en el servidor (solo lee; la ACL de Oracle solo acepta la IP del servidor).
 
 ## 7. Inconsistencias encontradas en los scripts
 

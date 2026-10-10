@@ -8,20 +8,20 @@
 -- #   Este archivo NO es idempotente, NO comprueba nada, NO da permisos y     #
 -- #   NO crea el job de purga. Ejecutarlo sobre una base con datos fallaría   #
 -- #   (las tablas ya existen) y sobre una base vacía dejaría un esquema       #
--- #   que los scripts 002-011 no reconocen como suyo en todos los detalles    #
+-- #   que los scripts 002-012 no reconocen como suyo en todos los detalles    #
 -- #   (orden de columnas, partición inicial, permisos).                      #
 -- #                                                                           #
 -- #############################################################################
 --
 -- Qué es: el estado FINAL del esquema ADMIN tras aplicar
---   001 -> 002 -> 003 -> 005 -> 006 -> 007 -> 008 -> 010 -> 011 (y 004, opcional;
+--   001 -> 002 -> 003 -> 005 -> 006 -> 007 -> 008 -> 010 -> 011 -> 012 (y 004, opcional;
 --   009 solo archiva filas y no cambia el esquema),
 -- escrito como un CREATE TABLE por tabla con los ALTER TABLE de los scripts
 -- posteriores ya aplicados. Cada columna indica entre corchetes el script que
 -- la crea o la cambia por última vez.
 --
--- Actualizado: 10 de octubre de 2026 (main con el script 011, Motor 3.5.1).
--- Fuentes: backend/sql/001_esquema_amatista.sql ... 011_detalle_instructor.sql
+-- Actualizado: 10 de octubre de 2026 (script 012, Amatista Taller, motor 5).
+-- Fuentes: backend/sql/001_esquema_amatista.sql ... 012_taller.sql
 --          y backend/database/modelos.py (fuente de verdad de columnas).
 -- Explicación de cada tabla y columna: docs/base-de-datos/esquema.md
 --
@@ -29,7 +29,8 @@
 -- (14 tablas). 007 (las 4 últimas tablas y V_AMATISTA_PRACTICAS) está
 -- pendiente hasta después del piloto del 8 de octubre (T-055), igual que 008
 -- y 009 (T-064), 010 (las 2 tablas del enlace en vivo, T-087) y 011 (la
--- columna ADDON_ENLACES.DETALLE de Motor 3.5.1). 004 no se ha aplicado (T-004).
+-- columna ADDON_ENLACES.DETALLE de Motor 3.5.1) y 012 (el modelo del alumno
+-- de Amatista Taller, motor 5). 004 no se ha aplicado (T-004).
 --
 -- Orden de este archivo: por dependencias de llaves foráneas (NIVELES va
 -- antes que MODULOS aunque la crea 005; en la base real MODULOS existe antes
@@ -255,17 +256,30 @@ CREATE TABLE habilidades (
 );
 CREATE INDEX ix_habilidades_curso ON habilidades (curso_id, orden);
 
--- HABILIDADES_ALUMNO · 5 columnas · 005 · IOT.
+-- HABILIDADES_ALUMNO · 15 columnas · 005 + 012 · IOT.
 CREATE TABLE habilidades_alumno (
   usuario_id      VARCHAR2(100)       NOT NULL,
   habilidad_id    VARCHAR2(50)        NOT NULL,
   estado          VARCHAR2(14) DEFAULT 'sin_practicar' NOT NULL,
   evidencia       VARCHAR2(300 CHAR),
   actualizado_en  TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL,
+  dominio         NUMBER(9,8),                                         -- [012] P(L) del modelo del alumno
+  intentos        NUMBER(6),                                           -- [012]
+  aciertos        NUMBER(6),                                           -- [012]
+  sin_ayuda       NUMBER(6),                                           -- [012]
+  ultimo          NUMBER(14,3),                                        -- [012] epoch del último intento
+  caja            NUMBER(2),                                           -- [012] Leitner
+  proximo         NUMBER(14,3),                                        -- [012] epoch del próximo repaso
+  pruebas         NUMBER(4),                                           -- [012]
+  vio_demo        NUMBER(1),                                           -- [012]
+  ayuda_max       NUMBER(1),                                           -- [012]
   CONSTRAINT pk_habilidades_alumno PRIMARY KEY (usuario_id, habilidad_id),
   CONSTRAINT fk_hab_alumno_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id),
   CONSTRAINT fk_hab_alumno_habilidad FOREIGN KEY (habilidad_id) REFERENCES habilidades (id),
-  CONSTRAINT ck_hab_alumno_estado CHECK (estado IN ('sin_practicar', 'con_guia', 'con_pistas', 'autonoma'))
+  CONSTRAINT ck_hab_alumno_estado CHECK (estado IN ('sin_practicar', 'con_guia', 'con_pistas', 'autonoma')),
+  CONSTRAINT ck_hab_alumno_dominio CHECK (dominio IS NULL OR dominio BETWEEN 0 AND 1),             -- [012]
+  CONSTRAINT ck_hab_alumno_vio_demo CHECK (vio_demo IS NULL OR vio_demo IN (0, 1)),                -- [012]
+  CONSTRAINT ck_hab_alumno_ayuda_max CHECK (ayuda_max IS NULL OR ayuda_max BETWEEN 0 AND 4)        -- [012]
 ) ORGANIZATION INDEX;
 
 -- EVALUACIONES_RUBRICA · 8 columnas · 005 · tabla normal (no IOT, ORA-01429).
@@ -450,6 +464,19 @@ CREATE TABLE addon_ajustes (
   CONSTRAINT pk_addon_ajustes PRIMARY KEY (usuario_id),
   CONSTRAINT fk_ajustes_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id),
   CONSTRAINT ck_ajustes_datos CHECK (datos IS JSON)
+);
+
+-- TALLERES_ALUMNO · 5 columnas · 012 · tabla normal (ISLA es CLOB).
+CREATE TABLE talleres_alumno (
+  usuario_id       VARCHAR2(100)       NOT NULL,
+  taller_id        VARCHAR2(60)        NOT NULL,                         -- practices/blender/habilidades.json
+  reto_hecho       NUMBER(1) DEFAULT 0 NOT NULL,
+  isla             CLOB,                                                 -- JSON
+  actualizado_en   TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL,
+  CONSTRAINT pk_talleres_alumno PRIMARY KEY (usuario_id, taller_id),
+  CONSTRAINT fk_talleres_alumno_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id),
+  CONSTRAINT ck_talleres_alumno_reto CHECK (reto_hecho IN (0, 1)),
+  CONSTRAINT ck_talleres_alumno_isla CHECK (isla IS JSON)
 );
 
 
@@ -664,13 +691,13 @@ END amatista_autor;
 -- =============================================================================
 -- 8. USUARIO DE APLICACIÓN (004, OPCIONAL) · solo como comentario
 -- =============================================================================
--- El script real exige las tablas de 002 y 005 (las de 007 y 010 son
--- opcionales), da permisos sobre las 20 tablas que existan, pide la contraseña en v_password y es
+-- El script real exige las tablas de 002 y 005 (las de 007, 010 y 012 son
+-- opcionales), da permisos sobre las 21 tablas que existan, pide la contraseña en v_password y es
 -- repetible: backend/sql/004_usuario_aplicacion.sql.
 --
 --   CREATE USER amatista_app IDENTIFIED BY "<contraseña>";
 --   GRANT CREATE SESSION TO amatista_app;
---   GRANT SELECT, INSERT, UPDATE, DELETE ON <cada una de las 20 tablas> TO amatista_app;
+--   GRANT SELECT, INSERT, UPDATE, DELETE ON <cada una de las 21 tablas> TO amatista_app;
 --
 -- backend/.env: DB_USER=AMATISTA_APP, DB_ESQUEMA=ADMIN.
 

@@ -1,10 +1,10 @@
 # Esquema de la base de datos de Amatista
 
-Referencia completa del esquema Oracle de Amatista tras aplicar los scripts 001→011: tablas, columnas, llaves, índices, restricciones, vistas, PL/SQL, usuario de aplicación y columnas JSON, con el modelo SQLAlchemy que mapea cada tabla. Para quien programa el backend o administra la base.
+Referencia completa del esquema Oracle de Amatista tras aplicar los scripts 001→012: tablas, columnas, llaves, índices, restricciones, vistas, PL/SQL, usuario de aplicación y columnas JSON, con el modelo SQLAlchemy que mapea cada tabla. Para quien programa el backend o administra la base.
 
-Actualizado: 10 de octubre de 2026 (main con el script 011 de Amatista Motor 3.5.1)
+Actualizado: 10 de octubre de 2026 (script 012 de Amatista Taller, motor 5)
 
-Todo sale de [`backend/sql/`](../../backend/sql/) (001 a 011) y de [`backend/database/modelos.py`](../../backend/database/modelos.py). El resumen, el orden de los scripts y el estado en producción están en el [README de esta carpeta](README.md). La versión en un solo archivo SQL (solo para leer) está en [`esquema_completo.sql`](esquema_completo.sql).
+Todo sale de [`backend/sql/`](../../backend/sql/) (001 a 012) y de [`backend/database/modelos.py`](../../backend/database/modelos.py). El resumen, el orden de los scripts y el estado en producción están en el [README de esta carpeta](README.md). La versión en un solo archivo SQL (solo para leer) está en [`esquema_completo.sql`](esquema_completo.sql).
 
 ## Índice
 
@@ -18,6 +18,7 @@ Todo sale de [`backend/sql/`](../../backend/sql/) (001 a 011) y de [`backend/dat
    - Reestructuración v3: [HABILIDADES](#410-habilidades) · [HABILIDADES_ALUMNO](#411-habilidades_alumno) · [EVALUACIONES_RUBRICA](#412-evaluaciones_rubrica) · [VERSIONES_BLENDER](#413-versiones_blender) · [VERIFICACIONES_BLENDER](#414-verificaciones_blender)
    - Motor de prácticas: [ADDON_VINCULOS](#415-addon_vinculos) · [PRACTICAS](#416-practicas) · [PRACTICA_VERSIONES](#417-practica_versiones) · [PROGRESO_PRACTICAS](#418-progreso_practicas)
    - Enlace en vivo con Blender: [ADDON_ENLACES](#419-addon_enlaces) · [ADDON_AJUSTES](#420-addon_ajustes)
+   - Amatista Taller (motor 5): [TALLERES_ALUMNO](#421-talleres_alumno) y las columnas de 012 en [HABILIDADES_ALUMNO](#411-habilidades_alumno)
 5. [Índices y restricciones: resumen](#5-índices-y-restricciones-resumen)
 6. [Vistas](#6-vistas)
 7. [Paquete AMATISTA_AUTOR](#7-paquete-amatista_autor)
@@ -590,8 +591,18 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 | `ESTADO` | `VARCHAR2(14)` | No | `'sin_practicar'` | `CK_HAB_ALUMNO_ESTADO`: `sin_practicar`, `con_guia`, `con_pistas`, `autonoma` | Estado. |
 | `EVIDENCIA` | `VARCHAR2(300 CHAR)` | Sí | — | — | Enlace o nota (nunca un binario). |
 | `ACTUALIZADO_EN` | `TIMESTAMP` | No | `SYSTIMESTAMP` | — | Última modificación. |
+| `DOMINIO` | `NUMBER(9,8)` | Sí | — | `CK_HAB_ALUMNO_DOMINIO`: NULL o 0 a 1 (012) | P(L) del modelo del alumno después del último intento (BKT). NULL = fila de antes del taller. |
+| `INTENTOS` | `NUMBER(6)` | Sí | — | — (012) | Intentos con nota (Mira no cuenta). |
+| `ACIERTOS` | `NUMBER(6)` | Sí | — | — (012) | Intentos logrados. |
+| `SIN_AYUDA` | `NUMBER(6)` | Sí | — | — (012) | Logrados sin molde ni pistas. |
+| `ULTIMO` | `NUMBER(14,3)` | Sí | — | — (012) | Epoch (s) del último intento; el servidor no cuenta dos veces un intento con la misma hora. |
+| `CAJA` | `NUMBER(2)` | Sí | — | — (012) | Caja de Leitner (0 = todavía no repasa; 1 a 5). |
+| `PROXIMO` | `NUMBER(14,3)` | Sí | — | — (012) | Epoch del próximo repaso (0 = ninguno). |
+| `PRUEBAS` | `NUMBER(4)` | Sí | — | — (012) | Retos del camino rápido («¿Ya sabes esto?») logrados sin ayuda. |
+| `VIO_DEMO` | `NUMBER(1)` | Sí | — | `CK_HAB_ALUMNO_VIO_DEMO`: NULL, 0 o 1 (012) | Ya vio «Mira». |
+| `AYUDA_MAX` | `NUMBER(1)` | Sí | — | `CK_HAB_ALUMNO_AYUDA_MAX`: NULL o 0 a 4 (012) | Pista más alta del último intento (4 = «Mírame»). |
 
-**Total:** 5. **Diferencias con el modelo:** el modelo no expresa la IOT.
+**Total:** 15 (5 de 005 y 10 de 012). **Diferencias con el modelo:** el modelo no expresa la IOT; `DOMINIO`, `ULTIMO` y `PROXIMO` son `Float` y el resto `Integer`. Solo `api/taller.py` lee y escribe las columnas de 012 (y tolera que falten); lo demás usa sentencias con las columnas de 005, así el backend funciona sin 012. `ESTADO` se sigue llenando a partir de la fase del modelo (nueva o acompañada → `con_guia`, sola → `con_pistas`, dominada → `autonoma`).
 
 ### 4.12 EVALUACIONES_RUBRICA
 
@@ -779,6 +790,22 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 **Total:** 3. **Diferencias con el modelo:** `datos` es `TextoJSONCorto(1000)`.
 
+### 4.21 TALLERES_ALUMNO
+
+- **Script:** 012. Tabla normal (no IOT): `ISLA` es un CLOB.
+- **Propósito:** lo que es del taller de un módulo y no de una habilidad: si el alumno ya hizo el reto final y lo que eligió para su pieza de «Mi isla». El avance de cada habilidad vive en `HABILIDADES_ALUMNO` y el del proyecto en `PROGRESO_PRACTICAS`.
+- **Modelo:** `TallerAlumno` (`modelos.py`).
+
+| Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
+|---|---|---|---|---|---|
+| `USUARIO_ID` | `VARCHAR2(100)` | No | — | `PK_TALLERES_ALUMNO` (1.ª col.); `FK_TALLERES_ALUMNO_USUARIO` → `USUARIOS(ID)` | Alumno. |
+| `TALLER_ID` | `VARCHAR2(60)` | No | — | PK (2.ª col.) | Taller de `practices/blender/habilidades.json` (`blender.bp.m1`). Sin FK: el catálogo vive en el repositorio. |
+| `RETO_HECHO` | `NUMBER(1)` | No | `0` | `CK_TALLERES_ALUMNO_RETO`: 0 o 1 | Ya hizo el reto final (nunca vuelve a 0). |
+| `ISLA` | `CLOB` | Sí | — | `CK_TALLERES_ALUMNO_ISLA`: `IS JSON` | JSON corto (hasta 1000 caracteres) con lo que eligió para su pieza (lugar, color). |
+| `ACTUALIZADO_EN` | `TIMESTAMP` | No | `SYSTIMESTAMP` | — | Última modificación. |
+
+**Total:** 5. **Diferencias con el modelo:** `isla` es `TextoJSON` (el `IS JSON` lo exige solo Oracle).
+
 ---
 
 ## 5. Índices y restricciones: resumen
@@ -798,11 +825,11 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 | `IX_PROG_PRACTICAS_PRACTICA` | `PROGRESO_PRACTICAS (practica_id)` | 007 | Alumnos de una práctica y FK. |
 | `IX_ADDON_ENLACES_USUARIO` | `ADDON_ENLACES (usuario_id)` | 010 | Los Blender conectados de un alumno y FK. |
 
-Además, Oracle crea un índice por cada PRIMARY KEY (20) y por cada UNIQUE: `UQ_USUARIOS_EMAIL`, `UQ_NIVELES_CURSO_NUMERO_RAMA`, `UQ_VINCULOS_CODIGO`. Si al crear un índice ya existe otro sobre las mismas columnas con otro nombre (ORA-01408), los scripts conservan el existente.
+Además, Oracle crea un índice por cada PRIMARY KEY (21) y por cada UNIQUE: `UQ_USUARIOS_EMAIL`, `UQ_NIVELES_CURSO_NUMERO_RAMA`, `UQ_VINCULOS_CODIGO`. Si al crear un índice ya existe otro sobre las mismas columnas con otro nombre (ORA-01408), los scripts conservan el existente.
 
 **FK sin índice que empiece por sus columnas** (ningún script lo crea; los encabezados solo justifican los índices que sí existen): `FK_MODULOS_NIVEL`, `FK_HABILIDADES_NIVEL`, `FK_HAB_ALUMNO_HABILIDAD`, `FK_RUBRICA_NIVEL`, `FK_VERIFICACIONES_VERSION`, `FK_VINCULOS_USUARIO`, `FK_PRACTICAS_AUTOR`, `FK_PRAC_VERSIONES_AUTOR`, `FK_CURSOS_REQUISITO` (008). El encabezado de 002 nombra como siguiente índice candidato `PROGRESO_LECCIONES (completada_en)`, que no existe.
 
-### Restricciones CHECK (40)
+### Restricciones CHECK (45)
 
 | Tabla | CHECK |
 |---|---|
@@ -814,7 +841,7 @@ Además, Oracle crea un índice por cada PRIMARY KEY (20) y por cada UNIQUE: `UQ
 | MODULOS | `CK_MODULOS_ESTADO` |
 | LECCIONES | `CK_LECCIONES_CONTENIDO`, `CK_LECCIONES_BLOQUEADA`, `CK_LECCIONES_ESTADO` |
 | NIVELES | `CK_NIVELES_NUMERO`, `CK_NIVELES_RAMA`, `CK_NIVELES_ESTADO` |
-| HABILIDADES_ALUMNO | `CK_HAB_ALUMNO_ESTADO` |
+| HABILIDADES_ALUMNO | `CK_HAB_ALUMNO_ESTADO`, `CK_HAB_ALUMNO_DOMINIO`, `CK_HAB_ALUMNO_VIO_DEMO`, `CK_HAB_ALUMNO_AYUDA_MAX` (012) |
 | EVALUACIONES_RUBRICA | `CK_RUBRICA_CRITERIO`, `CK_RUBRICA_LOGRO` |
 | VERSIONES_BLENDER | `CK_VERSIONES_CATEGORIA`, `CK_VERSIONES_ES_LTS` |
 | VERIFICACIONES_BLENDER | `CK_VERIFICACIONES_RESULTADO` |
@@ -824,6 +851,7 @@ Además, Oracle crea un índice por cada PRIMARY KEY (20) y por cada UNIQUE: `UQ
 | PROGRESO_PRACTICAS | `CK_PROG_PRACTICAS_PROGRESO`, `CK_PROG_PRACTICAS_COMPLETADA`, `CK_PROG_PRACTICAS_AUTONOMIA`, `CK_PROG_PRACTICAS_OBJETIVOS` |
 | ADDON_ENLACES | `CK_ENLACES_PROGRESO`, `CK_ENLACES_ENFOCADO`, `CK_ENLACES_ORDEN`, `CK_ENLACES_DETALLE` (011) |
 | ADDON_AJUSTES | `CK_AJUSTES_DATOS` |
+| TALLERES_ALUMNO | `CK_TALLERES_ALUMNO_RETO`, `CK_TALLERES_ALUMNO_ISLA` (012) |
 
 `HABILIDADES` no tiene CHECK. Cambiar la lista de un CHECK (p. ej. un tipo de evento nuevo) se hace en un script nuevo con `DROP CONSTRAINT` y `ADD CONSTRAINT` del mismo nombre (`LEEME.txt`, regla 5).
 

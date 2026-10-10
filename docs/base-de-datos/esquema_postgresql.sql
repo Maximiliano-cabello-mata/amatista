@@ -175,6 +175,16 @@ CREATE TABLE sesiones (
 
 CREATE INDEX ix_sesiones_usuario_id ON sesiones (usuario_id);
 
+CREATE TABLE talleres_alumno (
+	usuario_id VARCHAR(100) NOT NULL, 
+	taller_id VARCHAR(60) NOT NULL, 
+	reto_hecho INTEGER NOT NULL, 
+	isla TEXT, 
+	actualizado_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (usuario_id, taller_id), 
+	FOREIGN KEY(usuario_id) REFERENCES usuarios (id)
+);
+
 CREATE TABLE addon_enlaces (
 	sesion_id VARCHAR(64) NOT NULL, 
 	usuario_id VARCHAR(100) NOT NULL, 
@@ -293,6 +303,16 @@ CREATE TABLE habilidades_alumno (
 	estado VARCHAR(14) NOT NULL, 
 	evidencia VARCHAR(300), 
 	actualizado_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	dominio FLOAT, 
+	intentos INTEGER, 
+	aciertos INTEGER, 
+	sin_ayuda INTEGER, 
+	ultimo FLOAT, 
+	caja INTEGER, 
+	proximo FLOAT, 
+	pruebas INTEGER, 
+	vio_demo INTEGER, 
+	ayuda_max INTEGER, 
 	PRIMARY KEY (usuario_id, habilidad_id), 
 	FOREIGN KEY(habilidad_id) REFERENCES habilidades (id), 
 	FOREIGN KEY(usuario_id) REFERENCES usuarios (id), 
