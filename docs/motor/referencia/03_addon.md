@@ -11,24 +11,25 @@ El selector de modo aparece arriba del panel cuando la cuenta es de profesor o a
 | **Alumno** | todos | Cuenta, práctica abierta, tarjetas de pasos, pistas, roles y envío de progreso. |
 | **Desarrollador** (Amatista Author) | profesores, admins, o quien active el modo | Borrador, Tagger (roles y etiquetas), Inspector, Constructor de objetivos, Validación y depurador, Exportar y publicar. **Vista previa como alumno** carga el borrador como si fuera una práctica publicada. Detalle en [06_modo_desarrollador.md](06_modo_desarrollador.md). |
 
-## Paneles del modo Alumno
+## Paneles del modo Alumno (Amatista Motor 4)
 
-- **Amatista**: estado de la cuenta (vinculada o no, con el código para conectar), acceso en línea, **Abrir mi lección actual**, **Elegir otra práctica** y **Abrir la plataforma**.
-- **Práctica**: título, barra de progreso y el bloque **Ahora** (etapa 2): el paso actual con lo que pasa, el porqué y las instrucciones con teclas; botones **Hazlo conmigo**, **Muéstrame**, **Comprobar** y **¿Cómo lo hago?** (en modo Silencioso, **Necesito una pista** como en la etapa 1) y **Enviar mi progreso**. Muestra si el progreso está sincronizado, pendiente o guardado sin conexión.
-- **Tus herramientas** (motor 3.4): solo las herramientas de la práctica, las del paso actual primero, cada una con **Usar** y **¿Cómo se usa?**; arriba, **Enfocar** o **Ver todo** (modo enfocado). Detalle en [12_plataforma_y_blender.md](12_plataforma_y_blender.md).
-- **Comparado con el ejemplo** (motor 3.5, antes «Tu figura»): la lista del instructor agrupada por aspecto (la figura, materiales, luces, animación…), con lo que ya está y qué hacer si no, y el botón **Ver el ejemplo**. Detalle en [14_ejemplo_y_revision.md](14_ejemplo_y_revision.md).
-- **El ejemplo resuelto** (plegado): la descripción y los pasos del ejemplo con sus teclas, y **Verlo en Blender**, que lo arma en su propia escena («Ejemplo · <título>») sin tocar la tuya. Ahí una tarjeta ofrece **Volver a mi práctica**.
-- **Escenas por práctica** (motor 3.5): **De nuevo** abre la práctica en una escena limpia sin borrar nada, y cada práctica tiene su propia escena. Detalle en [13_instructor_y_silueta.md](13_instructor_y_silueta.md).
-- **Asignar rol**: elige un rol de la práctica y aplícalo a los objetos seleccionados (o quítalo). El rol viaja con el objeto al duplicarlo. En las prácticas con `figure.recognize` no hace falta: el panel muestra el rol que Amatista dedujo por la forma («Rueda (por su forma)», «Adorno») y solo sirve para corregirlo.
-- **Todos los pasos** (plegado): la lista de tarjetas con icono por estado (completado, actual, pendiente, bloqueado) y el mensaje de cada validador. En la etapa 1 era el panel principal «Objetivos»; ahora es una consulta.
+La pestaña **Practicar** muestra **una sola misión**: la de ahora. Todo lo demás queda cerrado debajo. Diseño y razones en [15_experiencia_del_alumno.md](15_experiencia_del_alumno.md).
 
-Diálogos: **Bienvenida** (intro de la práctica), **Así se hace este paso** (porqué, qué pasa, cómo hacerlo con teclas; se abre solo al empezar cada paso en modo Acompañado), **¿Te ayudo con este paso?** (cuando el acompañante ve que el alumno lleva rato), **Necesito una pista** (revela el siguiente nivel), **¡Práctica completada!** (mensaje final y autonomía) y el aviso de **herramienta de otro nivel**.
+- **Amatista**: estado de la cuenta (vinculada o no, con el código para conectar), acceso en línea y las pestañas Aprender · Practicar · Mi curso.
+- **La misión** (arriba, siempre abierta): «Misión N de M · Parte K: <parte>», barra de avance, título, qué hacer, los micro pasos con sus teclas (✓ los que ya hiciste), lo que dice el instructor (sin decimales en los niveles 1 a 3) y el porqué. Botón grande **Muéstrame cómo** (el «Hazlo conmigo» del paso), y **Pista (n)**, **¿Dónde?** y **Revisar**. Las herramientas de la misión con su botón **Usar**, «Después: …», **Así se ve** y **Ver el ejemplo**, y el estado del envío. Al terminar: **Siguiente práctica**.
+- **Tu ruta** (cerrado): las partes de la práctica y sus misiones con ✓ hechas, ▶ la de ahora, ○ las que vienen y «¡ya lo tenías!» en las adelantadas.
+- **Tus herramientas** (cerrado, motor 3.4): las de la práctica con **Usar** y **¿Cómo se usa?**; arriba, **Enfocar** o **Ver todo**. Detalle en [12_plataforma_y_blender.md](12_plataforma_y_blender.md).
+- **Comparado con el ejemplo** (cerrado, motor 3.5): la lista del instructor por aspecto y **Ver el ejemplo**. Detalle en [14_ejemplo_y_revision.md](14_ejemplo_y_revision.md).
+- **Asignar rol**: solo en las prácticas donde Amatista no reconoce las piezas por su forma (y en modo Desarrollador).
+- **Más** (cerrado): el tema del módulo con su mascota y jefe, **Así se debe ver** (imagen y plano), **El ejemplo resuelto** (pasos y **Verlo en Blender**, en su propia escena), la teoría del momento, **Tu misión**, **Plataforma**, **Otra práctica** y **De nuevo** (escena limpia, motor 3.5).
 
-En la **vista 3D**: la **tarjeta del acompañante** (paso N de M, progreso, qué hacer con teclas dibujadas y avisos que se desvanecen) y la **guía en la escena** (contornos verde/naranja/neón, regla, plano, piezas fantasma y flechas con etiquetas). Detalle en [07_guia_y_acompanamiento.md](07_guia_y_acompanamiento.md).
+Diálogos: **Bienvenida** (la primera vez), **Tu misión** (al abrir una práctica: el modelo, la ruta por partes, las herramientas y cómo funciona), **Así se hace este paso** (con «Muéstrame cómo» si el paso no tiene «Hazlo conmigo»; ya no se abre solo en cada paso), **¿Te ayudo con este paso?** (cuando el acompañante ve que el alumno lleva rato), **Necesito una pista**, **¡Práctica completada!** (autonomía, misiones y «Ya sabes usar») y el aviso de **herramienta de otro nivel**.
 
-## Nombre del descargable: Amatista Motor 3.5
+En la **vista 3D**: la **tarjeta de la misión** (parte, la ruta en bolitas, la misión con sus teclas que se encienden al usarlas, el instructor y las herramientas iluminadas: la de ahora, las usadas y las que vienen), con animaciones al empezar y al cumplir cada misión, y la **guía en la escena** (contornos verde/naranja/neón, regla, plano, piezas fantasma y flechas). En los niveles 1 y 2 la herramienta de cada misión queda elegida en la barra T. Detalle en [15_experiencia_del_alumno.md](15_experiencia_del_alumno.md) y [07_guia_y_acompanamiento.md](07_guia_y_acompanamiento.md).
 
-Desde la 3.2 el add-on se llama **Amatista Motor** (`name` en `blender_manifest.toml`); la versión actual es la 3.5.1. La plataforma lo descarga como `Amatista-Motor-3.5-<sistema>.zip`, con la carpeta «Amatista Motor 3.5» (instalador, `amatista-3.5.1.zip` y LEEME). El nombre de la descarga solo lleva la versión mayor.menor, así que la 3.5.0 y la 3.5.1 se llaman igual: la versión exacta está en el `.zip` de dentro y en `GET /api/addon/v1/estado`. El nombre y la versión salen del manifiesto, así que al subir la versión cambian solos. El servidor arma el paquete al vuelo con el código que tiene, así que entrega siempre la versión de su copia del repositorio; `GET /api/addon/v1/estado` devuelve `nombre` y `version_addon`, y la página «Mi Blender» avisa si el servidor entrega una versión vieja.
+## Nombre del descargable: Amatista Motor 4.0
+
+Desde la 3.2 el add-on se llama **Amatista Motor** (`name` en `blender_manifest.toml`); la versión actual es la 4.0.0. La plataforma lo descarga como `Amatista-Motor-4.0-<sistema>.zip`, con la carpeta «Amatista Motor 4.0» (instalador, `amatista-4.0.0.zip` y LEEME). El nombre de la descarga solo lleva la versión mayor.menor, así que la 4.0.0 y una 4.0.1 se llamarían igual: la versión exacta está en el `.zip` de dentro y en `GET /api/addon/v1/estado`. El nombre y la versión salen del manifiesto, así que al subir la versión cambian solos. El servidor arma el paquete al vuelo con el código que tiene, así que entrega siempre la versión de su copia del repositorio; `GET /api/addon/v1/estado` devuelve `nombre` y `version_addon`, y la página «Mi Blender» avisa si el servidor entrega una versión vieja.
 
 ## Temática por práctica (add-on 3.2)
 
@@ -68,7 +69,7 @@ Cada módulo tiene su mundo, igual que en la plataforma. La fuente es [`practice
 | Archivo | Qué hace |
 |---|---|
 | `__init__.py` | Registro y orden de los módulos. |
-| `blender_manifest.toml` | Nombre («Amatista Motor»), versión (3.5.1), Blender mínimo (4.2) y permisos de la extensión. |
+| `blender_manifest.toml` | Nombre («Amatista Motor»), versión (4.0.0), Blender mínimo (4.2) y permisos de la extensión. |
 | `_motor.py` | Carga el motor: la copia incluida en el `.zip` o, en desarrollo, `engine/` del repositorio. |
 | `config.json` | Servidor, plataforma y canal. El constructor lo reescribe con las URL de la plataforma que generó el paquete. |
 | `ajustes.py` | Preferencias y `es_desarrollador()`. |
@@ -76,6 +77,7 @@ Cada módulo tiene su mundo, igual que en la plataforma. La fuente es [`practice
 | `cuenta.py`, `red.py` | Vínculo, sesión, cliente HTTP y cola. |
 | `practicas.py` | Captura, evaluación, pistas, intentos y manejadores de Blender. |
 | `aprendizaje.py` | *(v3)* Mapa del curso (`cursos.json`), píldoras y repaso espaciado; guarda el avance local en `avance.json`. |
+| `mision.py` | *(4.0)* La misión de ahora: la ruta del motor, animaciones (entrada, sello y chispas, tecla que respira), teclas que se encienden al usarlas y la herramienta lista en la barra T. |
 | `ejemplo.py` | *(3.5)* «Ver el ejemplo»: arma el ejemplo resuelto en su propia escena con bmesh y `bpy.data`, y «Volver a mi práctica». |
 | `enlace.py` | *(3.4)* Enlace en vivo con la plataforma: el latido, las órdenes (abrir, enfocar, comprobar, pista, «Hazlo conmigo», guardar, empezar de nuevo, ver el ejemplo) y los ajustes de «Mi Blender». |
 | `enfoque.py` | *(3.4)* Modo enfocado: esconde lo que la práctica no usa y lo devuelve todo con «Ver todo Blender». |
@@ -84,7 +86,7 @@ Cada módulo tiene su mundo, igual que en la plataforma. La fuente es [`practice
 | `escenarios.py` | Escenas de inicio de las prácticas y, desde la 3.2, el cielo del tema (`aplicar_ambiente` / `restaurar_ambiente`). |
 | `guia.py` | *(etapa 2)* Guía y acompañante de la sesión: avisos, diálogos automáticos, «Hazlo conmigo» y registro de ayudas. |
 | `operadores.py`, `desarrollo.py`, `autor.py` | Acciones del modo Alumno y del modo Desarrollador. |
-| `interfaz/` | `estilo.py` (colores, iconos, escala, teclas), `paneles.py`, `dialogos.py`, `aprender.py` (píldoras, repaso y pausa), `herramientas.py` (panel «Tus herramientas», 3.4), `hud.py` (tarjeta del acompañante), `visor3d.py` (guía dibujada en la escena). |
+| `interfaz/` | `estilo.py` (colores, iconos, escala, teclas), `paneles.py`, `dialogos.py`, `aprender.py` (píldoras, repaso y pausa), `herramientas.py` (panel «Tus herramientas», 3.4), `hud.py` (tarjeta de la misión, motor 4), `visor3d.py` (guía dibujada en la escena). |
 | `iconos/` | PNG generados con `addon/herramientas/generar_iconos.py`. |
 
 ## Pruebas
