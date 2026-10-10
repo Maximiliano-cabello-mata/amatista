@@ -69,14 +69,14 @@
       },
       {
         "id": "bi2_blender",
-        "title": "En Blender: ordena en colecciones",
+        "title": "Taller en Blender: colecciones y orden",
         "slug": "blender-colecciones",
         "type": "theory_interactive",
         "durationSeconds": 480,
         "isLocked": true,
         "formula": "practica",
         "ficha": {
-          "objetivo": "Agregas varias piezas y las guardas en una colección con nombre. Amatista registra cómo organizas tu escena.",
+          "objetivo": "Aprender en Blender cada habilidad del módulo (nombrar, ordenar en colecciones y compartir materiales): mirarla, hacerla con ayuda y hacerla sin ayuda, hasta que salga sola.",
           "habilidades": [
             "bl-colecciones",
             "bl-organizar"
@@ -86,33 +86,25 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica en Blender: practices/blender/intermedio/m2-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Taller en Blender (motor 5): blender.bi.m2, en practices/blender/habilidades.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
           "comprobacion": [
-            "Tres piezas",
-            "En la colección «Casas»"
+            "Cada habilidad del taller sale sin ayuda («Ya te sale» o «Dominada»).",
+            "Se abre el proyecto del módulo."
           ]
         },
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### En Blender, conectado\nTres piezas y una colección llamada «Casas». Mira el Outliner mientras lo haces.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+            "body": "### Tu taller en Blender\nAquí aprendes cada habilidad del módulo (nombrar, ordenar en colecciones y compartir materiales) como en un taller: primero la miras en tu vista 3D, después la haces con ayuda y al final la haces sin ayuda. Cuando todas te salgan, se abre el proyecto: la aldea de tu isla, con tus casas."
           },
           {
-            "type": "blender_practice",
-            "id": "practica_bi2_blender",
-            "practica": "blender.bi.m2.explora",
-            "title": "Calentamiento: ordena en colecciones",
-            "text": "Una escena ordenada se trabaja el doble de rápido. Prueba las colecciones con tres cubos. Tu avance aparece aquí mientras trabajas.",
-            "minutes": 8,
-            "steps": [
-              "Tres piezas",
-              "En la colección «Casas»",
-              "Tu práctica coincide con el ejemplo"
-            ],
-            "allowManual": false
+            "type": "blender_taller",
+            "id": "taller_bi2",
+            "taller": "blender.bi.m2",
+            "title": "Tu taller: colecciones y orden"
           }
         ]
       },
@@ -261,6 +253,13 @@
               "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
+          },
+          {
+            "type": "blender_taller",
+            "id": "isla_bi2",
+            "taller": "blender.bi.m2",
+            "vista": "proyecto",
+            "title": "Úsalo · tu pieza para la isla"
           },
           {
             "type": "callout",

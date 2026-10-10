@@ -6,6 +6,7 @@ Actualizado: 5 de octubre de 2026; la fase 1 se revisó el 10 de octubre para Am
 - [Dominio amatista-3d.me](2026-10-04_dominio_amatista-3d.md): Cloudflare, DNS, certificados, PWA en Pages.
 - [Pasos en Oracle y el servidor](../../backend/sql/LEEME.txt) y la [auditoría de seguridad](../seguridad/01_auditoria_2026-10-05.md).
 - [Actualizar a Motor 3.5.1](2026-10-09_correcciones_3_5_1.md): el script 011 y la comprobación del detalle del instructor.
+- [Actualizar a Amatista Taller (motor 5)](2026-10-10_amatista_taller_motor_5.md): el script 012, las habilidades al arrancar y el add-on 5.0.
 
 > **Regla de oro.** El piloto del **8 de octubre** corre sobre la v2.2 tal como está. Antes de esa fecha no se toca la VM ni Oracle. Todo lo de las fases 1 a 4 es para el **9 de octubre en adelante**, en ese orden. Cada fase termina con una comprobación; si falla, no se pasa a la siguiente.
 
@@ -56,7 +57,7 @@ No se actualiza nada. Si algo se cae, la única acción es `sudo systemctl resta
 Sigue el archivo de pasos del servidor (`/mnt/project-files/despliegue/2026-10-05_pasos_despliegue.md`, el mismo contenido que esta sección con los comandos exactos). En corto:
 
 1. **Respaldo**: `python herramientas/migrar.py exportar ~/respaldos/$(date +%F)`; debe terminar con `manifiesto.json`.
-2. **Oracle** (Database Actions como ADMIN, **F5**): `007_motor_practicas.sql`, `008_cursos_por_ruta.sql` y, desde el Motor 3.4 (9 de octubre), `010_enlace_blender.sql` (enlace en vivo con Blender: `ADDON_ENLACES` y `ADDON_AJUSTES`) y, desde Motor 3.5.1 (9 de octubre, PR #26), `011_detalle_instructor.sql` (la columna `ADDON_ENLACES.DETALLE`, que guarda lo que muestra el instructor). 010 y 011 se pueden dejar para después: sin ellos la plataforma funciona igual, solo sin el estado de Blender en vivo. Si aplicas 010, aplica también 011 antes de subir el backend 3.5.1 ([guía](2026-10-09_correcciones_3_5_1.md)). El siguiente libre es el **012**.
+2. **Oracle** (Database Actions como ADMIN, **F5**): `007_motor_practicas.sql`, `008_cursos_por_ruta.sql` y, desde el Motor 3.4 (9 de octubre), `010_enlace_blender.sql` (enlace en vivo con Blender: `ADDON_ENLACES` y `ADDON_AJUSTES`) y, desde Motor 3.5.1 (9 de octubre, PR #26), `011_detalle_instructor.sql` (la columna `ADDON_ENLACES.DETALLE`, que guarda lo que muestra el instructor). 010 y 011 se pueden dejar para después: sin ellos la plataforma funciona igual, solo sin el estado de Blender en vivo. Si aplicas 010, aplica también 011 antes de subir el backend 3.5.1 ([guía](2026-10-09_correcciones_3_5_1.md)). Desde el motor 5 (Amatista Taller, 10 de octubre) va también `012_taller.sql` (el modelo del alumno por habilidad), después de 011 y antes del backend ([guía](2026-10-10_amatista_taller_motor_5.md)); sin 012 el taller se guarda en Blender y se envía después. El siguiente libre es el **013**.
 3. **Variables nuevas** en `backend/.env` (todas explicadas en `backend/.env.example`):
 
    ```
@@ -68,7 +69,7 @@ Sigue el archivo de pasos del servidor (`/mnt/project-files/despliegue/2026-10-0
 
    `AMATISTA_OCULTAR_DOCS=1` esconde `/docs` mientras la API siga expuesta sin Caddy. `AMATISTA_ADDON_VERIFICADO` se queda en `registrar` (acepta y marca las copias modificadas); pásalo a `exigir` solo cuando todos los alumnos tengan el Motor 3.5.1.
 4. **Código**: `bash /home/opc/amatista/despliegue/actualizar.sh`. El script ya resuelve los dos problemas que encontró la revisión del 4 de octubre: si la VM está en la rama local `despliegue/v3-2026-10-03` sin commits propios, se cambia sola a `main`; y si no existe la unidad `amatista-api`, reinicia `amatista-backend`.
-5. **Tablas y contenido**: `python diagnostico_oracle.py` (20 tablas con 010 y 12 columnas en `ADDON_ENLACES` con 011; si falta 010 u 011, el diagnóstico dice cuál), `python herramientas/contenido.py validar` y `importar`.
+5. **Tablas y contenido**: `python diagnostico_oracle.py` (21 tablas con 012, 12 columnas en `ADDON_ENLACES` con 011 y 15 en `HABILIDADES_ALUMNO` con 012; si falta 010, 011 o 012, el diagnóstico dice cuál), `python herramientas/contenido.py validar` y `importar`.
 6. **Prácticas**: al reiniciar, el servidor registra y actualiza las 18 prácticas solo (en la prueba sobre Oracle: «0 nuevas, 13 actualizadas»). `python herramientas/contenido.py practicas --revisar` debe decir **18 de 18**.
 7. **Archivar lo viejo**: `009_archivar_blender_v2.sql` con F5.
 8. **Add-on**: en la plataforma, **Mi Blender** debe ofrecer **Amatista Motor 3.5** (versión 3.5.1, PR #25 y #26). Abrir otra práctica empieza en su propia escena, «Ver el ejemplo» arma el ejemplo resuelto en otra escena y la lección muestra «Ahora en Blender» con la lista «Comparado con el ejemplo». La versión 3.5.1 necesita 011 para que ese detalle llegue a la lección. Reinstálalo en tu Blender y abre la práctica del tren: el panel muestra «Así se debe ver» con la imagen y el plano Blender se enfoca y la lección dice «Tu Blender está en esta práctica».

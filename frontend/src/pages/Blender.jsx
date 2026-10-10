@@ -356,7 +356,7 @@ function Practicas({ token }) {
   const lista = respuesta?.datos?.practicas ?? [];
   if (!respuesta?.ok || !lista.length) return null;
   return (
-    <Tarjeta antetitulo="Exploraciones y cierres" titulo="Tus prácticas en Blender">
+    <Tarjeta antetitulo="Proyectos de cada módulo" titulo="Tus prácticas en Blender">
       <ul className="grid gap-2 sm:grid-cols-2">
         {lista.map((p) => {
           const avance = p.mi_progreso?.completada ? 100 : (p.mi_progreso?.progreso ?? 0);
@@ -396,8 +396,8 @@ function Blender() {
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-blender">{NOMBRE_MOTOR} para Blender</p>
             <h1 className="mt-1 text-3xl font-extrabold leading-tight text-white sm:text-4xl">Mi Blender</h1>
             <p className="mt-2 max-w-2xl leading-relaxed text-texto/80">
-              Cada módulo intercala exploraciones en Blender y termina con una práctica. Instala el add-on una vez: Amatista te guía paso a paso,
-              resalta lo que tienes que cambiar y tu avance aparece en tu panel.
+              Cada módulo tiene un taller en Blender, donde aprendes cada habilidad mirándola, haciéndola con ayuda y después sin ayuda, y
+              termina con un proyecto que queda en tu isla. Instala el add-on una vez: tu avance aparece en tu panel.
             </p>
             <a href={rutas.inicio} className="mt-3 inline-block font-mono text-xs uppercase tracking-widest text-neon hover:underline">
               Ir a mis módulos ▸

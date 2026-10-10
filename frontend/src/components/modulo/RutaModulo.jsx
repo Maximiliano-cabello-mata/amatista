@@ -3,7 +3,7 @@
 // lecciones tiene el módulo, por dónde va el alumno y que cierra en Blender.
 // Sin progreso (panel admin) muestra solo la estructura.
 import { estaCompletada } from '../../progreso/reglas';
-import { esPracticaBlender } from '../../modulos/practica';
+import { esPracticaBlender, esTallerBlender } from '../../modulos/practica';
 import { etiquetaLeccion } from '../etiquetas/catalogo';
 
 const ESTILO_NODO = {
@@ -20,7 +20,7 @@ function RutaModulo({ lecciones = [], progreso = null, cursoId = '', className =
     <ol className={`flex items-center gap-0 ${className}`} aria-label="Ruta del módulo">
       {lecciones.map((leccion, i) => {
         const practica = esPracticaBlender(leccion);
-        const { Icono, texto } = etiquetaLeccion(leccion, practica);
+        const { Icono, texto } = etiquetaLeccion(leccion, esTallerBlender(leccion) ? 'taller' : practica);
         const estado = hechas[i] ? 'hecha' : i === actual ? 'actual' : 'pendiente';
         const tam = practica ? 'h-8 w-9' : 'h-6 w-7';
         const color = practica && estado === 'pendiente' ? 'bg-blender/25 text-blender' : ESTILO_NODO[estado];

@@ -1,27 +1,42 @@
-// Módulos con prácticas en Blender (v3.2, docs/plataforma/02_modulos_y_practica.md).
-// Teoría y Blender se intercalan: teoría, una exploración corta en Blender,
-// más teoría y la práctica que cierra el módulo. Cada práctica es una lección
-// con un bloque blender_practice y se hace con Blender conectado: el motor
-// registra el avance. Funciones puras: se prueban sin React.
+// Módulos con Blender (v3.2, docs/plataforma/02_modulos_y_practica.md; motor 5).
+// Teoría y Blender se intercalan: teoría, el taller de habilidades del módulo
+// en Blender, más teoría y el proyecto que cierra el módulo. El taller es una
+// lección con un bloque blender_taller (cada habilidad: Mira, Hazlo conmigo y
+// Hazlo tú); el proyecto, una lección con un bloque blender_practice (Úsalo,
+// queda en tu isla) y un blender_taller con vista «proyecto» que muestra la
+// pieza de la isla y el reto final. Todo se hace con Blender conectado: el
+// motor registra el avance. Funciones puras: se prueban sin React.
 import { estaCompletada, estaDesbloqueada } from '../progreso/reglas';
 
 const leccionesDe = (modulo) => modulo?.contenido?.lessons ?? modulo?.lessons ?? [];
+const bloquesDe = (leccion) => leccion?.contentBlocks ?? [];
 
-export const bloquePractica = (leccion) =>
-  (leccion?.contentBlocks ?? []).find((bloque) => bloque?.type === 'blender_practice') ?? null;
+export const bloquePractica = (leccion) => bloquesDe(leccion).find((bloque) => bloque?.type === 'blender_practice') ?? null;
 
-export const esPracticaBlender = (leccion) => Boolean(bloquePractica(leccion));
+// El taller de la lección (la vista «proyecto» no cuenta: es la tarjeta del proyecto).
+export const bloqueTaller = (leccion) =>
+  bloquesDe(leccion).find((bloque) => bloque?.type === 'blender_taller' && bloque.vista !== 'proyecto') ?? null;
 
-// Todas las prácticas del módulo en orden: [{leccion, indice, bloque, cierre}].
-// `cierre` es la última (la que cierra el módulo); las anteriores son exploraciones.
+// Lo que hace de la lección una estación de Blender: su práctica o su taller.
+export const bloqueBlender = (leccion) => bloquePractica(leccion) ?? bloqueTaller(leccion);
+
+export const esPracticaBlender = (leccion) => Boolean(bloqueBlender(leccion));
+
+export const esTallerBlender = (leccion) => !bloquePractica(leccion) && Boolean(bloqueTaller(leccion));
+
+// Todas las estaciones de Blender del módulo en orden: [{leccion, indice, bloque, taller, cierre}].
+// `taller` es el id del taller (null en una práctica); `cierre` es la última (el proyecto).
 export function practicasDelModulo(modulo) {
   const lista = leccionesDe(modulo)
-    .map((leccion, indice) => ({ leccion, indice, bloque: bloquePractica(leccion) }))
+    .map((leccion, indice) => {
+      const bloque = bloqueBlender(leccion);
+      return { leccion, indice, bloque, taller: bloque?.type === 'blender_taller' ? bloque.taller : null };
+    })
     .filter(({ bloque }) => bloque);
   return lista.map((practica, i) => ({ ...practica, cierre: i === lista.length - 1 }));
 }
 
-// Estado de la práctica de la lección `indice` (hecha · abierta · bloqueada):
+// Estado de la estación de la lección `indice` (hecha · abierta · bloqueada):
 // se abre al terminar las lecciones anteriores del módulo.
 export function estadoPracticaEn(progreso, cursoId, modulo, indice) {
   const practica = practicasDelModulo(modulo).find((p) => p.indice === indice);
@@ -35,7 +50,7 @@ export function estadoPracticaEn(progreso, cursoId, modulo, indice) {
 }
 
 // El módulo como se dibuja, en orden: lecciones de teoría y estaciones de Blender.
-// [{tipo: 'leccion' | 'practica', leccion, indice, bloque?, cierre?}]
+// [{tipo: 'leccion' | 'practica', leccion, indice, bloque?, taller?, cierre?}]
 export function secuenciaDelModulo(modulo) {
   const practicas = new Map(practicasDelModulo(modulo).map((p) => [p.indice, p]));
   return leccionesDe(modulo).map((leccion, indice) =>
@@ -43,12 +58,40 @@ export function secuenciaDelModulo(modulo) {
   );
 }
 
-// Prácticas de todos los módulos publicados del catálogo (panel del alumno),
-// exploraciones y cierres, en el orden del curso.
+// Estaciones de todos los módulos publicados del catálogo (panel del alumno),
+// talleres y proyectos, en el orden del curso.
 export function practicasDelCatalogo(cursos = []) {
   return cursos.flatMap((curso) =>
     (curso.modulos ?? []).flatMap((modulo) =>
       modulo.contenido ? practicasDelModulo(modulo).map((practica) => ({ curso, modulo, ...practica })) : [],
     ),
   );
+}
+
+// Dónde vive un taller en el catálogo: su curso, su módulo, la lección del
+// taller y la del proyecto (la que lleva la vista «proyecto» del mismo taller o,
+// si no la tiene, la práctica que cierra el módulo). null si no está publicado.
+export function ubicarTaller(cursos = [], tallerId) {
+  if (!tallerId) return null;
+  for (const curso of cursos ?? []) {
+    for (const modulo of curso.modulos ?? []) {
+      const lecciones = leccionesDe(modulo);
+      const indiceTaller = lecciones.findIndex((leccion) => bloqueTaller(leccion)?.taller === tallerId);
+      if (indiceTaller < 0) continue;
+      const conVista = lecciones.findIndex((leccion) =>
+        bloquesDe(leccion).some((b) => b?.type === 'blender_taller' && b.vista === 'proyecto' && b.taller === tallerId),
+      );
+      const cierre = practicasDelModulo(modulo).filter((p) => !p.taller).at(-1)?.indice ?? -1;
+      const indiceProyecto = conVista >= 0 ? conVista : cierre;
+      return {
+        curso,
+        modulo,
+        leccionTaller: lecciones[indiceTaller],
+        indiceTaller,
+        leccionProyecto: indiceProyecto >= 0 ? lecciones[indiceProyecto] : null,
+        indiceProyecto,
+      };
+    }
+  }
+  return null;
 }

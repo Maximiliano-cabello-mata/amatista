@@ -1,8 +1,9 @@
-// Una estación «En Blender» dentro del módulo (v3.2). Teoría y Blender se
-// intercalan: la exploración corta va entre dos lecciones de teoría y la
-// práctica de cierre al final. Bloqueada hasta terminar lo anterior;
-// abierta, lleva a la lección; hecha, muestra el logro. Todas se hacen con
-// Blender conectado y quedan registradas en la cuenta y en el motor.
+// Una estación «En Blender» dentro del módulo (v3.2; motor 5). Teoría y Blender
+// se intercalan: el taller de habilidades va entre dos lecciones de teoría
+// (cada habilidad: Mira, Hazlo conmigo y Hazlo tú) y el proyecto que cierra el
+// módulo al final (Úsalo: queda en tu isla). Bloqueada hasta terminar lo
+// anterior; abierta, lleva a la lección; hecha, muestra el logro. Todas se
+// hacen con Blender conectado y quedan registradas en la cuenta y en el motor.
 import { rutas } from '../../rutas';
 import { IconoCandado } from '../Iconos';
 import { IconoCubo, IconoGuia } from '../etiquetas/IconosEtiqueta';
@@ -10,17 +11,22 @@ import LogoCurso from '../LogoCurso';
 
 const TEXTO_ESTADO = {
   bloqueada: (faltan) => `Termina ${faltan === 1 ? 'la lección anterior' : `las ${faltan} lecciones anteriores`} para abrirla.`,
-  abierta: (_, cierre) =>
-    cierre
-      ? 'Ya terminaste la teoría: ahora llévalo a Blender. Amatista te guía paso a paso.'
-      : 'Abre Blender y pruébalo con tus manos: unos minutos, conectado a Amatista.',
-  hecha: () => '¡Hecha en Blender y registrada en tu cuenta!',
+  abierta: (_, cierre, taller) =>
+    taller
+      ? 'Aprende cada habilidad del módulo en Blender: la miras, la haces con ayuda y después sin ayuda.'
+      : cierre
+        ? 'Ya practicaste cada habilidad: ahora úsalas en el proyecto. Lo que armes queda en tu isla.'
+        : 'Abre Blender y pruébalo con tus manos: unos minutos, conectado a Amatista.',
+  hecha: (_, __, taller) =>
+    taller ? '¡Tus habilidades ya te salen! El proyecto del módulo está abierto.' : '¡Hecha en Blender y registrada en tu cuenta!',
 };
+
+const PASOS_TALLER = ['Mira', 'Hazlo conmigo', 'Hazlo tú'];
 
 function EstacionBlender({ cursoId, estado, comoElemento = 'div' }) {
   if (!estado) return null;
   const { practica, faltan } = estado;
-  const { leccion, bloque, cierre = true } = practica;
+  const { leccion, bloque, cierre = true, taller = null } = practica;
   const abierta = estado.estado !== 'bloqueada';
   const pasos = bloque?.steps?.length ?? 0;
   const minutos = bloque?.minutes ?? (leccion.durationSeconds ? Math.round(leccion.durationSeconds / 60) : null);
@@ -42,18 +48,26 @@ function EstacionBlender({ cursoId, estado, comoElemento = 'div' }) {
       </span>
       <span className="min-w-0 flex-1">
         <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-blender">
-          {cierre ? 'Práctica en Blender · cierre del módulo' : 'En Blender · exploración'}
+          {taller ? 'Taller en Blender · habilidades' : cierre ? 'Úsalo en Blender · proyecto del módulo' : 'En Blender · exploración'}
         </span>
         <span className={`mt-0.5 block font-extrabold ${cierre ? 'text-lg' : 'text-base'} ${abierta ? 'text-white' : 'text-white/50'}`}>
           {bloque?.title ?? leccion.title}
         </span>
-        <span className="mt-1 block text-sm text-texto/70">{TEXTO_ESTADO[estado.estado](faltan, cierre)}</span>
+        <span className="mt-1 block text-sm text-texto/70">{TEXTO_ESTADO[estado.estado](faltan, cierre, taller)}</span>
         <span className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-white/45">
-          {pasos > 0 && <span>{pasos} pasos</span>}
-          {minutos && <span>≈ {minutos} min</span>}
-          <span className="inline-flex items-center gap-1 text-neon/80">
-            <IconoGuia className="h-3 w-3" /> Guía paso a paso
-          </span>
+          {taller ? (
+            <span className="inline-flex items-center gap-1 text-neon/80">
+              <IconoGuia className="h-3 w-3" /> {PASOS_TALLER.join(' · ')}
+            </span>
+          ) : (
+            <>
+              {pasos > 0 && <span>{pasos} pasos</span>}
+              {minutos && <span>≈ {minutos} min</span>}
+              <span className="inline-flex items-center gap-1 text-neon/80">
+                <IconoGuia className="h-3 w-3" /> {cierre ? 'Queda en tu isla' : 'Guía paso a paso'}
+              </span>
+            </>
+          )}
           <span className="text-emerald-300/80">● Se registra</span>
         </span>
       </span>
