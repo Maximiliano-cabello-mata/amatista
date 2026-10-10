@@ -21,7 +21,7 @@ En la pestaña Amatista, cambia el modo a **Desarrollador**.
 6. **Validación y depurador**: **Validar práctica** compila el borrador (errores en español con la ruta del campo) y lo evalúa contra la escena actual. Con la escena de referencia todo debe quedar en verde; con una escena vacía, en rojo.
 7. **Vista previa como alumno**: carga el borrador en el modo Alumno, con tarjetas, pistas y diálogos, sin enviar nada a la plataforma.
 8. **Exportar y publicar**:
-   - **Exportar practice.json**: para guardarlo en el repositorio, en `practices/blender/level_<n>/`.
+   - **Exportar practice.json**: para guardarlo en el repositorio. Cada práctica vive en su propia carpeta, `practices/blender/<curso>/m<N>-<tema>/practica.json` (por ejemplo `practices/blender/principiante/m1-tren/`), junto a su `pruebas.json`.
    - **Subir a Amatista** (curso, lección y nota opcionales): `POST /api/addon/v1/practicas`. Oracle guarda la versión siguiente en `PRACTICA_VERSIONES` con la versión del add-on y de Blender. Si nada cambió desde la última subida, no crea otra. **Queda en borrador.**
    - **Registrar verificación**: anota en la matriz de compatibilidad (`VERIFICACIONES_BLENDER`) que la lección funciona en este Blender.
 
@@ -44,17 +44,17 @@ En el JSON del módulo, agrega un bloque a la lección:
 ```json
 {
   "type": "blender_practice",
-  "id": "practica_mesa",
-  "practica": "blender.n1.mesa",
-  "title": "Construye una mesa en Blender",
+  "id": "practica_tren",
+  "practica": "blender.bp.m1.tren",
+  "title": "Arma tu tren de juguete en Blender",
   "text": "Pulsa **Abrir en Blender**…",
-  "minutes": 20,
-  "steps": ["Crea la cubierta", "Hazla delgada", "…"],
+  "minutes": 25,
+  "steps": ["Dos vagones", "Vagones alargados", "…", "Tu práctica coincide con el ejemplo"],
   "allowManual": false
 }
 ```
 
-- `steps` es lo que se ve sin conexión o antes de abrir Blender: conviene que sean los títulos de los objetivos obligatorios (la prueba `logica.test.js` lo comprueba para la mesa).
+- `steps` es lo que se ve sin conexión o antes de abrir Blender: deben ser los títulos de los pasos que entrega el servidor, incluido el último, «Tu práctica coincide con el ejemplo», que el cargador agrega solo ([14](14_ejemplo_y_revision.md)).
 - `allowManual: true` deja marcar la actividad como hecha sin Blender (para quien no puede instalarlo).
 - Al importar el módulo (`herramientas/contenido.py importar` o Admin › Contenido), cada práctica queda enlazada con su lección: al completarla en Blender, la lección se marca sola.
 

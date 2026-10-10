@@ -2,7 +2,7 @@
 
 Todas las suites de pruebas del repositorio, cómo correrlas, qué cubren y qué hace cada workflow de GitHub Actions. Para desarrolladores antes de abrir un PR o cuando CI falla.
 
-Actualizado: 4 de octubre de 2026 (main en c730c0e)
+Actualizado: 10 de octubre de 2026 (main con los PR #25, #26 y #27; conteos con `pytest --collect-only`)
 
 1. [Resumen](#1-resumen)
 2. [Frontend (Vitest)](#2-frontend-vitest)
@@ -20,13 +20,13 @@ Actualizado: 4 de octubre de 2026 (main en c730c0e)
 
 | Suite | Dónde | Comando | Desde | Necesita | Job de CI |
 |---|---|---|---|---|---|
-| Backend | `backend/tests/` (10 archivos, ~198 funciones de prueba) | `python -m pytest -q` | `backend/` | `requirements-dev.txt` | `backend` |
+| Backend | `backend/tests/` (17 archivos, 263 funciones de prueba; 368 casos con las parametrizadas) | `python -m pytest -q` | `backend/` | `requirements-dev.txt` | `backend` |
 | Validación de contenido | `frontend/src/data/modulos/*.json` | `python herramientas/contenido.py validar` | `backend/` | — | `backend` |
 | Tablero | `tablero/test_actualizar.py` (8) | `python -m pytest -q tablero` | raíz | pytest + PyYAML | `backend` |
-| Motor | `engine/tests/` (4 archivos) | `python -m pytest -q engine/tests` | raíz | pytest | `backend` |
-| Constructor del add-on | `addon/tests/test_construir.py` (7) | `python -m pytest -q addon/tests` | raíz | pytest | `backend` |
+| Motor | `engine/tests/` (13 archivos, 293 casos) | `python -m pytest -q engine/tests` | raíz | pytest | `backend` |
+| Constructor del add-on | `addon/tests/` (3 archivos, 36 casos: constructor, integridad y temáticas) | `python -m pytest -q addon/tests` | raíz | pytest | `backend` |
 | Add-on en Blender | `addon/tests/en_blender.py` | `python addon/tests/en_blender.py` | raíz | Python 3.11 + `bpy==5.0.1` (o Blender) | `addon-blender` |
-| Frontend | `frontend/src/**/*.test.js` (14 archivos, ~158 casos) | `npm test` | `frontend/` | `npm ci` | `frontend` |
+| Frontend | `frontend/src/**/*.test.js` (21 archivos, 190 casos) | `npm test` | `frontend/` | `npm ci` | `frontend` |
 | Lint | todo `frontend/` | `npm run lint` | `frontend/` | `npm ci` | `frontend` |
 | Build | — | `npm run build` | `frontend/` | `npm ci` | `frontend` |
 
@@ -73,7 +73,11 @@ python -m pytest -q -k purga              # por nombre
 | `test_admin.py` | `/api/admin`: métricas, usuarios, permisos y purga |
 | `test_addon.py` | API del add-on: vínculo, prácticas, intentos evaluados en el servidor y descargas armadas al vuelo |
 | `test_esquema.py` | `database/modelos.py`, los scripts `sql/` y `diagnostico_oracle.py` describen las mismas tablas |
-| `test_diagnostico.py` | Las comparaciones y recomendaciones de `diagnostico_oracle.py` (qué script pedir según la base: 001, 002, 005–007, `DB_ESQUEMA`), espacio contra 20 GB y aviso con SQLite |
+| `test_diagnostico.py` | Las comparaciones y recomendaciones de `diagnostico_oracle.py` (qué script pedir según la base: 001, 002, 005 a 011, `DB_ESQUEMA`), espacio contra 20 GB y aviso con SQLite |
+| `test_enlace.py` | Enlace en vivo (`api/enlace.py`): latido, detalle del instructor, órdenes, ajustes de «Mi Blender» y respuesta sin 010 |
+| `test_ejemplo.py` | El ejemplo resuelto en la lección y en el enlace |
+| `test_pasos_lecciones.py` | Los pasos sin conexión de cada lección coinciden con los que entrega el servidor |
+| `test_migrar.py`, `test_seguridad.py`, `test_practicas_al_arrancar.py`, `test_proteccion_addon.py` | `migrar.py`; cabeceras y límites; registro de prácticas al arrancar; integridad y marca de agua del add-on |
 
 Regla: una columna nueva va en `modelos.py`, en un script SQL nuevo y en `ESPERADO` del diagnóstico; `test_esquema.py` falla si falta alguno. `despliegue/actualizar.sh` corre esta suite en la VM antes de reiniciar.
 
@@ -83,8 +87,9 @@ Regla: una columna nueva va en `modelos.py`, en un script SQL nuevo y en `ESPERA
 
 ## 5. Motor y constructor del add-on
 
-- `engine/tests/` (`test_engine.py`, `test_loader.py`, `test_motor_mesa.py`, `test_guia.py`): Python puro, sin Blender. `conftest.py` agrega `engine/` al `sys.path`. Cubren el motor, el cargador de prácticas (errores en español), la práctica de la mesa y la etapa 2 (guía y acompañante). Detalle: [docs/motor/](../motor/README.md).
-- `addon/tests/test_construir.py`: el constructor sin Blender (contenido del `.zip`, determinismo, `config.json`).
+- `engine/tests/` (13 archivos: `test_engine.py`, `test_loader.py`, `test_motor_mesa.py`, `test_motor_podio.py`, `test_guia.py`, `test_v3_*.py`, `test_figura.py`, `test_reconocer.py`, `test_herramientas_enfoque.py`, `test_silueta.py` y `test_ejemplo.py`, que comprueba que el ejemplo de cada práctica la complete): Python puro, sin Blender. `conftest.py` agrega `engine/` al `sys.path`. Cubren el motor, el cargador de prácticas (errores en español), la práctica de la mesa y la etapa 2 (guía y acompañante). Detalle: [docs/motor/](../motor/README.md).
+- `addon/tests/test_construir.py`: el constructor sin Blender (contenido del `.zip`, determinismo, `config.json`). `test_integridad.py` y `test_temas.py` prueban `integridad.py` y `temas.py` sin `bpy`.
+- `python engine/herramientas/practicas.py probar` corre los casos de `pruebas.json` de las 18 prácticas y sus ejemplos: 96 casos.
 
 ```bash
 python -m pytest -q engine/tests addon/tests

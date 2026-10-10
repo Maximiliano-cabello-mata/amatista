@@ -1,10 +1,10 @@
 # Esquema de la base de datos de Amatista
 
-Referencia completa del esquema Oracle de Amatista tras aplicar los scripts 001→007: tablas, columnas, llaves, índices, restricciones, vistas, PL/SQL, usuario de aplicación y columnas JSON, con el modelo SQLAlchemy que mapea cada tabla. Para quien programa el backend o administra la base.
+Referencia completa del esquema Oracle de Amatista tras aplicar los scripts 001→011: tablas, columnas, llaves, índices, restricciones, vistas, PL/SQL, usuario de aplicación y columnas JSON, con el modelo SQLAlchemy que mapea cada tabla. Para quien programa el backend o administra la base.
 
-Actualizado: 4 de octubre de 2026 (main en c730c0e)
+Actualizado: 10 de octubre de 2026 (main con el script 011 de Amatista Motor 3.5.1)
 
-Todo sale de [`backend/sql/`](../../backend/sql/) (001 a 007) y de [`backend/database/modelos.py`](../../backend/database/modelos.py). El resumen, el orden de los scripts y el estado en producción están en el [README de esta carpeta](README.md). La versión en un solo archivo SQL (solo para leer) está en [`esquema_completo.sql`](esquema_completo.sql).
+Todo sale de [`backend/sql/`](../../backend/sql/) (001 a 011) y de [`backend/database/modelos.py`](../../backend/database/modelos.py). El resumen, el orden de los scripts y el estado en producción están en el [README de esta carpeta](README.md). La versión en un solo archivo SQL (solo para leer) está en [`esquema_completo.sql`](esquema_completo.sql).
 
 ## Índice
 
@@ -17,6 +17,7 @@ Todo sale de [`backend/sql/`](../../backend/sql/) (001 a 007) y de [`backend/dat
    - Contenido: [CURSOS](#46-cursos) · [NIVELES](#47-niveles) · [MODULOS](#48-modulos) · [LECCIONES](#49-lecciones)
    - Reestructuración v3: [HABILIDADES](#410-habilidades) · [HABILIDADES_ALUMNO](#411-habilidades_alumno) · [EVALUACIONES_RUBRICA](#412-evaluaciones_rubrica) · [VERSIONES_BLENDER](#413-versiones_blender) · [VERIFICACIONES_BLENDER](#414-verificaciones_blender)
    - Motor de prácticas: [ADDON_VINCULOS](#415-addon_vinculos) · [PRACTICAS](#416-practicas) · [PRACTICA_VERSIONES](#417-practica_versiones) · [PROGRESO_PRACTICAS](#418-progreso_practicas)
+   - Enlace en vivo con Blender: [ADDON_ENLACES](#419-addon_enlaces) · [ADDON_AJUSTES](#420-addon_ajustes)
 5. [Índices y restricciones: resumen](#5-índices-y-restricciones-resumen)
 6. [Vistas](#6-vistas)
 7. [Paquete AMATISTA_AUTOR](#7-paquete-amatista_autor)
@@ -29,7 +30,7 @@ Todo sale de [`backend/sql/`](../../backend/sql/) (001 a 007) y de [`backend/dat
 
 ## 1. Diagrama entidad-relación
 
-Las 18 tablas y las **24 llaves foráneas declaradas** en los scripts. Los tipos se escriben sin largo porque Mermaid no admite paréntesis (los largos están en cada tabla, sección 4). `PK` = llave primaria, `FK` = llave foránea, `UK` = UNIQUE.
+Las 20 tablas y las **28 llaves foráneas declaradas** en los scripts. Los tipos se escriben sin largo porque Mermaid no admite paréntesis (los largos están en cada tabla, sección 4). `PK` = llave primaria, `FK` = llave foránea, `UK` = UNIQUE.
 
 ```mermaid
 erDiagram
@@ -57,6 +58,10 @@ erDiagram
     USUARIOS |o--o{ PRACTICA_VERSIONES : "fk_prac_versiones_autor"
     USUARIOS ||--o{ PROGRESO_PRACTICAS : "fk_prog_practicas_usuario"
     PRACTICAS ||--o{ PROGRESO_PRACTICAS : "fk_prog_practicas_practica"
+    CURSOS |o--o{ CURSOS : "fk_cursos_requisito"
+    SESIONES ||--o| ADDON_ENLACES : "fk_enlaces_sesion"
+    USUARIOS ||--o{ ADDON_ENLACES : "fk_enlaces_usuario"
+    USUARIOS ||--o| ADDON_AJUSTES : "fk_ajustes_usuario"
 
     USUARIOS {
         VARCHAR2 id PK
@@ -128,6 +133,8 @@ erDiagram
         NUMBER orden
         VARCHAR2 estado
         TIMESTAMP actualizado_en
+        VARCHAR2 ruta
+        VARCHAR2 requisito_id FK
     }
     NIVELES {
         VARCHAR2 id PK
@@ -273,6 +280,25 @@ erDiagram
         TIMESTAMP completada_en
         TIMESTAMP actualizado_en
     }
+    ADDON_ENLACES {
+        VARCHAR2 sesion_id PK, FK
+        VARCHAR2 usuario_id FK
+        TIMESTAMP visto_en
+        VARCHAR2 practica_id
+        VARCHAR2 paso
+        NUMBER progreso
+        NUMBER enfocado
+        VARCHAR2 version_addon
+        VARCHAR2 version_blender
+        VARCHAR2 orden "IS JSON"
+        TIMESTAMP orden_en
+        CLOB detalle "IS JSON"
+    }
+    ADDON_AJUSTES {
+        VARCHAR2 usuario_id PK, FK
+        VARCHAR2 datos "IS JSON"
+        TIMESTAMP actualizado_en
+    }
 ```
 
 `|o--o{` marca una FK sobre una columna anulable (la fila hija puede no tener padre). `FK_VERIFICACIONES_LECCION` es compuesta: `(curso_id, leccion_id)` → `LECCIONES (curso_id, id)`.
@@ -291,6 +317,7 @@ erDiagram
     PRACTICA_VERSIONES |o..o{ PROGRESO_PRACTICAS : "practica_id + version"
     PRACTICA_VERSIONES |o..o| PRACTICAS : "id + version_publicada"
     MODULOS |o..o{ LOGROS : "insignia_id = curso:modulo"
+    PRACTICAS |o..o{ ADDON_ENLACES : "practica_id"
 ```
 
 ## 2. Convenciones del esquema
@@ -318,7 +345,7 @@ En Oracle las tablas las crean los scripts; los modelos SQLAlchemy solo se usan 
 | CLOB con JSON | `CLOB` + `CHECK (col IS JSON)` | `TextoJSON()` (`impl = Text`). |
 | VARCHAR2 con JSON | `VARCHAR2(n CHAR)` + `CHECK (col IS JSON)` | `TextoJSONCorto(n)` (`impl = String`). |
 | Valores por omisión | `DEFAULT SYSTIMESTAMP`, `DEFAULT 'borrador'`, `DEFAULT 0`… en la tabla | `default=` del lado de Python (`ahora`, `"borrador"`, `0`); ningún `server_default`. |
-| Nulos | `NOT NULL` explícito | Se deduce del tipo: `Mapped[str]` es NOT NULL, `Mapped[Optional[str]]` es anulable. Coincide en las 18 tablas. |
+| Nulos | `NOT NULL` explícito | Se deduce del tipo: `Mapped[str]` es NOT NULL, `Mapped[Optional[str]]` es anulable. Coincide en las 20 tablas. |
 | CHECK | Todos con nombre | **Ninguno** en los modelos; en SQLite no hay CHECK. Las listas viven como constantes y la API valida. |
 | IOT, particionado, índices LOCAL | Sí (`LOGROS`, `HABILIDADES_ALUMNO`; `EVENTOS_APRENDIZAJE`) | No se expresan. |
 | Nombres de restricciones | `PK_…`, `FK_…`, `UQ_…` | Sin nombre (los genera SQLAlchemy) salvo `uq_niveles_curso_numero_rama` y los índices `ix_…` declarados con `Index(...)`. |
@@ -438,8 +465,8 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 ### 4.6 CURSOS
 
-- **Script:** 002.
-- **Propósito:** cursos del catálogo (`blender`, `aframe`…), administrados desde el panel.
+- **Script:** 002; 008 agrega `RUTA` y `REQUISITO_ID`.
+- **Propósito:** cursos del catálogo (`blender_principiante`, `aframe`…), administrados desde el panel.
 - **Modelo:** `Curso` (`modelos.py:195`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
@@ -456,14 +483,16 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 | `ORDEN` | `NUMBER(5)` | No | `0` | — | Orden en el catálogo. |
 | `ESTADO` | `VARCHAR2(12)` | No | `'publicado'` | `CK_CURSOS_ESTADO`: `borrador`, `publicado`, `archivado` | Estado. |
 | `ACTUALIZADO_EN` | `TIMESTAMP` | No | `SYSTIMESTAMP` | — | Última modificación. |
+| `RUTA` | `VARCHAR2(30)` | Sí | — | — | Familia del curso (008): `blender`, `aframe`. Los cuatro cursos de Blender comparten `blender`. |
+| `REQUISITO_ID` | `VARCHAR2(50)` | Sí | — | `FK_CURSOS_REQUISITO` → `CURSOS(ID)`; `CK_CURSOS_REQUISITO`: `requisito_id IS NULL OR requisito_id <> id` | Curso que conviene terminar antes (008). Principiante-Intermedio pide Principiante. |
 
-**Total:** 12. **Diferencias con el modelo:** solo las generales (`default="publicado"` del lado de Python).
+**Total:** 14 (12 hasta 007). **Diferencias con el modelo:** solo las generales (`default="publicado"` del lado de Python).
 
 ### 4.7 NIVELES
 
 - **Script:** 005.
 - **Propósito:** los cinco niveles de cada curso en la ruta curso > nivel > módulo > lección. El nivel 5 tiene una fila por rama (`web`, `animacion`, `producto`…). Ids `<curso>-n<numero>[-<rama>]` (p. ej. `blender-n1`, `blender-n5-web`). Un nivel en borrador no aparece en el catálogo.
-- **Modelo:** `Nivel` (`modelos.py:212`).
+- **Modelo:** `Nivel` (`modelos.py:216`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -486,7 +515,7 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 - **Scripts:** creada por 002 (11 columnas); 005 agrega `NIVEL_ID` y `FK_MODULOS_NIVEL`.
 - **Propósito:** módulos de un curso (`mod_teoria_001`). `NIVEL_ID` NULL = módulo anterior a los niveles (sigue visible). `VERSION` sube cuando cambia el módulo, lo que cambia la huella del catálogo y avisa a la PWA.
-- **Modelo:** `Modulo` (`modelos.py:237`).
+- **Modelo:** `Modulo` (`modelos.py:241`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -509,7 +538,7 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 - **Script:** 002.
 - **Propósito:** cada lección con su JSON completo en `CONTENIDO` (mismo formato que `frontend/src/data/modulos/*.json`: `contentBlocks`, `quizData`, `cover`, `ficha`…). El id nunca cambia una vez publicada (el progreso se guarda con él); para sustituirla se crea otra con `replaces` y su lista va en `REEMPLAZA`.
-- **Modelo:** `Leccion` (`modelos.py:256`).
+- **Modelo:** `Leccion` (`modelos.py:260`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -534,7 +563,7 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 - **Scripts:** 005; 007 inserta 4 filas si existe el nivel `blender-n1` (sección 10).
 - **Propósito:** habilidades observables del curso (`bl-navegar-vista`), citadas por las lecciones en `ficha.habilidades`.
-- **Modelo:** `Habilidad` (`modelos.py:289`).
+- **Modelo:** `Habilidad` (`modelos.py:293`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -552,7 +581,7 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 - **Script:** 005. **Organización:** IOT (`ORGANIZATION INDEX`), como `LOGROS`.
 - **Propósito:** estado de cada habilidad por alumno, una fila por par (upsert): sin practicar → con guía → con pistas → autónoma.
-- **Modelo:** `HabilidadAlumno` (`modelos.py:305`).
+- **Modelo:** `HabilidadAlumno` (`modelos.py:309`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -568,7 +597,7 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 - **Script:** 005. Tabla normal (no IOT): `evidencia` y `comentario` podrían pasar del límite de fila de una IOT sin segmento de desbordamiento (ORA-01429).
 - **Propósito:** rúbrica común del proyecto de cada nivel: criterio A-E por alumno. Guarda la evaluación más reciente; el historial va a `EVENTOS_APRENDIZAJE` (`activity_submitted`).
-- **Modelo:** `EvaluacionRubrica` (`modelos.py:317`).
+- **Modelo:** `EvaluacionRubrica` (`modelos.py:321`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -587,7 +616,7 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 - **Script:** 005. Nace vacía: la versión principal (LTS) es una decisión pendiente.
 - **Propósito:** versiones de Blender y su categoría en el curso. Solo una debería ser `principal`; lo asegura `AMATISTA_AUTOR.guardar_version_blender` (no hay restricción en la tabla).
-- **Modelo:** `VersionBlender` (`modelos.py:336`).
+- **Modelo:** `VersionBlender` (`modelos.py:340`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -604,7 +633,7 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 - **Script:** 005.
 - **Propósito:** matriz de compatibilidad: una prueba de una lección en una versión de Blender y un sistema operativo (quién, cuándo, con qué versión de la lección y qué cambió).
-- **Modelo:** `VerificacionBlender` (`modelos.py:353`).
+- **Modelo:** `VerificacionBlender` (`modelos.py:357`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -627,7 +656,7 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 - **Script:** 007.
 - **Propósito:** vincular un Blender con una cuenta por código de dispositivo. El add-on pide un vínculo y muestra un código (`ABCD-2345`); el alumno lo escribe en la plataforma (estado `listo`) y el add-on lo canjea una sola vez por una sesión propia en `SESIONES` (`canjeado`). Solo se guarda el hash del secreto. La API borra las filas vencidas al crear vínculos nuevos, así que la tabla queda pequeña (no la toca la purga de 003).
-- **Modelo:** `AddonVinculo` (`modelos.py:380`).
+- **Modelo:** `AddonVinculo` (`modelos.py:384`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -646,7 +675,7 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 - **Script:** 007.
 - **Propósito:** cada práctica del motor (`practice.json`, formato `amatista.practice/1`). `DEFINICION` guarda la última versión subida; `VERSION_PUBLICADA` es la que reciben los alumnos (su texto está en `PRACTICA_VERSIONES`). Subir nunca publica; publicar es un paso del administrador.
-- **Modelo:** `Practica` (`modelos.py:401`).
+- **Modelo:** `Practica` (`modelos.py:405`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -670,7 +699,7 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 - **Script:** 007.
 - **Propósito:** historial: una fila por versión subida de una práctica (nunca se reescribe), con quién y desde dónde.
-- **Modelo:** `PracticaVersion` (`modelos.py:427`).
+- **Modelo:** `PracticaVersion` (`modelos.py:431`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -690,7 +719,7 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 - **Script:** 007.
 - **Propósito:** avance de un alumno en una práctica, una fila por par (upsert). El servidor vuelve a evaluar la escena con el motor; `PROGRESO` guarda el mejor resultado y `COMPLETADA` nunca vuelve de 1 a 0. El detalle de cada envío va a `EVENTOS_APRENDIZAJE` (`activity_submitted`).
-- **Modelo:** `ProgresoPractica` (`modelos.py:443`).
+- **Modelo:** `ProgresoPractica` (`modelos.py:447`).
 
 | Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
 |---|---|---|---|---|---|
@@ -713,6 +742,43 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 
 **Total:** 16. **Diferencias con el modelo:** `objetivos` es `TextoJSONCorto(1000)`.
 
+### 4.19 ADDON_ENLACES
+
+- **Script:** 010; 011 agrega `DETALLE`.
+- **Propósito:** un Blender abierto y conectado. Guarda su último latido (práctica, paso, progreso, modo enfocado, y desde 011 lo que muestra el instructor) y la orden pendiente que la plataforma le deja («abre esta práctica»). Una fila por sesión del add-on; el latido solo reescribe la fila cada 15 s o al cambiar algo. Cuando la purga de 003 borra una sesión vieja, su enlace se borra con ella (`ON DELETE CASCADE`).
+- **Modelo:** `AddonEnlace` (`modelos.py:480`).
+
+| Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
+|---|---|---|---|---|---|
+| `SESION_ID` | `VARCHAR2(64)` | No | — | `PK_ADDON_ENLACES`; `FK_ENLACES_SESION` → `SESIONES(ID)` `ON DELETE CASCADE` | Sesión del add-on. |
+| `USUARIO_ID` | `VARCHAR2(100)` | No | — | `FK_ENLACES_USUARIO` → `USUARIOS(ID)`; `IX_ADDON_ENLACES_USUARIO` | Alumno. |
+| `VISTO_EN` | `TIMESTAMP` | No | `SYSTIMESTAMP` | — | Último latido. |
+| `PRACTICA_ID` | `VARCHAR2(80)` | Sí | — | — (sin FK a `PRACTICAS`) | Práctica abierta en Blender. |
+| `PASO` | `VARCHAR2(80)` | Sí | — | — | Paso en el que va. |
+| `PROGRESO` | `NUMBER(3)` | Sí | — | `CK_ENLACES_PROGRESO`: `progreso IS NULL OR progreso BETWEEN 0 AND 100` | Progreso de la práctica. |
+| `ENFOCADO` | `NUMBER(1)` | No | `0` | `CK_ENLACES_ENFOCADO`: 0, 1 | Modo enfocado activo. |
+| `VERSION_ADDON` | `VARCHAR2(20)` | Sí | — | — | Versión del add-on. |
+| `VERSION_BLENDER` | `VARCHAR2(20)` | Sí | — | — | Versión de Blender. |
+| `ORDEN` | `VARCHAR2(1000 CHAR)` | Sí | — | `CK_ENLACES_ORDEN`: `IS JSON` | Orden pendiente para este Blender (`{"id", "tipo", "datos"}`); se borra al entregarla. |
+| `ORDEN_EN` | `TIMESTAMP` | Sí | — | — | Cuándo se dejó la orden. |
+| `DETALLE` | `CLOB` | Sí | — | `CK_ENLACES_DETALLE`: `IS JSON` | Lo que muestra el instructor del add-on (paso, mensaje, lista «Comparado con el ejemplo»), para «Ahora en Blender». Se sobrescribe en cada cambio, sin historial. Agregada por 011. |
+
+**Total:** 12. **Diferencias con el modelo:** `orden` es `TextoJSONCorto(1000)`; `detalle` es `Text` (el `IS JSON` lo exige solo Oracle); el `ON DELETE CASCADE` se declara con `ForeignKey("sesiones.id", ondelete="CASCADE")`.
+
+### 4.20 ADDON_AJUSTES
+
+- **Script:** 010.
+- **Propósito:** cómo se ve Blender para cada alumno, decidido en «Mi Blender» (modo enfocado, acompañamiento, avisos de herramientas y tarjeta de la vista 3D). El add-on los aplica en cada latido; sus preferencias locales quedan como respaldo sin conexión.
+- **Modelo:** `AddonAjustes` (`modelos.py:511`).
+
+| Columna | Tipo Oracle | Nulo | Default | Restricción / índice | Descripción |
+|---|---|---|---|---|---|
+| `USUARIO_ID` | `VARCHAR2(100)` | No | — | `PK_ADDON_AJUSTES`; `FK_AJUSTES_USUARIO` → `USUARIOS(ID)` | Alumno. |
+| `DATOS` | `VARCHAR2(1000 CHAR)` | No | — | `CK_AJUSTES_DATOS`: `IS JSON` | `{"enfoque", "acompanamiento", "avisos_herramientas", "tarjeta_3d"}`. |
+| `ACTUALIZADO_EN` | `TIMESTAMP` | No | `SYSTIMESTAMP` | — | Última modificación. |
+
+**Total:** 3. **Diferencias con el modelo:** `datos` es `TextoJSONCorto(1000)`.
+
 ---
 
 ## 5. Índices y restricciones: resumen
@@ -730,12 +796,13 @@ Columnas en el orden en que quedan en Oracle (`COLUMN_ID`): primero las del `CRE
 | `IX_VERIFICACIONES_LECCION` | `VERIFICACIONES_BLENDER (curso_id, leccion_id)` | 005 | Matriz por lección y FK compuesta. |
 | `IX_PRACTICAS_LECCION` | `PRACTICAS (curso_id, leccion_id)` | 007 | Práctica de una lección. |
 | `IX_PROG_PRACTICAS_PRACTICA` | `PROGRESO_PRACTICAS (practica_id)` | 007 | Alumnos de una práctica y FK. |
+| `IX_ADDON_ENLACES_USUARIO` | `ADDON_ENLACES (usuario_id)` | 010 | Los Blender conectados de un alumno y FK. |
 
-Además, Oracle crea un índice por cada PRIMARY KEY (18) y por cada UNIQUE: `UQ_USUARIOS_EMAIL`, `UQ_NIVELES_CURSO_NUMERO_RAMA`, `UQ_VINCULOS_CODIGO`. Si al crear un índice ya existe otro sobre las mismas columnas con otro nombre (ORA-01408), los scripts conservan el existente.
+Además, Oracle crea un índice por cada PRIMARY KEY (20) y por cada UNIQUE: `UQ_USUARIOS_EMAIL`, `UQ_NIVELES_CURSO_NUMERO_RAMA`, `UQ_VINCULOS_CODIGO`. Si al crear un índice ya existe otro sobre las mismas columnas con otro nombre (ORA-01408), los scripts conservan el existente.
 
-**FK sin índice que empiece por sus columnas** (ningún script lo crea; los encabezados solo justifican los índices que sí existen): `FK_MODULOS_NIVEL`, `FK_HABILIDADES_NIVEL`, `FK_HAB_ALUMNO_HABILIDAD`, `FK_RUBRICA_NIVEL`, `FK_VERIFICACIONES_VERSION`, `FK_VINCULOS_USUARIO`, `FK_PRACTICAS_AUTOR`, `FK_PRAC_VERSIONES_AUTOR`. El encabezado de 002 nombra como siguiente índice candidato `PROGRESO_LECCIONES (completada_en)`, que no existe.
+**FK sin índice que empiece por sus columnas** (ningún script lo crea; los encabezados solo justifican los índices que sí existen): `FK_MODULOS_NIVEL`, `FK_HABILIDADES_NIVEL`, `FK_HAB_ALUMNO_HABILIDAD`, `FK_RUBRICA_NIVEL`, `FK_VERIFICACIONES_VERSION`, `FK_VINCULOS_USUARIO`, `FK_PRACTICAS_AUTOR`, `FK_PRAC_VERSIONES_AUTOR`, `FK_CURSOS_REQUISITO` (008). El encabezado de 002 nombra como siguiente índice candidato `PROGRESO_LECCIONES (completada_en)`, que no existe.
 
-### Restricciones CHECK (34)
+### Restricciones CHECK (40)
 
 | Tabla | CHECK |
 |---|---|
@@ -743,7 +810,7 @@ Además, Oracle crea un índice por cada PRIMARY KEY (18) y por cada UNIQUE: `UQ
 | SESIONES | `CK_SESIONES_ACTIVA` |
 | PROGRESO_LECCIONES | `CK_PROGRESO_COMPLETADA`, `CK_PROGRESO_PUNTAJE`, `CK_PROGRESO_DATOS_JSON` |
 | EVENTOS_APRENDIZAJE | `CK_EVENTOS_TIPO`, `CK_EVENTOS_ES_PRUEBA` |
-| CURSOS | `CK_CURSOS_ESTADO` |
+| CURSOS | `CK_CURSOS_ESTADO`, `CK_CURSOS_REQUISITO` (008) |
 | MODULOS | `CK_MODULOS_ESTADO` |
 | LECCIONES | `CK_LECCIONES_CONTENIDO`, `CK_LECCIONES_BLOQUEADA`, `CK_LECCIONES_ESTADO` |
 | NIVELES | `CK_NIVELES_NUMERO`, `CK_NIVELES_RAMA`, `CK_NIVELES_ESTADO` |
@@ -755,6 +822,8 @@ Además, Oracle crea un índice por cada PRIMARY KEY (18) y por cada UNIQUE: `UQ
 | PRACTICAS | `CK_PRACTICAS_DEFINICION`, `CK_PRACTICAS_NIVEL`, `CK_PRACTICAS_ESTADO`, `CK_PRACTICAS_ORIGEN`, `CK_PRACTICAS_PUBLICADA` |
 | PRACTICA_VERSIONES | `CK_PRAC_VERSIONES_DEFINICION` |
 | PROGRESO_PRACTICAS | `CK_PROG_PRACTICAS_PROGRESO`, `CK_PROG_PRACTICAS_COMPLETADA`, `CK_PROG_PRACTICAS_AUTONOMIA`, `CK_PROG_PRACTICAS_OBJETIVOS` |
+| ADDON_ENLACES | `CK_ENLACES_PROGRESO`, `CK_ENLACES_ENFOCADO`, `CK_ENLACES_ORDEN`, `CK_ENLACES_DETALLE` (011) |
+| ADDON_AJUSTES | `CK_AJUSTES_DATOS` |
 
 `HABILIDADES` no tiene CHECK. Cambiar la lista de un CHECK (p. ej. un tipo de evento nuevo) se hace en un script nuevo con `DROP CONSTRAINT` y `ADD CONSTRAINT` del mismo nombre (`LEEME.txt`, regla 5).
 
@@ -869,13 +938,13 @@ Para otra retención diaria se cambia `job_action` en 003 (p. ej. `BEGIN amatist
 
 ## 9. Usuario de aplicación AMATISTA_APP
 
-Script 004, opcional (T-004; hoy no aplicado en producción).
+Script 004, opcional (T-004; hoy no aplicado en producción, aunque ya se puede ejecutar).
 
 - Crea `AMATISTA_APP` con la contraseña escrita en `v_password` (solo en la hoja de Database Actions, nunca en el repositorio). Si ya existe, solo vuelve a dar permisos.
-- Permisos: `CREATE SESSION` y `SELECT, INSERT, UPDATE, DELETE` sobre las 18 tablas (72 permisos de objeto). Sin permisos sobre vistas, paquete ni procedimiento: la purga con particiones la ejecuta el job como dueño.
+- Permisos: `CREATE SESSION` y `SELECT, INSERT, UPDATE, DELETE` sobre las 20 tablas (80 permisos de objeto). Las de 007 y 010 son opcionales: si todavía no existen, 004 lo avisa y sigue. Sin permisos sobre vistas, paquete ni procedimiento: la purga con particiones la ejecuta el job como dueño.
 - Las tablas siguen siendo de `ADMIN`. En `backend/.env`: `DB_USER=AMATISTA_APP`, `DB_PASSWORD=…`, `DB_ESQUEMA=ADMIN`. `conexion.py` ejecuta `ALTER SESSION SET CURRENT_SCHEMA = ADMIN` en cada conexión nueva.
-- Errores propios: -20001 falta una de las 18 tablas; -20002 contraseña sin escribir; -20003 contraseña con comillas dobles.
-- 005 y 007 dan permisos sobre sus tablas nuevas si `AMATISTA_APP` ya existe.
+- Errores propios: -20001 falta una tabla de 002 o 005; -20002 contraseña sin escribir; -20003 contraseña con comillas dobles.
+- 005, 007 y 010 dan permisos sobre sus tablas nuevas si `AMATISTA_APP` ya existe.
 - Volver atrás: `DB_USER=ADMIN` en `.env` y `DROP USER amatista_app;` (no tiene tablas propias).
 
 ## 10. Secuencias, triggers y otros objetos
@@ -905,6 +974,9 @@ Script 004, opcional (T-004; hoy no aplicado en producción).
 | `PRACTICAS.DEFINICION` | `CLOB` | `CK_PRACTICAS_DEFINICION` (`IS JSON`) | `TextoJSON()` | `practice.json` vigente. |
 | `PRACTICA_VERSIONES.DEFINICION` | `CLOB` | `CK_PRAC_VERSIONES_DEFINICION` (`IS JSON`) | `TextoJSON()` | `practice.json` de esa versión. |
 | `PROGRESO_PRACTICAS.OBJETIVOS` | `VARCHAR2(1000 CHAR)` | `CK_PROG_PRACTICAS_OBJETIVOS` (`IS JSON`) | `TextoJSONCorto(1000)` | Arreglo de ids de objetivos cumplidos. |
+| `ADDON_ENLACES.ORDEN` | `VARCHAR2(1000 CHAR)` | `CK_ENLACES_ORDEN` (`IS JSON`) | `TextoJSONCorto(1000)` | Orden pendiente para el Blender (`{"id","tipo","datos"}`). |
+| `ADDON_ENLACES.DETALLE` | `CLOB` | `CK_ENLACES_DETALLE` (`IS JSON`) | `Text` | Lo que muestra el instructor del add-on (011). |
+| `ADDON_AJUSTES.DATOS` | `VARCHAR2(1000 CHAR)` | `CK_AJUSTES_DATOS` (`IS JSON`) | `TextoJSONCorto(1000)` | Ajustes de «Mi Blender». |
 | `EVENTOS_APRENDIZAJE.DATOS` | `VARCHAR2(250 CHAR)` | **ninguno** | `String(250)` | Normalmente JSON compacto, pero la base no lo exige. |
 
 `IS JSON` rechaza texto mal formado (y NaN o infinito). Por eso el backend serializa siempre con `allow_nan=False` (`backend/api/progreso.py`, `api/contenido.py`, `api/addon.py`, `contenido/validacion.py`). No hay columnas de tipo nativo `JSON` de Oracle: todas son `VARCHAR2` o `CLOB` con CHECK.
@@ -933,7 +1005,7 @@ class TextoJSONCorto(TextoJSON):
 - Al **escribir** no transforma nada: el código guarda texto ya serializado (`compactar(...)` con `separators=(",", ":")`).
 - Después, cada módulo lo convierte a objeto cuando lo necesita: `leer_json` en `backend/api/contenido.py`, `leer` en `backend/api/addon.py`, `leer_objeto` en `backend/api/progreso.py`. Todos devuelven `None` si el texto no es JSON válido.
 - `EVENTOS_APRENDIZAJE.DATOS` usa `String(250)` simple porque, al no tener `IS JSON`, el controlador la entrega como texto.
-- `backend/tests/test_contenido.py` comprueba que `TextoJSON` convierte a texto un `dict` como el que entrega `python-oracledb`; `backend/tests/test_esquema.py` comprueba que las cinco columnas JSON tengan su CHECK `IS JSON`.
+- `backend/tests/test_contenido.py` comprueba que `TextoJSON` convierte a texto un `dict` como el que entrega `python-oracledb`; `backend/tests/test_esquema.py` comprueba que las cinco columnas JSON hasta 007 tengan su CHECK `IS JSON`.
 
 ### Lectura de JSON dentro de Oracle
 

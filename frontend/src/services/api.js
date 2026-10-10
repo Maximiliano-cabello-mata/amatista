@@ -138,14 +138,6 @@ export const consultarSalud = async () => {
   return { backend: true, baseDatos: status === 200, detalle: datos?.detail ?? datos?.motor ?? null };
 };
 
-// Heredado (Laboratorio y versiones viejas): registra un alumno anónimo.
-// Ya no crea una sesión de autenticación: las cuentas entran por /api/auth.
-export const iniciarSesionBD = (email) =>
-  pedirJSON("/api/iniciar-sesion", {
-    metodo: "POST",
-    cuerpo: { email, dispositivo: dispositivo().substring(0, 45) },
-  });
-
 // --- Cuentas (/api/auth) ------------------------------------------------------
 
 export const registrar = (datos) =>

@@ -8,7 +8,6 @@ import {
   controlesDisponibles,
   instructorEnVivo,
   OPCIONES_ENFOQUE,
-  blenderCompatible,
   compararVersiones,
   detectarSistema,
   MOTOR,
@@ -52,12 +51,6 @@ describe('versiones de Blender', () => {
     expect(compararVersiones('4.10', '4.9')).toBe(1);
     expect(compararVersiones('4.2', '4.2.0')).toBe(0);
     expect(compararVersiones('3.6.9', '4.2')).toBe(-1);
-  });
-
-  it('4.2 o más nuevo es compatible', () => {
-    expect(blenderCompatible('5.1.1')).toBe(true);
-    expect(blenderCompatible('4.2.0')).toBe(true);
-    expect(blenderCompatible('4.1')).toBe(false);
   });
 });
 

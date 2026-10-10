@@ -13,7 +13,7 @@ Una práctica es un JSON declarativo. El motor la valida al cargarla (`engine/am
 | `version` | sí | Entero. Lo sube el autor; Oracle además numera cada subida en `PRACTICA_VERSIONES`. |
 | `title` | sí | Título que ve el alumno. |
 | `level` | sí | 1 a 5 (los niveles del curso). El cargador da error si falta. |
-| `description`, `intro`, `completion` | no | Textos: tarjeta del catálogo, bienvenida y mensaje final. Máximo 600 caracteres cada uno. |
+| `description`, `intro`, `completion` | no | Textos: tarjeta del catálogo, bienvenida y mensaje final. Máximo 2400 caracteres cada uno (el cargador da error si alguno es más largo). |
 | `estimatedMinutes` | no | Duración estimada. |
 | `blender` | no | `{"min": "4.2"}`: versión mínima para esta práctica. |
 | `skills` | no | Ids de `HABILIDADES` que la práctica entrena (suben a «con_pistas» al completarla). |
@@ -33,16 +33,16 @@ Una práctica es un JSON declarativo. El motor la valida al cargarla (`engine/am
 | `params` | Parámetros del validador. |
 | `weight` | Peso en el porcentaje (por defecto 1). Los obligatorios deben sumar más que 0. |
 | `requires` | Ids de objetivos que deben cumplirse antes; mientras tanto este queda «bloqueado». |
-| `optional` | `true`: suma como extra pero no hace falta para completar. |
+| `optional` | `true`: el paso se muestra, pero no cuenta para el progreso ni hace falta para completar. Los opcionales no suman ni restan. |
 | `tip` | Consejo corto que siempre se ve en la tarjeta del paso. |
 | `hints` | De 1 a 6 pistas, de la más general al paso a paso. Se revelan de una en una con **Necesito una pista**; llegar a la tercera cuenta como «con guía». |
 | `messages` | `{pass, fail}`: textos propios para cumplido / no cumplido. |
-| `watch` | Eventos que reevalúan este objetivo (por defecto los del validador). |
+| `watch` | Se acepta para no romper prácticas viejas, pero **hoy se ignora**: los eventos que reevalúan un objetivo son siempre los que declara su validador (`targets_for_event` en `engine.py`). |
 | `guide` | *(etapa 2, opcional)* `{why, steps}`: el porqué del paso y hasta 8 pasos (`"texto"` o `{"text", "keys": [hasta 6 teclas]}`) que reemplazan las instrucciones que genera el motor. Ver [07_guia_y_acompanamiento.md](07_guia_y_acompanamiento.md). |
 
 ## Validadores incluidos
 
-Los parámetros de selector, comunes a los que eligen objetos: `role`, `name`, `name_prefix`, `type`. Los de cantidad: `equals`, `min`, `max`. Los de rango: `axis` (`x`, `y`, `z`), `min`, `max`.
+Los parámetros de selector, comunes a los que eligen objetos: `role`, `name`, `name_prefix`, `type`, `tag`, `collection` y `primitive` (`validators/base.py`); un objeto tiene que cumplir todos los que se pongan. Los de cantidad: `equals`, `min`, `max`. Los de rango: `axis` (`x`, `y`, `z`), `min`, `max`.
 
 | Id | Etiqueta en el constructor | Parámetros |
 |---|---|---|
@@ -62,8 +62,9 @@ Los parámetros de selector, comunes a los que eligen objetos: `role`, `name`, `
 | `scene.camera_exists`, `scene.light_exists` | Cámara, Luz | cantidad |
 | `file.saved` | Archivo guardado | — (guardado y sin cambios desde entonces) |
 | `file.named` | Nombre del archivo | `contains` |
+| `scene.mode` | Modo de Blender | `mode` (`OBJECT` o `EDIT`; `EDIT` acepta `EDIT_MESH` y los demás modos de edición). Lo usa el calentamiento del módulo 2 de Principiante («Vuelve al Modo Objeto»). |
 
-La lista exacta con tipos y valores por defecto es el código: `engine/amatista_engine/validators/builtin.py` (el constructor de objetivos del modo desarrollador la lee de ahí). Agregar uno = una función + un registro; ninguna práctica necesita código propio.
+La lista exacta con tipos y valores por defecto es el código: `engine/amatista_engine/validators/builtin.py` (el constructor de objetivos del modo desarrollador la lee de ahí). El catálogo completo, con los 42 validadores, está en [09_validadores.md](09_validadores.md). El compilador da un error si un parámetro no tiene el tipo que declara su validador (un texto donde va un número, por ejemplo). Agregar uno = una función + un registro; ninguna práctica necesita código propio.
 
 ## Ejemplo mínimo
 

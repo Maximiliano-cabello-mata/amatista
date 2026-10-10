@@ -153,18 +153,21 @@ function MapaModulo({ curso, modulo, acento, progreso }) {
         <Mascota tema={tema} paseo className="relative mt-4" />
         <RutaModulo className="relative mt-4" lecciones={contenido.lessons} progreso={progreso} cursoId={curso.id} />
 
-        <ol className="relative mt-5 space-y-2">
+        {/* La línea que une las lecciones va fuera del <ol>: dentro solo puede haber <li>. */}
+        <div className="relative mt-5">
           <span className="absolute bottom-6 left-6 top-6 w-px bg-gradient-to-b from-white/15 via-blender/25 to-white/10" aria-hidden="true" />
-          {secuenciaDelModulo(modulo).map((paso) => (
-            <li key={paso.leccion.id}>
-              {paso.tipo === 'practica' ? (
-                <EstacionBlender cursoId={curso.id} estado={estadoPracticaEn(progreso, curso.id, modulo, paso.indice)} />
-              ) : (
-                <FilaLeccion leccion={paso.leccion} indice={paso.indice} {...props} />
-              )}
-            </li>
-          ))}
-        </ol>
+          <ol className="space-y-2">
+            {secuenciaDelModulo(modulo).map((paso) => (
+              <li key={paso.leccion.id}>
+                {paso.tipo === 'practica' ? (
+                  <EstacionBlender cursoId={curso.id} estado={estadoPracticaEn(progreso, curso.id, modulo, paso.indice)} />
+                ) : (
+                  <FilaLeccion leccion={paso.leccion} indice={paso.indice} {...props} />
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
 
         {modulo.insignia && (
           <div className="mt-6 flex items-center gap-3 border-t border-white/10 pt-5">

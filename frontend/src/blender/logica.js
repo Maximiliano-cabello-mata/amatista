@@ -1,14 +1,13 @@
 // Lógica pura de la integración con Blender (pruebas en logica.test.js).
 
 export const SISTEMAS = {
-  windows: { id: 'windows', nombre: 'Windows', lanzador: 'Instalar Amatista.bat', pista: 'Doble clic en «Instalar Amatista».' },
+  windows: { id: 'windows', nombre: 'Windows', pista: 'Doble clic en «Instalar Amatista».' },
   macos: {
     id: 'macos',
     nombre: 'macOS',
-    lanzador: 'Instalar Amatista.command',
     pista: 'Clic derecho en «Instalar Amatista» › Abrir (la primera vez macOS lo pide).',
   },
-  linux: { id: 'linux', nombre: 'Linux', lanzador: 'instalar-amatista.sh', pista: 'En una terminal: bash instalar-amatista.sh' },
+  linux: { id: 'linux', nombre: 'Linux', pista: 'En una terminal: bash instalar-amatista.sh' },
 };
 
 // Blender 4.2 es la primera versión con extensiones (blender_manifest.toml).
@@ -55,8 +54,6 @@ export function compararVersiones(a = '', b = '') {
   return 0;
 }
 
-export const blenderCompatible = (version) => compararVersiones(version, BLENDER_MINIMO) >= 0;
-
 // Pasos de la práctica con su estado para dibujarlos en la lección:
 //   pasos: [{id, titulo}] (del servidor) o textos (bloque.steps, sin conexión)
 //   progreso: fila de /mi-progreso (objetivos cumplidos y paso actual)
@@ -89,7 +86,7 @@ export function resumenPractica(progreso) {
   return `${progreso.progreso} % en Blender`;
 }
 
-// --- Enlace en vivo (motor 3.4) -----------------------------------------------------------
+// --- Enlace en vivo (motor 3.4 y 3.5) -----------------------------------------------------
 
 // Cómo se ve Blender: lo elige el alumno en «Mi Blender» y le llega al add-on en vivo.
 export const OPCIONES_ENFOQUE = [
@@ -134,7 +131,7 @@ export function estadoBlender(datos, practicaId = null) {
 
 // --- El instructor en vivo (motor 3.5) ------------------------------------------------------
 // El add-on manda en su latido lo que el instructor muestra en Blender (paso, mensaje y la lista
-// de la figura) y la plataforma le puede pedir que compruebe, dé una pista, lo haga con el alumno,
+// comparada con el ejemplo resuelto) y la plataforma le puede pedir que compruebe, dé una pista, lo haga con el alumno,
 // guarde o empiece de nuevo.
 
 export const CONTROLES_BLENDER = [
@@ -162,7 +159,6 @@ export function instructorEnVivo(blender) {
     titulo: d.titulo || '',
     paso: d.total ? `Paso ${d.numero} de ${d.total}` : '',
     mensaje: d.mensaje || '',
-    figura: d.figura || '',
     lista,
     hechas: lista.filter((i) => i.ok).length,
     modo: MODOS[d.modo] ?? '',

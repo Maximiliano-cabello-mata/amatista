@@ -2,7 +2,7 @@
 
 Cómo dejar Amatista corriendo en tu computadora: requisitos, variables de entorno, SQLite u Oracle local y el primer administrador. Para desarrolladores.
 
-Actualizado: 4 de octubre de 2026 (main en c730c0e)
+Actualizado: 10 de octubre de 2026 (main con los PR #25, #26 y #27)
 
 1. [Requisitos](#1-requisitos)
 2. [Variables de entorno](#2-variables-de-entorno)
@@ -85,7 +85,7 @@ DATABASE_URL=sqlite:///./amatista_local.db uvicorn main:app --reload
 
 Producción usa Oracle Autonomous Database (Free Tier, 20 GB) y solo acepta conexiones desde la IP de la VM (INC-008 en el [registro de incidencias](../incidencias/README.md)). Para reproducir fallas de Oracle fuera de la VM, el proyecto usa el contenedor **`gvenzl/oracle-free`**: así se probaron los scripts del 2 de octubre ([Oracle paso a paso](../despliegue/2026-10-02_oracle_paso_a_paso.md)) y la v3 (`gvenzl/oracle-free:23-slim-faststart`, [manual de Oracle v3](../reestructuracion/02_manual_oracle.md), 3 y 4 de octubre).
 
-**Aviso:** el repositorio no trae una guía paso a paso del contenedor (INC-008 dice «guía en docs/despliegue/», pero esa carpeta solo tiene `2026-10-02_oracle_paso_a_paso.md`). Lo siguiente es una receta mínima con las opciones documentadas de la imagen; ajústala a tu equipo:
+**Aviso:** el repositorio no trae una guía paso a paso del contenedor (INC-008 dice «guía en docs/despliegue/», pero los cinco documentos de esa carpeta tratan de la base real, la VM, el dominio y el plan de despliegue, no del contenedor). Lo siguiente es una receta mínima con las opciones documentadas de la imagen; ajústala a tu equipo:
 
 ```bash
 # 1. Levantar Oracle 23ai Free con un usuario de aplicación
@@ -94,9 +94,10 @@ docker run -d --name amatista-oracle -p 1521:1521 \
   -e APP_USER=amatista -e APP_USER_PASSWORD=ClaveApp123 \
   gvenzl/oracle-free:23-slim-faststart
 
-# 2. Crear el esquema en orden (base vacía): 001 → 002 → 003 → 005 → 006 → 007
+# 2. Crear el esquema en orden (base vacía): 001 → 002 → 003 → 005 → 006 → 007 → 008 → 010 → 011
 for s in 001_esquema_amatista 002_autenticacion_contenido_eventos 003_mantenimiento \
-         005_niveles_habilidades_versiones 006_herramientas_autor 007_motor_practicas; do
+         005_niveles_habilidades_versiones 006_herramientas_autor 007_motor_practicas \
+         008_cursos_por_ruta 010_enlace_blender 011_detalle_instructor; do
   docker exec -i amatista-oracle sqlplus -s amatista/ClaveApp123@FREEPDB1 < backend/sql/$s.sql
 done
 ```
@@ -116,7 +117,7 @@ uvicorn main:app --reload                      # /api/salud → "motor": "oracle
 
 Notas:
 
-- **`001` borra y vuelve a crear las tablas**: úsalo solo en una base vacía. En una base con datos el orden es `002 → 003 → 005 → 006 → 007` ([`backend/sql/LEEME.txt`](../../backend/sql/LEEME.txt)).
+- **`001` borra y vuelve a crear las tablas**: úsalo solo en una base vacía. En una base con datos el orden es `002 → 003 → 005 → 006 → 007 → 008 → 010 → 011`, con `004` opcional y `009` al final, después de importar los cursos nuevos ([`backend/sql/LEEME.txt`](../../backend/sql/LEEME.txt)).
 - `003` crea un job de `DBMS_SCHEDULER` y `004` crea el usuario `AMATISTA_APP`; si tu usuario no tiene permisos para eso, ejecútalos con `system` o sáltalos (no son necesarios para desarrollar).
 - `DB_DSN` sin `tcps://` usa una conexión normal (el contenedor no tiene TLS); `DB_HOST`/`DB_SERVICE` siempre arman `tcps://`, así que con el contenedor usa `DB_DSN`.
 - Cómo verificar cada script, el orden exacto en producción y las recetas del paquete de autor: [manual de Oracle v3](../reestructuracion/02_manual_oracle.md) y [Oracle paso a paso](../despliegue/2026-10-02_oracle_paso_a_paso.md).
@@ -142,9 +143,9 @@ Con la cuenta admin abre `http://localhost:5173/#/admin`. Los roles: `profesor` 
 
 ## 6. El add-on de Blender contra tu backend local
 
-1. `python addon/herramientas/construir.py` arma `dist/amatista-0.3.0.zip` con `servidor=http://localhost:8000` y `plataforma=http://localhost:5173` por defecto ([02 §9](02_herramientas_de_linea_de_comandos.md#9-addonherramientasconstruirpy)).
+1. `python addon/herramientas/construir.py` arma `dist/amatista-3.5.1.zip` con `servidor=http://localhost:8000` y `plataforma=http://localhost:5173` por defecto ([02 §9](02_herramientas_de_linea_de_comandos.md#9-addonherramientasconstruirpy)).
 2. En Blender: arrastra el `.zip` a la ventana (o *Preferencias › Extensiones › Instalar desde el disco*).
 3. En *Preferencias › Extensiones › Amatista* puedes cambiar **Servidor** y **Plataforma** (vacío = lo del paquete) y activar **Modo desarrollador**.
 4. Vincula la cuenta desde la pestaña Amatista (N) y escribe el código en `#/vincular`.
 
-Las prácticas deben estar registradas en tu base (`python herramientas/contenido.py practicas --publicar`). Detalle del add-on: [docs/motor/referencia/03_addon.md](../motor/referencia/03_addon.md) e [instalación del alumno](../motor/referencia/04_instalacion_alumno.md).
+El backend registra y publica solo las prácticas de `practices/blender/` al arrancar; `python herramientas/contenido.py practicas --revisar` dice si falta alguna. Con el backend local, la lección también maneja tu Blender (enlace en vivo): «Abrir en Blender» abre la práctica ahí y la tarjeta «Ahora en Blender» muestra el paso y la lista «Comparado con el ejemplo». Detalle del add-on: [docs/motor/referencia/03_addon.md](../motor/referencia/03_addon.md) e [instalación del alumno](../motor/referencia/04_instalacion_alumno.md).

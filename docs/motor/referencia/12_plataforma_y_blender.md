@@ -47,7 +47,7 @@ Los textos viven en el catálogo del motor ([`tools/catalogo.json`](../../../eng
 
 ## Pruebas
 
-- `backend/tests/test_enlace.py` (11 casos, incluido el servidor sin 010).
+- `backend/tests/test_enlace.py`: el latido, las órdenes de la plataforma y su cola, «Mi Blender», los límites del detalle y el servidor sin la migración 010.
 - `engine/tests/test_herramientas_enfoque.py`.
 - `addon/tests/en_blender.py` › `probar_motor_34`: enfoque al abrir el tren, menús filtrados y devueltos, «Usar», órdenes de la plataforma, ajustes de «Mi Blender», tren sin roles reconocido y desregistro limpio.
 - `frontend/src/blender/logica.test.js` › «enlace en vivo con Blender».

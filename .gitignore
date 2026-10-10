@@ -7,6 +7,9 @@ env/
 .pytest_cache/
 *.db
 
+# Paquetes del add-on (addon/herramientas/construir.py escribe en dist/ de la raíz)
+/dist/
+
 # SO
 .DS_Store
 Thumbs.db

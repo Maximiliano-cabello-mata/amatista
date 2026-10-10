@@ -8,8 +8,8 @@ import { listarDispositivos, listarPracticas } from '../../services/blender';
 import { IconoCubo } from '../etiquetas/IconosEtiqueta';
 import Seccion from './Seccion';
 
-// Las prácticas en Blender de tus módulos (v3.1): una por módulo, en el
-// orden del curso. El avance real viene del servidor (lo calcula con la foto
+// Las prácticas en Blender de tus módulos: las exploraciones y la práctica que
+// cierra cada módulo, en el orden del curso. El avance real viene del servidor (lo calcula con la foto
 // de la escena); sin cuenta o sin servidor se usa el progreso local.
 function BlenderPanel({ token, progreso, cursos, className = '' }) {
   const [datos, setDatos] = useState({ porId: {}, conectados: 0 });
@@ -35,7 +35,7 @@ function BlenderPanel({ token, progreso, cursos, className = '' }) {
   return (
     <Seccion
       id="panel-blender"
-      etiqueta="Cierre de cada módulo"
+      etiqueta="Exploraciones y cierres"
       titulo="Prácticas en Blender"
       className={className}
       accion={
@@ -45,10 +45,11 @@ function BlenderPanel({ token, progreso, cursos, className = '' }) {
       }
     >
       <ul className="grid gap-2 sm:grid-cols-2">
-        {practicas.map(({ curso, modulo, leccion, bloque }) => {
+        {practicas.map(({ curso, modulo, leccion, bloque, cierre }) => {
           const servidor = datos.porId[bloque.practica]?.mi_progreso;
           const hecha = Boolean(servidor?.completada) || estaCompletada(progreso, curso.id, leccion);
           const avance = hecha ? 100 : (servidor?.progreso ?? 0);
+          const pendiente = cierre ? 'Se abre al terminar las lecciones del módulo.' : 'Se abre al terminar la lección anterior.';
           return (
             <li key={`${curso.id}:${leccion.id}`} className="corte-poly-sm border border-white/10 bg-base/60 p-3">
               <a href={rutas.leccion(curso.id, leccion.id)} className="flex gap-3">
@@ -66,7 +67,7 @@ function BlenderPanel({ token, progreso, cursos, className = '' }) {
                     <span className={`block h-full ${hecha ? 'bg-emerald-400' : 'bg-blender'}`} style={{ width: `${avance}%` }} />
                   </span>
                   <span className="mt-1.5 block text-xs text-white/55">
-                    {hecha ? '¡Completada!' : servidor ? resumenPractica(servidor) : 'Se abre al terminar las lecciones del módulo.'}
+                    {hecha ? '¡Completada!' : servidor ? resumenPractica(servidor) : pendiente}
                   </span>
                 </span>
               </a>

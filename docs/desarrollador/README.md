@@ -2,7 +2,7 @@
 
 Todo lo que necesita quien programa en Amatista: preparar el entorno, cada herramienta (de terminal y dentro de la plataforma), las pruebas y la forma de trabajar en el repositorio. Para quien llega al proyecto o vuelve después de un tiempo.
 
-Actualizado: 4 de octubre de 2026 (main en c730c0e)
+Actualizado: 10 de octubre de 2026 (main con los PR #25, #26 y #27)
 
 ## Índice
 
@@ -111,16 +111,23 @@ pip install bpy==5.0.1 && python addon/tests/en_blender.py
 | `herramientas/crear-tags.sh` | Crear los tags de versión sobre el historial | `bash herramientas/crear-tags.sh [--reemplazar-v0.2.0]` (raíz) | [02 §5](02_herramientas_de_linea_de_comandos.md#5-herramientascrear-tagssh) |
 | `despliegue/actualizar.sh` | Actualizar la API en la VM con pruebas y vuelta atrás | `bash despliegue/actualizar.sh [rama]` (VM) | [02 §6](02_herramientas_de_linea_de_comandos.md#6-despliegueactualizarsh) |
 | `despliegue/amatista-api.service`, `despliegue/Caddyfile` | Unidad systemd y HTTPS de la API | se copian a `/etc/` (VM) | [02 §6](02_herramientas_de_linea_de_comandos.md#otros-archivos-de-despliegue) · [05 §6](05_flujo_de_trabajo.md#6-despliegue-en-la-vm) |
-| `engine/demo.py` | Ver el motor evaluando la mesa sin Blender | `python engine/demo.py` (raíz) | [02 §7](02_herramientas_de_linea_de_comandos.md#7-enginedemopy) |
+| `engine/demo.py` | Ver el motor evaluando el tren sin Blender | `python engine/demo.py` (raíz) | [02 §7](02_herramientas_de_linea_de_comandos.md#7-enginedemopy) |
 | `engine/herramientas/run_in_blender.py` | Probar el motor a mano dentro de Blender | Blender › Scripting › Run Script | [02 §8](02_herramientas_de_linea_de_comandos.md#8-engineherramientasrun_in_blenderpy) |
 | `addon/herramientas/construir.py` | Armar la extensión `.zip` o el paquete con instalador | `python addon/herramientas/construir.py [--sistema S] [--servidor U] [--plataforma U] [--canal C] [--salida D]` (raíz) | [02 §9](02_herramientas_de_linea_de_comandos.md#9-addonherramientasconstruirpy) |
 | `addon/herramientas/generar_iconos.py` | Regenerar los íconos PNG del add-on | `python addon/herramientas/generar_iconos.py` (raíz) | [02 §10](02_herramientas_de_linea_de_comandos.md#10-addonherramientasgenerar_iconospy) |
 | `addon/herramientas/instalador/*` | Instaladores que van dentro del paquete del alumno | `.bat`, `.command`, `instalar-amatista.sh`, `instalar_en_blender.py` | [02 §11](02_herramientas_de_linea_de_comandos.md#11-addonherramientasinstalador) |
 | `frontend/scripts/ilustraciones.mjs` | Regenerar los SVG low poly de las lecciones | `npm run ilustraciones` (`frontend/`) | [02 §12](02_herramientas_de_linea_de_comandos.md#12-frontendscriptsilustracionesmjs) |
 | Scripts npm | Desarrollo, build, vista previa, lint y pruebas de la PWA | `npm run dev\|build\|preview\|lint\|ilustraciones`, `npm test` (`frontend/`) | [02 §13](02_herramientas_de_linea_de_comandos.md#13-scripts-npm-del-frontend) |
+| `engine/herramientas/practicas.py` | Crear, revisar, probar (con el ejemplo resuelto de cada práctica) y simular prácticas sin Blender; catálogo de validadores; mapa del plan de estudios | `python engine/herramientas/practicas.py <nueva\|revisar\|probar\|simular\|validadores\|plan>` (raíz) | [prácticas v3](../motor/referencia/08_practicas_v3_y_herramientas.md) · [el ejemplo](../motor/referencia/14_ejemplo_y_revision.md) |
+| `engine/herramientas/referencias.py` | Construir en Blender el modelo de referencia de cada práctica y generar su imagen y su plano | con `bpy` (raíz) | [02 §14](02_herramientas_de_linea_de_comandos.md#14-engineherramientasreferenciaspy) |
+| `engine/herramientas/formato_json.py` | Reescribir los JSON con el formato compacto del repositorio | `python engine/herramientas/formato_json.py <rutas>` (raíz) | [02 §15](02_herramientas_de_linea_de_comandos.md#15-engineherramientasformato_jsonpy) |
+| `backend/herramientas/auditoria_seguridad.py` | Atacar todas las rutas de la API y reportar hallazgos | (`backend/`) | [02 §16](02_herramientas_de_linea_de_comandos.md#16-backendherramientasauditoria_seguridadpy) |
+| `backend/herramientas/rendimiento.py` y `frontend/scripts/rendimiento.mjs` | Medir el backend con alumnos simultáneos y la web en computadora y teléfono | (`backend/`, `frontend/`) | [02 §17](02_herramientas_de_linea_de_comandos.md#17-backendherramientasrendimientopy) · [02 §18](02_herramientas_de_linea_de_comandos.md#18-frontendscriptsrendimientomjs) |
+| `backend/herramientas/verificar_licencia.py` | Saber de qué cuenta salió una copia del add-on | (`backend/`, en la VM) | [02 §19](02_herramientas_de_linea_de_comandos.md#19-backendherramientasverificar_licenciapy) |
+| `backend/herramientas/migrar.py` | Respaldo JSONL, carga en otra base y esquema para PostgreSQL | `python herramientas/migrar.py <exportar\|importar\|verificar\|ddl> …` (`backend/`) | [migración](../base-de-datos/03_migracion.md) |
 | `pytest` | Pruebas del backend, tablero, motor y constructor del add-on | `python -m pytest -q` (`backend/`); `python -m pytest -q tablero engine/tests addon/tests` (raíz) | [04](04_pruebas_y_ci.md) |
 | `addon/tests/en_blender.py` | El add-on dentro de Blender real | `python addon/tests/en_blender.py` (con `bpy`) | [04 §6](04_pruebas_y_ci.md#6-add-on-dentro-de-blender-addontestsen_blenderpy) |
-| Scripts SQL `backend/sql/001`–`007` | Esquema de Oracle (se ejecutan a mano en Database Actions) | F5 en Database Actions, en el orden de [`LEEME.txt`](../../backend/sql/LEEME.txt) | [01 §4](01_entorno_local.md#4-oracle-local-opcional) · [manual Oracle](../reestructuracion/02_manual_oracle.md) |
+| Scripts SQL `backend/sql/001`–`011` | Esquema de Oracle (se ejecutan a mano en Database Actions) | F5 en Database Actions, en el orden de [`LEEME.txt`](../../backend/sql/LEEME.txt) | [01 §4](01_entorno_local.md#4-oracle-local-opcional) · [manual Oracle](../reestructuracion/02_manual_oracle.md) |
 
 ### Dentro de la plataforma y de Blender
 

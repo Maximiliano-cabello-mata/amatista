@@ -2,7 +2,7 @@
 
 Las herramientas para el equipo que viven dentro de la PWA, de Blender y de Oracle: panel de administración, Diagnóstico técnico, editor de lecciones, modo Desarrollador del add-on y el paquete `AMATISTA_AUTOR`. Para desarrolladores, profesores y administradores.
 
-Actualizado: 4 de octubre de 2026 (main en c730c0e)
+Actualizado: 10 de octubre de 2026 (la práctica en Blender ya no tiene que cerrar el módulo; el resto sigue como el 4 de octubre, main en c730c0e)
 
 1. [Panel de administración (`#/admin`)](#1-panel-de-administración-admin)
 2. [Diagnóstico técnico (`#/laboratorio`)](#2-diagnóstico-técnico-laboratorio)
@@ -44,7 +44,7 @@ Indicadores del plan de lanzamiento: selector de periodo (7, 14 o 30 días; `PER
 
 - **Crear módulo**: curso, título, número, insignia y esqueleto con la Fórmula (5 lecciones en borrador), lo mismo que `contenido.py nuevo-modulo`.
 - **Publicar** y **Archivar** módulos y lecciones (con confirmación).
-- **Subir / Bajar** lecciones (`mover`). Si la práctica en Blender no queda al final, el servidor responde qué lección mover.
+- **Subir / Bajar** lecciones (`mover`). La práctica en Blender puede ir en cualquier lugar del módulo; el servidor solo rechaza repetir la misma práctica.
 - **Exportar JSON** de un módulo, para guardarlo en `frontend/src/data/modulos/` y hacer commit (igual que `contenido.py exportar`).
 - Ver las etiquetas **Incluye práctica en Blender / Sin práctica** y el tipo de cada lección.
 

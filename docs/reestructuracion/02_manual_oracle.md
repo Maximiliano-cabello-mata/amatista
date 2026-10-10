@@ -16,7 +16,7 @@
 
 ## 1. Punto de partida
 
-> **Estado al 4 de octubre de 2026:** 005 y 006 ya se ejecutaron en producción el 3 de octubre (Oracle 23.26, esquema ADMIN, 14 tablas, 8 niveles de Blender en borrador, `VERSIONES_BLENDER` vacía; [bitácora técnica del 3 de octubre](../bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md), secciones 14 a 22). Lo que queda para después del piloto es la [sección 10](#10-motor-de-prácticas-de-blender-007-4-de-octubre-de-2026) (007, 18 tablas). Los pasos de 005 y 006 se conservan para una base nueva o de pruebas.
+> **Estado al 4 de octubre de 2026:** 005 y 006 ya se ejecutaron en producción el 3 de octubre (Oracle 23.26, esquema ADMIN, 14 tablas, 8 niveles de Blender en borrador, `VERSIONES_BLENDER` vacía; [bitácora técnica del 3 de octubre](../bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md), secciones 14 a 22). Lo que queda para después del piloto es la [sección 10](#10-motor-de-prácticas-de-blender-007-4-de-octubre-de-2026) (007, 18 tablas) y, después, 008 y 009 ([manual de 008 y 009](../base-de-datos/02_manual_008_009.md)), 010 y 011 ([`LEEME.txt`](../../backend/sql/LEEME.txt)), que dejan 20 tablas. Los pasos de 005 y 006 se conservan para una base nueva o de pruebas.
 
 Según la [incidencia del 2 de octubre](../incidencias/2026-10-02_despliegue-sql-v2.2-en-produccion.txt), la base de producción ya tiene **002 y 003** aplicados (8 tablas, purga diaria, catálogo importado). Para la v3 solo faltan:
 
@@ -264,7 +264,7 @@ Las vistas y el paquete solo existen en Oracle. En tu computadora, con la base S
 ```bash
 cd backend
 python herramientas/contenido.py mapa blender                  # el mapa, desde los archivos
-python herramientas/contenido.py nueva-leccion ../frontend/src/data/modulos/blender-modulo-2.json les_n1_mesa "Construir una mesa" --objetivo "…"
+python herramientas/contenido.py nueva-leccion ../frontend/src/data/modulos/blender_principiante-modulo-1.json bp1_repaso "Repaso del módulo" --objetivo "…"
 DATABASE_URL=sqlite:///./amatista_local.db python herramientas/contenido.py importar
 ```
 
@@ -302,7 +302,7 @@ Después del piloto del 8 de octubre:
    `AMATISTA_URL_API=https://<tu API>` y `AMATISTA_URL_PWA=https://<tu PWA>`.
 4. Actualiza el código (`bash ~/amatista/despliegue/actualizar.sh`) y comprueba `python diagnostico_oracle.py` (18 tablas).
 5. Registra y publica la práctica de la mesa: `cd ~/amatista/backend && python herramientas/contenido.py practicas --publicar` (o Admin › Prácticas › Registrar y publicar).
-6. Importa el módulo 2 (`python herramientas/contenido.py importar ../frontend/src/data/modulos/blender-modulo-2.json`), revísalo y publícalo desde Admin cuando esté listo (llega en «revisión»).
+6. Importa el módulo 2 (hoy los módulos están en `../frontend/src/data/modulos/blender_*.json`; el de la v2 quedó en `archivo/blender-modulo-2.json`: `python herramientas/contenido.py importar ../frontend/src/data/modulos/blender_principiante-modulo-1.json`), revísalo y publícalo desde Admin cuando esté listo (llega en «revisión»).
 
 Consultas útiles: `SELECT * FROM v_amatista_practicas;` y `SELECT practica_id, COUNT(*) FROM progreso_practicas GROUP BY practica_id;`.
 

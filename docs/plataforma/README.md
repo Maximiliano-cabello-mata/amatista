@@ -11,7 +11,7 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 | [03 · Etiquetas y gráficos](03_etiquetas_y_graficos.md) | El sistema de etiquetas low poly, la ruta del módulo y la estación de Blender. |
 | [04 · Herramientas de enseñanza](04_herramientas_de_ensenanza.md) | Los 20 bloques con los que se arma una lección, con sus campos y cuándo usar cada uno (3 nuevos). |
 | [05 · Panel de administración](05_panel_de_administracion.md) | Cómo se organiza el panel y el flujo para subir un módulo con su práctica. |
-| [06 · Módulo 3: modelado con precisión](06_modulo_3_modelado_precision.md) | El módulo de precisión de la v2 como ejemplo completo. |
+| [06 · Módulo 3: modelado con precisión](06_modulo_3_modelado_precision.md) | Histórico: el módulo de precisión de la v2 como ejemplo completo (hoy archivado en `frontend/src/data/modulos/archivo/`). |
 | [07 · Herramientas gráficas](07_herramientas_graficas.md) | Qué gráficos tenemos, qué se agregó en la v3.2 y qué conviene desarrollar (investigación). |
 | [08 · Auditoría educativa (9 oct)](08_auditoria_educativa_2026-10-09.md) | Qué está bien, qué está fallando y qué se corrige primero en documentación y producto. |
 
@@ -26,6 +26,14 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 - **Curso Intermedio publicado**; Avanzado bloqueado hasta tener su teoría ([ruta de aprendizaje](../cursos/03_ruta_de_aprendizaje_blender.md)).
 - **Más claro y más ligero:** el ejercicio de emparejar con más contraste, animaciones CSS nuevas y un modo ligero para equipos modestos ([07](07_herramientas_graficas.md)). Mismo diseño y misma paleta.
 - **Sin cambios en Oracle.** El curso Intermedio se crea solo al importar (`asegurar_cursos_base`).
+
+## Resumen de cambios (9 de octubre · la plataforma maneja Blender y el ejemplo manda)
+
+- **Abrir en Blender** desde la lección: la práctica se abre en el Blender del alumno, en su propia escena, y la lección dice «Tu Blender está en esta práctica (N %)» (Motor 3.4).
+- **Ahora en Blender**: la lección muestra el paso y lo que dice el instructor, con los botones Comprobar, Pista, Hazlo conmigo, Guardar, Empezar de nuevo y Ver el ejemplo (Motor 3.5).
+- **El ejemplo resuelto** de cada práctica en la lección (pasos, qué compara Amatista y el código) y la lista «Comparado con el ejemplo · N de M» (Motor 3.5).
+- **Mi Blender** decide cómo se ve Blender: modo enfocado, acompañamiento, tarjeta en la vista 3D y avisos de herramientas.
+- **Oracle 010 y 011** guardan el enlace en vivo y lo que muestra el instructor. Sin ellos la práctica funciona como antes. Detalle en [02](02_modulos_y_practica.md#dentro-de-la-práctica).
 
 ## Estado vigente (9 de octubre)
 

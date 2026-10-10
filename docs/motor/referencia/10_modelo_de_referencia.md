@@ -39,8 +39,10 @@ Cada pieza:
 | `primitive` | `cube`, `cylinder`, `sphere`, `icosphere`, `cone`, `torus` o `plane`. |
 | `size`, `location`, `rotation` | Medidas en metros (caja total), centro, giro en grados. |
 | `role` | El rol que el alumno le pone en la pestaña Amatista. Las piezas se agrupan por rol (o por primitiva si no tienen). |
-| `name`, `color`, `material`, `segments` | Solo para la imagen. |
-| `join` | Piezas con el mismo `join` se unen en un solo objeto (como Ctrl+J): cuentan como una caja. |
+| `name` | El nombre de la pieza: sale en la imagen, en las instrucciones del ejemplo (`describir`) y en la lista de `figure.silhouette`, que nombra cada parte de la figura. |
+| `color`, `material` | Solo para la imagen. |
+| `segments` | Los lados de un cilindro o un cono (un entero hasta 256; sin el campo, el valor por defecto). Sale en la imagen y `figure.silhouette` lo usa para armar la malla de la pieza. |
+| `join` | Piezas con el mismo `join` se unen en un solo objeto (como Ctrl+J). Una figura de piezas unidas se compara por su silueta con `figure.silhouette` ([13](13_instructor_y_silueta.md)), no caja por caja. |
 | `compare` | `false` = decoración: sale en la imagen pero no se califica. |
 
 ## Cómo califica `figure.resembles`
@@ -72,12 +74,12 @@ python engine/herramientas/referencias.py --sin-render    # solo plano.svg y el 
 python engine/herramientas/referencias.py --muestras 48   # render con más calidad
 ```
 
-Construye cada modelo en Blender, **lo califica con el propio motor** (debe sacar 100 % en `figure.resembles`, si no avisa), renderiza `referencia.jpg` (800×500, Cycles) y dibuja `plano.svg`. Actualiza `practices/blender/referencias.json`. Los JSON se escriben con `engine/herramientas/formato_json.py` para que los diffs sean cortos.
+Construye cada modelo en Blender y lo evalúa con el propio motor: imprime cuántos objetos armó, el progreso que saca el modelo solo y los objetivos que le faltan. Además comprueba que el modelo pase la revisión de la figura y avisa si no: usa el primer validador de figura que tenga la práctica, en este orden: `figure.recognize`, `figure.silhouette` y `figure.resembles` (este último queda por compatibilidad; ninguna práctica del plan lo usa). Si la práctica no tiene ninguno, mira el aspecto «La figura» de la revisión contra el ejemplo resuelto. Solo imprime «sin «figura»» cuando tampoco hay ese aspecto. Después renderiza `referencia.jpg` (800×500, Cycles) y dibuja `plano.svg`. Actualiza `practices/blender/referencias.json`. Los JSON se escriben con `engine/herramientas/formato_json.py` para que los diffs sean cortos.
 
 ## Pruebas
 
 - `engine/tests/test_figura.py` (19 pruebas): el modelo exacto, medidas ±8 %, el tren girado y más grande aprueban; ruedas en el techo, vagones apilados, ocho ruedas de un solo lado y piezas faltantes no.
-- `pruebas.json` de cada práctica: casos «Sin sentido» que deben reprobar. `python engine/herramientas/practicas.py probar <carpeta de la práctica>` los corre (71 casos en las 18 prácticas).
+- `pruebas.json` de cada práctica: casos «Sin sentido» que deben reprobar. `python engine/herramientas/practicas.py probar <carpeta de la práctica>` los corre, y prueba además que el ejemplo resuelto complete la práctica (96 casos en las 18 prácticas: 78 de `pruebas.json` y los 18 ejemplos).
 - `addon/tests/en_blender.py`: el panel muestra la imagen dentro de Blender.
 
 ## Prácticas con modelo

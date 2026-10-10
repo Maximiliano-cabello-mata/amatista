@@ -2,7 +2,7 @@
 
 Recorrido por el código de Amatista en cada versión etiquetada o propuesta: qué pantallas tenía la PWA, qué hacía el backend, qué tablas y qué contenido había, y qué podía hacer un alumno. Es para quien quiera entender cómo llegó la plataforma a su forma actual o necesite revisar una versión vieja.
 
-Actualizado: 4 de octubre de 2026 (main en `c730c0e`).
+Actualizado: 4 de octubre de 2026 (main en `c730c0e`). El recorrido llega hasta `v3.0.0-alpha.3`; lo que vino después (alpha.4 a alpha.9 y Motor 3.5.1) está en la [cronología](01_cronologia.md).
 
 - [Cómo se hizo este recorrido](#cómo-se-hizo-este-recorrido)
 - [Las dos historias del repositorio](#las-dos-historias-del-repositorio)
@@ -43,7 +43,7 @@ El repositorio guarda **dos historias de git sin un ancestro común**:
 
 `71bdbb1` no desciende de `v2.0.1`, pero su contenido es **el mismo árbol de `v2.0.1` más 12 archivos** (tablero Kanban, `PROYECTO.md`, `KANBAN.md`, el plan de lanzamiento, `herramientas/crear-tags.sh`, `.github/workflows/tablero.yml` y una nota de versiones). Es decir, el código se subió a mano al repositorio nuevo y la historia vieja quedó solo en los tags. Por eso `git log v2.0.1..main` muestra todo `main` como si fuera nuevo.
 
-Tags publicados hoy (`git tag`): `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.1`. Las versiones `v2.2.0-alpha.2`, `v3.0.0-alpha.1`, `v3.0.0-alpha.2` y `v3.0.0-alpha.3` son **propuestas**: las cuatro están en [`herramientas/crear-tags.sh`](../../herramientas/crear-tags.sh) (alpha.3 desde el 4 de octubre) pero no se han publicado.
+Tags publicados al 4 de octubre (`git tag`): `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.1`. Las versiones `v2.2.0-alpha.2`, `v3.0.0-alpha.1`, `v3.0.0-alpha.2` y `v3.0.0-alpha.3` son **propuestas**: las cuatro están en [`herramientas/crear-tags.sh`](../../herramientas/crear-tags.sh) (alpha.3 desde el 4 de octubre) pero no se han publicado.
 
 ---
 
@@ -270,7 +270,7 @@ Barra superior: **Cursos · Mi panel · Laboratorio · Blender** (+ Admin).
 
 ## v3.0.0-alpha.3 · Motor etapa 2 y plataforma por módulos (`d004071`, 3 y 4 de octubre)
 
-**Qué cambió:** el motor aprende a **guiar paso a paso** y la plataforma adopta una **estructura fija**. En el código y en el `CHANGELOG.md` esta etapa se llama «Plataforma por módulos (v3.1)»; el nombre `v3.0.0-alpha.3` es solo la propuesta de tag. Es el estado de `main` hoy (`c730c0e` solo añade una actualización del tablero).
+**Qué cambió:** el motor aprende a **guiar paso a paso** y la plataforma adopta una **estructura fija**. En el código y en el `CHANGELOG.md` esta etapa se llama «Plataforma por módulos (v3.1)»; el nombre `v3.0.0-alpha.3` es solo la propuesta de tag. Era el estado de `main` el 4 de octubre (`c730c0e` solo añade una actualización del tablero).
 
 - **Motor 0.3.0:** `engine/amatista_engine/guide/` (`coach.py`, `companion.py`, `models.py`): qué hacer, teclas, resaltados y la acción «Hazlo conmigo»; el acompañante felicita, avisa y ofrece ayuda. **Add-on 0.3.0:** `guia.py`, `interfaz/visor3d.py` (guía dibujada en la vista 3D), `interfaz/estilo.py` y preferencias de acompañamiento. Ver [docs/motor/etapas/](../motor/etapas/).
 - **Sin cambios en Oracle** (siguen 7 scripts y 18 tablas). El backend solo valida la nueva regla de práctica al cierre del módulo (`backend/contenido/validacion.py`).

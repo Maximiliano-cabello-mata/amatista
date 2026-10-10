@@ -46,7 +46,11 @@ La lección de práctica muestra la tarjeta del bloque `blender_practice` (`comp
   3. **¿Te muestra un código?**: escribirlo ahí mismo conecta la computadora.
 
   Con una computadora conectada, todo esto se pliega en «Tu Blender está conectado».
-- El avance de la práctica (pasos cumplidos, porcentaje) se actualiza solo mientras el alumno trabaja en Blender.
+- **El ejemplo resuelto**: un desplegable con los pasos de la solución, qué compara Amatista y, con «Ver en código», el bloque `example` de la práctica.
+- **Abrir en Blender** (o **Continuar en Blender** si ya se empezó): la plataforma le deja a Blender la orden de abrir la práctica, que se abre en su propia escena. Si Blender está cerrado, la práctica queda como la actual y se abre al conectarse.
+- Una línea de estado dice dónde está Blender: «Tu Blender está cerrado…», que está en otra práctica (con el botón «Cambiar a esta práctica») o «Tu Blender está en esta práctica (N %)», con «Enfocar Blender» o «Ver todo Blender» para el modo enfocado.
+- Con Blender en esta práctica aparece la tarjeta **Ahora en Blender**: el paso, lo que dice el instructor y la lista «Comparado con el ejemplo · N de M». Sus botones manejan Blender desde la lección: **Comprobar**, **Pista**, **Hazlo conmigo**, **Guardar**, **Empezar de nuevo** (pide confirmación; lo anterior queda en una escena «(anterior)») y **Ver el ejemplo**, que arma el ejemplo resuelto en otra escena. Mientras se ve el ejemplo solo queda **Volver a mi práctica**. Cada botón es una orden de `POST /api/addon/v1/ordenes` (`comprobar`, `pista`, `hazlo_conmigo`, `guardar`, `reiniciar`, `ver_ejemplo`, `volver_practica`) que Blender cumple en su siguiente latido.
+- La lección pregunta por Blender cada 3 s cuando está en esta práctica, cada 6 s cuando está en otra y cada 30 s cuando está cerrado. Sin el script Oracle 010 en el servidor no hay estado en vivo y la práctica funciona como antes: el avance se actualiza solo mientras el alumno trabaja en Blender.
 
 ### En el panel del alumno
 

@@ -102,7 +102,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Exploración del motor v3.2: practices/blender/principiante/m2-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Exploración en Blender: practices/blender/principiante/m2-explora/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
@@ -129,7 +129,8 @@
               "Un cubo para practicar",
               "Extruye una cara",
               "Haz un corte en bucle",
-              "Vuelve al Modo Objeto"
+              "Vuelve al Modo Objeto",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           }
@@ -286,7 +287,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3: practices/blender/principiante/m2-espada/practica.json."
+            "notas": "Práctica en Blender: practices/blender/principiante/m2-espada/practica.json."
           },
           "edicion": "1.0",
           "offline": false,
@@ -307,12 +308,12 @@
             "text": "Pulsa **Abrir en Blender** y luego abre Blender: la práctica aparece en la pestaña Amatista (tecla N). Tres secciones te acompañan: **Aprender** (la teoría justo cuando la necesitas), **Practicar** (los pasos con «Hazlo conmigo») y **Mi curso**. Tu avance se actualiza aquí mientras trabajas.",
             "minutes": 30,
             "steps": [
-              "Elige tu modelo",
-              "Extruye la forma",
-              "Dale forma de espada (o taza)",
-              "Haz un corte de bucle",
-              "Sigue siendo low-poly",
-              "Guarda como mi_espada.blend"
+              "Empieza con un cubo",
+              "Alarga el cubo con E",
+              "Forja la silueta: guarda, hoja y punta",
+              "Que siga siendo low-poly",
+              "Guarda tu espada",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           },

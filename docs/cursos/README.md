@@ -2,7 +2,7 @@
 
 Qué cursos tiene Amatista, para quién es cada uno y cómo el plan de estudios de Blender se convirtió en cursos, módulos, lecciones y prácticas. Para quien diseña contenido o quiere saber qué aprende un alumno.
 
-Actualizado: 4 de octubre de 2026
+Actualizado: 10 de octubre de 2026 (cada práctica con su ejemplo resuelto, Amatista Motor 3.5)
 
 ## Índice
 
@@ -37,7 +37,7 @@ El [plan de estudios de Blender](plan_de_estudios_blender.txt) tiene 6 módulos.
 | Plan | Curso › módulo | Práctica en Blender |
 |---|---|---|
 | Módulo 1 · Fundamentos y navegación espacial | Principiante › 1 | Tren de juguete |
-| Módulo 2 · Modelado (esculpiendo formas) | Principiante › 2 | Espada (o taza) low-poly |
+| Módulo 2 · Modelado (esculpiendo formas) | Principiante › 2 | Espada low-poly |
 | Módulo 3 · Modificadores | Principiante › 3 | Nave espacial simétrica |
 | Módulo 4 · Materiales, texturas y color | Principiante-Intermedio › 1 | Pinta tu nave |
 | Módulo 5 · Iluminación y cámara | Principiante-Intermedio › 2 | Tres puntos y render final |
@@ -112,7 +112,7 @@ La primera lección de cada curso está desbloqueada; las demás se abren en ord
 
 ## 7. Agregar un módulo o un curso
 
-1. Práctica: `python engine/herramientas/practicas.py nueva …` ([herramientas de autor](../motor/referencia/08_practicas_v3_y_herramientas.md)).
+1. Práctica: `python engine/herramientas/practicas.py nueva …` ([herramientas de autor](../motor/referencia/08_practicas_v3_y_herramientas.md)). La plantilla ya trae un bloque `example`: cámbialo por la solución de tu práctica (la solución en pasos, [cómo](../../engine/README.md#escribir-el-ejemplo-de-una-práctica)) y corre `python engine/herramientas/practicas.py probar <carpeta>`: comprueba los casos de `pruebas.json` y que el ejemplo complete la práctica.
 2. Módulo en `practices/blender/cursos.json`.
 3. Lecciones: copia un módulo existente o usa `python backend/herramientas/contenido.py nuevo-modulo`, y valida con `contenido.py validar`.
 4. Curso nuevo: los cuatro lugares de la §6, con el mismo id.

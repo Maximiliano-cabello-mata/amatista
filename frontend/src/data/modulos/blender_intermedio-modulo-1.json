@@ -92,7 +92,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m1-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Práctica en Blender: practices/blender/intermedio/m1-explora/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
@@ -115,9 +115,10 @@
             "text": "En el nivel Intermedio trabajas como en un estudio: menos clics, más control. Prueba el Array. Tu avance aparece aquí mientras trabajas.",
             "minutes": 10,
             "steps": [
-              "Una tabla alargada",
+              "Una tabla plana",
               "Repítela con Array",
-              "Redondea con Bisel"
+              "Redondea con Bisel",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           }
@@ -283,7 +284,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m1-puente/practica.json. Necesita el add-on conectado."
+            "notas": "Práctica en Blender: practices/blender/intermedio/m1-puente/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
@@ -318,8 +319,9 @@
               "Pilares en el suelo",
               "Tablero sobre los pilares",
               "Pilares biselados",
-              "Que se parezca al puente del modelo",
-              "Guarda tu puente"
+              "Amatista reconoce tu puente",
+              "Guarda tu puente",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           },

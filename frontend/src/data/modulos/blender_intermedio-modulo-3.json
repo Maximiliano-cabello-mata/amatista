@@ -87,7 +87,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m3-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Práctica en Blender: practices/blender/intermedio/m3-explora/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
@@ -114,7 +114,8 @@
               "Algo que fotografiar",
               "Motor Cycles",
               "Una cámara activa",
-              "Render con F12"
+              "Render con F12",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           }
@@ -245,7 +246,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m3-diorama/practica.json. Necesita el add-on conectado."
+            "notas": "Práctica en Blender: practices/blender/intermedio/m3-diorama/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
@@ -278,7 +279,8 @@
               "Tres puntos",
               "EEVEE o Cycles",
               "La foto final",
-              "Guarda el diorama"
+              "Guarda el diorama",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           },

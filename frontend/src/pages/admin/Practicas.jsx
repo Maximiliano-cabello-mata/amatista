@@ -54,17 +54,22 @@ function Versiones({ token, practica }) {
 function FilaPractica({ practica, esAdmin, token, alCambiar, preguntar }) {
   const [abierta, setAbierta] = useState(false);
   const [mensaje, setMensaje] = useState(null);
-  const pendiente = practica.version_ultima !== practica.version_publicada;
+  // Publicar también restaura una práctica archivada (el servidor la deja «publicado»).
+  const archivada = practica.estado === 'archivado';
+  const pendiente = practica.version_ultima !== practica.version_publicada || archivada;
 
   const publicar = async () => {
     const ok = await preguntar({
-      titulo: `¿Publicar la versión ${practica.version_ultima}?`,
-      texto: 'Los alumnos recibirán esta versión la próxima vez que abran la práctica. Su progreso se conserva.',
-      confirmar: 'Publicar',
+      titulo: archivada ? `¿Restaurar y publicar la versión ${practica.version_ultima}?` : `¿Publicar la versión ${practica.version_ultima}?`,
+      texto: archivada
+        ? 'La práctica vuelve a aparecer para los alumnos con esta versión. Su progreso se conserva.'
+        : 'Los alumnos recibirán esta versión la próxima vez que abran la práctica. Su progreso se conserva.',
+      confirmar: archivada ? 'Restaurar' : 'Publicar',
     });
     if (!ok) return;
     const r = await publicarPractica(token, practica.id, practica.version_ultima);
-    setMensaje(r.ok ? { tono: 'exito', texto: `Versión ${practica.version_ultima} publicada.` } : { tono: 'error', texto: r.error });
+    const hecho = archivada ? `Práctica restaurada con la versión ${practica.version_ultima}.` : `Versión ${practica.version_ultima} publicada.`;
+    setMensaje(r.ok ? { tono: 'exito', texto: hecho } : { tono: 'error', texto: r.error });
     if (r.ok) alCambiar();
   };
 
@@ -122,7 +127,7 @@ function FilaPractica({ practica, esAdmin, token, alCambiar, preguntar }) {
         </Boton>
         {esAdmin && pendiente && (
           <Boton chico variante="primario" onClick={publicar}>
-            Publicar v{practica.version_ultima}
+            {archivada ? 'Restaurar' : 'Publicar'} v{practica.version_ultima}
           </Boton>
         )}
         {esAdmin && practica.estado !== 'archivado' && (

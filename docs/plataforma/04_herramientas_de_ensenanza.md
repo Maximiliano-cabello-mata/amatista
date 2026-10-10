@@ -111,12 +111,12 @@ Dos lados con etiqueta, imagen o texto. En `columns` van lado a lado (en el celu
 
 ### Práctica en Blender (`blender_practice`)
 
-No es nueva, pero cambió su lugar: va en la última lección del módulo ([02](02_modulos_y_practica.md)).
+No es nueva, pero cambió su lugar: cada módulo lleva dos, una exploración corta después del gancho y la práctica de cierre antes del examen ([02](02_modulos_y_practica.md)). La tarjeta muestra el ejemplo resuelto de la práctica y, con Blender abierto, la maneja desde la lección («Ahora en Blender»).
 
 | Campo | Obligatorio | Qué es |
 |---|---|---|
 | `id` | sí | Id del bloque dentro de la lección. |
-| `practica` | sí | Id de la práctica del motor (`blender.n1.mesa`). Debe estar publicada en Admin › Prácticas de Blender. |
+| `practica` | sí | Id de la práctica del motor (por ejemplo `blender.bp.m1.tren`). Debe estar publicada en Admin › Prácticas de Blender. |
 | `title` | sí | Título de la tarjeta. |
 | `text` | no | Presentación (hasta 2000 caracteres). |
 | `minutes` | no | Duración estimada (1 a 240). |

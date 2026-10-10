@@ -2,7 +2,7 @@
 
 Cada script del repositorio: qué hace, desde dónde se ejecuta, todos sus subcomandos y opciones (leídos del `argparse` o del código real) y ejemplos. Para desarrolladores y para quien administra el servidor.
 
-Actualizado: 5 de octubre de 2026 (main en 2402549)
+Actualizado: 10 de octubre de 2026 (main con los PR #25, #26 y #27; Amatista Motor 3.5.1)
 
 | § | Herramienta | Se ejecuta desde |
 |---|---|---|
@@ -42,7 +42,7 @@ python herramientas/contenido.py {validar,importar,exportar,nuevo-modulo,nueva-l
 | Subcomando | Argumentos y opciones | ¿Base de datos? | Qué hace |
 |---|---|---|---|
 | `validar` | `[archivos ...]` (por defecto `../frontend/src/data/modulos/*.json`) | No | Valida cada módulo y los ids repetidos entre archivos del mismo curso. Sale con **1** si hay errores (CI y `actualizar.sh` lo usan) |
-| `importar` | `[archivos ...]` (mismo defecto) | Sí | Valida todo primero (si un archivo falla no importa nada). Crea los cursos `blender` y `aframe` y los niveles de Blender que falten, y hace upsert de cada módulo. Lo que está en la base y no en el archivo no se toca (se avisa) |
+| `importar` | `[archivos ...]` (mismo defecto) | Sí | Valida todo primero (si un archivo falla no importa nada). Crea los cursos de `CURSOS_BASE` que falten (`blender_principiante`, `blender_principiante_intermedio`, `blender_intermedio`, el `blender` de la v2 y `aframe`) y los niveles de Blender que falten, y hace upsert de cada módulo. Lo que está en la base y no en el archivo no se toca (se avisa) |
 | `exportar` | `modulo_id [salida]` · `--borradores` | Sí | Escribe el módulo de la base en formato de archivo (sin `salida`, lo imprime). `--borradores` incluye lecciones en borrador |
 | `nuevo-modulo` | `curso numero titulo` · `--insignia NOMBRE` · `--nivel NIVEL_ID` · `--destino CARPETA` · `--forzar` | No | Crea `<curso>-modulo-<n>.json` en borrador con las 5 lecciones de la Fórmula (gancho, explora, practica, reto, jefe), id `mod_<curso>_<nnn>` y numeración de lecciones continuada. `--forzar` sobrescribe |
 | `nueva-leccion` | `archivo leccion_id titulo` · `--objetivo "frase"` | No | Agrega al final del módulo una lección con la estructura de 10 pasos y su ficha (v3). Los ids no se reutilizan |
@@ -54,13 +54,13 @@ Ejemplos (desde `backend/`):
 
 ```bash
 python herramientas/contenido.py validar
-python herramientas/contenido.py validar ../frontend/src/data/modulos/blender-modulo-2.json
+python herramientas/contenido.py validar ../frontend/src/data/modulos/blender_principiante-modulo-1.json
 python herramientas/contenido.py importar                                  # todos los módulos
-python herramientas/contenido.py importar ../frontend/src/data/modulos/blender-modulo-2.json
-python herramientas/contenido.py exportar mod_teoria_001 ../frontend/src/data/modulos/blender-modulo-1.json --borradores
-python herramientas/contenido.py nuevo-modulo blender 3 "Modelado básico" --insignia "Modeladora" --nivel blender-n1
-python herramientas/contenido.py nueva-leccion ../frontend/src/data/modulos/blender-modulo-3.json les_110 "Una silla" --objetivo "Construye una silla con cuatro patas"
-python herramientas/contenido.py mapa blender
+python herramientas/contenido.py importar ../frontend/src/data/modulos/blender_principiante-modulo-1.json
+python herramientas/contenido.py exportar mod_bp_001 ../frontend/src/data/modulos/blender_principiante-modulo-1.json --borradores
+python herramientas/contenido.py nuevo-modulo blender_principiante 4 "Modelado básico" --insignia "Modeladora"
+python herramientas/contenido.py nueva-leccion ../frontend/src/data/modulos/blender_principiante-modulo-4.json les_110 "Una silla" --objetivo "Construye una silla con cuatro patas"
+python herramientas/contenido.py mapa blender_principiante
 python herramientas/contenido.py sembrar-niveles
 python herramientas/contenido.py practicas --publicar
 python herramientas/contenido.py practicas --revisar   # cuáles faltan en la base o están sin publicar
@@ -68,9 +68,9 @@ python herramientas/contenido.py practicas --revisar   # cuáles faltan en la ba
 
 Desde la v3.3 la API registra sola, al arrancar, los `practica.json` nuevos o cambiados de `practices/blender/` y publica los nuevos (los que el equipo dejó en borrador se quedan así). Se apaga con `AMATISTA_SINCRONIZAR_PRACTICAS=0` en `backend/.env`.
 
-**Cuidado con `nueva-leccion` en un módulo que ya tiene práctica en Blender.** La lección se agrega siempre **al final**, y la validación exige que la práctica cierre el módulo (solo el examen puede ir después). Probado sobre una copia de `blender-modulo-2.json`: después de `nueva-leccion ... les_104`, `validar` responde «lessons[3]: va después de la práctica en Blender (lessons[2])… muévela al final». Mueve la lección nueva antes de la práctica a mano en el JSON (o reordénala en Admin › Módulos) y vuelve a validar. El ejemplo del docstring de `contenido.py` y del [manual de Oracle §6](../reestructuracion/02_manual_oracle.md#6-lo-mismo-sin-oracle-sqlite-en-tu-computadora) usa justo `blender-modulo-2.json`, así que deja el archivo sin validar.
+**`nueva-leccion` agrega la lección siempre al final del módulo.** La validación ya no exige que la práctica en Blender cierre el módulo (un módulo puede tener una exploración entre lecciones de teoría y la práctica de cierre; solo no se permite repetir la misma práctica), así que el archivo sigue siendo válido. Si la lección nueva debe ir antes de la práctica de cierre o del examen, muévela a mano en el JSON (o en Admin › Módulos) y vuelve a validar. El docstring de `contenido.py` y el [manual de Oracle §6](../reestructuracion/02_manual_oracle.md#6-lo-mismo-sin-oracle-sqlite-en-tu-computadora) todavía usan de ejemplo `blender-modulo-2.json`, que hoy está archivado en `frontend/src/data/modulos/archivo/`.
 
-Salida real de `mapa blender` hoy: 2 módulos, 7 lecciones, «0 de 7 lecciones con la ficha completa».
+Salida real al 10 de octubre: `mapa blender_principiante` termina con «15 de 15 lecciones con la ficha completa» y `mapa` (todos los cursos) con «45 de 48 lecciones con la ficha completa» (las 3 de A-Frame no tienen ficha).
 
 Formato de los módulos: [docs/plataforma/04](../plataforma/04_herramientas_de_ensenanza.md) (bloques), [docs/plataforma/02](../plataforma/02_modulos_y_practica.md) (práctica al final del módulo) y [la Fórmula](../arquitectura/2026-10-02_formula_modulos.txt). Flujo de estados `borrador → revision → publicado → archivado`: [tablero/README.md](../../tablero/README.md#flujo-de-contenido).
 
@@ -144,7 +144,7 @@ git push origin :refs/tags/v0.2.0                     # quita v0.2.0 de GitHub, 
 | (ninguna) | Recorre la lista `VERSIONES` (`tag|commit|título`) y crea los que falten |
 | `--reemplazar-v0.2.0` | Borra localmente `v0.2.0` (apuntaba a lo mismo que `v2.0.1`) |
 
-Falla con `✗ No encuentro el commit` si el clon es superficial (`git fetch --unshallow`). Lista actual: `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.2`, `v3.0.0-alpha.1`, `v3.0.0-alpha.2` y, desde esta rama de documentación, `v3.0.0-alpha.3` (`d004071`, fusión del PR #14). `v2.2.0-alpha.1` se creó a mano y no está en la lista. Política de versiones: [05 §4](05_flujo_de_trabajo.md#4-tags-y-versiones).
+Falla con `✗ No encuentro el commit` si el clon es superficial (`git fetch --unshallow`). Lista actual: `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.2` y `v3.0.0-alpha.1` a `v3.0.0-alpha.9` (alpha.9 = `255d054`, Motor 3.4, PR #24). `v2.2.0-alpha.1` se creó a mano y no está en la lista. Política de versiones: [05 §4](05_flujo_de_trabajo.md#4-tags-y-versiones).
 
 ## 6. `despliegue/actualizar.sh`
 
@@ -177,13 +177,13 @@ Requisitos y avisos:
 | Archivo | Qué es | Instalación (encabezado del archivo) |
 |---|---|---|
 | [`despliegue/amatista-api.service`](../../despliegue/amatista-api.service) | Unidad systemd endurecida: usuario `amatista`, repo en `/opt/amatista`, `EnvironmentFile=/etc/amatista/amatista-api.env`, uvicorn en `127.0.0.1:8000` con 1 worker y `--proxy-headers` | `sudo cp despliegue/amatista-api.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl enable --now amatista-api` |
-| [`despliegue/Caddyfile`](../../despliegue/Caddyfile) | Caddy con HTTPS automático (Let's Encrypt), cabeceras de seguridad y proxy a `127.0.0.1:8000` | `sudo cp despliegue/Caddyfile /etc/caddy/Caddyfile && sudo caddy validate --config /etc/caddy/Caddyfile && sudo systemctl reload caddy` (antes cambia `api.ejemplo.com`) |
+| [`despliegue/Caddyfile`](../../despliegue/Caddyfile) | Caddy detrás de Cloudflare para `api.amatista-3d.me`: HTTPS con el certificado de origen de Cloudflare (opción A; Let's Encrypt es la opción B, sin Cloudflare), cabeceras de seguridad y proxy a `127.0.0.1:8000` | `sudo cp despliegue/Caddyfile /etc/caddy/Caddyfile && sudo caddy validate --config /etc/caddy/Caddyfile && sudo systemctl reload caddy` (antes copia el certificado de origen a `/etc/caddy/certs/`) |
 
 La diferencia entre esta unidad y la que corre hoy en la VM (`amatista-backend`) está en [05 §6](05_flujo_de_trabajo.md#6-despliegue-en-la-vm).
 
 ## 7. `engine/demo.py`
 
-Demostración del motor sin Blender: carga `practices/archivo/v2/mesa.json`, arma una escena de ejemplo con la cubierta y 3 de 4 patas, y muestra el reporte. Sin opciones; funciona desde cualquier carpeta.
+Demostración del motor sin Blender: carga la práctica del tren (`practices/blender/principiante/m1-tren/practica.json`), arma la escena que deja su ejemplo resuelto sin el último objeto (le falta una rueda) y muestra el reporte. Sin opciones; funciona desde cualquier carpeta.
 
 ```bash
 python engine/demo.py
@@ -192,14 +192,14 @@ python engine/demo.py
 Salida real:
 
 ```text
-Práctica: Construir una mesa
-Progreso: 70.0%
+Práctica: Tren de juguete
+Progreso: 77.78%
 Completada: False
-Paso actual: 3 de 7
+Paso actual: 3 de 12
 
-✓ Crea la cubierta: Ya tienes la cubierta de tu mesa.
-✓ Hazla delgada: Las medidas de «cubierta» en Z son correctas.
-▶ Agrega cuatro patas: Tienes 3/4 «pata». Falta 1.
+✓ Dos vagones: Tienes 2 de tipo «Vagón». Objetivo completado.
+✓ Vagones alargados: Las proporciones de «vagon» están bien.
+▶ Ocho ruedas: Tienes 7 de tipo «Rueda»; se necesitan al menos 8.
 ...
 ```
 
@@ -234,9 +234,9 @@ python addon/herramientas/construir.py [--sistema {windows,macos,linux}] [--serv
 La versión sale de `addon/amatista_blender/blender_manifest.toml` (hoy `0.3.0`).
 
 ```bash
-python addon/herramientas/construir.py                                    # dist/amatista-0.3.0.zip
+python addon/herramientas/construir.py                                    # dist/amatista-3.5.1.zip
 python addon/herramientas/construir.py --sistema windows \
-       --servidor https://api.ejemplo.cl --plataforma https://ejemplo.cl  # dist/amatista-0.3.0-windows.zip
+       --servidor https://api.ejemplo.cl --plataforma https://ejemplo.cl  # dist/amatista-3.5.1-windows.zip
 ```
 
 El vínculo de un solo uso (conectar la cuenta sin pasos) solo lo agrega el backend al descargar; la terminal no lo ofrece. Documentación: [addon/README.md](../../addon/README.md) y [docs/motor/referencia/03_addon.md](../motor/referencia/03_addon.md).
@@ -347,6 +347,6 @@ node scripts/rendimiento.mjs --url http://localhost:4173 --salida web.json --pag
 Dice de qué cuenta salió una copia del add-on (marca de agua `licencia.json` firmada con `AMATISTA_SECRETO_FIRMA`), si la firma es válida y si los archivos son los originales. Se corre en el servidor, donde está el secreto.
 
 ```bash
-python herramientas/verificar_licencia.py Amatista-Motor-3.3-windows.zip
+python herramientas/verificar_licencia.py Amatista-Motor-3.5-windows.zip
 ```
 

@@ -161,8 +161,12 @@ function Dispositivos({ token }) {
     };
   }, [token]);
 
-  const desconectar = async (id) => {
-    await desconectarDispositivo(token, id);
+  const [error, setError] = useState(null);
+  const desconectar = async (d) => {
+    if (!window.confirm(`¿Desconectar «${d.nombre}»? Ese Blender deja de guardar tu avance hasta que lo conectes de nuevo.`)) return;
+    setError(null);
+    const r = await desconectarDispositivo(token, d.id);
+    if (!r.ok) setError(r.error);
     cargar();
   };
 
@@ -170,6 +174,7 @@ function Dispositivos({ token }) {
   return (
     <Tarjeta antetitulo="Tu cuenta" titulo="Blender conectados">
       {respuesta && !respuesta.ok && <Alerta>{respuesta.error}</Alerta>}
+      {error && <Alerta>{error}</Alerta>}
       {respuesta?.ok && !lista.length && <p className="text-sm text-texto/70">Todavía no conectas ningún Blender.</p>}
       <ul className="grid gap-2">
         {lista.map((d) => (
@@ -182,7 +187,8 @@ function Dispositivos({ token }) {
             </div>
             <button
               type="button"
-              onClick={() => desconectar(d.id)}
+              onClick={() => desconectar(d)}
+              aria-label={`Desconectar ${d.nombre}`}
               className="corte-poly-sm bg-white/5 px-3 py-2 font-mono text-[11px] uppercase tracking-widest text-white/70 hover:bg-red-400/15 hover:text-red-200"
             >
               Desconectar
@@ -200,15 +206,16 @@ function Dispositivos({ token }) {
   );
 }
 
-function Opciones({ nombre, opciones, valor, alElegir, desactivado }) {
+// etiqueta: id del título que nombra el grupo (lectores de pantalla).
+function Opciones({ nombre, etiqueta, opciones, valor, alElegir, desactivado }) {
   return (
-    <div className="grid gap-2 sm:grid-cols-3" role="radiogroup">
+    <div className="grid gap-2 sm:grid-cols-3" role="radiogroup" aria-labelledby={etiqueta}>
       {opciones.map((o) => {
         const elegida = valor === o.id;
         return (
           <label
             key={o.id}
-            className={`corte-poly-sm cursor-pointer border p-3 text-sm transition ${
+            className={`corte-poly-sm cursor-pointer border p-3 text-sm transition focus-within:ring-2 focus-within:ring-neon ${
               elegida ? 'border-neon/60 bg-neon/10' : 'border-white/10 bg-black/25 hover:border-white/30'
             } ${desactivado ? 'pointer-events-none opacity-50' : ''}`}
           >
@@ -230,7 +237,7 @@ function Opciones({ nombre, opciones, valor, alElegir, desactivado }) {
   );
 }
 
-// Motor 3.4: la plataforma decide cómo se ve Blender y ve el Blender abierto en vivo.
+// Motor 3.4 y 3.5: la plataforma decide cómo se ve Blender y ve el Blender abierto en vivo.
 function AjustesBlender({ token }) {
   const [enlace, setEnlace] = useState(null);
   const [ajustes, setAjustes] = useState(AJUSTES_POR_DEFECTO);
@@ -286,15 +293,27 @@ function AjustesBlender({ token }) {
         <Alerta tipo="info">El servidor todavía no tiene el enlace en vivo: estas opciones se eligen por ahora en Blender (Preferencias › Add-ons › Amatista).</Alerta>
       )}
       {error && <Alerta>{error}</Alerta>}
-      <h3 className="mt-2 font-mono text-[11px] uppercase tracking-widest text-white/50">Modo enfocado</h3>
+      <h3 id="ajuste-enfoque" className="mt-2 font-mono text-[11px] uppercase tracking-widest text-white/50">
+        Modo enfocado
+      </h3>
       <p className="mb-2 mt-1 text-sm text-texto/75">
         Blender completo abruma al empezar: enfocado, solo ves las herramientas de la práctica y cada una explica cómo se usa.
       </p>
-      <Opciones nombre="enfoque" opciones={OPCIONES_ENFOQUE} valor={ajustes.enfoque} alElegir={(enfoque) => cambiar({ enfoque })} desactivado={sinEnlace} />
-      <h3 className="mt-5 font-mono text-[11px] uppercase tracking-widest text-white/50">Acompañamiento</h3>
+      <Opciones
+        nombre="enfoque"
+        etiqueta="ajuste-enfoque"
+        opciones={OPCIONES_ENFOQUE}
+        valor={ajustes.enfoque}
+        alElegir={(enfoque) => cambiar({ enfoque })}
+        desactivado={sinEnlace}
+      />
+      <h3 id="ajuste-acompanamiento" className="mt-5 font-mono text-[11px] uppercase tracking-widest text-white/50">
+        Acompañamiento
+      </h3>
       <div className="mt-2">
         <Opciones
           nombre="acompanamiento"
+          etiqueta="ajuste-acompanamiento"
           opciones={OPCIONES_ACOMPANAMIENTO}
           valor={ajustes.acompanamiento}
           alElegir={(acompanamiento) => cambiar({ acompanamiento })}
@@ -337,7 +356,7 @@ function Practicas({ token }) {
   const lista = respuesta?.datos?.practicas ?? [];
   if (!respuesta?.ok || !lista.length) return null;
   return (
-    <Tarjeta antetitulo="Cierre de cada módulo" titulo="Tus prácticas en Blender">
+    <Tarjeta antetitulo="Exploraciones y cierres" titulo="Tus prácticas en Blender">
       <ul className="grid gap-2 sm:grid-cols-2">
         {lista.map((p) => {
           const avance = p.mi_progreso?.completada ? 100 : (p.mi_progreso?.progreso ?? 0);
@@ -377,7 +396,7 @@ function Blender() {
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-blender">{NOMBRE_MOTOR} para Blender</p>
             <h1 className="mt-1 text-3xl font-extrabold leading-tight text-white sm:text-4xl">Mi Blender</h1>
             <p className="mt-2 max-w-2xl leading-relaxed text-texto/80">
-              Cada módulo termina con una práctica dentro de Blender. Instala el add-on una vez: Amatista te guía paso a paso,
+              Cada módulo intercala exploraciones en Blender y termina con una práctica. Instala el add-on una vez: Amatista te guía paso a paso,
               resalta lo que tienes que cambiar y tu avance aparece en tu panel.
             </p>
             <a href={rutas.inicio} className="mt-3 inline-block font-mono text-xs uppercase tracking-widest text-neon hover:underline">
@@ -419,10 +438,14 @@ function Blender() {
         <h2 className="sr-only">Cómo se instala</h2>
         <ol className="grid gap-3 md:grid-cols-3">
           <Paso numero="1" titulo="Descarga y descomprime">
-            Descarga el paquete de tu sistema y extrae la carpeta «Amatista».
+            Descarga el paquete de tu sistema y extrae la carpeta «{NOMBRE_MOTOR}».
           </Paso>
           <Paso numero="2" titulo="Ejecuta el instalador">
-            {SISTEMAS.windows.pista} En Mac: {SISTEMAS.macos.pista.toLowerCase()}
+            {Object.values(SISTEMAS).map((sistema) => (
+              <span key={sistema.id} className="block">
+                <strong className="text-texto/90">{sistema.nombre}:</strong> {sistema.pista}
+              </span>
+            ))}
           </Paso>
           <Paso numero="3" titulo="Abre Blender">
             Pulsa N en la vista 3D y elige la pestaña Amatista. La práctica de tu lección se abre sola.

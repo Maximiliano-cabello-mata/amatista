@@ -7,7 +7,7 @@
 3. Descomprime el `.zip` y abre **Instalar Amatista** (`.bat` en Windows, `.command` en macOS, `instalar-amatista.sh` en Linux).
 4. El instalador busca Blender, lo ejecuta sin ventana con `instalar_en_blender.py`, comprueba la versión, instala y activa la extensión, enciende **Permitir acceso en línea** y guarda las preferencias. Termina con «Listo».
 5. Abre Blender, pulsa **N**, pestaña **Amatista**. Si descargó con su sesión abierta, ya está conectado; si no, pulsa **Vincular con mi cuenta** y escribe el código en la página que se abre (`#/vincular?codigo=…`).
-6. En la lección «Práctica: construye una mesa» pulsa **Abrir en Blender**: la práctica aparece sola en Blender.
+6. En la práctica que cierra el módulo (por ejemplo, el tren de juguete del primer módulo del curso principiante) pulsa **Abrir en Blender**: la práctica aparece sola en Blender.
 
 ## Dónde busca Blender el instalador
 
@@ -30,13 +30,13 @@ La última línea siempre es `AMATISTA_RESULTADO=<texto>`.
 
 ## El paquete
 
-`GET /api/addon/v1/descargas/{windows|macos|linux}` arma al vuelo `Amatista-<versión>-<sistema>.zip` (con `addon/herramientas/construir.py` desde la terminal el nombre sale en minúsculas, `amatista-…`). Dentro, todo va en la carpeta `Amatista/`:
+`GET /api/addon/v1/descargas/{windows|macos|linux}` arma al vuelo `Amatista-Motor-3.5-<sistema>.zip`: el nombre del producto («Amatista Motor») y la versión mayor.menor salen de `addon/amatista_blender/blender_manifest.toml`. Con `addon/herramientas/construir.py` desde la terminal, el archivo se llama `amatista-3.5.1-<sistema>.zip`. Dentro, todo va en la carpeta «Amatista Motor 3.5»:
 
 ```
-Amatista/
+Amatista Motor 3.5/
 ├─ Instalar Amatista.bat         (o .command / instalar-amatista.sh)
 ├─ instalar_en_blender.py
-├─ amatista-0.3.0.zip            la extensión (add-on + motor + prácticas)
+├─ amatista-3.5.1.zip            la extensión (add-on + motor + prácticas)
 └─ LEEME.txt                     instalar, qué cambia, instalar a mano, desinstalar
 ```
 

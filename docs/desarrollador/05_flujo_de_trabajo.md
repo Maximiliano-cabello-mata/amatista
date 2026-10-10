@@ -2,7 +2,7 @@
 
 Cómo se trabaja en el repositorio de Amatista: ramas, commits, tablero Kanban, tags y versiones, bitácora e incidencias, despliegue en la VM y lo que hay que revisar antes de abrir un PR. Para todo el que hace cambios.
 
-Actualizado: 4 de octubre de 2026 (main en c730c0e)
+Actualizado: 10 de octubre de 2026 (main con los PR #25, #26 y #27)
 
 1. [Ramas](#1-ramas)
 2. [Commits](#2-commits)
@@ -55,7 +55,7 @@ Scopes de la guía: `pwa`, `api`, `db`, `ia`, `repo`. En el historial también a
 
 Guía completa: [tablero/README.md](../../tablero/README.md). Archivos: [`tablero/tareas.yml`](../../tablero/tareas.yml) (lo editan las personas), [`tablero/actualizar.py`](../../tablero/actualizar.py) (calcula), [`KANBAN.md`](../../KANBAN.md) (generado; **no se edita a mano ni se hace commit en ramas**) y [`tablero/historico/`](../../tablero/historico/) (tablero de la v2).
 
-**Crear una tarea**: agrégala en `tareas.yml` con el siguiente id libre (al 5 de octubre el último es `T-083`, así que la siguiente es `T-084`), `titulo`, `version` (del `roadmap`) y `area`.
+**Crear una tarea**: agrégala en `tareas.yml` con el siguiente id libre (al 10 de octubre el último es `T-095`, así que la siguiente es `T-096`), `titulo`, `version` (del `roadmap`) y `area`.
 
 | Campo | Obligatorio | Efecto |
 |---|---|---|
@@ -95,7 +95,7 @@ Guía: [docs/guias/2026-10-01_versiones-y-tablero.txt](../guias/2026-10-01_versi
   ```
   o, para una sola versión: `git tag -s vX.Y.Z -m "vX.Y.Z — título"` y `git push origin vX.Y.Z`.
 - **Al cerrar una versión**: pasar las notas de «Sin publicar» del CHANGELOG a una sección nueva, crear el tag, publicarlo y (opcional) crear el Release en GitHub con esa sección.
-- **Estado al 4 de octubre**: publicados `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1` y `v2.2.0-alpha.1`. Pendientes de publicar desde la PC: `v2.2.0-alpha.2`, `v3.0.0-alpha.1` y `v3.0.0-alpha.2` (ya están en el script). En `main` (c730c0e) el script todavía no tiene línea para el cierre del PR #14; esta rama de documentación agrega `v3.0.0-alpha.3` → `d004071`, que también habrá que publicar desde la PC.
+- **Estado al 10 de octubre**: publicados `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1` y `v2.2.0-alpha.1`. Pendientes de publicar desde la PC: `v2.2.0-alpha.2` y `v3.0.0-alpha.1` a `v3.0.0-alpha.9` (todos están en el script; alpha.9 = `255d054`, Motor 3.4). Motor 3.5 y 3.5.1 (PR #25 y #26) todavía no tienen tag.
 
 ## 5. Bitácora, incidencias y CHANGELOG
 
@@ -132,12 +132,12 @@ bash /home/opc/amatista/despliegue/actualizar.sh       # actualizar main con pru
 **Orden de un despliegue con cambios de base**:
 
 1. Respaldar (OCI) y ejecutar `python diagnostico_oracle.py` en la VM.
-2. Ejecutar a mano los scripts nuevos de `backend/sql/` en **Database Actions** (F5), en el orden de [`LEEME.txt`](../../backend/sql/LEEME.txt). **Nunca `001` en producción** (borra las tablas). Al 4 de octubre producción tiene `002`, `003`, `005` y `006`; `007` queda para después del piloto (T-055).
+2. Ejecutar a mano los scripts nuevos de `backend/sql/` en **Database Actions** (F5), en el orden de [`LEEME.txt`](../../backend/sql/LEEME.txt). **Nunca `001` en producción** (borra las tablas). Al 10 de octubre producción tiene `002`, `003`, `005` y `006`; `007` a `011` quedan para después del piloto (T-055, T-064 y T-087; 011 va antes del backend 3.5.1).
 3. `bash despliegue/actualizar.sh` (pull, dependencias, pytest, validar, reinicio, `/api/salud`).
 4. `python diagnostico_oracle.py` → «✓ Las tablas coinciden…»; `curl http://127.0.0.1:8000/api/salud` → `"motor": "oracle"`.
 5. Si hay contenido o prácticas nuevas: `python herramientas/contenido.py importar` y `practicas [--publicar]`.
 
-Guías: [backend/README.md](../../backend/README.md#dejar-oracle-funcionando-en-el-servidor-arm), [Oracle paso a paso](../despliegue/2026-10-02_oracle_paso_a_paso.md) (002–004) y [manual de Oracle v3](../reestructuracion/02_manual_oracle.md) (005–007). Despliegue completo de la VM: [despliegue en OCI](../despliegue/2026-10-04_despliegue_oci.md).
+Guías: [backend/README.md](../../backend/README.md#dejar-oracle-funcionando-en-el-servidor-arm), [Oracle paso a paso](../despliegue/2026-10-02_oracle_paso_a_paso.md) (002–004) [manual de Oracle v3](../reestructuracion/02_manual_oracle.md) (005–007) y [manual de 008 y 009](../base-de-datos/02_manual_008_009.md) (008–011). Despliegue completo de la VM: [despliegue en OCI](../despliegue/2026-10-04_despliegue_oci.md).
 
 El frontend no se despliega en la VM: es una PWA estática (`npm run build` → `dist/`) pensada para Cloudflare Pages (ver `CORS_ORIGINS` y `VITE_API_URL`).
 

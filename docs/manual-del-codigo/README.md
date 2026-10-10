@@ -2,7 +2,7 @@
 
 El código de Amatista explicado como un manual de uso: qué hay en cada carpeta, qué hace cada archivo importante, cómo fluyen los datos y qué tocar para cada cambio típico. Para quien va a leer o modificar el código.
 
-Actualizado: 4 de octubre de 2026 (main en `c730c0e`).
+Actualizado: 10 de octubre de 2026 (main con los PR #25, #26 y #27; Amatista Motor 3.5.1).
 
 | # | Documento | Qué responde |
 |---|---|---|

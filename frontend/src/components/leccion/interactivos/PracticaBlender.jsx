@@ -14,6 +14,8 @@ import ModeloReferencia from './ModeloReferencia';
 const INTERVALO_MS = 6000;
 // Con Blender en esta práctica, el instructor en vivo se refresca más seguido (el add-on late cada 5 s).
 const INTERVALO_VIVO_MS = 3000;
+// Sin Blender abierto (o sin enlace en el servidor) se pregunta mucho menos.
+const INTERVALO_SIN_BLENDER_MS = 30000;
 
 const ICONOS_LISTA = {
   Bien: { icono: '✓', clase: 'text-emerald-300' },
@@ -54,17 +56,17 @@ function Pasos({ pasos }) {
   );
 }
 
-// Práctica del motor Amatista dentro de Blender: el cierre de cada módulo
-// (v3.1). El alumno prepara Blender aquí mismo (sin ir a otra página), la
-// abre, trabaja en Blender acompañado por la guía paso a paso del add-on y
-// esta tarjeta muestra su avance real (lo calcula el servidor con la foto de
-// la escena). Se resuelve al completarla.
+// Práctica del motor Amatista dentro de Blender: una exploración corta o la
+// práctica que cierra el módulo. El alumno prepara Blender aquí mismo (sin ir
+// a otra página), la abre, trabaja en Blender acompañado por la guía paso a
+// paso del add-on y esta tarjeta muestra su avance real (lo calcula el servidor
+// con la foto de la escena). Se resuelve al completarla.
 // Motor 3.4: la plataforma ve el Blender del alumno en vivo y le puede pedir
 // que enfoque (solo las herramientas de la práctica) o muestre todo.
 // Motor 3.5: además muestra lo que dice el instructor en Blender (paso, mensaje y
 // la lista comparada con el ejemplo resuelto) y maneja la práctica: comprobar,
 // pista, «Hazlo conmigo», guardar, empezar de nuevo y ver el ejemplo en Blender.
-function ListaFigura({ instructor }) {
+function ListaEjemplo({ instructor }) {
   if (!instructor.lista.length) return null;
   const abiertas = instructor.lista.filter((i) => i.consejo).slice(0, 2);
   return (
@@ -79,7 +81,7 @@ function ListaFigura({ instructor }) {
             {grupo.items.map((item) => {
               const estilo = ICONOS_LISTA[item.estado] ?? { icono: '!', clase: 'text-rose-300' };
               return (
-                <li key={item.texto} className="corte-poly-sm flex items-center gap-1.5 bg-base/70 px-2 py-1 text-xs">
+                <li key={`${item.aspecto}:${item.texto}`} className="corte-poly-sm flex items-center gap-1.5 bg-base/70 px-2 py-1 text-xs">
                   <span className={`font-bold ${estilo.clase}`} aria-hidden="true">{estilo.icono}</span>
                   <span className="text-texto/90">{item.texto}</span>
                   <span className="sr-only">: {item.estado}</span>
@@ -90,7 +92,7 @@ function ListaFigura({ instructor }) {
         </div>
       ))}
       {abiertas.map((item) => (
-        <p key={item.texto} className="mt-2 text-sm leading-relaxed text-texto/80">
+        <p key={`${item.aspecto}:${item.texto}`} className="mt-2 text-sm leading-relaxed text-texto/80">
           <strong className="text-white">{item.texto}:</strong> {item.consejo}
         </p>
       ))}
@@ -153,7 +155,7 @@ function InstructorEnVivo({ instructor, ordenar, enviando }) {
       )}
       {instructor.titulo && <p className="mt-1 font-bold text-white">{instructor.titulo}</p>}
       {instructor.mensaje && <p className="mt-1 text-sm leading-relaxed text-texto/85">{instructor.mensaje}</p>}
-      <ListaFigura instructor={instructor} />
+      <ListaEjemplo instructor={instructor} />
       <div className="mt-3 flex flex-wrap gap-2">
         {controles.map((control) => (
           <button
@@ -171,17 +173,22 @@ function InstructorEnVivo({ instructor, ordenar, enviando }) {
   );
 }
 
-function BlenderEnVivo({ enlace, token, practicaId }) {
+// abrir: «Cambiar a esta práctica» la abre como el botón principal (POST /abrir), así queda su
+// fila de avance y la lección ve cuando se completa.
+function BlenderEnVivo({ enlace, token, practicaId, abrir, abriendo }) {
   const [enviando, setEnviando] = useState(false);
   const [aviso, setAviso] = useState('');
+  const temporizadorAviso = useRef(null);
+  useEffect(() => () => clearTimeout(temporizadorAviso.current), []);
   const { estado, blender, texto } = estadoBlender(enlace, practicaId);
   if (estado === 'sin_enlace') return null;
   const ordenar = async (tipo, opciones = {}) => {
     setEnviando(true);
-    const r = await ordenarBlender(token, tipo, tipo === 'abrir_practica' || estado === 'aqui' ? practicaId : undefined, opciones);
+    const r = await ordenarBlender(token, tipo, estado === 'aqui' ? practicaId : undefined, opciones);
     setEnviando(false);
     setAviso(r.ok && r.datos?.entregada ? 'Enviado a tu Blender.' : r.ok ? 'Tu Blender no respondió: ¿sigue abierto?' : r.error);
-    setTimeout(() => setAviso(''), 4000);
+    clearTimeout(temporizadorAviso.current);
+    temporizadorAviso.current = setTimeout(() => setAviso(''), 4000);
   };
   const color = estado === 'cerrado' ? 'bg-white/30' : 'bg-emerald-400 animar-pulso';
   const instructor = estado === 'aqui' ? instructorEnVivo(blender) : null;
@@ -204,8 +211,8 @@ function BlenderEnVivo({ enlace, token, practicaId }) {
         {estado === 'otra' && (
           <button
             type="button"
-            disabled={enviando}
-            onClick={() => ordenar('abrir_practica')}
+            disabled={enviando || abriendo}
+            onClick={abrir}
             className="ml-auto font-mono text-[11px] uppercase tracking-widest text-neon hover:underline disabled:opacity-50"
           >
             Cambiar a esta práctica
@@ -244,11 +251,17 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
     };
   }, [token, bloque.practica]);
 
-  // Mientras la pestaña está visible y la práctica sigue abierta, se consulta el avance.
+  // Blender en vivo: si está abierto, en qué práctica y paso va (el add-on late cada 5 s).
+  const estadoEnVivo = estadoBlender(enlace, bloque.practica).estado;
+  const enVivoAqui = estadoEnVivo === 'aqui';
+
+  // Mientras la pestaña está visible y la práctica sigue abierta (empezada o con Blender en
+  // ella), se consulta el avance.
   const completa = Boolean(progreso?.completada);
   const empezada = Boolean(progreso);
+  const seguirAvance = empezada || enVivoAqui;
   useEffect(() => {
-    if (!token || completa || !empezada) return undefined;
+    if (!token || completa || !seguirAvance) return undefined;
     const temporizador = setInterval(async () => {
       if (document.visibilityState !== 'visible') return;
       const r = await progresoPractica(token, bloque.practica);
@@ -256,29 +269,50 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
       if (fila) setProgreso(fila);
     }, INTERVALO_MS);
     return () => clearInterval(temporizador);
-  }, [token, completa, empezada, bloque.practica]);
+  }, [token, completa, seguirAvance, bloque.practica]);
 
+  // Al volver a una lección ya resuelta no se celebra otra vez.
   useEffect(() => {
-    if (completa) resolverRef.current(true, 1);
-  }, [completa]);
+    if (completa && !resuelta) resolverRef.current(true, 1);
+  }, [completa, resuelta]);
 
-  // Blender en vivo: si está abierto, en qué práctica y paso va (el add-on late cada 5 s).
-  const enVivoAqui = estadoBlender(enlace, bloque.practica).estado === 'aqui';
+  // El enlace se consulta de a una petición (la siguiente se programa al llegar la respuesta),
+  // más seguido con Blender en esta práctica y cada 30 s sin Blender abierto. Se pausa con la
+  // pestaña oculta, se refresca al volver y se detiene al completar la práctica.
+  const esperaEnlace = useRef(INTERVALO_MS);
   useEffect(() => {
-    if (!token) return undefined;
+    esperaEnlace.current = enVivoAqui ? INTERVALO_VIVO_MS : estadoEnVivo === 'otra' ? INTERVALO_MS : INTERVALO_SIN_BLENDER_MS;
+  });
+  const refrescarEnlace = useRef(() => {});
+  useEffect(() => {
+    if (!token || completa) return undefined;
     let vigente = true;
+    let enCurso = false;
+    let temporizador = null;
     const consultar = async () => {
-      if (document.visibilityState !== 'visible') return;
+      clearTimeout(temporizador);
+      if (!vigente || enCurso || document.visibilityState !== 'visible') return;
+      enCurso = true;
       const r = await estadoEnlace(token);
-      if (vigente && r.ok) setEnlace(r.datos);
+      enCurso = false;
+      if (!vigente) return;
+      if (r.ok) setEnlace(r.datos);
+      temporizador = setTimeout(consultar, esperaEnlace.current);
     };
+    const alCambiarVisibilidad = () => {
+      if (document.visibilityState === 'visible') consultar();
+      else clearTimeout(temporizador);
+    };
+    refrescarEnlace.current = consultar;
     consultar();
-    const temporizador = setInterval(consultar, enVivoAqui ? INTERVALO_VIVO_MS : INTERVALO_MS);
+    document.addEventListener('visibilitychange', alCambiarVisibilidad);
     return () => {
       vigente = false;
-      clearInterval(temporizador);
+      clearTimeout(temporizador);
+      refrescarEnlace.current = () => {};
+      document.removeEventListener('visibilitychange', alCambiarVisibilidad);
     };
-  }, [token, enVivoAqui]);
+  }, [token, completa]);
 
   const abrir = async () => {
     setAbriendo(true);
@@ -287,6 +321,7 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
     if (r.ok) {
       const { abierta_en_blender: enVivo, ...fila } = r.datos;
       setProgreso(fila);
+      refrescarEnlace.current();
       setAviso(
         enVivo
           ? {
@@ -329,7 +364,7 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
         </p>
       )}
 
-      <ModeloReferencia practicaId={bloque.practica} />
+      <ModeloReferencia practicaId={bloque.practica} conEjemplo={Boolean(practica?.ejemplo?.pasos?.length)} />
       <EjemploResuelto ejemplo={practica?.ejemplo} />
 
       <div className="corte-poly-sm mt-4 flex gap-3 border border-neon/20 bg-neon/5 p-3 text-sm text-texto/80">
@@ -377,7 +412,9 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
           </button>
         )}
       </div>
-      {usuario && !completa && <BlenderEnVivo enlace={enlace} token={token} practicaId={bloque.practica} />}
+      {usuario && !completa && (
+        <BlenderEnVivo enlace={enlace} token={token} practicaId={bloque.practica} abrir={abrir} abriendo={abriendo} />
+      )}
       {usuario && !completa && <PrepararBlender token={token} />}
       {!usuario && (
         <a href={rutas.blender} className={`${BOTON_SECUNDARIO} mt-3 inline-block`}>

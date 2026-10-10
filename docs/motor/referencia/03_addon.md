@@ -1,4 +1,4 @@
-# 03 · El add-on «Amatista» para Blender
+# 03 · El add-on «Amatista Motor» para Blender
 
 Extensión de Blender 4.2+ en [`addon/amatista_blender/`](../../../addon/amatista_blender/). Se abre en **Vista 3D › barra lateral (N) › pestaña Amatista**. Versión actual: la del [`blender_manifest.toml`](../../../addon/amatista_blender/blender_manifest.toml). Licencia GPL-3.0-or-later (usa `bpy`); solo aplica a `addon/`.
 
@@ -26,9 +26,9 @@ Diálogos: **Bienvenida** (intro de la práctica), **Así se hace este paso** (p
 
 En la **vista 3D**: la **tarjeta del acompañante** (paso N de M, progreso, qué hacer con teclas dibujadas y avisos que se desvanecen) y la **guía en la escena** (contornos verde/naranja/neón, regla, plano, piezas fantasma y flechas con etiquetas). Detalle en [07_guia_y_acompanamiento.md](07_guia_y_acompanamiento.md).
 
-## Nombre del descargable: Amatista Motor 3.4
+## Nombre del descargable: Amatista Motor 3.5
 
-Desde la 3.2 el add-on se llama **Amatista Motor** (`name` en `blender_manifest.toml`). La plataforma lo descarga como `Amatista-Motor-3.4-<sistema>.zip`, con la carpeta «Amatista Motor 3.4» (instalador, `amatista-3.4.0.zip` y LEEME). El servidor arma el paquete al vuelo con el código que tiene, así que entrega siempre la versión de su copia del repositorio; `GET /api/addon/v1/estado` devuelve `nombre` y `version_addon`, y la página «Mi Blender» avisa si el servidor entrega una versión vieja.
+Desde la 3.2 el add-on se llama **Amatista Motor** (`name` en `blender_manifest.toml`); la versión actual es la 3.5.1. La plataforma lo descarga como `Amatista-Motor-3.5-<sistema>.zip`, con la carpeta «Amatista Motor 3.5» (instalador, `amatista-3.5.1.zip` y LEEME). El nombre de la descarga solo lleva la versión mayor.menor, así que la 3.5.0 y la 3.5.1 se llaman igual: la versión exacta está en el `.zip` de dentro y en `GET /api/addon/v1/estado`. El nombre y la versión salen del manifiesto, así que al subir la versión cambian solos. El servidor arma el paquete al vuelo con el código que tiene, así que entrega siempre la versión de su copia del repositorio; `GET /api/addon/v1/estado` devuelve `nombre` y `version_addon`, y la página «Mi Blender» avisa si el servidor entrega una versión vieja.
 
 ## Temática por práctica (add-on 3.2)
 
@@ -68,21 +68,28 @@ Cada módulo tiene su mundo, igual que en la plataforma. La fuente es [`practice
 | Archivo | Qué hace |
 |---|---|
 | `__init__.py` | Registro y orden de los módulos. |
+| `blender_manifest.toml` | Nombre («Amatista Motor»), versión (3.5.1), Blender mínimo (4.2) y permisos de la extensión. |
 | `_motor.py` | Carga el motor: la copia incluida en el `.zip` o, en desarrollo, `engine/` del repositorio. |
 | `config.json` | Servidor, plataforma y canal. El constructor lo reescribe con las URL de la plataforma que generó el paquete. |
 | `ajustes.py` | Preferencias y `es_desarrollador()`. |
 | `estado.py` | Propiedades de escena y ventana (práctica abierta, borrador del autor, modo). |
 | `cuenta.py`, `red.py` | Vínculo, sesión, cliente HTTP y cola. |
 | `practicas.py` | Captura, evaluación, pistas, intentos y manejadores de Blender. |
+| `aprendizaje.py` | *(v3)* Mapa del curso (`cursos.json`), píldoras y repaso espaciado; guarda el avance local en `avance.json`. |
+| `ejemplo.py` | *(3.5)* «Ver el ejemplo»: arma el ejemplo resuelto en su propia escena con bmesh y `bpy.data`, y «Volver a mi práctica». |
+| `enlace.py` | *(3.4)* Enlace en vivo con la plataforma: el latido, las órdenes (abrir, enfocar, comprobar, pista, «Hazlo conmigo», guardar, empezar de nuevo, ver el ejemplo) y los ajustes de «Mi Blender». |
+| `enfoque.py` | *(3.4)* Modo enfocado: esconde lo que la práctica no usa y lo devuelve todo con «Ver todo Blender». |
+| `integridad.py` | Comprueba sin red si la copia del add-on es la que entregó Amatista (`integridad.json`): oficial, modificada o de desarrollo. |
 | `temas.py` | *(3.2)* Temática por módulo leída de `temas.json`: tema de una práctica, colores, mensajes de la mascota y su dibujo en pixel art. Python puro (sin `bpy`). |
 | `escenarios.py` | Escenas de inicio de las prácticas y, desde la 3.2, el cielo del tema (`aplicar_ambiente` / `restaurar_ambiente`). |
 | `guia.py` | *(etapa 2)* Guía y acompañante de la sesión: avisos, diálogos automáticos, «Hazlo conmigo» y registro de ayudas. |
 | `operadores.py`, `desarrollo.py`, `autor.py` | Acciones del modo Alumno y del modo Desarrollador. |
-| `interfaz/` | `estilo.py` (colores, iconos, escala, teclas), `paneles.py`, `dialogos.py`, `hud.py` (tarjeta del acompañante), `visor3d.py` (guía dibujada en la escena). |
+| `interfaz/` | `estilo.py` (colores, iconos, escala, teclas), `paneles.py`, `dialogos.py`, `aprender.py` (píldoras, repaso y pausa), `herramientas.py` (panel «Tus herramientas», 3.4), `hud.py` (tarjeta del acompañante), `visor3d.py` (guía dibujada en la escena). |
 | `iconos/` | PNG generados con `addon/herramientas/generar_iconos.py`. |
 
 ## Pruebas
 
 - `addon/tests/test_construir.py` (pytest, sin Blender): extensión, paquetes por sistema, índice del repositorio, `.bat` con CRLF, lanzadores ejecutables, bytes reproducibles.
 - `addon/tests/test_temas.py` (pytest, sin Blender): carga de `temas.json` (repositorio y paquete), tema por prefijo y de respaldo, colores, rotación de mensajes de la mascota y dibujos 10×10.
-- `addon/tests/en_blender.py`: dentro de Blender sin interfaz. Activa el add-on desde la carpeta `addon/` con `addon_utils.enable` (no instala el `.zip`; el `.zip` lo prueban `addon/tests/` con pytest), registra, abre la práctica de la mesa, construye la mesa con `bpy`, comprueba 100 %, prueba el modo autor y dibuja todos los paneles. Etapa 2: agrega un cubo, asigna el rol y escala con «Hazlo conmigo», comprueba las ayudas registradas, los avisos y dibuja la guía 3D con un `gpu` simulado. 3.2: el tema del tren, el cielo que se pinta al abrir y se restaura al cerrar (también sin mundo), que el mundo no entra en la foto y que paneles y tarjeta se dibujan con un tema activo. En CI corre con `bpy==5.0.1` de PyPI (job `addon-blender`).
+- `addon/tests/test_integridad.py` (pytest, sin Blender): la copia oficial, la modificada y la de desarrollo.
+- `addon/tests/en_blender.py`: dentro de Blender sin interfaz. Activa el add-on desde la carpeta `addon/` con `addon_utils.enable` (no instala el `.zip`; el `.zip` lo prueban `addon/tests/` con pytest), registra, abre la práctica de la mesa (hoy archivada: se prueba como compatibilidad con la v2), construye la mesa con `bpy`, comprueba 100 %, prueba el modo autor y dibuja todos los paneles. Etapa 2: agrega un cubo, asigna el rol y escala con «Hazlo conmigo», comprueba las ayudas registradas, los avisos y dibuja la guía 3D con un `gpu` simulado. 3.2: el tema del tren, el cielo que se pinta al abrir y se restaura al cerrar (también sin mundo), que el mundo no entra en la foto y que paneles y tarjeta se dibujan con un tema activo. Después vienen `probar_v3`, `probar_temas`, `probar_motor_34`, `probar_escena_por_practica`, `probar_motor_35` y `probar_ejemplo`, descritas en los documentos de cada versión. En CI corre con `bpy==5.0.1` de PyPI (job `addon-blender`).

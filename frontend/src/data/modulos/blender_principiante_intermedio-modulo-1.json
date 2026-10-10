@@ -83,7 +83,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Exploración del motor v3.2: practices/blender/principiante-intermedio/m1-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Exploración en Blender: practices/blender/principiante-intermedio/m1-explora/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
@@ -108,7 +108,8 @@
             "steps": [
               "Agrega una esfera",
               "Dale un material",
-              "Hazlo metal pulido"
+              "Hazlo metal pulido",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           }
@@ -237,7 +238,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3: practices/blender/principiante-intermedio/m1-pinta-nave/practica.json."
+            "notas": "Práctica en Blender: practices/blender/principiante-intermedio/m1-pinta-nave/practica.json."
           },
           "edicion": "1.0",
           "offline": false,
@@ -258,12 +259,13 @@
             "text": "Pulsa **Abrir en Blender** y luego abre Blender: la práctica aparece en la pestaña Amatista (tecla N). Tres secciones te acompañan: **Aprender** (la teoría justo cuando la necesitas), **Practicar** (los pasos con «Hazlo conmigo») y **Mi curso**. Tu avance se actualiza aquí mientras trabajas.",
             "minutes": 30,
             "steps": [
-              "Elige tu nave",
+              "Tu nave",
               "Tres materiales distintos",
               "Cabina de cristal",
               "Metal brillante",
               "Metal quemado",
-              "Guarda tu nave pintada"
+              "Guarda tu nave pintada",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           }
