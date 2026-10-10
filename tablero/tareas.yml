@@ -524,6 +524,19 @@ tareas:
     depende_de: [T-070]
     aceptacion: "docs/plataforma/07_herramientas_graficas.md §8 y §9; mesh_viewer y node_graph validan en el servidor y se usan en el curso; vitest, pytest y build en verde"
     evidencia: "frontend/src/components/leccion/VisorMalla.jsx, DiagramaNodos.jsx; frontend/src/components/ImagenLigera.jsx; frontend/src/index.css"
+  - id: T-098
+    titulo: "Amatista Motor 4.0: ruta de misiones, medidas amables y tarjeta de la misión con animaciones y herramientas iluminadas"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-093]
+    aceptacion: "Una sola misión explicada a la vez en Blender y en la lección; medidas aflojadas según el nivel; pytest, vitest y en_blender.py en verde"
+    evidencia: "engine/amatista_engine/ruta/; addon/amatista_blender/mision.py; addon/amatista_blender/interfaz/hud.py; docs/motor/referencia/15_experiencia_del_alumno.md"
+  - id: T-099
+    titulo: "Probar Amatista Motor 4.0 en Blender con ventana (animaciones, teclas que se encienden y herramienta en la barra T) hasta acordar que el add-on funciona"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-098]
+    aceptacion: "El alumno de prueba termina el tren y la espada solo con la tarjeta de la misión; los ajustes que salgan quedan en el mismo PR"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
