@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-10 22:42 · `main` en `15bbcf8`
+Último commit: 2026-10-10 22:43 · `main` en `15bbcf8`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -267,7 +267,7 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 - [ ] **T-099** Probar Amatista Motor 4.0 en Blender con ventana (animaciones, teclas que se encienden y herramienta en la barra T) hasta acordar que el add-on funciona · _en-progreso_ — commits: `3cfa09f` (2026-10-10)
   - ⏸️ Espera: Reemplazada por T-102: el add-on 5.0 (Amatista Taller) cambia la experiencia que se iba a probar
   - 🎯 Listo cuando: El alumno de prueba termina el tren y la espada solo con la tarjeta de la misión; los ajustes que salgan quedan en el mismo PR
-- [ ] **T-100** Amatista Taller (motor 5, add-on 5.0): la habilidad como unidad con Mira, Hazlo conmigo, Hazlo tú, Úsalo y Recuérdalo, modelo del alumno, molde, pistas con freno, Mi isla y la lección del taller en la plataforma · _revision_ — commits: `4c06fda` (2026-10-10), `abd3972` (2026-10-10), `ac3d958` (2026-10-10)
+- [ ] **T-100** Amatista Taller (motor 5, add-on 5.0): la habilidad como unidad con Mira, Hazlo conmigo, Hazlo tú, Úsalo y Recuérdalo, modelo del alumno, molde, pistas con freno, Mi isla y la lección del taller en la plataforma · _revision_ — commits: `4c06fda` (2026-10-10), `abd3972` (2026-10-10), `1e19d61` (2026-10-10)
   - 🔎 Evidencia: engine/amatista_engine/taller/; addon/amatista_blender/taller/; backend/api/taller.py; backend/sql/012_taller.sql; frontend/src/components/leccion/interactivos/TallerBlender.jsx; docs/motor/referencia/16_amatista_taller.md
   - 🎯 Listo cuando: 33 habilidades y 9 talleres en practices/blender/habilidades.json; el add-on, la plataforma y el servidor siguen el mismo plan; pytest, vitest, build y en_blender.py en verde
 - [ ] **T-101** Aplicar 012 en Oracle, actualizar el backend e instalar Amatista Motor 5.0 (después de probarlo) · _pendiente_
