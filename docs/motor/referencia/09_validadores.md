@@ -1,6 +1,6 @@
 # Catálogo de validadores
 
-Generado con `python engine/herramientas/practicas.py validadores --md` (Amatista Engine 3.5.0). No se edita a mano: cambia la descripción en `engine/amatista_engine/validators/builtin.py` y vuelve a generarlo.
+Generado con `python engine/herramientas/practicas.py validadores --md` (Amatista Engine 3.5.1). No se edita a mano: cambia la descripción en `engine/amatista_engine/validators/builtin.py` y vuelve a generarlo.
 
 Los validadores que aceptan **selector** (`role`, `name`, `name_prefix`, `type`, `tag`, `collection`, `primitive`) se aplican a los objetos que cumplen todos los criterios; sin selector, a todos.
 
@@ -166,6 +166,16 @@ La escena tiene luces (de un tipo, si se indica: AREA, SUN, POINT, SPOT).
 
 Se vuelve a revisar con: OBJECT_ADDED, OBJECT_DATA.
 
+### `scene.mode` — Modo de Blender
+
+Blender está en un modo: Modo Objeto (OBJECT) o Modo Edición (EDIT).
+
+| Parámetro | Tipo | Qué es | Obligatorio | Por defecto |
+|---|---|---|---|---|
+| `mode` | text | Modo (OBJECT, EDIT) |  | `OBJECT` |
+
+Se vuelve a revisar con: OBJECT_ADDED, OBJECT_TRANSFORM, OBJECT_MODIFIER, OBJECT_DATA, FILE_SAVED, ROLE_CHANGED.
+
 ## Forma
 
 ### `figure.recognize` — Amatista reconoce la figura
@@ -176,6 +186,7 @@ Reconoce la figura del modelo de referencia sin roles: deduce qué es cada pieza
 |---|---|---|---|---|
 | `strictness` | text | Exigencia (forma, proporcion, cercana, medidas, exacta; vacío = la del nivel) |  |  |
 | `min_score` | float | Parecido mínimo (0 a 1; vacío = el de la exigencia) |  |  |
+| `tolerance` | float | Holgura de medidas en la exigencia «cercana» (de «reference.tolerance») |  |  |
 | `parts` | reference | Piezas del modelo (de «reference») |  |  |
 | `labels` | reference | Nombres de los roles (de «roles») |  |  |
 | `flexible` | reference | Grupos con cantidad libre (de «reference») |  |  |
@@ -483,7 +494,9 @@ Los objetos quedan debajo de otro (por ejemplo, patas bajo la cubierta).
 | `name_prefix` | text | Nombre empieza con |  |  |
 | `type` | object_type | Tipo de objeto |  |  |
 | `primitive` | primitive | Primitiva (cube, cylinder…) |  |  |
-| `reference_role` | role | Rol de referencia | sí |  |
+| `reference_role` | role | Rol de referencia (o «reference») |  |  |
+| `reference` | text | Nombre de referencia (o «reference_role») |  |  |
+| `inside` | bool | El centro queda dentro de la huella de la referencia |  | `True` |
 | `tolerance` | float | Tolerancia |  | `0.02` |
 
 Se vuelve a revisar con: OBJECT_TRANSFORM, OBJECT_ADDED, ROLE_CHANGED, OBJECT_DATA.
@@ -646,5 +659,6 @@ La escala del objeto es 1 en los tres ejes (Ctrl+A › Escala).
 | `name_prefix` | text | Nombre empieza con |  |  |
 | `type` | object_type | Tipo de objeto |  |  |
 | `primitive` | primitive | Primitiva (cube, cylinder…) |  |  |
+| `tolerance` | float | Tolerancia |  | `0.0001` |
 
 Se vuelve a revisar con: OBJECT_TRANSFORM, OBJECT_ADDED, ROLE_CHANGED.
