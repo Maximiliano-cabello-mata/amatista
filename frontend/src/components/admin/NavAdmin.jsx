@@ -1,10 +1,18 @@
 import { rutas } from '../../rutas';
 import { alSalirPorEnlace } from './cambios';
 
-// Secciones agrupadas por tarea: enseñar (módulos, prácticas, herramientas),
+// Secciones agrupadas por tarea: revisar la plataforma (verla como alumno o
+// con todo abierto, auditoría), enseñar (módulos, prácticas, herramientas),
 // personas y sistema. Ver docs/plataforma/05_panel_de_administracion.md.
 const SECCIONES = [
   { titulo: null, entradas: [{ grupo: 'resumen', texto: 'Resumen', href: rutas.admin, icono: '◆' }] },
+  {
+    titulo: 'Revisión',
+    entradas: [
+      { grupo: 'revision', texto: 'Ver la plataforma', href: rutas.adminRevision, icono: '◐' },
+      { grupo: 'auditoria', texto: 'Auditoría', href: rutas.adminAuditoria, icono: '✓' },
+    ],
+  },
   {
     titulo: 'Enseñanza',
     entradas: [
