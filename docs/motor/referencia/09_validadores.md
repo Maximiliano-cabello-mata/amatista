@@ -1,6 +1,6 @@
 # Catálogo de validadores
 
-Generado con `python engine/herramientas/practicas.py validadores --md` (Amatista Engine 3.5.1). No se edita a mano: cambia la descripción en `engine/amatista_engine/validators/builtin.py` y vuelve a generarlo.
+Generado con `python engine/herramientas/practicas.py validadores --md` (Amatista Engine 5.0.0). No se edita a mano: cambia la descripción en `engine/amatista_engine/validators/builtin.py` y vuelve a generarlo.
 
 Los validadores que aceptan **selector** (`role`, `name`, `name_prefix`, `type`, `tag`, `collection`, `primitive`) se aplican a los objetos que cumplen todos los criterios; sin selector, a todos.
 
@@ -258,6 +258,19 @@ El lado más delgado del objeto está en un eje (x, y, z u horizontal): ruedas d
 | `primitive` | primitive | Primitiva (cube, cylinder…) |  |  |
 | `axis` | text | Eje (x, y, z, horizontal) |  | `horizontal` |
 | `max_ratio` | float | Delgadez máxima |  | `0.6` |
+
+Se vuelve a revisar con: OBJECT_TRANSFORM, OBJECT_ADDED, ROLE_CHANGED, OBJECT_DATA.
+
+### `taller.molde` — Las piezas llenan el molde
+
+Revisa pieza por pieza contra un molde: llena, casi (girada, de otro tamaño o en otro lugar), equivocada (otra forma) o vacía, con el motivo dicho sobre el modelo y sin números. «molde»: importan el lugar y el tamaño (con la holgura del nivel); «libre»: la figura se acomoda sola al modelo y solo importan la forma y cómo se acomodan las piezas. Lo usan las prácticas que genera el taller.
+
+| Parámetro | Tipo | Qué es | Obligatorio | Por defecto |
+|---|---|---|---|---|
+| `parts` | parts | Piezas del molde (como reference.parts) | sí |  |
+| `mode` | text | Modo (molde o libre) |  | `molde` |
+| `level` | int | Nivel (1 a 5) |  | `1` |
+| `labels` | parts | Nombres de las piezas por rol |  |  |
 
 Se vuelve a revisar con: OBJECT_TRANSFORM, OBJECT_ADDED, ROLE_CHANGED, OBJECT_DATA.
 

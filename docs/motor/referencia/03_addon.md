@@ -11,7 +11,11 @@ El selector de modo aparece arriba del panel cuando la cuenta es de profesor o a
 | **Alumno** | todos | Cuenta, práctica abierta, tarjetas de pasos, pistas, roles y envío de progreso. |
 | **Desarrollador** (Amatista Author) | profesores, admins, o quien active el modo | Borrador, Tagger (roles y etiquetas), Inspector, Constructor de objetivos, Validación y depurador, Exportar y publicar. **Vista previa como alumno** carga el borrador como si fuera una práctica publicada. Detalle en [06_modo_desarrollador.md](06_modo_desarrollador.md). |
 
-## Paneles del modo Alumno (Amatista Motor 4)
+## Amatista Taller (motor 5)
+
+Desde la 5.0 el modo Alumno abre el **taller del módulo**: la habilidad es la unidad y cada una pasa por Mira → Hazlo conmigo → Hazlo tú → Úsalo → Recuérdalo. El panel muestra solo el taller, la actividad de ahora, «Continuar», «Pausa», «Pista», los repasos y «Mi isla»; la instrucción vive en la tarjeta de la vista 3D y en el molde translúcido. El proyecto de cada módulo sigue siendo la práctica de abajo, que se abre dentro del taller como «Úsalo». Código en [`taller/`](../../../addon/amatista_blender/taller/); diseño completo en [16_amatista_taller.md](16_amatista_taller.md).
+
+## Paneles del modo Alumno (Amatista Motor 4, proyecto y modo desarrollador)
 
 La pestaña **Practicar** muestra **una sola misión**: la de ahora. Todo lo demás queda cerrado debajo. Diseño y razones en [15_experiencia_del_alumno.md](15_experiencia_del_alumno.md).
 
@@ -27,9 +31,9 @@ Diálogos: **Bienvenida** (la primera vez), **Tu misión** (al abrir una prácti
 
 En la **vista 3D**: la **tarjeta de la misión** (parte, la ruta en bolitas, la misión con sus teclas que se encienden al usarlas, el instructor y las herramientas iluminadas: la de ahora, las usadas y las que vienen), con animaciones al empezar y al cumplir cada misión, y la **guía en la escena** (contornos verde/naranja/neón, regla, plano, piezas fantasma y flechas). En los niveles 1 y 2 la herramienta de cada misión queda elegida en la barra T. Detalle en [15_experiencia_del_alumno.md](15_experiencia_del_alumno.md) y [07_guia_y_acompanamiento.md](07_guia_y_acompanamiento.md).
 
-## Nombre del descargable: Amatista Motor 4.0
+## Nombre del descargable: Amatista Motor 5.0
 
-Desde la 3.2 el add-on se llama **Amatista Motor** (`name` en `blender_manifest.toml`); la versión actual es la 4.0.0. La plataforma lo descarga como `Amatista-Motor-4.0-<sistema>.zip`, con la carpeta «Amatista Motor 4.0» (instalador, `amatista-4.0.0.zip` y LEEME). El nombre de la descarga solo lleva la versión mayor.menor, así que la 4.0.0 y una 4.0.1 se llamarían igual: la versión exacta está en el `.zip` de dentro y en `GET /api/addon/v1/estado`. El nombre y la versión salen del manifiesto, así que al subir la versión cambian solos. El servidor arma el paquete al vuelo con el código que tiene, así que entrega siempre la versión de su copia del repositorio; `GET /api/addon/v1/estado` devuelve `nombre` y `version_addon`, y la página «Mi Blender» avisa si el servidor entrega una versión vieja.
+Desde la 3.2 el add-on se llama **Amatista Motor** (`name` en `blender_manifest.toml`); la versión actual es la 5.0.0. La plataforma lo descarga como `Amatista-Motor-5.0-<sistema>.zip`, con la carpeta «Amatista Motor 5.0» (instalador, `amatista-5.0.0.zip` y LEEME). El nombre de la descarga solo lleva la versión mayor.menor, así que la 5.0.0 y una 5.0.1 se llamarían igual: la versión exacta está en el `.zip` de dentro y en `GET /api/addon/v1/estado`. El nombre y la versión salen del manifiesto, así que al subir la versión cambian solos. El servidor arma el paquete al vuelo con el código que tiene, así que entrega siempre la versión de su copia del repositorio; `GET /api/addon/v1/estado` devuelve `nombre` y `version_addon`, y la página «Mi Blender» avisa si el servidor entrega una versión vieja.
 
 ## Temática por práctica (add-on 3.2)
 
@@ -69,7 +73,7 @@ Cada módulo tiene su mundo, igual que en la plataforma. La fuente es [`practice
 | Archivo | Qué hace |
 |---|---|
 | `__init__.py` | Registro y orden de los módulos. |
-| `blender_manifest.toml` | Nombre («Amatista Motor»), versión (4.0.0), Blender mínimo (4.2) y permisos de la extensión. |
+| `blender_manifest.toml` | Nombre («Amatista Motor»), versión (5.0.0), Blender mínimo (4.2) y permisos de la extensión. |
 | `_motor.py` | Carga el motor: la copia incluida en el `.zip` o, en desarrollo, `engine/` del repositorio. |
 | `config.json` | Servidor, plataforma y canal. El constructor lo reescribe con las URL de la plataforma que generó el paquete. |
 | `ajustes.py` | Preferencias y `es_desarrollador()`. |
