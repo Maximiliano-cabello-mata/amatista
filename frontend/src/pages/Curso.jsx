@@ -37,6 +37,8 @@ import {
 } from '../progreso/reglas';
 import { rutas } from '../rutas';
 import { listarDispositivos, listarPracticas } from '../services/blender';
+import { useVista } from '../vista/contexto';
+import { estacionConRevision } from '../vista/reglas';
 
 function NodoLeccion({ numero, hecha, abierta, acento }) {
   if (hecha) {
@@ -60,11 +62,14 @@ function NodoLeccion({ numero, hecha, abierta, acento }) {
   );
 }
 
-function FilaLeccion({ curso, modulo, leccion, indice, acento, progreso, tema }) {
+function FilaLeccion({ curso, modulo, leccion, indice, acento, progreso, tema, revision }) {
   const hecha = estaCompletada(progreso, curso.id, leccion);
-  const abierta = estaDesbloqueada(progreso, curso.id, modulo, indice);
+  const desbloqueada = estaDesbloqueada(progreso, curso.id, modulo, indice);
+  // En la vista de administrador todo se abre para revisar (sin tocar el progreso).
+  const abierta = desbloqueada || revision;
+  const porRevision = abierta && !desbloqueada;
   const nueva = leccionEsNueva(progreso, curso.id, modulo, indice);
-  const actual = abierta && !hecha;
+  const actual = desbloqueada && !hecha;
   const examen = leccion.type === 'exam';
   const etiqueta = etiquetaLeccion(leccion);
   const fila = (
@@ -80,6 +85,7 @@ function FilaLeccion({ curso, modulo, leccion, indice, acento, progreso, tema })
         <span className={`flex flex-wrap items-center gap-2 font-semibold ${abierta ? 'text-white' : 'text-white/45'}`}>
           {examen ? `Jefe final: ${tema.jefe.nombre}` : leccion.title}
           {nueva && <Etiqueta texto="Nueva" tono="neon" />}
+          {porRevision && <Etiqueta texto="Abierta por revisión" tono="aviso" />}
         </span>
         <span className="mt-1 flex flex-wrap items-center gap-2">
           <Etiqueta {...etiqueta} tono={abierta ? etiqueta.tono : 'gris'} />
@@ -93,7 +99,7 @@ function FilaLeccion({ curso, modulo, leccion, indice, acento, progreso, tema })
           actual ? 'animar-pulso text-neon' : `hidden sm:inline ${hecha ? 'text-white/50' : 'text-white/30'}`
         }`}
       >
-        {actual ? (examen ? '¡Pelear! ▶' : 'Jugar ▶') : hecha ? (examen ? 'Vencido' : 'Repasar') : 'Bloqueada'}
+        {actual ? (examen ? '¡Pelear! ▶' : 'Jugar ▶') : hecha ? (examen ? 'Vencido' : 'Repasar') : porRevision ? 'Revisar' : 'Bloqueada'}
       </span>
     </>
   );
@@ -113,7 +119,7 @@ function FilaLeccion({ curso, modulo, leccion, indice, acento, progreso, tema })
 
 // Un módulo: su temática arriba y, en orden, teoría y estaciones de Blender
 // intercaladas, hasta el jefe final.
-function MapaModulo({ curso, modulo, acento, progreso }) {
+function MapaModulo({ curso, modulo, acento, progreso, revision }) {
   const contenido = modulo.contenido;
   const numero = modulo.numero;
   const titulo = tituloCorto(contenido.title);
@@ -121,7 +127,7 @@ function MapaModulo({ curso, modulo, acento, progreso }) {
   const { total, completadas, nuevas } = resumenModulo(progreso, curso.id, modulo);
   const insigniaGanada = tieneInsignia(progreso.insignias, idInsignia(curso.id, modulo));
   const enBlender = practicasDelModulo(modulo).length;
-  const props = { curso, modulo, acento, progreso, tema };
+  const props = { curso, modulo, acento, progreso, tema, revision };
 
   return (
     <section
@@ -161,7 +167,10 @@ function MapaModulo({ curso, modulo, acento, progreso }) {
             {secuenciaDelModulo(modulo).map((paso) => (
               <li key={paso.leccion.id}>
                 {paso.tipo === 'practica' ? (
-                  <EstacionBlender cursoId={curso.id} estado={estadoPracticaEn(progreso, curso.id, modulo, paso.indice)} />
+                  <EstacionBlender
+                    cursoId={curso.id}
+                    estado={estacionConRevision(estadoPracticaEn(progreso, curso.id, modulo, paso.indice), revision)}
+                  />
                 ) : (
                   <FilaLeccion leccion={paso.leccion} indice={paso.indice} {...props} />
                 )}
@@ -316,6 +325,47 @@ function TuBlender({ niveles }) {
   );
 }
 
+// Cómo se avanza en el curso, en tres pasos y con los mismos colores del mapa
+// de cada módulo. Reemplaza la leyenda suelta de la v3.2: el alumno nuevo ve
+// qué hacer antes de ver los módulos.
+const PASOS_CURSO = [
+  { color: 'bg-neon', titulo: 'Teoría', texto: 'Lecciones cortas con actividades. Resuélvelas y pulsa «Completar lección».' },
+  { color: 'bg-blender', titulo: 'En Blender', texto: 'Estaciones naranjas: las haces en Blender con el add-on y quedan registradas.' },
+  { color: 'bg-amber-300', titulo: 'Jefe final', texto: 'Un examen corto. Al vencerlo ganas la insignia y se abre lo que sigue.' },
+];
+
+function ComoAvanzas({ conBlender }) {
+  const pasos = conBlender ? PASOS_CURSO : PASOS_CURSO.filter((paso) => paso.titulo !== 'En Blender');
+  return (
+    <section className="corte-poly-sm mt-8 border border-white/10 bg-superficie/90 p-4 sm:p-5" aria-labelledby="como-avanzas">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 id="como-avanzas" className="font-mono text-xs uppercase tracking-[0.25em] text-neon">
+          Así avanzas en este curso
+        </h2>
+        <a href={rutas.guia} className="font-mono text-[11px] uppercase tracking-widest text-white/55 hover:text-neon">
+          ¿Primera vez? Ver la guía ▸
+        </a>
+      </div>
+      <ol className={`mt-3 grid gap-3 ${pasos.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
+        {pasos.map((paso, i) => (
+          <li key={paso.titulo} className="flex gap-3">
+            <span className={`hexagono grid h-8 w-9 shrink-0 place-items-center font-mono text-xs font-bold text-base ${paso.color}`}>
+              {i + 1}
+            </span>
+            <span className="min-w-0">
+              <span className="block font-bold text-white">{paso.titulo}</span>
+              <span className="block text-sm leading-snug text-texto/70">{paso.texto}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+      <p className="mt-3 text-xs text-white/50">
+        Las lecciones con candado se abren al terminar la anterior. Siempre puedes volver a una lección hecha para repasar.
+      </p>
+    </section>
+  );
+}
+
 // Un nivel que aún no se publica: qué traerá.
 function NivelProximo({ curso }) {
   return (
@@ -341,6 +391,7 @@ function NivelProximo({ curso }) {
 function Curso({ cursoId }) {
   const { progreso } = useProgreso();
   const { cursos } = useCatalogo();
+  const { revision } = useVista();
   const encontrado = buscarRuta(cursos, cursoId);
 
   if (!encontrado) {
@@ -415,8 +466,8 @@ function Curso({ cursoId }) {
       <p className="mt-6 max-w-3xl leading-relaxed text-texto/80">{ruta.descripcion}</p>
 
       {varios && <ArbolNiveles ruta={ruta} elegido={nivel} progreso={progreso} acento={acento} />}
+      {!bloqueado && <ComoAvanzas conBlender={conBlender} />}
       {conBlender && <TuBlender niveles={ruta.niveles} />}
-      {conBlender && <TuIsla className="mt-4" />}
 
       {/* El nivel elegido */}
       <section className="mt-10" aria-labelledby="nivel-titulo">
@@ -436,23 +487,9 @@ function Curso({ cursoId }) {
           <NivelProximo curso={nivel} />
         ) : (
           <div className="space-y-4">
-            {conBlender && (
-              <p className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[11px] uppercase tracking-widest text-white/50">
-                <span>Así avanzas:</span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="hexagono inline-block h-3 w-3.5 bg-neon" /> Teoría
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="hexagono inline-block h-3 w-3.5 bg-blender" /> En Blender, registrado
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="hexagono inline-block h-3 w-3.5 bg-amber-300" /> Jefe final
-                </span>
-              </p>
-            )}
             {nivel.modulos.map((modulo) =>
               modulo.contenido ? (
-                <MapaModulo key={modulo.id} curso={nivel} modulo={modulo} acento={acento} progreso={progreso} />
+                <MapaModulo key={modulo.id} curso={nivel} modulo={modulo} acento={acento} progreso={progreso} revision={revision} />
               ) : (
                 <div
                   key={modulo.id}
@@ -471,6 +508,9 @@ function Curso({ cursoId }) {
           </div>
         )}
       </section>
+
+      {/* Tu isla junta los proyectos terminados: va después de los módulos que los producen. */}
+      {conBlender && <TuIsla className="mt-8" />}
 
       <div className="mt-8 flex flex-col gap-3 border-t border-white/5 pt-6 sm:flex-row sm:items-center sm:justify-between">
         <EstadoGuardado />

@@ -12,6 +12,7 @@ import { logoDeCurso } from '../components/estiloCurso';
 import { esPracticaBlender } from '../modulos/practica';
 import Figura from '../components/leccion/Figura';
 import { actividadesDe } from '../components/leccion/interactivos/logica';
+import { queHacer } from '../components/leccion/queHacer';
 import { buscarLeccion, duracionTexto, TIPOS_LECCION } from '../data/cursos';
 import { useProgreso } from '../progreso/contexto';
 import {
@@ -23,6 +24,7 @@ import {
   XP_POR_LECCION,
 } from '../progreso/reglas';
 import { rutas } from '../rutas';
+import { useVista } from '../vista/contexto';
 
 function Aviso({ titulo, texto, enlace, textoEnlace }) {
   return (
@@ -170,9 +172,12 @@ function Leccion({ cursoId, leccionId }) {
     registrarSesionAprendizaje,
   } = useProgreso();
   const { buscarCurso } = useCatalogo();
+  const { revision } = useVista();
   const curso = buscarCurso(cursoId);
   const ubicacion = curso && buscarLeccion(curso, leccionId);
-  const abierta = Boolean(ubicacion) && estaDesbloqueada(progreso, curso.id, ubicacion.modulo, ubicacion.indice);
+  const desbloqueada = Boolean(ubicacion) && estaDesbloqueada(progreso, curso.id, ubicacion.modulo, ubicacion.indice);
+  // Vista de administrador: cualquier lección se abre para revisarla (el progreso no cambia por eso).
+  const abierta = Boolean(ubicacion) && (desbloqueada || revision);
   const idAbierta = abierta ? ubicacion.leccion.id : null;
 
   // learning_session_started: el proveedor lo registra una vez por lección y día.
@@ -271,8 +276,13 @@ function Leccion({ cursoId, leccionId }) {
             {duracion && <span className="corte-poly-sm bg-white/5 px-2.5 py-1 text-white/55">{duracion}</span>}
             {completada && <span className="corte-poly-sm bg-emerald-400/10 px-2.5 py-1 text-emerald-300">✓ Completada</span>}
             {nueva && <span className="corte-poly-sm bg-neon/15 px-2.5 py-1 font-bold text-neon">Nueva</span>}
+            {!desbloqueada && <span className="corte-poly-sm bg-amber-400/15 px-2.5 py-1 font-bold text-amber-200">Abierta por revisión</span>}
           </div>
           <h1 className="text-3xl font-extrabold leading-tight text-white sm:text-5xl">{leccion.title}</h1>
+          <p className="mt-4 flex max-w-2xl gap-2 text-sm leading-relaxed text-texto/85">
+            <span className="shrink-0 font-mono font-bold uppercase tracking-widest text-neon">Qué hacer:</span>
+            <span>{queHacer(leccion, { completada, enBlender, jefe: tema.jefe?.nombre, xp: XP_POR_LECCION })}</span>
+          </p>
         </div>
       </header>
 

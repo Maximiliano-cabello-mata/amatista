@@ -12,12 +12,15 @@ export const rutas = {
   confirmar: '#/confirmar',
   recuperar: '#/recuperar',
   perfil: '#/perfil',
+  guia: '#/guia',
   admin: '#/admin',
   adminUsuarios: '#/admin/usuarios',
   adminContenido: '#/admin/contenido',
   adminPracticas: '#/admin/practicas',
   adminHerramientas: '#/admin/herramientas',
   adminSistema: '#/admin/sistema',
+  adminRevision: '#/admin/revision',
+  adminAuditoria: '#/admin/auditoria',
   curso: (cursoId) => `#/curso/${parte(cursoId)}`,
   leccion: (cursoId, leccionId) => `#/curso/${parte(cursoId)}/leccion/${parte(leccionId)}`,
   adminUsuario: (usuarioId) => `#/admin/usuarios/${parte(usuarioId)}`,
@@ -35,6 +38,8 @@ export const rutas = {
 //   #/admin/practicas                    → practicas (motor de Blender)
 //   #/admin/herramientas                 → herramientas (catálogo de bloques)
 //   #/admin/sistema                      → sistema
+//   #/admin/revision                     → revision (ver la plataforma y saltar a cualquier lección)
+//   #/admin/auditoria                    → auditoria
 function rutaAdmin(partes) {
   const [seccion, a, b, c] = partes;
   if (seccion === 'usuarios') {
@@ -48,10 +53,12 @@ function rutaAdmin(partes) {
   if (seccion === 'sistema') return { seccion: 'sistema', params: {} };
   if (seccion === 'practicas') return { seccion: 'practicas', params: {} };
   if (seccion === 'herramientas') return { seccion: 'herramientas', params: {} };
+  if (seccion === 'revision') return { seccion: 'revision', params: {} };
+  if (seccion === 'auditoria') return { seccion: 'auditoria', params: {} };
   return { seccion: 'resumen', params: {} };
 }
 
-const PAGINAS_SIMPLES = ['panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil'];
+const PAGINAS_SIMPLES = ['panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'guia'];
 
 // Devuelve {pagina, ...}. Una consulta tras "?" (por ejemplo
 // "#/entrar?volver=%23%2Fperfil") llega en `consulta`.

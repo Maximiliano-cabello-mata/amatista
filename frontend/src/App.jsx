@@ -8,6 +8,8 @@ import { CristalLogo, IconoCandado } from './components/Iconos';
 import Inicio from './pages/Inicio';
 import ProgresoProvider from './progreso/ProgresoProvider';
 import { analizarRuta, rutaEntrar, rutas } from './rutas';
+import BarraVista from './vista/BarraVista';
+import VistaProvider from './vista/VistaProvider';
 
 // Páginas bajo demanda: la pantalla de inicio carga rápido.
 // El laboratorio incluye A-Frame (~1.3 MB): solo se descarga si se visita.
@@ -24,6 +26,7 @@ const Registro = lazy(() => import('./pages/cuenta/Registro'));
 const Confirmar = lazy(() => import('./pages/cuenta/Confirmar'));
 const Recuperar = lazy(() => import('./pages/cuenta/Recuperar'));
 const Perfil = lazy(() => import('./pages/cuenta/Perfil'));
+const Guia = lazy(() => import('./pages/Guia'));
 
 function useRuta() {
   const [hash, setHash] = useState(() => window.location.hash);
@@ -108,6 +111,8 @@ function Pagina({ ruta, hash }) {
       return <Recuperar consulta={ruta.consulta} />;
     case 'perfil':
       return <Perfil />;
+    case 'guia':
+      return <Guia />;
     case 'admin':
       return <RutaAdmin ruta={ruta} hash={hash} />;
     default:
@@ -122,9 +127,11 @@ function App() {
     <div className="min-h-screen">
       <FondoLowPoly />
       <AuthProvider>
+        <VistaProvider>
         <CatalogoProvider>
           <ProgresoProvider>
             <BarraSuperior ruta={ruta} hash={hash} />
+            <BarraVista pagina={ruta.pagina} />
             <Suspense fallback={<Cargando />}>
               {/* Cada cambio de página entra con un fundido corto (sin animación en modo ligero). */}
               <div key={`${ruta.pagina}:${ruta.cursoId ?? ''}:${ruta.leccionId ?? ''}`} className="animar-pagina">
@@ -133,6 +140,7 @@ function App() {
             </Suspense>
           </ProgresoProvider>
         </CatalogoProvider>
+        </VistaProvider>
       </AuthProvider>
     </div>
   );
