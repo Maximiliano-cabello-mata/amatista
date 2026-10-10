@@ -50,10 +50,10 @@
 
 ## Flujo del alumno
 
-1. En **#/blender** elige su sistema (se detecta solo) y descarga `Amatista-<versión>-<sistema>.zip`. Con sesión abierta, el paquete trae un vínculo pre-confirmado (7 días, un uso).
+1. En **#/blender** elige su sistema (se detecta solo) y descarga `Amatista-Motor-3.5-<sistema>.zip` (el nombre del producto y la versión mayor.menor salen de `blender_manifest.toml`). Con sesión abierta, el paquete trae un vínculo pre-confirmado (7 días, un uso).
 2. Abre «Instalar Amatista»: busca Blender, comprueba que sea 4.2 o más nuevo y, si lo es, instala y activa la extensión con `blender --background`. Si no, avisa y no toca nada.
 3. Abre Blender: el add-on canjea el vínculo y queda conectado; pide `GET /practica-actual` y abre la práctica que el alumno dejó abierta en su lección.
-4. Mientras trabaja, cada cambio en la escena se reevalúa (con medio segundo de calma). Los intentos se envían solos unos segundos después de un cambio, o con **Enviar mi progreso**. Sin conexión se encolan y se envían al volver.
+4. Mientras trabaja, cada cambio en la escena se reevalúa (cuando la escena lleva 0.4 s sin cambios). Los intentos se envían solos unos segundos después de un cambio, o con **Enviar mi progreso**. Sin conexión se encolan y se envían al volver.
 5. La lección (bloque `blender_practice`) consulta el progreso cada 6 s y muestra los pasos al día.
 
 ## Archivos clave

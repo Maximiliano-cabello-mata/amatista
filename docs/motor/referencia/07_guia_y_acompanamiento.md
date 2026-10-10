@@ -62,6 +62,20 @@ Cada señal puede traer `label`, que se dibuja como una pastilla de texto sobre 
 | `apply_scale` | Abre el menú *Aplicar* (`Ctrl A`) para elegir «Escala». |
 | `save` | Guarda (o abre *Guardar como* si el archivo aún no tiene nombre). |
 | `focus` | Selecciona y encuadra el objeto. |
+| `add_primitive` *(v3)* | Agrega la primitiva que falta (cubo, cilindro, esfera…) y, si el paso lo pide, le pone el rol. |
+| `add_modifier` *(v3)* | Agrega el modificador al objeto (Espejo, Subdivisión, Array…) con la pestaña Modificadores abierta. |
+| `open_tab` *(v3)* | Abre una pestaña de Propiedades (`MODIFIER`, `MATERIAL`, `RENDER`, `DATA`…). |
+| `edit_mode`, `object_mode` *(v3)* | Entra a Modo Edición o vuelve a Modo Objeto. |
+| `merge_by_distance` *(v3)* | Fusiona los vértices encimados (lo ofrece el vigilante de malla limpia). |
+| `apply_all` *(v3)* | Aplica rotación y escala del objeto (lo usan los `fix` de los vigilantes). |
+| `add_light`, `add_camera`, `align_camera` *(v3)* | Agrega una luz (por ejemplo de área), agrega o activa una cámara, o la alinea con la vista. |
+| `set_engine`, `render` *(v3)* | Cambia el motor de render (Eevee, Cycles…) o hace el render (F12). |
+| `insert_keyframe` *(v3)* | Inserta un fotograma clave en la propiedad y el eje que pide el paso. |
+| `new_material` *(v3)* | Crea un material nuevo en el objeto. |
+| `clear_scene` *(v3)* | Vacía la escena de inicio. |
+| `show_example` *(3.5)* | Abre el ejemplo resuelto en su propia escena ([14](14_ejemplo_y_revision.md)). |
+
+La lista completa está en `GuideAction` (`engine/amatista_engine/guide/models.py`) y cada acción la cumple `addon/amatista_blender/guia.py`. Un vigilante o un objetivo con `fix` puede pedir cualquiera de estas acciones con su propia etiqueta.
 
 La herramienta se arranca en modo interactivo a propósito: el alumno **hace** el gesto, no lo ve hecho. En Blender sin interfaz (pruebas) la acción aplica directamente el valor sugerido.
 
@@ -77,7 +91,20 @@ La herramienta se arranca en modo interactivo a propósito: el alumno **hace** e
 | `transform.scale_applied` | Por qué importa y `Ctrl A › Escala`. |
 | `file.saved`, `file.named` | `Ctrl S`, y qué nombre poner. |
 | `material.exists`, `modifier.exists` | Dónde está el panel (Propiedades › Material / Modificadores) y qué agregar. |
-| cualquier otro | Guía genérica: el mensaje del validador, el `tip` y los objetos a revisar. Un error dentro de un entrenador nunca rompe la evaluación: cae en la guía genérica. |
+| `logic.any` | Guía con el entrenador de la primera opción. |
+| `object.count`, `shape.thinnest_axis`, `shape.proportion` *(v3)* | Qué pieza sobra o falta (con «Agregar … conmigo»), cuál hay que girar o estirar y con qué factor. |
+| `spatial.grounded`, `spatial.touching` *(v3)* | Cuánto bajar la pieza hasta el suelo o moverla hasta que toque a la otra. |
+| `mesh.no_duplicates`, `mesh.one_side` *(v3)* | Fusionar por distancia; entrar a Modo Edición para dejar solo una mitad. |
+| `modifier.configured` *(v3)* | Agregar el modificador o abrir Modificadores para ajustar ejes y niveles. |
+| `material.distinct`, `material.matches` *(v3)* | Crear un material nuevo o abrir la pestaña Material para cambiar su rasgo. |
+| `light.three_point`, `camera.active`, `camera.frames` *(v3)* | Qué luz falta (con «Agregar una luz de área conmigo»), agregar o activar la cámara y alinearla con la vista. |
+| `render.engine`, `render.done` *(v3)* | Cambiar el motor de render; hacer el render con F12. |
+| `animation.keyframes`, `animation.varies` *(v3)* | Insertar el fotograma clave que falta en la propiedad y el eje que pide el paso. |
+| `figure.silhouette` *(3.5)* | La primera parte pendiente de la lista del instructor, con su tecla; el resto queda en la lista ([13](13_instructor_y_silueta.md)). |
+| `example.matches` *(3.5)* | El primer punto pendiente de «Comparado con el ejemplo», con sus teclas; nombra los demás aspectos pendientes y ofrece «Ver el ejemplo resuelto». |
+| cualquier otro | Guía genérica: el mensaje del validador, el `tip` y los objetos a revisar (por ejemplo `figure.recognize`, cuyo mensaje ya dice qué pieza falta). Un error dentro de un entrenador nunca rompe la evaluación: cae en la guía genérica. |
+
+Los entrenadores de la etapa 2 están en `engine/amatista_engine/guide/coach.py` (`ENTRENADORES`) y los del motor v3 en adelante en `coach_v3.py` (`ENTRENADORES_V3`).
 
 Los números que se proponen son **redondos y dentro del rango** (`objetivo_amable`, `factor_amable`, `delta_amable`): «escribe 0.1», nunca «escribe 0.0734».
 

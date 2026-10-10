@@ -12,7 +12,7 @@ Código: [`backend/api/addon.py`](../../../backend/api/addon.py). Pruebas: `back
 | Profesor / admin | rol | subir prácticas y ver versiones y borradores |
 | Admin | rol | publicar, archivar, sincronizar el repositorio |
 
-Límites por IP y ruta, por minuto: crear vínculo 20, consultar vínculo 60, confirmar código 10, intentos 120, descargas 20.
+Límites por minuto, contados por ruta: crear vínculo 20, consultar vínculo 60, confirmar código 10 y descargas 60, por IP; intentos 60 por cuenta (un aula comparte una sola IP pública, así que contar por IP frenaría a todo el curso). El enlace en vivo tiene los suyos, también por cuenta: latido 40, y órdenes y cambios de ajustes 30 cada uno ([`backend/api/enlace.py`](../../../backend/api/enlace.py)).
 
 ## Vínculo (como en un televisor)
 
@@ -62,7 +62,7 @@ Las URL que van dentro del paquete salen de `AMATISTA_URL_API` y `AMATISTA_URL_P
 
 ## Enlace en vivo (motor 3.4, script 010)
 
-Motor 3.5: el latido acepta `detalle` (paso, mensaje del instructor, lista de la figura, modo, pistas y «Hazlo conmigo», con límites de tamaño) y `GET /enlace` lo devuelve en cada Blender en línea. `POST /ordenes` acepta además `comprobar`, `pista`, `hazlo_conmigo`, `guardar` y `reiniciar` (este último con `confirmar: true`); con `practica_id`, Blender solo la cumple si sigue en esa práctica.
+Motor 3.5: el latido acepta `detalle` (paso, mensaje del instructor, lista de la figura, modo, pistas y «Hazlo conmigo», con límites de tamaño) y `GET /enlace` lo devuelve en cada Blender en línea. Desde el 3.5.1 se guarda en `ADDON_ENLACES.DETALLE` (script 011), no en la memoria del proceso: lo ven todos los procesos del backend, solo se reescribe cuando cambia y deja de mostrarse a los 25 s sin latido. `POST /ordenes` acepta además `comprobar`, `pista`, `hazlo_conmigo`, `guardar` y `reiniciar` (este último con `confirmar: true`); con `practica_id`, Blender solo la cumple si sigue en esa práctica.
 
 Motor 3.5 (el ejemplo manda, [14](14_ejemplo_y_revision.md)): `POST /ordenes` acepta `ver_ejemplo` (Blender arma el ejemplo resuelto en su propia escena) y `volver_practica` (vuelve a la escena del alumno). Cada punto de la lista del `detalle` puede llevar `aspecto` (hasta 40 caracteres: `figura`, `materiales`, `animacion`…), y `detalle.modo` es `EJEMPLO` mientras Blender muestra el ejemplo.
 
@@ -86,6 +86,6 @@ Código: [`backend/api/enlace.py`](../../../backend/api/enlace.py). Pruebas: `ba
 | `PRACTICA_VERSIONES` | versión subida | `DEFINICION`, `HUELLA`, `NOTA`, `AUTOR_ID`, `VERSION_ADDON`, `VERSION_BLENDER` |
 | `PROGRESO_PRACTICAS` | alumno y práctica | `VERSION`, `PROGRESO`, `COMPLETADA`, `AUTONOMIA`, `PISTAS`, `CORRECCIONES`, `INTENTOS`, `PASO_ACTUAL`, `OBJETIVOS`, `ABIERTA_EN`, `COMPLETADA_EN` |
 
-Script 010: `ADDON_ENLACES` (una fila por sesión de Blender: `SESION_ID`, `USUARIO_ID`, `VISTO_EN`, `PRACTICA_ID`, `PASO`, `PROGRESO`, `ENFOCADO`, `VERSION_ADDON`, `VERSION_BLENDER`, `ORDEN`, `ORDEN_EN`; se borra con la sesión) y `ADDON_AJUSTES` (una fila por alumno: `DATOS` en JSON).
+Script 010: `ADDON_ENLACES` (una fila por sesión de Blender: `SESION_ID`, `USUARIO_ID`, `VISTO_EN`, `PRACTICA_ID`, `PASO`, `PROGRESO`, `ENFOCADO`, `VERSION_ADDON`, `VERSION_BLENDER`, `ORDEN`, `ORDEN_EN`; se borra con la sesión; el script 011 del motor 3.5.1 le agrega `DETALLE`, un JSON anulable con el último mensaje del instructor) y `ADDON_AJUSTES` (una fila por alumno: `DATOS` en JSON).
 
 Vista `V_AMATISTA_PRACTICAS`: cada práctica con su lección, autor, versión publicada, alumnos que la abrieron, cuántos la completaron y el progreso promedio.

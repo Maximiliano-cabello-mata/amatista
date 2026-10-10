@@ -2,7 +2,7 @@
 
 Referencia del formato `amatista.practice/2`, del plan de estudios (`amatista.curriculum/1`), de los casos de prueba (`amatista.practice-tests/1`) y de las herramientas para escribirlos. Para quien crea o mantiene prácticas.
 
-Actualizado: 4 de octubre de 2026 · Contexto: [etapa 3](../etapas/etapa-3.md) · Lo que no cambió de la v1: [formato de práctica](02_formato_de_practica.md)
+Actualizado: 9 de octubre de 2026 (motor 3.5) · Contexto: [etapa 3](../etapas/etapa-3.md) · Lo que no cambió de la v1: [formato de práctica](02_formato_de_practica.md)
 
 ## Índice
 
@@ -25,21 +25,31 @@ Actualizado: 4 de octubre de 2026 · Contexto: [etapa 3](../etapas/etapa-3.md) �
 ```
 practices/
 ├─ blender/
-│  ├─ cursos.json                       plan de estudios (amatista.curriculum/1)
+│  ├─ cursos.json          plan de estudios (amatista.curriculum/1)
+│  ├─ temas.json           el mundo de cada módulo (amatista.temas/1, ver 03_addon.md)
+│  ├─ referencias.json     índice de los modelos de referencia (lo escribe referencias.py)
 │  ├─ principiante/
-│  │  ├─ m1-tren/       practica.json   pruebas.json
-│  │  ├─ m2-espada/     practica.json   pruebas.json
-│  │  └─ m3-nave/       practica.json   pruebas.json
-│  └─ principiante-intermedio/
-│     ├─ m1-pinta-nave/ practica.json   pruebas.json
-│     ├─ m2-tres-puntos/practica.json   pruebas.json   tres-puntos.svg
-│     └─ m3-pelota/     practica.json   pruebas.json   rebote.svg
-└─ archivo/v2/          mesa.json, podio.json, table.json (archivadas)
+│  │  ├─ m1-explora/      m1-tren/
+│  │  ├─ m2-explora/      m2-espada/
+│  │  └─ m3-explora/      m3-nave/
+│  ├─ principiante-intermedio/
+│  │  ├─ m1-explora/      m1-pinta-nave/
+│  │  ├─ m2-explora/      m2-tres-puntos/   (+ tres-puntos.svg)
+│  │  └─ m3-explora/      m3-pelota/        (+ rebote.svg)
+│  └─ intermedio/
+│     ├─ m1-explora/      m1-puente/
+│     ├─ m2-explora/      m2-aldea/
+│     └─ m3-explora/      m3-diorama/
+└─ archivo/v2/             mesa.json, podio.json, table.json (archivadas)
 ```
 
-- El add-on lleva `practica.json`, `cursos.json` y las imágenes (`.svg`, `.png`). Los `pruebas.json` no viajan (`addon/herramientas/construir.py`).
+Cada carpeta de práctica tiene `practica.json` y `pruebas.json`. Las 13 que traen modelo de referencia tienen además `referencia.jpg` (la imagen) y `plano.svg` (el plano), generados con `engine/herramientas/referencias.py` ([10_modelo_de_referencia.md](10_modelo_de_referencia.md)).
+
+Cada módulo tiene dos prácticas: la **explora** (un calentamiento corto a mitad del módulo, entre teoría y teoría, en la lección `bpN_blender`, `bpiN_blender` o `biN_blender`) y la práctica del módulo, que lo cierra (lección `…N_practica`). En `cursos.json` el módulo las nombra con `explore` y `practice`. En total son 18: 3 cursos, 3 módulos por curso y 2 prácticas por módulo.
+
+- El add-on lleva `practica.json`, `cursos.json`, `temas.json`, `referencias.json` y las imágenes (`.svg`, `.png`, `.jpg`). Los `pruebas.json` no viajan (`addon/herramientas/construir.py`).
 - El backend registra en Oracle solo los archivos con `"schema": "amatista.practice/…"` (`backend/contenido/motor.py`).
-- Ids: `blender.<curso>.<módulo>.<nombre>`, con `bp` = Principiante y `bpi` = Principiante-Intermedio. El id nunca cambia: el progreso se guarda con él.
+- Ids: `blender.<curso>.<módulo>.<nombre>`, con `bp` = Principiante, `bpi` = Principiante-Intermedio y `bi` = Intermedio. El id nunca cambia: el progreso se guarda con él.
 
 ## 2. Crear una práctica en 6 pasos
 
@@ -47,7 +57,9 @@ practices/
 cd engine/herramientas
 python practicas.py nueva blender.bp.m4.casa --plantilla modelado --curso blender_principiante --modulo 4 --titulo "Una casa"
 #   → practices/blender/principiante/m4-casa/practica.json y pruebas.json
-# 1. Escribe objetivos, pistas y píldoras en practica.json
+#   (la plantilla ya trae un bloque «example» de muestra y su caso «Solución (el ejemplo resuelto)» en pruebas.json:
+#    cámbialos por la solución real, ver 14_ejemplo_y_revision.md)
+# 1. Escribe objetivos, pistas, píldoras y el ejemplo resuelto en practica.json
 python practicas.py revisar ../../practices/blender/principiante/m4-casa/
 # 2. Escribe los casos (escena vacía, a medias, error típico, solución) en pruebas.json
 python practicas.py probar ../../practices/blender/principiante/m4-casa/ --detalle
@@ -73,6 +85,8 @@ Todo lo de la v1 sigue igual (`targets`, `roles`, `tools`, `hints`, `guide`…).
 | `pills` | lista | Teoría dentro de Blender (§4). |
 | `guards` | lista | Vigilantes que pausan el progreso (§5). |
 | `starter` | objeto | Escena de inicio (§6). |
+| `reference` | objeto | El modelo de referencia: la figura terminada, con su imagen, su plano y las piezas que se comparan ([10_modelo_de_referencia.md](10_modelo_de_referencia.md)). |
+| `example` | objeto | El ejemplo resuelto en código, `{title, description, steps, check?}`. El cargador agrega con él el objetivo «Tu práctica coincide con el ejemplo» ([14_ejemplo_y_revision.md](14_ejemplo_y_revision.md)). Las 18 prácticas del plan lo tienen. |
 
 ## 4. Píldoras de teoría (pills)
 
@@ -138,9 +152,11 @@ Se prepara una vez por práctica (marca `amatista_preparado` en la escena) y Ctr
   "route": "blender",
   "courses": [
     {"id": "blender_principiante", "title": "Blender Principiante", "status": "disponible",
-     "modules": [{"number": 1, "title": "La interfaz y navegación 3D", "practice": "blender.bp.m1.tren", "project": "Tren de juguete"}]},
+     "modules": [{"number": 1, "title": "La interfaz y navegación 3D", "explore": "blender.bp.m1.explora",
+                  "practice": "blender.bp.m1.tren", "project": "Tren de juguete"}]},
     {"id": "blender_principiante_intermedio", "requires": "blender_principiante", "status": "disponible", "modules": []},
-    {"id": "blender_intermedio", "requires": "blender_principiante_intermedio", "status": "proximamente", "modules": []}
+    {"id": "blender_intermedio", "requires": "blender_principiante_intermedio", "status": "disponible", "modules": []},
+    {"id": "blender_avanzado", "requires": "blender_intermedio", "status": "proximamente", "modules": []}
   ]
 }
 ```
@@ -157,20 +173,23 @@ Se prepara una vez por práctica (marca `amatista_preparado` en la escena) y Ctr
   "schema": "amatista.practice-tests/1",
   "practica": "blender.bp.m2.espada",
   "casos": [
-    {"nombre": "Escena de inicio", "construir": [{"inicial": true}],
-     "espera": {"completada": false, "actual": "modelo", "accion": "assign_role", "pildoras": ["modos"]}},
-    {"nombre": "E y cancelar: pausa",
-     "construir": [{"cubo": {"nombre": "Espada", "dims": [0.4, 0.15, 3], "rol": "modelo", "vertices": 32, "caras": 30, "encimados": 4}}],
-     "espera": {"pausa": "malla-limpia", "accion": "merge_by_distance", "mensaje_contiene": "encimadas"}}
+    {"nombre": "Escena vacía: empieza con un cubo", "construir": [],
+     "espera": {"completada": false, "actual": "malla", "accion": "add_primitive", "pildoras": ["modos"]}},
+    {"nombre": "E y cancelar: el progreso se pausa y se ofrece fusionar",
+     "construir": [{"cubo": {"nombre": "Espada", "dims": [0.4, 0.15, 3], "loc": [0, 0, 1.5], "vertices": 32, "caras": 30, "encimados": 4}}],
+     "espera": {"completada": false, "pausa": "malla-limpia", "accion": "merge_by_distance", "mensaje_contiene": "encimadas"}},
+    {"nombre": "Solución: la espada de la imagen, limpia y guardada",
+     "construir": [{"referencia": {"vertices": 48, "caras": 46}}, {"guardado": {"archivo": "mi_espada.blend"}}],
+     "espera": {"completada": true, "progreso_min": 100}}
   ]
 }
 ```
 
-**Pasos de `construir`** (cada uno es un objeto con una sola clave): `inicial`, `cubo`, `cilindro`, `esfera`, `plano`, `cono`, `malla`, `luz`, `camara`, `modificador`, `material`, `animar`, `rol`, `mover`, `quitar`, `modo`, `seleccionar`, `motor`, `renders` y `guardado`. Sus parámetros son los del constructor `Escena` de `engine/amatista_engine/testing.py`.
+**Pasos de `construir`** (cada uno es un objeto con una sola clave): `inicial`, `cubo`, `cilindro`, `esfera`, `plano`, `cono`, `malla`, `luz`, `camara`, `modificador`, `material`, `animar`, `coleccion`, `rol`, `mover`, `quitar`, `modo`, `seleccionar`, `motor`, `renders`, `guardado` y `referencia`. Sus parámetros son los del constructor `Escena` de `engine/amatista_engine/testing.py`. `coleccion` junta objetos en una colección (`{"nombre": "Casas", "objetos": ["Casa 1", "Casa 2"]}`) y `referencia` arma la figura del modelo de referencia de la práctica con sus piezas; acepta, entre otros, `cambiar` (multiplica las medidas de una pieza por su nombre: `{"cambiar": {"Guarda": [0.2, 0.7, 1]}}`), `sin` (quita grupos o piezas), `escala`, `giro` y `variacion`, útiles para los casos que deben reprobar. Los mismos pasos escriben el ejemplo resuelto (`example.steps`).
 
 **Lo que se puede esperar** (`espera`): `completada`, `actual` (id del objetivo en curso), `accion` (la de «Hazlo conmigo»), `pildoras` (las que deben estar activas), `pausa` (id del vigilante), `mensaje_contiene`, `progreso_min` y `progreso_max`.
 
-Mínimo recomendado por práctica: escena vacía, un punto intermedio, el error típico (con su vigilante) y la solución.
+Mínimo recomendado por práctica: escena vacía, un punto intermedio, el error típico (con su vigilante) y la solución. Además de estos casos, `probar` comprueba que el ejemplo resuelto complete la práctica (en las 18 prácticas: 78 casos de `pruebas.json` y 18 ejemplos, 96 en total).
 
 Desde Blender, el modo Desarrollador guarda la escena actual como caso (§10). También sirve una foto exportada desde el add-on con `practicas.py simular --escena`.
 
@@ -180,11 +199,11 @@ Desde Blender, el modo Desarrollador guarda la escena actual como caso (§10). T
 
 | Comando | Qué hace | Sale con error si… |
 |---|---|---|
-| `nueva <id> [--plantilla P] [--titulo T] [--curso C] [--modulo N] [--carpeta D]` | Crea `practica.json` y `pruebas.json`. Plantillas: `vacia`, `ensamblar`, `modelado`, `modificadores`, `materiales`, `iluminacion`, `animacion`. | la carpeta ya existe |
+| `nueva <id> [--plantilla P] [--titulo T] [--curso C] [--modulo N] [--carpeta D]` | Crea `practica.json` (con un bloque `example` de muestra) y `pruebas.json` (con un caso «Solución (el ejemplo resuelto)» que construye los mismos pasos del ejemplo). Plantillas: `vacia`, `ensamblar`, `modelado`, `modificadores`, `materiales`, `iluminacion`, `animacion`. | la carpeta ya existe |
 | `revisar [rutas]` | Compila y muestra errores y avisos de pedagogía. Sin rutas, revisa todo `practices/blender/`. | hay errores (no avisos) |
-| `probar [rutas] [--detalle]` | Corre los casos de `pruebas.json`. | falla un caso |
+| `probar [rutas] [--detalle]` | Corre los casos de `pruebas.json` y comprueba que el ejemplo resuelto complete la práctica. Un caso o un ejemplo mal escrito se informa como error, sin cortar la herramienta. | falla un caso o el ejemplo no completa la práctica |
 | `simular <ruta> [--escena archivo]` | Lo que vería el alumno paso a paso. | — |
-| `validadores [--md archivo]` | Catálogo de los validadores (41 con el motor 3.5) con sus parámetros ([09_validadores.md](09_validadores.md) se genera así). | — |
+| `validadores [--md archivo]` | Catálogo de los validadores (42 con el motor 3.5.1; el último en llegar es `scene.mode`) con sus parámetros ([09_validadores.md](09_validadores.md) se genera así). | — |
 | `plan [--completadas id …]` | El mapa del plan y qué queda desbloqueado. | una práctica del plan no existe o no coincide |
 
 Las pruebas del motor (`engine/tests/test_v3_*.py`) corren `revisar`, `probar` y `plan` sobre las prácticas reales: CI falla si una práctica se rompe.
@@ -197,7 +216,7 @@ En N › Amatista, con el modo Desarrollador:
 - **Teoría y pruebas** (panel nuevo):
   - agrega una píldora a la práctica abierta (título, texto, teclas, disparo y objetivo);
   - guarda la escena actual como caso de prueba en el texto `amatista_pruebas.json` del `.blend`, para copiarlo a `pruebas.json`.
-- Las prácticas archivadas (`archivo/`) y las de `sandbox` solo aparecen en este modo.
+- Las prácticas archivadas (`practices/archivo/`) solo aparecen en este modo.
 
 El resto (roles, objetivos, subir al servidor) sigue como en [modo desarrollador](06_modo_desarrollador.md).
 

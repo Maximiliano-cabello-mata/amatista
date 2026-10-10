@@ -45,7 +45,7 @@ Las 18 prácticas del plan de estudios tienen ya su ejemplo. CI comprueba que **
 |---|---|
 | `title`, `description` | Lo que lee el alumno sobre el ejemplo (en la lección y en Blender). |
 | `steps` | La solución, hasta 120 pasos, en el mismo idioma que los casos de `pruebas.json` («construir»): `cubo`, `cilindro`, `esfera`, `plano`, `cono`, `malla`, `referencia`, `luz`, `camara`, `modificador`, `material`, `animar`, `coleccion`, `rol`, `motor`, `renders`, `guardado`… Ver [08_practicas_v3_y_herramientas.md](08_practicas_v3_y_herramientas.md). |
-| `check` | *(opcional)* Qué aspectos revisar. Sin `check`, se revisan **todos los que tiene el ejemplo**. Sirve cuando la práctica ya revisa la figura con su propio objetivo (la nave: `malla`, `modificadores`, `archivo`). |
+| `check` | *(opcional)* Qué aspectos revisar. Sin `check`, se revisan **todos los que tiene el ejemplo**. Sirve cuando la práctica ya revisa la figura con su propio objetivo (la nave: `malla`, `modificadores`, `archivo`). El cargador comprueba que cada aspecto de `check` exista y que el ejemplo lo tenga: pedir `animacion` en un ejemplo sin animación es un error al cargar. |
 
 Pasos nuevos para el ejemplo:
 
@@ -54,11 +54,15 @@ Pasos nuevos para el ejemplo:
 - `material` acepta `piezas`: el material va solo en esas piezas de una malla unida (la cabina de la nave, los motores).
 - Las primitivas aceptan `vertices` (se modeló en Modo Edición) y `mitad` (`"x+"`, `"x-"`…: queda solo una mitad, como con el Espejo).
 
-El cargador lo valida al leer la práctica: pasos desconocidos, objetos que no existen o un `referencia` sin `reference` dan un error con la ruta del campo.
+El cargador lo valida al leer la práctica. Si algo está mal, lanza `InvalidPracticeError` con un mensaje en español que nombra el paso: un paso desconocido (`example.steps[3]: paso desconocido «cubos»`), un argumento que el paso no admite o del tipo equivocado (`example.steps[2].cubo.dims debe ser …`), un `referencia` en una práctica sin `reference` con piezas, o un paso que no se puede armar, por ejemplo porque nombra un objeto que no existe (`'example.steps' no se puede armar: example.steps[4] («material»): …`). Un `example.matches` en una práctica sin `example` también es un error.
+
+Cada paso es un objeto con sus argumentos (`{"cubo": {"nombre": "Caja", "dims": [1, 1, 2]}}`), o `null`/`true` cuando no necesita ninguno. Solo seis pasos aceptan además un valor suelto: `inicial`, `renders` (`{"renders": 1}`), `motor` (`{"motor": "CYCLES"}`), `modo`, `quitar` y `seleccionar`. El cargador revisa el nombre y el tipo de cada argumento (`revisar_argumentos` en `ejemplo/pasos.py`): un nombre que el paso no admite, un argumento obligatorio que falta o un valor del tipo equivocado dan un error con la ruta, como `example.steps[2].cubo.dims`.
+
+Al compilar (`practicas.py revisar`, el modo Desarrollador y la subida), el compilador comprueba además que el archivo que guarda el ejemplo y un objetivo `file.named` pidan lo mismo: si el objetivo pide «espada» y el ejemplo guarda `mi_pelota.blend`, es un error. También revisa que los parámetros de cada objetivo tengan el tipo que declara su validador en el registro.
 
 ## El objetivo «Tu práctica coincide con el ejemplo»
 
-El cargador agrega al final de la ruta el objetivo `ejemplo` (o `coincide-con-el-ejemplo` si ese id ya existe), con el validador `example.matches` y peso 15. No se escribe en el JSON y `dump_practice` no lo exporta.
+El cargador agrega al final de la ruta el objetivo `ejemplo` (o `coincide-con-el-ejemplo` si ese id ya existe), con el validador `example.matches` y peso 15. No se escribe en el JSON, `dump_practice` no lo exporta y no cuenta para el máximo de 40 objetivos de la práctica.
 
 Un autor también puede ponerlo en medio de la ruta, solo con algunos aspectos:
 
@@ -67,7 +71,9 @@ Un autor también puede ponerlo en medio de la ruta, solo con algunos aspectos:
  "params": {"aspects": ["luces"]}, "requires": ["camara"]}
 ```
 
-Si la práctica ya tiene un `example.matches` sin `aspects`, no se agrega otro.
+Si la práctica ya tiene un `example.matches` sin `aspects`, no se agrega otro. Igual que con `check`, el cargador comprueba que cada aspecto de `aspects` exista y que el ejemplo lo tenga.
+
+Si al final no queda ningún aspecto que revisar (por ejemplo, porque los pedidos no están en el ejemplo), `example.matches` no aprueba, en lugar de dar la práctica por buena sin haber revisado nada.
 
 ## Cómo revisa, aspecto por aspecto
 
@@ -75,13 +81,13 @@ Un aspecto se revisa **solo si el ejemplo lo tiene**. La pelota no revisa materi
 
 | Aspecto | Qué busca en tu escena | Cómo cambia con el nivel |
 |---|---|---|
-| **La figura** | Si el ejemplo usa `referencia`, la figura del modelo con `figure.recognize` ([11](11_reconocer_figuras.md)) o, si sus piezas están unidas, con la silueta ([13](13_instructor_y_silueta.md)). Si no, las mallas del ejemplo, por primitiva. | La exigencia del nivel: forma (1-2), proporción (3), medidas (4), exacta (5). |
+| **La figura** | Si el ejemplo usa `referencia`, la figura del modelo con `figure.recognize` ([11](11_reconocer_figuras.md)) o, si sus piezas están unidas, con la silueta ([13](13_instructor_y_silueta.md)). Si no, las mallas del ejemplo, por primitiva. | La exigencia del nivel: forma (1), proporción (2), cercana (3), medidas (4), exacta (5). El modelo de referencia puede fijar otra con `strictness` ([10](10_modelo_de_referencia.md)). |
 | **La malla** | Trabajo en Modo Edición: más vértices que la primitiva; solo una mitad cuando el ejemplo la recorta para el Espejo. | Igual en todos. |
-| **Modificadores** | Los mismos tipos. Espejo en los mismos ejes; Subdivisión con al menos sus niveles. | Del 1 al 3 basta un objeto; en el 4 y el 5, en tantos objetos como el ejemplo. |
+| **Modificadores** | Los mismos tipos. Espejo en los mismos ejes; Subdivisión con al menos sus niveles. Los nombres en español (Espejo, Subdivisión, Bisel…) salen de `engine/amatista_engine/terminos.py`, los mismos que usan las instrucciones del ejemplo. | Del 1 al 3 basta un objeto; en el 4 y el 5, en tantos objetos como el ejemplo. |
 | **Materiales** | Cada material por su rasgo (metálico, vidrio, pulido, rugoso), uno a uno, y que se distingan entre sí. | El color cuenta en los niveles 4 y 5. |
 | **Colecciones** | Los objetos agrupados como en el ejemplo. | El nombre es libre hasta el nivel 3. |
 | **Luces** | Las luces del ejemplo por tipo. | En los niveles 1 y 2, si tienes las luces pero de otro tipo, es un detalle. |
-| **Cámara** | Una cámara activa que mire al modelo. | Igual en todos. |
+| **Cámara** | El punto «Una cámara activa»: la cámara activa de la escena (Ctrl + 0 del teclado numérico), y que mire al modelo. Una cámara que no es la activa no cuenta; el consejo dice cuál activar. | Igual en todos. |
 | **Animación** | Las mismas propiedades animadas en el mismo eje, con sus claves y un recorrido parecido. | Niveles 1 y 2: 2 claves y 35 % del recorrido; desde el 3, todas las claves y 50 %. |
 | **Render** | El motor de render (si el ejemplo lo cambia) y el render hecho (F12). | Igual en todos. |
 | **Archivo** | Guardado con la palabra del nombre del ejemplo («pelota» en `mi_pelota.blend`). | Igual en todos. |
@@ -118,7 +124,7 @@ Motor 3.5.0 no cambió Oracle. La corrección 3.5.1 requiere `011_detalle_instru
 
 1. Arma la solución en `pruebas.json` como un caso que aprueba. Esos mismos pasos son el ejemplo.
 2. Cópialos a `example.steps` y escribe `title` y `description`.
-3. Corre `python engine/herramientas/practicas.py probar <carpeta>`. Además de los casos de `pruebas.json`, prueba que el ejemplo complete la práctica (en las 18 prácticas: 95 casos).
+3. Corre `python engine/herramientas/practicas.py probar <carpeta>`. Además de los casos de `pruebas.json`, prueba que el ejemplo complete la práctica (en las 18 prácticas: 96 casos, 78 de `pruebas.json` y 18 ejemplos). Un ejemplo mal escrito sale como error en la lista, no como un fallo de la herramienta. `practicas.py nueva` ya crea un `example` de muestra y su caso «Solución (el ejemplo resuelto)» en `pruebas.json`.
 4. Abre la práctica en Blender y pulsa **Ver el ejemplo** para ver que se arme como esperas.
 
 ## Pruebas

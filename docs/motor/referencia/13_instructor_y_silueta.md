@@ -62,11 +62,11 @@ La práctica `blender.bp.m2.espada` (versión 3) sigue la lección del módulo 2
 
 Desaparecieron la alternativa «o una taza», el rol «modelo» que había que asignar a mano y los pasos que solo contaban caras y vértices. La práctica nueva tiene una píldora «Afilar la punta», y en modo enfocado Shift+A muestra solo el cubo (las piezas unidas de un modelo se modelan desde un cubo).
 
-## 4. El instructor: la lista «Tu figura» y la plataforma en vivo
+## 4. El instructor: la lista «Comparado con el ejemplo» y la plataforma en vivo
 
 `figure.silhouette` y `figure.recognize` devuelven `details.checklist`, una lista de `{texto, ok, estado, consejo}`. Por ejemplo, en el tren: «Rueda: bien», «Chimenea: falta (Shift + A › Malla › Cilindro)» y las relaciones rotas.
 
-- **En Blender**: el panel **Tu figura** en Practicar muestra cada parte con ✓, ! o una bombilla (detalle) y deja abiertos los dos primeros consejos. La guía del paso usa el primer pendiente, con sus teclas.
+- **En Blender**: el panel **Comparado con el ejemplo** en Practicar (en esta entrega se llamaba «Tu figura»; ver la nota del principio) muestra cada punto con ✓, ! o una bombilla (detalle), agrupado por aspecto, y deja abiertos los dos primeros consejos. La guía del paso usa el primer pendiente, con sus teclas.
 - **En la plataforma**: el latido (`POST /api/addon/v1/enlace`) lleva un `detalle` con el paso, el mensaje del instructor, la lista, el modo de Blender, las pistas que quedan y el «Hazlo conmigo». La lección lo muestra en la tarjeta **Ahora en Blender**, que se refresca cada 3 s mientras Blender está en esa práctica. Desde 3.5.1 el servidor guarda el último detalle en `ADDON_ENLACES.DETALLE` (011), junto con el estado de la práctica. Todos los procesos consultan la misma fila; el detalle deja de mostrarse a los 25 segundos sin latido.
 - **Órdenes nuevas** (`POST /api/addon/v1/ordenes`): `comprobar`, `pista`, `hazlo_conmigo`, `guardar` y `reiniciar`. `reiniciar` exige `confirmar: true`, y la lección pregunta antes. Llevan `practica_id` y Blender solo las cumple si sigue en esa práctica. `guardar` usa el archivo abierto o, si es nuevo, `Documentos/Amatista/mi_espada.blend`, sin pisar uno que ya exista.
 
