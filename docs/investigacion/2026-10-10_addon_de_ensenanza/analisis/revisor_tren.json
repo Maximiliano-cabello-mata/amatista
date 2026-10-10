@@ -1,0 +1,321 @@
+[
+ {
+  "grupo": "sensato",
+  "caso": "Copia exacta del modelo",
+  "n1": true,
+  "f1": [],
+  "n3": true,
+  "f3": [],
+  "n5": true,
+  "f5": []
+ },
+ {
+  "grupo": "sensato",
+  "caso": "Todo 30 % más grande",
+  "n1": true,
+  "f1": [],
+  "n3": true,
+  "f3": [],
+  "n5": false,
+  "f5": [
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sensato",
+  "caso": "Todo 30 % más chico",
+  "n1": true,
+  "f1": [],
+  "n3": true,
+  "f3": [],
+  "n5": false,
+  "f5": [
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sensato",
+  "caso": "Armado 3 m a un lado",
+  "n1": true,
+  "f1": [],
+  "n3": true,
+  "f3": [],
+  "n5": true,
+  "f5": []
+ },
+ {
+  "grupo": "sensato",
+  "caso": "Ruedas más gruesas y grandes",
+  "n1": true,
+  "f1": [],
+  "n3": true,
+  "f3": [],
+  "n5": false,
+  "f5": [
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sensato",
+  "caso": "Ruedas con 5 cm de aire",
+  "n1": true,
+  "f1": [],
+  "n3": true,
+  "f3": [],
+  "n5": true,
+  "f5": []
+ },
+ {
+  "grupo": "sensato",
+  "caso": "Locomotora más larga",
+  "n1": true,
+  "f1": [],
+  "n3": true,
+  "f3": [],
+  "n5": false,
+  "f5": [
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sensato",
+  "caso": "Tren girado 90°",
+  "n1": false,
+  "f1": [
+   "tren-unido"
+  ],
+  "n3": false,
+  "f3": [
+   "tren-unido",
+   "figura",
+   "ejemplo"
+  ],
+  "n5": false,
+  "f5": [
+   "tren-unido",
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sensato",
+  "caso": "Con faro decorativo",
+  "n1": true,
+  "f1": [],
+  "n3": true,
+  "f3": [],
+  "n5": true,
+  "f5": []
+ },
+ {
+  "grupo": "sinsentido",
+  "caso": "Todas las piezas apiladas en el centro",
+  "n1": false,
+  "f1": [
+   "ruedas-al-suelo",
+   "figura",
+   "ejemplo"
+  ],
+  "n3": false,
+  "f3": [
+   "ruedas-al-suelo",
+   "figura",
+   "ejemplo"
+  ],
+  "n5": false,
+  "f5": [
+   "ruedas-al-suelo",
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sinsentido",
+  "caso": "Ruedas acostadas como platos",
+  "n1": false,
+  "f1": [
+   "ruedas-de-pie",
+   "figura",
+   "ejemplo"
+  ],
+  "n3": false,
+  "f3": [
+   "ruedas-de-pie",
+   "figura",
+   "ejemplo"
+  ],
+  "n5": false,
+  "f5": [
+   "ruedas-de-pie",
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sinsentido",
+  "caso": "Chimenea debajo del tren",
+  "n1": false,
+  "f1": [
+   "figura",
+   "ejemplo"
+  ],
+  "n3": false,
+  "f3": [
+   "figura",
+   "ejemplo"
+  ],
+  "n5": false,
+  "f5": [
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sinsentido",
+  "caso": "Ruedas flotando a 1 m",
+  "n1": false,
+  "f1": [
+   "ruedas-al-suelo",
+   "figura",
+   "ejemplo"
+  ],
+  "n3": false,
+  "f3": [
+   "ruedas-al-suelo",
+   "figura",
+   "ejemplo"
+  ],
+  "n5": false,
+  "f5": [
+   "ruedas-al-suelo",
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sinsentido",
+  "caso": "Todo hecho con cubos",
+  "n1": false,
+  "f1": [
+   "vagones-largos",
+   "ruedas",
+   "ruedas-de-pie",
+   "ruedas-al-suelo",
+   "ruedas-unidas",
+   "chimenea",
+   "figura",
+   "ejemplo"
+  ],
+  "n3": false,
+  "f3": [
+   "vagones-largos",
+   "ruedas",
+   "ruedas-de-pie",
+   "ruedas-al-suelo",
+   "ruedas-unidas",
+   "chimenea",
+   "figura",
+   "ejemplo"
+  ],
+  "n5": false,
+  "f5": [
+   "vagones-largos",
+   "ruedas",
+   "ruedas-de-pie",
+   "ruedas-al-suelo",
+   "ruedas-unidas",
+   "chimenea",
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sinsentido",
+  "caso": "Ruedas tiradas lejos del tren",
+  "n1": false,
+  "f1": [
+   "ruedas-unidas",
+   "figura",
+   "ejemplo"
+  ],
+  "n3": false,
+  "f3": [
+   "ruedas-unidas",
+   "figura",
+   "ejemplo"
+  ],
+  "n5": false,
+  "f5": [
+   "ruedas-unidas",
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sinsentido",
+  "caso": "Vagón encima de la locomotora",
+  "n1": false,
+  "f1": [
+   "ruedas-unidas",
+   "figura",
+   "ejemplo"
+  ],
+  "n3": false,
+  "f3": [
+   "ruedas-unidas",
+   "figura",
+   "ejemplo"
+  ],
+  "n5": false,
+  "f5": [
+   "ruedas-unidas",
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sinsentido",
+  "caso": "Vagones separados 3 m",
+  "n1": false,
+  "f1": [
+   "ruedas-unidas",
+   "tren-unido"
+  ],
+  "n3": false,
+  "f3": [
+   "ruedas-unidas",
+   "tren-unido",
+   "figura",
+   "ejemplo"
+  ],
+  "n5": false,
+  "f5": [
+   "ruedas-unidas",
+   "tren-unido",
+   "figura",
+   "ejemplo"
+  ]
+ },
+ {
+  "grupo": "sinsentido",
+  "caso": "Ruedas enterradas a la mitad",
+  "n1": false,
+  "f1": [
+   "ruedas-al-suelo"
+  ],
+  "n3": false,
+  "f3": [
+   "ruedas-al-suelo"
+  ],
+  "n5": false,
+  "f5": [
+   "ruedas-al-suelo",
+   "figura",
+   "ejemplo"
+  ]
+ }
+]
