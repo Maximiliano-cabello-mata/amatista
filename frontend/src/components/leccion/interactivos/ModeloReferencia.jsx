@@ -1,3 +1,4 @@
+import ImagenLigera from '../../ImagenLigera';
 import { useState } from 'react';
 import { referenciaDe, textoMedidas } from '../../../blender/referencias';
 
@@ -43,18 +44,17 @@ function ModeloReferencia({ practicaId, conEjemplo = false }) {
         )}
       </div>
       <div className="modelo-referencia__lienzo relative bg-black/30">
-        <img
+        <ImagenLigera
           src={vista === 'plano' && conPlano ? referencia.plano : referencia.imagen}
           alt={
             vista === 'plano'
               ? `Plano de ${referencia.titulo} visto de frente, de lado y desde arriba, con medidas aproximadas`
               : `${referencia.titulo} terminado, renderizado en Blender`
           }
-          loading="lazy"
-          decoding="async"
-          width="800"
-          height={vista === 'plano' ? 400 : 500}
-          className="block h-auto w-full"
+          ancho={800}
+          alto={vista === 'plano' && conPlano ? 400 : 500}
+          className="block w-full"
+          imgClassName="block h-auto w-full"
         />
       </div>
       <div className="grid gap-1.5 px-4 py-3 text-sm text-texto/80">
