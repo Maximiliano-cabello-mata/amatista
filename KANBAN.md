@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-10 07:34 · `main` en `1dff9ea`
+Último commit: 2026-10-10 01:41 · `main` en `a9df7e9`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -16,14 +16,14 @@
 | **v3.0.0** | Reestructuración | Niveles, habilidades, versiones de Blender y herramientas de autor en Oracle; documentación y tablero nuevos. | ▰▰▰▰▱▱▱▱▱▱ 5/12 |
 | **v3.1.0** | Mi primer espacio 3D | Primera entrega de contenido por niveles (lecciones 01–11 de la propuesta) con fichas, rúbrica y versión verificada. | ▱▱▱▱▱▱▱▱▱▱ 0/5 |
 | **v3.2.0** | Laboratorio 3D | Visor GLB en las lecciones, escena de ejemplo y lección 12 (exportar y comprobar). | ▱▱▱▱▱▱▱▱▱▱ 0/3 |
-| **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▰▰▰▰▰▱▱▱▱ 20/33 |
+| **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▰▰▰▰▰▱▱▱▱ 20/35 |
 | **v3.4.0** | Especialidades y tutor | Primera rama del nivel 5 y tutor IA dentro de las lecciones. | ▱▱▱▱▱▱▱▱▱▱ 0/15 |
 
 Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-alpha.8` · `v3.0.0-alpha.7` · `v3.0.0-alpha.6` · `v3.0.0-alpha.5` · `v3.0.0-alpha.4` · `v3.0.0-alpha.3` · `v3.0.0-alpha.2` · `v3.0.0-alpha.1` · `v2.2.0-alpha.2` · `v2.2.0-alpha.1` · `v2.0.1` · `v2.0.0` · `v1.0.0` · `v0.1.0`
 
 ## 📌 Kanban
 
-| 📋 Pendiente (41) | 🔨 En progreso (15) | 👀 Revisión (2) | ✅ Hecho (35) |
+| 📋 Pendiente (41) | 🔨 En progreso (17) | 👀 Revisión (2) | ✅ Hecho (35) |
 |---|---|---|---|
 | **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> |
 | **T-008** Proteger main (solo cambios por PR)<br><sub>v2.2.0 · repo</sub> | **T-028** Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)<br><sub>v2.2.0 · lanzamiento</sub> | **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)<br><sub>v2.2.0 · repo</sub> | **T-006** Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)<br><sub>v2.2.0 · api</sub> |
@@ -35,13 +35,13 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 | **T-030** Revisión de seguridad e integridad (permisos, tokens, XSS en contenido, fusión y sincronización)<br><sub>v2.2.0 · api</sub> | **T-092** Entregar Amatista Motor 3.5.1 en producción (reinstalar el add-on; requiere 011, T-094)<br><sub>v3.3.0 · lanzamiento</sub> |   | **T-021** Bloques interactivos en las lecciones (7 tipos nuevos)<br><sub>v2.2.0 · pwa</sub> |
 | **T-032** Configurar SMTP y primer admin en el servidor (confirmación y recuperación por correo)<br><sub>v2.2.0 · api</sub> | **T-094** Aplicar 011_detalle_instructor.sql en Oracle (ADDON_ENLACES.DETALLE, motor 3.5.1)<br><sub>v3.3.0 · lanzamiento</sub> |   | **T-022** Aplicar la Fórmula Amatista al módulo 1 (bloques interactivos en los JSON)<br><sub>v2.2.0 · contenido</sub> |
 | **T-038** Elegir y verificar la versión principal de Blender (LTS)<br><sub>v3.0.0 · contenido</sub> | **T-095** Revisión completa del repositorio (documentación y código al día con «el ejemplo manda» y 3.5.1) y tag v3.0.0-alpha.10<br><sub>v3.3.0 · repo</sub> |   | **T-033** Importar el catálogo a Oracle (herramientas/contenido.py importar)<br><sub>v2.2.0 · contenido</sub> |
-| **T-039** Inventario de lecciones existentes → niveles y fichas<br><sub>v3.0.0 · contenido</sub> | **T-097** Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)<br><sub>v3.4.0 · pwa</sub> |   | **T-034** Estructura de niveles, habilidades y versiones de Blender en código y esquema (005)<br><sub>v3.0.0 · db</sub> |
-| **T-040** Lección modelo completa (10 pasos, recursos, rúbrica y verificación)<br><sub>v3.0.0 · contenido</sub> | **T-083** Examen final (jefe) calificado por el servidor: las respuestas dejan de viajar en el JavaScript de la PWA<br><sub>v3.4.0 · api</sub> |   | **T-035** Ejecutar 005 y 006 en producción y sembrar los niveles<br><sub>v3.0.0 · db</sub> |
-| **T-041** Mapa de niveles en la PWA y «Verificada en…» en cada lección<br><sub>v3.0.0 · pwa</sub> | **T-082** Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages<br><sub>v3.4.0 · pwa</sub> |   | **T-036** Herramientas de autor en Oracle (006, vistas y paquete AMATISTA_AUTOR)<br><sub>v3.0.0 · db</sub> |
-| **T-042** Habilidades y rúbrica en la API y en el panel del alumno<br><sub>v3.0.0 · api</sub> | **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)<br><sub>v3.4.0 · db</sub> |   | **T-037** Documentación de la reestructuración, bitácora y tablero nuevo<br><sub>v3.0.0 · repo</sub> |
-| **T-043** Diagnóstico opcional de entrada que recomienda un nivel<br><sub>v3.0.0 · pwa</sub> | **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)<br><sub>v3.4.0 · contenido</sub> |   | **T-061** Documentación completa por secciones (historia, manual del código, esquema SQL, manual del desarrollador y README)<br><sub>v3.0.0 · repo</sub> |
-| **T-044** Editor del panel con ficha de lección y nivel del módulo<br><sub>v3.0.0 · pwa</sub> |   |   | **T-050** Contrato de API del add-on y vinculación de cuenta por código<br><sub>v3.3.0 · api</sub> |
-| **T-009** Mi primer espacio 3D: lecciones 01–03 (entorno, navegar, seleccionar y transformar)<br><sub>v3.1.0 · contenido</sub> |   |   | **T-051** Esqueleto del add-on (manifiesto 4.2+, preferencias, panel de la lección)<br><sub>v3.3.0 · blender</sub> |
+| **T-039** Inventario de lecciones existentes → niveles y fichas<br><sub>v3.0.0 · contenido</sub> | **T-098** Amatista Motor 4.0: ruta de misiones, medidas amables y tarjeta de la misión con animaciones y herramientas iluminadas<br><sub>v3.3.0 · motor</sub> |   | **T-034** Estructura de niveles, habilidades y versiones de Blender en código y esquema (005)<br><sub>v3.0.0 · db</sub> |
+| **T-040** Lección modelo completa (10 pasos, recursos, rúbrica y verificación)<br><sub>v3.0.0 · contenido</sub> | **T-099** Probar Amatista Motor 4.0 en Blender con ventana (animaciones, teclas que se encienden y herramienta en la barra T) hasta acordar que el add-on funciona<br><sub>v3.3.0 · motor</sub> |   | **T-035** Ejecutar 005 y 006 en producción y sembrar los niveles<br><sub>v3.0.0 · db</sub> |
+| **T-041** Mapa de niveles en la PWA y «Verificada en…» en cada lección<br><sub>v3.0.0 · pwa</sub> | **T-097** Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)<br><sub>v3.4.0 · pwa</sub> |   | **T-036** Herramientas de autor en Oracle (006, vistas y paquete AMATISTA_AUTOR)<br><sub>v3.0.0 · db</sub> |
+| **T-042** Habilidades y rúbrica en la API y en el panel del alumno<br><sub>v3.0.0 · api</sub> | **T-083** Examen final (jefe) calificado por el servidor: las respuestas dejan de viajar en el JavaScript de la PWA<br><sub>v3.4.0 · api</sub> |   | **T-037** Documentación de la reestructuración, bitácora y tablero nuevo<br><sub>v3.0.0 · repo</sub> |
+| **T-043** Diagnóstico opcional de entrada que recomienda un nivel<br><sub>v3.0.0 · pwa</sub> | **T-082** Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages<br><sub>v3.4.0 · pwa</sub> |   | **T-061** Documentación completa por secciones (historia, manual del código, esquema SQL, manual del desarrollador y README)<br><sub>v3.0.0 · repo</sub> |
+| **T-044** Editor del panel con ficha de lección y nivel del módulo<br><sub>v3.0.0 · pwa</sub> | **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)<br><sub>v3.4.0 · db</sub> |   | **T-050** Contrato de API del add-on y vinculación de cuenta por código<br><sub>v3.3.0 · api</sub> |
+| **T-009** Mi primer espacio 3D: lecciones 01–03 (entorno, navegar, seleccionar y transformar)<br><sub>v3.1.0 · contenido</sub> | **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)<br><sub>v3.4.0 · contenido</sub> |   | **T-051** Esqueleto del add-on (manifiesto 4.2+, preferencias, panel de la lección)<br><sub>v3.3.0 · blender</sub> |
 | **T-045** Mi primer espacio 3D: lecciones 04–05 (base de la habitación, guardar y recuperar)<br><sub>v3.1.0 · contenido</sub> |   |   | **T-053** Registrar verificaciones de versión desde Blender<br><sub>v3.3.0 · blender</sub> |
 | **T-046** Mi primer espacio 3D: lecciones 06–07 (mesa y primera edición de malla)<br><sub>v3.1.0 · contenido</sub> |   |   | **T-057** Motor etapa 2: guía paso a paso, «Hazlo conmigo» y acompañante en el add-on<br><sub>v3.3.0 · blender</sub> |
 | **T-047** Mi primer espacio 3D: lecciones 08–09 (lámpara, colores, cámara e iluminación)<br><sub>v3.1.0 · contenido</sub> |   |   | **T-058** Práctica de Blender al cierre de cada módulo, etiquetas y herramientas nuevas en la plataforma<br><sub>v3.3.0 · pwa</sub> |
@@ -255,6 +255,11 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 - [x] **T-096** Herramientas gráficas v3.6: medir librerías, crear visor de malla, diagrama de nodos e imagen ligera, y diseño CSS para condiciones difíciles · _hecho_ — commits: `ebccd0f` (2026-10-10), `c261553` (2026-10-10), `ee22e5e` (2026-10-10)
   - 🔎 Evidencia: frontend/src/components/leccion/VisorMalla.jsx, DiagramaNodos.jsx; frontend/src/components/ImagenLigera.jsx; frontend/src/index.css
   - 🎯 Listo cuando: docs/plataforma/07_herramientas_graficas.md §8 y §9; mesh_viewer y node_graph validan en el servidor y se usan en el curso; vitest, pytest y build en verde
+- [ ] **T-098** Amatista Motor 4.0: ruta de misiones, medidas amables y tarjeta de la misión con animaciones y herramientas iluminadas · _en-progreso_ — commits: `975dcf9` (2026-10-10), `da8d643` (2026-10-10), `3cfa09f` (2026-10-10)
+  - 🔎 Evidencia: engine/amatista_engine/ruta/; addon/amatista_blender/mision.py; addon/amatista_blender/interfaz/hud.py; docs/motor/referencia/15_experiencia_del_alumno.md
+  - 🎯 Listo cuando: Una sola misión explicada a la vez en Blender y en la lección; medidas aflojadas según el nivel; pytest, vitest y en_blender.py en verde
+- [ ] **T-099** Probar Amatista Motor 4.0 en Blender con ventana (animaciones, teclas que se encienden y herramienta en la barra T) hasta acordar que el add-on funciona · _en-progreso_ — commits: `3cfa09f` (2026-10-10)
+  - 🎯 Listo cuando: El alumno de prueba termina el tren y la espada solo con la tarjeta de la misión; los ajustes que salgan quedan en el mismo PR
 - [x] **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas) · _hecho_ — commits: `34af6f3` (2026-10-04), `f9334d5` (2026-10-10)
   - 🔎 Evidencia: docs/motor/referencia/08_practicas_v3_y_herramientas.md; engine/herramientas/practicas.py (nueva, revisar, probar, simular, validadores, plan); addon/amatista_blender/interfaz/paneles.py (panel «Teoría y casos de prueba»); engine/tests/test_v3_herramientas.py
 - [ ] **T-064** Aplicar 008 y 009 en Oracle e importar los cursos Principiante, Principiante-Intermedio e Intermedio (después del piloto) · _pendiente_
