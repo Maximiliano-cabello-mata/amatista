@@ -1,5 +1,7 @@
 # 07 · Guía paso a paso y acompañamiento (etapa 2)
 
+> **Motor 4:** la guía se muestra como la misión de una ruta (una a la vez, con sus teclas que se encienden y sus herramientas iluminadas) y ya no abre un diálogo por cada paso. Ver [15_experiencia_del_alumno.md](15_experiencia_del_alumno.md).
+
 En la etapa 1 el motor respondía «Dimensión Z fuera de rango». En la etapa 2 responde como un profesor sentado al lado: **qué** hacer ahora, **con qué teclas**, **dónde** mirar en la escena y, si hace falta, **lo hace contigo**. Nada de esto cambia cómo se evalúa ni lo que guarda Oracle: la guía se calcula a partir del mismo `EvaluationReport`.
 
 Código: [`engine/amatista_engine/guide/`](../../../engine/amatista_engine/guide/) (Python puro) y, en el add-on, [`guia.py`](../../../addon/amatista_blender/guia.py), [`interfaz/hud.py`](../../../addon/amatista_blender/interfaz/hud.py) y [`interfaz/visor3d.py`](../../../addon/amatista_blender/interfaz/visor3d.py). Pruebas: [`engine/tests/test_guia.py`](../../../engine/tests/test_guia.py) y la parte «etapa 2» de [`addon/tests/en_blender.py`](../../../addon/tests/en_blender.py).
@@ -120,7 +122,7 @@ Opcional y aditivo en `amatista.practice/1` (las prácticas sin `guide` siguen f
  }}
 ```
 
-- `why`: el porqué, en una o dos frases. Se ve en el diálogo de paso nuevo y en la tarjeta.
+- `why`: el porqué, en una o dos frases. Se ve en la misión de la barra lateral y en «Así se hace este paso».
 - `steps`: hasta 8 pasos; cada uno es un texto o `{text, keys}` con hasta 6 teclas. Si están, **reemplazan** las instrucciones generadas; la acción, los resaltados y las señales siguen siendo los calculados.
 
 ## El acompañante (`Companion`)
@@ -151,7 +153,9 @@ La **distancia** (`distance(result)`) es cuánto falta: unidades fuera del rango
 |---|---|---|
 | Acompañamiento | **Acompañado** (diálogos y avisos), **Solo tarjeta** (avisos sin diálogos), **Silencioso** (como la etapa 1: Comprobar y Pista) | Acompañado |
 | Mostrar en la vista 3D | resaltados y señales | sí |
-| Explicarme cada paso nuevo | diálogo al empezar un paso | sí |
+| Un diálogo por cada misión | *(motor 4)* además de la tarjeta, un diálogo al empezar cada misión | no |
+| Animaciones | *(motor 4)* la tarjeta entra, celebra y la tecla que toca respira | sí |
+| Dejarme lista la herramienta | *(motor 4)* niveles 1 y 2: elige la herramienta de la misión en la barra T | sí |
 | Ofrecer ayuda tras | 2 a 20 cambios | 4 |
 | o tras (segundos) | 30 a 900 | 120 |
 

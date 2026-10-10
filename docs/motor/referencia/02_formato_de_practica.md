@@ -33,6 +33,7 @@ Una práctica es un JSON declarativo. El motor la valida al cargarla (`engine/am
 | `params` | Parámetros del validador. |
 | `weight` | Peso en el porcentaje (por defecto 1). Los obligatorios deben sumar más que 0. |
 | `requires` | Ids de objetivos que deben cumplirse antes; mientras tanto este queda «bloqueado». |
+| `stage` | *(motor 4)* La parte de la ruta del alumno («Las ruedas»), hasta 40 caracteres. Los objetivos de una parte van seguidos. Sin `stage`, el motor la deduce de lo que revisa el objetivo. Ver [15_experiencia_del_alumno.md](15_experiencia_del_alumno.md). |
 | `optional` | `true`: el paso se muestra, pero no cuenta para el progreso ni hace falta para completar. Los opcionales no suman ni restan. |
 | `tip` | Consejo corto que siempre se ve en la tarjeta del paso. |
 | `hints` | De 1 a 6 pistas, de la más general al paso a paso. Se revelan de una en una con **Necesito una pista**; llegar a la tercera cuenta como «con guía». |
