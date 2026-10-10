@@ -85,7 +85,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Exploración del motor v3.2: practices/blender/principiante/m3-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Exploración en Blender: practices/blender/principiante/m3-explora/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
@@ -110,9 +110,10 @@
             "minutes": 8,
             "steps": [
               "Agrega un cubo",
-              "Aplástalo como cojín",
+              "Un cojín plano",
               "Aplica la escala",
-              "Ponle Subdivisión"
+              "Ponle Subdivisión",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           }
@@ -260,7 +261,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3: practices/blender/principiante/m3-nave/practica.json."
+            "notas": "Práctica en Blender: practices/blender/principiante/m3-nave/practica.json."
           },
           "edicion": "1.0",
           "offline": false,
@@ -281,13 +282,14 @@
             "text": "Pulsa **Abrir en Blender** y luego abre Blender: la práctica aparece en la pestaña Amatista (tecla N). Tres secciones te acompañan: **Aprender** (la teoría justo cuando la necesitas), **Practicar** (los pasos con «Hazlo conmigo») y **Mi curso**. Tu avance se actualiza aquí mientras trabajas.",
             "minutes": 35,
             "steps": [
-              "Elige tu nave",
-              "Aplica la escala",
-              "Espejo en X",
+              "Tu nave",
+              "Escala aplicada",
+              "Modificador Espejo en X",
               "Modela solo una mitad",
               "Alas y cabina",
               "Subdivisión entre 1 y 3",
-              "Guarda como mi_nave.blend"
+              "Guarda tu nave",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           },

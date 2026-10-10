@@ -87,7 +87,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Exploración del motor v3.2: practices/blender/principiante-intermedio/m2-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Exploración en Blender: practices/blender/principiante-intermedio/m2-explora/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
@@ -114,7 +114,8 @@
               "Algo que fotografiar",
               "Una luz de Área",
               "Una cámara activa",
-              "Toma la foto (F12)"
+              "Toma la foto (F12)",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           }
@@ -252,7 +253,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3: practices/blender/principiante-intermedio/m2-tres-puntos/practica.json."
+            "notas": "Práctica en Blender: practices/blender/principiante-intermedio/m2-tres-puntos/practica.json."
           },
           "edicion": "1.0",
           "offline": false,
@@ -277,10 +278,11 @@
               "Una cámara activa",
               "Encuadra el modelo",
               "Motor EEVEE",
-              "Una luz de Área",
+              "Al menos una luz de Área",
               "Iluminación de tres puntos",
-              "Tu primer render (F12)",
-              "Guarda tu estudio"
+              "Tu primer render",
+              "Guarda tu estudio",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           }

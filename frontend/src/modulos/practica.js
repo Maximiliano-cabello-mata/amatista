@@ -12,13 +12,6 @@ export const bloquePractica = (leccion) =>
 
 export const esPracticaBlender = (leccion) => Boolean(bloquePractica(leccion));
 
-// {leccion, indice, bloque} de la práctica del módulo (la primera, si hubiera varias) o null.
-export function practicaDelModulo(modulo) {
-  const lecciones = leccionesDe(modulo);
-  const indice = lecciones.findIndex(esPracticaBlender);
-  return indice < 0 ? null : { leccion: lecciones[indice], indice, bloque: bloquePractica(lecciones[indice]) };
-}
-
 // Todas las prácticas del módulo en orden: [{leccion, indice, bloque, cierre}].
 // `cierre` es la última (la que cierra el módulo); las anteriores son exploraciones.
 export function practicasDelModulo(modulo) {
@@ -48,30 +41,6 @@ export function secuenciaDelModulo(modulo) {
   return leccionesDe(modulo).map((leccion, indice) =>
     practicas.has(indice) ? { tipo: 'practica', ...practicas.get(indice) } : { tipo: 'leccion', leccion, indice },
   );
-}
-
-// Divide el módulo en lo que se dibuja: las lecciones antes de la práctica,
-// la práctica y lo que va después (el examen final).
-export function partesDelModulo(modulo) {
-  const lecciones = leccionesDe(modulo).map((leccion, indice) => ({ leccion, indice }));
-  const practica = practicaDelModulo(modulo);
-  if (!practica) return { antes: lecciones, practica: null, despues: [] };
-  return {
-    antes: lecciones.filter(({ indice, leccion }) => indice < practica.indice && !esPracticaBlender(leccion)),
-    practica,
-    despues: lecciones.filter(({ indice }) => indice > practica.indice),
-  };
-}
-
-// Estado de la práctica del módulo para el mapa del curso:
-//   hecha · abierta · bloqueada (faltan N lecciones) · sin práctica (null).
-export function estadoPractica(progreso, cursoId, modulo) {
-  const { antes, practica } = partesDelModulo(modulo);
-  if (!practica) return null;
-  const faltan = antes.filter(({ leccion }) => !estaCompletada(progreso, cursoId, leccion)).length;
-  if (estaCompletada(progreso, cursoId, practica.leccion)) return { estado: 'hecha', faltan: 0, practica };
-  const abierta = estaDesbloqueada(progreso, cursoId, modulo, practica.indice) && faltan === 0;
-  return { estado: abierta ? 'abierta' : 'bloqueada', faltan, practica };
 }
 
 // Prácticas de todos los módulos publicados del catálogo (panel del alumno),

@@ -86,7 +86,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m2-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Práctica en Blender: practices/blender/intermedio/m2-explora/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
@@ -109,7 +109,8 @@
             "minutes": 8,
             "steps": [
               "Tres piezas",
-              "En la colección «Casas»"
+              "En la colección «Casas»",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           }
@@ -223,7 +224,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3.2: practices/blender/intermedio/m2-aldea/practica.json. Necesita el add-on conectado."
+            "notas": "Práctica en Blender: practices/blender/intermedio/m2-aldea/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
@@ -256,7 +257,8 @@
               "Casas en «Casas»",
               "Techos en «Techos»",
               "Tres materiales distintos",
-              "Guarda tu aldea"
+              "Guarda tu aldea",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           },

@@ -19,27 +19,29 @@ const ESTADO_NIVEL = {
 // Los niveles de la ruta como ramas de un árbol: una línea que baja y un nodo por nivel.
 function RamasNiveles({ ruta, progreso }) {
   return (
-    <ol className="relative grid gap-1.5" aria-label={`Niveles de ${ruta.titulo}`}>
+    <div className="relative">
       <span className="absolute bottom-4 left-[13px] top-4 w-px bg-gradient-to-b from-white/25 to-white/5" aria-hidden="true" />
-      {ruta.niveles.map((curso, i) => {
-        const estado = estadoNivel(progreso, curso);
-        const estilo = ESTADO_NIVEL[estado];
-        const { porcentaje } = resumenCurso(progreso, curso);
-        return (
-          <li key={curso.id} className="relative flex items-center gap-3">
-            <span className={`hexagono relative z-10 grid h-7 w-7 shrink-0 place-items-center font-mono text-[11px] font-bold ${estilo.nodo}`}>
-              {estado === 'completado' ? '✓' : estado === 'bloqueado' ? <IconoCandado className="h-3 w-3" /> : i + 1}
-            </span>
-            <span className={`min-w-0 flex-1 truncate font-semibold ${estado === 'bloqueado' ? 'text-white/45' : 'text-white'}`}>
-              {curso.nivel || curso.titulo}
-            </span>
-            <span className={`corte-poly-sm shrink-0 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest ${estilo.clase}`}>
-              {estado === 'en-curso' ? `${porcentaje}%` : estilo.texto}
-            </span>
-          </li>
-        );
-      })}
-    </ol>
+      <ol className="grid gap-1.5" aria-label={`Niveles de ${ruta.titulo}`}>
+        {ruta.niveles.map((curso, i) => {
+          const estado = estadoNivel(progreso, curso);
+          const estilo = ESTADO_NIVEL[estado];
+          const { porcentaje } = resumenCurso(progreso, curso);
+          return (
+            <li key={curso.id} className="relative flex items-center gap-3">
+              <span className={`hexagono relative z-10 grid h-7 w-7 shrink-0 place-items-center font-mono text-[11px] font-bold ${estilo.nodo}`}>
+                {estado === 'completado' ? '✓' : estado === 'bloqueado' ? <IconoCandado className="h-3 w-3" /> : i + 1}
+              </span>
+              <span className={`min-w-0 flex-1 truncate font-semibold ${estado === 'bloqueado' ? 'text-white/45' : 'text-white'}`}>
+                {curso.nivel || curso.titulo}
+              </span>
+              <span className={`corte-poly-sm shrink-0 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest ${estilo.clase}`}>
+                {estado === 'en-curso' ? `${porcentaje}%` : estilo.texto}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
 }
 

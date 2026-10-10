@@ -109,20 +109,20 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Exploración del motor v3.2: practices/blender/principiante/m1-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Exploración en Blender: practices/blender/principiante/m1-explora/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
           "comprobacion": [
             "Tres bolas de nieve, de mayor a menor",
             "Una nariz de cono girada al frente",
-            "Se parece al muñeco del modelo"
+            "Comparado con el ejemplo resuelto, se reconoce el muñeco"
           ]
         },
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### En Blender, conectado\nYa sabes qué es el espacio 3D. Ahora pruébalo armando un muñeco de nieve: tres esferas de mayor a menor (S para escalar, G Z para subirlas) y una nariz de cono que giras con R. Mira la imagen del modelo: las medidas no tienen que ser exactas.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
+            "body": "### En Blender, conectado\nYa sabes qué es el espacio 3D. Ahora pruébalo armando un muñeco de nieve: tres esferas de mayor a menor (S para escalar, G Z para subirlas) y una nariz de cono que giras con R. Mira el ejemplo resuelto: las medidas no tienen que ser exactas.\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."
           },
           {
             "type": "blender_practice",
@@ -132,11 +132,12 @@
             "text": "Antes de armar el tren, date una vuelta por Blender: Amatista te acompaña y registra lo que haces. Tu avance aparece aquí mientras trabajas.",
             "minutes": 8,
             "steps": [
-              "Agrega una esfera",
-              "Haz tres bolas de nieve",
-              "Agrega una nariz (cono)",
-              "Gira la nariz al frente",
-              "Que se parezca al muñeco del modelo"
+              "Una bola de nieve",
+              "Tres bolas de nieve",
+              "Una nariz de zanahoria",
+              "La nariz apunta al frente",
+              "Amatista reconoce tu muñeco",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           }
@@ -303,19 +304,19 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3: practices/blender/principiante/m1-tren/practica.json."
+            "notas": "Práctica en Blender: practices/blender/principiante/m1-tren/practica.json."
           },
           "edicion": "1.0",
           "offline": false,
           "comprobacion": [
-            "Dos vagones, ocho ruedas de pie (dos de cada lado por vagón) en el suelo, chimenea y el tren parecido al modelo (medidas aproximadas, ±35 %).",
+            "Dos vagones, ocho ruedas de pie (dos de cada lado por vagón) en el suelo, chimenea, y el tren se reconoce al compararlo con el ejemplo resuelto (el tamaño y los colores son tuyos).",
             "Archivo guardado como tren."
           ]
         },
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### Un tren con piezas de juguete\nVas a armar un tren con **cubos** (locomotora y vagón) y **cilindros** (ruedas y chimenea). Nada se modela todavía: solo agregas, mueves, giras y escalas.\n\nArriba de los pasos está **la imagen del modelo**: así se ve el tren terminado, con su plano y sus medidas aproximadas. Amatista revisa que las ruedas estén **de pie**, **apoyadas en el suelo** y **unidas**, y al final compara tu tren completo con el modelo: puede ser más grande, más chico o estar girado; lo que cuenta es que **se vea como un tren**."
+            "body": "### Un tren con piezas de juguete\nVas a armar un tren con **cubos** (locomotora y vagón) y **cilindros** (ruedas y chimenea). Nada se modela todavía: solo agregas, mueves, giras y escalas.\n\nArriba de los pasos está **el ejemplo resuelto**: una versión posible del tren terminado, con su imagen y sus pasos. Amatista revisa que las ruedas estén **de pie**, **apoyadas en el suelo** y **unidas**, y al final compara tu tren completo con el ejemplo resuelto: puede ser más grande, más chico o estar girado; lo que cuenta es que **se vea como un tren**."
           },
           {
             "type": "blender_practice",
@@ -325,16 +326,17 @@
             "text": "Pulsa **Abrir en Blender** y luego abre Blender: la práctica aparece en la pestaña Amatista (tecla N). Tres secciones te acompañan: **Aprender** (la teoría justo cuando la necesitas), **Practicar** (los pasos con «Hazlo conmigo») y **Mi curso**. Tu avance se actualiza aquí mientras trabajas.",
             "minutes": 25,
             "steps": [
-              "Agrega dos vagones (cubos)",
-              "Hazlos largos",
-              "Agrega ocho ruedas (cilindros)",
-              "Pon las ruedas de pie",
-              "Apóyalas en el suelo",
-              "Únelas a los vagones, dos de cada lado",
-              "Junta los vagones",
-              "Ponle chimenea a la locomotora",
-              "Que se parezca al tren del modelo",
-              "Guarda como mi_tren.blend"
+              "Dos vagones",
+              "Vagones alargados",
+              "Ocho ruedas",
+              "Ruedas de pie y delgadas",
+              "Ruedas en el suelo",
+              "Ruedas pegadas a los vagones",
+              "Vagones enganchados",
+              "Chimenea en la locomotora",
+              "Amatista reconoce tu tren",
+              "Guarda tu tren",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           },
@@ -342,7 +344,7 @@
             "type": "callout",
             "variant": "reto",
             "title": "Reto extra",
-            "body": "Agrega una cabina a la locomotora o un segundo vagón. Amatista solo revisa que se siga viendo como el tren del modelo."
+            "body": "Agrega una cabina a la locomotora o un segundo vagón. Amatista solo revisa que se siga reconociendo el tren del ejemplo resuelto."
           }
         ]
       },

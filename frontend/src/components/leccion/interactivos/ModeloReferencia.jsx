@@ -5,7 +5,9 @@ import { referenciaDe, textoMedidas } from '../../../blender/referencias';
 // renderizado en Blender por Amatista (motor 3.3). El alumno ve la figura
 // terminada y su plano con medidas APROXIMADAS: no tiene que copiarlas al
 // centímetro, tiene que verse así.
-function ModeloReferencia({ practicaId }) {
+// Motor 3.5: si la práctica tiene ejemplo resuelto, la imagen es solo una guía
+// (Amatista compara con el ejemplo, no con estas medidas).
+function ModeloReferencia({ practicaId, conEjemplo = false }) {
   const referencia = referenciaDe(practicaId);
   const [vista, setVista] = useState('imagen');
   if (!referencia) return null;
@@ -16,7 +18,7 @@ function ModeloReferencia({ practicaId }) {
     <figure className="modelo-referencia corte-poly-sm mt-5 overflow-hidden border border-white/10 bg-base/60">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 px-4 py-2.5">
         <figcaption className="font-bold text-white">
-          Así se debe ver: <span className="text-neon">{referencia.titulo}</span>
+          {conEjemplo ? 'Una versión posible' : 'Así se debe ver'}: <span className="text-neon">{referencia.titulo}</span>
         </figcaption>
         {conPlano && (
           <div className="flex gap-1" role="tablist" aria-label="Vista del modelo">
@@ -57,10 +59,18 @@ function ModeloReferencia({ practicaId }) {
       </div>
       <div className="grid gap-1.5 px-4 py-3 text-sm text-texto/80">
         <p>{referencia.descripcion}</p>
-        <p className="font-mono text-[11px] uppercase tracking-widest text-white/50">
-          {medidas && <span>{medidas} · </span>}
-          Medidas aproximadas: ±{referencia.holgura} % · puede ser más grande, más chica o estar girada
-        </p>
+        {conEjemplo ? (
+          <p className="text-xs text-white/60">
+            {medidas && <span className="font-mono">{medidas} · </span>}
+            La imagen es una guía: Amatista compara tu escena con el ejemplo resuelto. Hasta el nivel 3, el tamaño y los
+            colores son tuyos.
+          </p>
+        ) : (
+          <p className="font-mono text-[11px] uppercase tracking-widest text-white/50">
+            {medidas && <span>{medidas} · </span>}
+            Medidas aproximadas: ±{referencia.holgura} % · puede ser más grande, más chica o estar girada
+          </p>
+        )}
       </div>
     </figure>
   );

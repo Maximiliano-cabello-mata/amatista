@@ -85,7 +85,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Exploración del motor v3.2: practices/blender/principiante-intermedio/m3-explora/practica.json. Necesita el add-on conectado."
+            "notas": "Exploración en Blender: practices/blender/principiante-intermedio/m3-explora/practica.json. Necesita el add-on conectado."
           },
           "edicion": "1.0",
           "offline": false,
@@ -110,7 +110,8 @@
             "steps": [
               "Agrega un cubo",
               "Dos fotogramas clave",
-              "Que de verdad se mueva"
+              "Que de verdad se mueva",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           }
@@ -226,7 +227,7 @@
           ],
           "blender": {
             "verificadaEn": null,
-            "notas": "Práctica del motor v3: practices/blender/principiante-intermedio/m3-pelota/practica.json."
+            "notas": "Práctica en Blender: practices/blender/principiante-intermedio/m3-pelota/practica.json."
           },
           "edicion": "1.0",
           "offline": false,
@@ -251,7 +252,8 @@
               "Tres claves de altura",
               "Cae, toca el suelo y sube",
               "Se aplasta al chocar",
-              "Guarda tu animación"
+              "Guarda tu animación",
+              "Tu práctica coincide con el ejemplo"
             ],
             "allowManual": false
           },

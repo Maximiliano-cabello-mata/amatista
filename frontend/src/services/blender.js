@@ -1,6 +1,7 @@
 // src/services/blender.js
 // Cliente del add-on de Blender y del motor de prácticas (/api/addon/v1).
 // Como services/api.js, nada lanza: todo devuelve {ok, status, datos, error}.
+import { NOMBRE_MOTOR } from "../blender/logica";
 import { API_URL, mensajeDeError, pedirJSON, sincronizacionDisponible } from "./api";
 
 const BASE = "/api/addon/v1";
@@ -38,7 +39,8 @@ export async function descargarPaquete(token, sistema) {
     return { ok: false, error: mensajeDeError(respuesta.status, datos) };
   }
   const nombre =
-    /filename="([^"]+)"/.exec(respuesta.headers.get("content-disposition") ?? "")?.[1] ?? `Amatista-${sistema}.zip`;
+    /filename="([^"]+)"/.exec(respuesta.headers.get("content-disposition") ?? "")?.[1] ??
+    `${NOMBRE_MOTOR.replace(/ /g, "-")}-${sistema}.zip`;
   const blob = await respuesta.blob();
   const enlace = document.createElement("a");
   enlace.href = URL.createObjectURL(blob);
@@ -49,10 +51,6 @@ export async function descargarPaquete(token, sistema) {
   setTimeout(() => URL.revokeObjectURL(enlace.href), 30000);
   return { ok: true, nombre };
 }
-
-// Dirección pública (sin sesión) de la extensión y del repositorio de extensiones.
-export const urlExtension = () => `${API_URL}${BASE}/extension.zip`;
-export const urlRepositorio = () => `${API_URL}${BASE}/extensiones/index.json`;
 
 // --- Prácticas y progreso -----------------------------------------------------------
 
@@ -66,7 +64,7 @@ export const abrirPractica = (token, practicaId) =>
 export const progresoPractica = (token, practicaId) =>
   pedirJSON(`${BASE}/mi-progreso?practica_id=${parte(practicaId)}`, { token });
 
-// --- Enlace en vivo con Blender (motor 3.4) --------------------------------------------
+// --- Enlace en vivo con Blender (motor 3.4 y 3.5) --------------------------------------
 // El add-on late cada pocos segundos: la plataforma ve si Blender está abierto,
 // qué practica y en qué paso va, y le puede dejar órdenes.
 
