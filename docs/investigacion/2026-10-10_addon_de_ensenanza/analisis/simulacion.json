@@ -1,0 +1,71 @@
+{
+ "novato": {
+  "A actual": {
+   "domina_dia_14_mediana": 14.0,
+   "domina_p5": 7.8,
+   "domina_p95": 24.1,
+   "oportunidades_por_habilidad": 3.3,
+   "pasos_guiados_por_habilidad": 3.3,
+   "gana_a_A_en_pct_de_corridas": 0.0
+  },
+  "B guía que se desvanece": {
+   "domina_dia_14_mediana": 21.0,
+   "domina_p5": 14.1,
+   "domina_p95": 32.0,
+   "oportunidades_por_habilidad": 3.3,
+   "pasos_guiados_por_habilidad": 1.1,
+   "gana_a_A_en_pct_de_corridas": 100.0
+  },
+  "C + dominio": {
+   "domina_dia_14_mediana": 46.0,
+   "domina_p5": 35.0,
+   "domina_p95": 63.0,
+   "oportunidades_por_habilidad": 9.3,
+   "pasos_guiados_por_habilidad": 2.9,
+   "gana_a_A_en_pct_de_corridas": 100.0
+  },
+  "D + repaso espaciado": {
+   "domina_dia_14_mediana": 66.8,
+   "domina_p5": 55.8,
+   "domina_p95": 76.2,
+   "oportunidades_por_habilidad": 12.3,
+   "pasos_guiados_por_habilidad": 3.4,
+   "gana_a_A_en_pct_de_corridas": 100.0
+  }
+ },
+ "con experiencia": {
+  "A actual": {
+   "domina_dia_14_mediana": 44.4,
+   "domina_p5": 29.3,
+   "domina_p95": 64.8,
+   "oportunidades_por_habilidad": 3.3,
+   "pasos_guiados_por_habilidad": 3.3,
+   "gana_a_A_en_pct_de_corridas": 0.0
+  },
+  "B guía que se desvanece": {
+   "domina_dia_14_mediana": 46.3,
+   "domina_p5": 30.8,
+   "domina_p95": 67.1,
+   "oportunidades_por_habilidad": 3.3,
+   "pasos_guiados_por_habilidad": 0.5,
+   "gana_a_A_en_pct_de_corridas": 95.0
+  },
+  "C + dominio": {
+   "domina_dia_14_mediana": 54.7,
+   "domina_p5": 39.2,
+   "domina_p95": 75.6,
+   "oportunidades_por_habilidad": 6.1,
+   "pasos_guiados_por_habilidad": 1.2,
+   "gana_a_A_en_pct_de_corridas": 100.0
+  },
+  "D + repaso espaciado": {
+   "domina_dia_14_mediana": 75.5,
+   "domina_p5": 62.0,
+   "domina_p95": 87.3,
+   "oportunidades_por_habilidad": 9.1,
+   "pasos_guiados_por_habilidad": 1.7,
+   "gana_a_A_en_pct_de_corridas": 100.0
+  }
+ },
+ "nota": "Simulación: no son alumnos reales. 400 corridas × 300 alumnos × 35 habilidades por perfil."
+}

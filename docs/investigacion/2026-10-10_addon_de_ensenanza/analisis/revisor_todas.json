@@ -1,0 +1,94 @@
+{
+ "tabla": [
+  {
+   "practica": "intermedio/m1-puente",
+   "nivel": 3,
+   "sens": "5/5",
+   "sens_detalle": {
+    "copia": "ok",
+    "+25 %": "ok",
+    "-20 %": "ok",
+    "a 2 m": "ok",
+    "medidas ±15 %": "ok"
+   },
+   "sin": "5/5",
+   "sin_detalle": {
+    "apiladas": "ok sobre-pilares,figura",
+    "flotando 1.5 m": "ok en-el-suelo",
+    "todo cubos": "ok pilares,en-el-suelo,sobre-pilares",
+    "piezas tiradas": "ok sobre-pilares,figura",
+    "falta la mitad": "ok pilares,en-el-suelo,sobre-pilares"
+   }
+  },
+  {
+   "practica": "intermedio/m2-aldea",
+   "nivel": 3,
+   "sens": "0/5",
+   "sens_detalle": {
+    "copia": "FALLA casas,techos,techos-encima",
+    "+25 %": "FALLA casas,techos,techos-encima",
+    "-20 %": "FALLA casas,techos,techos-encima",
+    "a 2 m": "FALLA casas,techos,techos-encima",
+    "medidas ±15 %": "FALLA casas,techos,techos-encima"
+   },
+   "sin": "5/5",
+   "sin_detalle": {
+    "apiladas": "ok casas,techos,techos-encima",
+    "flotando 1.5 m": "ok casas,techos,techos-encima",
+    "todo cubos": "ok casas,techos,techos-encima",
+    "piezas tiradas": "ok casas,techos,techos-encima",
+    "falta la mitad": "ok casas,techos,techos-encima"
+   }
+  },
+  {
+   "practica": "principiante/m1-explora",
+   "nivel": 1,
+   "sens": "5/5",
+   "sens_detalle": {
+    "copia": "ok",
+    "+25 %": "ok",
+    "-20 %": "ok",
+    "a 2 m": "ok",
+    "medidas ±15 %": "ok"
+   },
+   "sin": "4/5",
+   "sin_detalle": {
+    "apiladas": "ok figura",
+    "flotando 1.5 m": "FALLA",
+    "todo cubos": "ok esfera,tres-esferas,nariz",
+    "piezas tiradas": "ok figura",
+    "falta la mitad": "ok tres-esferas,nariz,nariz-girada"
+   }
+  },
+  {
+   "practica": "principiante/m1-tren",
+   "nivel": 1,
+   "sens": "5/5",
+   "sens_detalle": {
+    "copia": "ok",
+    "+25 %": "ok",
+    "-20 %": "ok",
+    "a 2 m": "ok",
+    "medidas ±15 %": "ok"
+   },
+   "sin": "5/5",
+   "sin_detalle": {
+    "apiladas": "ok ruedas-al-suelo,figura",
+    "flotando 1.5 m": "ok ruedas-al-suelo",
+    "todo cubos": "ok vagones-largos,ruedas,ruedas-de-pie",
+    "piezas tiradas": "ok ruedas-al-suelo,ruedas-unidas,tren-unido",
+    "falta la mitad": "ok ruedas,figura"
+   }
+  }
+ ],
+ "total": {
+  "sens": [
+   15,
+   20
+  ],
+  "sin": [
+   19,
+   20
+  ]
+ }
+}

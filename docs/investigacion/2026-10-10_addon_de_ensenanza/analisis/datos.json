@@ -1,0 +1,630 @@
+{
+ "assist_filas": 421318,
+ "assist_alumnos": 4151,
+ "assist_habilidades": 110,
+ "assist_curva": {
+  "1": [
+   0.4107,
+   39308
+  ],
+  "2": [
+   0.3356,
+   31688
+  ],
+  "3": [
+   0.3232,
+   26955
+  ],
+  "4": [
+   0.2989,
+   24450
+  ],
+  "5": [
+   0.3034,
+   21422
+  ],
+  "6": [
+   0.3126,
+   18352
+  ],
+  "7": [
+   0.3154,
+   16054
+  ],
+  "8": [
+   0.307,
+   14115
+  ],
+  "9": [
+   0.3057,
+   12530
+  ],
+  "10": [
+   0.3118,
+   11201
+  ],
+  "11": [
+   0.3198,
+   9598
+  ],
+  "12": [
+   0.3264,
+   8556
+  ],
+  "13": [
+   0.3088,
+   7703
+  ],
+  "14": [
+   0.3171,
+   6897
+  ],
+  "15": [
+   0.3242,
+   6199
+  ],
+  "16": [
+   0.3103,
+   5549
+  ],
+  "17": [
+   0.3183,
+   5039
+  ],
+  "18": [
+   0.32,
+   4594
+  ],
+  "19": [
+   0.3222,
+   4193
+  ],
+  "20": [
+   0.3188,
+   3839
+  ]
+ },
+ "assist_ley_potencia": {
+  "a": 0.3511,
+  "b": 0.0441
+ },
+ "assist_dominio_3_seguidas": {
+  "secuencias": 39308,
+  "pct_lo_logran": 53.5,
+  "mediana_intentos": 4.0,
+  "p75": 6.0,
+  "p90": 9.0
+ },
+ "assist_siguiente_tras": {
+  "acierto": [
+   0.8568,
+   262276
+  ],
+  "error sin pista": [
+   0.4578,
+   70189
+  ],
+  "pista hasta la respuesta": [
+   0.2248,
+   36433
+  ],
+  "pista parcial": [
+   0.4552,
+   13112
+  ]
+ },
+ "assist_abuso_pistas": {
+  "<5 %": [
+   0.7399,
+   817
+  ],
+  "5–15 %": [
+   0.6321,
+   509
+  ],
+  "15–30 %": [
+   0.498,
+   285
+  ],
+  ">30 %": [
+   0.2959,
+   178
+  ]
+ },
+ "assist_pendiente_por_grupo": {
+  "<5 %": 0.0069,
+  "5–15 %": 0.0087,
+  "15–30 %": 0.0065,
+  ">30 %": -0.0036
+ },
+ "assist_bkt": {
+  "habilidades": [
+   {
+    "habilidad": "Addition and Subtraction Fractions",
+    "alumnos": 1353,
+    "L0": 0.75,
+    "T": 0.1,
+    "G": 0.1,
+    "S": 0.2,
+    "oportunidades_95": 15.3
+   },
+   {
+    "habilidad": "Addition and Subtraction Integers",
+    "alumnos": 1226,
+    "L0": 0.65,
+    "T": 0.02,
+    "G": 0.35,
+    "S": 0.15,
+    "oportunidades_95": 96.3
+   },
+   {
+    "habilidad": "Conversion of Fraction Decimals Percents",
+    "alumnos": 1225,
+    "L0": 0.65,
+    "T": 0.02,
+    "G": 0.35,
+    "S": 0.2,
+    "oportunidades_95": 96.3
+   },
+   {
+    "habilidad": "Percent Of",
+    "alumnos": 1115,
+    "L0": 0.45,
+    "T": 0.1,
+    "G": 0.2,
+    "S": 0.15,
+    "oportunidades_95": 22.8
+   },
+   {
+    "habilidad": "Absolute Value",
+    "alumnos": 1002,
+    "L0": 0.65,
+    "T": 0.14,
+    "G": 0.35,
+    "S": 0.1,
+    "oportunidades_95": 12.9
+   },
+   {
+    "habilidad": "Addition Whole Numbers",
+    "alumnos": 988,
+    "L0": 0.65,
+    "T": 0.18,
+    "G": 0.35,
+    "S": 0.1,
+    "oportunidades_95": 9.8
+   },
+   {
+    "habilidad": "Equation Solving Two or Fewer Steps",
+    "alumnos": 961,
+    "L0": 0.65,
+    "T": 0.06,
+    "G": 0.25,
+    "S": 0.25,
+    "oportunidades_95": 31.4
+   },
+   {
+    "habilidad": "Ordering Positive Decimals",
+    "alumnos": 942,
+    "L0": 0.65,
+    "T": 0.1,
+    "G": 0.35,
+    "S": 0.1,
+    "oportunidades_95": 18.5
+   },
+   {
+    "habilidad": "Probability of a Single Event",
+    "alumnos": 939,
+    "L0": 0.85,
+    "T": 0.14,
+    "G": 0.15,
+    "S": 0.15,
+    "oportunidades_95": 7.3
+   },
+   {
+    "habilidad": "Subtraction Whole Numbers",
+    "alumnos": 903,
+    "L0": 0.75,
+    "T": 0.1,
+    "G": 0.1,
+    "S": 0.2,
+    "oportunidades_95": 15.3
+   },
+   {
+    "habilidad": "Multiplication and Division Integers",
+    "alumnos": 900,
+    "L0": 0.95,
+    "T": 0.06,
+    "G": 0.15,
+    "S": 0.15,
+    "oportunidades_95": 0.0
+   },
+   {
+    "habilidad": "Ordering Fractions",
+    "alumnos": 882,
+    "L0": 0.75,
+    "T": 0.1,
+    "G": 0.35,
+    "S": 0.1,
+    "oportunidades_95": 15.3
+   },
+   {
+    "habilidad": "Median",
+    "alumnos": 791,
+    "L0": 0.45,
+    "T": 0.1,
+    "G": 0.35,
+    "S": 0.15,
+    "oportunidades_95": 22.8
+   },
+   {
+    "habilidad": "Multiplication Fractions",
+    "alumnos": 783,
+    "L0": 0.55,
+    "T": 0.14,
+    "G": 0.3,
+    "S": 0.2,
+    "oportunidades_95": 14.6
+   },
+   {
+    "habilidad": "Finding Percents",
+    "alumnos": 771,
+    "L0": 0.45,
+    "T": 0.1,
+    "G": 0.1,
+    "S": 0.2,
+    "oportunidades_95": 22.8
+   },
+   {
+    "habilidad": "Range",
+    "alumnos": 769,
+    "L0": 0.75,
+    "T": 0.42,
+    "G": 0.05,
+    "S": 0.15,
+    "oportunidades_95": 3.0
+   },
+   {
+    "habilidad": "Proportion",
+    "alumnos": 756,
+    "L0": 0.55,
+    "T": 0.06,
+    "G": 0.35,
+    "S": 0.2,
+    "oportunidades_95": 35.5
+   },
+   {
+    "habilidad": "Addition and Subtraction Positive Decimals",
+    "alumnos": 753,
+    "L0": 0.65,
+    "T": 0.06,
+    "G": 0.15,
+    "S": 0.2,
+    "oportunidades_95": 31.4
+   },
+   {
+    "habilidad": "Division Fractions",
+    "alumnos": 724,
+    "L0": 0.75,
+    "T": 0.18,
+    "G": 0.1,
+    "S": 0.2,
+    "oportunidades_95": 8.1
+   },
+   {
+    "habilidad": "Table",
+    "alumnos": 713,
+    "L0": 0.85,
+    "T": 0.1,
+    "G": 0.1,
+    "S": 0.2,
+    "oportunidades_95": 10.4
+   },
+   {
+    "habilidad": "Mean",
+    "alumnos": 680,
+    "L0": 0.75,
+    "T": 0.1,
+    "G": 0.05,
+    "S": 0.35,
+    "oportunidades_95": 15.3
+   },
+   {
+    "habilidad": "Order of Operations +,-,/,* () positive reals",
+    "alumnos": 664,
+    "L0": 0.85,
+    "T": 0.06,
+    "G": 0.1,
+    "S": 0.25,
+    "oportunidades_95": 17.8
+   },
+   {
+    "habilidad": "Order of Operations All",
+    "alumnos": 651,
+    "L0": 0.55,
+    "T": 0.18,
+    "G": 0.25,
+    "S": 0.2,
+    "oportunidades_95": 11.1
+   },
+   {
+    "habilidad": "Unit Rate",
+    "alumnos": 626,
+    "L0": 0.65,
+    "T": 0.1,
+    "G": 0.15,
+    "S": 0.35,
+    "oportunidades_95": 18.5
+   },
+   {
+    "habilidad": "Exponents",
+    "alumnos": 619,
+    "L0": 0.95,
+    "T": 0.14,
+    "G": 0.05,
+    "S": 0.2,
+    "oportunidades_95": 0.0
+   },
+   {
+    "habilidad": "Circle Graph",
+    "alumnos": 616,
+    "L0": 0.55,
+    "T": 0.06,
+    "G": 0.15,
+    "S": 0.3,
+    "oportunidades_95": 35.5
+   },
+   {
+    "habilidad": "Mode",
+    "alumnos": 572,
+    "L0": 0.85,
+    "T": 0.38,
+    "G": 0.05,
+    "S": 0.05,
+    "oportunidades_95": 2.3
+   },
+   {
+    "habilidad": "Venn Diagram",
+    "alumnos": 552,
+    "L0": 0.85,
+    "T": 0.06,
+    "G": 0.05,
+    "S": 0.2,
+    "oportunidades_95": 17.8
+   },
+   {
+    "habilidad": "Box and Whisker",
+    "alumnos": 505,
+    "L0": 0.75,
+    "T": 0.14,
+    "G": 0.35,
+    "S": 0.15,
+    "oportunidades_95": 10.7
+   },
+   {
+    "habilidad": "Ordering Integers",
+    "alumnos": 490,
+    "L0": 0.85,
+    "T": 0.06,
+    "G": 0.35,
+    "S": 0.15,
+    "oportunidades_95": 17.8
+   }
+  ],
+  "auc_bkt": 0.7178,
+  "auc_media_por_habilidad": 0.6024,
+  "mediana": {
+   "L0": 0.7,
+   "T": 0.1,
+   "G": 0.15,
+   "S": 0.2,
+   "oportunidades_95": 15.3
+  },
+  "p25_p75_T": [
+   0.06,
+   0.14
+  ],
+  "p25_p75_n95": [
+   10.5,
+   22.8
+  ]
+ },
+ "ct_filas": 16851,
+ "ct_alumnos": 587,
+ "ct_habilidades": 12,
+ "ct_acierto_por_hueco": {
+  "<5 min": [
+   0.6377,
+   9406
+  ],
+  "5–60 min": [
+   0.6071,
+   2596
+  ],
+  "1–24 h": [
+   0.5523,
+   306
+  ],
+  "1–7 días": [
+   0.5444,
+   878
+  ],
+  ">7 días": [
+   0.5345,
+   550
+  ]
+ },
+ "ct_regresion_hueco": {
+  "5–60 min": 0.0368,
+  "1–24 h": -0.2145,
+  "1–7 días": -0.251,
+  ">7 días": -0.2294,
+  "log_op": 0.046,
+  "ok_prev": 1.0688,
+  "nota": "logit; categoría base <5 min; controla número de oportunidad y acierto anterior"
+ },
+ "ct_siguiente_tras": {
+  "acierto": [
+   0.7094,
+   7949
+  ],
+  "con pista": [
+   0.3855,
+   3128
+  ],
+  "error sin pista": [
+   0.6281,
+   2659
+  ]
+ },
+ "ct_curva": {
+  "1": 0.383,
+  "2": 0.4958,
+  "3": 0.4486,
+  "4": 0.3626,
+  "5": 0.3202,
+  "6": 0.2828,
+  "7": 0.2796,
+  "8": 0.2667,
+  "9": 0.3082,
+  "10": 0.338,
+  "11": 0.3828,
+  "12": 0.3436,
+  "13": 0.3333,
+  "14": 0.3821,
+  "15": 0.3222,
+  "16": 0.4048,
+  "17": 0.3846,
+  "18": 0.4237,
+  "19": 0.5349,
+  "20": 0.5122
+ },
+ "ct_bkt": {
+  "habilidades": [
+   {
+    "habilidad": "Calculate unit rate",
+    "alumnos": 470,
+    "L0": 0.85,
+    "T": 0.06,
+    "G": 0.3,
+    "S": 0.35,
+    "oportunidades_95": 17.8
+   },
+   {
+    "habilidad": "Calculate part in proportion with fractions",
+    "alumnos": 453,
+    "L0": 0.65,
+    "T": 0.14,
+    "G": 0.35,
+    "S": 0.15,
+    "oportunidades_95": 12.9
+   },
+   {
+    "habilidad": "Calculate total in proportion with fractions",
+    "alumnos": 451,
+    "L0": 0.55,
+    "T": 0.26,
+    "G": 0.25,
+    "S": 0.15,
+    "oportunidades_95": 7.3
+   },
+   {
+    "habilidad": "Plot terminating proper fraction",
+    "alumnos": 256,
+    "L0": 0.65,
+    "T": 0.02,
+    "G": 0.3,
+    "S": 0.35,
+    "oportunidades_95": 96.3
+   },
+   {
+    "habilidad": "Plot whole number",
+    "alumnos": 256,
+    "L0": 0.95,
+    "T": 0.5,
+    "G": 0.35,
+    "S": 0.1,
+    "oportunidades_95": 0.0
+   },
+   {
+    "habilidad": "Plot non-terminating improper fraction",
+    "alumnos": 255,
+    "L0": 0.75,
+    "T": 0.22,
+    "G": 0.05,
+    "S": 0.3,
+    "oportunidades_95": 6.5
+   },
+   {
+    "habilidad": "Plot pi",
+    "alumnos": 253,
+    "L0": 0.45,
+    "T": 0.5,
+    "G": 0.35,
+    "S": 0.05,
+    "oportunidades_95": 3.5
+   },
+   {
+    "habilidad": "Plot imperfect radical",
+    "alumnos": 253,
+    "L0": 0.35,
+    "T": 0.14,
+    "G": 0.05,
+    "S": 0.35,
+    "oportunidades_95": 17.0
+   },
+   {
+    "habilidad": "Plot decimal - thousandths",
+    "alumnos": 251,
+    "L0": 0.15,
+    "T": 0.38,
+    "G": 0.2,
+    "S": 0.3,
+    "oportunidades_95": 5.9
+   },
+   {
+    "habilidad": "Finding the intersection, Mixed",
+    "alumnos": 74,
+    "L0": 0.65,
+    "T": 0.1,
+    "G": 0.25,
+    "S": 0.35,
+    "oportunidades_95": 18.5
+   },
+   {
+    "habilidad": "Finding the intersection, GLF",
+    "alumnos": 72,
+    "L0": 0.35,
+    "T": 0.1,
+    "G": 0.35,
+    "S": 0.1,
+    "oportunidades_95": 24.3
+   },
+   {
+    "habilidad": "Finding the intersection, SIF",
+    "alumnos": 71,
+    "L0": 0.05,
+    "T": 0.14,
+    "G": 0.35,
+    "S": 0.05,
+    "oportunidades_95": 19.5
+   }
+  ],
+  "auc_bkt": 0.6965,
+  "auc_media_por_habilidad": 0.6456,
+  "mediana": {
+   "L0": 0.6,
+   "T": 0.14,
+   "G": 0.3,
+   "S": 0.225,
+   "oportunidades_95": 14.95
+  },
+  "p25_p75_T": [
+   0.1,
+   0.29
+  ],
+  "p25_p75_n95": [
+   6.3,
+   18.8
+  ]
+ }
+}
