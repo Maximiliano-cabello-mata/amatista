@@ -139,6 +139,7 @@ function EjemploResuelto({ ejemplo }) {
 }
 
 // Motor 3.5: lo que dice el instructor en Blender, aquí mismo, y los botones para manejar la práctica.
+// Motor 4: la misión de la ruta (número, parte, qué hacer y sus teclas) con su barra de avance.
 function InstructorEnVivo({ instructor, ordenar, enviando }) {
   const controles = controlesDisponibles(instructor);
   const pedir = (control) => {
@@ -153,8 +154,32 @@ function InstructorEnVivo({ instructor, ordenar, enviando }) {
       {instructor.viendoEjemplo && (
         <p className="mt-1 text-sm text-amber-200">Tu Blender muestra el ejemplo resuelto en su propia escena: nada de ahí cuenta para tu práctica.</p>
       )}
-      {instructor.titulo && <p className="mt-1 font-bold text-white">{instructor.titulo}</p>}
-      {instructor.mensaje && <p className="mt-1 text-sm leading-relaxed text-texto/85">{instructor.mensaje}</p>}
+      {instructor.total > 0 && (
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10" aria-hidden="true">
+          <div
+            className="h-full rounded-full bg-neon transition-all duration-500"
+            style={{ width: `${Math.round((100 * instructor.misionesHechas) / instructor.total)}%` }}
+          />
+        </div>
+      )}
+      {instructor.titulo && <p className="mt-2 font-bold text-white">{instructor.titulo}</p>}
+      {instructor.objetivo && <p className="mt-1 text-sm leading-relaxed text-texto/70">{instructor.objetivo}</p>}
+      {instructor.pasos.length > 0 && (
+        <ol className="mt-2 space-y-1">
+          {instructor.pasos.map((p, i) => (
+            <li key={i} className="flex flex-wrap items-center gap-1.5 text-sm text-texto/85">
+              <span className="font-mono text-[11px] text-neon">{i + 1}</span>
+              {(p.teclas ?? []).map((t, j) => (
+                <kbd key={j} className="rounded border border-white/20 bg-base/80 px-1.5 py-0.5 font-mono text-[11px] text-white">
+                  {t}
+                </kbd>
+              ))}
+              <span>{p.texto}</span>
+            </li>
+          ))}
+        </ol>
+      )}
+      {instructor.mensaje && <p className="mt-2 text-sm leading-relaxed text-texto/85">{instructor.mensaje}</p>}
       <ListaEjemplo instructor={instructor} />
       <div className="mt-3 flex flex-wrap gap-2">
         {controles.map((control) => (

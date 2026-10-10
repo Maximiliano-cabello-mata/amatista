@@ -15,7 +15,7 @@ export const BLENDER_MINIMO = '4.2';
 
 // El descargable: Amatista Motor (add-on + motor de prácticas). La versión
 // coincide con addon/amatista_blender/blender_manifest.toml (lo revisa logica.test.js).
-export const MOTOR = { nombre: 'Amatista Motor', version: '3.5.1' };
+export const MOTOR = { nombre: 'Amatista Motor', version: '4.0.0' };
 export const NOMBRE_MOTOR = `${MOTOR.nombre} ${MOTOR.version.split('.').slice(0, 2).join('.')}`;
 
 // ¿El servidor entrega la misma versión que espera esta plataforma?
@@ -157,7 +157,12 @@ export function instructorEnVivo(blender) {
   const lista = Array.isArray(d.lista) ? d.lista : [];
   return {
     titulo: d.titulo || '',
-    paso: d.total ? `Paso ${d.numero} de ${d.total}` : '',
+    // Motor 4: «Misión 4 de 11 · Las ruedas» (la misma tarjeta que en Blender).
+    paso: d.total ? `${d.parte !== undefined ? 'Misión' : 'Paso'} ${d.numero} de ${d.total}${d.parte ? ` · ${d.parte}` : ''}` : '',
+    objetivo: d.objetivo || '',
+    pasos: Array.isArray(d.pasos) ? d.pasos.filter((p) => p && p.texto) : [],
+    misionesHechas: Number.isFinite(d.hechas) ? d.hechas : 0,
+    total: d.total || 0,
     mensaje: d.mensaje || '',
     lista,
     hechas: lista.filter((i) => i.ok).length,

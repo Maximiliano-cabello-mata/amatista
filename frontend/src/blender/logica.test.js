@@ -109,16 +109,16 @@ describe('primera práctica en el módulo 2', () => {
 });
 
 describe('Amatista Motor', () => {
-  it('se llama «Amatista Motor 3.5» y coincide con el manifiesto del add-on', async () => {
+  it('se llama «Amatista Motor 4.0» y coincide con el manifiesto del add-on', async () => {
     const { readFileSync } = await import('node:fs');
     const manifiesto = readFileSync(new URL('../../../addon/amatista_blender/blender_manifest.toml', import.meta.url), 'utf8');
     expect(manifiesto).toContain(`version = "${MOTOR.version}"`);
     expect(manifiesto).toContain(`name = "${MOTOR.nombre}"`);
-    expect(NOMBRE_MOTOR).toBe('Amatista Motor 3.5');
+    expect(NOMBRE_MOTOR).toBe('Amatista Motor 4.0');
   });
 
   it('avisa si el servidor entrega una versión vieja', () => {
-    expect(versionDelServidor({ version_addon: '3.5.1' })).toEqual({ conocida: true, version: '3.5.1', alDia: true });
+    expect(versionDelServidor({ version_addon: '4.0.0' })).toEqual({ conocida: true, version: '4.0.0', alDia: true });
     expect(versionDelServidor({ version_addon: '3.4.0' }).alDia).toBe(false);
     expect(versionDelServidor({ version_addon: '3.0.0' }).alDia).toBe(false);
     expect(versionDelServidor(null).conocida).toBe(false);
@@ -159,6 +159,12 @@ describe('el instructor en vivo (motor 3.5)', () => {
   it('resume lo que muestra Blender', () => {
     const i = instructorEnVivo({ detalle });
     expect(i.paso).toBe('Paso 3 de 5');
+    // Motor 4: la misión de la ruta, con su parte y sus teclas.
+    const m = instructorEnVivo({ detalle: { ...detalle, parte: 'Las ruedas', hechas: 2, objetivo: 'Aplánala.', pasos: [{ texto: 'Escala en Z', teclas: ['S', 'Z'] }, { teclas: [] }] } });
+    expect(m.paso).toBe('Misión 3 de 5 · Las ruedas');
+    expect(m.misionesHechas).toBe(2);
+    expect(m.objetivo).toBe('Aplánala.');
+    expect(m.pasos).toEqual([{ texto: 'Escala en Z', teclas: ['S', 'Z'] }]);
     expect(i.modo).toBe('Modo Edición');
     expect(i.hechas).toBe(1);
     expect(instructorEnVivo({ detalle: null })).toBeNull();
