@@ -14,6 +14,7 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 | [06 · Módulo 3: modelado con precisión](06_modulo_3_modelado_precision.md) | Histórico: el módulo de precisión de la v2 como ejemplo completo (hoy archivado en `frontend/src/data/modulos/archivo/`). |
 | [07 · Herramientas gráficas](07_herramientas_graficas.md) | Qué gráficos tenemos, qué se agregó en la v3.2 y qué conviene desarrollar (investigación). |
 | [08 · Auditoría educativa (9 oct)](08_auditoria_educativa_2026-10-09.md) | Qué está bien, qué está fallando y qué se corrige primero en documentación y producto. |
+| [09 · Guía, vista de alumno y auditoría (10 oct)](09_guia_vista_y_auditoria.md) | La guía de primeros pasos para alumnos nuevos, las instrucciones en cada lección y curso, y para el equipo: vista de alumno o administrador, saltar a cualquier lección y la auditoría. |
 
 ![Un módulo con su práctica en Blender](img/modulo_ruta.svg)
 
