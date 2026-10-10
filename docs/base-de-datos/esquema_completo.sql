@@ -8,26 +8,28 @@
 -- #   Este archivo NO es idempotente, NO comprueba nada, NO da permisos y     #
 -- #   NO crea el job de purga. Ejecutarlo sobre una base con datos fallaría   #
 -- #   (las tablas ya existen) y sobre una base vacía dejaría un esquema       #
--- #   que los scripts 002-007 no reconocen como suyo en todos los detalles    #
+-- #   que los scripts 002-011 no reconocen como suyo en todos los detalles    #
 -- #   (orden de columnas, partición inicial, permisos).                      #
 -- #                                                                           #
 -- #############################################################################
 --
 -- Qué es: el estado FINAL del esquema ADMIN tras aplicar
---   001 -> 002 -> 003 -> 005 -> 006 -> 007 (y 004, opcional),
+--   001 -> 002 -> 003 -> 005 -> 006 -> 007 -> 008 -> 010 -> 011 (y 004, opcional;
+--   009 solo archiva filas y no cambia el esquema),
 -- escrito como un CREATE TABLE por tabla con los ALTER TABLE de los scripts
 -- posteriores ya aplicados. Cada columna indica entre corchetes el script que
 -- la crea o la cambia por última vez.
 --
--- Actualizado: 4 de octubre de 2026 (main en c730c0e).
--- Fuentes: backend/sql/001_esquema_amatista.sql ... 007_motor_practicas.sql
+-- Actualizado: 10 de octubre de 2026 (main con el script 011, Motor 3.5.1).
+-- Fuentes: backend/sql/001_esquema_amatista.sql ... 011_detalle_instructor.sql
 --          y backend/database/modelos.py (fuente de verdad de columnas).
 -- Explicación de cada tabla y columna: docs/base-de-datos/esquema.md
 --
 -- Producción (03/10/2026): tiene 002, 003, 005 y 006 sobre la base de 001
 -- (14 tablas). 007 (las 4 últimas tablas y V_AMATISTA_PRACTICAS) está
--- pendiente hasta después del piloto del 8 de octubre (T-055). 004 no se ha
--- aplicado (T-004).
+-- pendiente hasta después del piloto del 8 de octubre (T-055), igual que 008
+-- y 009 (T-064), 010 (las 2 tablas del enlace en vivo, T-087) y 011 (la
+-- columna ADDON_ENLACES.DETALLE de Motor 3.5.1). 004 no se ha aplicado (T-004).
 --
 -- Orden de este archivo: por dependencias de llaves foráneas (NIVELES va
 -- antes que MODULOS aunque la crea 005; en la base real MODULOS existe antes
@@ -145,7 +147,7 @@ CREATE INDEX ix_eventos_fecha ON eventos_aprendizaje (ocurrido_en) LOCAL;
 -- 3. CONTENIDO: CURSOS > NIVELES > MODULOS > LECCIONES
 -- =============================================================================
 
--- CURSOS · 12 columnas · 002.
+-- CURSOS · 14 columnas · creada por 002, ampliada por 008.
 CREATE TABLE cursos (
   id              VARCHAR2(50)        NOT NULL,
   numero          VARCHAR2(5),
@@ -159,8 +161,12 @@ CREATE TABLE cursos (
   orden           NUMBER(5) DEFAULT 0 NOT NULL,
   estado          VARCHAR2(12) DEFAULT 'publicado' NOT NULL,
   actualizado_en  TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL,
+  ruta            VARCHAR2(30),                                        -- [008] 'blender', 'aframe'
+  requisito_id    VARCHAR2(50),                                        -- [008] curso que conviene terminar antes
   CONSTRAINT pk_cursos PRIMARY KEY (id),
-  CONSTRAINT ck_cursos_estado CHECK (estado IN ('borrador', 'publicado', 'archivado'))
+  CONSTRAINT ck_cursos_estado CHECK (estado IN ('borrador', 'publicado', 'archivado')),
+  CONSTRAINT fk_cursos_requisito FOREIGN KEY (requisito_id) REFERENCES cursos (id),          -- [008]
+  CONSTRAINT ck_cursos_requisito CHECK (requisito_id IS NULL OR requisito_id <> id)          -- [008]
 );
 
 -- NIVELES · 10 columnas · 005.
@@ -407,6 +413,47 @@ CREATE INDEX ix_prog_practicas_practica ON progreso_practicas (practica_id);
 
 
 -- =============================================================================
+-- 5b. ENLACE EN VIVO PLATAFORMA <-> BLENDER (010 y 011) · PENDIENTE EN PRODUCCIÓN (T-087)
+-- =============================================================================
+
+-- ADDON_ENLACES · 12 columnas · 010 y 011. Un Blender abierto y conectado: su
+-- último latido, la orden pendiente y lo que muestra el instructor (011). Se borra con su sesión (ON DELETE CASCADE).
+CREATE TABLE addon_enlaces (
+  sesion_id        VARCHAR2(64)        NOT NULL,
+  usuario_id       VARCHAR2(100)       NOT NULL,
+  visto_en         TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL,
+  practica_id      VARCHAR2(80),
+  paso             VARCHAR2(80),
+  progreso         NUMBER(3),
+  enfocado         NUMBER(1) DEFAULT 0 NOT NULL,
+  version_addon    VARCHAR2(20),
+  version_blender  VARCHAR2(20),
+  orden            VARCHAR2(1000 CHAR),                                -- JSON: {"id","tipo","datos"}
+  orden_en         TIMESTAMP,
+  detalle          CLOB,                                               -- [011] JSON: lo que muestra el instructor
+  CONSTRAINT pk_addon_enlaces PRIMARY KEY (sesion_id),
+  CONSTRAINT fk_enlaces_sesion FOREIGN KEY (sesion_id) REFERENCES sesiones (id) ON DELETE CASCADE,
+  CONSTRAINT fk_enlaces_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id),
+  CONSTRAINT ck_enlaces_progreso CHECK (progreso IS NULL OR progreso BETWEEN 0 AND 100),
+  CONSTRAINT ck_enlaces_enfocado CHECK (enfocado IN (0, 1)),
+  CONSTRAINT ck_enlaces_orden CHECK (orden IS JSON),
+  CONSTRAINT ck_enlaces_detalle CHECK (detalle IS JSON)                       -- [011]
+);
+CREATE INDEX ix_addon_enlaces_usuario ON addon_enlaces (usuario_id);
+
+-- ADDON_AJUSTES · 3 columnas · 010. Cómo se ve Blender para cada alumno
+-- (Mi Blender): enfoque, acompañamiento, avisos y tarjeta 3D.
+CREATE TABLE addon_ajustes (
+  usuario_id       VARCHAR2(100)       NOT NULL,
+  datos            VARCHAR2(1000 CHAR) NOT NULL,                       -- JSON
+  actualizado_en   TIMESTAMP DEFAULT SYSTIMESTAMP NOT NULL,
+  CONSTRAINT pk_addon_ajustes PRIMARY KEY (usuario_id),
+  CONSTRAINT fk_ajustes_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios (id),
+  CONSTRAINT ck_ajustes_datos CHECK (datos IS JSON)
+);
+
+
+-- =============================================================================
 -- 6. VISTAS
 -- =============================================================================
 
@@ -617,12 +664,13 @@ END amatista_autor;
 -- =============================================================================
 -- 8. USUARIO DE APLICACIÓN (004, OPCIONAL) · solo como comentario
 -- =============================================================================
--- El script real valida las 18 tablas, pide la contraseña en v_password y es
+-- El script real exige las tablas de 002 y 005 (las de 007 y 010 son
+-- opcionales), da permisos sobre las 20 tablas que existan, pide la contraseña en v_password y es
 -- repetible: backend/sql/004_usuario_aplicacion.sql.
 --
 --   CREATE USER amatista_app IDENTIFIED BY "<contraseña>";
 --   GRANT CREATE SESSION TO amatista_app;
---   GRANT SELECT, INSERT, UPDATE, DELETE ON <cada una de las 18 tablas> TO amatista_app;
+--   GRANT SELECT, INSERT, UPDATE, DELETE ON <cada una de las 20 tablas> TO amatista_app;
 --
 -- backend/.env: DB_USER=AMATISTA_APP, DB_ESQUEMA=ADMIN.
 

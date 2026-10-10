@@ -41,15 +41,15 @@ Reglas que no cambian: migraciones solo aditivas (nunca se borran usuarios ni pr
 
 ## 3. Fases y orden de ejecución
 
-> **Dónde estamos (4 de octubre de 2026).** Lo que pasó de verdad, para no confundir el plan con lo hecho:
+> **Dónde estamos (4 de octubre de 2026; revisado el 10 de octubre).** Lo que pasó de verdad, para no confundir el plan con lo hecho:
 >
 > | Fase | Estado real | Evidencia |
 > |---|---|---|
 > | 0 · Piloto v2.2 | Sigue abierta: faltan HTTPS (T-005), SMTP (T-032), prueba de punta a punta (T-029) y revisión de seguridad (T-030). La API ya corre como servicio en la VM con la unidad `amatista-backend` (T-003 en progreso). | [Bitácora técnica del 3 oct](../bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md) §20 |
 > | A · Estructura | Hecha, incluida T-035: 005 y 006 corren en producción desde el 3 oct (14 tablas, 8 niveles en borrador). Solo queda T-038 (versión principal de Blender), que espera decisión. | Misma bitácora, §14–§22 |
 > | B · El alumno ve la ruta | Sin empezar. | — |
-> | C · «Mi primer espacio 3D» | Sin empezar como tal; existe el módulo 2 de Blender en revisión con la práctica de la mesa. | `frontend/src/data/modulos/blender-modulo-2.json` |
-> | E · Add-on | **Adelantada a pedido de Maximiliano** (3 y 4 oct): motor de prácticas y add-on (PR #13, etapa 1) y el acompañamiento paso a paso con la práctica integrada en cada módulo (PR #14, etapa 2). En código está; en producción falta 007 (T-055) y probar el instalador en equipos reales (T-056). | [docs/motor/etapas/](../motor/etapas/etapa-1.md) |
+> | C · «Mi primer espacio 3D» | El plan de estudios v3 la reemplazó: el curso Principiante abre con «Fundamentos y navegación» y la práctica del tren. El módulo 2 con la práctica de la mesa quedó archivado. | `frontend/src/data/modulos/blender_principiante-modulo-1.json`; archivo en `frontend/src/data/modulos/archivo/` |
+> | E · Add-on | **Adelantada a pedido de Maximiliano** (3 y 4 oct): motor de prácticas y add-on (PR #13, etapa 1) y el acompañamiento paso a paso con la práctica integrada en cada módulo (PR #14, etapa 2). En código está, y desde el 9 de octubre llega a Amatista Motor 3.5.1 (PR #24 a #26). En producción faltan 007 a 011 (T-055, T-064 y T-087) y probar el instalador en equipos reales (T-056). | [docs/motor/etapas/](../motor/etapas/etapa-1.md) |
 >
 > El orden B → C → D sigue siendo el recomendado para el contenido. El add-on ya no espera a la fase C. La regla «el primer recorrido debe poder completarse sin add-on» queda en manos de cada práctica: el bloque admite `allowManual: true` para quien no puede instalar Blender (en la mesa está en `false`; decidirlo antes de publicar el módulo 2).
 

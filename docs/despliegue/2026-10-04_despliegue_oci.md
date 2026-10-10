@@ -50,6 +50,7 @@ En esta guía cada paso lleva una de dos marcas:
 | SMTP y primer administrador | **[Sin ejecutar]** | T-032; INC-010 §4 |
 | PWA en Cloudflare Pages | **[Sin ejecutar]** | T-024 (depende de T-005) |
 | Script 007 (motor de prácticas) | **[Sin ejecutar]**: después del piloto | T-055 |
+| Scripts 008, 009, 010 y 011 (cursos por ruta, archivo de la v2, enlace en vivo y detalle del instructor) | **[Sin ejecutar]**: después del piloto | T-064, T-087 y la [guía de 3.5.1](2026-10-09_correcciones_3_5_1.md) |
 | `despliegue/actualizar.sh` en la VM | **[Sin ejecutar]** (no hay registro de que se haya usado) | — |
 
 Otro dato que conviene saber antes de empezar: el 3 de octubre la VM trabajaba en una rama **local** llamada `despliegue/v3-2026-10-03` (bitácora §11). Revisa en qué rama está con `git -C ~/amatista status` antes de seguir (ver [§11](#11-actualizar-a-una-versión-nueva-y-revertir)).
@@ -160,13 +161,14 @@ Los scripts de [`backend/sql/`](../../backend/sql/) se ejecutan **a mano** en *D
 - [`backend/sql/LEEME.txt`](../../backend/sql/LEEME.txt): qué hace cada script y el orden.
 - [Oracle paso a paso](2026-10-02_oracle_paso_a_paso.md): 002, 003 y 004, `.env`, importar el contenido y crear el primer admin.
 - [Manual de Oracle v3](../reestructuracion/02_manual_oracle.md): 005, 006 y 007, y las herramientas de autor.
+- [Manual de 008 y 009](../base-de-datos/02_manual_008_009.md): 008, 009, 010 y 011, con la importación de los cursos nuevos.
 
-Orden de scripts (de `LEEME.txt`, sección 2):
+Orden de scripts (de `LEEME.txt`, sección 2, más 011, que según su nota en el mismo archivo va después de 010):
 
 | Caso | Orden |
 |---|---|
-| Base nueva o prototipo sin alumnos | `001 → 002 → 003 → 005 → 006 → 007 → 004` (opcional) |
-| Base con datos (producción) | `002 → 003 → 005 → 006 → 007 → 004` (opcional). **Nunca 001**: borra las tablas |
+| Base nueva o prototipo sin alumnos | `001 → 002 → 003 → 005 → 006 → 007 → 008 → 010 → 011 → 004` (opcional); 009 solo si hay datos de la v2 |
+| Base con datos (producción) | `002 → 003 → 005 → 006 → 007 → 008 → 010 → 011 → 004` (opcional) `→ 009`. **Nunca 001**: borra las tablas |
 
 Estado de producción: **[Comprobado]** 002, 003, 005 y 006 (14 tablas, bitácora §14–§22). **[Sin ejecutar]** 007 (después del piloto y **antes** de actualizar el backend al código del motor de prácticas, T-055) y 004 (T-004).
 
@@ -190,7 +192,7 @@ El servicio evita el error del puerto ocupado ([INC-002](../incidencias/2026-09-
 | Variables | `backend/.env` | `/etc/amatista/amatista-api.env` (root, 600) |
 | Escucha | Desconocido: comprobar | `127.0.0.1:8000`, 1 proceso, `--proxy-headers` solo para `127.0.0.1` |
 | Endurecimiento | Desconocido | `ProtectSystem=strict`, `NoNewPrivileges`, `PrivateTmp`, etc. |
-| `actualizar.sh` | La usa sola si `amatista-api` no existe (`actualizar.sh:25-29`) | La usa por defecto |
+| `actualizar.sh` | La usa sola si `amatista-api` no existe (`actualizar.sh:36-40`) | La usa por defecto |
 
 ### 7.1 Opción A: adoptar `amatista-backend` (la que ya corre)
 
@@ -246,7 +248,7 @@ Si `amatista-api` no arranca, vuelve atrás con `sudo systemctl disable --now am
 
 Consecuencias que hay que tener presentes:
 
-- **`backend/.env` se sigue leyendo.** `load_dotenv()` lo carga aunque la unidad tenga `EnvironmentFile`; solo gana lo que ya está en el entorno. Si conservas los dos archivos, una variable que falte en `/etc/...` se toma del `.env` viejo. `actualizar.sh` avisa si encuentra `backend/.env` (líneas 65-68). Una vez que funcione, borra `backend/.env` o deja en él solo lo que quieras usar en la terminal.
+- **`backend/.env` se sigue leyendo.** `load_dotenv()` lo carga aunque la unidad tenga `EnvironmentFile`; solo gana lo que ya está en el entorno. Si conservas los dos archivos, una variable que falte en `/etc/...` se toma del `.env` viejo. `actualizar.sh` avisa si encuentra `backend/.env` (líneas 109-112) y, si no lo encuentra, corre `diagnostico_oracle.py` y `contenido.py practicas --revisar` con `systemd-run` y ese archivo. Una vez que funcione, borra `backend/.env` o deja en él solo lo que quieras usar en la terminal.
 - **Las herramientas de terminal solo leen `backend/.env`.** `diagnostico_oracle.py`, `herramientas/contenido.py` y `herramientas/crear_admin.py` usan `database/conexion.py`, que no conoce `/etc/amatista/amatista-api.env`. Sin `backend/.env`, una forma de correrlas con las mismas variables que el servicio es dejar que systemd lea el archivo:
   ```bash
   sudo systemd-run --pty --wait --collect \

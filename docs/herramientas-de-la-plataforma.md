@@ -2,7 +2,7 @@
 
 Qué tecnologías, servicios y herramientas forman Amatista, para qué sirve cada una y dónde está en el repositorio. Para quien quiera entender de qué está hecha la plataforma antes de tocarla.
 
-Actualizado: 4 de octubre de 2026 (main en `c730c0e`). Las versiones salen de `frontend/package.json`, `backend/requirements*.txt`, `addon/amatista_blender/blender_manifest.toml` y `.github/workflows/`.
+Actualizado: 10 de octubre de 2026 (main con los PR #25, #26 y #27; Amatista Motor 3.5.1). Las versiones salen de `frontend/package.json`, `backend/requirements*.txt`, `addon/amatista_blender/blender_manifest.toml` y `.github/workflows/`.
 
 1. [Vista general](#1-vista-general)
 2. [PWA (frontend)](#2-pwa-frontend)
@@ -22,10 +22,10 @@ Actualizado: 4 de octubre de 2026 (main en `c730c0e`). Las versiones salen de `f
 flowchart LR
   subgraph Dispositivo del alumno
     PWA["PWA<br/>React 19 · Vite 8 · Tailwind 4<br/>IndexedDB · Service Worker · A-Frame"]
-    BL["Blender 4.2+<br/>add-on Amatista 0.3.0<br/>Amatista Engine"]
+    BL["Blender 4.2+<br/>add-on Amatista Motor 3.5.1<br/>Amatista Engine"]
   end
   subgraph VM Oracle Cloud
-    CADDY["Caddy<br/>HTTPS Let's Encrypt"]
+    CADDY["Caddy<br/>HTTPS con certificado de origen de Cloudflare"]
     API["FastAPI + Uvicorn<br/>SQLAlchemy 2 · python-oracledb<br/>systemd: amatista-backend"]
   end
   DB[("Oracle Autonomous DB 23ai<br/>esquema ADMIN")]
@@ -90,7 +90,7 @@ Detalle: [manual del código › backend](manual-del-codigo/03_backend.md) y [ba
 | Herramienta | Para qué la usamos |
 |---|---|
 | **Oracle Autonomous Database 23ai** (Oracle Cloud, Free Tier) | Producción: usuarios, sesiones, progreso, eventos, contenido, niveles, versiones de Blender, prácticas. Esquema `ADMIN`. |
-| **Scripts `backend/sql/001`–`007`** | Instalación y migraciones aditivas, ejecutadas a mano en Database Actions en el orden de `backend/sql/LEEME.txt`. |
+| **Scripts `backend/sql/001`–`011`** | Instalación y migraciones aditivas, ejecutadas a mano en Database Actions en el orden de `backend/sql/LEEME.txt`. |
 | **Paquete PL/SQL `AMATISTA_AUTOR` y vistas `V_AMATISTA_*`** | Crear niveles y lecciones y revisar el mapa del curso desde Database Actions (006). |
 | **Database Actions (SQL Developer Web)** | Donde se ejecutan los scripts y se consulta producción. |
 | **`backend/diagnostico_oracle.py`** | Compara las tablas reales con lo que espera el backend. |
@@ -104,9 +104,9 @@ Esquema completo: [base de datos](base-de-datos/README.md).
 | Herramienta | Para qué la usamos |
 |---|---|
 | **Blender 4.2 o posterior** | Donde el alumno hace la práctica de cada módulo. 4.2 es la primera versión con extensiones; la versión principal del curso se decide en T-038. |
-| **Add-on «Amatista» 0.3.0** (`addon/amatista_blender/`) | Paneles y tarjetas en Blender: modo Alumno (practicar, pistas, guía y acompañante), Vista previa y modo Desarrollador / Amatista Author. Licencia GPL-3.0-or-later por usar `bpy`. |
-| **Amatista Engine** (`engine/amatista_engine/`) | Motor declarativo: lee prácticas `amatista.practice/1`, evalúa objetivos con validadores y, desde la etapa 2, guía paso a paso. Python puro; se prueba sin Blender. |
-| **Prácticas JSON** (`practices/`) | Contenido de cada práctica: objetivos, pistas, guía. |
+| **Add-on «Amatista Motor» 3.5.1** (`addon/amatista_blender/`) | Paneles y tarjetas en Blender: pestañas Aprender, Practicar y Mi curso, una escena por práctica, «Ver el ejemplo», modo enfocado, el enlace en vivo con la lección y el modo Desarrollador / Amatista Author. Licencia GPL-3.0-or-later por usar `bpy`. |
+| **Amatista Engine** (`engine/amatista_engine/`) | Motor declarativo: lee prácticas `amatista.practice/1` y `/2`, evalúa objetivos con 42 validadores, guía paso a paso, reconoce figuras y su silueta y, desde el motor 3.5, revisa la escena del alumno contra el ejemplo resuelto de cada práctica. Python puro; se prueba sin Blender. |
+| **Prácticas JSON** (`practices/`) | Contenido de cada práctica: objetivos, pistas, guía, modelo de referencia y ejemplo resuelto (`example`). |
 | **Instalador por sistema** (`addon/herramientas/instalador/`) | `.bat` (Windows), `.command` (macOS) y `.sh` (Linux) que buscan Blender, comprueban la versión, instalan el add-on y vinculan la cuenta. |
 | **bpy de PyPI (Blender 5.0 como módulo)** | Solo en CI: ejecuta el add-on dentro de un Blender real sin ventana. |
 
@@ -118,7 +118,7 @@ Documentación: [Amatista Engine](motor/README.md) y [manual del código › mot
 |---|---|
 | **VM de Oracle Cloud (OCI)** | Aloja la API. App en `/home/opc/amatista`. |
 | **systemd** | Mantiene la API viva. En la VM la unidad se llama `amatista-backend`; la plantilla del repo es `despliegue/amatista-api.service` y `despliegue/actualizar.sh` detecta cuál existe. |
-| **Caddy** | HTTPS automático con Let's Encrypt, cabeceras de seguridad, límite de 1 MB por petición y oculta `/docs` (`despliegue/Caddyfile`, T-005). |
+| **Caddy** | HTTPS con el certificado de origen de Cloudflare (Let's Encrypt queda como alternativa sin Cloudflare), cabeceras de seguridad, límite de 1 MB por petición y oculta `/docs` (`despliegue/Caddyfile`, T-005). |
 | **`despliegue/actualizar.sh`** | En la VM: `git pull`, dependencias, pytest, reinicio del servicio y prueba de `/api/salud`; si algo falla vuelve al commit anterior. No aplica cambios de esquema. |
 | **Cloudflare Pages** (previsto) | Hospedaje de la PWA; ya contemplado en `CORS_ORIGINS` y `frontend/.env.example`. |
 

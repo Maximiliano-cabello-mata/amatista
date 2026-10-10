@@ -2,7 +2,7 @@
 
 Cómo avanzó el proyecto, commit por commit, desde el primer archivo (27 de septiembre de 2026) hasta hoy. Para quien quiera saber **qué se hizo, cuándo, quién y en qué orden**.
 
-Actualizado: 9 de octubre de 2026.
+Actualizado: 10 de octubre de 2026.
 
 - [Cómo leer esta cronología](#cómo-leer-esta-cronología)
 - [Resumen en una tabla](#resumen-en-una-tabla)
@@ -16,6 +16,8 @@ Actualizado: 9 de octubre de 2026.
 - [Etapa 5 · Amatista Engine (3 oct)](#etapa-5--amatista-engine-3-de-octubre-tarde)
 - [Etapa 6 · Motor etapa 2 y plataforma por módulos (3 oct)](#etapa-6--motor-etapa-2-y-plataforma-por-módulos-3-de-octubre-noche)
 - [Etapa 7 · Documentación completa (4 oct)](#etapa-7--documentación-completa-4-de-octubre)
+- [Etapa 8 · Motor v3, cursos por niveles y temáticas (4 oct)](#etapa-8--motor-v3-cursos-por-niveles-y-temáticas-4-de-octubre)
+- [Etapa 9 · Seguridad, rendimiento y Motor 3.3 (4 oct)](#etapa-9--seguridad-rendimiento-y-motor-33-4-de-octubre-noche)
 - [Etapa 10 · Integración plataforma-Blender (9 oct)](#etapa-10--integración-plataforma-blender-9-de-octubre)
 - [Lo que viene](#lo-que-viene)
 - [Números del proyecto](#números-del-proyecto)
@@ -53,6 +55,11 @@ Actualizado: 9 de octubre de 2026.
 | 4 oct | Temáticas | Un mundo por módulo, mascotas originales, Amatista Motor 3.2, prácticas registradas al arrancar | PR #19 (`927248c`) | `v3.0.0-alpha.7` (sin publicar) |
 | 4 oct, noche | Seguridad, rendimiento y Motor 3.3 | Auditoría y rendimiento automáticos, modelo de referencia, personajes interactivos, plan de despliegue | PR #20 (`de22ee6`) | — |
 | 4 oct, noche | Historia | Archivo histórico de la plataforma | PR #22 (`4576463`), `main` en `2402549` | `v3.0.0-alpha.8` (sin publicar) |
+| 5 oct, madrugada | Revisión del repositorio | Documentos al día y el tag alpha.8 en `crear-tags.sh` | PR #23 (`64dc37b`) | — |
+| 8 oct, noche | Plataforma y Blender integrados | Amatista Motor 3.4: enlace en vivo, «Abrir en Blender», modo enfocado, Oracle 010 | PR #24 (`255d054`) | `v3.0.0-alpha.9` (sin publicar) |
+| 9 oct | Blender como instructor y el ejemplo manda | Amatista Motor 3.5: escena por práctica, «Ahora en Blender», silueta, ejemplo resuelto en cada práctica | PR #25 (`8ca63b9`) | — |
+| 9 oct | Correcciones 3.5.1 | Silueta exigida, detalle del instructor compartido entre procesos, Oracle 011 | PR #26 (`9804dc5`) | — |
+| 9 oct | Documentación | Auditoría educativa y repaso de documentos | PR #27 (`0975b37`) | — |
 
 ---
 
@@ -182,11 +189,13 @@ El **PR #20** (23:20, hora de México; 5 de octubre en UTC) respondió a un pedi
 
 ## Etapa 10 · Integración plataforma-Blender (9 de octubre)
 
-Bitácoras del 9 de octubre documentan tres avances seguidos:
+Antes, el **PR #23** (5 de octubre, 02:28) dejó los documentos al día y preparó el tag `v3.0.0-alpha.8`. Después llegaron tres avances seguidos:
 
-- **Motor 3.4**: plataforma y Blender conectados con más control desde la PWA y modo enfocado para practicar.
-- **Motor 3.5**: Blender como instructor, checklist de figura y práctica por escena.
-- **Motor 3.5.1 / enfoque “el ejemplo manda”**: cada práctica con ejemplo resuelto en código y revisión autónoma contra ese ejemplo.
+- **Motor 3.4** (**PR #24**, 8 de octubre a las 21:56, ya 9 de octubre en UTC; tag `v3.0.0-alpha.9` en `255d054`): plataforma y Blender conectados por el enlace en vivo (Oracle 010), «Abrir en Blender» desde la lección y modo enfocado para practicar.
+- **Motor 3.5** (**PR #25**, 9 de octubre, 15:06): Blender como instructor, práctica por escena, la silueta de una figura y el enfoque «el ejemplo manda»: cada práctica con su ejemplo resuelto en código y la revisión de la escena del alumno contra ese ejemplo.
+- **Motor 3.5.1** (**PR #26**, de Codex, 15:27): la silueta se exige de verdad y lo que muestra el instructor se comparte entre procesos del backend en la columna `ADDON_ENLACES.DETALLE` (Oracle 011).
+
+El **PR #27** (17:31, de Copilot) agregó la [auditoría educativa](../plataforma/08_auditoria_educativa_2026-10-09.md) y repasó los documentos generales.
 
 Referencias:
 - [plataforma y Blender integrados](../bitacora/2026-10-09_plataforma_y_blender_integrados.md)
@@ -197,20 +206,20 @@ Referencias:
 
 | Fecha | Qué |
 |---|---|
-| 9 oct (estado actual) | Motor 3.4, 3.5 y 3.5.1 documentados en bitácora; foco en integración educativa plataforma-Blender |
+| 10 oct (estado actual) | Motor 3.5.1 en `main`; producción sigue en la v2.2 con 14 tablas y le faltan los scripts 007 a 011 |
 | próximo bloque | Cierre operativo y despliegue: T-065, T-078, T-079, T-032 |
 | siguiente versión | Examen final en servidor (T-083), optimización de portada móvil (T-080), varias aulas (T-081), curso avanzado (T-067) |
 
 ## Números del proyecto
 
-| Dato | Valor (5 oct, `main` en `2402549`) |
+| Dato | Valor (5 oct, `main` en `2402549`; al 10 de octubre cambian las filas de PR, scripts y tags) |
 |---|---|
 | Días con commits | 7 (27, 28 y 29 de septiembre; 1, 2, 3 y 4 de octubre, en hora de México) |
 | Commits en el repositorio original (`v2.0.1`) | 36 |
 | Commits en `main` | 176, de ellos 70 del bot del tablero |
-| PR fusionados en el repositorio oficial | 19 de 22 (#5 cerrado sin fusionar; #9 y #10 reunidos en #11; #21, del bot, cerrado) |
-| Scripts de Oracle | 9 (`001`–`009`); 18 tablas con 007 |
+| PR fusionados en el repositorio oficial | 24 de 27 al 10 de octubre (#5 cerrado sin fusionar; #9 y #10 reunidos en #11; #21, del bot, cerrado) |
+| Scripts de Oracle | 11 al 10 de octubre (`001`–`011`); 18 tablas con 007 y 20 con 010 |
 | Tags publicados | `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.1` |
-| Tags preparados en `herramientas/crear-tags.sh` | `v2.2.0-alpha.2` y `v3.0.0-alpha.1` a `v3.0.0-alpha.8` |
+| Tags preparados en `herramientas/crear-tags.sh` | `v2.2.0-alpha.2` y `v3.0.0-alpha.1` a `v3.0.0-alpha.9` (alpha.9 = `255d054`, Motor 3.4) |
 
 Para reproducir cualquier dato: `TZ=America/Mexico_City git log --date=format-local:'%Y-%m-%d %H:%M' --format='%h %ad %an %s' v2.0.1` (historial original) y lo mismo con `main`.

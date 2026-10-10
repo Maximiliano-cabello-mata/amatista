@@ -2,7 +2,7 @@
 
 Cómo está hecho y cómo se usa el código de `backend/`: arranque, configuración, mapa de archivos, todos los endpoints, autenticación, flujos principales, pruebas y recetas para cambiarlo. Para quien va a leer o modificar la API.
 
-Actualizado: 4 de octubre de 2026 (main en c730c0e)
+Actualizado: 10 de octubre de 2026 (main con los PR #25, #26 y #27; incluye el enlace en vivo y el detalle del instructor de Amatista Motor 3.5.1)
 
 **Índice**
 
@@ -121,7 +121,7 @@ flowchart TD
 
 - `motor()` está memorizado con `@lru_cache(maxsize=1)`: un solo `Engine` por proceso. Las pruebas lo vacían con `conexion.motor.cache_clear()`.
 - `obtener_db()` es la dependencia de FastAPI que abre una `Session` por petición y la cierra al final. **Los routers hacen `db.commit()` ellos mismos**; ante `SQLAlchemyError` hacen `rollback()` y lanzan `error_bd(...)` (`api/comun.py`), que registra el error completo y responde con la primera línea (incluye el código `ORA-xxxxx`).
-- Con SQLite, `create_all` crea las 18 tablas en el arranque. Con Oracle las crean los scripts `backend/sql/001` a `007` (orden y estado de producción en [`sql/LEEME.txt`](../../backend/sql/LEEME.txt)); si falta una tabla, las rutas que la usan responden 500/503 con el `ORA-00942`.
+- Con SQLite, `create_all` crea las 20 tablas en el arranque. Con Oracle las crean los scripts `backend/sql/001` a `011` (orden y estado de producción en [`sql/LEEME.txt`](../../backend/sql/LEEME.txt)); si falta una tabla, las rutas que la usan responden 500/503 con el `ORA-00942`.
 - `database/modelos.py` define `TextoJSON`: `python-oracledb` devuelve ya convertidas a `dict` las columnas con `CHECK (... IS JSON)` y SQLite devuelve texto; el tipo propio hace que el código siempre vea texto JSON.
 - `ahora()` (en `modelos.py`) devuelve la hora UTC **sin zona**, que es como se guarda todo `TIMESTAMP`.
 
@@ -137,8 +137,9 @@ backend/
 ├── api/                    routers y dependencias
 ├── database/               conexión y modelos SQLAlchemy
 ├── contenido/              validación de lecciones, plantillas, puente al motor
-├── herramientas/           CLI: contenido.py, crear_admin.py
-├── sql/                    scripts Oracle 001–007 + LEEME.txt
+├── herramientas/           CLI: contenido.py, crear_admin.py, migrar.py, auditoria_seguridad.py,
+│                           rendimiento.py, verificar_licencia.py
+├── sql/                    scripts Oracle 001–011 + LEEME.txt
 ├── tests/                  pytest con SQLite temporal
 ├── .env.example, pytest.ini, requirements*.txt, README.md
 ```
@@ -156,6 +157,7 @@ backend/
 | [`niveles.py`](../../backend/api/niveles.py) | `/api/contenido` | Niveles del curso (reestructuración v3) y mapa curso > nivel > módulo > lección. |
 | [`blender.py`](../../backend/api/blender.py) | `/api/blender` | Versiones de Blender y matriz de compatibilidad. |
 | [`addon.py`](../../backend/api/addon.py) | `/api/addon/v1` | Add-on de Blender: vínculo, prácticas del motor, intentos, descargas. |
+| [`enlace.py`](../../backend/api/enlace.py) | `/api/addon/v1` | Enlace en vivo plataforma↔Blender (sql/010 y sql/011): latido del add-on con el detalle del instructor, órdenes de la plataforma y ajustes de «Mi Blender». Sin las tablas de 010 responde «sin enlace en vivo» (`enlace: false`). |
 
 Módulos de apoyo (sin rutas):
 
@@ -192,8 +194,10 @@ Módulos de apoyo (sin rutas):
 | `Practica` | `PRACTICAS` | 007 | Práctica vigente y versión publicada. |
 | `PracticaVersion` | `PRACTICA_VERSIONES` | 007 | Historial de versiones. |
 | `ProgresoPractica` | `PROGRESO_PRACTICAS` | 007 | Avance por alumno y práctica. |
+| `AddonEnlace` | `ADDON_ENLACES` | 010 y 011 | El último latido de cada Blender conectado, su orden pendiente y, desde 011, el detalle que muestra el instructor (`DETALLE`, JSON). |
+| `AddonAjustes` | `ADDON_AJUSTES` | 010 | Cómo se ve Blender para cada alumno («Mi Blender»). |
 
-Según `sql/LEEME.txt`, producción tiene aplicados 002, 003, 005 y 006; **007 está pendiente** (T-055), así que en producción las rutas de `/api/addon/v1` que tocan esas tablas fallarían hasta ejecutarlo.
+`Curso` también tiene `ruta` y `requisito_id`, que agrega 008. Según `sql/LEEME.txt`, producción tiene aplicados 002, 003, 005 y 006; **007, 008, 009, 010 y 011 están pendientes** (T-055, T-064, T-087 y T-094), así que en producción las rutas de `/api/addon/v1` que tocan las tablas de 007 fallarían hasta ejecutarlo. Sin 010, el enlace en vivo responde `enlace: false` y lo demás funciona igual.
 
 ### 2.3 `contenido/`
 
@@ -227,6 +231,10 @@ Solo se nombran aquí; el manual del desarrollador las documenta a fondo.
 
 - [`herramientas/contenido.py`](../../backend/herramientas/contenido.py): CLI `validar | importar | exportar | nuevo-modulo | nueva-leccion | mapa | sembrar-niveles | practicas`. Reutiliza `importar_modulo`, `exportar_modulo`, `sembrar_niveles_blender` y `sincronizar_practicas` de la API.
 - [`herramientas/crear_admin.py`](../../backend/herramientas/crear_admin.py): da el rol `admin` (o `--rol profesor`) a una cuenta; `--crear` la crea.
+- [`herramientas/migrar.py`](../../backend/herramientas/migrar.py): respaldo en JSONL, carga en otra base y esquema para PostgreSQL.
+- [`herramientas/auditoria_seguridad.py`](../../backend/herramientas/auditoria_seguridad.py): ataca todas las rutas de la API y reporta hallazgos.
+- [`herramientas/rendimiento.py`](../../backend/herramientas/rendimiento.py): mide el backend con alumnos simultáneos.
+- [`herramientas/verificar_licencia.py`](../../backend/herramientas/verificar_licencia.py): dice de qué cuenta salió una copia del add-on.
 
 ### 2.7 `tests/`
 
@@ -364,6 +372,18 @@ Contrato detallado en [`05_api.md`](../motor/referencia/05_api.md).
 | GET | `/descargas/{sistema}` | opcional · 20/min | ZIP con instalador (`windows`, `macos`, `linux`); con sesión incluye un vínculo de un uso (7 días). |
 | GET | `/extension.zip` | público | Solo la extensión. |
 | GET | `/extensiones/index.json` | público | Índice de repositorio de extensiones de Blender. |
+
+### Enlace en vivo (`api/enlace.py`, prefijo `/api/addon/v1`)
+
+Necesita las tablas de `sql/010`; sin ellas, `GET /enlace` responde `{"enlace": false}` y el resto sigue igual. Detalle en [`12_plataforma_y_blender.md`](../motor/referencia/12_plataforma_y_blender.md).
+
+| Método | Ruta | Auth | Qué hace |
+|---|---|---|---|
+| POST | `/enlace` | sesión del add-on · 40/min por cuenta | El latido de Blender (práctica, paso, progreso, modo enfocado y lo que muestra el instructor). Responde la orden pendiente y los ajustes. |
+| GET | `/enlace` | sesión | Los Blender del alumno: si están abiertos, en qué práctica y paso van, y sus ajustes. |
+| POST | `/ordenes` | sesión de la plataforma · 30/min por cuenta | Deja una orden para el Blender del alumno: `abrir_practica`, `enfocar`, `ver_todo`, `actualizar`, `comprobar`, `pista`, `hazlo_conmigo`, `guardar`, `reiniciar` (exige `confirmar`), `ver_ejemplo` o `volver_practica`. |
+| GET | `/ajustes` | sesión | Los ajustes de «Mi Blender». |
+| PUT | `/ajustes` | sesión de la plataforma · 30/min por cuenta | Guarda los ajustes: `enfoque`, `acompanamiento`, `avisos_herramientas`, `tarjeta_3d`. |
 
 ---
 
@@ -525,14 +545,21 @@ Organización (`backend/tests/`, configuración en [`pytest.ini`](../../backend/
 | `test_progreso.py` | Progreso monotónico, anónimos, permisos de lectura | 23 |
 | `test_admin.py` | Métricas, usuarios, purga, salud | 23 |
 | `test_contenido.py` | Catálogo/ETag, edición, publicación, import/export | 25 |
+| `test_diagnostico.py` | Recomendaciones de `diagnostico_oracle.py` | 19 |
 | `test_esquema.py` | Modelos = scripts SQL = `ESPERADO` del diagnóstico; reglas de los scripts; `DB_ESQUEMA` y pool | 17 |
-| `test_diagnostico.py` | Recomendaciones de `diagnostico_oracle.py` | 15 |
+| `test_addon.py` | Vínculo, prácticas, intentos, descargas | 17 |
+| `test_enlace.py` | Latido, detalle del instructor, órdenes y ajustes del enlace en vivo; sin 010 | 25 |
 | `test_niveles.py` | Niveles, fichas v3, mapa, versiones de Blender y CLI de niveles | 14 |
 | `test_api.py` | Salud, sesión heredada, progreso básico, errores de BD, CORS, `dsn_oracle` | 13 |
-| `test_addon.py` | Vínculo, prácticas, intentos, descargas | 12 |
 | `test_eventos.py` | Eventos y deduplicación | 10 |
+| `test_seguridad.py` | Cabeceras, límites y errores sin detalles del esquema | 10 |
+| `test_migrar.py` | Exportar, importar y esquema PostgreSQL de `migrar.py` | 7 |
+| `test_practicas_al_arrancar.py` | El servidor registra y publica las prácticas al arrancar | 5 |
+| `test_proteccion_addon.py` | Integridad y marca de agua del add-on | 4 |
+| `test_ejemplo.py` | El ejemplo resuelto en la lección y en el enlace | 3 |
+| `test_pasos_lecciones.py` | Los pasos sin conexión de cada lección son los que entrega el servidor (parametrizada por lección) | 2 |
 
-(Las cifras cuentan funciones; las parametrizadas generan más casos.)
+Son 17 archivos y 263 funciones; con las parametrizadas, `pytest --collect-only` cuenta 368 casos (10 de octubre).
 
 Fixtures de `conftest.py`:
 
@@ -602,16 +629,16 @@ CI ([`.github/workflows/ci.yml`](../../.github/workflows/ci.yml), job `backend`)
 
 El orden importa: en producción **primero Oracle, después el código** (ver [`02_manual_oracle.md`](../reestructuracion/02_manual_oracle.md), sección 2).
 
-1. **Script Oracle nuevo y aditivo**: `backend/sql/008_<tema>.sql` (y 009, 010… después). **Nunca edites 001–007**: ya se ejecutaron (o se ejecutarán tal cual) en la base real; 001 además es destructivo. Copia la estructura de `005` o `007`: bloque PL/SQL idempotente con los procedimientos `ejecutar`, `crear_tabla`, `agregar_columna`, `agregar_restriccion`, `crear_indice` que consultan el diccionario antes de cada cambio, cada bloque terminado en una línea `/`, sin `DROP`, `DELETE FROM` ni `TRUNCATE`. Nombres de restricciones `CK_...`/`FK_...` como en los existentes. Usa `VARCHAR2` para ids y el mismo tipo en ambos lados de una FK.
+1. **Script Oracle nuevo y aditivo**: `backend/sql/012_<tema>.sql` (el siguiente libre). **Nunca edites 001–011**: ya se ejecutaron (o se ejecutarán tal cual) en la base real; 001 además es destructivo. Copia la estructura de `005` o `007`: bloque PL/SQL idempotente con los procedimientos `ejecutar`, `crear_tabla`, `agregar_columna`, `agregar_restriccion`, `crear_indice` que consultan el diccionario antes de cada cambio, cada bloque terminado en una línea `/`, sin `DROP`, `DELETE FROM` ni `TRUNCATE`. Nombres de restricciones `CK_...`/`FK_...` como en los existentes. Usa `VARCHAR2` para ids y el mismo tipo en ambos lados de una FK.
 2. **Modelo SQLAlchemy** en `database/modelos.py` con el mismo nombre, tipo y largo (`String(n)` ↔ `VARCHAR2(n)`, `Integer` ↔ `NUMBER`, `TIMESTAMP`, `Text`/`TextoJSON` ↔ `CLOB`). Si la columna tiene un `CHECK` con valores, pon los valores en una constante del módulo.
-3. **`diagnostico_oracle.py`**: agrega la tabla/columna a `ESPERADO`; si es una tabla nueva, considera una tupla `TABLAS_008` y su caso en `solucion()` como existen `TABLAS_005`/`TABLAS_007`, y las constantes `SCRIPT_00x`.
+3. **`diagnostico_oracle.py`**: agrega la tabla/columna a `ESPERADO`; si es una tabla nueva, considera una tupla como `TABLAS_010` y su caso en `solucion()` como existen `TABLAS_005`/`TABLAS_007`/`TABLAS_010`, y las constantes `SCRIPT_0xx`.
 4. **Actualiza las pruebas de esquema** que hoy nombran scripts concretos (`tests/test_esquema.py`):
-   - `test_la_verificacion_del_ultimo_script_espera_el_numero_correcto_de_columnas` lee la verificación de columnas de `script("007")`; el script nuevo debe traer su propia verificación y la prueba debe apuntar a él.
-   - `test_003_o_su_script_cuentan_filas_y_004_da_permisos...` busca el `COUNT(*) FROM <tabla>` solo en 003, 005 y 007, y exige que la lista de `sql/004` incluya todas las tablas: una tabla nueva obliga a ajustar esta prueba y a decidir cómo se dan permisos a `AMATISTA_APP` (004 todavía no se ha ejecutado en producción, según `sql/LEEME.txt`).
-   - `test_los_scripts_incrementales_no_borran_datos` está parametrizada con `["002", "005", "006", "007"]`: agrega `"008"`.
+   - `test_la_verificacion_del_ultimo_script_espera_el_numero_correcto_de_columnas` lee la verificación de columnas de `script("011")`; el script nuevo debe traer su propia verificación y la prueba debe apuntar a él.
+   - `test_003_o_su_script_cuentan_filas_y_004_da_permisos...` busca el `COUNT(*) FROM <tabla>` solo en 003, 005, 007 y 010, y exige que la lista de `sql/004` incluya todas las tablas: una tabla nueva obliga a ajustar esta prueba, a agregarla a 004 (como opcional en `v_opcional` si su script puede faltar) y a darle permisos a `AMATISTA_APP` en su propio script, como hacen 007 y 010.
+   - `test_los_scripts_incrementales_no_borran_datos` está parametrizada con `["002", "005", "006", "007", "008", "009", "010", "011"]`: agrega el tuyo.
    - `test_email_unico_y_checks_con_las_constantes_de_los_modelos` compara cada `CK_...` con su constante.
 5. **Código que la usa** (router, `usuario_publico`, etc.) y sus pruebas. Con SQLite no hace falta nada: `create_all` crea la columna en una base nueva (una base SQLite local vieja no se altera: bórrala).
-6. **Documenta** en `sql/LEEME.txt` (qué hace 008 y el orden) y en `backend/README.md`. Tras ejecutarlo en Oracle: `python diagnostico_oracle.py` debe decir que las tablas coinciden.
+6. **Documenta** en `sql/LEEME.txt` (qué hace 012 y el orden) y en `backend/README.md`. Tras ejecutarlo en Oracle: `python diagnostico_oracle.py` debe decir que las tablas coinciden.
 
 ### 7.3 Agregar un rol o un permiso
 
@@ -620,7 +647,7 @@ El orden importa: en producción **primero Oracle, después el código** (ver [`
 **Agregar un rol nuevo** (p. ej. `"autor"`) toca varias capas:
 
 1. `ROLES` en `database/modelos.py`. De ahí lo toman `admin.py` (validación de `PATCH /usuarios`, filtro `rol`, `por_rol` del resumen) y `herramientas/crear_admin.py` (`--rol` usa `choices=ROLES`).
-2. El `CHECK (rol IN ('alumno','profesor','admin'))` de `USUARIOS` (creado en `sql/002`, restricción `CK_USUARIOS_ROL`): un script nuevo `008+` que la reemplace de forma idempotente. `test_email_unico_y_checks...` exige que coincida con `ROLES`, así que habrá que adaptar cómo la prueba lee la restricción vigente.
+2. El `CHECK (rol IN ('alumno','profesor','admin'))` de `USUARIOS` (creado en `sql/002`, restricción `CK_USUARIOS_ROL`): un script nuevo `012+` que la reemplace de forma idempotente. `test_email_unico_y_checks...` exige que coincida con `ROLES`, así que habrá que adaptar cómo la prueba lee la restricción vigente.
 3. Las rutas que deban aceptarlo: añade el rol a cada `requiere_rol(...)` que corresponda, y a las comprobaciones escritas a mano: `puede_ver_alumno` (`api/dependencias.py`) y `es_equipo` (`api/addon.py`).
 4. Métricas: `alumnos_reales()` en `admin.py` cuenta solo `rol == "alumno"`; un rol nuevo quedará fuera de las métricas de alumnos (revisa si es lo que quieres).
 5. Mensajes que enumeran roles (`"Rol inválido: usa alumno, profesor o admin."` en `admin.py`).

@@ -2,7 +2,7 @@
 
 Cómo llegó Amatista hasta aquí: cuándo pasó cada cosa, de dónde salió cada idea y cómo se veía la plataforma en cada versión. Para quien quiera entender el proyecto completo o retomar una decisión antigua.
 
-Actualizado: 5 de octubre de 2026 (main en `34ed82d`).
+Actualizado: 10 de octubre de 2026.
 
 | # | Documento | Qué responde |
 |---|---|---|
@@ -24,6 +24,11 @@ Actualizado: 5 de octubre de 2026 (main en `34ed82d`).
 | Amatista Engine | 3 oct | Motor de prácticas, add-on de Blender, Oracle 007 | `v3.0.0-alpha.2` |
 | Motor etapa 2 y módulos | 3 oct | Guía paso a paso, práctica al cierre de cada módulo, navegación fija | `v3.0.0-alpha.3` |
 | Documentación completa | 4 oct | Historia, manuales, esquema SQL, README nuevo | `v3.0.0-alpha.4` |
+| Motor v3 y cursos por niveles | 4 oct | Plan de estudios en cursos, add-on 3.0 como aula, Oracle 008/009, curso unificado | `v3.0.0-alpha.5`, `alpha.6` |
+| Temáticas | 4 oct | Un mundo por módulo, mascotas, Amatista Motor 3.2 | `v3.0.0-alpha.7` |
+| Seguridad, rendimiento y Motor 3.3 | 4–5 oct | Auditoría, rendimiento, modelo de referencia, plan de despliegue | `v3.0.0-alpha.8` |
+| Plataforma y Blender integrados | 8–9 oct | Amatista Motor 3.4: enlace en vivo, «Abrir en Blender», modo enfocado, Oracle 010 | `v3.0.0-alpha.9` |
+| El ejemplo manda | 9 oct | Amatista Motor 3.5 y 3.5.1: escena por práctica, instructor, silueta, ejemplo resuelto, Oracle 011 | — |
 
 ## Otras fuentes históricas
 

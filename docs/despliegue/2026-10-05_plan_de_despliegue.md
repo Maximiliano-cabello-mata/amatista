@@ -1,10 +1,11 @@
 # Plan de despliegue de Amatista (v3.4)
 
-Actualizado: 5 de octubre de 2026. Reemplaza el orden de trabajo de los documentos anteriores; los detalles de cada paso siguen en sus guías:
+Actualizado: 5 de octubre de 2026; la fase 1 se revisó el 10 de octubre para Amatista Motor 3.5.1 y los scripts 010 y 011. Reemplaza el orden de trabajo de los documentos anteriores; los detalles de cada paso siguen en sus guías:
 
 - [Despliegue en OCI](2026-10-04_despliegue_oci.md): VM, systemd, Caddy, SMTP, actualizar y revertir.
 - [Dominio amatista-3d.me](2026-10-04_dominio_amatista-3d.md): Cloudflare, DNS, certificados, PWA en Pages.
 - [Pasos en Oracle y el servidor](../../backend/sql/LEEME.txt) y la [auditoría de seguridad](../seguridad/01_auditoria_2026-10-05.md).
+- [Actualizar a Motor 3.5.1](2026-10-09_correcciones_3_5_1.md): el script 011 y la comprobación del detalle del instructor.
 
 > **Regla de oro.** El piloto del **8 de octubre** corre sobre la v2.2 tal como está. Antes de esa fecha no se toca la VM ni Oracle. Todo lo de las fases 1 a 4 es para el **9 de octubre en adelante**, en ese orden. Cada fase termina con una comprobación; si falla, no se pasa a la siguiente.
 
@@ -14,7 +15,7 @@ Actualizado: 5 de octubre de 2026. Reemplaza el orden de trabajo de los document
 |---|---|---|---|---|
 | 0. Preparar sin tocar la VM | Hasta el 7/10 | Cloudflare, PWA en Pages, secretos | Max, desde su PC y el navegador | Sí |
 | Piloto | 8/10 | Nada | — | — |
-| 1. Actualizar la plataforma | 9/10 | Código de `main` en la VM y Motor 3.3 en Oracle ([sección propia](#subir-el-motor-33-a-oracle-parte-de-la-fase-1)) | Max, por SSH | Sí (`actualizar.sh` vuelve solo) |
+| 1. Actualizar la plataforma | 9/10 | Código de `main` en la VM, scripts 007 a 011 y las prácticas de Motor 3.5.1 en Oracle ([sección propia](#subir-el-motor-33-a-oracle-parte-de-la-fase-1)) | Max, por SSH | Sí (`actualizar.sh` vuelve solo) |
 | 2. HTTPS con el dominio | 9–10/10 | Caddy, firewall, `api.amatista-3d.me` | Max, por SSH y en OCI | Sí (volver a abrir el 8000) |
 | 3. Correo y cuentas | Después de la fase 2 | SMTP, administrador, confirmación de correo | Max | Sí |
 | 4. Comprobar y cerrar | Una semana después | Auditoría contra producción, HSTS, repo privado | Max | HSTS no se deshace rápido |
@@ -35,7 +36,7 @@ Actualizado: 5 de octubre de 2026. Reemplaza el orden de trabajo de los document
 
    ```bash
    git checkout main && git pull
-   bash herramientas/crear-tags.sh          # ya incluye v3.0.0-alpha.5 a alpha.7
+   bash herramientas/crear-tags.sh          # incluye v3.0.0-alpha.5 a alpha.9
    git push origin --tags
    git push origin --delete claude/reestructuracion-niveles-9xym5f claude/project-thread-bpfcse \
      claude/amatista-engine-x71veq claude/motor-etapa-2-8z6xd8 claude/documentacion-completa-s4sztc \
@@ -55,7 +56,7 @@ No se actualiza nada. Si algo se cae, la única acción es `sudo systemctl resta
 Sigue el archivo de pasos del servidor (`/mnt/project-files/despliegue/2026-10-05_pasos_despliegue.md`, el mismo contenido que esta sección con los comandos exactos). En corto:
 
 1. **Respaldo**: `python herramientas/migrar.py exportar ~/respaldos/$(date +%F)`; debe terminar con `manifiesto.json`.
-2. **Oracle** (Database Actions como ADMIN, **F5**): `007_motor_practicas.sql`, `008_cursos_por_ruta.sql` y, desde el Motor 3.4 (9 de octubre), `010_enlace_blender.sql` (enlace en vivo con Blender: `ADDON_ENLACES` y `ADDON_AJUSTES`). 010 se puede dejar para después: sin él la plataforma funciona igual, solo sin el estado de Blender en vivo. El siguiente libre es el **011**.
+2. **Oracle** (Database Actions como ADMIN, **F5**): `007_motor_practicas.sql`, `008_cursos_por_ruta.sql` y, desde el Motor 3.4 (9 de octubre), `010_enlace_blender.sql` (enlace en vivo con Blender: `ADDON_ENLACES` y `ADDON_AJUSTES`) y, desde Motor 3.5.1 (9 de octubre, PR #26), `011_detalle_instructor.sql` (la columna `ADDON_ENLACES.DETALLE`, que guarda lo que muestra el instructor). 010 y 011 se pueden dejar para después: sin ellos la plataforma funciona igual, solo sin el estado de Blender en vivo. Si aplicas 010, aplica también 011 antes de subir el backend 3.5.1 ([guía](2026-10-09_correcciones_3_5_1.md)). El siguiente libre es el **012**.
 3. **Variables nuevas** en `backend/.env` (todas explicadas en `backend/.env.example`):
 
    ```
@@ -65,12 +66,12 @@ Sigue el archivo de pasos del servidor (`/mnt/project-files/despliegue/2026-10-0
    AMATISTA_OCULTAR_DOCS=1
    ```
 
-   `AMATISTA_OCULTAR_DOCS=1` esconde `/docs` mientras la API siga expuesta sin Caddy. `AMATISTA_ADDON_VERIFICADO` se queda en `registrar` (acepta y marca las copias modificadas); pásalo a `exigir` solo cuando todos los alumnos tengan el Motor 3.3.
+   `AMATISTA_OCULTAR_DOCS=1` esconde `/docs` mientras la API siga expuesta sin Caddy. `AMATISTA_ADDON_VERIFICADO` se queda en `registrar` (acepta y marca las copias modificadas); pásalo a `exigir` solo cuando todos los alumnos tengan el Motor 3.5.1.
 4. **Código**: `bash /home/opc/amatista/despliegue/actualizar.sh`. El script ya resuelve los dos problemas que encontró la revisión del 4 de octubre: si la VM está en la rama local `despliegue/v3-2026-10-03` sin commits propios, se cambia sola a `main`; y si no existe la unidad `amatista-api`, reinicia `amatista-backend`.
-5. **Tablas y contenido**: `python diagnostico_oracle.py` (20 tablas con 010; si solo falta 010, el diagnóstico lo dice), `python herramientas/contenido.py validar` y `importar`.
+5. **Tablas y contenido**: `python diagnostico_oracle.py` (20 tablas con 010 y 12 columnas en `ADDON_ENLACES` con 011; si falta 010 u 011, el diagnóstico dice cuál), `python herramientas/contenido.py validar` y `importar`.
 6. **Prácticas**: al reiniciar, el servidor registra y actualiza las 18 prácticas solo (en la prueba sobre Oracle: «0 nuevas, 13 actualizadas»). `python herramientas/contenido.py practicas --revisar` debe decir **18 de 18**.
 7. **Archivar lo viejo**: `009_archivar_blender_v2.sql` con F5.
-8. **Add-on**: en la plataforma, **Mi Blender** debe ofrecer **Amatista Motor 3.5** (3.4 si solo se fusionó el PR #24; 3.3 si ninguno). Con 3.5, abrir otra práctica empieza en su propia escena y la lección muestra «Ahora en Blender» con la lista «Tu figura»; no hay SQL nuevo. Reinstálalo en tu Blender y abre la práctica del tren: el panel muestra «Así se debe ver» con la imagen y el plano y, con 3.4, Blender se enfoca y la lección dice «Tu Blender está en esta práctica».
+8. **Add-on**: en la plataforma, **Mi Blender** debe ofrecer **Amatista Motor 3.5** (versión 3.5.1, PR #25 y #26). Abrir otra práctica empieza en su propia escena, «Ver el ejemplo» arma el ejemplo resuelto en otra escena y la lección muestra «Ahora en Blender» con la lista «Comparado con el ejemplo». La versión 3.5.1 necesita 011 para que ese detalle llegue a la lección. Reinstálalo en tu Blender y abre la práctica del tren: el panel muestra «Así se debe ver» con la imagen y el plano Blender se enfoca y la lección dice «Tu Blender está en esta práctica».
 
 **Comprobación:** `curl -s http://127.0.0.1:8000/api/salud` → `{"estado":"ok","motor":"oracle"}`; `curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8000/docs` → `404`; una práctica entregada desde Blender aparece calificada en el panel.
 
@@ -78,7 +79,9 @@ Sigue el archivo de pasos del servidor (`/mnt/project-files/despliegue/2026-10-0
 
 ## Subir el Motor 3.3 a Oracle (parte de la fase 1)
 
-El motor nuevo **no cambia el esquema**: no hay script SQL nuevo (el siguiente libre sigue siendo el 010). Lo que cambia en Oracle son **filas**: las prácticas rehechas (tren, muñeco de nieve, cojín, puente, aldea…) entran como una versión nueva en `PRACTICAS` y quedan en el historial de `PRACTICA_VERSIONES`. El servidor lo hace solo al arrancar con el código nuevo.
+Esta sección se escribió para el Motor 3.3 y el procedimiento sigue igual con 3.5.1: las prácticas entran como filas nuevas al arrancar el servidor. El esquema sí cambió después: 3.4 agregó 010 y 3.5.1 agregó 011 (paso 2 de la fase 1).
+
+El Motor 3.3 **no cambiaba el esquema**: no traía script SQL nuevo. Lo que cambia en Oracle son **filas**: las prácticas rehechas (tren, muñeco de nieve, cojín, puente, aldea…) entran como una versión nueva en `PRACTICAS` y quedan en el historial de `PRACTICA_VERSIONES`. El servidor lo hace solo al arrancar con el código nuevo.
 
 1. **Antes**: respaldo (`migrar.py exportar`) y anota cómo están las prácticas hoy, en Database Actions:
 
@@ -148,7 +151,7 @@ Hoy la API viaja en **HTTP plano** por el puerto 8000: contraseñas y tokens cru
 2. **Rendimiento**: `rendimiento.py` **no se corre contra producción** (su `medir` manda miles de peticiones y necesita las sesiones de prueba que crea `sembrar`). Contra producción solo se mide la web, que no escribe nada: desde `frontend/`, `CHROMIUM=<ruta de Chrome> node scripts/rendimiento.mjs --url https://amatista-3d.me --salida web_produccion.json`. El backend se mide contra una copia (respaldo de la fase 1 cargado con `migrar.py importar` en el contenedor de Oracle de las pruebas).
 3. **HSTS en Cloudflare** cuando todo lleve una semana bien (6 meses, sin `preload`).
 4. **Repositorio privado**: hoy es público, así que cualquiera puede leer el código del servidor y del add-on. Hazlo privado **después** de mover la PWA a Cloudflare Pages: GitHub Pages en un repositorio privado necesita un plan de pago, y Pages de Cloudflare no. Revisa antes que Cloudflare Pages siga teniendo acceso al repositorio.
-5. `AMATISTA_ADDON_VERIFICADO=exigir` cuando todos los alumnos usen el Motor 3.3.
+5. `AMATISTA_ADDON_VERIFICADO=exigir` cuando todos los alumnos usen el Motor 3.5.1.
 
 ## Qué quedó fuera de este plan
 

@@ -2,7 +2,7 @@
 
 Toda la documentación del proyecto, ordenada por secciones. Cada sección dice para quién es y por dónde empezar.
 
-Actualizado: 9 de octubre de 2026. Etapa vigente: **v3 «Reestructuración»** con integración plataforma + Blender en operación de desarrollo.
+Actualizado: 10 de octubre de 2026 (`main` con los PR #25, #26 y #27 fusionados). Etapa vigente: **v3 «Reestructuración»**, con la integración de la plataforma y Blender en desarrollo.
 
 > **¿Primera vez?** Lee el [README de la raíz](../README.md), luego la [cronología](historia/01_cronologia.md) y el [mapa del repositorio](manual-del-codigo/01_mapa_del_repositorio.md). Si vas a programar, sigue con el [manual del desarrollador](desarrollador/README.md).
 
@@ -43,18 +43,20 @@ Carpeta [`plataforma/`](plataforma/README.md): estructura fija Cursos · Mi pane
 - [Etiquetas y gráficos](plataforma/03_etiquetas_y_graficos.md)
 - [Las 20 herramientas de enseñanza](plataforma/04_herramientas_de_ensenanza.md)
 - [Panel de administración](plataforma/05_panel_de_administracion.md)
+- [Módulo 3 de Blender: modelado con precisión](plataforma/06_modulo_3_modelado_precision.md) (historia: borrador del curso v2)
+- [Herramientas gráficas](plataforma/07_herramientas_graficas.md)
 - [Auditoría educativa (9 oct)](plataforma/08_auditoria_educativa_2026-10-09.md)
 
 ### Cursos
 
-Carpeta [`cursos/`](cursos/README.md): los cuatro cursos de Blender (Principiante y Principiante-Intermedio publicados), cómo el [plan de estudios](cursos/plan_de_estudios_blender.txt) se volvió módulos y prácticas, y cómo agregar uno.
+Carpeta [`cursos/`](cursos/README.md): los cuatro cursos de Blender (Principiante, Principiante-Intermedio e Intermedio publicados; Avanzado bloqueado), la [ruta de aprendizaje](cursos/03_ruta_de_aprendizaje_blender.md), cómo el [plan de estudios](cursos/plan_de_estudios_blender.txt) se volvió módulos y prácticas, y cómo agregar uno.
 
 ## 3. Amatista Engine y add-on de Blender
 
 Carpeta [`motor/`](motor/README.md).
 
-- Etapas: [1 · evalúa](motor/etapas/etapa-1.md) · [2 · acompaña paso a paso](motor/etapas/etapa-2.md) · [3 · enseña (motor v3, add-on 3.0)](motor/etapas/etapa-3.md) · [3.3 · modelo de referencia](motor/referencia/10_modelo_de_referencia.md)
-- Referencia: [arquitectura](motor/referencia/01_arquitectura.md) · [formato de práctica](motor/referencia/02_formato_de_practica.md) · [add-on](motor/referencia/03_addon.md) · [instalación del alumno](motor/referencia/04_instalacion_alumno.md) · [API](motor/referencia/05_api.md) · [modo desarrollador](motor/referencia/06_modo_desarrollador.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md) · [prácticas v3 y herramientas de autor](motor/referencia/08_practicas_v3_y_herramientas.md) · [validadores](motor/referencia/09_validadores.md) · [modelo de referencia](motor/referencia/10_modelo_de_referencia.md)
+- Etapas: [1 · evalúa](motor/etapas/etapa-1.md) · [2 · acompaña paso a paso](motor/etapas/etapa-2.md) · [3 · enseña (motor v3, add-on 3.0)](motor/etapas/etapa-3.md) · [3.3 · modelo de referencia](motor/referencia/10_modelo_de_referencia.md) · [3.4 · reconocer figuras](motor/referencia/11_reconocer_figuras.md) · [3.5 · el ejemplo manda](motor/referencia/14_ejemplo_y_revision.md)
+- Referencia: [arquitectura](motor/referencia/01_arquitectura.md) · [formato de práctica](motor/referencia/02_formato_de_practica.md) · [add-on](motor/referencia/03_addon.md) · [instalación del alumno](motor/referencia/04_instalacion_alumno.md) · [API](motor/referencia/05_api.md) · [modo desarrollador](motor/referencia/06_modo_desarrollador.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md) · [prácticas v3 y herramientas de autor](motor/referencia/08_practicas_v3_y_herramientas.md) · [validadores](motor/referencia/09_validadores.md) · [modelo de referencia](motor/referencia/10_modelo_de_referencia.md) · [reconocer figuras](motor/referencia/11_reconocer_figuras.md) · [la plataforma maneja Blender](motor/referencia/12_plataforma_y_blender.md) · [instructor y silueta](motor/referencia/13_instructor_y_silueta.md) · [el ejemplo y la revisión](motor/referencia/14_ejemplo_y_revision.md)
 - [Especificaciones originales](motor/especificaciones/) (historia: el concepto antes del código)
 
 ## 4. Manual del código
@@ -98,7 +100,7 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 - [Auditoría de seguridad](seguridad/01_auditoria_2026-10-05.md), [protección del código del add-on](seguridad/02_proteccion_del_codigo.md) e [informe de rendimiento](rendimiento/2026-10-05_informe.md).
 - [Dominio amatista-3d.me con Cloudflare](despliegue/2026-10-04_dominio_amatista-3d.md): DNS, certificados, PWA en Pages, API detrás del proxy y apéndice Fly.io. Registro de la compra: [dominio y SSL](despliegue/2026-10-04_dominio_y_dns-v2.md).
 - [Despliegue en OCI](despliegue/2026-10-04_despliegue_oci.md): VM, servicio systemd, HTTPS con Caddy, PWA, SMTP y actualizaciones.
-- [Oracle paso a paso (002–004)](despliegue/2026-10-02_oracle_paso_a_paso.md) y [manual de Oracle (005–007)](reestructuracion/02_manual_oracle.md)
+- [Oracle paso a paso (002–004)](despliegue/2026-10-02_oracle_paso_a_paso.md) y [manual de Oracle (005–007)](reestructuracion/02_manual_oracle.md); [aplicar 008 y 009](base-de-datos/02_manual_008_009.md), 010 y 011 ([correcciones 3.5.1](despliegue/2026-10-09_correcciones_3_5_1.md); orden en [`backend/sql/LEEME.txt`](../backend/sql/LEEME.txt))
 - Archivos: [`despliegue/`](../despliegue/)
 
 ## 9. Dirección y decisiones
@@ -111,8 +113,10 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 ## 10. Registros: bitácora e incidencias
 
 - **Bitácora** ([`bitacora/`](bitacora/)), de la más reciente a la más antigua:
+  - 10 oct: [renovación del repositorio](bitacora/2026-10-10_renovacion_del_repositorio.md)
   - 9 oct: [la plataforma maneja Blender (motor 3.4)](bitacora/2026-10-09_plataforma_y_blender_integrados.md) · [Blender como instructor (motor 3.5)](bitacora/2026-10-09_blender_como_instructor.md) · [el ejemplo manda (motor 3.5)](bitacora/2026-10-09_el_ejemplo_manda.md)
-  - 4 oct: [motor v3, plan de estudios, base de datos y dominio](bitacora/2026-10-04_motor_v3_plan_de_estudios.md) · [documentación completa](bitacora/2026-10-04_documentacion_completa.md) · [motor etapa 2 y plataforma por módulos](bitacora/2026-10-04_motor_etapa_2_y_plataforma.md) · [Amatista Engine](bitacora/2026-10-04_amatista_engine.md)
+  - 5 oct: [seguridad, rendimiento y Motor 3.3](bitacora/2026-10-05_seguridad_rendimiento_motor.md) · [temáticas y Motor 3.2](bitacora/2026-10-05_temas_y_motor_3_2.md)
+  - 4 oct: [motor v3, plan de estudios, base de datos y dominio](bitacora/2026-10-04_motor_v3_plan_de_estudios.md) · [curso de Blender unificado y ruta de aprendizaje](bitacora/2026-10-04_curso_unificado.md) · [documentación completa](bitacora/2026-10-04_documentacion_completa.md) · [motor etapa 2 y plataforma por módulos](bitacora/2026-10-04_motor_etapa_2_y_plataforma.md) · [Amatista Engine](bitacora/2026-10-04_amatista_engine.md)
   - 3 oct: [estado y reestructuración](bitacora/2026-10-03_estado_y_reestructuracion.md) · [bitácora técnica del servidor](bitacora/2026-10-03_bitacora_tecnica_v3_servidor.md)
   - 2 oct: [cierre del día](bitacora/2026-10-02_cierre_del_dia.txt) · [ramas y cronología](bitacora/2026-10-02_ramas_y_cronologia.txt) · [estado de la plataforma unificada](bitacora/2026-10-02_estado_plataforma_unificada.txt)
   - 29 sep: [lecciones y progreso](bitacora/2026-09-29_lecciones-y-progreso.txt)
@@ -129,11 +133,12 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 |---|---|---|
 | `historia/`, `manual-del-codigo/`, `desarrollador/`, `base-de-datos/`, `herramientas-de-la-plataforma.md` | Vigente (nuevos el 4 oct) | — |
 | `despliegue/2026-10-04_despliegue_oci.md` | Vigente (nuevo el 4 oct; cierra la parte de despliegue de T-031) | — |
-| `plataforma/` (01 a 05) | Vigente | — |
-| `motor/` (etapas 1 a 3 y referencia 01 a 09) | Vigente | — |
+| `plataforma/` (01 a 05 y 07) | Vigente | — |
+| `plataforma/06_modulo_3_modelado_precision.md` | Historia: borrador del módulo 3 de la v2 | `cursos/` |
+| `motor/` (etapas 1 a 3 y referencia 01 a 14) | Vigente | — |
 | `cursos/` (cursos y plan de estudios de Blender) | Vigente (nuevo el 4 oct) | — |
 | `motor/especificaciones/` | Historia: el concepto original del motor | `motor/referencia/` |
-| `reestructuracion/00_plan_maestro.md` | Vigente (tabla «Dónde estamos» al 4 oct) | — |
+| `reestructuracion/00_plan_maestro.md` | Vigente (tabla «Dónde estamos» al 9 oct) | — |
 | `reestructuracion/01_modelo_de_contenido.md` | Vigente: fase B, sin empezar | — |
 | `reestructuracion/02_manual_oracle.md` | Vigente (estado de producción al 4 oct; §10 para 007) | — |
 | `reestructuracion/03_addon_blender.md` | Historia: diseño previo al código | `motor/` |

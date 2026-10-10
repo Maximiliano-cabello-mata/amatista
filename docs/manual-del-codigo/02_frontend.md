@@ -2,7 +2,7 @@
 
 Manual del código de la PWA de Amatista (`frontend/`) para desarrolladores que llegan nuevos: qué hace cada carpeta, cómo fluyen los datos y qué archivos tocar para cambiar algo.
 
-Actualizado: 4 de octubre de 2026 (main en c730c0e)
+Actualizado: 10 de octubre de 2026 (main con los PR #25, #26 y #27; Amatista Motor 3.5.1)
 
 **Índice**
 
@@ -154,14 +154,14 @@ src/
 | `herramientas.js` | Catálogo de herramientas de enseñanza (bloques) por categoría, con «para qué», «cuándo» y pasos de la Fórmula. Lo usan el editor de lecciones y `#/admin/herramientas`. | `CATEGORIAS`, `HERRAMIENTAS`, `NOMBRES_FORMULA`, `nombreHerramienta`, `agruparHerramientas`. |
 | `herramientas.test.js` | Pruebas del agrupado. | — |
 | `modulos/aframe-modulo-1.json` | Módulo `mod_aframe_001` (curso `aframe`, `order` 1, `publicado`): 2 lecciones + examen. | `{module: {...}}` |
-| `modulos/blender-modulo-1.json` | Módulo `mod_teoria_001` (curso `blender`, `order` 1, `publicado`): 3 lecciones + examen. | `{module: {...}}` |
-| `modulos/blender-modulo-2.json` | Módulo `mod_blender_002` (curso `blender`, `order` 2, **`estado: "revision"`**): 3 lecciones; la última tiene el bloque `blender_practice` con `practica: "blender.n1.mesa"`. | `{module: {...}}` |
+| `modulos/blender_principiante-modulo-{1,2,3}.json`, `blender_principiante_intermedio-modulo-{1,2,3}.json`, `blender_intermedio-modulo-{1,2,3}.json` | Los nueve módulos de Blender del plan v3 (por ejemplo `mod_bp_001`, curso `blender_principiante`, `order` 1), todos `publicado`. Cada uno intercala teoría con una exploración en Blender y cierra con su práctica (bloques `blender_practice`, como `blender.bp.m1.tren`). | `{module: {...}}` |
+| `modulos/archivo/blender-modulo-{1,2,3}.json` | Los módulos de Blender de la v2 (con la mesa `blender.n1.mesa`). Están archivados: `import.meta.glob` no lee esta carpeta. | — |
 
 ### `modulos/`
 
 | Archivo | Qué hace | Exporta / usa |
 |---|---|---|
-| `practica.js` | Funciones puras de la práctica en Blender que cierra cada módulo: encontrarla, dividir el módulo en «antes / práctica / después» y calcular su estado. | `bloquePractica`, `esPracticaBlender`, `practicaDelModulo`, `partesDelModulo`, `estadoPractica`, `practicasDelCatalogo`. Usa `progreso/reglas.js`. |
+| `practica.js` | Funciones puras de las prácticas en Blender de cada módulo (exploraciones y práctica de cierre): encontrarlas, dibujar el módulo en orden y calcular el estado de cada una. | `bloquePractica`, `esPracticaBlender`, `practicasDelModulo`, `estadoPracticaEn`, `secuenciaDelModulo`, `practicasDelCatalogo`. Usa `progreso/reglas.js`. |
 | `practica.test.js` | Pruebas. | — |
 
 ### `blender/`
@@ -170,8 +170,9 @@ src/
 |---|---|---|
 | `PrepararBlender.jsx` | «Prepara tu Blender» dentro de la lección de práctica: detecta el sistema, descarga el paquete y permite escribir el código de vínculo. | `default PrepararBlender`. Usa `services/blender.js` (`descargarPaquete`, `listarDispositivos`), `FormularioCodigo`. |
 | `FormularioCodigo.jsx` | Formulario del código de vínculo `ABCD-2345`. | `default FormularioCodigo`. Usa `confirmarVinculo`, `normalizarCodigo`, `Alerta`. |
-| `logica.js` | Lógica pura: `SISTEMAS`, `BLENDER_MINIMO` (`'4.2'`), `detectarSistema`, `normalizarCodigo`, `compararVersiones`, `blenderCompatible`, `pasosConEstado`, `textoAutonomia`, `resumenPractica`. | — |
-| `logica.test.js` | Pruebas. | — |
+| `logica.js` | Lógica pura: `SISTEMAS`, `BLENDER_MINIMO` (`'4.2'`), `MOTOR` (Amatista Motor 3.5.1), `detectarSistema`, `normalizarCodigo`, `compararVersiones`, `pasosConEstado`, `textoAutonomia`, `resumenPractica`. Enlace en vivo: `OPCIONES_ENFOQUE`, `OPCIONES_ACOMPANAMIENTO`, `AJUSTES_POR_DEFECTO`, `estadoBlender` (sin enlace, cerrado, en otra práctica o en esta), `CONTROLES_BLENDER` y `CONTROL_VOLVER`, `instructorEnVivo`, `agruparPorAspecto` y `controlesDisponibles`. | — |
+| `referencias.js` | El modelo de referencia de cada práctica («Así se debe ver»): `referenciaDe`, `textoMedidas`. | — |
+| `logica.test.js`, `referencias.test.js` | Pruebas. | — |
 
 ### `lib/`
 
@@ -426,15 +427,18 @@ Campos de la lección que lee la PWA: `id`, `title`, `type` (`theory_reading`, `
 
 Archivos: `modulos/practica.js`, `components/modulo/EstacionBlender.jsx`, `components/leccion/interactivos/PracticaBlender.jsx`, `blender/*`, `services/blender.js`, `pages/Blender.jsx`, `pages/Vincular.jsx`. Concepto: [docs/plataforma/02_modulos_y_practica.md](../plataforma/02_modulos_y_practica.md); motor: [docs/motor/README.md](../motor/README.md).
 
-1. **Qué es la práctica**: una lección que contiene un bloque `blender_practice`. El servidor exige que vaya al final del módulo (solo el examen puede ir después). `practicaDelModulo` toma la primera.
-2. **Estado en el mapa** (`estadoPractica`): `hecha` si la lección está completada; `abierta` si está desbloqueada y no falta ninguna lección anterior; si no, `bloqueada` con `faltan` = lecciones pendientes. `EstacionBlender` solo enlaza cuando no está bloqueada.
+1. **Qué es una práctica**: una lección que contiene un bloque `blender_practice`. Un módulo puede tener varias (una exploración corta entre lecciones de teoría y la práctica de cierre); el servidor solo rechaza repetir la misma práctica en un módulo. `practicasDelModulo` las lista en orden y marca como `cierre` la última.
+2. **Estado en el mapa** (`estadoPracticaEn`): `hecha` si la lección está completada; `abierta` si está desbloqueada y no falta ninguna lección anterior; si no, `bloqueada` con `faltan` = lecciones pendientes. `EstacionBlender` solo enlaza cuando no está bloqueada.
 3. **Dentro de la lección** (`PracticaBlender`):
    - Sin sesión, invita a entrar; con sesión llama `GET /api/addon/v1/practicas/{practica}` (pasos con id y `mi_progreso`).
    - Incluye `PrepararBlender`: detecta el sistema (`detectarSistema`; `null` en celulares), descarga el paquete con instalador (`GET /descargas/{sistema}`; con sesión trae un vínculo de un solo uso) y ofrece `FormularioCodigo` para conectar con `POST /vinculos/confirmar`.
-   - «Abrir en Blender»: `POST /practicas/{id}/abrir` con `{origen: "plataforma"}`. El alumno abre Blender (N › pestaña Amatista) y el add-on lo guía.
-   - Mientras la pestaña está visible, consulta `GET /mi-progreso?practica_id=…` cada 6 s y pinta los pasos (`pasosConEstado`). Cuando el servidor dice `completada`, la actividad se resuelve (y con ella se puede completar la lección).
+   - Muestra el modelo de referencia (`ModeloReferencia`) y **El ejemplo resuelto** (`EjemploResuelto`): los pasos del `ejemplo` que devuelve `GET /practicas/{id}`, «Amatista compara tu escena con este ejemplo en: …» y «Ver en código» con el JSON del ejemplo.
+   - **«Abrir en Blender»** (o «Continuar en Blender» si ya empezó): `POST /practicas/{id}/abrir`. Si hay un Blender conectado, el servidor le deja la orden y la práctica se abre ahí sola, en su propia escena; si no, el alumno abre Blender (N › pestaña Amatista) y la práctica se abre al conectarse.
+   - **Enlace en vivo** (`BlenderEnVivo`): consulta `GET /enlace` de a una petición (cada 3 s con Blender en esta práctica, 6 s si está en otra y 30 s si está cerrado; se pausa con la pestaña oculta). Muestra «Tu Blender está en esta práctica (N %)», «Tu Blender está abierto en «…»» con «Cambiar a esta práctica» o «Tu Blender está cerrado», y el botón «Enfocar Blender» / «Ver todo Blender». Sin Oracle 010 (`enlace: false`) esta parte no aparece.
+   - **Ahora en Blender** (`InstructorEnVivo`, solo con Blender en esta práctica): el paso, el modo, lo que dice el instructor y la lista **«Comparado con el ejemplo»** agrupada por aspecto (`agruparPorAspecto`), con los dos primeros consejos abiertos. Los botones **Comprobar**, **Pista**, **Hazlo conmigo**, **Guardar**, **Empezar de nuevo** (pide confirmar) y **Ver el ejemplo** mandan órdenes con `POST /ordenes` (`controlesDisponibles` quita Pista o Hazlo conmigo cuando no aplican). Mientras Blender muestra el ejemplo solo queda **Volver a mi práctica** (`volver_practica`).
+   - Mientras la práctica está empezada o Blender está en ella, consulta `GET /mi-progreso?practica_id=…` cada 6 s y pinta los pasos (`pasosConEstado`). Cuando el servidor dice `completada`, la actividad se resuelve (y con ella se puede completar la lección).
    - `allowManual: true` permite marcarla como hecha sin Blender.
-4. **Mi Blender** (`#/blender`) reúne descarga, compatibilidad (`BLENDER_MINIMO` 4.2), Blender conectados (`listarDispositivos`, `desconectarDispositivo`) y prácticas (`listarPracticas`). **Vincular** (`#/vincular?codigo=…`) es la página que abre el add-on con el código escrito.
+4. **Mi Blender** (`#/blender`) reúne descarga, compatibilidad (`BLENDER_MINIMO` 4.2), Blender conectados (`listarDispositivos`, `desconectarDispositivo`), prácticas (`listarPracticas`) y la tarjeta «Tu Blender, desde aquí» (`AjustesBlender`): modo enfocado, acompañamiento, tarjeta de la vista 3D y avisos de herramientas, que se guardan con `PUT /ajustes` y le llegan al add-on en su siguiente latido. **Vincular** (`#/vincular?codigo=…`) es la página que abre el add-on con el código escrito.
 
 ### 3.5 Panel del alumno
 
@@ -492,7 +496,7 @@ Para qué sirve cada uno, cuándo usarlo y los límites de cada campo: **[docs/p
 | `hotspots` | `PuntosImagen.jsx` | **`id`**, **`src`**, **`alt`**, **`points[]`** (**`id`**, **`x`**, **`y`** en %, **`title`**, **`text`**), `title` |
 | `scene_explorer` | `ExploradorEscena.jsx` (+ `EscenaAFrame.jsx` diferido) | **`id`**, `title`, **`primitive`**, **`controls[]`** (`param`, `label`, `type`, `min`, `max`, `step`, `default`), `goal` |
 | `code_challenge` | `RetoCodigo.jsx` (+ `VistaAFrame` diferido) | **`id`**, **`prompt`**, **`language`** (`html`), **`starter`**, **`checks[]`**, `solution`, `preview` |
-| `blender_practice` | `PracticaBlender.jsx` | **`id`**, **`practica`** (id del motor, p. ej. `blender.n1.mesa`), **`title`**, `text`, `minutes`, `steps[]`, **`allowManual`** |
+| `blender_practice` | `PracticaBlender.jsx` | **`id`**, **`practica`** (id del motor, p. ej. `blender.bp.m1.tren`), **`title`**, `text`, `minutes`, `steps[]`, **`allowManual`** |
 
 La lógica de corrección de cada interactivo está en `interactivos/logica.js` (con pruebas), no en los componentes.
 
@@ -561,12 +565,15 @@ Todos los clientes devuelven `{ok, status, datos, error}` y **nunca lanzan**. `p
 | `obtenerPractica(token, id)` | `GET /practicas/{id}` | `PracticaBlender` |
 | `abrirPractica(token, id)` | `POST /practicas/{id}/abrir` | `PracticaBlender` |
 | `progresoPractica(token, id)` | `GET /mi-progreso?practica_id=` | `PracticaBlender` |
+| `estadoEnlace(token)` | `GET /enlace` | `PracticaBlender`, `Blender.jsx` |
+| `ordenarBlender(token, tipo, practicaId, {confirmar})` | `POST /ordenes` | `PracticaBlender` |
+| `leerAjustesBlender(token)` / `guardarAjustesBlender(token, cambios)` | `GET /ajustes` / `PUT /ajustes` | `Blender.jsx` |
 | `sincronizarPracticas(token, {publicar})` | `POST /practicas/sincronizar[?publicar=true]` | `admin/Practicas.jsx` |
 | `publicarPractica(token, id, version)` | `POST /practicas/{id}/publicar` | `admin/Practicas.jsx` |
 | `archivarPractica(token, id)` | `POST /practicas/{id}/archivar` | `admin/Practicas.jsx` |
 | `versionesPractica(token, id)` | `GET /practicas/{id}/versiones` | `admin/Practicas.jsx` |
 
-Todas estas rutas existen en `backend/api/{auth,progreso,eventos,sesiones,admin,contenido,addon}.py` y `backend/main.py` (`/api/salud`). La PWA no llama a `/api/blender/*` ni a `/api/contenido/niveles` o `/mapa/*`.
+Todas estas rutas existen en `backend/api/{auth,progreso,eventos,sesiones,admin,contenido,addon,enlace}.py` y `backend/main.py` (`/api/salud`). La PWA no llama a `/api/blender/*` ni a `/api/contenido/niveles` o `/mapa/*`.
 
 ---
 
@@ -622,18 +629,27 @@ Vitest con `include: ['src/**/*.test.js']` y `environment: 'node'` (`vite.config
 |---|---|---|
 | `src/rutas.test.js` | `analizarRuta`, rutas admin, `rutaEntrar`, `destinoTrasEntrar` | 3 |
 | `src/auth/validacion.test.js` | Validaciones de cuenta | 5 |
+| `src/catalogo/agrupar.test.js` | Una tarjeta por curso con su árbol de niveles | 4 |
 | `src/catalogo/combinar.test.js` | `armarCatalogo` (de `data/cursos.js`) y `combinarCatalogos`/`combinarModulos` | 13 |
 | `src/progreso/estado.test.js` | Estado v2: normalizar, combinar, aplicar, preparar y confirmar envíos | 20 |
 | `src/progreso/reglas.test.js` | Completado, desbloqueo, insignias, XP, nivel, racha | 27 |
+| `src/progreso/logros.test.js` | Medallas progresivas | 3 |
 | `src/data/herramientas.test.js` | Agrupado del catálogo de herramientas | 2 |
-| `src/modulos/practica.test.js` | Práctica de Blender del módulo | 5 |
-| `src/blender/logica.test.js` | Sistema, código de vínculo, versiones, pasos | 13 |
+| `src/modulos/practica.test.js` | Prácticas de Blender del módulo | 4 |
+| `src/blender/logica.test.js` | Sistema, código de vínculo, versiones, pasos, enlace en vivo, instructor, lista por aspecto y controles | 22 |
+| `src/blender/referencias.test.js` | Modelo de referencia de cada práctica | 3 |
 | `src/components/admin/logica.test.js` | Lógica del panel y `consultaURL` | 18 |
 | `src/components/graficas/graficas.test.js` | Escalas y fechas | 7 |
 | `src/components/leccion/atajos.test.js` | Modo «Pruébate» | 3 |
-| `src/components/leccion/interactivos/logica.test.js` | Corrección de los interactivos | 18 |
+| `src/components/leccion/interactivos/logica.test.js` | Corrección de los interactivos | 17 |
 | `src/components/panel/datos.test.js` | Datos del panel | 12 |
-| `src/components/panel/retos.test.js` | Retos semanales y logros | 14 |
+| `src/components/panel/retos.test.js` | Retos semanales y logros | 13 |
+| `src/components/temas/personaje.test.js` | Movimiento y reacciones del personaje | 3 |
+| `src/components/temas/temas.test.js` | Temática de cada módulo | 7 |
+| `src/lib/rendimiento.test.js` | Modo ligero para equipos modestos | 1 |
+| `src/services/api.test.js` | Cliente de la API | 3 |
+
+Son 21 archivos y 190 casos (`npx vitest list`, 9 de octubre).
 
 Cómo correrlas (desde `frontend/`, con dependencias instaladas):
 
@@ -678,12 +694,12 @@ Un tipo nuevo necesita **frontend y backend**, porque el servidor rechaza tipos 
 
 Opción A, **archivo empaquetado** (funciona offline desde la instalación):
 
-1. Crea el esqueleto desde `backend/`: `python herramientas/contenido.py nuevo-modulo blender 3 "Modelado low poly" --insignia "…" [--nivel blender-n1]`. Escribe `frontend/src/data/modulos/blender-modulo-3.json` en borrador con las 5 lecciones de la Fórmula ([`backend/herramientas/contenido.py`](../../backend/herramientas/contenido.py)). También puedes copiar un JSON existente.
+1. Crea el esqueleto desde `backend/`: `python herramientas/contenido.py nuevo-modulo blender_avanzado 1 "Modelado avanzado" --insignia "…"`. Escribe `frontend/src/data/modulos/blender_avanzado-modulo-1.json` en borrador con las 5 lecciones de la Fórmula ([`backend/herramientas/contenido.py`](../../backend/herramientas/contenido.py)). También puedes copiar un JSON existente.
 2. Edita el contenido. Claves del `module`: `id`, `curso` (o `courseId`), `order` (el número del módulo), `title`, `insignia`, `nivel`, `estado`, `estimatedTimeMinutes`, `lessons[]`.
 3. Valida: `python herramientas/contenido.py validar` (CI lo exige).
 4. Cambia `estado` a `"publicado"`. Con otro estado `armarCatalogo` lo ignora y el módulo sigue como «Próximamente».
 5. No hace falta registrar nada: `import.meta.glob` lo recoge solo. Si el `order` coincide con un marcador de `CURSOS_BASE`, lo reemplaza y conserva su título e insignia; si es un número nuevo, se agrega.
-6. Si el módulo cierra con práctica en Blender, la última lección (antes del examen) lleva un bloque `blender_practice` cuya `practica` debe estar publicada en Admin › Prácticas de Blender.
+6. Las prácticas en Blender van en lecciones con un bloque `blender_practice` (una exploración entre la teoría y la práctica de cierre). Su `practica` debe existir en `practices/blender/` con su `example`; el servidor la registra y publica sola al arrancar ([cursos](../cursos/README.md), §7).
 
 Opción B, **desde el servidor**: `#/admin/contenido` → nuevo módulo → editar lecciones → publicar. La PWA lo recibe por `GET /api/contenido/catalogo` y lo combina sin publicar una versión nueva de la app. Para pasarlo a archivo: «Exportar» en `Contenido.jsx` descarga el mismo formato de `data/modulos/*.json`.
 
@@ -700,7 +716,7 @@ Para un **curso nuevo**: agrégalo a `CURSOS_BASE` en [`data/cursos.js`](../../f
 
 ## 9. Detalles que conviene saber
 
-- **`blender-modulo-2.json` está en `estado: "revision"`**: la app empaquetada lo ignora y el curso Blender muestra el módulo 2 como «Próximamente» salvo que el servidor lo publique. Es el único JSON con `blender_practice`.
+- **Los módulos de Blender de la v2 están archivados** en `data/modulos/archivo/` y la app no los lee. Los nueve módulos del plan v3 están publicados y todos tienen bloques `blender_practice`.
 - **`API_URL` por defecto** es una IP fija (`http://158.101.118.222:8000`), no el `localhost` de `.env.example`. Sin `.env`, el desarrollo local apunta a ese servidor.
 - **Funciones de servicio sin uso** en `src/`: `iniciarSesionBD` (heredada), `editarModulo`, `estadoAddon`, `urlExtension`, `urlRepositorio`.
 - **`#/laboratorio` no pasa por `RutaAdmin`**: la comprobación de rol está dentro de `Laboratorio.jsx` (y como la página importa `aframe` al cargarse, cualquiera que abra el hash descarga A-Frame aunque luego vea el aviso).

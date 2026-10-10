@@ -30,13 +30,13 @@ El alumno avanza por cursos y módulos en una PWA. Cada módulo termina con una 
 
 ## 1. Estado actual
 
-Al 9 de octubre de 2026:
+Al 10 de octubre de 2026 (`main` con el PR #25, Motor 3.5, y las correcciones 3.5.1 de los PR #26 y #27 fusionados):
 
 | Frente | Dónde está |
 |---|---|
-| **Plataforma educativa** | Ruta por módulos en PWA, práctica al cierre de cada módulo, progreso local y sincronización con backend. |
-| **Integración con Blender** | Flujo plataforma ↔ Blender en evolución activa (motor 3.4, 3.5 y 3.5.1 en documentación técnica y bitácora del 9 de octubre). |
-| **Amatista Engine** | Revisión por validadores y por ejemplo resuelto en código (`example.matches`), con checklist pedagógico y acompañamiento dentro de Blender. |
+| **Plataforma v2.2** («Plataforma unificada») | En producción con Oracle. El piloto del 8 de octubre se hizo con ella. |
+| **Lo nuevo en `main` (v3, sin desplegar)** | Cursos de Blender por niveles, temáticas por módulo, seguridad y rendimiento, enlace en vivo con Blender (PR #24) y Amatista Motor 3.5.1 (PR #25 y #26). Se sube a producción siguiendo el [plan de despliegue](docs/despliegue/2026-10-05_plan_de_despliegue.md) (fase 1, T-078). |
+| **Amatista Engine** | **Motor 3.5** y add-on **Amatista Motor 3.5** (PR #25, y 3.5.1 en los PR #26 y #27): el ejemplo manda. Cada práctica trae su ejemplo resuelto en `example.steps` y el motor revisa la escena del alumno contra él con `example.matches`. Cada práctica abre en su propia escena de Blender, el motor reconoce la figura (`figure.recognize`) y su silueta (`figure.silhouette`), y la plataforma maneja Blender con un enlace en vivo. Son 42 validadores. Etapas 1 a 3, [modelo de referencia](docs/motor/referencia/10_modelo_de_referencia.md) y [el ejemplo y la revisión](docs/motor/referencia/14_ejemplo_y_revision.md). |
 | **Cursos de Blender** | Una tarjeta «Blender» con su árbol de niveles: **Principiante**, **Principiante-Intermedio** e **Intermedio** publicados (3 módulos cada uno, 18 prácticas en Blender) y **Avanzado** bloqueado. Teoría y Blender intercalados; cada módulo cierra con su práctica y un jefe final. [Ruta de aprendizaje](docs/cursos/03_ruta_de_aprendizaje_blender.md). |
 | **Temáticas por módulo** | Cada módulo es un mundo (escenario, partículas, colores) con un personaje original que acompaña la lección. [Herramientas gráficas](docs/plataforma/07_herramientas_graficas.md). |
 | **Seguridad y rendimiento** | Auditoría automática (1,449 ataques, 0 hallazgos), informe de rendimiento antes y después, add-on con integridad y marca de agua, PWA sin mapas de fuente. [Auditoría](docs/seguridad/01_auditoria_2026-10-05.md) · [informe](docs/rendimiento/2026-10-05_informe.md) · [protección del código](docs/seguridad/02_proteccion_del_codigo.md). |
@@ -65,6 +65,8 @@ Amatista nació el **27 de septiembre de 2026** y en ocho días pasó de una pan
 | 4 oct | Curso de Blender unificado | Una tarjeta por curso con niveles, Intermedio publicado, jefes finales, medallas y modo claro | `v3.0.0-alpha.6` |
 | 4 oct | Temáticas y Motor 3.2 | Un mundo por módulo con su mascota y jefe; las prácticas se registran solas al arrancar | `v3.0.0-alpha.7` |
 | 5 oct | Seguridad, rendimiento y Motor 3.3 | Auditoría y rendimiento automáticos, modelo de referencia y figuras con sentido, personajes interactivos, plan de despliegue | `v3.0.0-alpha.8` |
+| 9 oct | Plataforma y Blender integrados (PR #24) | Motor 3.4: el motor reconoce la figura, enlace en vivo con Blender, modo enfocado y Oracle 010 | `v3.0.0-alpha.9` |
+| 9–10 oct | El ejemplo manda (PR #25) y Motor 3.5.1 (PR #26) | Motor 3.5: una escena por práctica, silueta, ejemplo resuelto en cada práctica y revisión contra él; 3.5.1 comparte el detalle del instructor entre procesos (Oracle 011) | — |
 
 Detalle con hora y commit: [cronología exacta](docs/historia/01_cronologia.md). Cómo se veía la plataforma en cada versión: [la plataforma en cada versión](docs/historia/03_la_plataforma_en_cada_version.md). De dónde salió cada idea: [ideas y cómo se implementaron](docs/historia/02_ideas_y_como_se_implementaron.md).
 
@@ -90,7 +92,7 @@ flowchart LR
 ```
 
 - **20 herramientas de enseñanza** en cuatro categorías: explicar (texto, imagen, video, aviso, código), visualizar (paso a paso, atajos, comparar, tarjetas, línea de tiempo, pipeline, capas), practicar en el navegador (pregunta rápida, ordenar, emparejar, completar, puntos en imagen, explorador 3D, reto de código) y practicar en Blender. [Detalle](docs/plataforma/04_herramientas_de_ensenanza.md).
-- **Amatista Engine** lee prácticas declarativas (`amatista.practice/1` y `/2`), comprueba la escena de Blender con 38 validadores, compara la figura con un modelo de referencia (medidas aproximadas, figura con sentido), da pistas, en la etapa 2 guía paso a paso, felicita, avisa y ofrece «Hazlo conmigo», y en la etapa 3 enseña teoría en píldoras con repaso espaciado y pausa el progreso cuando algo se rompe. [Detalle](docs/motor/README.md).
+- **Amatista Engine** lee prácticas declarativas (`amatista.practice/1` y `/2`), comprueba la escena de Blender con 42 validadores; cada práctica trae su ejemplo resuelto y el motor revisa sola la escena del alumno contra él («Comparado con el ejemplo»). Además reconoce la figura y su silueta, da pistas, en la etapa 2 guía paso a paso, felicita, avisa y ofrece «Hazlo conmigo», y en la etapa 3 enseña teoría en píldoras con repaso espaciado y pausa el progreso cuando algo se rompe. [Detalle](docs/motor/README.md).
 
 ## 4. Arquitectura
 
@@ -102,6 +104,7 @@ flowchart LR
               │ IndexedDB local │        │ Amatista Engine      │
               └────────┬────────┘        └──────────┬───────────┘
                        │  /api                      │  /api/addon/v1
+                       │                            │  (enlace en vivo: /enlace, /ordenes, /ajustes)
                        └─────────────┬──────────────┘
                               ┌──────▼──────┐
                               │    Caddy    │  HTTPS
@@ -114,6 +117,8 @@ flowchart LR
                               └─────────────┘
 ```
 
+La lección y Blender se hablan a través de la API: el add-on late cada 5 segundos en `/api/addon/v1/enlace`, la lección deja órdenes en `/api/addon/v1/ordenes` (abrir la práctica, `ver_ejemplo`, `volver_practica`) y «Mi Blender» guarda en `/api/addon/v1/ajustes` cómo se ve Blender.
+
 Las piezas y cómo se conectan, archivo por archivo: [mapa del repositorio](docs/manual-del-codigo/01_mapa_del_repositorio.md).
 
 ## 5. Estructura del repositorio
@@ -123,9 +128,9 @@ amatista/
 ├── frontend/      PWA React 19 + Vite 8 + Tailwind 4 → docs/manual-del-codigo/02_frontend.md
 │   └── src/       páginas, lecciones, panel, admin, progreso offline, data/modulos/*.json
 ├── backend/       API FastAPI → docs/manual-del-codigo/03_backend.md
-│   ├── api/       auth, sesiones, progreso, eventos, admin, contenido, niveles, blender, addon
+│   ├── api/       auth, sesiones, progreso, eventos, admin, contenido, niveles, blender, addon, enlace
 │   ├── database/  conexión y modelos SQLAlchemy
-│   ├── sql/       scripts de Oracle 001–009 (orden en sql/LEEME.txt)
+│   ├── sql/       scripts de Oracle 001–011 (orden en sql/LEEME.txt)
 │   └── herramientas/  contenido.py, crear_admin.py, migrar.py, auditoria_seguridad.py, rendimiento.py, verificar_licencia.py
 ├── engine/        Amatista Engine, Python puro → docs/manual-del-codigo/04_motor_addon_y_practicas.md
 ├── addon/         add-on de Blender, constructor del .zip e instaladores por sistema
@@ -155,8 +160,10 @@ Oracle Autonomous Database 23ai en producción (esquema `ADMIN`); SQLite en desa
 | `007` | Motor de prácticas: con él son **18 tablas** |
 | `008` | Cursos por ruta: `CURSOS.RUTA` y `CURSOS.REQUISITO_ID` |
 | `009` | Archiva el curso `blender` de la v2 (no borra el progreso) |
+| `010` | Enlace en vivo con Blender: `ADDON_ENLACES` y `ADDON_AJUSTES` (con él son **20 tablas**) |
+| `011` | Detalle del instructor compartido entre procesos: `ADDON_ENLACES.DETALLE` (Motor 3.5.1) |
 
-Producción: 002, 003, 005 y 006 aplicados (14 tablas); 007, 008 y 009 después del piloto (T-055, T-064). Para cambiar de base algún día, `backend/herramientas/migrar.py` exporta e importa en JSONL y genera el esquema para PostgreSQL ([migración](docs/base-de-datos/03_migracion.md)). `backend/diagnostico_oracle.py` compara las tablas reales con las que espera el backend. Diagrama entidad-relación y cada columna: [esquema SQL](docs/base-de-datos/esquema.md).
+Producción: 002, 003, 005 y 006 aplicados (14 tablas); 007, 008, 009, 010 y 011 después del piloto (T-055, T-064, T-087; 011 va con Amatista Motor 3.5.1, [correcciones 3.5.1](docs/despliegue/2026-10-09_correcciones_3_5_1.md)). Para cambiar de base algún día, `backend/herramientas/migrar.py` exporta e importa en JSONL y genera el esquema para PostgreSQL ([migración](docs/base-de-datos/03_migracion.md)). `backend/diagnostico_oracle.py` compara las tablas reales con las que espera el backend. Diagrama entidad-relación y cada columna: [esquema SQL](docs/base-de-datos/esquema.md).
 
 ## 7. Tecnologías
 
@@ -165,7 +172,7 @@ Producción: 002, 003, 005 y 006 aplicados (14 tablas); 007, 008 y 009 después 
 | PWA | React 19, Vite 8, Tailwind CSS 4, vite-plugin-pwa, IndexedDB, A-Frame 1.8, Vitest, ESLint |
 | API | FastAPI, Uvicorn, SQLAlchemy 2, python-oracledb, PBKDF2, SMTP, pytest |
 | Datos | Oracle Autonomous Database 23ai, SQLite, PL/SQL (`AMATISTA_AUTOR`) |
-| Blender | Blender 4.2+ (extensión, probada en 4.2 y 5.0), add-on Amatista Motor 3.3.0, Amatista Engine (Python puro); `bpy` para generar las imágenes de referencia |
+| Blender | Blender 4.2+ (extensión, probada en 4.2 y 5.0), add-on Amatista Motor 3.5.1, Amatista Engine (Python puro); `bpy` para generar las imágenes de referencia |
 | Servidor | VM de Oracle Cloud, systemd, Caddy y Cloudflare (HTTPS con certificado de origen) |
 | Proceso | GitHub, GitHub Actions (CI y tablero), commits firmados con SSH |
 
@@ -235,13 +242,13 @@ Todas, con cada opción y ejemplos: [manual del desarrollador](docs/desarrollado
 - **Commits**: `type(scope): descripción` ([convención](docs/guias/2026-09-27_convencion_commits.txt)), firmados con SSH.
 - **Tareas**: [`tablero/tareas.yml`](tablero/tareas.yml); las tarjetas se mueven con los commits (`T-xxx`, `cierra T-xxx`) y [KANBAN.md](KANBAN.md) se regenera solo.
 - **Bitácora**: cada sesión deja su registro en [`docs/bitacora/`](docs/bitacora/); las fallas, en el [registro de incidencias](docs/incidencias/README.md).
-- **Base de datos**: cambios de esquema solo con scripts nuevos y aditivos (`010` en adelante), ejecutados antes del código que los necesita.
+- **Base de datos**: cambios de esquema solo con scripts nuevos y aditivos (`012` en adelante), ejecutados antes del código que los necesita.
 
 Flujo completo y checklist antes de un PR: [flujo de trabajo](docs/desarrollador/05_flujo_de_trabajo.md).
 
 ## 11. Versiones
 
-Tags `v*` con `bash herramientas/crear-tags.sh` desde la computadora de Maximiliano (la nube no puede publicar tags). Publicados: `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.1`. Preparados en el script: `v2.2.0-alpha.2` y `v3.0.0-alpha.1` a `v3.0.0-alpha.8` (este último, `main` al 5 de octubre). Qué trajo cada una: [CHANGELOG.md](CHANGELOG.md).
+Tags `v*` con `bash herramientas/crear-tags.sh` desde la computadora de Maximiliano (la nube no puede publicar tags). Publicados: `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.1`. Preparados en el script: `v2.2.0-alpha.2` y `v3.0.0-alpha.1` a `v3.0.0-alpha.9` (este último, `255d054`, el PR #24 con el Motor 3.4). Qué trajo cada una: [CHANGELOG.md](CHANGELOG.md).
 
 ## 12. Qué sigue
 

@@ -1,6 +1,6 @@
 # Módulo 3 de Blender: Modelado con precisión
 
-Estado: borrador para revisión. Continúa el módulo 2 y la mesa. No está publicado en Oracle.
+Estado: histórico. Era un borrador de la v2 que continuaba el módulo 2 y la mesa; el plan de estudios v3 lo reemplazó y el archivo quedó en `frontend/src/data/modulos/archivo/`. No se publicó en Oracle.
 Tiempo estimado: 39 minutos, ajustable tras probarlo con alumnos.
 
 ## Resultado y contenido
@@ -19,7 +19,7 @@ Los 15 minutos de práctica son una excepción explícita al objetivo de leccion
 
 ## Archivos
 
-- frontend/src/data/modulos/blender-modulo-3.json: cinco lecciones completas en borrador.
+- frontend/src/data/modulos/archivo/blender-modulo-3.json: cinco lecciones completas en borrador.
 - frontend/public/ilustraciones/podio-modulo-3.svg: diagrama original de referencia, no captura ni prueba de Blender.
 - practices/archivo/v2/podio.json: práctica blender.n1.podio.
 - engine/tests/test_motor_podio.py: referencia correcta, errores de posición, tamaño, roles, escala, guardado y enlace.
@@ -29,8 +29,8 @@ Los 15 minutos de práctica son una excepción explícita al objetivo de leccion
 Después de fusionar y desplegar esta rama, desde backend y con el entorno configurado para la base deseada:
 
 ```bash
-python herramientas/contenido.py validar ../frontend/src/data/modulos/blender-modulo-3.json
-python herramientas/contenido.py importar ../frontend/src/data/modulos/blender-modulo-3.json
+python herramientas/contenido.py validar ../frontend/src/data/modulos/archivo/blender-modulo-3.json
+python herramientas/contenido.py importar ../frontend/src/data/modulos/archivo/blender-modulo-3.json
 python herramientas/contenido.py practicas
 ```
 
