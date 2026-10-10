@@ -4,6 +4,7 @@
 import { useAuth } from '../auth/contexto';
 import { useCatalogo } from '../catalogo/contexto';
 import { agruparPorRuta } from '../catalogo/agrupar';
+import AvisoGuia from '../components/AvisoGuia';
 import { CristalLogo } from '../components/Iconos';
 import LogoCurso from '../components/LogoCurso';
 import TarjetaCurso from '../components/TarjetaCurso';
@@ -152,6 +153,8 @@ function Inicio() {
         </div>
       </section>
 
+      <AvisoGuia className="mt-10" />
+
       {/* Propuesta de valor */}
       <ul className="mt-12 grid gap-3 sm:grid-cols-3" aria-label="Por qué Amatista">
         {PILARES.map(({ id, titulo, texto, Icono, tono }, i) => (
@@ -274,6 +277,11 @@ function Inicio() {
             <li>
               <a href={rutas.panel} className="hover:text-neon">
                 Mi panel
+              </a>
+            </li>
+            <li>
+              <a href={rutas.guia} className="hover:text-neon">
+                Guía
               </a>
             </li>
             <li>
