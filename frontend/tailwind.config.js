@@ -17,8 +17,10 @@ export default {
         'blender': '#F5792A',
       },
       fontFamily: {
-        sans: ['"Outfit Variable"', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono Variable"', 'ui-monospace', 'monospace'],
+        // «… respaldo»: fuentes del sistema ajustadas a las medidas de las nuestras
+        // (index.css) para que el texto no salte cuando llega la fuente.
+        sans: ['"Outfit Variable"', '"Outfit respaldo"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono Variable"', '"JetBrains Mono respaldo"', 'ui-monospace', 'monospace'],
       },
     },
   },
