@@ -104,3 +104,9 @@ export const moverLeccion = (token, cursoId, leccionId, orden) =>
 
 export const validarLeccion = (token, leccion) =>
   pedirJSON("/api/contenido/validar", { metodo: "POST", cuerpo: { leccion }, token });
+
+// --- Auditoría -----------------------------------------------------------------
+
+// Permisos, cuentas, contenido sin publicar y lecciones donde los alumnos se atascan.
+export const obtenerAuditoria = (token, dias = 30) =>
+  pedirJSON(`/api/admin/auditoria${consultaURL({ dias })}`, { token, espera: ESPERA_LARGA });

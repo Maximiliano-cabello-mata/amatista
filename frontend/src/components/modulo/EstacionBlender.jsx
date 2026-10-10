@@ -53,7 +53,9 @@ function EstacionBlender({ cursoId, estado, comoElemento = 'div' }) {
         <span className={`mt-0.5 block font-extrabold ${cierre ? 'text-lg' : 'text-base'} ${abierta ? 'text-white' : 'text-white/50'}`}>
           {bloque?.title ?? leccion.title}
         </span>
-        <span className="mt-1 block text-sm text-texto/70">{TEXTO_ESTADO[estado.estado](faltan, cierre, taller)}</span>
+        <span className="mt-1 block text-sm text-texto/70">
+          {estado.porRevision ? 'Abierta por revisión: un alumno la ve con candado hasta terminar lo anterior.' : TEXTO_ESTADO[estado.estado](faltan, cierre, taller)}
+        </span>
         <span className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[11px] uppercase tracking-wider text-white/45">
           {taller ? (
             <span className="inline-flex items-center gap-1 text-neon/80">

@@ -11,6 +11,7 @@
 | Mi Blender | `#/blender` (menú de la cuenta) | Descargar el add-on, computadoras conectadas, compatibilidad y **Tu Blender, desde aquí**: cómo se ve Blender para el alumno (modo enfocado, acompañamiento, tarjeta con el paso actual en la vista 3D y avisos si usa una herramienta de otro nivel), guardado con `GET/PUT /api/addon/v1/ajustes` y aplicado en el siguiente latido. Ya no está en la barra superior: se llega desde el menú de la cuenta o desde cualquier práctica. |
 | Vincular | `#/vincular?codigo=…` | Confirmar el código que muestra Blender. |
 | Perfil | `#/perfil` | Datos de la cuenta. |
+| Guía | `#/guia` (botón «?» de la barra) | La guía de primeros pasos: cómo funciona la plataforma y el add-on ([09](09_guia_vista_y_auditoria.md)). |
 
 **Recorrido típico:** abre el curso → entra al módulo → hace las lecciones en orden (cada una desbloquea la siguiente) → la estación de Blender se ilumina → abre la práctica → si es la primera vez, prepara Blender en la misma tarjeta → **Abrir en Blender** → practica en Blender acompañado por el motor, mientras la lección muestra «Ahora en Blender», el ejemplo resuelto y la lista «Comparado con el ejemplo» → el avance aparece en la lección y en el panel → examen del módulo e insignia.
 
@@ -22,12 +23,16 @@ Rol `profesor`. Ve el **Diagnóstico técnico** (`#/laboratorio`) de su disposit
 
 Rol `admin`. Todo lo del profesor y además: crea y edita módulos y lecciones, publica y archiva, publica versiones de prácticas, gestiona usuarios y ve el estado del sistema. Detalle en [05 · Panel de administración](05_panel_de_administracion.md).
 
+**Vista del equipo (10 oct).** Profesores y administradores recorren la plataforma en vista de **administrador** (todas las lecciones abiertas para revisar) o de **alumno** (igual que un alumno, sin la pestaña Admin). Se cambia desde la franja debajo de la barra superior o en Admin › Ver la plataforma ([09](09_guia_vista_y_auditoria.md)).
+
 ## Barra superior
 
 | Antes (v3.0) | Ahora (v3.1) |
 |---|---|
 | Cursos · Mi panel · **Laboratorio** · **Blender** · Admin (profesor/admin) | Cursos · Mi panel · Admin (profesor/admin) |
 | Menú de la cuenta: Perfil · Mi panel · Cerrar sesión | Menú de la cuenta: Perfil · Mi panel · **Mi Blender** · Cerrar sesión (también en el menú del celular) |
+
+Desde el 10 de octubre la barra también tiene el botón **«?»** (la guía) y el menú de la cuenta, **Guía**.
 
 La ruta `#/blender` sigue funcionando (enlaces viejos, el add-on y los correos la usan).
 

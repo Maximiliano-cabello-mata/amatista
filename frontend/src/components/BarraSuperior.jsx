@@ -4,11 +4,12 @@ import { useConexion } from '../hooks/useConexion';
 import { useInstalarPWA } from '../hooks/useInstalarPWA';
 import { useProgreso } from '../progreso/contexto';
 import { navegar, rutaEntrar, rutas } from '../rutas';
+import { useVista } from '../vista/contexto';
 import { CristalLogo } from './Iconos';
 
 const PAGINAS_CURSOS = ['inicio', 'curso', 'leccion'];
 
-function enlacesDe(esProfesor) {
+function enlacesDe(verAdmin) {
   const enlaces = [
     { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
     { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
@@ -17,7 +18,8 @@ function enlacesDe(esProfesor) {
   // Blender ya no es una pestaña: cada módulo cierra con su práctica en
   // Blender y la instalación vive en la práctica y en «Mi Blender». El
   // diagnóstico técnico (#/laboratorio) se abre desde Admin › Estado.
-  if (esProfesor) enlaces.push({ href: rutas.admin, texto: 'Admin', activo: (pagina) => pagina === 'admin' });
+  // En la vista de alumno el equipo no ve Admin (vuelve desde la franja de vista).
+  if (verAdmin) enlaces.push({ href: rutas.admin, texto: 'Admin', activo: (pagina) => pagina === 'admin' });
   return enlaces;
 }
 
@@ -131,6 +133,11 @@ function MenuCuenta({ usuario, alCerrarSesion }) {
               </a>
             </li>
             <li>
+              <a href={rutas.guia} onClick={() => setAbierto(false)} className="block px-3 py-2 text-sm text-white hover:bg-white/5">
+                Guía: cómo funciona Amatista
+              </a>
+            </li>
+            <li>
               <button
                 type="button"
                 onClick={() => {
@@ -154,6 +161,7 @@ function BarraSuperior({ ruta, hash = '' }) {
   const instalar = useInstalarPWA();
   const { xp, nivel } = useProgreso();
   const { usuario, esProfesor, cerrarSesion } = useAuth();
+  const { comoAlumno } = useVista();
   const [menuAbierto, setMenuAbierto] = useState(false);
   const barra = useRef(null);
   const botonMenu = useRef(null);
@@ -164,7 +172,7 @@ function BarraSuperior({ ruta, hash = '' }) {
   useCerrarFuera(menuAbierto, cerrarMenu, barra);
 
   const pagina = ruta?.pagina ?? 'inicio';
-  const enlaces = enlacesDe(esProfesor);
+  const enlaces = enlacesDe(esProfesor && !comoAlumno);
   const enCuenta = ['entrar', 'registro', 'confirmar', 'recuperar'].includes(pagina);
 
   const salir = async () => {
@@ -205,6 +213,17 @@ function BarraSuperior({ ruta, hash = '' }) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <a
+            href={rutas.guia}
+            aria-current={pagina === 'guia' ? 'page' : undefined}
+            title="Guía: cómo funciona Amatista"
+            className={`corte-poly-sm grid h-8 w-8 place-items-center border font-mono text-sm font-bold transition-colors ${
+              pagina === 'guia' ? 'border-neon bg-neon/15 text-neon' : 'border-white/10 bg-superficie/80 text-white/70 hover:border-neon hover:text-neon'
+            }`}
+          >
+            <span aria-hidden="true">?</span>
+            <span className="sr-only">Guía: cómo funciona Amatista</span>
+          </a>
           <IndicadorXP xp={xp} nivel={nivel} />
           <EstadoConexion enLinea={enLinea} />
           {instalar && (
@@ -290,6 +309,14 @@ function BarraSuperior({ ruta, hash = '' }) {
                     className="corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest text-white/70 hover:text-neon"
                   >
                     Mi Blender
+                  </a>
+                  <a
+                    href={rutas.guia}
+                    onClick={() => setMenuAbierto(false)}
+                    aria-current={pagina === 'guia' ? 'page' : undefined}
+                    className="corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest text-white/70 hover:text-neon"
+                  >
+                    Guía
                   </a>
                   <button
                     type="button"

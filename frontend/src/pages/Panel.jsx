@@ -5,6 +5,7 @@
 import { useMemo } from 'react';
 import { useAuth } from '../auth/contexto';
 import { useCatalogo } from '../catalogo/contexto';
+import AvisoGuia from '../components/AvisoGuia';
 import ActividadPanel from '../components/panel/ActividadPanel';
 import BlenderPanel from '../components/panel/BlenderPanel';
 import ContinuarPanel from '../components/panel/ContinuarPanel';
@@ -37,6 +38,8 @@ function Panel() {
   return (
     <main className="mx-auto max-w-6xl px-4 pb-20 pt-6 sm:px-6 sm:pt-10">
       <EncabezadoPanel usuario={usuario} xp={xp} nivel={nivel} racha={racha} lecciones={cuenta.lecciones} hayAvance={hayAvance} actividad={progreso.actividad} hoy={hoy} />
+
+      <AvisoGuia className="mt-6" />
 
       {/* Móvil: una columna en orden de prioridad. Escritorio: 2/3 + 1/3. */}
       <div className="mt-6 grid gap-5 lg:grid-cols-3">

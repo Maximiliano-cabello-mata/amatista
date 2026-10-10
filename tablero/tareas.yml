@@ -558,6 +558,25 @@ tareas:
     area: motor
     depende_de: [T-100]
     aceptacion: "El alumno de prueba termina el taller del módulo 1 y el tren solo con la tarjeta; los ajustes que salgan quedan en el mismo PR"
+  - id: T-103
+    titulo: "Guía de primeros pasos para alumnos nuevos (#/guia: plataforma y add-on), línea «Qué hacer» en cada lección y curso reorganizado con «Así avanzas»"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "Cinco capítulos con comprobación, aviso en portada y panel, botón «?» en la barra; vitest y build en verde"
+    evidencia: "frontend/src/data/guia.js; frontend/src/pages/Guia.jsx; frontend/src/components/leccion/queHacer.js; docs/plataforma/09_guia_vista_y_auditoria.md"
+  - id: T-104
+    titulo: "Equipo: vista de alumno o de administrador, saltar a cualquier lección (Admin › Ver la plataforma) y auditoría (contenido, revisión a mano con informe, atascos, permisos y cuentas)"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "GET /api/admin/auditoria solo para profesor y admin; la vista solo cambia lo que se muestra; pytest, vitest y build en verde"
+    evidencia: "frontend/src/vista/; frontend/src/pages/admin/Revision.jsx; frontend/src/pages/admin/Auditoria.jsx; backend/api/admin.py"
+  - id: T-105
+    titulo: "Probar la guía con un alumno nuevo y la vista de alumno, el salto de lecciones y la auditoría con la cuenta de administrador en producción"
+    version: v3.3.0
+    area: pwa
+    depende_de: [T-103, T-104]
+    aceptacion: "Un alumno nuevo termina la guía sin ayuda y llega a su primera lección; el administrador revisa un módulo completo desde Ver la plataforma y descarga el informe de auditoría"
+    bloqueo: "Lo prueba el usuario después de actualizar el backend y la PWA"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0

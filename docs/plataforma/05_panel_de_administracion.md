@@ -11,6 +11,8 @@ Antes la navegación era una lista plana (Resumen, Usuarios, Contenido, Práctic
 | Grupo | Sección | Ruta | Qué se hace |
 |---|---|---|---|
 | — | **Resumen** | `#/admin` | Indicadores del lanzamiento, actividad diaria, embudo y avance por curso. |
+| Revisión *(10 oct)* | **Ver la plataforma** | `#/admin/revision` | Elegir vista de administrador o de alumno, abrir las páginas del alumno y saltar a cualquier lección ([09](09_guia_vista_y_auditoria.md)). |
+| | **Auditoría** | `#/admin/auditoria` | Revisiones del contenido, revisión lección por lección con informe, dónde se atascan los alumnos, permisos, cuentas y contenido sin publicar ([09](09_guia_vista_y_auditoria.md)). |
 | Enseñanza | **Módulos** (antes «Contenido») | `#/admin/contenido` | Árbol cursos → módulos → lecciones. Crear un módulo con la Fórmula, editar y crear lecciones, publicar, archivar, reordenar, exportar el JSON. |
 | | **Prácticas de Blender** | `#/admin/practicas` | Las prácticas del motor registradas en Oracle, su historial de versiones y cuál ven los alumnos (publicar, archivar, sincronizar desde el repositorio). |
 | | **Herramientas** *(nueva)* | `#/admin/herramientas` | El catálogo de bloques de lección por categoría, con vista previa y JSON ([04](04_herramientas_de_ensenanza.md)). |

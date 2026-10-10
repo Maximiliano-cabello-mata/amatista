@@ -4,11 +4,13 @@
 import { useAuth } from '../../auth/contexto';
 import NavAdmin from '../../components/admin/NavAdmin';
 import { Mensaje } from '../../components/admin/ui';
+import Auditoria from './Auditoria';
 import Contenido from './Contenido';
 import EditorLeccion from './EditorLeccion';
 import Herramientas from './Herramientas';
 import Practicas from './Practicas';
 import Resumen from './Resumen';
+import Revision from './Revision';
 import Sistema from './Sistema';
 import Usuario from './Usuario';
 import Usuarios from './Usuarios';
@@ -23,6 +25,8 @@ const TITULOS = {
   sistema: 'Sistema',
   practicas: 'Prácticas de Blender',
   herramientas: 'Herramientas de enseñanza',
+  revision: 'Ver la plataforma',
+  auditoria: 'Auditoría',
 };
 
 const GRUPOS = { usuario: 'usuarios', leccion: 'contenido', 'nueva-leccion': 'contenido' };
@@ -41,6 +45,10 @@ function Seccion({ seccion, params, esAdmin }) {
       return <EditorLeccion key={`nueva/${params.moduloId}`} moduloId={params.moduloId} esAdmin={esAdmin} />;
     case 'herramientas':
       return <Herramientas />;
+    case 'revision':
+      return <Revision />;
+    case 'auditoria':
+      return <Auditoria />;
     case 'practicas':
       return <Practicas esAdmin={esAdmin} />;
     case 'sistema':
