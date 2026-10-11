@@ -1,7 +1,9 @@
-// #/blender («Mi Blender»): descargar e instalar Amatista para Blender,
-// conectar la cuenta y ver los Blender conectados y las prácticas. Desde
-// v3.1 ya no es una pestaña: las prácticas viven al cierre de cada módulo y
-// se preparan desde la misma práctica; aquí quedan las opciones y la ayuda.
+// #/blender («Blender», pestaña de la barra desde el 11 de octubre): todo lo que une la plataforma con
+// Blender en un solo lugar y en el orden en que se vive:
+//   1. Cómo se unen la plataforma y Blender (la tarjeta del proceso, paso a paso).
+//   2. Prepárate una sola vez: descargar Amatista Motor, instalarlo y vincular la cuenta.
+//   3. Conoce Amatista Motor: las tres prácticas que explican todo el add-on.
+//   4. Tu Blender, desde aquí (ajustes), los Blender conectados y tus prácticas.
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../auth/contexto';
 import FormularioCodigo from '../blender/FormularioCodigo';
@@ -17,6 +19,10 @@ import {
   SISTEMAS,
   versionDelServidor,
 } from '../blender/logica';
+import ConoceAmatistaMotor from '../components/blender/ConoceAmatistaMotor';
+import FusionPlataformaBlender from '../components/blender/FusionPlataformaBlender';
+import Pagina from '../components/estructura/Pagina';
+import TituloSeccion from '../components/estructura/TituloSeccion';
 import { CristalLogo } from '../components/Iconos';
 import { useConexion } from '../hooks/useConexion';
 import { Alerta } from './cuenta/Formulario';
@@ -85,7 +91,7 @@ function Descarga({ token, usuario }) {
   };
 
   return (
-    <Tarjeta antetitulo="Paso 1" titulo={`Descarga ${NOMBRE_MOTOR}`} acento="border-amatista/50">
+    <Tarjeta antetitulo="Instalador" titulo={`Descarga ${NOMBRE_MOTOR}`} acento="border-amatista/50">
       {!detectado && (
         <Alerta tipo="info">Blender funciona en computadores: abre esta página desde Windows, macOS o Linux.</Alerta>
       )}
@@ -135,7 +141,7 @@ function Descarga({ token, usuario }) {
       {estado.nombre && (
         <div className="mt-4">
           <Alerta tipo="exito">
-            Descargado <strong>{estado.nombre}</strong>. Ahora descomprímelo y sigue el paso 2.
+            Descargado <strong>{estado.nombre}</strong>. Ahora descomprímelo y ejecuta el instalador.
           </Alerta>
         </div>
       )}
@@ -179,7 +185,7 @@ function Dispositivos({ token }) {
       <ul className="grid gap-2">
         {lista.map((d) => (
           <li key={d.id} className="corte-poly-sm flex flex-wrap items-center justify-between gap-3 bg-black/25 px-4 py-3">
-            <div className="min-w-0">
+            <div className="min-w-0 max-w-full flex-[1_1_12rem]">
               <p className="truncate font-bold text-white">{d.nombre}</p>
               <p className="font-mono text-[11px] uppercase tracking-widest text-white/45">
                 Conectado {fecha(d.conectado_en)} · último uso {fecha(d.ultimo_uso)}
@@ -383,36 +389,32 @@ function Practicas({ token }) {
   );
 }
 
-function Blender() {
-  const { token, usuario } = useAuth();
-  const enLinea = useConexion();
+// Lo que ya tiene el alumno (para la tarjeta del proceso y la cabecera): una sola consulta al abrir.
+function useConexionBlender(token) {
+  const [estado, setEstado] = useState({ cargado: false, vinculado: false, abierto: false });
+  useEffect(() => {
+    if (!token) return undefined;
+    let vigente = true;
+    Promise.all([listarDispositivos(token), estadoEnlace(token)]).then(([dispositivos, enlace]) => {
+      if (!vigente) return;
+      const vivo = enlace.ok ? estadoBlender(enlace.datos) : { estado: 'sin_enlace' };
+      setEstado({
+        cargado: true,
+        vinculado: dispositivos.ok && dispositivos.datos.dispositivos.length > 0,
+        abierto: ['aqui', 'otra'].includes(vivo.estado),
+      });
+    });
+    return () => {
+      vigente = false;
+    };
+  }, [token]);
+  return estado;
+}
 
+function Instalar({ token, usuario }) {
   return (
-    <main className="mx-auto max-w-5xl px-4 pb-20 pt-6 sm:px-6 sm:pt-10">
-      <header className="corte-poly animar-entrar bg-gradient-to-br from-amatista via-amatista-oscuro to-blender/50 p-[2px]">
-        <div className="corte-poly flex flex-col gap-5 bg-superficie/95 p-6 sm:flex-row sm:items-center sm:p-8">
-          <CristalLogo className="animar-flotar h-16 w-16 shrink-0" />
-          <div>
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-blender">{NOMBRE_MOTOR} para Blender</p>
-            <h1 className="mt-1 text-3xl font-extrabold leading-tight text-white sm:text-4xl">Mi Blender</h1>
-            <p className="mt-2 max-w-2xl leading-relaxed text-texto/80">
-              Cada módulo tiene un taller en Blender, donde aprendes cada habilidad mirándola, haciéndola con ayuda y después sin ayuda, y
-              termina con un proyecto que queda en tu isla. Instala el add-on una vez: tu avance aparece en tu panel.
-            </p>
-            <a href={rutas.inicio} className="mt-3 inline-block font-mono text-xs uppercase tracking-widest text-neon hover:underline">
-              Ir a mis módulos ▸
-            </a>
-          </div>
-        </div>
-      </header>
-
-      {!enLinea && (
-        <div className="mt-6">
-          <Alerta tipo="info">Sin conexión: la descarga y la lista de Blender conectados necesitan internet.</Alerta>
-        </div>
-      )}
-
-      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+    <>
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <Descarga token={token} usuario={usuario} />
         <Tarjeta antetitulo="Compatibilidad" titulo={`Blender ${BLENDER_MINIMO} o más nuevo`}>
           <p className="text-sm leading-relaxed text-texto/80">
@@ -433,9 +435,8 @@ function Blender() {
           </p>
         </Tarjeta>
       </div>
-
       <section className="mt-6">
-        <h2 className="sr-only">Cómo se instala</h2>
+        <h3 className="sr-only">Cómo se instala</h3>
         <ol className="grid gap-3 md:grid-cols-3">
           <Paso numero="1" titulo="Descarga y descomprime">
             Descarga el paquete de tu sistema y extrae la carpeta «{NOMBRE_MOTOR}».
@@ -448,29 +449,100 @@ function Blender() {
             ))}
           </Paso>
           <Paso numero="3" titulo="Abre Blender">
-            Pulsa N en la vista 3D y elige la pestaña Amatista. La práctica de tu lección se abre sola.
+            Pulsa N en la vista 3D y elige la pestaña Amatista. Si te muestra un código, escríbelo en «Blender conectados».
           </Paso>
         </ol>
       </section>
+    </>
+  );
+}
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        {usuario && <AjustesBlender token={token} />}
-        {usuario ? (
-          <Dispositivos token={token} />
-        ) : (
-          <Tarjeta antetitulo="Tu cuenta" titulo="Conecta Blender con tu cuenta">
-            <p className="text-sm text-texto/75">Entra para que tus prácticas cuenten en tu panel y en tus insignias.</p>
-            <a
-              href={rutaEntrar(rutas.blender)}
-              className="corte-poly-sm destello mt-4 inline-block bg-amatista px-5 py-2.5 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
-            >
-              Entrar ▶
-            </a>
-          </Tarjeta>
-        )}
-        <Practicas token={token} />
+function Etapa({ numero, titulo, children, id, recorrido }) {
+  return (
+    <section className="mt-12" aria-labelledby={id} data-recorrido={recorrido}>
+      <TituloSeccion id={id} antetitulo={`Paso ${numero}`} titulo={titulo} />
+      <div className="mt-5">{children}</div>
+    </section>
+  );
+}
+
+function Blender() {
+  const { token, usuario } = useAuth();
+  const enLinea = useConexion();
+  const conexion = useConexionBlender(usuario ? token : null);
+  const listo = conexion.cargado && conexion.vinculado;
+  const progreso = usuario ? { instalado: conexion.vinculado, vinculado: conexion.vinculado, abierto: conexion.abierto } : null;
+
+  return (
+    <Pagina
+      ancho="contenido"
+      migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Blender' }]}
+      encabezado={{
+        tono: 'blender',
+        icono: <CristalLogo className="animar-flotar h-12 w-12" />,
+        antetitulo: `${NOMBRE_MOTOR} para Blender`,
+        titulo: 'Blender, con Amatista a tu lado',
+        descripcion: 'Aquí está todo lo que une la plataforma con tu Blender: cómo funciona, la instalación, las prácticas que te enseñan el add-on y tus ajustes.',
+        children: usuario && conexion.cargado && (
+              <p className="mt-3 flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-widest">
+                <span className={`corte-poly-sm px-2.5 py-1 ${conexion.vinculado ? 'bg-emerald-400/15 text-emerald-300' : 'bg-white/5 text-white/55'}`}>
+                  {conexion.vinculado ? '✓ Blender vinculado' : '○ Blender sin vincular'}
+                </span>
+                <span className={`corte-poly-sm px-2.5 py-1 ${conexion.abierto ? 'bg-neon/15 text-neon' : 'bg-white/5 text-white/55'}`}>
+                  {conexion.abierto ? '● Blender abierto ahora' : '○ Blender cerrado'}
+                </span>
+              </p>
+        ),
+      }}
+    >
+
+      {!enLinea && (
+        <div className="mt-6">
+          <Alerta tipo="info">Sin conexión: la descarga, el enlace en vivo y la lista de Blender conectados necesitan internet.</Alerta>
+        </div>
+      )}
+
+      <div className="mt-6">
+        <FusionPlataformaBlender progreso={progreso} resumida={listo} />
       </div>
-    </main>
+
+      <Etapa numero="1" titulo="Prepárate (una sola vez)" id="blender-preparar" recorrido="instalar">
+        {listo ? (
+          <details className="corte-poly-sm border border-emerald-400/30 bg-emerald-400/5 p-4">
+            <summary className="cursor-pointer font-bold text-emerald-200">✓ Ya tienes Amatista Motor vinculado. ¿Otro computador o reinstalar?</summary>
+            <div className="mt-5">
+              <Instalar token={token} usuario={usuario} />
+            </div>
+          </details>
+        ) : (
+          <Instalar token={token} usuario={usuario} />
+        )}
+      </Etapa>
+
+      <Etapa numero="2" titulo="Conoce el add-on" id="blender-conoce">
+        <ConoceAmatistaMotor token={token} usuario={usuario} />
+      </Etapa>
+
+      <Etapa numero="3" titulo="Tu Blender y tus prácticas" id="blender-ajustes">
+        <div className="grid gap-6 lg:grid-cols-2 [&>*]:min-w-0">
+          {usuario && <AjustesBlender token={token} />}
+          {usuario ? (
+            <Dispositivos token={token} />
+          ) : (
+            <Tarjeta antetitulo="Tu cuenta" titulo="Conecta Blender con tu cuenta">
+              <p className="text-sm text-texto/75">Entra para que tus prácticas cuenten en tu panel y en tus insignias.</p>
+              <a
+                href={rutaEntrar(rutas.blender)}
+                className="corte-poly-sm destello mt-4 inline-block bg-amatista px-5 py-2.5 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
+              >
+                Entrar ▶
+              </a>
+            </Tarjeta>
+          )}
+          <Practicas token={token} />
+        </div>
+      </Etapa>
+    </Pagina>
   );
 }
 

@@ -217,10 +217,10 @@ export const HERRAMIENTAS = {
     formula: ['reto'],
   },
   blender_tour: {
-    nombre: 'Primeros pasos en Blender',
+    nombre: 'Conoce Amatista Motor',
     categoria: 'blender',
-    paraQue: 'Empezar desde la lección el recorrido del add-on en Blender y verlo en vivo, paso a paso.',
-    cuando: 'Una vez, en el curso «Primeros pasos»: el alumno conoce Blender y la conexión antes del primer taller.',
+    paraQue: 'Empezar desde la lección la práctica del add-on que toca y verla en vivo, paso a paso.',
+    cuando: 'Rara vez: las tres prácticas ya viven en la página Blender. Úsalo solo si una lección necesita repasar el add-on.',
     formula: ['practica'],
     nueva: true,
   },

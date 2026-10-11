@@ -19,7 +19,7 @@ const ETIQUETAS = {
   blender_taller: 'Taller en Blender',
   classify: 'Clasifica',
   true_false: '¿Verdad o mito?',
-  blender_tour: 'Primeros pasos en Blender',
+  blender_tour: 'Conoce Amatista Motor',
 };
 
 // Marco común de las actividades: tipo, estado (pendiente / resuelta), XP

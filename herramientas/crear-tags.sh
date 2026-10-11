@@ -34,6 +34,12 @@ VERSIONES=(
   "v3.0.0-alpha.7|927248c|Temáticas por módulo, mascotas y Amatista Motor 3.2; las prácticas se registran solas (PR #19)"
   "v3.0.0-alpha.8|2402549|Seguridad y rendimiento, Motor 3.3 con modelo de referencia, personajes interactivos y plan de despliegue (PR #20 y #22)"
   "v3.0.0-alpha.9|255d054|Plataforma y Blender integrados: Amatista Motor 3.4, figure.recognize, enlace en vivo (Oracle 010) y modo enfocado (PR #24)"
+  # Auditoría 2026-10-11: alpha.10 ya está publicado en GitHub; de alpha.11 en adelante faltaban.
+  "v3.0.0-alpha.10|1b26416|Renovación del repositorio: Motor 3.5/3.5.1, errores del alumno corregidos y documentación al día (PR #25 a #28)"
+  "v3.0.0-alpha.11|a9df7e9|Herramientas gráficas v3.6 y Amatista Motor 4.0: ruta de misiones y medidas amables (PR #29 y #30)"
+  "v3.0.0-alpha.12|48025f7|Amatista Taller: motor 5, add-on 5.0 y Oracle 012 (PR #31 y #32)"
+  "v3.0.0-alpha.13|7d17f81|Guía para alumnos y vista de administrador: revisión y auditoría (PR #33)"
+  "v3.0.0-alpha.14|70064b2|Primeros pasos, recursos gráficos nuevos y Amatista Motor 5.1 (PR #34)"
 )
 
 git fetch --quiet origin --tags

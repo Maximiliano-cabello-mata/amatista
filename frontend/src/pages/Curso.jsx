@@ -14,6 +14,7 @@ import Etiqueta, { Etiquetas } from '../components/etiquetas/Etiqueta';
 import { etiquetaLeccion, etiquetasModulo } from '../components/etiquetas/catalogo';
 import { ACENTOS } from '../components/estiloCurso';
 import { CristalLogo, IconoCandado } from '../components/Iconos';
+import Pagina from '../components/estructura/Pagina';
 import LogoCurso from '../components/LogoCurso';
 import EstacionBlender from '../components/modulo/EstacionBlender';
 import RutaModulo from '../components/modulo/RutaModulo';
@@ -201,7 +202,7 @@ const NODO_NIVEL = {
 };
 const TEXTO_NIVEL = { completado: 'Completado', 'en-curso': 'En curso', disponible: 'Disponible', bloqueado: 'Próximamente' };
 
-// Primeros pasos es el nivel 0; los demás, su número de curso (01, 02…) o su posición.
+// Cada nivel lleva su número de curso (01, 02…) o su posición.
 const numeroNivel = (curso, i) => (curso.numero ? Number(curso.numero) : i + 1);
 
 // El árbol del curso: un tronco (el logo) que se ramifica en los niveles.
@@ -322,7 +323,7 @@ function TuBlender({ niveles }) {
         href={rutas.blender}
         className="corte-poly-sm destello shrink-0 bg-blender px-4 py-2.5 text-center font-mono text-xs font-bold uppercase tracking-widest text-base hover:brightness-110"
       >
-        {conectado ? 'Mi Blender ▸' : 'Conectar Blender ▸'}
+        {conectado ? 'Ir a Blender ▸' : 'Conectar Blender ▸'}
       </a>
     </aside>
   );
@@ -340,13 +341,13 @@ const PASOS_CURSO = [
 function ComoAvanzas({ conBlender }) {
   const pasos = conBlender ? PASOS_CURSO : PASOS_CURSO.filter((paso) => paso.titulo !== 'En Blender');
   return (
-    <section className="corte-poly-sm mt-8 border border-white/10 bg-superficie/90 p-4 sm:p-5" aria-labelledby="como-avanzas">
+    <section className="corte-poly-sm mt-8 border border-white/10 bg-superficie/90 p-4 sm:p-5" aria-labelledby="como-avanzas" data-recorrido="como-avanzas">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="como-avanzas" className="font-mono text-xs uppercase tracking-[0.25em] text-neon">
           Así avanzas en este curso
         </h2>
         <a href={rutas.guia} className="font-mono text-[11px] uppercase tracking-widest text-white/55 hover:text-neon">
-          ¿Primera vez? Ver la guía ▸
+          ¿Dudas? Ayuda ▸
         </a>
       </div>
       <ol className={`mt-3 grid gap-3 ${pasos.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
@@ -421,22 +422,24 @@ function Curso({ cursoId }) {
   const conBlender = ruta.id === 'blender';
 
   return (
-    <main className="mx-auto max-w-4xl px-4 pb-20 pt-6 sm:px-6 sm:pt-10">
-      <a href={rutas.inicio} className="font-mono text-xs uppercase tracking-widest text-white/50 hover:text-neon">
-        ◂ Todos los cursos
-      </a>
-
-      <header className="animar-entrar mt-5 flex flex-col gap-6 sm:flex-row sm:items-center">
-        <div className="hexagono grid h-28 w-28 shrink-0 place-items-center bg-superficie">
-          <LogoCurso logo={ruta.logo} className="animar-flotar h-16 w-20" decorativo={false} />
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-white/50">
-            Curso {ruta.numero}
-            {varios ? ` · ${ruta.niveles.length} niveles` : ''}
-          </p>
-          <h1 className="text-4xl font-extrabold text-white sm:text-5xl">{ruta.titulo}</h1>
-          <p className={`text-lg font-medium ${acento.texto}`}>{ruta.subtitulo}</p>
+    <Pagina
+      ancho="contenido"
+      migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Cursos', href: rutas.inicio }, { texto: ruta.titulo }]}
+      encabezado={{
+        tono: conBlender ? 'blender' : 'neon',
+        icono: <LogoCurso logo={ruta.logo} className="animar-flotar h-12 w-14" decorativo={false} />,
+        antetitulo: `Curso ${ruta.numero}${varios ? ` · ${ruta.niveles.length} niveles` : ''}`,
+        titulo: ruta.titulo,
+        descripcion: <p className={`text-lg font-medium ${acento.texto}`}>{ruta.subtitulo}</p>,
+        acciones: siguiente && !bloqueado && (
+          <a
+            href={rutas.leccion(nivel.id, siguiente.leccion.id)}
+            className={`corte-poly-sm destello px-6 py-3 text-center font-extrabold uppercase tracking-widest text-base hover:brightness-110 ${acento.fondo}`}
+          >
+            ▶ {resumenNivel.completadas ? 'Continuar' : 'Comenzar'}
+          </a>
+        ),
+        children: (
           <div className="mt-4 max-w-md">
             <div className="mb-1.5 flex justify-between font-mono text-[11px] uppercase tracking-wider text-white/50">
               <span>Todo el curso</span>
@@ -455,17 +458,9 @@ function Curso({ cursoId }) {
               <div className={`relleno ${acento.fondo}`} style={{ width: `${resumen.porcentaje}%` }} />
             </div>
           </div>
-        </div>
-        {siguiente && !bloqueado && (
-          <a
-            href={rutas.leccion(nivel.id, siguiente.leccion.id)}
-            className={`corte-poly-sm destello shrink-0 px-6 py-3 text-center font-extrabold uppercase tracking-widest text-base hover:brightness-110 ${acento.fondo}`}
-          >
-            ▶ {resumenNivel.completadas ? 'Continuar' : 'Comenzar'}
-          </a>
-        )}
-      </header>
-
+        ),
+      }}
+    >
       <p className="mt-6 max-w-3xl leading-relaxed text-texto/80">{ruta.descripcion}</p>
 
       {varios && <ArbolNiveles ruta={ruta} elegido={nivel} progreso={progreso} acento={acento} />}
@@ -473,7 +468,7 @@ function Curso({ cursoId }) {
       {conBlender && <TuBlender niveles={ruta.niveles} />}
 
       {/* El nivel elegido */}
-      <section className="mt-10" aria-labelledby="nivel-titulo">
+      <section className="mt-10" aria-labelledby="nivel-titulo" data-recorrido="modulos">
         {varios && (
           <div className="mb-5">
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Nivel {ruta.niveles.indexOf(nivel) + 1}</p>
@@ -528,7 +523,7 @@ function Curso({ cursoId }) {
           </a>
         )}
       </div>
-    </main>
+    </Pagina>
   );
 }
 

@@ -8,7 +8,7 @@
 //   true_false       interactivo: ¿verdad o mito?
 //   axis_gizmo       los ejes X, Y y Z que se giran con el dedo, con las vistas del teclado numérico
 //   param_demo       un control que cambia una figura (Array, Bisel, Subdivisión, Espejo, Luz, Resolución)
-//   blender_tour     interactivo: los primeros pasos dentro de Blender, en vivo por el enlace
+//   blender_tour     interactivo: «Conoce Amatista Motor» dentro de Blender, en vivo por el enlace
 
 // --- ui_tour: pantallas esquemáticas ---------------------------------------------------------
 // Cada pantalla es un dibujo de 320 × 200 con zonas con nombre; las paradas del bloque dicen qué
@@ -24,7 +24,7 @@ export const PANTALLAS = {
       continuar: { x: 16, y: 36, w: 128, h: 26, nombre: '▶ Continuar' },
       cursos: { x: 16, y: 74, w: 182, h: 112, nombre: 'Cursos' },
       panel: { x: 210, y: 74, w: 94, h: 52, nombre: 'Mi panel' },
-      blender: { x: 210, y: 134, w: 94, h: 52, nombre: 'Mi Blender' },
+      blender: { x: 210, y: 134, w: 94, h: 52, nombre: 'Página Blender' },
     },
   },
   leccion: {
@@ -341,7 +341,7 @@ export const limitarValor = (control, valor) => {
   return Math.max(control.min, Math.min(control.max, Math.round(numero / control.paso) * control.paso));
 };
 
-// --- blender_tour: los primeros pasos en Blender, por el enlace en vivo ----------------------
+// --- blender_tour: «Conoce Amatista Motor», por el enlace en vivo ----------------------
 // El add-on (addon/amatista_blender/recorrido.py) manda en su latido detalle.recorrido:
 // {activo, hecho, paso, total, titulo, texto, hacer, teclas, pasos: [{titulo, ok}]}.
 
@@ -385,10 +385,10 @@ export function recorridoDelEnlace(datos) {
 }
 
 export const TEXTO_RECORRIDO = {
-  sin_enlace: 'El servidor todavía no tiene el enlace en vivo: haz los primeros pasos desde la pestaña Amatista de Blender.',
-  cerrado: 'Tu Blender está cerrado. Ábrelo: los primeros pasos te esperan en la pestaña Amatista (tecla N).',
-  viejo: 'Tu Amatista Motor es anterior a los primeros pasos. Descarga el nuevo desde Mi Blender y reinstálalo.',
+  sin_enlace: 'El servidor todavía no tiene el enlace en vivo: haz «Conoce Amatista Motor» desde la pestaña Amatista de Blender.',
+  cerrado: 'Tu Blender está cerrado. Ábrelo: «Conoce Amatista Motor» te espera en la pestaña Amatista (tecla N).',
+  viejo: 'Tu Amatista Motor es anterior a estas prácticas. Descarga el nuevo desde la página Blender y reinstálalo.',
   abierto: 'Tu Blender está conectado. Pulsa «Empezar en Blender» y mira tu pantalla.',
-  recorriendo: 'Estás haciendo los primeros pasos en Blender. Aquí ves el mismo paso que allá.',
-  hecho: '¡Listo! Terminaste los primeros pasos en Blender.',
+  recorriendo: 'Estás en una práctica del add-on. Aquí ves el mismo paso que en Blender.',
+  hecho: '¡Listo! Terminaste esta práctica del add-on.',
 };

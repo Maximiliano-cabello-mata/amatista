@@ -4,9 +4,11 @@ import { useAuth } from './auth/contexto';
 import CatalogoProvider from './catalogo/CatalogoProvider';
 import BarraSuperior from './components/BarraSuperior';
 import FondoLowPoly from './components/FondoLowPoly';
+import PiePagina from './components/estructura/PiePagina';
 import { CristalLogo, IconoCandado } from './components/Iconos';
 import Inicio from './pages/Inicio';
 import ProgresoProvider from './progreso/ProgresoProvider';
+import RecorridoProvider from './recorrido/RecorridoProvider';
 import { analizarRuta, rutaEntrar, rutas } from './rutas';
 import BarraVista from './vista/BarraVista';
 import VistaProvider from './vista/VistaProvider';
@@ -124,20 +126,23 @@ function App() {
   const { ruta, hash } = useRuta();
 
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <FondoLowPoly />
       <AuthProvider>
         <VistaProvider>
         <CatalogoProvider>
           <ProgresoProvider>
-            <BarraSuperior ruta={ruta} hash={hash} />
-            <BarraVista pagina={ruta.pagina} />
-            <Suspense fallback={<Cargando />}>
-              {/* Cada cambio de página entra con un fundido corto (sin animación en modo ligero). */}
-              <div key={`${ruta.pagina}:${ruta.cursoId ?? ''}:${ruta.leccionId ?? ''}`} className="animar-pagina">
-                <Pagina ruta={ruta} hash={hash} />
-              </div>
-            </Suspense>
+            <RecorridoProvider>
+              <BarraSuperior ruta={ruta} hash={hash} />
+              <BarraVista pagina={ruta.pagina} />
+              <Suspense fallback={<Cargando />}>
+                {/* Cada cambio de página entra con un fundido corto (sin animación en modo ligero). */}
+                <div key={`${ruta.pagina}:${ruta.cursoId ?? ''}:${ruta.leccionId ?? ''}`} className="animar-pagina flex-1">
+                  <Pagina ruta={ruta} hash={hash} />
+                </div>
+              </Suspense>
+              <PiePagina />
+            </RecorridoProvider>
           </ProgresoProvider>
         </CatalogoProvider>
         </VistaProvider>

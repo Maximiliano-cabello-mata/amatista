@@ -249,6 +249,7 @@
         "title": "Prueba de Progreso: Conceptos Base",
         "slug": "examen-progreso-aframe",
         "type": "exam",
+        "durationSeconds": 300,
         "isLocked": true,
         "quizData": {
           "passingScore": 100,

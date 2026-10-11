@@ -1,7 +1,11 @@
 import { CristalLogo, IconoCandado } from '../Iconos';
 import { temaDelModulo } from '../temas/temas';
 import { insigniasDelMuro } from './datos';
+import { useState } from 'react';
 import Seccion from './Seccion';
+import VerTodo from './VerTodo';
+
+const POR_GANAR = 4;
 
 const fecha = (iso) => new Date(iso).toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' });
 
@@ -51,10 +55,15 @@ function Insignia({ insignia }) {
 function MuroInsignias({ progreso, cursos, className = '' }) {
   const muro = insigniasDelMuro(progreso, cursos);
   const ganadas = muro.filter((insignia) => insignia.ganada).length;
+  const [todo, setTodo] = useState(false);
+  // Sin abrir: las ganadas y las próximas por ganar (no las de módulos que aún no se publican).
+  const proximas = new Set(muro.filter((i) => !i.ganada && !i.proximamente).slice(0, POR_GANAR).map((i) => i.id));
+  const visible = (i) => todo || i.ganada || proximas.has(i.id);
+  const ocultas = muro.filter((i) => !visible(i)).length;
   const grupos = cursos
-    .map((curso) => ({ id: curso.id, titulo: curso.titulo, insignias: muro.filter((i) => i.curso?.id === curso.id) }))
+    .map((curso) => ({ id: curso.id, titulo: curso.titulo, insignias: muro.filter((i) => i.curso?.id === curso.id && visible(i)) }))
     .filter((grupo) => grupo.insignias.length);
-  const sueltas = muro.filter((insignia) => !insignia.curso);
+  const sueltas = muro.filter((insignia) => !insignia.curso && visible(insignia));
   if (sueltas.length) grupos.push({ id: 'otras', titulo: 'Otras insignias', insignias: sueltas });
 
   return (
@@ -86,6 +95,7 @@ function MuroInsignias({ progreso, cursos, className = '' }) {
           </div>
         ))}
       </div>
+      <VerTodo abierto={todo} ocultos={ocultas} texto="Ver todas las insignias" alCambiar={setTodo} />
     </Seccion>
   );
 }

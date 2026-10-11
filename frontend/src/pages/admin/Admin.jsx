@@ -3,6 +3,7 @@
 // el administrador modifica (el servidor lo valida en cada petición).
 import { useAuth } from '../../auth/contexto';
 import NavAdmin from '../../components/admin/NavAdmin';
+import Pagina from '../../components/estructura/Pagina';
 import { Mensaje } from '../../components/admin/ui';
 import Auditoria from './Auditoria';
 import Contenido from './Contenido';
@@ -14,6 +15,7 @@ import Revision from './Revision';
 import Sistema from './Sistema';
 import Usuario from './Usuario';
 import Usuarios from './Usuarios';
+import { rutas } from '../../rutas';
 
 const TITULOS = {
   resumen: 'Resumen',
@@ -63,19 +65,23 @@ function Admin({ seccion = 'resumen', params = {} }) {
   const grupo = GRUPOS[seccion] ?? seccion;
 
   return (
-    <main className="mx-auto max-w-7xl px-4 pb-20 pt-6 sm:px-6 sm:pt-10">
-      <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Administración</p>
-      <h1 className="mt-1 text-3xl font-extrabold text-white sm:text-4xl">{TITULOS[seccion] ?? 'Administración'}</h1>
-      {!esAdmin && (
-        <p className="mt-2 text-sm text-white/55">Entraste como profesor: puedes consultar todo, pero solo un administrador hace cambios.</p>
-      )}
+    <Pagina
+      ancho="admin"
+      migas={seccion === 'resumen' ? [{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Admin' }] : [{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Admin', href: rutas.admin }, { texto: TITULOS[seccion] ?? 'Sección' }]}
+      encabezado={{
+        tono: 'neon',
+        antetitulo: 'Administración',
+        titulo: TITULOS[seccion] ?? 'Administración',
+        descripcion: esAdmin ? null : 'Entraste como profesor: puedes consultar todo, pero solo un administrador hace cambios.',
+      }}
+    >
       <div className="mt-6 grid gap-6 lg:grid-cols-[15rem_minmax(0,1fr)]">
         <NavAdmin grupo={grupo} esAdmin={esAdmin} />
         <div className="min-w-0">
           <Seccion seccion={seccion} params={params} esAdmin={esAdmin} />
         </div>
       </div>
-    </main>
+    </Pagina>
   );
 }
 

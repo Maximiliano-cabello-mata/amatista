@@ -1,5 +1,7 @@
 # 09 · Guía para alumnos nuevos, vista de alumno y auditoría (10 oct 2026)
 
+> **11 de octubre (auditoría, T-111):** la guía con capítulos, candados y comprobaciones pasó a **Ayuda** (recorrido guiado, tarjeta de la fusión y preguntas rápidas sin candados) y su aviso, a la invitación al recorrido. Ver [11](11_recorrido_y_fusion.md). La vista de alumno o administrador y la auditoría del equipo siguen como se describen aquí.
+
 > «Hacer muy claras las instrucciones dentro de la plataforma, reorganizar ciertos elementos de un curso, crear una lección clave para alumnos nuevos que les enseñe cómo funciona la plataforma y el add-on; para los administradores una interfaz especial para saltar cursos, una auditoría y ver la plataforma con la vista de alumno y de administrador.» (Maximiliano, 10 oct 2026)
 
 ## 1. Para el alumno

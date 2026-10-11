@@ -24,6 +24,12 @@
   --curva-salida: cubic-bezier(0.2, 0.8, 0.2, 1);
   --curva-rebote: cubic-bezier(0.2, 0.9, 0.3, 1.3);
   --sombra-flotante: 0 10px 30px rgb(0 0 0 / 0.45);
+  /* v4.0 · Facetas (docs/diseno/2026-10-11_sistema_facetas.md) */
+  --gema: linear-gradient(120deg, #c39bd3 0%, #9b59b6 28%, #00e5ff 62%, #f5792a 100%);
+  --gema-suave: linear-gradient(120deg, rgb(195 155 211 / 0.55), rgb(155 89 182 / 0.35) 40%, rgb(0 229 255 / 0.35) 75%, rgb(245 121 42 / 0.4));
+  --faceta-luz: radial-gradient(120% 140% at 100% 0%, rgb(155 89 182 / 0.28), transparent 55%);
+  --sombra-gema: 0 18px 40px -18px rgb(155 89 182 / 0.55);
+  --espacio-seccion: 3rem;
 }
 
 /* Mientras llega la fuente (o si nunca llega en una red mala) se usa la del
@@ -1078,6 +1084,118 @@ button:not(:disabled):active, a.corte-poly-sm:active { transform: translateY(1px
   a[href^='http']::after { content: ' (' attr(href) ')'; font-size: 0.8em; }
   .visor-malla__lienzo, .nodos__lienzo { background: #fff !important; }
 }
+
+/* ===================================================================
+   v4.0 · Facetas: la estructura común de las páginas
+   (components/estructura/, docs/diseno/2026-10-11_sistema_facetas.md).
+   Solo transform y opacity en lo que se mueve; todo se apaga en modo
+   ligero y con movimiento reducido (abajo).
+   =================================================================== */
+
+/* Encabezado de página: borde de gema, facetas y una luz en la esquina. */
+.encabezado-faceta {
+  position: relative;
+  padding: 1.5px;
+  background: var(--gema-suave);
+  box-shadow: var(--sombra-gema);
+}
+.encabezado-faceta--neon { background: linear-gradient(120deg, rgb(0 229 255 / 0.55), rgb(155 89 182 / 0.35) 55%, rgb(195 155 211 / 0.4)); }
+.encabezado-faceta--blender { background: linear-gradient(120deg, rgb(245 121 42 / 0.6), rgb(155 89 182 / 0.4) 55%, rgb(0 229 255 / 0.3)); }
+.encabezado-faceta__interior {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--superficie) 94%, transparent);
+}
+.encabezado-faceta__interior::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--faceta-luz);
+  pointer-events: none;
+}
+.encabezado-faceta__facetas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.9; }
+/* El brillo cruza una sola vez al entrar a la página. */
+.encabezado-faceta__brillo {
+  position: absolute;
+  inset: -20% auto -20% 0;
+  width: 35%;
+  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.09) 45%, rgb(0 229 255 / 0.12) 50%, transparent 60%);
+  transform: translateX(-120%) skewX(-12deg);
+  animation: brillo-faceta 1.6s var(--curva-salida) 0.35s 1 both;
+  pointer-events: none;
+}
+@keyframes brillo-faceta {
+  to { transform: translateX(380%) skewX(-12deg); }
+}
+
+/* Borde de gema para lo destacado (tarjeta de la fusión, recorrido, siguiente paso). */
+.borde-gema { position: relative; padding: 1.5px; background: var(--gema-suave); }
+.borde-gema > * { background: color-mix(in srgb, var(--superficie) 96%, transparent); }
+
+/* Título de sección: rombo neón, antetítulo mono y una arista que se desvanece. */
+.titulo-seccion__ante {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.titulo-seccion__ante::before {
+  content: '';
+  width: 0.55rem;
+  height: 0.55rem;
+  flex: none;
+  transform: rotate(45deg);
+  background: var(--neon);
+  box-shadow: 0 0 10px rgb(0 229 255 / 0.6);
+}
+.titulo-seccion__ante::after {
+  content: '';
+  height: 1px;
+  flex: 1;
+  max-width: 10rem;
+  background: linear-gradient(90deg, rgb(0 229 255 / 0.45), transparent);
+}
+
+/* Migas de pan. */
+.migas li + li::before {
+  content: '◆';
+  margin: 0 0.55rem;
+  font-size: 0.55rem;
+  color: rgb(155 89 182 / 0.8);
+  vertical-align: 0.15em;
+}
+
+/* Pie de página: una fila de facetas arriba. */
+.pie-pagina__facetas { display: block; width: 100%; height: 18px; }
+
+/* Fondo: aristas de luz y destellos que titilan cerca de la luz. */
+.fondo-destello { animation: titilar 5s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes titilar {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.85; }
+}
+
+html.ligero .encabezado-faceta__brillo, html.ligero .fondo-destello { animation: none; }
+html.ligero .encabezado-faceta__brillo { display: none; }
+html.ligero .encabezado-faceta { box-shadow: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .encabezado-faceta__brillo { display: none; }
+  .fondo-destello { animation: none; }
+}
+
+/* Recorrido por la plataforma (recorrido/RecorridoProvider.jsx): la página se oscurece salvo el
+   elemento de la parada, que se ilumina con un borde neón. La sombra gigante hace el oscurecido. */
+.recorrido-foco {
+  box-shadow: 0 0 0 9999px rgba(5, 3, 10, 0.74), 0 0 24px 2px rgba(0, 229, 255, 0.45);
+  transition: top 0.3s ease, left 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+.recorrido-tarjeta { transition: top 0.3s ease, bottom 0.3s ease, left 0.3s ease; max-height: calc(100vh - 32px); overflow-y: auto; }
+html.ligero .recorrido-foco, html.ligero .recorrido-tarjeta { transition: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .recorrido-foco, .recorrido-tarjeta { transition: none; }
+}
+
 
 /* Modo ligero: equipos con poca memoria o pocos núcleos, ahorro de datos o
    movimiento reducido (lo decide main.jsx al arrancar). Se apagan las

@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 import aframe1 from '../../../data/modulos/aframe-modulo-1.json';
 import blender1 from '../../../data/modulos/archivo/blender-modulo-1.json';
 import principiante1 from '../../../data/modulos/blender_principiante-modulo-1.json';
-import primerosPasos from '../../../data/modulos/primeros_pasos-modulo-1.json';
 import {
   actividadesDe,
   cumpleRevision,
@@ -171,9 +170,10 @@ describe('textoPlano', () => {
   });
 });
 
-// El contenido de los módulos 1 debe poder resolverse en el frontend.
-describe('actividades de los módulos 1', () => {
-  const lecciones = [blender1, aframe1, principiante1, primerosPasos].flatMap((archivo) => archivo.module.lessons);
+// El contenido de todos los módulos publicados (y del módulo 1 archivado de la v2) debe poder resolverse en el frontend.
+const publicados = Object.values(import.meta.glob('../../../data/modulos/*.json', { eager: true, import: 'default' }));
+describe('actividades de los módulos', () => {
+  const lecciones = [blender1, aframe1, principiante1, ...publicados].flatMap((archivo) => archivo.module.lessons);
   const bloques = lecciones.flatMap((leccion) => leccion.contentBlocks ?? []);
 
   it('cada lección de teoría tiene al menos un interactivo con id único', () => {
@@ -187,7 +187,7 @@ describe('actividades de los módulos 1', () => {
   });
 
   it('usan los 9 tipos interactivos del navegador', () => {
-    // blender_practice, blender_taller y blender_tour (los primeros pasos) se resuelven en Blender.
+    // blender_practice, blender_taller y blender_tour (Conoce Amatista Motor) se resuelven en Blender.
     const delNavegador = TIPOS_INTERACTIVOS.filter((tipo) => !['blender_practice', 'blender_taller', 'blender_tour'].includes(tipo));
     expect(new Set(bloques.map((b) => b.type).filter((tipo) => delNavegador.includes(tipo)))).toEqual(
       new Set(delNavegador),

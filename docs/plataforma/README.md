@@ -15,7 +15,9 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 | [07 · Herramientas gráficas](07_herramientas_graficas.md) | Qué gráficos tenemos, qué se agregó en la v3.2 y qué conviene desarrollar (investigación). |
 | [08 · Auditoría educativa (9 oct)](08_auditoria_educativa_2026-10-09.md) | Qué está bien, qué está fallando y qué se corrige primero en documentación y producto. |
 | [09 · Guía, vista de alumno y auditoría (10 oct)](09_guia_vista_y_auditoria.md) | La guía de primeros pasos para alumnos nuevos, las instrucciones en cada lección y curso, y para el equipo: vista de alumno o administrador, saltar a cualquier lección y la auditoría. |
-| [10 · Primeros pasos y recursos gráficos (11 oct)](10_primeros_pasos_y_recursos.md) | El curso de introducción «Primeros pasos con Amatista», la conexión en vivo con los primeros pasos en Blender (add-on 5.1), los siete recursos gráficos nuevos intercalados en las lecciones y el CSS v3.7. |
+| [10 · Primeros pasos y recursos gráficos (11 oct)](10_primeros_pasos_y_recursos.md) | Los siete recursos gráficos nuevos intercalados en las lecciones y el CSS v3.7. Histórico: el curso «Primeros pasos con Amatista» y el recorrido del add-on 5.1 (retirados en el doc 11). |
+| [11 · Recorrido guiado, página Blender y «Conoce Amatista Motor» (11 oct)](11_recorrido_y_fusion.md) | **Vigente.** Cursos · Blender · Mi panel; el recorrido de 10 paradas por las páginas reales; la tarjeta de cómo se unen la plataforma y Blender; las tres prácticas del add-on 5.2; Ayuda y Mi panel. |
+| [Diseño «Facetas» (11 oct)](../diseno/2026-10-11_sistema_facetas.md) | **Vigente.** La anatomía común de todas las páginas (migas, encabezado facetado, secciones y pie global), los cuatro anchos y el CSS v4.0 del tema low poly. |
 
 ![Un módulo con su práctica en Blender](img/modulo_ruta.svg)
 
@@ -28,6 +30,14 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 - **Curso Intermedio publicado**; Avanzado bloqueado hasta tener su teoría ([ruta de aprendizaje](../cursos/03_ruta_de_aprendizaje_blender.md)).
 - **Más claro y más ligero:** el ejercicio de emparejar con más contraste, animaciones CSS nuevas y un modo ligero para equipos modestos ([07](07_herramientas_graficas.md)). Mismo diseño y misma paleta.
 - **Sin cambios en Oracle.** El curso Intermedio se crea solo al importar (`asegurar_cursos_base`).
+
+## Resumen de cambios (11 de octubre · auditoría y orden)
+
+- **Tres lugares**: la barra queda en **Cursos · Blender · Mi panel** (· Admin). La página Blender vuelve a la barra: es la mitad de Amatista y escondida en el menú de la cuenta no se encontraba.
+- **Recorrido guiado** en lugar del curso de introducción: 10 paradas por las páginas reales, no da XP.
+- **Cómo se unen la plataforma y Blender**: una tarjeta con el proceso paso a paso, arriba de la página Blender y en Ayuda.
+- **Conoce Amatista Motor** (add-on 5.2): tres prácticas que explican todo el add-on, empezadas y vistas en vivo desde la página Blender.
+- **Ayuda** sin candados y **Mi panel** con una tarjeta por curso. Detalle en [11](11_recorrido_y_fusion.md) y el informe en `docs/auditoria/2026-10-11_auditoria_completa.md`.
 
 ## Resumen de cambios (9 de octubre · la plataforma maneja Blender y el ejemplo manda)
 

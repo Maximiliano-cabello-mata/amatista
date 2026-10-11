@@ -1,5 +1,7 @@
 # 10 · Primeros pasos con Amatista y recursos gráficos nuevos (11 oct 2026)
 
+> **Retirado el 11 de octubre (auditoría, T-111).** El curso «Primeros pasos con Amatista» salió del árbol de Blender (su JSON queda en `frontend/src/data/modulos/archivo/`) y el recorrido del add-on 5.1 pasó a las tres prácticas «Conoce Amatista Motor» del add-on 5.2. Lo vigente está en [11 · Recorrido guiado, página Blender y «Conoce Amatista Motor»](11_recorrido_y_fusion.md). Los recursos gráficos de la sección 2 en adelante siguen vigentes.
+
 > «Un módulo instructivo que enseñe cómo funciona toda la plataforma mediante los primeros pasos en Blender y los primeros cursos: cómo funciona el add-on y su relación con la plataforma. Una conexión real entre la plataforma y el add-on. Actualizar los recursos gráficos de las lecciones, más interactivo, y recursos nuevos que se vayan intercalando porque se repiten.» (Maximiliano, 11 oct 2026)
 
 Construye sobre la guía `#/guia` (doc 09), Amatista Taller (motor 5) y las herramientas gráficas (doc 07). Mismo diseño y misma paleta.

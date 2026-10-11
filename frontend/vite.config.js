@@ -13,9 +13,10 @@ export default defineConfig({
     // nunca publicar mapas de fuente (devolverían el código original con sus
     // comentarios). scripts/revisar-publicacion.mjs lo comprueba en cada build.
     sourcemap: false,
+    // Sin comentarios de licencia ni de autor en el JS publicado. Vite 8 compila con oxc y
+    // rolldown: la antigua opción `esbuild.legalComments` se ignoraba (aviso en cada build).
+    rolldownOptions: { output: { comments: false } },
   },
-  // Sin comentarios de licencia ni de autor en el JS publicado.
-  esbuild: { legalComments: 'none' },
   // Pruebas de funciones puras (reglas del progreso, catálogo): `npm test`.
   test: {
     include: ['src/**/*.test.js'],

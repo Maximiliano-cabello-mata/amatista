@@ -27,7 +27,7 @@ function ContinuarPanel({ progreso, cursos, className = '' }) {
 
   if (!lista.length) {
     return (
-      <Seccion id="panel-continuar" etiqueta="Tu siguiente paso" titulo="Continúa donde te quedaste" className={className}>
+      <Seccion id="panel-continuar" recorrido="panel" etiqueta="Tu siguiente paso" titulo="Continúa donde te quedaste" className={className}>
         <div className="flex items-center gap-4">
           <CristalLogo className="animar-flotar h-14 w-14 shrink-0" />
           <p className="text-texto/80">
@@ -55,7 +55,7 @@ function ContinuarPanel({ progreso, cursos, className = '' }) {
   const nueva = leccionEsNueva(progreso, curso.id, modulo, indice);
 
   return (
-    <Seccion id="panel-continuar" etiqueta="Tu siguiente paso" titulo="Continúa donde te quedaste" className={className}>
+    <Seccion id="panel-continuar" recorrido="panel" etiqueta="Tu siguiente paso" titulo="Continúa donde te quedaste" className={className}>
       <div className={`corte-poly bg-gradient-to-br p-[2px] ${acento.borde}`}>
         <div className="corte-poly flex flex-col gap-5 bg-base/95 p-5 sm:flex-row sm:items-center sm:p-6">
           <div className="hexagono grid h-20 w-[5.5rem] shrink-0 place-items-center bg-superficie">

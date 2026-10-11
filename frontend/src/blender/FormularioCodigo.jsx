@@ -41,7 +41,8 @@ function FormularioCodigo({ codigoInicial = '', alConectar }) {
       <label htmlFor="codigo-blender" className="font-mono text-xs uppercase tracking-widest text-white/60">
         Código que muestra Blender
       </label>
-      <div className="flex flex-col gap-3 sm:flex-row">
+      {/* flex-wrap: el formulario también vive en columnas angostas (la práctica del módulo). */}
+      <div className="flex flex-wrap gap-3">
         <input
           id="codigo-blender"
           value={texto}
@@ -51,12 +52,12 @@ function FormularioCodigo({ codigoInicial = '', alConectar }) {
           spellCheck={false}
           maxLength={12}
           placeholder="ABCD-2345"
-          className="corte-poly-sm min-w-0 flex-1 border border-white/15 bg-black/30 px-4 py-3 text-center font-mono text-2xl uppercase tracking-[0.35em] text-white placeholder:text-white/20 focus:border-neon focus:outline-none"
+          className="corte-poly-sm min-w-0 flex-[1_1_11rem] border border-white/15 bg-black/30 px-3 py-3 text-center font-mono text-xl uppercase tracking-[0.2em] sm:text-2xl text-white placeholder:text-white/20 focus:border-neon focus:outline-none"
         />
         <button
           type="submit"
           disabled={estado.enviando}
-          className="corte-poly-sm destello bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white transition-[filter] hover:brightness-110 disabled:cursor-wait disabled:opacity-50"
+          className="corte-poly-sm destello flex-auto bg-amatista px-5 py-3 font-extrabold uppercase tracking-wider text-white transition-[filter] hover:brightness-110 disabled:cursor-wait disabled:opacity-50"
         >
           {estado.enviando ? 'Conectando…' : 'Conectar'}
         </button>

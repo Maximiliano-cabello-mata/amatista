@@ -1,16 +1,14 @@
-// Guía de primeros pasos (#/guia): la lección para alumnos nuevos. Explica
-// cómo funciona la plataforma y el add-on de Blender tal como son hoy
-// (motor 5, «Amatista Taller»). Cada capítulo usa los mismos bloques que las
-// lecciones (BloqueContenido) y termina con una comprobación corta: la
-// respuesta correcta abre el capítulo siguiente.
+// Ayuda (#/guia): respuestas cortas sobre cómo funciona la plataforma y el add-on de Blender tal
+// como son hoy (add-on 5.2, «Amatista Taller»). No es un curso: no tiene candados, preguntas ni XP.
+// Cada tema usa los mismos bloques que las lecciones (BloqueContenido). El paseo por las páginas
+// reales es el recorrido (recorrido/pasos.js); la tarjeta de la fusión está en components/blender.
 //
-// Si cambia la plataforma o el add-on, actualiza este archivo: es lo primero
-// que lee un alumno nuevo.
+// Si cambia la plataforma o el add-on, actualiza este archivo: es lo que lee un alumno con dudas.
 
-export const CAPITULOS = [
+export const TEMAS_AYUDA = [
   {
     id: 'organizacion',
-    titulo: 'Cómo está organizada Amatista',
+    titulo: '¿Cómo está organizada Amatista?',
     corto: 'Organización',
     resumen: 'Cursos, niveles, módulos y lecciones: dónde está cada cosa.',
     bloques: [
@@ -18,7 +16,7 @@ export const CAPITULOS = [
         type: 'markdown_text',
         body:
           'Amatista te enseña 3D **haciendo**. Todo está ordenado de lo grande a lo pequeño, y siempre sabes cuál es tu siguiente paso:\n\n' +
-          '- **Curso**: un tema completo, como Blender o A-Frame. Lo eliges en **Cursos**.\n' +
+          '- **Curso**: un tema completo, como Blender o A-Frame. Lo eliges en **Cursos** (arriba).\n' +
           '- **Nivel**: Blender tiene varios (Principiante, Principiante-Intermedio, Intermedio…). Empiezas por el primero.\n' +
           '- **Módulo**: un mundo con su escenario, su guía y su insignia. Dura cerca de una hora.\n' +
           '- **Lección**: una idea, menos de diez minutos, siempre con algo que hacer con tus manos.',
@@ -39,21 +37,10 @@ export const CAPITULOS = [
         body: 'En la portada y en cada curso hay un botón **▶ Continuar**: te lleva directo a la lección que te toca.',
       },
     ],
-    comprueba: {
-      type: 'quiz_inline',
-      id: 'guia-organizacion',
-      question: '¿Qué hay al final de cada módulo?',
-      options: [
-        { id: 'jefe', text: 'Un jefe final: un examen corto que te da la insignia del módulo', isCorrect: true },
-        { id: 'pago', text: 'Un pago para desbloquear el siguiente módulo', isCorrect: false },
-        { id: 'nada', text: 'Nada: los módulos no terminan', isCorrect: false },
-      ],
-      explanation: 'Cada módulo cierra con su jefe final. Al vencerlo ganas la insignia y se abre lo que sigue.',
-    },
   },
   {
     id: 'lecciones',
-    titulo: 'Cómo se completa una lección',
+    titulo: '¿Cómo se completa una lección?',
     corto: 'Lecciones',
     resumen: 'Qué hacer dentro de una lección y cómo se abre la siguiente.',
     bloques: [
@@ -88,21 +75,10 @@ export const CAPITULOS = [
         ],
       },
     ],
-    comprueba: {
-      type: 'quiz_inline',
-      id: 'guia-lecciones',
-      question: 'El botón «Completar lección» está gris. ¿Qué haces?',
-      options: [
-        { id: 'pendiente', text: 'Busco la actividad pendiente y la resuelvo', isCorrect: true },
-        { id: 'recargar', text: 'Recargo la página hasta que se encienda', isCorrect: false },
-        { id: 'saltar', text: 'Me salto la lección: la siguiente ya está abierta', isCorrect: false },
-      ],
-      explanation: 'El botón se enciende al resolver todas las actividades. «Ir a la actividad pendiente» te lleva a la que falta.',
-    },
   },
   {
     id: 'avance',
-    titulo: 'Tu avance: XP, racha e insignias',
+    titulo: '¿Dónde veo mi avance?',
     corto: 'Tu avance',
     resumen: 'Dónde ves lo que llevas y cómo se guarda.',
     bloques: [
@@ -112,7 +88,7 @@ export const CAPITULOS = [
           { term: 'XP y nivel', definition: 'Arriba a la derecha. Cada lección suma XP y con XP subes de nivel (Aprendiz, Modelador, Escultor…).' },
           { term: 'Racha', definition: 'Días seguidos con actividad. Una lección al día basta para mantenerla.' },
           { term: 'Insignias', definition: 'Una por módulo, al vencer a su jefe final. Las ves en tu muro de insignias.' },
-          { term: 'Mi panel', definition: 'Tu resumen: qué sigue, tus cursos, exámenes, logros y tu Blender.' },
+          { term: 'Mi panel', definition: 'Tu resumen: qué sigue, tus cursos, exámenes, logros e insignias.' },
         ],
       },
       {
@@ -125,21 +101,10 @@ export const CAPITULOS = [
           '- Para las estaciones en **Blender** sí necesitas cuenta: así cada práctica queda registrada.',
       },
     ],
-    comprueba: {
-      type: 'quiz_inline',
-      id: 'guia-avance',
-      question: '¿Necesitas una cuenta para empezar a estudiar?',
-      options: [
-        { id: 'no', text: 'No. Pero con cuenta tu avance se guarda en la nube y puedes usar Blender conectado', isCorrect: true },
-        { id: 'si', text: 'Sí, sin cuenta no se abre ninguna lección', isCorrect: false },
-        { id: 'pierdo', text: 'No, pero lo que haga sin cuenta se pierde al crearla', isCorrect: false },
-      ],
-      explanation: 'Empiezas sin cuenta y nada se pierde: al crear tu cuenta, lo que ya hiciste se suma a ella.',
-    },
   },
   {
     id: 'instalar',
-    titulo: 'Conecta Blender con Amatista',
+    titulo: '¿Cómo conecto Blender?',
     corto: 'Instalar',
     resumen: 'Instala el add-on una vez y tu Blender queda conectado.',
     bloques: [
@@ -157,8 +122,8 @@ export const CAPITULOS = [
             text: 'Descárgalo gratis de blender.org. Si ya lo tienes, revisa la versión en Ayuda › Acerca de Blender.',
           },
           {
-            title: 'Entra con tu cuenta y abre «Mi Blender»',
-            text: 'Está en el menú de tu cuenta (arriba a la derecha). Descarga el paquete de tu sistema con la sesión iniciada: así trae tu acceso y se conecta solo.',
+            title: 'Entra con tu cuenta y abre la pestaña «Blender»',
+            text: 'Está arriba, entre Cursos y Mi panel. Descarga el paquete de tu sistema con la sesión iniciada: así trae tu acceso y se conecta solo.',
           },
           {
             title: 'Descomprime y ejecuta el instalador',
@@ -171,7 +136,7 @@ export const CAPITULOS = [
           },
           {
             title: '¿Te pide un código? Conéctalo',
-            text: 'Si descargaste el paquete sin sesión, la pestaña muestra un código. Escríbelo en la plataforma (se abre sola la página «Conectar Blender») y pulsa «Conectar». En «Mi Blender» ves tus Blender conectados.',
+            text: 'Si descargaste el paquete sin sesión, la pestaña muestra un código. Tiene 8 caracteres (como ABCD-2345) y vale 10 minutos. Escríbelo en la plataforma (se abre sola la página «Conectar Blender») y pulsa «Conectar». En la pestaña Blender ves tus Blender conectados.',
           },
         ],
       },
@@ -184,25 +149,14 @@ export const CAPITULOS = [
       {
         type: 'callout',
         variant: 'dato',
-        title: 'Tus primeros pasos en Blender',
-        body: 'El curso **Primeros pasos con Amatista** te acompaña en todo esto: instalas, vinculas tu cuenta y haces un recorrido de diez paradas dentro de Blender mientras la lección te muestra en vivo en qué paso vas.',
+        title: 'Conoce el add-on antes de tu primer taller',
+        body: 'En la pestaña **Blender** están las tres prácticas **Conoce Amatista Motor**: tu pestaña Amatista, moverte y usar tus herramientas, y cómo te enseña el taller. Unos 3 minutos cada una, y la plataforma te muestra en vivo en qué paso vas.',
       },
     ],
-    comprueba: {
-      type: 'quiz_inline',
-      id: 'guia-instalar',
-      question: 'Instalaste el add-on. ¿Dónde lo encuentras dentro de Blender?',
-      options: [
-        { id: 'n', text: 'En la vista 3D, pulsando N, en la pestaña «Amatista»', isCorrect: true },
-        { id: 'menu', text: 'En un programa aparte que se abre junto a Blender', isCorrect: false },
-        { id: 'web', text: 'No está en Blender: todo se hace en la página web', isCorrect: false },
-      ],
-      explanation: 'La barra lateral de la vista 3D se abre con N; ahí está la pestaña «Amatista».',
-    },
   },
   {
     id: 'taller',
-    titulo: 'Cómo te enseña el add-on',
+    titulo: '¿Cómo me enseña el add-on?',
     corto: 'El taller',
     resumen: 'Mira, Hazlo conmigo, Hazlo tú, Úsalo y Recuérdalo.',
     bloques: [
@@ -232,25 +186,5 @@ export const CAPITULOS = [
         ],
       },
     ],
-    comprueba: {
-      type: 'ordering',
-      id: 'guia-taller-orden',
-      prompt: 'Ordena el ciclo de una habilidad.',
-      items: [
-        { id: 'mira', text: 'Mira' },
-        { id: 'conmigo', text: 'Hazlo conmigo' },
-        { id: 'tu', text: 'Hazlo tú' },
-        { id: 'usalo', text: 'Úsalo' },
-        { id: 'recuerdalo', text: 'Recuérdalo' },
-      ],
-      explanation: 'Primero miras, después lo haces con ayuda y luego solo. Al final lo usas en el proyecto y lo repasas días después.',
-    },
   },
 ];
-
-// El cierre de la guía: qué hacer ahora.
-export const CIERRE = {
-  titulo: '¡Listo para empezar!',
-  texto:
-    'Ya sabes cómo funciona Amatista. Empieza por el curso «Primeros pasos con Amatista»: ahí recorres la plataforma, conectas Blender y das tus primeros pasos en él. El botón de abajo te lleva a la lección que te toca. Si algo no queda claro, pulsa «?» arriba a la derecha y vuelve a esta guía cuando quieras.',
-};
