@@ -14,7 +14,7 @@ export const RUTAS = {
     titulo: 'Blender',
     subtitulo: 'De cero a crear tus propios mundos 3D',
     descripcion:
-      'Todo Blender en un solo lugar: empiezas con los primeros pasos y sigues por cuatro niveles que se ramifican desde tu primer cubo hasta proyectos completos. Teoría corta y práctica real dentro de Blender, con Amatista conectada y registrando tu avance.',
+      'Todo Blender en un solo lugar: cuatro niveles que se ramifican desde tu primer cubo hasta proyectos completos. Teoría corta y práctica real dentro de Blender, con Amatista conectada y registrando tu avance.',
     acento: 'blender',
     logo: 'blender',
     recurso: { texto: 'Descarga Blender gratis', url: 'https://www.blender.org/download/' },

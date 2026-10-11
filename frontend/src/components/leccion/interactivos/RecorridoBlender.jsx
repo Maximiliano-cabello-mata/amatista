@@ -1,10 +1,12 @@
-// Primeros pasos dentro de Blender (bloque «blender_tour», add-on 5.1): la lección y Blender se
-// ven a la vez. Desde aquí se empieza el recorrido en Blender y se pasa de paso; Blender cuenta
-// en su latido en qué paso va (detalle.recorrido) y esta tarjeta muestra lo mismo que la
-// pestaña Amatista. Se resuelve cuando Blender avisa que el recorrido terminó.
+// «Conoce Amatista Motor» dentro de una lección (bloque «blender_tour», add-on 5.2): la lección y
+// Blender se ven a la vez. Desde aquí se empieza en Blender la práctica del add-on que toca y se
+// pasa de paso; Blender cuenta en su latido en qué paso va (detalle.recorrido) y esta tarjeta
+// muestra lo mismo que la pestaña Amatista. Se resuelve cuando Blender avisa que terminó una.
+// Las tres prácticas completas viven en #/blender (components/blender/ConoceAmatistaMotor.jsx).
 // Bloque: {"type": "blender_tour", "id", "title", "text"?, "allowManual"?}.
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../../auth/contexto';
+import { conoceDelEnlace, siguientePractica } from '../../../blender/conoce';
 import PrepararBlender from '../../../blender/PrepararBlender';
 import { useAvisoTemporal } from '../../../blender/useTaller';
 import { rutaEntrar, rutas } from '../../../rutas';
@@ -29,7 +31,7 @@ function useRecorridoVivo(token) {
       if (!vigente || document.visibilityState !== 'visible') return;
       const r = await estadoEnlace(token);
       if (!vigente) return;
-      const nuevo = r.ok ? recorridoDelEnlace(r.datos) : { estado: 'sin_enlace', vivo: null };
+      const nuevo = r.ok ? { ...recorridoDelEnlace(r.datos), conoce: conoceDelEnlace(r.datos) } : { estado: 'sin_enlace', vivo: null, conoce: null };
       setEnlace(nuevo);
       temporizador = setTimeout(consultar, ESPERA_MS[nuevo.estado] ?? 20000);
     };
@@ -53,9 +55,9 @@ function useRecorridoVivo(token) {
 function Etapas({ estado, usuario }) {
   const conectado = ['abierto', 'recorriendo', 'hecho', 'viejo'].includes(estado);
   const etapas = [
-    { titulo: 'Instala Amatista Motor', hecha: conectado, texto: 'Una vez, desde Mi Blender.' },
-    { titulo: 'Vincula tu cuenta', hecha: conectado && Boolean(usuario), texto: 'Un código de 6 letras.' },
-    { titulo: 'Recorre Blender', hecha: estado === 'hecho', texto: 'Diez paradas cortas.' },
+    { titulo: 'Instala Amatista Motor', hecha: conectado, texto: 'Una vez, desde la página Blender.' },
+    { titulo: 'Vincula tu cuenta', hecha: conectado && Boolean(usuario), texto: 'Un código de 8 caracteres, como ABCD-2345.' },
+    { titulo: 'Conoce el add-on', hecha: estado === 'hecho', texto: 'Tres prácticas cortas en Blender.' },
   ];
   return (
     <ol className="grid gap-2 sm:grid-cols-3">
@@ -135,7 +137,9 @@ function RecorridoBlender({ bloque, alCompletar, resuelta }) {
 
   const ordenar = async (accion) => {
     setEnviando(true);
-    const r = await ordenarRecorrido(token, accion);
+    const conoce = enlace?.conoce;
+    const recorrido = accion === 'empezar' ? (siguientePractica(conoce?.hechos) ?? 'pestana') : (conoce?.actual ?? null);
+    const r = await ordenarRecorrido(token, accion, recorrido);
     setEnviando(false);
     if (!r.ok) avisar(r.error || 'No se pudo avisar a tu Blender.');
     else if (r.datos?.entregada === false) avisar('Tu Blender no está abierto: ábrelo y vuelve a intentarlo.');
@@ -144,8 +148,8 @@ function RecorridoBlender({ bloque, alCompletar, resuelta }) {
   };
 
   let retro = null;
-  if (resultado?.correcto && hecho) retro = { tipo: 'bien', texto: '¡Primeros pasos en Blender terminados! Ya sabes dónde está cada cosa.' };
-  else if (resultado) retro = { tipo: 'info', titulo: 'Pendiente en Blender', texto: 'Cuando abras Blender, la pestaña Amatista te ofrecerá los primeros pasos.' };
+  if (resultado?.correcto && hecho) retro = { tipo: 'bien', texto: '¡Práctica del add-on terminada! Las demás te esperan en la página Blender.' };
+  else if (resultado) retro = { tipo: 'info', titulo: 'Pendiente en Blender', texto: 'Cuando abras Blender, la pestaña Amatista te ofrecerá «Conoce Amatista Motor».' };
 
   return (
     <MarcoActividad bloque={bloque} titulo={bloque.title} resultado={resultado} resuelta={resuelta}>

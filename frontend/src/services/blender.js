@@ -102,10 +102,9 @@ export const ordenarTaller = (token, tipo, { taller, actividad, habilidad } = {}
     },
   });
 
-// Primeros pasos dentro de Blender (add-on 5.1, recorrido.py): la lección del curso «Primeros
-// pasos» lo empieza y lo avanza desde aquí. accion: empezar · siguiente · anterior · salir.
-// «Conoce Amatista Motor» (add-on 5.2): `recorrido` es la práctica (pestana · vista · taller); sin ella,
-// «empezar» abre la primera sin terminar.
+// «Conoce Amatista Motor» (add-on 5.2, recorrido.py): #/blender empieza y avanza desde aquí las tres
+// prácticas del add-on. accion: empezar · siguiente · anterior · salir. `recorrido` es la práctica
+// (pestana · vista · taller); sin ella, «empezar» abre la primera sin terminar.
 export const ordenarRecorrido = (token, accion, recorrido = null) =>
   pedirJSON(`${BASE}/ordenes`, { metodo: "POST", token, cuerpo: { tipo: "recorrido", accion, ...(recorrido ? { recorrido } : {}) } });
 

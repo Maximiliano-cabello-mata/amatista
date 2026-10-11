@@ -187,7 +187,7 @@ describe('actividades de los módulos', () => {
   });
 
   it('usan los 9 tipos interactivos del navegador', () => {
-    // blender_practice, blender_taller y blender_tour (los primeros pasos) se resuelven en Blender.
+    // blender_practice, blender_taller y blender_tour (Conoce Amatista Motor) se resuelven en Blender.
     const delNavegador = TIPOS_INTERACTIVOS.filter((tipo) => !['blender_practice', 'blender_taller', 'blender_tour'].includes(tipo));
     expect(new Set(bloques.map((b) => b.type).filter((tipo) => delNavegador.includes(tipo)))).toEqual(
       new Set(delNavegador),

@@ -201,7 +201,7 @@ const NODO_NIVEL = {
 };
 const TEXTO_NIVEL = { completado: 'Completado', 'en-curso': 'En curso', disponible: 'Disponible', bloqueado: 'Próximamente' };
 
-// Primeros pasos es el nivel 0; los demás, su número de curso (01, 02…) o su posición.
+// Cada nivel lleva su número de curso (01, 02…) o su posición.
 const numeroNivel = (curso, i) => (curso.numero ? Number(curso.numero) : i + 1);
 
 // El árbol del curso: un tronco (el logo) que se ramifica en los niveles.
