@@ -4,7 +4,11 @@ import { ACENTOS_GRAFICA, COLORES } from '../graficas/colores';
 import { IconoCandado } from '../Iconos';
 import { examenesDelCatalogo } from './datos';
 import { IconoJefe, IconoPalomita } from './IconosPanel';
+import { useState } from 'react';
 import Seccion from './Seccion';
+import VerTodo from './VerTodo';
+
+const VISIBLES = 3;
 
 const CHIP = 'corte-poly-sm flex shrink-0 items-center gap-1 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest';
 
@@ -74,6 +78,10 @@ function Examen({ examen }) {
 function ExamenesPanel({ progreso, cursos, className = '' }) {
   const examenes = examenesDelCatalogo(progreso, cursos);
   const intentados = examenes.filter((examen) => examen.intentos > 0 || examen.aprobado).length;
+  const [todo, setTodo] = useState(false);
+  // Primero los que tocan: desde el primero sin aprobar.
+  const desde = Math.max(0, examenes.findIndex((examen) => examen.estado !== 'aprobado'));
+  const visibles = todo ? examenes : examenes.slice(desde, desde + VISIBLES);
 
   return (
     <Seccion id="panel-examenes" etiqueta="Jefes" titulo="Exámenes" className={className}>
@@ -88,10 +96,11 @@ function ExamenesPanel({ progreso, cursos, className = '' }) {
             </div>
           )}
           <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {examenes.map((examen) => (
+            {visibles.map((examen) => (
               <Examen key={`${examen.curso.id}:${examen.leccion.id}`} examen={examen} />
             ))}
           </ul>
+          <VerTodo abierto={todo} ocultos={examenes.length - visibles.length} texto="Ver todos los exámenes" alCambiar={setTodo} />
           <p className="mt-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-white/40">
             <span className="h-3 w-0.5 bg-white/80" aria-hidden="true" /> Marca: puntaje mínimo para aprobar
           </p>

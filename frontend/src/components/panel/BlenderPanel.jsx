@@ -8,6 +8,9 @@ import { rutas } from '../../rutas';
 import { listarDispositivos, listarPracticas, listarTalleres, obtenerTaller } from '../../services/blender';
 import { IconoCubo } from '../etiquetas/IconosEtiqueta';
 import Seccion from './Seccion';
+import VerTodo from './VerTodo';
+
+const VISIBLES = 4;
 
 const BARRA_FASE = { nueva: 'bg-white/35', acompanada: 'bg-amber-300', sola: 'bg-neon', dominada: 'bg-emerald-400' };
 
@@ -36,6 +39,7 @@ function HabilidadesEnCurso({ habilidades }) {
 function BlenderPanel({ token, progreso, cursos, className = '' }) {
   const [datos, setDatos] = useState({ porId: {}, talleres: {}, conectados: 0 });
   const [enCurso, setEnCurso] = useState(null);
+  const [todo, setTodo] = useState(false);
   const practicas = useMemo(() => practicasDelCatalogo(cursos), [cursos]);
 
   useEffect(() => {
@@ -76,6 +80,17 @@ function BlenderPanel({ token, progreso, cursos, className = '' }) {
 
   if (!practicas.length) return null;
 
+  const filas = practicas.map((p) => {
+    const { curso, leccion, bloque, taller } = p;
+    const servidor = taller ? null : datos.porId[bloque.practica]?.mi_progreso;
+    const plan = taller ? datos.talleres[taller] : null;
+    const hecha = Boolean(servidor?.completada || plan?.proyecto_abierto) || estaCompletada(progreso, curso.id, leccion);
+    return { ...p, servidor, plan, hecha };
+  });
+  // Primero lo que toca ahora: desde la primera sin terminar, en el orden del curso.
+  const desde = Math.max(0, filas.findIndex((f) => !f.hecha));
+  const visibles = todo ? filas : filas.slice(desde, desde + VISIBLES);
+
   return (
     <Seccion
       id="panel-blender"
@@ -89,10 +104,7 @@ function BlenderPanel({ token, progreso, cursos, className = '' }) {
       }
     >
       <ul className="grid gap-2 sm:grid-cols-2">
-        {practicas.map(({ curso, modulo, leccion, bloque, cierre, taller }) => {
-          const servidor = taller ? null : datos.porId[bloque.practica]?.mi_progreso;
-          const plan = taller ? datos.talleres[taller] : null;
-          const hecha = Boolean(servidor?.completada || plan?.proyecto_abierto) || estaCompletada(progreso, curso.id, leccion);
+        {visibles.map(({ curso, modulo, leccion, bloque, cierre, taller, servidor, plan, hecha }) => {
           const avance = hecha ? 100 : plan ? avanceTaller(plan) : (servidor?.progreso ?? 0);
           const pendiente = cierre ? 'Se abre al terminar las lecciones del módulo.' : 'Se abre al terminar la lección anterior.';
           let texto = pendiente;
@@ -124,6 +136,7 @@ function BlenderPanel({ token, progreso, cursos, className = '' }) {
           );
         })}
       </ul>
+      <VerTodo abierto={todo} ocultos={filas.length - visibles.length} texto="Ver todos los talleres y proyectos" alCambiar={setTodo} />
     </Seccion>
   );
 }

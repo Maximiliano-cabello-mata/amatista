@@ -16,13 +16,27 @@ import EncabezadoPanel from '../components/panel/EncabezadoPanel';
 import LogrosPanel from '../components/panel/LogrosPanel';
 import ExamenesPanel from '../components/panel/ExamenesPanel';
 import MuroInsignias from '../components/panel/MuroInsignias';
-import Proximamente from '../components/panel/Proximamente';
 import RetosPanel from '../components/panel/RetosPanel';
 import { totales } from '../components/panel/retos';
 import { useHoy } from '../components/panel/useHoy';
 import { useProgreso } from '../progreso/contexto';
 import { calcularRacha } from '../progreso/reglas';
 import { rutas } from '../rutas';
+
+// Índice de Mi panel. Las rutas son por hash (#/…): los saltos se hacen con scroll, no con el enlace.
+const SECCIONES = [
+  ['panel-continuar', 'Qué sigue'],
+  ['panel-cursos', 'Cursos'],
+  ['panel-retos', 'Retos'],
+  ['panel-blender', 'Blender'],
+  ['panel-examenes', 'Exámenes'],
+  ['panel-insignias', 'Insignias'],
+];
+
+function irASeccion(evento, id) {
+  evento.preventDefault();
+  document.getElementById(id)?.closest('section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 
 function Panel() {
   const { progreso, xp, nivel } = useProgreso();
@@ -41,6 +55,14 @@ function Panel() {
 
       <InvitacionRecorrido className="mt-6" />
 
+      <nav aria-label="Secciones de Mi panel" className="mt-6 flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-widest">
+        {SECCIONES.map(([id, texto]) => (
+          <a key={id} href={`#${id}`} onClick={(e) => irASeccion(e, id)} className="corte-poly-sm border border-white/10 bg-superficie/80 px-3 py-1.5 text-white/65 hover:border-neon hover:text-neon">
+            {texto}
+          </a>
+        ))}
+      </nav>
+
       {/* Móvil: una columna en orden de prioridad. Escritorio: 2/3 + 1/3. */}
       <div className="mt-6 grid gap-5 lg:grid-cols-3">
         <ContinuarPanel progreso={progreso} cursos={cursos} className="lg:col-span-2" />
@@ -52,7 +74,6 @@ function Panel() {
         <ExamenesPanel progreso={progreso} cursos={cursos} className="diferido diferido--corto lg:col-span-3" />
         <LogrosPanel progreso={progreso} cursos={cursos} hoy={hoy} className="diferido diferido--corto lg:col-span-3" />
         <MuroInsignias progreso={progreso} cursos={cursos} className="diferido diferido--corto lg:col-span-3" />
-        <Proximamente className="diferido diferido--corto lg:col-span-3" />
       </div>
 
       <a href={rutas.inicio} className="mt-10 inline-block font-mono text-xs uppercase tracking-widest text-white/50 hover:text-neon">
