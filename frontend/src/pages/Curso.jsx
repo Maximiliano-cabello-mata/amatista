@@ -201,6 +201,9 @@ const NODO_NIVEL = {
 };
 const TEXTO_NIVEL = { completado: 'Completado', 'en-curso': 'En curso', disponible: 'Disponible', bloqueado: 'Próximamente' };
 
+// Primeros pasos es el nivel 0; los demás, su número de curso (01, 02…) o su posición.
+const numeroNivel = (curso, i) => (curso.numero ? Number(curso.numero) : i + 1);
+
 // El árbol del curso: un tronco (el logo) que se ramifica en los niveles.
 // Cada rama es un enlace al nivel; el elegido se resalta.
 function ArbolNiveles({ ruta, elegido, progreso, acento }) {
@@ -226,7 +229,7 @@ function ArbolNiveles({ ruta, elegido, progreso, acento }) {
           );
         })}
       </svg>
-      <ol className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      <ol className={`grid grid-cols-2 gap-3 ${n > 4 ? 'md:grid-cols-5' : 'md:grid-cols-4'}`}>
         {ruta.niveles.map((curso, i) => {
           const estado = estadoNivel(progreso, curso);
           const { porcentaje } = resumenCurso(progreso, curso);
@@ -243,7 +246,7 @@ function ArbolNiveles({ ruta, elegido, progreso, acento }) {
               >
                 <span className="flex items-center gap-2">
                   <span className={`hexagono grid h-8 w-9 shrink-0 place-items-center font-mono text-xs font-bold ${NODO_NIVEL[estado]}`}>
-                    {estado === 'completado' ? '✓' : bloqueado ? <IconoCandado className="h-3.5 w-3.5" /> : i + 1}
+                    {estado === 'completado' ? '✓' : bloqueado ? <IconoCandado className="h-3.5 w-3.5" /> : numeroNivel(curso, i)}
                   </span>
                   <span className={`font-mono text-[10px] font-bold uppercase tracking-widest ${actual ? 'text-white' : 'text-white/50'}`}>
                     {TEXTO_NIVEL[estado]}
