@@ -154,6 +154,52 @@
             ]
           },
           {
+            "type": "classify",
+            "id": "bpi3_clasifica",
+            "question": "¿Qué fase del rebote es cada momento?",
+            "groups": [
+              {
+                "id": "caida",
+                "label": "Cae"
+              },
+              {
+                "id": "choque",
+                "label": "Toca el suelo"
+              },
+              {
+                "id": "subida",
+                "label": "Sube"
+              }
+            ],
+            "items": [
+              {
+                "text": "La pelota se estira y acelera",
+                "group": "caida"
+              },
+              {
+                "text": "La pelota se aplasta",
+                "group": "choque"
+              },
+              {
+                "text": "Va frenando hasta quedar quieta en el aire",
+                "group": "subida"
+              },
+              {
+                "text": "Los fotogramas se separan más",
+                "group": "caida"
+              },
+              {
+                "text": "Dura uno o dos fotogramas",
+                "group": "choque"
+              },
+              {
+                "text": "Recupera su forma redonda",
+                "group": "subida"
+              }
+            ],
+            "explanation": "Cae acelerando y estirada, se aplasta al tocar el suelo y sube frenando hasta el punto más alto."
+          },
+          {
             "type": "shortcuts",
             "title": "Los atajos del módulo",
             "practice": true,

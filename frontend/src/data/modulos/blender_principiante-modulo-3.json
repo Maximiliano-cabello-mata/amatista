@@ -42,6 +42,11 @@
             "body": "### Como un filtro de fotos\nUn **modificador** cambia cómo se ve tu modelo sin tocar la malla original. Puedes apagarlo, cambiarlo o quitarlo cuando quieras. Viven en la pestaña de la **llave inglesa** (azul) del panel Propiedades."
           },
           {
+            "type": "param_demo",
+            "demo": "mirror",
+            "caption": "Mueves un vértice de la mitad derecha y el espejo lo copia del otro lado."
+          },
+          {
             "type": "quiz_inline",
             "id": "quiz_bp3_1",
             "question": "Pusiste un modificador y no te gustó. ¿Qué pasa con tu malla?",
@@ -155,6 +160,11 @@
             ]
           },
           {
+            "type": "param_demo",
+            "demo": "subdivision",
+            "caption": "Cada nivel suaviza la caja. Un nivel o dos bastan casi siempre: más niveles pesan más."
+          },
+          {
             "type": "compare",
             "title": "¿Por qué aplicar la escala?",
             "mode": "columns",
@@ -166,6 +176,11 @@
               "label": "Ctrl + A › Escala",
               "text": "La escala vuelve a 1, 1, 1 y la forma no cambia: los modificadores se comportan bien."
             }
+          },
+          {
+            "type": "param_demo",
+            "demo": "array",
+            "caption": "Array copia el objeto en fila sin duplicarlo a mano: cambias la cantidad cuando quieras."
           },
           {
             "type": "shortcuts",
@@ -200,6 +215,11 @@
                 "action": "Corte de bucle al centro"
               }
             ]
+          },
+          {
+            "type": "param_demo",
+            "demo": "bevel",
+            "caption": "El bisel redondea los bordes: con más segmentos, más suave el canto y más luz que atrapa."
           },
           {
             "type": "ordering",

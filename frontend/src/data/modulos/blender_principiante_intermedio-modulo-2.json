@@ -160,6 +160,11 @@
             ]
           },
           {
+            "type": "param_demo",
+            "demo": "light",
+            "caption": "Con el sol bajo las sombras se alargan; al mediodía casi desaparecen. Así eliges el ánimo de tu render."
+          },
+          {
             "type": "shortcuts",
             "title": "Los atajos del módulo",
             "practice": true,
@@ -190,6 +195,32 @@
                   "F12"
                 ],
                 "action": "Render final"
+              }
+            ]
+          },
+          {
+            "type": "true_false",
+            "id": "bpi2_verdad",
+            "statements": [
+              {
+                "text": "La luz principal (key) es la más fuerte.",
+                "answer": true,
+                "explanation": "La key marca la forma; el relleno suaviza sus sombras."
+              },
+              {
+                "text": "La cámara se mueve igual que la vista.",
+                "answer": false,
+                "explanation": "La cámara es un objeto: la mueves con G y R o con Ctrl+Alt+0."
+              },
+              {
+                "text": "F12 saca el render.",
+                "answer": true,
+                "explanation": "F12 renderiza lo que ve la cámara activa."
+              },
+              {
+                "text": "Sin luces, EEVEE muestra la escena bien iluminada.",
+                "answer": false,
+                "explanation": "Sin luz solo queda el mundo: la escena se ve oscura y plana."
               }
             ]
           },

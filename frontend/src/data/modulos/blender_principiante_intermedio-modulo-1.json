@@ -236,6 +236,52 @@
             "caption": "En Blender lo abres en el espacio de trabajo Shading. El cable amarillo lleva color; el verde lleva el shader completo."
           },
           {
+            "type": "classify",
+            "id": "bpi1_clasifica",
+            "question": "¿Qué control del Principled BSDF cambia cada cosa?",
+            "groups": [
+              {
+                "id": "color",
+                "label": "Base Color"
+              },
+              {
+                "id": "metal",
+                "label": "Metallic"
+              },
+              {
+                "id": "rugosidad",
+                "label": "Roughness"
+              }
+            ],
+            "items": [
+              {
+                "text": "El rojo de la carrocería",
+                "group": "color"
+              },
+              {
+                "text": "Que parezca de acero",
+                "group": "metal"
+              },
+              {
+                "text": "Un reflejo nítido como espejo",
+                "group": "rugosidad"
+              },
+              {
+                "text": "Un acabado mate de goma",
+                "group": "rugosidad"
+              },
+              {
+                "text": "El tono verde de una hoja",
+                "group": "color"
+              },
+              {
+                "text": "Que brille como una moneda de oro",
+                "group": "metal"
+              }
+            ],
+            "explanation": "Base Color es el tono; Metallic dice si es metal; Roughness, si el reflejo es nítido o difuso."
+          },
+          {
             "type": "matching",
             "id": "parejas_bpi1",
             "prompt": "Une cada material con sus valores.",

@@ -160,6 +160,12 @@
             ]
           },
           {
+            "type": "param_demo",
+            "demo": "light",
+            "caption": "En tu galería, una luz lateral y baja marca la textura; una alta y de frente la aplana.",
+            "title": "Luz: el ánimo del render"
+          },
+          {
             "type": "ordering",
             "id": "orden_bi3",
             "prompt": "Ordena el flujo de la imagen final.",
@@ -210,6 +216,27 @@
               }
             ],
             "explanation": "Cada ajuste resuelve un problema típico del render final."
+          },
+          {
+            "type": "true_false",
+            "id": "bi3_verdad",
+            "statements": [
+              {
+                "text": "Más muestras siempre dan un render mejor sin costo.",
+                "answer": false,
+                "explanation": "Más muestras quitan ruido, pero cada una suma tiempo."
+              },
+              {
+                "text": "El denoiser limpia el ruido con pocas muestras.",
+                "answer": true,
+                "explanation": "Permite renders limpios con menos muestras."
+              },
+              {
+                "text": "La regla de los tercios ubica lo importante en el centro exacto.",
+                "answer": false,
+                "explanation": "Lo ubica en los cruces de las líneas, no al centro."
+              }
+            ]
           }
         ]
       },
