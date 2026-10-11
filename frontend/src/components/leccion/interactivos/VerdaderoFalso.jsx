@@ -60,14 +60,15 @@ function VerdaderoFalso({ bloque, alCompletar, resuelta }) {
         })}
       </ol>
 
-      <div className="[perspective:1200px]">
+      {/* La animación de entrada va en el contenedor: si fuera en la tarjeta, su «transform» final
+          (fill-mode both) taparía el giro y la tarjeta nunca se voltearía. */}
+      <div key={indice} className="animar-entrar [perspective:1200px]">
         <div
-          key={indice}
-          className={`verdad__tarjeta animar-entrar grid transition-transform duration-500 [transform-style:preserve-3d] motion-reduce:transition-none ${
+          className={`verdad__tarjeta grid transition-transform duration-500 [transform-style:preserve-3d] motion-reduce:transition-none ${
             respondida ? '[transform:rotateY(180deg)]' : ''
           }`}
         >
-          <div className="corte-poly flex min-h-[9.5rem] flex-col justify-center gap-4 border border-white/10 bg-base/70 p-5 [backface-visibility:hidden] [grid-area:1/1]" aria-hidden={respondida}>
+          <div className="corte-poly flex min-h-[9.5rem] flex-col justify-center gap-4 border border-white/10 bg-base/70 p-5 [backface-visibility:hidden] [grid-area:1/1]" aria-hidden={respondida} inert={respondida}>
             <p className="font-mono text-[11px] uppercase tracking-widest text-white/45">
               Afirmación {indice + 1} de {afirmaciones.length}
             </p>
@@ -98,6 +99,7 @@ function VerdaderoFalso({ bloque, alCompletar, resuelta }) {
               acierto ? 'border-emerald-400/50 bg-gradient-to-br from-emerald-900/40 to-superficie' : 'border-blender/50 bg-gradient-to-br from-orange-950/50 to-superficie'
             }`}
             aria-hidden={!respondida}
+            inert={!respondida}
             aria-live="polite"
           >
             <p className={`font-mono text-xs font-bold uppercase tracking-widest ${acierto ? 'text-emerald-300' : 'text-blender'}`}>

@@ -335,9 +335,9 @@ function DatosServidor() {
             <ul className="divide-y divide-white/5">
               {personal.map((p) => (
                 <li key={p.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 py-2 text-sm">
-                  <a href={rutas.adminUsuario(p.id)} className="min-w-0 flex-1 hover:text-neon">
-                    <span className="block text-white">{p.nombre || p.email}</span>
-                    <span className="block text-xs text-white/50">{p.email}</span>
+                  <a href={rutas.adminUsuario(p.id)} className="min-w-[10rem] flex-1 hover:text-neon">
+                    <span className="block truncate text-white">{p.nombre || p.email}</span>
+                    <span className="block truncate text-xs text-white/50">{p.email}</span>
                   </a>
                   <Pastilla tono={p.rol === 'admin' ? 'bg-amatista/25 text-amatista-claro' : 'bg-neon/10 text-neon'}>{p.rol}</Pastilla>
                   {!p.correo_confirmado && <Pastilla tono="bg-amber-300/10 text-amber-200">Correo sin confirmar</Pastilla>}
