@@ -113,7 +113,7 @@ function BlenderPanel({ token, progreso, cursos, className = '' }) {
           else if (servidor) texto = resumenPractica(servidor);
           const habilidades = enCurso && enCurso.taller === taller ? enCurso.habilidades : [];
           return (
-            <li key={`${curso.id}:${leccion.id}`} className="corte-poly-sm border border-white/10 bg-base/60 p-3">
+            <li key={`${curso.id}:${leccion.id}`} className="corte-poly-sm min-w-0 border border-white/10 bg-base/60 p-3">
               <a href={rutas.leccion(curso.id, leccion.id)} className="flex gap-3">
                 <span
                   className={`hexagono grid h-10 w-11 shrink-0 place-items-center ${hecha ? 'bg-emerald-400 text-base' : 'bg-blender/20 text-blender'}`}
