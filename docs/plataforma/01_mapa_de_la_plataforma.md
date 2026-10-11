@@ -8,10 +8,10 @@
 | Curso | `#/curso/<curso>` | El mapa: módulos (con la etiqueta «Nivel N» en su encabezado; el mapa de niveles completo es T-041) con sus **etiquetas**, la **ruta** de cada módulo y su **estación de práctica en Blender**. Ver [02](02_modulos_y_practica.md). |
 | Lección | `#/curso/<curso>/leccion/<leccion>` | Los bloques de la lección ([04](04_herramientas_de_ensenanza.md)). En la lección de práctica, la tarjeta de Blender: **Prepara tu Blender** en tres pasos, **El ejemplo resuelto**, el botón **Abrir en Blender** y, con Blender en esa práctica, la tarjeta **Ahora en Blender**, que maneja la práctica desde la lección ([02](02_modulos_y_practica.md#dentro-de-la-práctica)). |
 | Mi panel | `#/panel` | Nivel, racha, qué sigue, avance por curso, exámenes, retos y **Tus prácticas en Blender** (la práctica de cada módulo con su estado). |
-| Mi Blender | `#/blender` (menú de la cuenta) | Descargar el add-on, computadoras conectadas, compatibilidad y **Tu Blender, desde aquí**: cómo se ve Blender para el alumno (modo enfocado, acompañamiento, tarjeta con el paso actual en la vista 3D y avisos si usa una herramienta de otro nivel), guardado con `GET/PUT /api/addon/v1/ajustes` y aplicado en el siguiente latido. Ya no está en la barra superior: se llega desde el menú de la cuenta o desde cualquier práctica. |
+| Blender | `#/blender` (pestaña de la barra) | **Cómo se unen la plataforma y Blender** (el proceso paso a paso), instalar y vincular (una sola vez), las tres prácticas **Conoce Amatista Motor** en vivo y **Tu Blender, desde aquí**: cómo se ve Blender para el alumno (modo enfocado, acompañamiento, tarjeta con el paso actual en la vista 3D y avisos si usa una herramienta de otro nivel), guardado con `GET/PUT /api/addon/v1/ajustes` y aplicado en el siguiente latido ([11](11_recorrido_y_fusion.md)). |
 | Vincular | `#/vincular?codigo=…` | Confirmar el código que muestra Blender. |
 | Perfil | `#/perfil` | Datos de la cuenta. |
-| Guía | `#/guia` (botón «?» de la barra) | La guía de primeros pasos: cómo funciona la plataforma y el add-on ([09](09_guia_vista_y_auditoria.md)). |
+| Ayuda | `#/guia` (botón «?» de la barra) | El recorrido guiado por la plataforma, la tarjeta de la fusión y preguntas rápidas ([11](11_recorrido_y_fusion.md)). |
 
 **Recorrido típico:** abre el curso → entra al módulo → hace las lecciones en orden (cada una desbloquea la siguiente) → la estación de Blender se ilumina → abre la práctica → si es la primera vez, prepara Blender en la misma tarjeta → **Abrir en Blender** → practica en Blender acompañado por el motor, mientras la lección muestra «Ahora en Blender», el ejemplo resuelto y la lista «Comparado con el ejemplo» → el avance aparece en la lección y en el panel → examen del módulo e insignia.
 
@@ -27,13 +27,13 @@ Rol `admin`. Todo lo del profesor y además: crea y edita módulos y lecciones, 
 
 ## Barra superior
 
-| Antes (v3.0) | Ahora (v3.1) |
-|---|---|
-| Cursos · Mi panel · **Laboratorio** · **Blender** · Admin (profesor/admin) | Cursos · Mi panel · Admin (profesor/admin) |
-| Menú de la cuenta: Perfil · Mi panel · Cerrar sesión | Menú de la cuenta: Perfil · Mi panel · **Mi Blender** · Cerrar sesión (también en el menú del celular) |
+| Antes (v3.0) | v3.1 | Ahora (auditoría, 11 oct) |
+|---|---|---|
+| Cursos · Mi panel · **Laboratorio** · **Blender** · Admin (profesor/admin) | Cursos · Mi panel · Admin (profesor/admin) | Cursos · **Blender** · Mi panel · Admin (profesor/admin) |
+| Menú de la cuenta: Perfil · Mi panel · Cerrar sesión | Menú de la cuenta: Perfil · Mi panel · **Mi Blender** · Cerrar sesión | Menú de la cuenta: Perfil · **Ayuda** · Cerrar sesión (también en el menú del celular) |
 
-Desde el 10 de octubre la barra también tiene el botón **«?»** (la guía) y el menú de la cuenta, **Guía**.
+La barra tiene además el botón **«?»** (Ayuda, con el recorrido guiado).
 
 La ruta `#/blender` sigue funcionando (enlaces viejos, el add-on y los correos la usan).
 
-**Estructura fija.** La barra no cambia de una pantalla a otra ni según el módulo: todo lo del alumno cuelga de *Cursos* (aprender, incluida la práctica en Blender) y de *Mi panel* (su avance). El antiguo «Laboratorio técnico» era una página de pruebas (estado del backend, una sesión de prueba y un recuadro de tutor IA que no existía): salió de la navegación y de la portada, quedó como **Diagnóstico técnico** solo para profesores y administradores (se abre desde Admin › Estado) y perdió los botones de prueba. El laboratorio 3D para alumnos es otra cosa y llega con la v3.2 (T-049).
+**Estructura fija.** La barra no cambia de una pantalla a otra ni según el módulo: todo lo del alumno cuelga de *Cursos* (aprender, incluida la práctica en Blender), de *Blender* (conectar y conocer el add-on) y de *Mi panel* (su avance). El antiguo «Laboratorio técnico» era una página de pruebas (estado del backend, una sesión de prueba y un recuadro de tutor IA que no existía): salió de la navegación y de la portada, quedó como **Diagnóstico técnico** solo para profesores y administradores (se abre desde Admin › Estado) y perdió los botones de prueba. El laboratorio 3D para alumnos es otra cosa y llega con la v3.2 (T-049).

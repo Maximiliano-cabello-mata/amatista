@@ -41,7 +41,7 @@ Al 10 de octubre de 2026 (`main` con el PR #25, Motor 3.5, y las correcciones 3.
 | **Temáticas por módulo** | Cada módulo es un mundo (escenario, partículas, colores) con un personaje original que acompaña la lección. [Herramientas gráficas](docs/plataforma/07_herramientas_graficas.md). |
 | **Seguridad y rendimiento** | Auditoría automática (1,449 ataques, 0 hallazgos), informe de rendimiento antes y después, add-on con integridad y marca de agua, PWA sin mapas de fuente. [Auditoría](docs/seguridad/01_auditoria_2026-10-05.md) · [informe](docs/rendimiento/2026-10-05_informe.md) · [protección del código](docs/seguridad/02_proteccion_del_codigo.md). |
 | **Dominio** | `amatista-3d.me`. Plan con Cloudflare: PWA en `amatista-3d.me` y API en `api.amatista-3d.me` (T-065), en la fase 2 del plan de despliegue. |
-| **Plataforma por módulos** | Estructura fija **Cursos · Mi panel · Admin**. [Documentación](docs/plataforma/README.md). |
+| **Plataforma por módulos** | Estructura fija **Cursos · Blender · Mi panel · Admin**, con recorrido guiado y Ayuda. [Documentación](docs/plataforma/README.md). |
 
 Contenido: Blender Principiante, Principiante-Intermedio e Intermedio (9 módulos) y Módulo 1 de A-Frame publicados. Los módulos de Blender de la v2 están en `frontend/src/data/modulos/archivo/`.
 
@@ -117,7 +117,7 @@ flowchart LR
                               └─────────────┘
 ```
 
-La lección y Blender se hablan a través de la API: el add-on late cada 5 segundos en `/api/addon/v1/enlace`, la lección deja órdenes en `/api/addon/v1/ordenes` (abrir la práctica, `ver_ejemplo`, `volver_practica`) y «Mi Blender» guarda en `/api/addon/v1/ajustes` cómo se ve Blender.
+La lección y Blender se hablan a través de la API: el add-on late cada 5 segundos en `/api/addon/v1/enlace`, la lección deja órdenes en `/api/addon/v1/ordenes` (abrir la práctica, `ver_ejemplo`, `volver_practica`) y la página Blender guarda en `/api/addon/v1/ajustes` cómo se ve Blender.
 
 Las piezas y cómo se conectan, archivo por archivo: [mapa del repositorio](docs/manual-del-codigo/01_mapa_del_repositorio.md).
 

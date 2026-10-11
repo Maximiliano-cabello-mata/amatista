@@ -1,5 +1,7 @@
 # 17 · Primeros pasos en Blender (add-on 5.1)
 
+> **Add-on 5.2 (11 oct, T-112):** las diez paradas pasan a **«Conoce Amatista Motor»**, tres prácticas que explican todo el add-on (`pestana`, `vista`, `taller`), y se empiezan desde la página Blender de la plataforma en vez de una lección. Lo vigente: `docs/plataforma/11_recorrido_y_fusion.md`. Este documento queda como historia del 5.1.
+
 El add-on 5.1 enseña Blender y Amatista **dentro de Blender** antes del primer taller, y lo hace conectado con la lección «Tus primeros pasos en Blender» del curso «Primeros pasos con Amatista» (`docs/plataforma/10_primeros_pasos_y_recursos.md`).
 
 El motor de los talleres (Amatista Taller, motor 5) **no cambia**: el recorrido es una pieza aparte que solo toca la bienvenida, la pestaña Amatista, la tarjeta de la vista 3D y el enlace.

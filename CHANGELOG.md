@@ -1,12 +1,5 @@
 # Changelog
 
-## 3.5.1 · Correcciones de evaluación y detalle del instructor
-
-- Siluetas sin evidencia quedan pendientes, también al comparar con el ejemplo.
-- El complemento conserva la silueta en intentos con `example.matches`.
-- Detalle del instructor compartido en la base, sin caché por proceso. Requiere 011 antes del backend.
-- Documentación delimita los aspectos que el motor puede evaluar.
-
 Todas las versiones de Amatista. Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) y [versionado semántico](https://semver.org/lang/es/).
 
 | Versión | Fecha | Fase | Commit |
@@ -20,9 +13,25 @@ Pre-lanzamientos de la v2.2.0: `v2.2.0-alpha.1` (`f68c704`: cuentas, Oracle 20 G
 contenido administrable, lecciones interactivas y panel del alumno) y `v2.2.0-alpha.2` (`88dd539`: panel
 de administración; se publica con `crear-tags.sh`).
 
-Los tags hasta `v2.2.0-alpha.1` están publicados y firmados con SSH. `v2.2.0-alpha.2`, `v3.0.0-alpha.1` (`2337fd5`, reestructuración), `v3.0.0-alpha.2` (`ec849d8`, Amatista Engine etapa 1) y `v3.0.0-alpha.3` (`d004071`, motor etapa 2 y plataforma por módulos), `v3.0.0-alpha.4` (`fe209e0`), `alpha.5` (`34af6f3`), `alpha.6` (`191a888`), `alpha.7` (`927248c`), `alpha.8` (`2402549`, `main` al 5 de octubre) y `alpha.9` (`255d054`, Motor 3.4) ya están en `bash herramientas/crear-tags.sh` y se publican desde la computadora del usuario (ver `docs/guias/2026-10-01_versiones-y-tablero.txt`).
+Los tags hasta `v2.2.0-alpha.1` están publicados y firmados con SSH. `v2.2.0-alpha.2`, `v3.0.0-alpha.1` (`2337fd5`, reestructuración), `v3.0.0-alpha.2` (`ec849d8`, Amatista Engine etapa 1) y `v3.0.0-alpha.3` (`d004071`, motor etapa 2 y plataforma por módulos), `v3.0.0-alpha.4` (`fe209e0`), `alpha.5` (`34af6f3`), `alpha.6` (`191a888`), `alpha.7` (`927248c`), `alpha.8` (`2402549`, `main` al 5 de octubre), `alpha.9` (`255d054`, Motor 3.4), `alpha.10` (`1b26416`, ya publicado), `alpha.11` (`a9df7e9`, Motor 4.0), `alpha.12` (`48025f7`, Amatista Taller), `alpha.13` (`7d17f81`, guía y vista de administrador) y `alpha.14` (`70064b2`, Motor 5.1) ya están en `bash herramientas/crear-tags.sh` y se publican desde la computadora del usuario (ver `docs/guias/2026-10-01_versiones-y-tablero.txt`).
 
 ## [Sin publicar]
+
+### Agregado
+
+- **Auditoría completa y plataforma en orden** (11 oct 2026, T-110 a T-112, informe en `docs/auditoria/2026-10-11_auditoria_completa.md`, `docs/plataforma/11_recorrido_y_fusion.md`). Revisión de los 270 commits, los tags, todas las pruebas, cada página y las 48 lecciones; 16 errores corregidos. La plataforma queda en **Cursos · Blender · Mi panel**: el curso «Primeros pasos con Amatista» sale del árbol de Blender (archivado sin perder progreso) y lo reemplaza un **recorrido guiado** de 10 paradas por las páginas reales; la página **Blender** vuelve a la barra con la tarjeta **«Cómo se unen la plataforma y Blender»** (el proceso paso a paso y qué viaja entre los dos); **Ayuda** (`#/guia`) sin candados ni preguntas; **Mi panel** con una tarjeta por curso y listas cortas (de ~6700 a ~4200 px). **Add-on 5.2 «Conoce Amatista Motor»**: tres prácticas cortas dentro de Blender que explican todas sus herramientas (pestaña, cuenta, plataforma, lección, ajustes, guardar, vista, mover/girar/escalar, herramientas, ayuda, enfoque y el ciclo del taller), empezadas y vistas en vivo desde la página Blender. Sin SQL. Guía: `docs/despliegue/2026-10-11_auditoria_y_motor_5_2.md`.
+
+### Corregido
+
+- Auditoría del 11 oct: «¿Verdad o mito?» no volteaba; el formulario del código de Blender desbordaba a 390 px (18 lecciones y `#/vincular`); el curso v2 archivado aparecía en Mi panel; el código de vinculación tiene 8 caracteres, no «6 letras»; Admin › Resumen contaba lecciones de módulos archivados; el jefe final de A-Frame módulo 1 no tenía duración; Vite 8 ignoraba `esbuild.legalComments` (ahora `build.rolldownOptions.output.comments: false`); desbordes en `#/blender` y Mi panel a 390 px; nombre y rol montados en Admin › Auditoría.
+- Esta sección «3.5.1» estaba antes del título del archivo; se movió aquí.
+
+### Corregido · Motor 3.5.1 (Codex, PR #26): correcciones de evaluación y detalle del instructor
+
+- Siluetas sin evidencia quedan pendientes, también al comparar con el ejemplo.
+- El complemento conserva la silueta en intentos con `example.matches`.
+- Detalle del instructor compartido en la base, sin caché por proceso. Requiere 011 antes del backend.
+- Documentación delimita los aspectos que el motor puede evaluar.
 
 ### Agregado
 
