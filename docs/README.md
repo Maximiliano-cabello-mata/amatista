@@ -36,7 +36,7 @@ Carpeta [`historia/`](historia/README.md).
 
 ## 2. La plataforma
 
-Carpeta [`plataforma/`](plataforma/README.md): estructura fija Cursos · Mi panel · Admin.
+Carpeta [`plataforma/`](plataforma/README.md): estructura fija Cursos · Blender · Mi panel · Admin.
 
 - [Mapa de la plataforma por rol](plataforma/01_mapa_de_la_plataforma.md)
 - [Módulos con práctica de Blender al final](plataforma/02_modulos_y_practica.md)
@@ -46,6 +46,10 @@ Carpeta [`plataforma/`](plataforma/README.md): estructura fija Cursos · Mi pane
 - [Módulo 3 de Blender: modelado con precisión](plataforma/06_modulo_3_modelado_precision.md) (historia: borrador del curso v2)
 - [Herramientas gráficas](plataforma/07_herramientas_graficas.md)
 - [Auditoría educativa (9 oct)](plataforma/08_auditoria_educativa_2026-10-09.md)
+- [Guía, vista de alumno y auditoría (10 oct)](plataforma/09_guia_vista_y_auditoria.md)
+- [Recorrido guiado, página Blender y «Conoce Amatista Motor» (11 oct)](plataforma/11_recorrido_y_fusion.md)
+- [Diseño «Facetas» (CSS v4.0)](diseno/2026-10-11_sistema_facetas.md)
+- [Auditoría completa del 11 de octubre](auditoria/2026-10-11_auditoria_completa.md)
 
 ### Cursos
 

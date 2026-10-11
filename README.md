@@ -30,7 +30,7 @@ El alumno avanza por cursos y módulos en una PWA. Cada módulo termina con una 
 
 ## 1. Estado actual
 
-Al 10 de octubre de 2026 (`main` con el PR #25, Motor 3.5, y las correcciones 3.5.1 de los PR #26 y #27 fusionados):
+Al 11 de octubre de 2026 (`main` con el PR #35: auditoría completa, recorrido guiado, página Blender, Amatista Motor 5.2 y el diseño «Facetas»):
 
 | Frente | Dónde está |
 |---|---|
@@ -41,7 +41,9 @@ Al 10 de octubre de 2026 (`main` con el PR #25, Motor 3.5, y las correcciones 3.
 | **Temáticas por módulo** | Cada módulo es un mundo (escenario, partículas, colores) con un personaje original que acompaña la lección. [Herramientas gráficas](docs/plataforma/07_herramientas_graficas.md). |
 | **Seguridad y rendimiento** | Auditoría automática (1,449 ataques, 0 hallazgos), informe de rendimiento antes y después, add-on con integridad y marca de agua, PWA sin mapas de fuente. [Auditoría](docs/seguridad/01_auditoria_2026-10-05.md) · [informe](docs/rendimiento/2026-10-05_informe.md) · [protección del código](docs/seguridad/02_proteccion_del_codigo.md). |
 | **Dominio** | `amatista-3d.me`. Plan con Cloudflare: PWA en `amatista-3d.me` y API en `api.amatista-3d.me` (T-065), en la fase 2 del plan de despliegue. |
-| **Plataforma por módulos** | Estructura fija **Cursos · Blender · Mi panel · Admin**, con recorrido guiado y Ayuda. [Documentación](docs/plataforma/README.md). |
+| **Plataforma por módulos** | Estructura fija **Cursos · Blender · Mi panel · Admin**, con recorrido guiado y Ayuda. [Documentación](docs/plataforma/README.md) · [recorrido y fusión con Blender](docs/plataforma/11_recorrido_y_fusion.md). |
+| **Diseño «Facetas» (CSS v4.0)** | Todas las páginas con la misma anatomía: migas, encabezado facetado con borde de gema, títulos de sección y pie global; fondo low poly con destellos. [Plan del diseño](docs/diseno/2026-10-11_sistema_facetas.md). |
+| **Auditoría del 11 de octubre** | 270 commits, tags, seguridad, todas las páginas y las 48 lecciones revisadas; 16 errores corregidos y 5 puntos abiertos. [Informe](docs/auditoria/2026-10-11_auditoria_completa.md). |
 
 Contenido: Blender Principiante, Principiante-Intermedio e Intermedio (9 módulos) y Módulo 1 de A-Frame publicados. Los módulos de Blender de la v2 están en `frontend/src/data/modulos/archivo/`.
 
@@ -271,6 +273,8 @@ Las ideas grandes entran primero como propuesta fechada en [`docs/propuestas/`](
 | [Base de datos](docs/base-de-datos/README.md) | Esquema SQL completo y diagrama entidad-relación |
 | [Herramientas de la plataforma](docs/herramientas-de-la-plataforma.md) | Tecnologías y servicios |
 | [Despliegue](docs/despliegue/2026-10-05_plan_de_despliegue.md) | Plan por fases, servidor, HTTPS y actualizaciones |
+| [Diseño](docs/diseno/2026-10-11_sistema_facetas.md) | Sistema «Facetas»: anatomía de página, anchos, piezas comunes y CSS v4.0 |
+| [Auditoría completa (11 oct)](docs/auditoria/2026-10-11_auditoria_completa.md) | Qué se revisó, los 16 hallazgos con su commit y los puntos abiertos |
 | [Seguridad](docs/seguridad/01_auditoria_2026-10-05.md) y [rendimiento](docs/rendimiento/2026-10-05_informe.md) | Auditoría, protección del código e informe de rendimiento |
 | [Dirección](docs/reestructuracion/00_plan_maestro.md) | Plan maestro, arquitectura, propuestas, lanzamiento |
 | [Registros](docs/bitacora/) | Bitácora de cada sesión e incidencias |

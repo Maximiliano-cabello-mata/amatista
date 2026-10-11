@@ -17,15 +17,20 @@ Pedido: reorganizar los recursos de la plataforma, organización de páginas a n
 
 ## Commits (rama `claude/auditoria-orden-plataforma-wfzu65`)
 
-`c6c5de4` arreglos gráficos · `8af56a8` retirar «Primeros pasos» · `4d45128` add-on 5.2 · `efe01e3` API del enlace · `59f863d` página Blender · `62f48ee` bloque de Blender en lecciones · `e1c1287` recorrido, pestaña Blender y Ayuda · `970b88d` Mi panel · `e93545b` Admin › Resumen · `e07bb30` duración A-Frame · `57475fe` comentarios del build · `fb3955d` desborde de Mi panel · documentación y tablero.
+`c6c5de4` arreglos gráficos · `8af56a8` retirar «Primeros pasos» · `4d45128` add-on 5.2 · `efe01e3` API del enlace · `59f863d` página Blender · `62f48ee` bloque de Blender en lecciones · `e1c1287` recorrido, pestaña Blender y Ayuda · `970b88d` Mi panel · `e93545b` Admin › Resumen · `e07bb30` duración A-Frame · `57475fe` comentarios del build · `fb3955d` desborde de Mi panel · documentación y tablero. Diseño «Facetas»: `71327b3` plan · `9cad9be` CSS y piezas comunes · `ff4bb0c` páginas · `dcb443a` fondo · `08707fc` documentación y T-115.
 
 ## Pruebas
 
-Backend 391, motor y add-on 553, add-on dentro de Blender 5.0.1 sin ventana OK, vitest 282, lint y build sin avisos, contenido 0 errores, recorrido de pantallas sin problemas. Las tres prácticas se probaron de punta a punta con un Blender simulado que late y cumple las órdenes de la página.
+Backend 391, motor y add-on 553, add-on dentro de Blender 5.0.1 sin ventana OK, vitest 286, lint y build sin avisos, contenido 0 errores, recorrido de pantallas sin problemas. Las tres prácticas se probaron de punta a punta con un Blender simulado que late y cumple las órdenes de la página.
+
+## Fusión
+
+Maximiliano dio el visto bueno el 11 de octubre a las 18:40 UTC («Fusiona con main y documenta»). Se trajo `main` (solo chocaba `KANBAN.md`, regenerado con `tablero/actualizar.py`), el CI quedó en verde y el PR #35 se fusionó con merge commit para conservar los commits por tema.
 
 ## Pendiente del usuario
 
-- Revisar y fusionar el PR (sin fusionar hasta su visto bueno).
-- Publicar: `docs/despliegue/2026-10-11_auditoria_y_motor_5_2.md` (sin SQL; archivar el módulo de «Primeros pasos» con `contenido.py importar`).
-- Probar con ventana (T-113) y publicar los tags desde su computadora (T-114).
-- Decidir los puntos abiertos P-01 a P-05 del informe (HTTPS en producción es el importante).
+- **Publicar en producción:** `docs/despliegue/2026-10-11_auditoria_y_motor_5_2.md` (sin SQL; archivar el módulo de «Primeros pasos» con `contenido.py importar`, publicar el build nuevo y reinstalar Amatista Motor 5.2).
+- **Probar con ventana** en Blender el add-on 5.2 y «Conoce Amatista Motor» (T-113).
+- **Tags** desde su computadora (T-114): `git checkout main && git pull && bash herramientas/crear-tags.sh && git push origin --tags`, y el de esta fusión, `v3.0.0-alpha.15`, sobre el merge commit del PR #35.
+- **Borrar la rama** `claude/auditoria-orden-plataforma-wfzu65`.
+- **Decidir** los puntos abiertos P-01 a P-05 del informe (HTTPS en producción es el importante).
