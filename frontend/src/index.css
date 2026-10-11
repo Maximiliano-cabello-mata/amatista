@@ -843,6 +843,204 @@ button:not(:disabled):active, a.corte-poly-sm:active { transform: translateY(1px
 .nodos__nota { border-left: 3px solid var(--borde-fuerte); padding-left: 0.85rem; }
 
 /* ===================================================================
+   v3.7 · Recursos gráficos nuevos y lecciones con más ritmo
+   (docs/plataforma/10_primeros_pasos_y_recursos.md)
+   =================================================================== */
+
+/* Cada bloque de la lección lleva data-bloque con su tipo (Leccion.jsx): así el texto, los
+   gráficos y las actividades se distinguen de un vistazo y la lección no se ve igual de
+   principio a fin. El acento sigue al mundo del módulo (--tema-acento) cuando lo hay. */
+.bloque-leccion { --acento-bloque: var(--tema-acento, var(--amatista)); position: relative; }
+.bloque-leccion[data-bloque='markdown_text'] {
+  padding: 0.25rem 0 0.25rem 1.15rem;
+  border-left: 3px solid color-mix(in srgb, var(--acento-bloque) 55%, transparent);
+}
+.bloque-leccion[data-bloque='markdown_text']:nth-of-type(4n + 3) { --acento-bloque: var(--neon); }
+.bloque-leccion[data-bloque='markdown_text'] > div > p:first-of-type { font-size: 1.15em; color: color-mix(in srgb, var(--texto) 95%, #fff); }
+.bloque-leccion[data-bloque='markdown_text'] h2 { display: flex; align-items: center; gap: 0.6rem; }
+.bloque-leccion[data-bloque='markdown_text'] h2::before {
+  content: '';
+  width: 0.7rem;
+  height: 0.62rem;
+  flex-shrink: 0;
+  background: var(--acento-bloque);
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
+/* Gráficos: un marco con la esquina recortada que brilla al acercarse. */
+.bloque-leccion:is([data-bloque='pipeline'], [data-bloque='timeline'], [data-bloque='layers'], [data-bloque='step_by_step'],
+  [data-bloque='ui_tour'], [data-bloque='connection_flow'], [data-bloque='axis_gizmo'], [data-bloque='param_demo'],
+  [data-bloque='mesh_viewer'], [data-bloque='node_graph'], [data-bloque='compare'], [data-bloque='shortcuts']) > section {
+  background-image: linear-gradient(160deg, color-mix(in srgb, var(--acento-bloque) 9%, transparent), transparent 45%);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.bloque-leccion:is([data-bloque='pipeline'], [data-bloque='ui_tour'], [data-bloque='connection_flow'], [data-bloque='axis_gizmo'],
+  [data-bloque='param_demo'], [data-bloque='step_by_step']) > section:hover {
+  border-color: color-mix(in srgb, var(--acento-bloque) 45%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--acento-bloque) 18%, transparent), var(--sombra-flotante);
+}
+/* Pipeline: una flecha entre etapas cuando van en fila. */
+@media (min-width: 640px) {
+  .bloque-leccion[data-bloque='pipeline'] li + li::before {
+    content: '';
+    position: absolute;
+    left: -0.95rem;
+    top: 50%;
+    width: 0.9rem;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon));
+  }
+}
+/* Tarjetas de concepto: se levantan al pasar y el reverso tiene un brillo. */
+.bloque-leccion[data-bloque='concept_cards'] button > div { transition-timing-function: var(--curva-rebote); }
+.bloque-leccion[data-bloque='concept_cards'] button:hover > div:not([class*='rotateY']) { transform: translateY(-4px); }
+.bloque-leccion[data-bloque='concept_cards'] button:focus-visible { outline-offset: 4px; }
+/* Avisos: un borde que respira despacio (solo opacidad). */
+.bloque-leccion[data-bloque='callout'] > aside { position: relative; }
+.bloque-leccion[data-bloque='callout'] > aside::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--neon) 40%, transparent);
+  opacity: 0;
+  animation: aviso-respira 4.5s ease-in-out infinite;
+}
+@keyframes aviso-respira { 50% { opacity: 1; } }
+
+/* Barra de lectura: cuánto llevas de la lección (CSS puro con scroll(); sin soporte no aparece). */
+.lectura {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 40;
+  height: 3px;
+  pointer-events: none;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--amatista), var(--tema-acento, var(--neon)));
+}
+@supports (animation-timeline: scroll()) {
+  .lectura { animation: lectura linear both; animation-timeline: scroll(root); }
+}
+@keyframes lectura { to { transform: scaleX(1); } }
+
+/* Recorrido de pantalla (RecorridoPantalla.jsx). */
+.recorrido__dibujo { overflow: visible; }
+.recorrido__marco { fill: #18181b; stroke: var(--borde-fuerte); }
+.recorrido__caja { fill: rgb(255 255 255 / 0.04); stroke: rgb(255 255 255 / 0.12); transition: fill 0.35s ease, stroke 0.35s ease; }
+.recorrido__zona { transition: opacity 0.35s ease; }
+.recorrido__dibujo:has(.recorrido__zona--activa) .recorrido__zona:not(.recorrido__zona--activa) { opacity: 0.38; }
+.recorrido__zona--activa .recorrido__caja { fill: color-mix(in srgb, var(--neon) 12%, transparent); stroke: var(--neon); stroke-width: 1.5; }
+.recorrido__linea { fill: rgb(255 255 255 / 0.16); }
+.recorrido__linea-fuerte { fill: rgb(255 255 255 / 0.55); }
+.recorrido__sub { fill: rgb(255 255 255 / 0.07); stroke: rgb(255 255 255 / 0.1); }
+.recorrido__acento { fill: var(--amatista); }
+.recorrido__neon { fill: var(--neon); }
+.recorrido__neon-suave { fill: color-mix(in srgb, var(--neon) 55%, transparent); }
+.recorrido__naranja { fill: var(--blender); }
+.recorrido__verde { fill: #34d399; }
+.recorrido__ojo { fill: #121212; }
+.recorrido__anillo { fill: none; stroke: var(--neon); stroke-width: 3; stroke-dasharray: 46 70; }
+.recorrido__enlace { stroke: var(--neon); stroke-width: 2; stroke-dasharray: 3 3; animation: esc-ruta 1.6s linear infinite; }
+.recorrido__boton { fill: var(--amatista); }
+.recorrido__boton-texto { fill: #fff; font: 800 7px/1 'JetBrains Mono Variable', 'JetBrains Mono respaldo', monospace; letter-spacing: 0.08em; }
+.recorrido__zona:is(:has(.recorrido__boton-texto)) .recorrido__caja { fill: var(--amatista); }
+.recorrido__mini { fill: rgb(255 255 255 / 0.75); font: 700 8px/1 'JetBrains Mono Variable', 'JetBrains Mono respaldo', monospace; }
+.recorrido__opcion-bien { fill: color-mix(in srgb, #34d399 25%, transparent); stroke: #34d399; }
+.recorrido__rejilla { stroke: rgb(255 255 255 / 0.06); }
+.recorrido__eje-x { stroke: #ff3352; stroke-width: 1.2; opacity: 0.8; }
+.recorrido__eje-y { stroke: #8bdc00; stroke-width: 1.2; opacity: 0.8; }
+.recorrido__cubo-arriba { fill: #8c8c92; }
+.recorrido__cubo-lado { fill: #5b5b61; }
+.recorrido__cubo-frente { fill: #727278; }
+.recorrido__molde polygon { fill: color-mix(in srgb, var(--neon) 14%, transparent); stroke: var(--neon); stroke-dasharray: 3 2; }
+.recorrido__franja { fill: color-mix(in srgb, var(--amatista) 45%, #121212); }
+.recorrido__tecla { fill: #2a2a30; stroke: rgb(255 255 255 / 0.35); }
+.recorrido__marca { cursor: pointer; }
+.recorrido__marca circle { fill: #2a2a30; stroke: rgb(255 255 255 / 0.5); stroke-width: 1.2; transition: fill 0.25s ease; }
+.recorrido__marca text { fill: #fff; font: 800 9px/1 'JetBrains Mono Variable', 'JetBrains Mono respaldo', monospace; pointer-events: none; }
+.recorrido__marca--vista circle { fill: color-mix(in srgb, #34d399 55%, #121212); }
+.recorrido__marca--activa circle { fill: var(--neon); stroke: #fff; }
+.recorrido__marca--activa text { fill: #121212; }
+.recorrido__marca .recorrido__onda { fill: none; stroke: var(--neon); stroke-width: 2; animation: esc-anillo 1.8s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+
+/* Quién le habla a quién (FlujoConexion.jsx). */
+.flujo__ruta { fill: none; stroke: rgb(255 255 255 / 0.14); stroke-width: 1.5; stroke-dasharray: 4 4; transition: stroke 0.3s ease; }
+.flujo__ruta--activa { stroke: var(--neon); stroke-width: 2.2; animation: esc-ruta 1.2s linear infinite; }
+.flujo__punta { fill: var(--neon); }
+.flujo__paquete-luz { fill: var(--neon); filter: drop-shadow(0 0 4px var(--neon)); }
+.flujo__hexagono { fill: #232328; stroke: rgb(255 255 255 / 0.2); stroke-width: 1.5; transition: fill 0.3s ease, stroke 0.3s ease; }
+.flujo__nodo--activo .flujo__hexagono { fill: color-mix(in srgb, var(--amatista) 35%, #1a1a1e); stroke: var(--amatista-claro); }
+.flujo__icono { fill: none; stroke: rgb(255 255 255 / 0.85); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.flujo__icono-relleno { fill: var(--neon); stroke: none; }
+.flujo__nombre { fill: rgb(255 255 255 / 0.75); font: 700 9px/1 'JetBrains Mono Variable', 'JetBrains Mono respaldo', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
+.flujo__nodo--activo .flujo__nombre { fill: #fff; }
+
+/* Ejes que se giran (GizmoEjes.jsx): los colores de los ejes de Blender. */
+.gizmo__lienzo { cursor: grab; }
+.gizmo__lienzo:active { cursor: grabbing; }
+.gizmo__fondo { fill: #26262a; stroke: rgb(255 255 255 / 0.08); }
+.gizmo__arista { stroke: rgb(255 255 255 / 0.35); stroke-width: 1.2; }
+.gizmo__eje { stroke-width: 3; stroke-linecap: round; }
+.gizmo__negativo { stroke-width: 1.5; stroke-dasharray: 3 3; opacity: 0.45; }
+.gizmo__x { stroke: #ff3352; fill: #ff3352; }
+.gizmo__y { stroke: #8bdc00; fill: #8bdc00; }
+.gizmo__z { stroke: #2890ff; fill: #2890ff; }
+.gizmo__bola { stroke: none; }
+.gizmo__letra { fill: #121212; stroke: none; font: 800 11px/1 'JetBrains Mono Variable', 'JetBrains Mono respaldo', monospace; pointer-events: none; }
+.gizmo__ayuda { fill: rgb(255 255 255 / 0.4); font: 600 8px/1 'JetBrains Mono Variable', 'JetBrains Mono respaldo', monospace; letter-spacing: 0.15em; text-transform: uppercase; }
+
+/* Demo con control (DemoParametro.jsx). */
+.demo__lienzo { background: #1f1f23; box-shadow: inset 0 0 0 1px var(--borde); }
+.demo__rejilla { fill: none; stroke: rgb(255 255 255 / 0.05); }
+.demo__original { fill: color-mix(in srgb, var(--blender) 55%, #2a2a2f); stroke: #ffb27a; stroke-width: 1.5; stroke-linejoin: round; transition: all 0.25s var(--curva-salida); }
+.demo__copia { fill: color-mix(in srgb, var(--neon) 18%, #2a2a2f); stroke: var(--neon); stroke-width: 1.2; stroke-dasharray: 3 2; stroke-linejoin: round; }
+.demo__guia { fill: none; stroke: rgb(255 255 255 / 0.25); stroke-dasharray: 4 4; }
+.demo__eje { stroke: #8bdc00; stroke-width: 1.5; stroke-dasharray: 6 4; }
+.demo__control { fill: #fff; stroke: var(--blender); stroke-width: 2; }
+.demo__suelo { stroke: rgb(255 255 255 / 0.3); stroke-width: 1.5; }
+.demo__sombra { fill: rgb(0 0 0 / 0.55); }
+.demo__rayo { stroke: #ffe58a; stroke-width: 1; stroke-dasharray: 2 3; opacity: 0.7; }
+.demo__luz { fill: #ffd84a; }
+.demo__halo { fill: #ffd84a; opacity: 0.22; }
+.demo__valor { font-variant-numeric: tabular-nums; }
+.demo input.demo__control {
+  appearance: none;
+  height: 8px;
+  border-radius: 999px;
+  fill: none;
+  stroke: none;
+  background: linear-gradient(90deg, var(--blender) var(--relleno, 50%), rgb(255 255 255 / 0.12) var(--relleno, 50%));
+  cursor: pointer;
+}
+.demo input.demo__control::-webkit-slider-thumb {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--blender);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.5);
+}
+.demo input.demo__control::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--blender);
+}
+
+/* Primeros pasos en vivo (RecorridoBlender.jsx): el punto que late mientras Blender habla. */
+.recorrido-vivo__latido { box-shadow: 0 0 0 0 var(--neon); animation: latido-enlace 1.8s ease-out infinite; }
+@keyframes latido-enlace {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--neon) 70%, transparent); }
+  100% { box-shadow: 0 0 0 9px transparent; }
+}
+
+/* ¿Verdad o mito?: los botones crecen un poco al pasar. */
+.verdad__boton { transition: transform 0.2s var(--curva-rebote), background-color 0.2s ease; }
+.verdad__boton:not(:disabled):hover { transform: translateY(-2px); }
+
+/* ===================================================================
    v3.6 · Pantallas y condiciones difíciles
    =================================================================== */
 
@@ -861,7 +1059,7 @@ button:not(:disabled):active, a.corte-poly-sm:active { transform: translateY(1px
 @media (forced-colors: active) {
   .corte-poly, .corte-poly-sm, .hexagono, .globo, .visor-malla__modo { clip-path: none; }
   .corte-poly, .corte-poly-sm { border: 1px solid CanvasText; }
-  .mundo-tema, .fondo-pesado { display: none; }
+  .mundo-tema, .fondo-pesado, .lectura { display: none; }
   .visor-malla__modo[aria-checked='true'], .visor-malla__modo[aria-pressed='true'] { outline: 2px solid Highlight; }
 }
 
@@ -870,7 +1068,7 @@ button:not(:disabled):active, a.corte-poly-sm:active { transform: translateY(1px
 @media print {
   :root { --fondo: #fff; --superficie: #fff; --texto: #000; --texto-suave: #333; --borde: #999; }
   html, body { background: #fff !important; color: #000 !important; }
-  header.sticky, .companero, .mundo-tema, .fondo-pesado, .particula, .paseo, [role='toolbar'] { display: none !important; }
+  header.sticky, .companero, .mundo-tema, .lectura, .fondo-pesado, .particula, .paseo, [role='toolbar'] { display: none !important; }
   * { animation: none !important; transition: none !important; box-shadow: none !important; text-shadow: none !important; }
   [class*='text-white'], [class*='text-texto'], [class*='text-neon'], [class*='text-amatista'] { color: #000 !important; }
   [class*='bg-'] { background: transparent !important; }
@@ -903,6 +1101,9 @@ html.ligero .elevar::before { display: none; }
 html.ligero .esqueleto::after, html.ligero .imagen-ligera::after { display: none; }
 html.ligero .imagen-ligera > img { transition: none; }
 html.ligero .nodos__enlace--activo { animation: none; stroke-dasharray: none; }
+html.ligero .flujo__ruta--activa, html.ligero .recorrido__enlace, html.ligero .recorrido-vivo__latido,
+html.ligero .bloque-leccion[data-bloque='callout'] > aside::after, html.ligero .lectura { animation: none; }
+html.ligero .recorrido__onda, html.ligero .flujo__paquete { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .animar-flotar, .animar-pulso, .animar-entrar, .animar-sacudir, .animar-acierto,
@@ -920,5 +1121,7 @@ html.ligero .nodos__enlace--activo { animation: none; stroke-dasharray: none; }
   .elevar:hover, .elevar:focus-within { transform: none; }
   .esqueleto::after, .imagen-ligera::after { display: none; }
   .nodos__enlace--activo { animation: none; stroke-dasharray: none; }
+  .flujo__ruta--activa, .recorrido__enlace, .recorrido-vivo__latido, .bloque-leccion[data-bloque='callout'] > aside::after { animation: none; }
+  .recorrido__onda, .flujo__paquete { display: none; }
   * { transition-duration: 0.01ms !important; }
 }
