@@ -102,6 +102,11 @@ export const ordenarTaller = (token, tipo, { taller, actividad, habilidad } = {}
     },
   });
 
+// Primeros pasos dentro de Blender (add-on 5.1, recorrido.py): la lección del curso «Primeros
+// pasos» lo empieza y lo avanza desde aquí. accion: empezar · siguiente · anterior · salir.
+export const ordenarRecorrido = (token, accion) =>
+  pedirJSON(`${BASE}/ordenes`, { metodo: "POST", token, cuerpo: { tipo: "recorrido", accion } });
+
 export const leerAjustesBlender = (token) => pedirJSON(`${BASE}/ajustes`, { token });
 
 export const guardarAjustesBlender = (token, cambios) =>

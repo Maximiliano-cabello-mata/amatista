@@ -12,6 +12,10 @@ export const TIPOS_INTERACTIVOS = [
   'blender_practice',
   // Motor 5: el taller de habilidades del módulo. Se resuelve cuando se abre el proyecto.
   'blender_taller',
+  // Recursos v3.7: cada tarjeta a su grupo, ¿verdad o mito? y los primeros pasos en Blender.
+  'classify',
+  'true_false',
+  'blender_tour',
 ];
 
 // La tarjeta del proyecto (blender_taller con vista «proyecto») solo informa: la
