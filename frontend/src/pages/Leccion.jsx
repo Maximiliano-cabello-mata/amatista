@@ -7,8 +7,7 @@ import Escenario from '../components/temas/Escenario';
 import CompaneroMascota from '../components/temas/CompaneroMascota';
 import MundoTema from '../components/temas/MundoTema';
 import { avisarMascota, temaDelModulo } from '../components/temas/temas';
-import LogoCurso from '../components/LogoCurso';
-import { logoDeCurso } from '../components/estiloCurso';
+import Migas from '../components/estructura/Migas';
 import { esPracticaBlender } from '../modulos/practica';
 import Figura from '../components/leccion/Figura';
 import { actividadesDe } from '../components/leccion/interactivos/logica';
@@ -238,9 +237,14 @@ function Leccion({ cursoId, leccionId }) {
       <MundoTema tema={tema} />
       {leccion.type !== 'exam' && <CompaneroMascota key={`${modulo.id}-${leccion.id}`} tema={tema} titulo={leccion.title} />}
       <nav className="mb-4 flex items-center justify-between gap-3 font-mono text-xs uppercase tracking-widest">
-        <a href={rutas.curso(curso.id)} className="inline-flex items-center gap-2 text-white/50 hover:text-neon">
-          ◂ <LogoCurso logo={logoDeCurso(curso)} className="h-4 w-5" /> {curso.titulo} · Módulo {numeroModulo}
-        </a>
+        <Migas
+          className="min-w-0"
+          items={[
+            { texto: 'Cursos', href: rutas.inicio },
+            { texto: curso.titulo, href: rutas.curso(curso.id) },
+            { texto: `Módulo ${numeroModulo}` },
+          ]}
+        />
         <span className="shrink-0 text-white/40">
           Lección {indice + 1} de {lecciones.length}
         </span>

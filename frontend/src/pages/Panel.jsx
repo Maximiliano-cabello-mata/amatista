@@ -5,6 +5,7 @@
 import { useMemo } from 'react';
 import { useAuth } from '../auth/contexto';
 import { useCatalogo } from '../catalogo/contexto';
+import Pagina from '../components/estructura/Pagina';
 import InvitacionRecorrido from '../components/InvitacionRecorrido';
 import ActividadPanel from '../components/panel/ActividadPanel';
 import BlenderPanel from '../components/panel/BlenderPanel';
@@ -50,7 +51,7 @@ function Panel() {
   const hayAvance = tieneAvance(progreso) || cuenta.insignias > 0;
 
   return (
-    <main className="mx-auto max-w-6xl px-4 pb-20 pt-6 sm:px-6 sm:pt-10">
+    <Pagina ancho="amplio" migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Mi panel' }]}>
       <EncabezadoPanel usuario={usuario} xp={xp} nivel={nivel} racha={racha} lecciones={cuenta.lecciones} hayAvance={hayAvance} actividad={progreso.actividad} hoy={hoy} />
 
       <InvitacionRecorrido className="mt-6" />
@@ -75,11 +76,7 @@ function Panel() {
         <LogrosPanel progreso={progreso} cursos={cursos} hoy={hoy} className="diferido diferido--corto lg:col-span-3" />
         <MuroInsignias progreso={progreso} cursos={cursos} className="diferido diferido--corto lg:col-span-3" />
       </div>
-
-      <a href={rutas.inicio} className="mt-10 inline-block font-mono text-xs uppercase tracking-widest text-white/50 hover:text-neon">
-        ◂ Volver a los cursos
-      </a>
-    </main>
+    </Pagina>
   );
 }
 

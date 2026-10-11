@@ -3,6 +3,8 @@
 // al final, respuestas cortas que se abren de a una (data/guia.js), sin candados ni preguntas.
 import { useState } from 'react';
 import FusionPlataformaBlender from '../components/blender/FusionPlataformaBlender';
+import Pagina from '../components/estructura/Pagina';
+import TituloSeccion from '../components/estructura/TituloSeccion';
 import { CristalLogo } from '../components/Iconos';
 import BloqueContenido from '../components/leccion/BloqueContenido';
 import { TEMAS_AYUDA } from '../data/guia';
@@ -49,59 +51,36 @@ function Guia() {
   const [abierto, setAbierto] = useState(null);
 
   return (
-    <main className="mx-auto max-w-4xl px-4 pb-24 pt-6 sm:px-6 sm:pt-10">
-      <a href={rutas.inicio} className="font-mono text-xs uppercase tracking-widest text-white/50 hover:text-neon">
-        ◂ Volver a los cursos
-      </a>
-
-      <header className="animar-entrar mt-5 flex flex-col gap-5 sm:flex-row sm:items-center">
-        <span className="hexagono grid h-20 w-24 shrink-0 place-items-center bg-amatista-oscuro">
-          <CristalLogo className="animar-flotar h-12 w-12" />
-        </span>
-        <div className="min-w-0">
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Ayuda</p>
-          <h1 className="mt-1 text-4xl font-extrabold leading-tight text-white">¿Cómo funciona Amatista?</h1>
-          <p className="mt-2 leading-relaxed text-texto/80">Todo lo que necesitas para empezar. No tienes que saber programar ni instalar nada raro.</p>
-        </div>
-      </header>
-
-      <section
-        className="corte-poly mt-8 bg-gradient-to-br from-neon/60 via-amatista to-blender/60 p-[2px]"
-        aria-labelledby="ayuda-recorrido"
-      >
-        <div className="corte-poly flex flex-col gap-5 bg-superficie/95 p-6 sm:flex-row sm:items-center sm:p-7">
-          <div className="min-w-0 flex-1">
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-neon">Un minuto</p>
-            <h2 id="ayuda-recorrido" className="mt-1 text-2xl font-extrabold text-white">
-              Recorre la plataforma conmigo
-            </h2>
-            <p className="mt-1 text-texto/80">
-              {TOTAL_RECORRIDO} paradas por las páginas de verdad: tus cursos, cómo avanzas, la página Blender y Mi panel. Te ilumino cada cosa y
-              te digo para qué sirve.
-            </p>
-          </div>
-          <button type="button" onClick={() => empezar(0)} className={`${BOTON} destello shrink-0 bg-neon text-base hover:brightness-110`}>
+    <Pagina
+      ancho="contenido"
+      migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Ayuda' }]}
+      encabezado={{
+        tono: 'neon',
+        icono: <CristalLogo className="animar-flotar h-12 w-12" />,
+        antetitulo: 'Ayuda',
+        titulo: '¿Cómo funciona Amatista?',
+        descripcion: `Todo lo que necesitas para empezar, sin saber programar. El recorrido te muestra la plataforma en ${TOTAL_RECORRIDO} paradas por las páginas de verdad.`,
+        acciones: (
+          <button type="button" onClick={() => empezar(0)} className={`${BOTON} destello bg-neon text-base hover:brightness-110`}>
             ▶ Empezar el recorrido
           </button>
-        </div>
-      </section>
-
+        ),
+      }}
+    >
       <div className="mt-8">
         <FusionPlataformaBlender resumida />
       </div>
 
-      <section className="mt-10" aria-labelledby="ayuda-preguntas">
-        <h2 id="ayuda-preguntas" className="text-2xl font-extrabold text-white">
-          Preguntas rápidas
-        </h2>
-        <ul className="mt-4 grid gap-3">
+      <section className="mt-12" aria-labelledby="ayuda-preguntas">
+        <TituloSeccion id="ayuda-preguntas" antetitulo="Respuestas cortas" titulo="Preguntas rápidas" />
+        <ul className="mt-5 grid gap-3">
           {TEMAS_AYUDA.map((tema) => (
             <Tema key={tema.id} tema={tema} abierto={abierto === tema.id} alAlternar={() => setAbierto(abierto === tema.id ? null : tema.id)} />
           ))}
         </ul>
       </section>
 
-      <nav className="mt-10 flex flex-col gap-3 sm:flex-row" aria-label="Ir a">
+      <nav className="mt-12 flex flex-col gap-3 sm:flex-row" aria-label="Ir a">
         <a href={rutas.inicio} className={`${BOTON} bg-amatista text-white hover:brightness-110`}>
           Cursos
         </a>
@@ -112,7 +91,7 @@ function Guia() {
           Mi panel
         </a>
       </nav>
-    </main>
+    </Pagina>
   );
 }
 

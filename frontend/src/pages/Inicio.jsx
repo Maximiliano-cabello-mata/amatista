@@ -4,6 +4,7 @@
 import { useAuth } from '../auth/contexto';
 import { useCatalogo } from '../catalogo/contexto';
 import { agruparPorRuta } from '../catalogo/agrupar';
+import TituloSeccion from '../components/estructura/TituloSeccion';
 import InvitacionRecorrido from '../components/InvitacionRecorrido';
 import { CristalLogo } from '../components/Iconos';
 import LogoCurso from '../components/LogoCurso';
@@ -85,6 +86,70 @@ function AccionesHero({ siguiente, hayAvance }) {
         Mi panel
       </a>
     </div>
+  );
+}
+
+// Así está organizada Amatista: los tres lugares de la barra, como áreas del producto.
+const LUGARES = [
+  {
+    id: 'cursos',
+    ante: 'Aprende la idea',
+    titulo: 'Cursos',
+    texto: 'Lecciones cortas e interactivas, ordenadas en niveles y módulos. Cada módulo cierra en Blender y con un jefe final.',
+    href: rutas.curso('blender'),
+    accion: 'Ver el curso de Blender',
+    tono: 'text-neon',
+  },
+  {
+    id: 'blender',
+    ante: 'Hazla en Blender',
+    titulo: 'Blender',
+    texto: 'Amatista Motor vive dentro de Blender, te guía paso a paso y le cuenta a la plataforma lo que haces, en vivo.',
+    href: rutas.blender,
+    accion: 'Conectar Blender',
+    tono: 'text-blender',
+  },
+  {
+    id: 'panel',
+    ante: 'Mira cómo avanzas',
+    titulo: 'Mi panel',
+    texto: 'Lo que sigue, tu nivel, tu racha, tus exámenes y tus insignias. Con cuenta, todo queda guardado en la nube.',
+    href: rutas.panel,
+    accion: 'Abrir Mi panel',
+    tono: 'text-amatista-claro',
+  },
+];
+
+function TresLugares() {
+  return (
+    <section className="revelar diferido mt-16" aria-labelledby="inicio-lugares">
+      <TituloSeccion
+        id="inicio-lugares"
+        className="mb-6"
+        antetitulo="Así está organizada"
+        titulo={
+          <>
+            Tres lugares, <span className="text-amatista-claro">un solo producto</span>
+          </>
+        }
+        descripcion="Todo lo que haces en Amatista está en uno de estos tres lugares, siempre arriba en la barra."
+      />
+      <ol className="grid gap-4 md:grid-cols-3">
+        {LUGARES.map((lugar, i) => (
+          <li key={lugar.id} className="borde-gema corte-poly elevar">
+            <a href={lugar.href} className="corte-poly group flex h-full flex-col p-5 sm:p-6">
+              <span className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.25em]">
+                <span className={lugar.tono}>{lugar.ante}</span>
+                <span className="text-white/30">0{i + 1}</span>
+              </span>
+              <span className="mt-2 text-2xl font-extrabold text-white">{lugar.titulo}</span>
+              <span className="mt-2 flex-1 text-sm leading-relaxed text-texto/75">{lugar.texto}</span>
+              <span className={`mt-4 font-mono text-xs font-bold uppercase tracking-widest ${lugar.tono} group-hover:underline`}>{lugar.accion} ▸</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
   );
 }
 
@@ -172,12 +237,20 @@ function Inicio() {
         ))}
       </ul>
 
+      <TresLugares />
+
       {/* Catálogo */}
       <section className="revelar diferido mt-16" aria-labelledby="inicio-cursos" data-recorrido="cursos">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Catálogo</p>
-        <h2 id="inicio-cursos" className="mb-6 text-3xl font-extrabold text-white sm:text-4xl">
-          Elige tu <span className="text-amatista-claro">curso</span>
-        </h2>
+        <TituloSeccion
+          id="inicio-cursos"
+          className="mb-6"
+          antetitulo="Catálogo"
+          titulo={
+            <>
+              Elige tu <span className="text-amatista-claro">curso</span>
+            </>
+          }
+        />
         {tarjetas.length ? (
           <div className="grid gap-6 md:grid-cols-2">
             {tarjetas.map((ruta, i) => (
@@ -191,27 +264,32 @@ function Inicio() {
 
       {/* Un mundo por módulo */}
       <section className="revelar diferido mt-16" aria-labelledby="inicio-mundos">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Un mundo por módulo</p>
-        <h2 id="inicio-mundos" className="mb-2 text-3xl font-extrabold text-white sm:text-4xl">
-          Cada módulo, una <span className="text-amatista-claro">aventura</span>
-        </h2>
-        <p className="mb-6 max-w-2xl text-texto/75">
-          Un escenario distinto, un guía que te da consejos y datos curiosos, y un jefe final que pierde vida con cada respuesta
-          correcta.
-        </p>
+        <TituloSeccion
+          id="inicio-mundos"
+          className="mb-6"
+          antetitulo="Un mundo por módulo"
+          titulo={
+            <>
+              Cada módulo, una <span className="text-amatista-claro">aventura</span>
+            </>
+          }
+          descripcion="Un escenario distinto, un guía que te da consejos y datos curiosos, y un jefe final que pierde vida con cada respuesta correcta."
+        />
         <MundosModulos cursos={cursos} />
       </section>
 
       {/* La fórmula Amatista */}
       <section className="revelar diferido mt-16" aria-labelledby="inicio-formula">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">El ciclo del cristal</p>
-        <h2 id="inicio-formula" className="text-3xl font-extrabold text-white sm:text-4xl">
-          Cómo aprendes en <span className="text-amatista-claro">Amatista</span>
-        </h2>
-        <p className="mt-3 max-w-2xl leading-relaxed text-texto/75">
-          Cada módulo sigue los mismos cinco pasos: una idea por lección, menos de diez minutos y siempre algo que hacer con
-          tus manos.
-        </p>
+        <TituloSeccion
+          id="inicio-formula"
+          antetitulo="El ciclo del cristal"
+          titulo={
+            <>
+              Cómo aprendes en <span className="text-amatista-claro">Amatista</span>
+            </>
+          }
+          descripcion="Cada módulo sigue los mismos cinco pasos: una idea por lección, menos de diez minutos y siempre algo que hacer con tus manos."
+        />
         <ol className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {FORMULA.map(({ paso, nombre, duracion, descripcion, Icono }, i) => (
             <li key={paso} className="revelar elevar corte-poly-sm relative flex gap-4 border border-white/10 bg-superficie/90 p-4 lg:flex-col lg:gap-3 lg:p-5">
@@ -263,35 +341,6 @@ function Inicio() {
           </div>
         </section>
       )}
-
-      <footer className="mt-16 flex flex-col gap-4 border-t border-white/5 pt-6 font-mono text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
-        <span className="flex flex-wrap items-center gap-2">
-          <CristalLogo className="h-5 w-5" />
-          Amatista · plataforma offline-first de creación 3D
-          <span className="ml-1 inline-flex items-center gap-2 border-l border-white/10 pl-3">
-            con <LogoCurso logo="blender" className="h-4 w-5" decorativo={false} /> y <LogoCurso logo="aframe" className="h-4 w-5" decorativo={false} />
-          </span>
-        </span>
-        <nav aria-label="Enlaces del pie">
-          <ul className="flex flex-wrap gap-x-5 gap-y-2 uppercase tracking-widest">
-            <li>
-              <a href={rutas.panel} className="hover:text-neon">
-                Mi panel
-              </a>
-            </li>
-            <li>
-              <a href={rutas.guia} className="hover:text-neon">
-                Guía
-              </a>
-            </li>
-            <li>
-              <a href={usuario ? rutas.perfil : rutas.entrar} className="hover:text-neon">
-                {usuario ? 'Mi cuenta' : 'Entrar'}
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </footer>
     </main>
   );
 }

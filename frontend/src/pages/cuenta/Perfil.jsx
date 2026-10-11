@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../../auth/contexto';
 import { validarNombre, validarPassword, validarPasswordNueva, validarTelefono } from '../../auth/validacion';
 import EstadoGuardado from '../../components/EstadoGuardado';
+import Pagina from '../../components/estructura/Pagina';
 import { useProgreso } from '../../progreso/contexto';
 import { navegar, rutaEntrar, rutas } from '../../rutas';
 import { Alerta, BotonEnviar, Campo, CampoPassword, CLASE_ENLACE, PaginaCuenta } from './Formulario';
@@ -241,13 +242,17 @@ function Perfil() {
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-4 pb-20 pt-8 sm:px-6 sm:pt-12">
-      <header className="animar-entrar mb-8">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Tu cuenta</p>
-        <h1 className="text-4xl font-extrabold text-white">{usuario.nombre || 'Perfil'}</h1>
-      </header>
-
-      <div className="grid gap-6">
+    <Pagina
+      ancho="lectura"
+      migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Mi cuenta' }]}
+      encabezado={{
+        icono: <span className="text-4xl font-extrabold text-white">{(usuario.nombre || usuario.email || '?').trim().charAt(0).toUpperCase()}</span>,
+        antetitulo: 'Tu cuenta',
+        titulo: usuario.nombre || 'Perfil',
+        descripcion: usuario.email,
+      }}
+    >
+      <div className="mt-8 grid gap-6">
         <Seccion id="perfil-datos" titulo="Datos de la cuenta">
           <dl className="grid gap-3 text-sm sm:grid-cols-2">
             <div>
@@ -294,7 +299,7 @@ function Perfil() {
           <CerrarSesiones />
         </Seccion>
       </div>
-    </main>
+    </Pagina>
   );
 }
 

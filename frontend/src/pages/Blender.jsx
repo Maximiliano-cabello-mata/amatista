@@ -21,6 +21,8 @@ import {
 } from '../blender/logica';
 import ConoceAmatistaMotor from '../components/blender/ConoceAmatistaMotor';
 import FusionPlataformaBlender from '../components/blender/FusionPlataformaBlender';
+import Pagina from '../components/estructura/Pagina';
+import TituloSeccion from '../components/estructura/TituloSeccion';
 import { CristalLogo } from '../components/Iconos';
 import { useConexion } from '../hooks/useConexion';
 import { Alerta } from './cuenta/Formulario';
@@ -457,12 +459,9 @@ function Instalar({ token, usuario }) {
 
 function Etapa({ numero, titulo, children, id, recorrido }) {
   return (
-    <section className="mt-10" aria-labelledby={id} data-recorrido={recorrido}>
-      <h2 id={id} className="flex items-center gap-3 text-xl font-extrabold text-white sm:text-2xl">
-        <span className="hexagono grid h-9 w-10 shrink-0 place-items-center bg-white/10 font-mono text-sm text-white">{numero}</span>
-        {titulo}
-      </h2>
-      <div className="mt-4">{children}</div>
+    <section className="mt-12" aria-labelledby={id} data-recorrido={recorrido}>
+      <TituloSeccion id={id} antetitulo={`Paso ${numero}`} titulo={titulo} />
+      <div className="mt-5">{children}</div>
     </section>
   );
 }
@@ -475,18 +474,16 @@ function Blender() {
   const progreso = usuario ? { instalado: conexion.vinculado, vinculado: conexion.vinculado, abierto: conexion.abierto } : null;
 
   return (
-    <main className="mx-auto max-w-5xl px-4 pb-20 pt-6 sm:px-6 sm:pt-10">
-      <header className="corte-poly animar-entrar bg-gradient-to-br from-amatista via-amatista-oscuro to-blender/50 p-[2px]">
-        <div className="corte-poly flex flex-col gap-5 bg-superficie/95 p-6 sm:flex-row sm:items-center sm:p-8">
-          <CristalLogo className="animar-flotar h-16 w-16 shrink-0" />
-          <div className="min-w-0">
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-blender">{NOMBRE_MOTOR} para Blender</p>
-            <h1 className="mt-1 text-3xl font-extrabold leading-tight text-white sm:text-4xl">Blender, con Amatista a tu lado</h1>
-            <p className="mt-2 max-w-2xl leading-relaxed text-texto/80">
-              Aquí está todo lo que une la plataforma con tu Blender: cómo funciona, la instalación, las prácticas que te enseñan el add-on y
-              tus ajustes.
-            </p>
-            {usuario && conexion.cargado && (
+    <Pagina
+      ancho="contenido"
+      migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Blender' }]}
+      encabezado={{
+        tono: 'blender',
+        icono: <CristalLogo className="animar-flotar h-12 w-12" />,
+        antetitulo: `${NOMBRE_MOTOR} para Blender`,
+        titulo: 'Blender, con Amatista a tu lado',
+        descripcion: 'Aquí está todo lo que une la plataforma con tu Blender: cómo funciona, la instalación, las prácticas que te enseñan el add-on y tus ajustes.',
+        children: usuario && conexion.cargado && (
               <p className="mt-3 flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-widest">
                 <span className={`corte-poly-sm px-2.5 py-1 ${conexion.vinculado ? 'bg-emerald-400/15 text-emerald-300' : 'bg-white/5 text-white/55'}`}>
                   {conexion.vinculado ? '✓ Blender vinculado' : '○ Blender sin vincular'}
@@ -495,10 +492,9 @@ function Blender() {
                   {conexion.abierto ? '● Blender abierto ahora' : '○ Blender cerrado'}
                 </span>
               </p>
-            )}
-          </div>
-        </div>
-      </header>
+        ),
+      }}
+    >
 
       {!enLinea && (
         <div className="mt-6">
@@ -546,7 +542,7 @@ function Blender() {
           <Practicas token={token} />
         </div>
       </Etapa>
-    </main>
+    </Pagina>
   );
 }
 

@@ -14,6 +14,7 @@ import Etiqueta, { Etiquetas } from '../components/etiquetas/Etiqueta';
 import { etiquetaLeccion, etiquetasModulo } from '../components/etiquetas/catalogo';
 import { ACENTOS } from '../components/estiloCurso';
 import { CristalLogo, IconoCandado } from '../components/Iconos';
+import Pagina from '../components/estructura/Pagina';
 import LogoCurso from '../components/LogoCurso';
 import EstacionBlender from '../components/modulo/EstacionBlender';
 import RutaModulo from '../components/modulo/RutaModulo';
@@ -421,22 +422,24 @@ function Curso({ cursoId }) {
   const conBlender = ruta.id === 'blender';
 
   return (
-    <main className="mx-auto max-w-4xl px-4 pb-20 pt-6 sm:px-6 sm:pt-10">
-      <a href={rutas.inicio} className="font-mono text-xs uppercase tracking-widest text-white/50 hover:text-neon">
-        ◂ Todos los cursos
-      </a>
-
-      <header className="animar-entrar mt-5 flex flex-col gap-6 sm:flex-row sm:items-center">
-        <div className="hexagono grid h-28 w-28 shrink-0 place-items-center bg-superficie">
-          <LogoCurso logo={ruta.logo} className="animar-flotar h-16 w-20" decorativo={false} />
-        </div>
-        <div className="min-w-0 flex-1">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-white/50">
-            Curso {ruta.numero}
-            {varios ? ` · ${ruta.niveles.length} niveles` : ''}
-          </p>
-          <h1 className="text-4xl font-extrabold text-white sm:text-5xl">{ruta.titulo}</h1>
-          <p className={`text-lg font-medium ${acento.texto}`}>{ruta.subtitulo}</p>
+    <Pagina
+      ancho="contenido"
+      migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Cursos', href: rutas.inicio }, { texto: ruta.titulo }]}
+      encabezado={{
+        tono: conBlender ? 'blender' : 'neon',
+        icono: <LogoCurso logo={ruta.logo} className="animar-flotar h-12 w-14" decorativo={false} />,
+        antetitulo: `Curso ${ruta.numero}${varios ? ` · ${ruta.niveles.length} niveles` : ''}`,
+        titulo: ruta.titulo,
+        descripcion: <p className={`text-lg font-medium ${acento.texto}`}>{ruta.subtitulo}</p>,
+        acciones: siguiente && !bloqueado && (
+          <a
+            href={rutas.leccion(nivel.id, siguiente.leccion.id)}
+            className={`corte-poly-sm destello px-6 py-3 text-center font-extrabold uppercase tracking-widest text-base hover:brightness-110 ${acento.fondo}`}
+          >
+            ▶ {resumenNivel.completadas ? 'Continuar' : 'Comenzar'}
+          </a>
+        ),
+        children: (
           <div className="mt-4 max-w-md">
             <div className="mb-1.5 flex justify-between font-mono text-[11px] uppercase tracking-wider text-white/50">
               <span>Todo el curso</span>
@@ -455,17 +458,9 @@ function Curso({ cursoId }) {
               <div className={`relleno ${acento.fondo}`} style={{ width: `${resumen.porcentaje}%` }} />
             </div>
           </div>
-        </div>
-        {siguiente && !bloqueado && (
-          <a
-            href={rutas.leccion(nivel.id, siguiente.leccion.id)}
-            className={`corte-poly-sm destello shrink-0 px-6 py-3 text-center font-extrabold uppercase tracking-widest text-base hover:brightness-110 ${acento.fondo}`}
-          >
-            ▶ {resumenNivel.completadas ? 'Continuar' : 'Comenzar'}
-          </a>
-        )}
-      </header>
-
+        ),
+      }}
+    >
       <p className="mt-6 max-w-3xl leading-relaxed text-texto/80">{ruta.descripcion}</p>
 
       {varios && <ArbolNiveles ruta={ruta} elegido={nivel} progreso={progreso} acento={acento} />}
@@ -528,7 +523,7 @@ function Curso({ cursoId }) {
           </a>
         )}
       </div>
-    </main>
+    </Pagina>
   );
 }
 
