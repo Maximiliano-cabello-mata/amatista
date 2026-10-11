@@ -17,7 +17,7 @@ Amatista sigue siendo una PWA: se instala y funciona sin conexión, así que su 
 
 | Medida | Estado |
 |---|---|
-| Código compilado y minificado: nombres cortos, sin espacios, sin comentarios, sin licencias ni autores incrustados | Hecho (`vite build`, `esbuild.legalComments: 'none'`) |
+| Código compilado y minificado: nombres cortos, sin espacios, sin comentarios, sin licencias ni autores incrustados | Hecho (`vite build`, `build.rolldownOptions.output.comments: false`; desde Vite 8 `esbuild.legalComments` se ignoraba) |
 | **Sin mapas de fuente**: el navegador no puede reconstruir los archivos originales de `src/` | Hecho (`build.sourcemap: false`) |
 | Revisión automática en cada build (`npm run build` → `scripts/revisar-publicacion.mjs`): falla si aparecen mapas de fuente, rutas de la computadora, comentarios de desarrollo o algo que parezca un secreto | Hecho; corre también en CI y en Cloudflare Pages |
 | Ningún secreto en la PWA: contraseñas, llaves y el secreto de firma viven solo en el servidor | Revisado |
