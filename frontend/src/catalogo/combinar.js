@@ -60,6 +60,12 @@ const textoNumero = (valor, respaldo) => {
   return /^\d+$/.test(String(valor)) ? String(valor).padStart(2, '0') : String(valor);
 };
 
+// Cursos retirados que el servidor puede seguir enviando (su progreso se conserva en la base):
+// «blender» (v2, hasta correr sql/009) y «primeros_pasos» (v3.7, reemplazado el 11 de octubre por el
+// recorrido de la plataforma y las prácticas del add-on). CatalogoProvider los quita del catálogo.
+export const CURSOS_ARCHIVADOS = ['blender', 'primeros_pasos'];
+export const sinArchivados = (cursos) => cursos.filter((curso) => !CURSOS_ARCHIVADOS.includes(curso.id));
+
 const listaDe = (catalogo) => (Array.isArray(catalogo) ? catalogo : catalogo?.cursos ?? []);
 
 // app y servidor: listas de cursos (o catálogos {cursos}). Devuelve la lista

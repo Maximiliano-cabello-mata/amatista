@@ -3,7 +3,7 @@ import { buscarCurso as buscarEn, cursos as cursosApp } from '../data/cursos';
 import { useConexion } from '../hooks/useConexion';
 import { guardar, leer } from '../lib/almacen';
 import { descargarCatalogo, sincronizacionDisponible } from '../services/api';
-import { combinarCatalogos } from './combinar';
+import { combinarCatalogos, sinArchivados } from './combinar';
 import { ContextoCatalogo } from './contexto';
 
 const CLAVE = 'catalogo';
@@ -60,7 +60,7 @@ function CatalogoProvider({ children }) {
   }, [cargado, enLinea, actualizar]);
 
   const valor = useMemo(() => {
-    const cursos = servidor ? combinarCatalogos(cursosApp, servidor.cursos) : cursosApp;
+    const cursos = sinArchivados(servidor ? combinarCatalogos(cursosApp, servidor.cursos) : cursosApp);
     return {
       cursos,
       version: servidor?.version ?? 'app',

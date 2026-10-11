@@ -1,10 +1,11 @@
 // Un curso por tarjeta (v3.2): los cursos de una misma ruta (campo `ruta`,
 // sql/008 CURSOS.RUTA) se muestran juntos. La ruta «blender» es una sola
-// tarjeta «Blender» y dentro se ramifica en sus niveles: Primeros pasos (v3.7,
-// `introduccion: true`), Principiante, Principiante-Intermedio, Intermedio y Avanzado. Cada nivel sigue siendo un
+// tarjeta «Blender» y dentro se ramifica en sus niveles: Principiante,
+// Principiante-Intermedio, Intermedio y Avanzado. Cada nivel sigue siendo un
 // curso con su id (el progreso, el servidor y el motor no cambian).
 // Funciones puras: pruebas en agrupar.test.js.
 import { resumenCurso } from '../progreso/reglas';
+import { CURSOS_ARCHIVADOS } from './combinar';
 
 // Datos de cada ruta para su tarjeta. Una ruta que no esté aquí toma los del
 // primer curso que la compone.
@@ -29,9 +30,8 @@ export const RUTAS = {
   },
 };
 
-// Cursos retirados que el servidor puede seguir enviando hasta correr sql/009:
-// no se muestran como nivel (su progreso se conserva).
-export const CURSOS_ARCHIVADOS = ['blender'];
+// Cursos retirados (catalogo/combinar.js ya los quita; aquí por si llega una lista sin combinar).
+export { CURSOS_ARCHIVADOS };
 
 const rutaDe = (curso) => curso.ruta || curso.id;
 
@@ -77,26 +77,19 @@ export function buscarRuta(cursos, id) {
 
 // Avance de toda la ruta: suma de sus niveles disponibles, el nivel en curso
 // (el primero con lecciones pendientes) y cuántos niveles están terminados.
-// El curso de introducción (Primeros pasos) solo es el «nivel en curso» de quien
-// todavía no empezó otro nivel: a quien ya avanzaba no le cambia nada.
 export function resumenRuta(progreso, ruta) {
   let total = 0;
   let completadas = 0;
   let enCurso = null;
-  let introduccion = null;
-  let avanzoOtro = false;
   let terminados = 0;
   for (const curso of ruta.niveles) {
     if (curso.estado === 'bloqueado') continue;
     const resumen = resumenCurso(progreso, curso);
     total += resumen.total;
     completadas += resumen.completadas;
-    if (!curso.introduccion && resumen.completadas > 0) avanzoOtro = true;
     if (resumen.total > 0 && resumen.completadas === resumen.total) terminados += 1;
-    else if (curso.introduccion && resumen.total > 0) introduccion = { curso, resumen };
     else if (!enCurso && resumen.total > 0) enCurso = { curso, resumen };
   }
-  if (introduccion && !avanzoOtro) enCurso = introduccion;
   return {
     total,
     completadas,
