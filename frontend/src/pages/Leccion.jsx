@@ -86,17 +86,24 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, res
 
   return (
     <>
+      <div className="lectura" aria-hidden="true" />
       <div className="space-y-8">
         {bloques.map((bloque, i) => {
           const actividad = porIndice.get(i);
           if (!actividad)
             return (
-              <div key={i} className="revelar">
+              <div key={i} className="bloque-leccion revelar" data-bloque={bloque.type}>
                 <BloqueContenido bloque={bloque} />
               </div>
             );
           return (
-            <div key={actividad.clave} id={`actividad-${actividad.clave}`} tabIndex={-1} className="revelar scroll-mt-24 outline-none">
+            <div
+              key={actividad.clave}
+              id={`actividad-${actividad.clave}`}
+              tabIndex={-1}
+              data-bloque={bloque.type}
+              className="bloque-leccion revelar scroll-mt-24 outline-none"
+            >
               <BloqueContenido
                 bloque={bloque}
                 resuelta={resueltas.has(actividad.clave)}

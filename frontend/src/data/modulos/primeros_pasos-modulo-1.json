@@ -1,0 +1,800 @@
+{
+  "module": {
+    "id": "mod_pp_001",
+    "title": "Módulo 1: La estación del enlace",
+    "slug": "pp-modulo-1-estacion-del-enlace",
+    "description": "Antes del primer cubo: aprende cómo funciona la plataforma, qué hace el add-on de Amatista dentro de Blender y cómo se conectan los dos. Terminas con tus primeros pasos en Blender, vistos en vivo desde la lección.",
+    "estimatedTimeMinutes": 30,
+    "order": 1,
+    "curso": "primeros_pasos",
+    "insignia": "Navegante de Amatista",
+    "estado": "publicado",
+    "tema": "estacion",
+    "lessons": [
+      {
+        "id": "pp1_plataforma",
+        "title": "Tu mapa de Amatista",
+        "slug": "tu-mapa-de-amatista",
+        "type": "theory_interactive",
+        "durationSeconds": 240,
+        "isLocked": false,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Reconocer las partes de la plataforma y saber dónde está siempre el siguiente paso.",
+          "habilidades": [
+            "pp-plataforma"
+          ],
+          "prerrequisitos": [],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Señalar dónde están Continuar, Cursos, Mi panel y Mi Blender.",
+            "Distinguir mitos de verdades sobre cómo se guarda el avance."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Bienvenido a la estación\nAmatista tiene **dos ventanas que trabajan juntas**: esta plataforma, donde aprendes la idea, y **Blender**, donde la haces con tus manos. En este curso corto conoces las dos y cómo se hablan entre ellas.\n\nEmpecemos por la plataforma. Recorre el dibujo parada por parada: cada número ilumina una zona."
+          },
+          {
+            "type": "ui_tour",
+            "screen": "plataforma",
+            "title": "Recorrido · la portada",
+            "stops": [
+              {
+                "area": "continuar",
+                "title": "▶ Continuar",
+                "text": "Tu botón de siempre: te lleva directo a la lección que te toca. Si te pierdes, búscalo."
+              },
+              {
+                "area": "cursos",
+                "title": "Cursos",
+                "text": "Cada tarjeta es un curso. **Blender** se abre en niveles: Primeros pasos, Principiante, Principiante-Intermedio e Intermedio."
+              },
+              {
+                "area": "avance",
+                "title": "Tu avance",
+                "text": "Arriba a la derecha ves tu **XP**, tu nivel y tu **racha** de días seguidos."
+              },
+              {
+                "area": "panel",
+                "title": "Mi panel",
+                "text": "Tu resumen: qué sigue, tus exámenes, tus insignias y tus retos del día."
+              },
+              {
+                "area": "blender",
+                "title": "Mi Blender",
+                "text": "Aquí descargas **Amatista Motor** (el add-on), vinculas tu Blender y eliges cómo te acompaña."
+              },
+              {
+                "area": "ayuda",
+                "title": "El botón «?»",
+                "text": "Abre la guía rápida cuando quieras repasar cómo funciona todo."
+              },
+              {
+                "area": "barra",
+                "title": "La barra de arriba",
+                "text": "Siempre visible: te lleva a Cursos, Mi panel y Blender, y dice si estás **en línea**."
+              }
+            ]
+          },
+          {
+            "type": "true_false",
+            "id": "vf_pp1_plataforma",
+            "title": "¿Verdad o mito?",
+            "statements": [
+              {
+                "text": "Necesito una cuenta para abrir la primera lección.",
+                "answer": false,
+                "explanation": "Puedes empezar sin cuenta: tu avance se guarda en este navegador y se suma a tu cuenta cuando la creas."
+              },
+              {
+                "text": "«▶ Continuar» siempre me lleva a la lección que me toca.",
+                "answer": true,
+                "explanation": "Es el atajo más corto: no tienes que recordar dónde ibas."
+              },
+              {
+                "text": "Sin Internet no puedo estudiar nada.",
+                "answer": false,
+                "explanation": "La teoría funciona sin conexión; tu avance viaja cuando vuelve la red."
+              },
+              {
+                "text": "Mi Blender se conecta desde «Mi Blender».",
+                "answer": true,
+                "explanation": "Ahí descargas el add-on y vinculas tu cuenta con un código."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "pp1_leccion",
+        "title": "Así se vive una lección",
+        "slug": "asi-se-vive-una-leccion",
+        "type": "theory_interactive",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Completar una lección sabiendo qué hacer en cada parte y qué pasa en Blender.",
+          "habilidades": [
+            "pp-leccion"
+          ],
+          "prerrequisitos": [
+            "pp1_plataforma"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Explicar cuándo se enciende «Completar lección».",
+            "Clasificar qué se hace en la plataforma y qué en Blender."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Una lección por dentro\nCada lección dura menos de diez minutos y siempre tiene **algo que hacer**. La primera línea, **«Qué hacer»**, te dice cómo se completa. Recorre una lección de ejemplo:"
+          },
+          {
+            "type": "ui_tour",
+            "screen": "leccion",
+            "title": "Recorrido · una lección",
+            "stops": [
+              {
+                "area": "titulo",
+                "title": "Título y tiempo",
+                "text": "Cuánto dura y de qué trata. Arriba también ves el módulo y su mundo."
+              },
+              {
+                "area": "quehacer",
+                "title": "Qué hacer",
+                "text": "Una línea que te dice exactamente cómo se completa esta lección."
+              },
+              {
+                "area": "teoria",
+                "title": "Teoría corta",
+                "text": "Poco texto y muchos gráficos: tarjetas, recorridos, ejes que giras, demos con controles."
+              },
+              {
+                "area": "actividad",
+                "title": "Actividades",
+                "text": "Preguntas, ordenar, emparejar, clasificar… Si fallas, la explicación te ayuda y vuelves a intentarlo."
+              },
+              {
+                "area": "hexagonos",
+                "title": "Los hexágonos",
+                "text": "Uno por actividad. Se ponen verdes al resolverlas."
+              },
+              {
+                "area": "completar",
+                "title": "Completar lección",
+                "text": "Se enciende cuando todos los hexágonos están verdes. Ganas **100 XP** y se abre la siguiente."
+              },
+              {
+                "area": "mascota",
+                "title": "La mascota del módulo",
+                "text": "Cada módulo tiene su guía. En este curso te acompaña **Bip**, la paloma mensajera de hojalata."
+              }
+            ]
+          },
+          {
+            "type": "pipeline",
+            "title": "Cómo aprendes cada habilidad en Blender",
+            "steps": [
+              {
+                "icon": "estudio",
+                "title": "Mira",
+                "text": "Amatista lo hace frente a ti, con las teclas en pantalla."
+              },
+              {
+                "icon": "modelar",
+                "title": "Hazlo conmigo",
+                "text": "Lo haces tú con una guía que se va retirando."
+              },
+              {
+                "icon": "reto",
+                "title": "Hazlo tú y úsalo",
+                "text": "Sin ayuda, y luego en un proyecto de verdad. Días después, «Recuérdalo» en un minuto."
+              }
+            ]
+          },
+          {
+            "type": "classify",
+            "id": "clasifica_pp1_donde",
+            "question": "¿Dónde pasa cada cosa?",
+            "groups": [
+              {
+                "id": "plataforma",
+                "label": "Plataforma"
+              },
+              {
+                "id": "blender",
+                "label": "Blender"
+              }
+            ],
+            "items": [
+              {
+                "text": "Leer la teoría y resolver actividades",
+                "group": "plataforma"
+              },
+              {
+                "text": "Mover un cubo con la tecla G",
+                "group": "blender"
+              },
+              {
+                "text": "Pelear contra el jefe final del módulo",
+                "group": "plataforma"
+              },
+              {
+                "text": "Ver el molde translúcido de la pieza que falta",
+                "group": "blender"
+              },
+              {
+                "text": "Ganar la insignia del módulo",
+                "group": "plataforma"
+              },
+              {
+                "text": "Pedir «Mírame» cuando te atoras modelando",
+                "group": "blender"
+              }
+            ],
+            "explanation": "La plataforma explica, comprueba y guarda tu avance; en Blender modelas. El add-on las conecta para que se sientan como una sola."
+          }
+        ]
+      },
+      {
+        "id": "pp1_addon",
+        "title": "El add-on: Amatista dentro de Blender",
+        "slug": "el-add-on-amatista-dentro-de-blender",
+        "type": "theory_interactive",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Reconocer en Blender la pestaña Amatista, la tarjeta de la vista 3D y el molde, y saber para qué sirven.",
+          "habilidades": [
+            "pp-addon",
+            "bl-interfaz"
+          ],
+          "prerrequisitos": [
+            "pp1_leccion"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Señalar dónde está la pestaña Amatista (N).",
+            "Explicar qué muestra la tarjeta y qué muestra el molde."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Amatista Motor, el add-on\nUn **add-on** es un complemento que se instala dentro de Blender. El de Amatista hace tres cosas:\n\n- **Te guía**: una tarjeta en la vista 3D te dice qué hacer ahora.\n- **Te revisa**: mira tu escena y te avisa cuando lo logras (sin decimales ni medidas imposibles al principio).\n- **Te conecta**: lo que haces en Blender aparece en la plataforma, en vivo."
+          },
+          {
+            "type": "ui_tour",
+            "screen": "blender",
+            "title": "Recorrido · Blender con Amatista",
+            "stops": [
+              {
+                "area": "vista3d",
+                "title": "La vista 3D",
+                "text": "El centro de Blender: aquí ves y mueves tus objetos. Orbitas con el botón central del ratón."
+              },
+              {
+                "area": "barra_n",
+                "title": "La pestaña Amatista",
+                "text": "Pulsa **N** con el ratón sobre la vista 3D: se abre la barra lateral. En la pestaña **Amatista** están tu cuenta, tu taller, «Mi isla» y «Abrir la plataforma»."
+              },
+              {
+                "area": "tarjeta",
+                "title": "La tarjeta de la actividad",
+                "text": "Abajo a la izquierda: lo que toca hacer ahora, sus teclas (que se encienden al usarlas) y tu avance."
+              },
+              {
+                "area": "molde",
+                "title": "El molde translúcido",
+                "text": "En los primeros niveles, una silueta transparente te muestra **dónde** va la pieza que falta. Se llena cuando la pieza encaja."
+              },
+              {
+                "area": "herramientas",
+                "title": "Barra de herramientas (T)",
+                "text": "En los niveles 1 y 2 Amatista deja a la vista solo las herramientas que la práctica necesita."
+              },
+              {
+                "area": "outliner",
+                "title": "Outliner",
+                "text": "La lista de todo lo que hay en la escena. Útil para encontrar una pieza perdida."
+              },
+              {
+                "area": "propiedades",
+                "title": "Propiedades",
+                "text": "Los detalles del objeto elegido: medidas, modificadores y materiales."
+              }
+            ]
+          },
+          {
+            "type": "axis_gizmo",
+            "title": "Antes de entrar: gira el espacio 3D",
+            "caption": "Prueba las teclas 1, 3 y 7: en Blender están en el teclado numérico y te llevan a esas mismas vistas."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "quiz_pp1_addon",
+            "question": "Estás en Blender y no ves la pestaña Amatista. ¿Qué haces?",
+            "options": [
+              {
+                "id": "opt_a",
+                "text": "Pulso N con el ratón sobre la vista 3D",
+                "isCorrect": true
+              },
+              {
+                "id": "opt_b",
+                "text": "Reinstalo Blender",
+                "isCorrect": false
+              },
+              {
+                "id": "opt_c",
+                "text": "Cierro la plataforma",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "N abre y cierra la barra lateral de la vista 3D; la pestaña Amatista vive ahí."
+          }
+        ]
+      },
+      {
+        "id": "pp1_enlace",
+        "title": "Cómo se hablan la plataforma y Blender",
+        "slug": "como-se-hablan-la-plataforma-y-blender",
+        "type": "theory_interactive",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Explicar cómo se vinculan Blender y la plataforma y qué viaja entre ellos.",
+          "habilidades": [
+            "pp-enlace"
+          ],
+          "prerrequisitos": [
+            "pp1_addon"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Ordenar los pasos para vincular Blender.",
+            "Decir quién hace qué: la plataforma, el servidor o Blender."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Una conexión, dos ventanas\nBlender y la plataforma no se hablan directo: los dos hablan con el **servidor de Amatista**, que guarda tu avance. Pulsa **▶ Ver en orden** y mira el viaje de cada mensaje."
+          },
+          {
+            "type": "connection_flow",
+            "title": "Así se hablan",
+            "nodes": [
+              {
+                "id": "plataforma",
+                "label": "Plataforma",
+                "icon": "plataforma"
+              },
+              {
+                "id": "servidor",
+                "label": "Servidor",
+                "icon": "servidor"
+              },
+              {
+                "id": "blender",
+                "label": "Blender",
+                "icon": "blender"
+              }
+            ],
+            "messages": [
+              {
+                "from": "blender",
+                "to": "servidor",
+                "label": "Pide un código",
+                "text": "Al pulsar **Vincular** en Blender aparece un código de 6 letras. Vale por 10 minutos."
+              },
+              {
+                "from": "plataforma",
+                "to": "servidor",
+                "label": "Confirma el código",
+                "text": "Escribes ese código en la plataforma (Mi Blender › Vincular). Desde ahí, ese Blender es tuyo."
+              },
+              {
+                "from": "blender",
+                "to": "servidor",
+                "label": "Latido",
+                "text": "Cada **5 segundos** Blender cuenta qué haces: la actividad, el paso y tu progreso."
+              },
+              {
+                "from": "servidor",
+                "to": "plataforma",
+                "label": "En vivo",
+                "text": "La lección pregunta por tu Blender y muestra **lo mismo que la tarjeta** de la vista 3D."
+              },
+              {
+                "from": "plataforma",
+                "to": "servidor",
+                "label": "Orden",
+                "text": "Pulsas «Abrir en Blender» o «Pista» en la lección: queda una orden esperando."
+              },
+              {
+                "from": "servidor",
+                "to": "blender",
+                "label": "La orden llega",
+                "text": "En el siguiente latido Blender la recibe y la cumple. Si un latido se pierde, la orden espera al siguiente."
+              },
+              {
+                "from": "blender",
+                "to": "servidor",
+                "label": "Tu avance",
+                "text": "Cada habilidad lograda se guarda en tu cuenta: la ves en Mi panel y en Mi isla."
+              }
+            ],
+            "caption": "Sin Internet Blender sigue funcionando: guarda tu avance y lo manda cuando vuelve la conexión."
+          },
+          {
+            "type": "classify",
+            "id": "clasifica_pp1_quien",
+            "question": "¿Quién hace cada cosa?",
+            "groups": [
+              {
+                "id": "plataforma",
+                "label": "Plataforma"
+              },
+              {
+                "id": "servidor",
+                "label": "Servidor"
+              },
+              {
+                "id": "blender",
+                "label": "Blender"
+              }
+            ],
+            "items": [
+              {
+                "text": "Muestra el código de 6 letras para vincular",
+                "group": "blender"
+              },
+              {
+                "text": "Guarda tu avance y tu XP en la nube",
+                "group": "servidor"
+              },
+              {
+                "text": "Tiene el botón «Abrir en Blender»",
+                "group": "plataforma"
+              },
+              {
+                "text": "Late cada 5 segundos contando qué haces",
+                "group": "blender"
+              },
+              {
+                "text": "Guarda las órdenes hasta que Blender las recoge",
+                "group": "servidor"
+              },
+              {
+                "text": "Muestra tu Blender en vivo dentro de la lección",
+                "group": "plataforma"
+              }
+            ],
+            "explanation": "Blender trabaja y avisa; el servidor guarda y reparte; la plataforma te muestra todo y te deja manejar Blender."
+          },
+          {
+            "type": "ordering",
+            "id": "orden_pp1_vincular",
+            "prompt": "Ordena los pasos para conectar tu Blender por primera vez.",
+            "items": [
+              {
+                "id": "v1",
+                "text": "Descargar Amatista Motor desde Mi Blender"
+              },
+              {
+                "id": "v2",
+                "text": "Instalarlo en Blender (arrastrar el archivo a Blender)"
+              },
+              {
+                "id": "v3",
+                "text": "Pulsar «Vincular» en la pestaña Amatista"
+              },
+              {
+                "id": "v4",
+                "text": "Escribir el código en la plataforma"
+              }
+            ],
+            "explanation": "Primero el add-on, luego el vínculo. Se hace una sola vez por computador."
+          }
+        ]
+      },
+      {
+        "id": "pp1_blender",
+        "title": "Tus primeros pasos en Blender",
+        "slug": "tus-primeros-pasos-en-blender",
+        "type": "theory_interactive",
+        "durationSeconds": 600,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Instalar y vincular Amatista Motor y recorrer Blender con la pestaña Amatista, viendo el avance en vivo en la plataforma.",
+          "habilidades": [
+            "pp-addon",
+            "pp-enlace",
+            "bl-navegar"
+          ],
+          "prerrequisitos": [
+            "pp1_enlace"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Necesita Amatista Motor 5.1 o más nuevo (addon/amatista_blender/recorrido.py)."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "El add-on instalado y vinculado (o pendiente, si el alumno no tiene Blender ahora).",
+            "Los primeros pasos terminados en Blender."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Ahora, en Blender\nDeja esta lección abierta y abre Blender al lado. Vas a ver **la misma parada en las dos ventanas**: lo que haces en Blender se marca aquí solo."
+          },
+          {
+            "type": "step_by_step",
+            "title": "Instala y vincula (una sola vez)",
+            "steps": [
+              {
+                "title": "Descarga Amatista Motor",
+                "text": "En **Mi Blender**, elige tu sistema y descarga el paquete. Trae el instalador y el add-on."
+              },
+              {
+                "title": "Instálalo en Blender",
+                "text": "Abre Blender 4.2 o más nuevo y arrastra el archivo del add-on a la ventana. O usa el instalador del paquete."
+              },
+              {
+                "title": "Abre la pestaña Amatista",
+                "text": "Con el ratón sobre la vista 3D, pulsa N.",
+                "keys": [
+                  "N"
+                ]
+              },
+              {
+                "title": "Vincula tu cuenta",
+                "text": "Pulsa «Vincular» y escribe el código en la plataforma. La tarjeta de abajo se pondrá verde."
+              }
+            ]
+          },
+          {
+            "type": "blender_tour",
+            "id": "recorrido_pp1",
+            "title": "Primeros pasos en Blender, en vivo",
+            "text": "Pulsa **Empezar en Blender**: tu Blender abre una escena de práctica con un cubo y la tarjeta de Bip. Cada parada se marca sola cuando la haces (abrir la barra, orbitar, elegir y mover el cubo).",
+            "allowManual": true
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "title": "¿Algo no conecta?",
+            "body": "Si la tarjeta dice que tu Blender está cerrado, revisa que Blender esté abierto y vinculado (pestaña Amatista › tu cuenta arriba). Sin Internet puedes hacer los primeros pasos igual desde la pestaña Amatista."
+          }
+        ]
+      },
+      {
+        "id": "pp1_jefe",
+        "title": "Jefe final: el Nudo de Cables",
+        "slug": "jefe-final-nudo-de-cables",
+        "type": "exam",
+        "durationSeconds": 240,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Explicar cómo funcionan la plataforma, el add-on y su conexión.",
+          "habilidades": [
+            "pp-plataforma",
+            "pp-addon",
+            "pp-enlace"
+          ],
+          "prerrequisitos": [
+            "pp1_blender"
+          ],
+          "blender": {
+            "verificadaEn": null,
+            "notas": "Pensada para Blender 4.2 LTS o más nuevo, mapa de teclado predeterminado."
+          },
+          "edicion": "1.0",
+          "offline": false,
+          "comprobacion": [
+            "Obtener al menos 70 puntos en el examen."
+          ]
+        },
+        "quizData": {
+          "passingScore": 70,
+          "questions": [
+            {
+              "id": "qpp1_1",
+              "questionText": "¿Qué botón te lleva siempre a la lección que te toca?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "▶ Continuar",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Mi Blender",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "El botón «?»",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Continuar te lleva directo a lo que sigue.",
+              "feedbackIncorrect": "Es ▶ Continuar, en la portada y en cada curso."
+            },
+            {
+              "id": "qpp1_2",
+              "questionText": "El botón «Completar lección» está gris. ¿Qué falta?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Resolver alguna actividad (un hexágono sin verde)",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Abrir Blender",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Esperar un día",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Se enciende al resolver todas las actividades.",
+              "feedbackIncorrect": "Busca el hexágono gris: esa actividad falta."
+            },
+            {
+              "id": "qpp1_3",
+              "questionText": "¿Cómo abres la pestaña Amatista en Blender?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Con N, sobre la vista 3D",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Con G",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Con F12",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "N abre la barra lateral.",
+              "feedbackIncorrect": "Es N: abre la barra lateral de la vista 3D."
+            },
+            {
+              "id": "qpp1_4",
+              "questionText": "¿Qué te muestra el molde translúcido en Blender?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Dónde va la pieza que falta",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "El render final",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Tus insignias",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Es la silueta de la pieza que falta.",
+              "feedbackIncorrect": "El molde marca dónde va la pieza que falta."
+            },
+            {
+              "id": "qpp1_5",
+              "questionText": "¿Cómo sabe la lección qué estás haciendo en Blender?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Blender late cada 5 segundos y el servidor se lo cuenta a la plataforma",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "La plataforma mira tu pantalla",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "No lo sabe nunca",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "El latido viaja por el servidor.",
+              "feedbackIncorrect": "Es el latido: Blender avisa al servidor cada 5 segundos."
+            },
+            {
+              "id": "qpp1_6",
+              "questionText": "Pulsaste «Pista» en la lección. ¿Cómo llega a Blender?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Queda como orden en el servidor y Blender la recoge en su siguiente latido",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Por correo",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Hay que copiarla a mano",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Las órdenes esperan en el servidor hasta que Blender las cumple.",
+              "feedbackIncorrect": "La orden espera en el servidor; Blender la recoge al latir."
+            },
+            {
+              "id": "qpp1_7",
+              "questionText": "¿Qué pasa si se corta Internet mientras trabajas en Blender?",
+              "options": [
+                {
+                  "id": "o1",
+                  "text": "Sigues trabajando y tu avance se manda cuando vuelve la conexión",
+                  "isCorrect": true
+                },
+                {
+                  "id": "o2",
+                  "text": "Pierdes todo lo que hiciste",
+                  "isCorrect": false
+                },
+                {
+                  "id": "o3",
+                  "text": "Blender se cierra",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Nada se pierde: viaja después.",
+              "feedbackIncorrect": "Tu avance espera y viaja cuando vuelve la red."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

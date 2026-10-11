@@ -15,6 +15,26 @@ const CURSOS_BASE = [
   // Principiante, Principiante-Intermedio e Intermedio; Avanzado sigue
   // bloqueado. Cada módulo intercala teoría y prácticas dentro de Blender. El curso «blender»
   // de la v2 quedó archivado (data/modulos/archivo/): el progreso se conserva.
+  // Curso 00 (v3.7, introduccion: true): la lección clave para quien llega. Enseña cómo funcionan la plataforma, el
+  // add-on y su conexión con los primeros pasos dentro de Blender (data/modulos/primeros_pasos-*).
+  {
+    id: 'primeros_pasos',
+    numero: '00',
+    introduccion: true,
+    titulo: 'Primeros pasos con Amatista',
+    subtitulo: 'Cómo trabajan juntos la plataforma y tu Blender',
+    descripcion:
+      'Antes del primer taller: recorres la plataforma y una lección, instalas Amatista Motor, vinculas tu cuenta y das tus primeros pasos en Blender mientras la lección te ve en vivo.',
+    estado: 'disponible',
+    nivel: 'Primeros pasos',
+    acento: 'blender',
+    ruta: 'blender',
+    recurso: {
+      texto: 'Descarga Blender gratis',
+      url: 'https://www.blender.org/download/',
+    },
+    modulos: [{ titulo: 'La estación del enlace', insignia: 'Navegante de Amatista' }],
+  },
   {
     id: 'blender_principiante',
     numero: '01',

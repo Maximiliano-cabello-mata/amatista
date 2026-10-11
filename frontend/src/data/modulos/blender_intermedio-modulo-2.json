@@ -159,6 +159,52 @@
             ]
           },
           {
+            "type": "classify",
+            "id": "bi2_clasifica",
+            "question": "¿A qué colección va cada objeto de la aldea?",
+            "groups": [
+              {
+                "id": "casas",
+                "label": "Casas"
+              },
+              {
+                "id": "naturaleza",
+                "label": "Naturaleza"
+              },
+              {
+                "id": "luces",
+                "label": "Luces y cámara"
+              }
+            ],
+            "items": [
+              {
+                "text": "Casa_Molino",
+                "group": "casas"
+              },
+              {
+                "text": "Arbol_Pino.003",
+                "group": "naturaleza"
+              },
+              {
+                "text": "Sol_Principal",
+                "group": "luces"
+              },
+              {
+                "text": "Casa_Herrero",
+                "group": "casas"
+              },
+              {
+                "text": "Roca_Grande",
+                "group": "naturaleza"
+              },
+              {
+                "text": "Camara_Plano",
+                "group": "luces"
+              }
+            ],
+            "explanation": "Agrupar por función te deja ocultar, elegir o renderizar cada grupo de una vez."
+          },
+          {
             "type": "matching",
             "id": "parejas_bi2",
             "prompt": "Une cada atajo con lo que hace.",

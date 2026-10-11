@@ -5,6 +5,7 @@ import BloqueCodigo from './BloqueCodigo';
 import Capas from './Capas';
 import Comparar from './Comparar';
 import Figura from './Figura';
+import Clasificar from './interactivos/Clasificar';
 import Completar from './interactivos/Completar';
 import Emparejar from './interactivos/Emparejar';
 import ExploradorEscena from './interactivos/ExploradorEscena';
@@ -12,8 +13,10 @@ import Ordenar from './interactivos/Ordenar';
 import PracticaBlender from './interactivos/PracticaBlender';
 import PuntosImagen from './interactivos/PuntosImagen';
 import QuizEnLinea from './interactivos/QuizEnLinea';
+import RecorridoBlender from './interactivos/RecorridoBlender';
 import RetoCodigo from './interactivos/RetoCodigo';
 import TallerBlender from './interactivos/TallerBlender';
+import VerdaderoFalso from './interactivos/VerdaderoFalso';
 import LineaTiempo from './LineaTiempo';
 import Markdown from './Markdown';
 import PasoAPaso from './PasoAPaso';
@@ -24,6 +27,11 @@ import TarjetasConcepto from './TarjetasConcepto';
 // (el service worker ya las tiene guardadas, así que también van sin conexión).
 const VisorMalla = lazy(() => import('./VisorMalla'));
 const DiagramaNodos = lazy(() => import('./DiagramaNodos'));
+// Recursos gráficos v3.7 (recursos.js): también aparte, para que la primera carga no crezca.
+const RecorridoPantalla = lazy(() => import('./RecorridoPantalla'));
+const FlujoConexion = lazy(() => import('./FlujoConexion'));
+const GizmoEjes = lazy(() => import('./GizmoEjes'));
+const DemoParametro = lazy(() => import('./DemoParametro'));
 
 function Diferido({ children, alto }) {
   return <Suspense fallback={<div className="esqueleto corte-poly" style={{ minHeight: alto }} role="status" aria-label="Cargando" />}>{children}</Suspense>;
@@ -40,6 +48,9 @@ const INTERACTIVOS = {
   code_challenge: RetoCodigo,
   blender_practice: PracticaBlender,
   blender_taller: TallerBlender,
+  classify: Clasificar,
+  true_false: VerdaderoFalso,
+  blender_tour: RecorridoBlender,
 };
 
 // Dibuja un bloque de contenido del JSON de la lección según su "type".
@@ -91,6 +102,30 @@ function BloqueContenido({ bloque, alCompletar, alDescubrirTodas, resuelta = fal
       return (
         <Diferido alto="20rem">
           <DiagramaNodos bloque={bloque} />
+        </Diferido>
+      );
+    case 'ui_tour':
+      return (
+        <Diferido alto="22rem">
+          <RecorridoPantalla bloque={bloque} />
+        </Diferido>
+      );
+    case 'connection_flow':
+      return (
+        <Diferido alto="22rem">
+          <FlujoConexion bloque={bloque} />
+        </Diferido>
+      );
+    case 'axis_gizmo':
+      return (
+        <Diferido alto="18rem">
+          <GizmoEjes bloque={bloque} />
+        </Diferido>
+      );
+    case 'param_demo':
+      return (
+        <Diferido alto="16rem">
+          <DemoParametro bloque={bloque} />
         </Diferido>
       );
     case 'video_player':

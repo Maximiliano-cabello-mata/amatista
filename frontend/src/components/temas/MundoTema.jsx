@@ -20,6 +20,7 @@ const PARTICULA = {
   mapa: 'papel',
   galeria: 'marco',
   portal: 'anillo',
+  antenas: 'anillo',
   cristales: 'cristal',
 };
 

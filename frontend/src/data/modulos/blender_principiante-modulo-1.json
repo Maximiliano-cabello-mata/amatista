@@ -59,6 +59,11 @@
             ]
           },
           {
+            "type": "axis_gizmo",
+            "title": "Gira los ejes de Blender",
+            "caption": "Arrastra para orbitar o pulsa 1, 3 y 7 como en el teclado numérico. X es rojo, Y verde y Z azul."
+          },
+          {
             "type": "quiz_inline",
             "id": "quiz_bp1_1",
             "question": "Quieres hacer una torre más alta. ¿En qué eje la estiras?",
@@ -206,6 +211,32 @@
                   "D"
                 ],
                 "action": "Duplicar"
+              }
+            ]
+          },
+          {
+            "type": "true_false",
+            "id": "bp1_verdad",
+            "statements": [
+              {
+                "text": "Orbitar mueve el objeto.",
+                "answer": false,
+                "explanation": "Orbitar mueve tu mirada: el objeto se queda donde estaba."
+              },
+              {
+                "text": "En Blender, Z es la altura.",
+                "answer": true,
+                "explanation": "Z, el eje azul, apunta al cielo."
+              },
+              {
+                "text": "G mueve, R gira y S escala.",
+                "answer": true,
+                "explanation": "Grab, Rotate y Scale: las tres transformaciones."
+              },
+              {
+                "text": "Para cambiar un objeto primero lo eliges.",
+                "answer": true,
+                "explanation": "Lo elegido se ve con borde naranja."
               }
             ]
           },

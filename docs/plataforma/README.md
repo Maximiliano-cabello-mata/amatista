@@ -15,6 +15,7 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 | [07 · Herramientas gráficas](07_herramientas_graficas.md) | Qué gráficos tenemos, qué se agregó en la v3.2 y qué conviene desarrollar (investigación). |
 | [08 · Auditoría educativa (9 oct)](08_auditoria_educativa_2026-10-09.md) | Qué está bien, qué está fallando y qué se corrige primero en documentación y producto. |
 | [09 · Guía, vista de alumno y auditoría (10 oct)](09_guia_vista_y_auditoria.md) | La guía de primeros pasos para alumnos nuevos, las instrucciones en cada lección y curso, y para el equipo: vista de alumno o administrador, saltar a cualquier lección y la auditoría. |
+| [10 · Primeros pasos y recursos gráficos (11 oct)](10_primeros_pasos_y_recursos.md) | El curso de introducción «Primeros pasos con Amatista», la conexión en vivo con los primeros pasos en Blender (add-on 5.1), los siete recursos gráficos nuevos intercalados en las lecciones y el CSS v3.7. |
 
 ![Un módulo con su práctica en Blender](img/modulo_ruta.svg)
 

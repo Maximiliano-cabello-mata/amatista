@@ -7,11 +7,12 @@ const con = (cursoId, ...ids) => ({
 });
 
 describe('un curso por tarjeta', () => {
-  it('Blender es una sola ruta con sus cuatro niveles y A-Frame otra', () => {
+  it('Blender es una sola ruta con los primeros pasos y sus cuatro niveles, y A-Frame otra', () => {
     const grupos = agruparPorRuta(cursos);
     expect(grupos.map((g) => g.id)).toEqual(['blender', 'aframe']);
     expect(grupos[0].titulo).toBe('Blender');
     expect(grupos[0].niveles.map((c) => c.id)).toEqual([
+      'primeros_pasos',
       'blender_principiante',
       'blender_principiante_intermedio',
       'blender_intermedio',
@@ -39,8 +40,17 @@ describe('un curso por tarjeta', () => {
     const resumen = resumenRuta(progreso, blender);
     expect(resumen.completadas).toBe(1);
     expect(resumen.enCurso.curso.id).toBe('blender_principiante');
-    expect(estadoNivel(progreso, blender.niveles[0])).toBe('en-curso');
-    expect(estadoNivel(progreso, blender.niveles[1])).toBe('disponible');
-    expect(estadoNivel(progreso, blender.niveles[3])).toBe('bloqueado');
+    expect(estadoNivel(progreso, blender.niveles[0])).toBe('disponible');
+    expect(estadoNivel(progreso, blender.niveles[1])).toBe('en-curso');
+    expect(estadoNivel(progreso, blender.niveles[2])).toBe('disponible');
+    expect(estadoNivel(progreso, blender.niveles[4])).toBe('bloqueado');
+  });
+
+  it('los primeros pasos son el nivel en curso solo de quien recién llega', () => {
+    const blender = agruparPorRuta(cursos)[0];
+    expect(resumenRuta(con('nadie'), blender).enCurso.curso.id).toBe('primeros_pasos');
+    expect(resumenRuta(con('primeros_pasos', 'pp1_plataforma'), blender).enCurso.curso.id).toBe('primeros_pasos');
+    // Quien ya avanzaba en Principiante sigue ahí aunque no haya hecho los primeros pasos.
+    expect(resumenRuta(con('blender_principiante', 'bp1_gancho'), blender).enCurso.curso.id).toBe('blender_principiante');
   });
 });

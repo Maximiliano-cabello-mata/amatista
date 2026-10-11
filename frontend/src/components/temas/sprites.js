@@ -11,5 +11,6 @@ export const SPRITES = {
   archivo: ['.a......a.', '.aaaaaaaa.', 'aawwaawwaa', 'aawkaakwaa', '.aaaooaaa.', '.asssssaa.', '.asssssaa.', '..aaaaaa..', '..o....o..', '..........'],
   galeria: ['..........', '...aaaa...', '..aaaaaa..', '.awkaaaaa.', '.aaaaaaaa.', '..assssaas', '...ssss..s', '..a.a..ss.', '..........', '..........'],
   portal: ['.a......a.', '.aa....aa.', '.aaaaaaaa.', '.akaaaaka.', '.aaaooaaa.', '..aaaaaa..', '..assssa..', '..assssa..', '..a.aa.a..', '..........'],
+  estacion: ['.a........', '..a.......', '...aaaa...', '..asssaa..', '.aswksaaa.', 'oaasssaaa.', '..aaaaaas.', '...aassss.', '....a.a...', '...kk.kk..'],
   cristal: ['....ss....', '...saas...', '..saaaas..', '..akaaka..', '..aaaaaa..', '..saaaas..', '...saas...', '....aa....', '..........', '..........'],
 };

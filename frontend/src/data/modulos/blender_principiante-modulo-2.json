@@ -179,6 +179,11 @@
             }
           },
           {
+            "type": "param_demo",
+            "demo": "resolution",
+            "caption": "Más vértices dan un cilindro más redondo, pero más caras que mover. En low-poly, 8 a 12 bastan."
+          },
+          {
             "type": "shortcuts",
             "title": "Los atajos del módulo",
             "practice": true,

@@ -28,7 +28,7 @@ function AvisoGuia({ className = '' }) {
           {empezada ? 'Termina la guía de primeros pasos' : 'Empieza por la guía de primeros pasos'}
         </p>
         <p className="mt-0.5 text-sm text-texto/70">
-          Unos 6 minutos: cómo se completa una lección, dónde ves tu avance y cómo conectar Blender con el add-on.
+          Unos 6 minutos: cómo se completa una lección, dónde ves tu avance y cómo conectar Blender con el add-on. Después sigues con el curso «Primeros pasos con Amatista».
         </p>
       </div>
       <a

@@ -181,6 +181,12 @@ export const CAPITULOS = [
         title: 'Desde la lección',
         body: 'En cada estación naranja hay un botón para **abrir la práctica en Blender**. Haz la práctica allá y vuelve a la lección: tu avance aparece solo.',
       },
+      {
+        type: 'callout',
+        variant: 'dato',
+        title: 'Tus primeros pasos en Blender',
+        body: 'El curso **Primeros pasos con Amatista** te acompaña en todo esto: instalas, vinculas tu cuenta y haces un recorrido de diez paradas dentro de Blender mientras la lección te muestra en vivo en qué paso vas.',
+      },
     ],
     comprueba: {
       type: 'quiz_inline',
@@ -246,5 +252,5 @@ export const CAPITULOS = [
 export const CIERRE = {
   titulo: '¡Listo para empezar!',
   texto:
-    'Ya sabes cómo funciona Amatista. Empieza por tu primera lección: el botón de abajo te lleva a la que te toca. Si algo no queda claro, pulsa «?» arriba a la derecha y vuelve a esta guía cuando quieras.',
+    'Ya sabes cómo funciona Amatista. Empieza por el curso «Primeros pasos con Amatista»: ahí recorres la plataforma, conectas Blender y das tus primeros pasos en él. El botón de abajo te lleva a la lección que te toca. Si algo no queda claro, pulsa «?» arriba a la derecha y vuelve a esta guía cuando quieras.',
 };

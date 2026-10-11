@@ -29,7 +29,7 @@ function RamasNiveles({ ruta, progreso }) {
           return (
             <li key={curso.id} className="relative flex items-center gap-3">
               <span className={`hexagono relative z-10 grid h-7 w-7 shrink-0 place-items-center font-mono text-[11px] font-bold ${estilo.nodo}`}>
-                {estado === 'completado' ? '✓' : estado === 'bloqueado' ? <IconoCandado className="h-3 w-3" /> : i + 1}
+                {estado === 'completado' ? '✓' : estado === 'bloqueado' ? <IconoCandado className="h-3 w-3" /> : curso.numero ? Number(curso.numero) : i + 1}
               </span>
               <span className={`min-w-0 flex-1 truncate font-semibold ${estado === 'bloqueado' ? 'text-white/45' : 'text-white'}`}>
                 {curso.nivel || curso.titulo}

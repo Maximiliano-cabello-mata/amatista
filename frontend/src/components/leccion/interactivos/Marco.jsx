@@ -17,6 +17,9 @@ const ETIQUETAS = {
   code_challenge: 'Reto de código',
   blender_practice: 'Práctica en Blender',
   blender_taller: 'Taller en Blender',
+  classify: 'Clasifica',
+  true_false: '¿Verdad o mito?',
+  blender_tour: 'Primeros pasos en Blender',
 };
 
 // Marco común de las actividades: tipo, estado (pendiente / resuelta), XP

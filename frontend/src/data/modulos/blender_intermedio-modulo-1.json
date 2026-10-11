@@ -166,6 +166,27 @@
             ]
           },
           {
+            "type": "true_false",
+            "id": "bi1_verdad",
+            "statements": [
+              {
+                "text": "Snap ayuda a pegar piezas sin medir a ojo.",
+                "answer": true,
+                "explanation": "Con Snap el objeto se pega a vértices, caras o la rejilla."
+              },
+              {
+                "text": "El panel N muestra medidas exactas.",
+                "answer": true,
+                "explanation": "En Elemento ves y escribes ubicación, rotación y dimensiones."
+              },
+              {
+                "text": "Aplicar la escala no cambia nada.",
+                "answer": false,
+                "explanation": "Aplicar deja la escala en 1: los biseles y modificadores salen parejos."
+              }
+            ]
+          },
+          {
             "type": "shortcuts",
             "title": "Los atajos del módulo",
             "practice": true,
@@ -226,6 +247,12 @@
               }
             ],
             "explanation": "Cada herramienta resuelve una parte: medir, repetir, redondear y encajar."
+          },
+          {
+            "type": "param_demo",
+            "demo": "bevel",
+            "caption": "En madera, 2 o 3 segmentos dan un canto creíble sin cargar la malla.",
+            "title": "Bisel: el canto de la tabla"
           },
           {
             "type": "ordering",

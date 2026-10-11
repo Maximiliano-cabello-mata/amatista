@@ -18,6 +18,7 @@ const CLASES = {
   archivo: { banda: 'from-indigo-400/25 via-amatista/15 to-transparent', texto: 'text-indigo-300', borde: 'border-indigo-300/40' },
   galeria: { banda: 'from-amatista/35 via-fuchsia-500/15 to-transparent', texto: 'text-amatista-claro', borde: 'border-amatista-claro/40' },
   portal: { banda: 'from-neon/30 via-sky-500/15 to-transparent', texto: 'text-neon', borde: 'border-neon/40' },
+  estacion: { banda: 'from-teal-300/30 via-neon/15 to-transparent', texto: 'text-teal-300', borde: 'border-teal-300/40' },
   cristal: { banda: 'from-amatista/30 via-amatista-oscuro/30 to-transparent', texto: 'text-amatista-claro', borde: 'border-amatista/40' },
 };
 

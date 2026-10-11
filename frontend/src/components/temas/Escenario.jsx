@@ -156,6 +156,30 @@ function Motivo({ escena, c }) {
           <polygon points="322,50 338,50 344,62 316,62" fill={c.acento} opacity="0.5" />
         </g>
       );
+    case 'antenas':
+      return (
+        <g>
+          <polygon points="60,96 72,40 84,96" fill={c.acento} opacity="0.3" />
+          <circle cx="72" cy="38" r="4" fill={c.suave} className="esc-titilar" />
+          <polygon points="318,96 330,30 342,96" fill={c.acento} opacity="0.4" />
+          <circle cx="330" cy="28" r="4" fill={c.suave} />
+          {[0, 1, 2].map((i) => (
+            <circle
+              key={i}
+              className="esc-anillo"
+              style={{ animationDelay: `${i * 1.1}s` }}
+              cx="330"
+              cy="28"
+              r="14"
+              fill="none"
+              stroke={i === 1 ? c.suave : c.acento}
+              strokeOpacity="0.6"
+              strokeWidth="2"
+            />
+          ))}
+          <path className="esc-ruta" d="M76,40 Q200,-6 326,30" fill="none" stroke={c.suave} strokeOpacity="0.5" strokeWidth="1.5" strokeDasharray="5 5" />
+        </g>
+      );
     case 'cristales':
     default:
       return (

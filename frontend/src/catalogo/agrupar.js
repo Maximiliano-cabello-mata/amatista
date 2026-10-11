@@ -1,7 +1,7 @@
 // Un curso por tarjeta (v3.2): los cursos de una misma ruta (campo `ruta`,
 // sql/008 CURSOS.RUTA) se muestran juntos. La ruta «blender» es una sola
-// tarjeta «Blender» y dentro se ramifica en sus niveles: Principiante,
-// Principiante-Intermedio, Intermedio y Avanzado. Cada nivel sigue siendo un
+// tarjeta «Blender» y dentro se ramifica en sus niveles: Primeros pasos (v3.7,
+// `introduccion: true`), Principiante, Principiante-Intermedio, Intermedio y Avanzado. Cada nivel sigue siendo un
 // curso con su id (el progreso, el servidor y el motor no cambian).
 // Funciones puras: pruebas en agrupar.test.js.
 import { resumenCurso } from '../progreso/reglas';
@@ -13,7 +13,7 @@ export const RUTAS = {
     titulo: 'Blender',
     subtitulo: 'De cero a crear tus propios mundos 3D',
     descripcion:
-      'Todo Blender en un solo lugar: cuatro niveles que se ramifican desde tu primer cubo hasta proyectos completos. Teoría corta y práctica real dentro de Blender, con Amatista conectada y registrando tu avance.',
+      'Todo Blender en un solo lugar: empiezas con los primeros pasos y sigues por cuatro niveles que se ramifican desde tu primer cubo hasta proyectos completos. Teoría corta y práctica real dentro de Blender, con Amatista conectada y registrando tu avance.',
     acento: 'blender',
     logo: 'blender',
     recurso: { texto: 'Descarga Blender gratis', url: 'https://www.blender.org/download/' },
@@ -77,19 +77,26 @@ export function buscarRuta(cursos, id) {
 
 // Avance de toda la ruta: suma de sus niveles disponibles, el nivel en curso
 // (el primero con lecciones pendientes) y cuántos niveles están terminados.
+// El curso de introducción (Primeros pasos) solo es el «nivel en curso» de quien
+// todavía no empezó otro nivel: a quien ya avanzaba no le cambia nada.
 export function resumenRuta(progreso, ruta) {
   let total = 0;
   let completadas = 0;
   let enCurso = null;
+  let introduccion = null;
+  let avanzoOtro = false;
   let terminados = 0;
   for (const curso of ruta.niveles) {
     if (curso.estado === 'bloqueado') continue;
     const resumen = resumenCurso(progreso, curso);
     total += resumen.total;
     completadas += resumen.completadas;
+    if (!curso.introduccion && resumen.completadas > 0) avanzoOtro = true;
     if (resumen.total > 0 && resumen.completadas === resumen.total) terminados += 1;
+    else if (curso.introduccion && resumen.total > 0) introduccion = { curso, resumen };
     else if (!enCurso && resumen.total > 0) enCurso = { curso, resumen };
   }
+  if (introduccion && !avanzoOtro) enCurso = introduccion;
   return {
     total,
     completadas,

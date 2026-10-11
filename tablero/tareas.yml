@@ -577,6 +577,31 @@ tareas:
     depende_de: [T-103, T-104]
     aceptacion: "Un alumno nuevo termina la guía sin ayuda y llega a su primera lección; el administrador revisa un módulo completo desde Ver la plataforma y descarga el informe de auditoría"
     bloqueo: "Lo prueba el usuario después de actualizar el backend y la PWA"
+  - id: T-106
+    titulo: "Curso «Primeros pasos con Amatista» (nivel 0 de Blender): cómo funcionan la plataforma, el add-on y su conexión, con jefe final y tema «estación»"
+    version: v3.3.0
+    area: contenido
+    aceptacion: "Seis lecciones validadas; es el nivel en curso solo de quien recién llega; la guía y su aviso apuntan al curso"
+    evidencia: "frontend/src/data/modulos/primeros_pasos-modulo-1.json; frontend/src/catalogo/agrupar.js; docs/plataforma/10_primeros_pasos_y_recursos.md"
+  - id: T-107
+    titulo: "Recursos gráficos nuevos (recorrido por la pantalla, flujo de la conexión, ejes, demo de parámetros, Clasifica, ¿Verdad o mito?) intercalados en los 9 módulos de Blender y CSS de lecciones con más ritmo"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "Bloques validados en el servidor con ejemplo en plantillas; apagados en modo ligero; vitest, lint y build en verde"
+    evidencia: "frontend/src/components/leccion/recursos.js; frontend/src/index.css (v3.7); backend/contenido/validacion.py"
+  - id: T-108
+    titulo: "Add-on 5.1: primeros pasos dentro de Blender (10 paradas que se comprueban solas) conectados en vivo con la lección por el latido y la orden «recorrido»"
+    version: v3.3.0
+    area: motor
+    aceptacion: "detalle.recorrido en el latido sin SQL nuevo; la lección empieza y avanza el recorrido; pytest y en_blender.py en verde"
+    evidencia: "addon/amatista_blender/recorrido.py; addon/amatista_blender/recorrido_pasos.py; backend/api/enlace.py; docs/motor/referencia/17_primeros_pasos_en_blender.md"
+  - id: T-109
+    titulo: "Probar los primeros pasos en Blender con ventana (barra N, orbitar, elegir y mover, tarjeta de Bip) con la lección abierta en la plataforma"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-108]
+    aceptacion: "Un alumno nuevo termina el recorrido y la lección lo marca sola; los ajustes que salgan quedan en el mismo PR"
+    bloqueo: "Lo prueba el usuario en su computadora después de actualizar el backend y reinstalar Amatista Motor 5.1"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
