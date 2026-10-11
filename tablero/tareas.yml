@@ -634,6 +634,12 @@ tareas:
     area: repo
     aceptacion: "git ls-remote --tags origin muestra alpha.11 a alpha.14"
     bloqueo: "La nube no puede publicar tags (403): bash herramientas/crear-tags.sh && git push origin --tags"
+  - id: T-115
+    titulo: "Sistema de diseño «Facetas» (CSS v4.0): anatomía de página común, migas, encabezado facetado, pie global y fondo low poly con destellos"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "docs/diseno/2026-10-11_sistema_facetas.md §8: todas las páginas interiores con migas, encabezado y pie; 0 desbordes a 390 px"
+    evidencia: "Rama claude/auditoria-orden-plataforma-wfzu65 (PR #35)"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0

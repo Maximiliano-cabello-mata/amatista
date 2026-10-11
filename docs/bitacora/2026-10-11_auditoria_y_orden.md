@@ -11,6 +11,10 @@
 3. **Add-on 5.2 «Conoce Amatista Motor»**: tres prácticas (tu pestaña Amatista; muévete y usa tus herramientas; así te enseña el taller) que cubren 24 temas y se comprueban solas, incluidos los botones del add-on.
 4. **Plataforma**: barra Cursos · Blender · Mi panel; recorrido guiado de 10 paradas; página Blender con la tarjeta de la fusión, instalar, las tres prácticas en vivo y los ajustes; Ayuda sin candados; Mi panel con una tarjeta por curso y listas cortas.
 
+## Segunda parte: diseño «Facetas» (05:28 UTC)
+
+Pedido: reorganizar los recursos de la plataforma, organización de páginas a nivel empresarial, mejor CSS y que el tema low poly brille, todo planificado. Plan en `docs/diseno/2026-10-11_sistema_facetas.md`. Se hizo: piezas comunes en `components/estructura/`, todas las páginas interiores con migas y encabezado facetado, pie global, títulos de sección, «Tres lugares» en la portada y destellos en el fondo. Pruebas: vitest 286, lint y build sin avisos, todas las páginas y las 48 lecciones a 390 y 1280 px sin desbordes ni errores, recorrido guiado completo en ambos anchos (T-115).
+
 ## Commits (rama `claude/auditoria-orden-plataforma-wfzu65`)
 
 `c6c5de4` arreglos gráficos · `8af56a8` retirar «Primeros pasos» · `4d45128` add-on 5.2 · `efe01e3` API del enlace · `59f863d` página Blender · `62f48ee` bloque de Blender en lecciones · `e1c1287` recorrido, pestaña Blender y Ayuda · `970b88d` Mi panel · `e93545b` Admin › Resumen · `e07bb30` duración A-Frame · `57475fe` comentarios del build · `fb3955d` desborde de Mi panel · documentación y tablero.

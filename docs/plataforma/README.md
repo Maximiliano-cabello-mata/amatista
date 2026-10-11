@@ -17,6 +17,7 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 | [09 · Guía, vista de alumno y auditoría (10 oct)](09_guia_vista_y_auditoria.md) | La guía de primeros pasos para alumnos nuevos, las instrucciones en cada lección y curso, y para el equipo: vista de alumno o administrador, saltar a cualquier lección y la auditoría. |
 | [10 · Primeros pasos y recursos gráficos (11 oct)](10_primeros_pasos_y_recursos.md) | Los siete recursos gráficos nuevos intercalados en las lecciones y el CSS v3.7. Histórico: el curso «Primeros pasos con Amatista» y el recorrido del add-on 5.1 (retirados en el doc 11). |
 | [11 · Recorrido guiado, página Blender y «Conoce Amatista Motor» (11 oct)](11_recorrido_y_fusion.md) | **Vigente.** Cursos · Blender · Mi panel; el recorrido de 10 paradas por las páginas reales; la tarjeta de cómo se unen la plataforma y Blender; las tres prácticas del add-on 5.2; Ayuda y Mi panel. |
+| [Diseño «Facetas» (11 oct)](../diseno/2026-10-11_sistema_facetas.md) | **Vigente.** La anatomía común de todas las páginas (migas, encabezado facetado, secciones y pie global), los cuatro anchos y el CSS v4.0 del tema low poly. |
 
 ![Un módulo con su práctica en Blender](img/modulo_ruta.svg)
 
