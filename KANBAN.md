@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-11 18:42 · `main` en `15bbcf8`
+Último commit: 2026-10-11 12:47 · `main` en `28b8772`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -16,20 +16,20 @@
 | **v3.0.0** | Reestructuración | Niveles, habilidades, versiones de Blender y herramientas de autor en Oracle; documentación y tablero nuevos. | ▰▰▰▰▱▱▱▱▱▱ 5/12 |
 | **v3.1.0** | Mi primer espacio 3D | Primera entrega de contenido por niveles (lecciones 01–11 de la propuesta) con fichas, rúbrica y versión verificada. | ▱▱▱▱▱▱▱▱▱▱ 0/5 |
 | **v3.2.0** | Laboratorio 3D | Visor GLB en las lecciones, escena de ejemplo y lección 12 (exportar y comprobar). | ▱▱▱▱▱▱▱▱▱▱ 0/3 |
-| **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▰▰▰▱▱▱▱▱▱ 21/51 |
+| **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▰▰▰▰▱▱▱▱▱ 24/51 |
 | **v3.4.0** | Especialidades y tutor | Primera rama del nivel 5 y tutor IA dentro de las lecciones. | ▱▱▱▱▱▱▱▱▱▱ 0/15 |
 
 Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-alpha.8` · `v3.0.0-alpha.7` · `v3.0.0-alpha.6` · `v3.0.0-alpha.5` · `v3.0.0-alpha.4` · `v3.0.0-alpha.3` · `v3.0.0-alpha.2` · `v3.0.0-alpha.1` · `v2.2.0-alpha.2` · `v2.2.0-alpha.1` · `v2.0.1` · `v2.0.0` · `v1.0.0` · `v0.1.0`
 
 ## 📌 Kanban
 
-| 📋 Pendiente (44) | 🔨 En progreso (26) | 👀 Revisión (5) | ✅ Hecho (36) |
+| 📋 Pendiente (44) | 🔨 En progreso (26) | 👀 Revisión (2) | ✅ Hecho (39) |
 |---|---|---|---|
 | **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> |
 | **T-008** Proteger main (solo cambios por PR)<br><sub>v2.2.0 · repo</sub> | **T-028** Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)<br><sub>v2.2.0 · lanzamiento</sub> | **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)<br><sub>v2.2.0 · repo</sub> | **T-006** Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)<br><sub>v2.2.0 · api</sub> |
-| **T-023** Respaldo de Oracle y restauración ensayada en pruebas<br><sub>v2.2.0 · db</sub> | **T-029** Prueba de punta a punta en navegador (anónimo → cuenta → offline → admin publica → acople)<br><sub>v2.2.0 · lanzamiento</sub> | **T-110** Auditoría completa: historial, tags, pruebas, cada página y cada lección; corregir los errores gráficos, de código y de seguridad encontrados<br><sub>v3.3.0 · repo</sub> | **T-014** Esquema incremental 002–004 (8 tablas, 20 GB) y diagnóstico ampliado<br><sub>v2.2.0 · db</sub> |
-| **T-024** Publicar el frontend en Cloudflare Pages contra la API HTTPS<br><sub>v2.2.0 · pwa</sub> | **T-052** Comprobaciones locales de la lección 03 en el add-on<br><sub>v3.3.0 · blender</sub> | **T-111** Plataforma en orden: recorrido guiado por las páginas reales (no un curso), pestaña Blender con la tarjeta de la fusión plataforma ↔ add-on, Ayuda sin candados y Mi panel más corto<br><sub>v3.3.0 · pwa</sub> | **T-015** Catálogo dinámico y progreso adaptable (acople, replaces, % recalculado)<br><sub>v2.2.0 · pwa</sub> |
-| **T-025** Pruebas P01–P10 del plan de lanzamiento con evidencia<br><sub>v2.2.0 · lanzamiento</sub> | **T-055** Aplicar 007 en Oracle y publicar la práctica de la mesa y el módulo 2 (después del piloto)<br><sub>v3.3.0 · db</sub> | **T-112** Add-on 5.2 «Conoce Amatista Motor»: tres prácticas cortas que explican todas las herramientas del add-on, empezadas y vistas en vivo desde la página Blender<br><sub>v3.3.0 · motor</sub> | **T-016** Panel del alumno (nivel, racha, retos, actividad e insignias)<br><sub>v2.2.0 · pwa</sub> |
+| **T-023** Respaldo de Oracle y restauración ensayada en pruebas<br><sub>v2.2.0 · db</sub> | **T-029** Prueba de punta a punta en navegador (anónimo → cuenta → offline → admin publica → acople)<br><sub>v2.2.0 · lanzamiento</sub> |   | **T-014** Esquema incremental 002–004 (8 tablas, 20 GB) y diagnóstico ampliado<br><sub>v2.2.0 · db</sub> |
+| **T-024** Publicar el frontend en Cloudflare Pages contra la API HTTPS<br><sub>v2.2.0 · pwa</sub> | **T-052** Comprobaciones locales de la lección 03 en el add-on<br><sub>v3.3.0 · blender</sub> |   | **T-015** Catálogo dinámico y progreso adaptable (acople, replaces, % recalculado)<br><sub>v2.2.0 · pwa</sub> |
+| **T-025** Pruebas P01–P10 del plan de lanzamiento con evidencia<br><sub>v2.2.0 · lanzamiento</sub> | **T-055** Aplicar 007 en Oracle y publicar la práctica de la mesa y el módulo 2 (después del piloto)<br><sub>v3.3.0 · db</sub> |   | **T-016** Panel del alumno (nivel, racha, retos, actividad e insignias)<br><sub>v2.2.0 · pwa</sub> |
 | **T-026** Piloto por invitación con 10 alumnos (8 de octubre, 18:00)<br><sub>v2.2.0 · lanzamiento</sub> | **T-056** Probar el paquete de instalación en Windows y macOS reales<br><sub>v3.3.0 · blender</sub> |   | **T-017** Eventos de aprendizaje y métricas de alumnos activos (API)<br><sub>v2.2.0 · api</sub> |
 | **T-027** Beta pública con cohorte inicial de 30 cuentas (15 de octubre, 18:00)<br><sub>v2.2.0 · lanzamiento</sub> | **T-060** Guardar en Oracle las ayudas usadas en cada práctica (008 aditivo) y mostrarlas al profesor<br><sub>v3.4.0 · db</sub> |   | **T-019** Contenido administrable (API borrador → publicado, validación y CLI)<br><sub>v2.2.0 · contenido</sub> |
 | **T-030** Revisión de seguridad e integridad (permisos, tokens, XSS en contenido, fusión y sincronización)<br><sub>v2.2.0 · api</sub> | **T-092** Entregar Amatista Motor 3.5.1 en producción (reinstalar el add-on; requiere 011, T-094)<br><sub>v3.3.0 · lanzamiento</sub> |   | **T-021** Bloques interactivos en las lecciones (7 tipos nuevos)<br><sub>v2.2.0 · pwa</sub> |
@@ -60,10 +60,10 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 | **T-113** Probar en Blender con ventana las tres prácticas «Conoce Amatista Motor» y el recorrido de la plataforma con un alumno nuevo<br><sub>v3.3.0 · motor</sub> |   |   | **T-093** El ejemplo manda: cada práctica con su ejemplo resuelto en código y revisión autónoma contra él (motor, Blender «Ver el ejemplo» y lección)<br><sub>v3.3.0 · motor</sub> |
 | **T-071** Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)<br><sub>v3.4.0 · pwa</sub> |   |   | **T-096** Herramientas gráficas v3.6: medir librerías, crear visor de malla, diagrama de nodos e imagen ligera, y diseño CSS para condiciones difíciles<br><sub>v3.3.0 · pwa</sub> |
 | **T-072** Transiciones entre páginas (View Transitions), celebraciones con confeti e ilustración de fondo por temática<br><sub>v3.4.0 · pwa</sub> |   |   | **T-100** Amatista Taller (motor 5, add-on 5.0): la habilidad como unidad con Mira, Hazlo conmigo, Hazlo tú, Úsalo y Recuérdalo, modelo del alumno, molde, pistas con freno, Mi isla y la lección del taller en la plataforma<br><sub>v3.3.0 · motor</sub> |
-| **T-073** Diseñar el laboratorio (retos abiertos sin guía después de la ruta)<br><sub>v3.4.0 · contenido</sub> |   |   | **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas)<br><sub>v3.3.0 · blender</sub> |
-| **T-080** Portada más ligera en teléfono: el texto de cada módulo se carga al abrir su curso (hoy va en el paquete principal)<br><sub>v3.4.0 · pwa</sub> |   |   |   |
-| **T-081** Varias aulas a la vez: dos procesos de uvicorn con los límites por IP y las cachés compartidos (Oracle)<br><sub>v3.4.0 · api</sub> |   |   |   |
-| **T-064** Aplicar 008 y 009 en Oracle e importar los cursos Principiante, Principiante-Intermedio e Intermedio (después del piloto)<br><sub>v3.3.0 · db</sub> |   |   |   |
+| **T-073** Diseñar el laboratorio (retos abiertos sin guía después de la ruta)<br><sub>v3.4.0 · contenido</sub> |   |   | **T-110** Auditoría completa: historial, tags, pruebas, cada página y cada lección; corregir los errores gráficos, de código y de seguridad encontrados<br><sub>v3.3.0 · repo</sub> |
+| **T-080** Portada más ligera en teléfono: el texto de cada módulo se carga al abrir su curso (hoy va en el paquete principal)<br><sub>v3.4.0 · pwa</sub> |   |   | **T-111** Plataforma en orden: recorrido guiado por las páginas reales (no un curso), pestaña Blender con la tarjeta de la fusión plataforma ↔ add-on, Ayuda sin candados y Mi panel más corto<br><sub>v3.3.0 · pwa</sub> |
+| **T-081** Varias aulas a la vez: dos procesos de uvicorn con los límites por IP y las cachés compartidos (Oracle)<br><sub>v3.4.0 · api</sub> |   |   | **T-112** Add-on 5.2 «Conoce Amatista Motor»: tres prácticas cortas que explican todas las herramientas del add-on, empezadas y vistas en vivo desde la página Blender<br><sub>v3.3.0 · motor</sub> |
+| **T-064** Aplicar 008 y 009 en Oracle e importar los cursos Principiante, Principiante-Intermedio e Intermedio (después del piloto)<br><sub>v3.3.0 · db</sub> |   |   | **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas)<br><sub>v3.3.0 · blender</sub> |
 | **T-065** Dominio amatista-3d.me: Cloudflare (DNS y proxy), PWA en Pages y API con certificado de origen<br><sub>v2.2.0 · lanzamiento</sub> |   |   |   |
 | **T-066** Probar el add-on 3.0 con alumnos (Principiante, módulo 1) y ajustar píldoras y mensajes<br><sub>v3.3.0 · blender</sub> |   |   |   |
 | **T-067** Curso Blender Avanzado (teoría de topología, UV, nodos y rig; prácticas y desbloqueo)<br><sub>v3.4.0 · contenido</sub> |   |   |   |
@@ -293,13 +293,13 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 - [ ] **T-109** Probar los primeros pasos en Blender con ventana (barra N, orbitar, elegir y mover, tarjeta de Bip) con la lección abierta en la plataforma · _en-progreso_ — commits: `380fd94` (2026-10-11)
   - ⏸️ Espera: Sustituida por T-113: el recorrido de 5.1 pasó a las tres prácticas «Conoce Amatista Motor» del add-on 5.2
   - 🎯 Listo cuando: Un alumno nuevo termina el recorrido y la lección lo marca sola; los ajustes que salgan quedan en el mismo PR
-- [ ] **T-110** Auditoría completa: historial, tags, pruebas, cada página y cada lección; corregir los errores gráficos, de código y de seguridad encontrados · _revision_ — commits: `9ccbda7` (2026-10-11), `6296088` (2026-10-11)
+- [x] **T-110** Auditoría completa: historial, tags, pruebas, cada página y cada lección; corregir los errores gráficos, de código y de seguridad encontrados · _hecho_ — commits: `9ccbda7` (2026-10-11), `6296088` (2026-10-11)
   - 🔎 Evidencia: docs/auditoria/2026-10-11_auditoria_completa.md
   - 🎯 Listo cuando: Informe en docs/auditoria/ con cada hallazgo, su gravedad y el commit que lo corrige o por qué queda abierto; pruebas de backend, motor, add-on, Blender sin ventana, frontend, lint y build en verde
-- [ ] **T-111** Plataforma en orden: recorrido guiado por las páginas reales (no un curso), pestaña Blender con la tarjeta de la fusión plataforma ↔ add-on, Ayuda sin candados y Mi panel más corto · _revision_ — commits: `9ccbda7` (2026-10-11)
+- [x] **T-111** Plataforma en orden: recorrido guiado por las páginas reales (no un curso), pestaña Blender con la tarjeta de la fusión plataforma ↔ add-on, Ayuda sin candados y Mi panel más corto · _hecho_ — commits: `9ccbda7` (2026-10-11)
   - 🔎 Evidencia: frontend/src/recorrido/; frontend/src/pages/Blender.jsx; frontend/src/components/blender/; docs/plataforma/11_recorrido_y_fusion.md
   - 🎯 Listo cuando: El curso «Primeros pasos» sale del árbol; la barra queda en Cursos · Blender · Mi panel; el recorrido funciona en escritorio y en el teléfono; vitest, lint y build en verde
-- [ ] **T-112** Add-on 5.2 «Conoce Amatista Motor»: tres prácticas cortas que explican todas las herramientas del add-on, empezadas y vistas en vivo desde la página Blender · _revision_ — commits: `9ccbda7` (2026-10-11)
+- [x] **T-112** Add-on 5.2 «Conoce Amatista Motor»: tres prácticas cortas que explican todas las herramientas del add-on, empezadas y vistas en vivo desde la página Blender · _hecho_ — commits: `9ccbda7` (2026-10-11)
   - 🔎 Evidencia: addon/amatista_blender/recorrido_pasos.py; addon/amatista_blender/recorrido.py; backend/api/enlace.py; frontend/src/components/blender/ConoceAmatistaMotor.jsx
   - 🎯 Listo cuando: Las tres prácticas cubren pestaña, cuenta, plataforma, lección, ajustes, guardar, vista, mover/girar/escalar, herramientas, ayuda, enfoque y el ciclo del taller; pytest y en_blender.py en verde; sin SQL nuevo
 - [ ] **T-113** Probar en Blender con ventana las tres prácticas «Conoce Amatista Motor» y el recorrido de la plataforma con un alumno nuevo · _pendiente_
