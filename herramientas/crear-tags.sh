@@ -40,6 +40,7 @@ VERSIONES=(
   "v3.0.0-alpha.12|48025f7|Amatista Taller: motor 5, add-on 5.0 y Oracle 012 (PR #31 y #32)"
   "v3.0.0-alpha.13|7d17f81|Guía para alumnos y vista de administrador: revisión y auditoría (PR #33)"
   "v3.0.0-alpha.14|70064b2|Primeros pasos, recursos gráficos nuevos y Amatista Motor 5.1 (PR #34)"
+  "v3.0.0-alpha.15|28b8772|Auditoría completa, recorrido guiado, página Blender, Amatista Motor 5.2 y diseño «Facetas» (PR #35)"
 )
 
 git fetch --quiet origin --tags

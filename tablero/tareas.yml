@@ -629,10 +629,10 @@ tareas:
     aceptacion: "Un alumno nuevo hace el recorrido, instala el add-on y termina las tres prácticas sin ayuda; la página Blender las marca solas"
     bloqueo: "Lo prueba el usuario después de actualizar el backend, publicar la PWA y reinstalar Amatista Motor 5.2"
   - id: T-114
-    titulo: "Publicar los tags v3.0.0-alpha.11 a alpha.14 (y el de esta versión al fusionar) desde la computadora del usuario"
+    titulo: "Publicar los tags v3.0.0-alpha.11 a alpha.15 desde la computadora del usuario"
     version: v3.3.0
     area: repo
-    aceptacion: "git ls-remote --tags origin muestra alpha.11 a alpha.14"
+    aceptacion: "git ls-remote --tags origin muestra alpha.11 a alpha.15"
     bloqueo: "La nube no puede publicar tags (403): bash herramientas/crear-tags.sh && git push origin --tags"
   - id: T-115
     titulo: "Sistema de diseño «Facetas» (CSS v4.0): anatomía de página común, migas, encabezado facetado, pie global y fondo low poly con destellos"

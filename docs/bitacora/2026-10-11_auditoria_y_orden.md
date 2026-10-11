@@ -25,12 +25,12 @@ Backend 391, motor y add-on 553, add-on dentro de Blender 5.0.1 sin ventana OK, 
 
 ## Fusión
 
-Maximiliano dio el visto bueno el 11 de octubre a las 18:40 UTC («Fusiona con main y documenta»). Se trajo `main` (solo chocaba `KANBAN.md`, regenerado con `tablero/actualizar.py`), el CI quedó en verde y el PR #35 se fusionó con merge commit para conservar los commits por tema.
+Maximiliano dio el visto bueno el 11 de octubre a las 18:40 UTC («Fusiona con main y documenta»). Se trajo `main` (solo chocaba `KANBAN.md`, regenerado con `tablero/actualizar.py`), el CI quedó en verde y el PR #35 se fusionó con merge commit (`28b8772`) para conservar los commits por tema. La documentación (README, índice, despliegue y esta bitácora) entró después, en un paso aparte, como pidió Maximiliano («Pero primero fusiona»).
 
 ## Pendiente del usuario
 
 - **Publicar en producción:** `docs/despliegue/2026-10-11_auditoria_y_motor_5_2.md` (sin SQL; archivar el módulo de «Primeros pasos» con `contenido.py importar`, publicar el build nuevo y reinstalar Amatista Motor 5.2).
 - **Probar con ventana** en Blender el add-on 5.2 y «Conoce Amatista Motor» (T-113).
-- **Tags** desde su computadora (T-114): `git checkout main && git pull && bash herramientas/crear-tags.sh && git push origin --tags`, y el de esta fusión, `v3.0.0-alpha.15`, sobre el merge commit del PR #35.
+- **Tags** desde su computadora (T-114): `git checkout main && git pull && bash herramientas/crear-tags.sh && git push origin --tags`, que ya incluye `v3.0.0-alpha.15` sobre `28b8772`.
 - **Borrar la rama** `claude/auditoria-orden-plataforma-wfzu65`.
 - **Decidir** los puntos abiertos P-01 a P-05 del informe (HTTPS en producción es el importante).
