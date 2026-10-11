@@ -582,7 +582,7 @@ tareas:
     version: v3.3.0
     area: contenido
     aceptacion: "Seis lecciones validadas; es el nivel en curso solo de quien recién llega; la guía y su aviso apuntan al curso"
-    evidencia: "frontend/src/data/modulos/primeros_pasos-modulo-1.json; frontend/src/catalogo/agrupar.js; docs/plataforma/10_primeros_pasos_y_recursos.md"
+    evidencia: "Retirado el 11 oct (T-111): frontend/src/data/modulos/archivo/primeros_pasos-modulo-1.json; docs/plataforma/10_primeros_pasos_y_recursos.md"
   - id: T-107
     titulo: "Recursos gráficos nuevos (recorrido por la pantalla, flujo de la conexión, ejes, demo de parámetros, Clasifica, ¿Verdad o mito?) intercalados en los 9 módulos de Blender y CSS de lecciones con más ritmo"
     version: v3.3.0
@@ -601,7 +601,39 @@ tareas:
     area: motor
     depende_de: [T-108]
     aceptacion: "Un alumno nuevo termina el recorrido y la lección lo marca sola; los ajustes que salgan quedan en el mismo PR"
-    bloqueo: "Lo prueba el usuario en su computadora después de actualizar el backend y reinstalar Amatista Motor 5.1"
+    bloqueo: "Sustituida por T-113: el recorrido de 5.1 pasó a las tres prácticas «Conoce Amatista Motor» del add-on 5.2"
+  - id: T-110
+    titulo: "Auditoría completa: historial, tags, pruebas, cada página y cada lección; corregir los errores gráficos, de código y de seguridad encontrados"
+    version: v3.3.0
+    area: repo
+    aceptacion: "Informe en docs/auditoria/ con cada hallazgo, su gravedad y el commit que lo corrige o por qué queda abierto; pruebas de backend, motor, add-on, Blender sin ventana, frontend, lint y build en verde"
+    evidencia: "docs/auditoria/2026-10-11_auditoria_completa.md"
+  - id: T-111
+    titulo: "Plataforma en orden: recorrido guiado por las páginas reales (no un curso), pestaña Blender con la tarjeta de la fusión plataforma ↔ add-on, Ayuda sin candados y Mi panel más corto"
+    version: v3.3.0
+    area: pwa
+    depende_de: [T-110]
+    aceptacion: "El curso «Primeros pasos» sale del árbol; la barra queda en Cursos · Blender · Mi panel; el recorrido funciona en escritorio y en el teléfono; vitest, lint y build en verde"
+    evidencia: "frontend/src/recorrido/; frontend/src/pages/Blender.jsx; frontend/src/components/blender/; docs/plataforma/11_recorrido_y_fusion.md"
+  - id: T-112
+    titulo: "Add-on 5.2 «Conoce Amatista Motor»: tres prácticas cortas que explican todas las herramientas del add-on, empezadas y vistas en vivo desde la página Blender"
+    version: v3.3.0
+    area: motor
+    aceptacion: "Las tres prácticas cubren pestaña, cuenta, plataforma, lección, ajustes, guardar, vista, mover/girar/escalar, herramientas, ayuda, enfoque y el ciclo del taller; pytest y en_blender.py en verde; sin SQL nuevo"
+    evidencia: "addon/amatista_blender/recorrido_pasos.py; addon/amatista_blender/recorrido.py; backend/api/enlace.py; frontend/src/components/blender/ConoceAmatistaMotor.jsx"
+  - id: T-113
+    titulo: "Probar en Blender con ventana las tres prácticas «Conoce Amatista Motor» y el recorrido de la plataforma con un alumno nuevo"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-111, T-112]
+    aceptacion: "Un alumno nuevo hace el recorrido, instala el add-on y termina las tres prácticas sin ayuda; la página Blender las marca solas"
+    bloqueo: "Lo prueba el usuario después de actualizar el backend, publicar la PWA y reinstalar Amatista Motor 5.2"
+  - id: T-114
+    titulo: "Publicar los tags v3.0.0-alpha.11 a alpha.14 (y el de esta versión al fusionar) desde la computadora del usuario"
+    version: v3.3.0
+    area: repo
+    aceptacion: "git ls-remote --tags origin muestra alpha.11 a alpha.14"
+    bloqueo: "La nube no puede publicar tags (403): bash herramientas/crear-tags.sh && git push origin --tags"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
