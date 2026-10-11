@@ -84,7 +84,7 @@ function BlenderPanel({ token, progreso, cursos, className = '' }) {
       className={className}
       accion={
         <a href={rutas.blender} className="font-mono text-xs font-bold uppercase tracking-widest text-neon hover:underline">
-          {datos.conectados ? `${datos.conectados} Blender conectado${datos.conectados > 1 ? 's' : ''}` : 'Mi Blender ▸'}
+          {datos.conectados ? `${datos.conectados} Blender conectado${datos.conectados > 1 ? 's' : ''}` : 'Ir a Blender ▸'}
         </a>
       }
     >

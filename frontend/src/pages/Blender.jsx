@@ -183,7 +183,7 @@ function Dispositivos({ token }) {
       <ul className="grid gap-2">
         {lista.map((d) => (
           <li key={d.id} className="corte-poly-sm flex flex-wrap items-center justify-between gap-3 bg-black/25 px-4 py-3">
-            <div className="min-w-0">
+            <div className="min-w-0 max-w-full flex-[1_1_12rem]">
               <p className="truncate font-bold text-white">{d.nombre}</p>
               <p className="font-mono text-[11px] uppercase tracking-widest text-white/45">
                 Conectado {fecha(d.conectado_en)} · último uso {fecha(d.ultimo_uso)}
@@ -455,9 +455,9 @@ function Instalar({ token, usuario }) {
   );
 }
 
-function Etapa({ numero, titulo, children, id }) {
+function Etapa({ numero, titulo, children, id, recorrido }) {
   return (
-    <section className="mt-10" aria-labelledby={id}>
+    <section className="mt-10" aria-labelledby={id} data-recorrido={recorrido}>
       <h2 id={id} className="flex items-center gap-3 text-xl font-extrabold text-white sm:text-2xl">
         <span className="hexagono grid h-9 w-10 shrink-0 place-items-center bg-white/10 font-mono text-sm text-white">{numero}</span>
         {titulo}
@@ -510,7 +510,7 @@ function Blender() {
         <FusionPlataformaBlender progreso={progreso} resumida={listo} />
       </div>
 
-      <Etapa numero="1" titulo="Prepárate (una sola vez)" id="blender-preparar">
+      <Etapa numero="1" titulo="Prepárate (una sola vez)" id="blender-preparar" recorrido="instalar">
         {listo ? (
           <details className="corte-poly-sm border border-emerald-400/30 bg-emerald-400/5 p-4">
             <summary className="cursor-pointer font-bold text-emerald-200">✓ Ya tienes Amatista Motor vinculado. ¿Otro computador o reinstalar?</summary>
@@ -528,7 +528,7 @@ function Blender() {
       </Etapa>
 
       <Etapa numero="3" titulo="Tu Blender y tus prácticas" id="blender-ajustes">
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-2 [&>*]:min-w-0">
           {usuario && <AjustesBlender token={token} />}
           {usuario ? (
             <Dispositivos token={token} />

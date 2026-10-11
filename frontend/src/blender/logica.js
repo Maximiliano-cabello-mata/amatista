@@ -88,7 +88,7 @@ export function resumenPractica(progreso) {
 
 // --- Enlace en vivo (motor 3.4 y 3.5) -----------------------------------------------------
 
-// Cómo se ve Blender: lo elige el alumno en «Mi Blender» y le llega al add-on en vivo.
+// Cómo se ve Blender: lo elige el alumno en #/blender y le llega al add-on en vivo.
 export const OPCIONES_ENFOQUE = [
   { id: 'auto', titulo: 'Según mi nivel', texto: 'Enfocado en los niveles 1 y 2; Blender completo después.' },
   { id: 'siempre', titulo: 'Siempre enfocado', texto: 'Solo las herramientas de cada práctica, con «¿Cómo se usa?».' },

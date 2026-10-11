@@ -24,7 +24,7 @@ export const PANTALLAS = {
       continuar: { x: 16, y: 36, w: 128, h: 26, nombre: '▶ Continuar' },
       cursos: { x: 16, y: 74, w: 182, h: 112, nombre: 'Cursos' },
       panel: { x: 210, y: 74, w: 94, h: 52, nombre: 'Mi panel' },
-      blender: { x: 210, y: 134, w: 94, h: 52, nombre: 'Mi Blender' },
+      blender: { x: 210, y: 134, w: 94, h: 52, nombre: 'Página Blender' },
     },
   },
   leccion: {

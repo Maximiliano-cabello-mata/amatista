@@ -4,7 +4,7 @@
 import { useAuth } from '../auth/contexto';
 import { useCatalogo } from '../catalogo/contexto';
 import { agruparPorRuta } from '../catalogo/agrupar';
-import AvisoGuia from '../components/AvisoGuia';
+import InvitacionRecorrido from '../components/InvitacionRecorrido';
 import { CristalLogo } from '../components/Iconos';
 import LogoCurso from '../components/LogoCurso';
 import TarjetaCurso from '../components/TarjetaCurso';
@@ -101,7 +101,7 @@ function Inicio() {
   return (
     <main className="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6 sm:pt-14">
       {/* Hero */}
-      <section className="animar-entrar grid items-center gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]" aria-labelledby="inicio-titulo">
+      <section className="animar-entrar grid items-center gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]" aria-labelledby="inicio-titulo" data-recorrido="hero">
         <div className="min-w-0">
           <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-neon">Ruta del creador 3D</p>
           <h1 id="inicio-titulo" className="text-4xl font-extrabold leading-[1.05] text-white sm:text-6xl">
@@ -153,7 +153,7 @@ function Inicio() {
         </div>
       </section>
 
-      <AvisoGuia className="mt-10" />
+      <InvitacionRecorrido className="mt-10" />
 
       {/* Propuesta de valor */}
       <ul className="mt-12 grid gap-3 sm:grid-cols-3" aria-label="Por qué Amatista">
@@ -173,7 +173,7 @@ function Inicio() {
       </ul>
 
       {/* Catálogo */}
-      <section className="revelar diferido mt-16" aria-labelledby="inicio-cursos">
+      <section className="revelar diferido mt-16" aria-labelledby="inicio-cursos" data-recorrido="cursos">
         <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Catálogo</p>
         <h2 id="inicio-cursos" className="mb-6 text-3xl font-extrabold text-white sm:text-4xl">
           Elige tu <span className="text-amatista-claro">curso</span>

@@ -1,7 +1,7 @@
 // Tarjeta de una sección del panel: etiqueta tipo HUD, título y una acción opcional a la derecha.
-function Seccion({ id, etiqueta, titulo, accion, children, className = '' }) {
+function Seccion({ id, etiqueta, titulo, accion, children, className = '', recorrido }) {
   return (
-    <section aria-labelledby={id} className={`corte-poly animar-entrar min-w-0 border border-white/10 bg-superficie/95 p-5 sm:p-6 ${className}`}>
+    <section aria-labelledby={id} data-recorrido={recorrido} className={`corte-poly animar-entrar min-w-0 border border-white/10 bg-superficie/95 p-5 sm:p-6 ${className}`}>
       <header className="mb-5 flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
         <div className="min-w-0">
           {etiqueta && <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-neon">{etiqueta}</p>}

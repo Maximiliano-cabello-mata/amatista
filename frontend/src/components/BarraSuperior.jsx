@@ -12,12 +12,13 @@ const PAGINAS_CURSOS = ['inicio', 'curso', 'leccion'];
 function enlacesDe(verAdmin) {
   const enlaces = [
     { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
+    { href: rutas.blender, texto: 'Blender', activo: (pagina) => pagina === 'blender' || pagina === 'vincular' },
     { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
   ];
-  // Estructura fija (v3.1): Cursos, Mi panel y, para el equipo, Admin.
-  // Blender ya no es una pestaña: cada módulo cierra con su práctica en
-  // Blender y la instalación vive en la práctica y en «Mi Blender». El
-  // diagnóstico técnico (#/laboratorio) se abre desde Admin › Estado.
+  // Estructura fija (auditoría 2026-10-11): Cursos, Blender, Mi panel y, para el equipo, Admin.
+  // Blender vuelve a ser una pestaña: es la mitad de Amatista (cómo se une con la plataforma,
+  // instalar, conocer el add-on y tus ajustes) y escondida en el menú de la cuenta no se encontraba.
+  // El diagnóstico técnico (#/laboratorio) se abre desde Admin › Estado.
   // En la vista de alumno el equipo no ve Admin (vuelve desde la franja de vista).
   if (verAdmin) enlaces.push({ href: rutas.admin, texto: 'Admin', activo: (pagina) => pagina === 'admin' });
   return enlaces;
@@ -123,18 +124,8 @@ function MenuCuenta({ usuario, alCerrarSesion }) {
               </a>
             </li>
             <li>
-              <a href={rutas.panel} onClick={() => setAbierto(false)} className="block px-3 py-2 text-sm text-white hover:bg-white/5">
-                Mi panel
-              </a>
-            </li>
-            <li>
-              <a href={rutas.blender} onClick={() => setAbierto(false)} className="block px-3 py-2 text-sm text-white hover:bg-white/5">
-                Mi Blender
-              </a>
-            </li>
-            <li>
               <a href={rutas.guia} onClick={() => setAbierto(false)} className="block px-3 py-2 text-sm text-white hover:bg-white/5">
-                Guía: cómo funciona Amatista
+                Ayuda y recorrido
               </a>
             </li>
             <li>
@@ -191,7 +182,7 @@ function BarraSuperior({ ruta, hash = '' }) {
           <span className="hidden text-xl font-extrabold tracking-[0.25em] text-white min-[440px]:inline">AMATISTA</span>
         </a>
 
-        <nav className="hidden md:block" aria-label="Principal">
+        <nav className="hidden md:block" aria-label="Principal" data-recorrido="menu">
           <ul className="flex items-center gap-1">
             {enlaces.map((enlace) => {
               const activo = enlace.activo(pagina);
@@ -216,13 +207,14 @@ function BarraSuperior({ ruta, hash = '' }) {
           <a
             href={rutas.guia}
             aria-current={pagina === 'guia' ? 'page' : undefined}
-            title="Guía: cómo funciona Amatista"
+            title="Ayuda: cómo funciona Amatista"
+            data-recorrido="ayuda"
             className={`corte-poly-sm grid h-8 w-8 place-items-center border font-mono text-sm font-bold transition-colors ${
               pagina === 'guia' ? 'border-neon bg-neon/15 text-neon' : 'border-white/10 bg-superficie/80 text-white/70 hover:border-neon hover:text-neon'
             }`}
           >
             <span aria-hidden="true">?</span>
-            <span className="sr-only">Guía: cómo funciona Amatista</span>
+            <span className="sr-only">Ayuda: cómo funciona Amatista</span>
           </a>
           <IndicadorXP xp={xp} nivel={nivel} />
           <EstadoConexion enLinea={enLinea} />
@@ -248,6 +240,7 @@ function BarraSuperior({ ruta, hash = '' }) {
           <button
             ref={botonMenu}
             type="button"
+            data-recorrido="menu"
             className="corte-poly-sm grid h-9 w-10 place-items-center border border-white/10 bg-superficie/80 text-white md:hidden"
             onClick={() => setMenuAbierto(!menuAbierto)}
             aria-expanded={menuAbierto}
@@ -303,20 +296,12 @@ function BarraSuperior({ ruta, hash = '' }) {
                     Perfil
                   </a>
                   <a
-                    href={rutas.blender}
-                    onClick={() => setMenuAbierto(false)}
-                    aria-current={pagina === 'blender' ? 'page' : undefined}
-                    className="corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest text-white/70 hover:text-neon"
-                  >
-                    Mi Blender
-                  </a>
-                  <a
                     href={rutas.guia}
                     onClick={() => setMenuAbierto(false)}
                     aria-current={pagina === 'guia' ? 'page' : undefined}
                     className="corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest text-white/70 hover:text-neon"
                   >
-                    Guía
+                    Ayuda
                   </a>
                   <button
                     type="button"

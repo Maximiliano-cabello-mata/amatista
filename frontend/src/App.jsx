@@ -7,6 +7,7 @@ import FondoLowPoly from './components/FondoLowPoly';
 import { CristalLogo, IconoCandado } from './components/Iconos';
 import Inicio from './pages/Inicio';
 import ProgresoProvider from './progreso/ProgresoProvider';
+import RecorridoProvider from './recorrido/RecorridoProvider';
 import { analizarRuta, rutaEntrar, rutas } from './rutas';
 import BarraVista from './vista/BarraVista';
 import VistaProvider from './vista/VistaProvider';
@@ -130,14 +131,16 @@ function App() {
         <VistaProvider>
         <CatalogoProvider>
           <ProgresoProvider>
-            <BarraSuperior ruta={ruta} hash={hash} />
-            <BarraVista pagina={ruta.pagina} />
-            <Suspense fallback={<Cargando />}>
-              {/* Cada cambio de página entra con un fundido corto (sin animación en modo ligero). */}
-              <div key={`${ruta.pagina}:${ruta.cursoId ?? ''}:${ruta.leccionId ?? ''}`} className="animar-pagina">
-                <Pagina ruta={ruta} hash={hash} />
-              </div>
-            </Suspense>
+            <RecorridoProvider>
+              <BarraSuperior ruta={ruta} hash={hash} />
+              <BarraVista pagina={ruta.pagina} />
+              <Suspense fallback={<Cargando />}>
+                {/* Cada cambio de página entra con un fundido corto (sin animación en modo ligero). */}
+                <div key={`${ruta.pagina}:${ruta.cursoId ?? ''}:${ruta.leccionId ?? ''}`} className="animar-pagina">
+                  <Pagina ruta={ruta} hash={hash} />
+                </div>
+              </Suspense>
+            </RecorridoProvider>
           </ProgresoProvider>
         </CatalogoProvider>
         </VistaProvider>

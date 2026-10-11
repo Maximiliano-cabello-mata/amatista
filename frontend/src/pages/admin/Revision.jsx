@@ -32,9 +32,9 @@ const MODOS = [
 
 const PAGINAS_ALUMNO = [
   { href: rutas.inicio, titulo: 'Portada y cursos', texto: 'Lo primero que ve un alumno: el catálogo y «Continuar».' },
-  { href: rutas.guia, titulo: 'Guía de primeros pasos', texto: 'La lección para alumnos nuevos: plataforma y add-on.' },
+  { href: rutas.guia, titulo: 'Ayuda y recorrido', texto: 'El recorrido guiado por la plataforma y las respuestas cortas para alumnos nuevos.' },
   { href: rutas.panel, titulo: 'Mi panel', texto: 'Avance, retos, exámenes, insignias y Blender.' },
-  { href: rutas.blender, titulo: 'Mi Blender', texto: 'Descarga del add-on, ajustes y Blender conectados.' },
+  { href: rutas.blender, titulo: 'Blender', texto: 'Cómo se une con la plataforma, descarga del add-on, las tres prácticas del add-on y ajustes.' },
   { href: rutas.vincular, titulo: 'Conectar Blender', texto: 'Donde se escribe el código que muestra Blender.' },
   { href: rutas.perfil, titulo: 'Perfil', texto: 'Datos de la cuenta, contraseña y sesiones.' },
 ];

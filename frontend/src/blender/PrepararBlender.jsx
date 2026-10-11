@@ -102,7 +102,7 @@ function PrepararBlender({ token }) {
         </Paso>
       </ol>
       <a href={rutas.blender} className="mt-2 inline-block font-mono text-[11px] uppercase tracking-widest text-white/45 hover:text-neon">
-        Más opciones y ayuda en Mi Blender ▸
+        Más opciones y ayuda en la página Blender ▸
       </a>
     </section>
   );

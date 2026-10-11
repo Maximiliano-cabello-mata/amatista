@@ -322,7 +322,7 @@ function TuBlender({ niveles }) {
         href={rutas.blender}
         className="corte-poly-sm destello shrink-0 bg-blender px-4 py-2.5 text-center font-mono text-xs font-bold uppercase tracking-widest text-base hover:brightness-110"
       >
-        {conectado ? 'Mi Blender ▸' : 'Conectar Blender ▸'}
+        {conectado ? 'Ir a Blender ▸' : 'Conectar Blender ▸'}
       </a>
     </aside>
   );
@@ -340,13 +340,13 @@ const PASOS_CURSO = [
 function ComoAvanzas({ conBlender }) {
   const pasos = conBlender ? PASOS_CURSO : PASOS_CURSO.filter((paso) => paso.titulo !== 'En Blender');
   return (
-    <section className="corte-poly-sm mt-8 border border-white/10 bg-superficie/90 p-4 sm:p-5" aria-labelledby="como-avanzas">
+    <section className="corte-poly-sm mt-8 border border-white/10 bg-superficie/90 p-4 sm:p-5" aria-labelledby="como-avanzas" data-recorrido="como-avanzas">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="como-avanzas" className="font-mono text-xs uppercase tracking-[0.25em] text-neon">
           Así avanzas en este curso
         </h2>
         <a href={rutas.guia} className="font-mono text-[11px] uppercase tracking-widest text-white/55 hover:text-neon">
-          ¿Primera vez? Ver la guía ▸
+          ¿Dudas? Ayuda ▸
         </a>
       </div>
       <ol className={`mt-3 grid gap-3 ${pasos.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
@@ -473,7 +473,7 @@ function Curso({ cursoId }) {
       {conBlender && <TuBlender niveles={ruta.niveles} />}
 
       {/* El nivel elegido */}
-      <section className="mt-10" aria-labelledby="nivel-titulo">
+      <section className="mt-10" aria-labelledby="nivel-titulo" data-recorrido="modulos">
         {varios && (
           <div className="mb-5">
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Nivel {ruta.niveles.indexOf(nivel) + 1}</p>
