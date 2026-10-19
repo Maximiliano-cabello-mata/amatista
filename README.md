@@ -30,22 +30,24 @@ El alumno avanza por cursos y módulos en una PWA. Cada módulo termina con una 
 
 ## 1. Estado actual
 
-Al 11 de octubre de 2026 (`main` con el PR #35: auditoría completa, recorrido guiado, página Blender, Amatista Motor 5.2 y el diseño «Facetas»):
+Actualizado: 18 de octubre de 2026 (contrastado con `main` en `abd9928`, PR #35 fusionado en `28b8772`: auditoría completa, recorrido guiado, página Blender, Amatista Motor 5.2 y el diseño «Facetas»):
 
 | Frente | Dónde está |
 |---|---|
-| **Plataforma v2.2** («Plataforma unificada») | En producción con Oracle. El piloto del 8 de octubre se hizo con ella. |
-| **Lo nuevo en `main` (v3, sin desplegar)** | Cursos de Blender por niveles, temáticas por módulo, seguridad y rendimiento, enlace en vivo con Blender (PR #24) y Amatista Motor 3.5.1 (PR #25 y #26). Se sube a producción siguiendo el [plan de despliegue](docs/despliegue/2026-10-05_plan_de_despliegue.md) (fase 1, T-078). |
-| **Amatista Engine** | **Motor 3.5** y add-on **Amatista Motor 3.5** (PR #25, y 3.5.1 en los PR #26 y #27): el ejemplo manda. Cada práctica trae su ejemplo resuelto en `example.steps` y el motor revisa la escena del alumno contra él con `example.matches`. Cada práctica abre en su propia escena de Blender, el motor reconoce la figura (`figure.recognize`) y su silueta (`figure.silhouette`), y la plataforma maneja Blender con un enlace en vivo. Son 42 validadores. Etapas 1 a 3, [modelo de referencia](docs/motor/referencia/10_modelo_de_referencia.md) y [el ejemplo y la revisión](docs/motor/referencia/14_ejemplo_y_revision.md). |
+| **Producción** | El repositorio conserva registros históricos de despliegue; esta revisión no verifica la VM ni Oracle. Confirmar versión y esquema con los endpoints de salud y `backend/diagnostico_oracle.py` antes de actualizar. |
+| **Lo nuevo en `main`** | Amatista Taller (motor 5), add-on Amatista Motor 5.2, recorrido guiado, página Blender y diseño «Facetas». [Despliegue y prerrequisitos](docs/despliegue/2026-10-11_auditoria_y_motor_5_2.md). La fusión del código no confirma su publicación en producción. |
+| **Amatista Engine y add-on** | Motor 5 (Amatista Taller): aprendizaje por habilidades con Mira, Hazlo conmigo, Hazlo tú, Úsalo y Recuérdalo. Add-on **Amatista Motor 5.2.0**: tres prácticas «Conoce Amatista Motor», iniciadas y seguidas desde la plataforma. Conserva prácticas, ejemplos y comprobaciones anteriores. [Taller](docs/motor/referencia/16_amatista_taller.md) · [Recorrido y enlace](docs/plataforma/11_recorrido_y_fusion.md). |
 | **Cursos de Blender** | Una tarjeta «Blender» con su árbol de niveles: **Principiante**, **Principiante-Intermedio** e **Intermedio** publicados (3 módulos cada uno, 18 prácticas en Blender) y **Avanzado** bloqueado. Teoría y Blender intercalados; cada módulo cierra con su práctica y un jefe final. [Ruta de aprendizaje](docs/cursos/03_ruta_de_aprendizaje_blender.md). |
 | **Temáticas por módulo** | Cada módulo es un mundo (escenario, partículas, colores) con un personaje original que acompaña la lección. [Herramientas gráficas](docs/plataforma/07_herramientas_graficas.md). |
 | **Seguridad y rendimiento** | Auditoría automática (1,449 ataques, 0 hallazgos), informe de rendimiento antes y después, add-on con integridad y marca de agua, PWA sin mapas de fuente. [Auditoría](docs/seguridad/01_auditoria_2026-10-05.md) · [informe](docs/rendimiento/2026-10-05_informe.md) · [protección del código](docs/seguridad/02_proteccion_del_codigo.md). |
 | **Dominio** | `amatista-3d.me`. Plan con Cloudflare: PWA en `amatista-3d.me` y API en `api.amatista-3d.me` (T-065), en la fase 2 del plan de despliegue. |
 | **Plataforma por módulos** | Estructura fija **Cursos · Blender · Mi panel · Admin**, con recorrido guiado y Ayuda. [Documentación](docs/plataforma/README.md) · [recorrido y fusión con Blender](docs/plataforma/11_recorrido_y_fusion.md). |
-| **Diseño «Facetas» (CSS v4.0)** | Todas las páginas con la misma anatomía: migas, encabezado facetado con borde de gema, títulos de sección y pie global; fondo low poly con destellos. [Plan del diseño](docs/diseno/2026-10-11_sistema_facetas.md). |
+| **Diseño «Facetas» (CSS v4.0)** | Piezas comunes de página: migas, encabezado facetado con borde de gema, títulos de sección y pie global, con las excepciones de portada, cuenta y lección descritas en el plan; fondo low poly con destellos. [Plan del diseño](docs/diseno/2026-10-11_sistema_facetas.md). |
 | **Auditoría del 11 de octubre** | 270 commits, tags, seguridad, todas las páginas y las 48 lecciones revisadas; 16 errores corregidos y 5 puntos abiertos. [Informe](docs/auditoria/2026-10-11_auditoria_completa.md). |
 
 Contenido: Blender Principiante, Principiante-Intermedio e Intermedio (9 módulos) y Módulo 1 de A-Frame publicados. Los módulos de Blender de la v2 están en `frontend/src/data/modulos/archivo/`.
+
+**Pendiente T-113:** probar en Blender con ventana las tres prácticas y el recorrido con un alumno nuevo. CI y Blender sin ventana no sustituyen esa prueba.
 
 ## 2. Cómo llegamos hasta aquí
 
@@ -132,7 +134,7 @@ amatista/
 ├── backend/       API FastAPI → docs/manual-del-codigo/03_backend.md
 │   ├── api/       auth, sesiones, progreso, eventos, admin, contenido, niveles, blender, addon, enlace
 │   ├── database/  conexión y modelos SQLAlchemy
-│   ├── sql/       scripts de Oracle 001–011 (orden en sql/LEEME.txt)
+│   ├── sql/       scripts de Oracle 001–012 (orden en sql/LEEME.txt)
 │   └── herramientas/  contenido.py, crear_admin.py, migrar.py, auditoria_seguridad.py, rendimiento.py, verificar_licencia.py
 ├── engine/        Amatista Engine, Python puro → docs/manual-del-codigo/04_motor_addon_y_practicas.md
 ├── addon/         add-on de Blender, constructor del .zip e instaladores por sistema
@@ -164,8 +166,9 @@ Oracle Autonomous Database 23ai en producción (esquema `ADMIN`); SQLite en desa
 | `009` | Archiva el curso `blender` de la v2 (no borra el progreso) |
 | `010` | Enlace en vivo con Blender: `ADDON_ENLACES` y `ADDON_AJUSTES` (con él son **20 tablas**) |
 | `011` | Detalle del instructor compartido entre procesos: `ADDON_ENLACES.DETALLE` (Motor 3.5.1) |
+| `012` | Amatista Taller: modelo por habilidad y `TALLERES_ALUMNO` (21 tablas) |
 
-Producción: 002, 003, 005 y 006 aplicados (14 tablas); 007, 008, 009, 010 y 011 después del piloto (T-055, T-064, T-087; 011 va con Amatista Motor 3.5.1, [correcciones 3.5.1](docs/despliegue/2026-10-09_correcciones_3_5_1.md)). Para cambiar de base algún día, `backend/herramientas/migrar.py` exporta e importa en JSONL y genera el esquema para PostgreSQL ([migración](docs/base-de-datos/03_migracion.md)). `backend/diagnostico_oracle.py` compara las tablas reales con las que espera el backend. Diagrama entidad-relación y cada columna: [esquema SQL](docs/base-de-datos/esquema.md).
+El esquema del código incluye `012_taller.sql`: añade `TALLERES_ALUMNO` y columnas del modelo por habilidad en `HABILIDADES_ALUMNO` (21 tablas). Los registros antiguos de producción no sustituyen una comprobación actual: ejecutar `python diagnostico_oracle.py` en la VM y aplicar las migraciones pendientes en el orden de `backend/sql/LEEME.txt` antes del backend. Esta revisión documental no confirma migraciones aplicadas. Para cambiar de base algún día, `backend/herramientas/migrar.py` exporta e importa en JSONL y genera el esquema para PostgreSQL ([migración](docs/base-de-datos/03_migracion.md)). `backend/diagnostico_oracle.py` compara las tablas reales con las que espera el backend. Diagrama entidad-relación y cada columna: [esquema SQL](docs/base-de-datos/esquema.md).
 
 ## 7. Tecnologías
 
@@ -174,7 +177,7 @@ Producción: 002, 003, 005 y 006 aplicados (14 tablas); 007, 008, 009, 010 y 011
 | PWA | React 19, Vite 8, Tailwind CSS 4, vite-plugin-pwa, IndexedDB, A-Frame 1.8, Vitest, ESLint |
 | API | FastAPI, Uvicorn, SQLAlchemy 2, python-oracledb, PBKDF2, SMTP, pytest |
 | Datos | Oracle Autonomous Database 23ai, SQLite, PL/SQL (`AMATISTA_AUTOR`) |
-| Blender | Blender 4.2+ (extensión, probada en 4.2 y 5.0), add-on Amatista Motor 3.5.1, Amatista Engine (Python puro); `bpy` para generar las imágenes de referencia |
+| Blender | Blender 4.2+ (extensión, probada en 4.2 y 5.0), add-on Amatista Motor 5.2.0, Amatista Engine (Python puro); `bpy` para generar las imágenes de referencia |
 | Servidor | VM de Oracle Cloud, systemd, Caddy y Cloudflare (HTTPS con certificado de origen) |
 | Proceso | GitHub, GitHub Actions (CI y tablero), commits firmados con SSH |
 
@@ -244,13 +247,13 @@ Todas, con cada opción y ejemplos: [manual del desarrollador](docs/desarrollado
 - **Commits**: `type(scope): descripción` ([convención](docs/guias/2026-09-27_convencion_commits.txt)), firmados con SSH.
 - **Tareas**: [`tablero/tareas.yml`](tablero/tareas.yml); las tarjetas se mueven con los commits (`T-xxx`, `cierra T-xxx`) y [KANBAN.md](KANBAN.md) se regenera solo.
 - **Bitácora**: cada sesión deja su registro en [`docs/bitacora/`](docs/bitacora/); las fallas, en el [registro de incidencias](docs/incidencias/README.md).
-- **Base de datos**: cambios de esquema solo con scripts nuevos y aditivos (`012` en adelante), ejecutados antes del código que los necesita.
+- **Base de datos**: cambios de esquema solo con scripts nuevos y aditivos (`013` en adelante), ejecutados antes del código que los necesita.
 
 Flujo completo y checklist antes de un PR: [flujo de trabajo](docs/desarrollador/05_flujo_de_trabajo.md).
 
 ## 11. Versiones
 
-Tags `v*` con `bash herramientas/crear-tags.sh` desde la computadora de Maximiliano (la nube no puede publicar tags). Publicados: `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.1`. Preparados en el script: `v2.2.0-alpha.2` y `v3.0.0-alpha.1` a `v3.0.0-alpha.9` (este último, `255d054`, el PR #24 con el Motor 3.4). Qué trajo cada una: [CHANGELOG.md](CHANGELOG.md).
+Tags verificados en GitHub el 18 de octubre de 2026: `v0.1.0`, `v1.0.0`, `v2.0.0`, `v2.0.1`, `v2.2.0-alpha.1`, `v2.2.0-alpha.2` y `v3.0.0-alpha.1` a `v3.0.0-alpha.10`. **Pendientes de publicar:** `v3.0.0-alpha.11` a `v3.0.0-alpha.15`, preparados en `herramientas/crear-tags.sh`. Alpha.15 apunta a `28b8772`, la fusión del PR #35; no incluye los cambios documentales posteriores del PR #36. Ejecutar el script crea tags locales; publicarlos requiere `git push origin --tags`. [CHANGELOG.md](CHANGELOG.md).
 
 ## 12. Qué sigue
 

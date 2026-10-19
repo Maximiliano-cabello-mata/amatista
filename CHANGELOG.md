@@ -11,9 +11,9 @@ Todas las versiones de Amatista. Formato basado en [Keep a Changelog](https://ke
 
 Pre-lanzamientos de la v2.2.0: `v2.2.0-alpha.1` (`f68c704`: cuentas, Oracle 20 GB, progreso adaptable,
 contenido administrable, lecciones interactivas y panel del alumno) y `v2.2.0-alpha.2` (`88dd539`: panel
-de administración; se publica con `crear-tags.sh`).
+de administración; publicado).
 
-Los tags hasta `v2.2.0-alpha.1` están publicados y firmados con SSH. `v2.2.0-alpha.2`, `v3.0.0-alpha.1` (`2337fd5`, reestructuración), `v3.0.0-alpha.2` (`ec849d8`, Amatista Engine etapa 1) y `v3.0.0-alpha.3` (`d004071`, motor etapa 2 y plataforma por módulos), `v3.0.0-alpha.4` (`fe209e0`), `alpha.5` (`34af6f3`), `alpha.6` (`191a888`), `alpha.7` (`927248c`), `alpha.8` (`2402549`, `main` al 5 de octubre), `alpha.9` (`255d054`, Motor 3.4), `alpha.10` (`1b26416`, ya publicado), `alpha.11` (`a9df7e9`, Motor 4.0), `alpha.12` (`48025f7`, Amatista Taller), `alpha.13` (`7d17f81`, guía y vista de administrador) `alpha.14` (`70064b2`, Motor 5.1) y `alpha.15` (`28b8772`, auditoría, Motor 5.2 y diseño «Facetas») ya están en `bash herramientas/crear-tags.sh` y se publican desde la computadora del usuario (ver `docs/guias/2026-10-01_versiones-y-tablero.txt`).
+Estado verificado el 18 de octubre de 2026: publicados los tags hasta `v3.0.0-alpha.10`; pendientes de publicación `alpha.11` a `alpha.15`. `v2.2.0-alpha.2`, `v3.0.0-alpha.1` (`2337fd5`, reestructuración), `v3.0.0-alpha.2` (`ec849d8`, Amatista Engine etapa 1) y `v3.0.0-alpha.3` (`d004071`, motor etapa 2 y plataforma por módulos), `v3.0.0-alpha.4` (`fe209e0`), `alpha.5` (`34af6f3`), `alpha.6` (`191a888`), `alpha.7` (`927248c`), `alpha.8` (`2402549`, `main` al 5 de octubre), `alpha.9` (`255d054`, Motor 3.4), `alpha.10` (`1b26416`, ya publicado), `alpha.11` (`a9df7e9`, Motor 4.0), `alpha.12` (`48025f7`, Amatista Taller), `alpha.13` (`7d17f81`, guía y vista de administrador), `alpha.14` (`70064b2`, Motor 5.1) y `alpha.15` (`28b8772`, auditoría, Motor 5.2 y diseño «Facetas») están definidos en `herramientas/crear-tags.sh`; el script omite los existentes y prepara localmente los pendientes, que después se publican desde la computadora del usuario (ver `docs/guias/2026-10-01_versiones-y-tablero.txt`).
 
 ## [Sin publicar]
 

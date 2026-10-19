@@ -2,7 +2,7 @@
 
 Toda la documentación del proyecto, ordenada por secciones. Cada sección dice para quién es y por dónde empezar.
 
-Actualizado: 10 de octubre de 2026 (`main` con los PR #25, #26 y #27 fusionados). Etapa vigente: **v3 «Reestructuración»**, con la integración de la plataforma y Blender en desarrollo.
+Actualizado: 18 de octubre de 2026 (`main` en `abd9928`, PR #35 fusionado en `28b8772`). Etapa vigente: **v3 «Reestructuración»**, con Amatista Taller, add-on 5.2 y diseño «Facetas» en el código; producción pendiente de verificación.
 
 > **¿Primera vez?** Lee el [README de la raíz](../README.md), luego la [cronología](historia/01_cronologia.md) y el [mapa del repositorio](manual-del-codigo/01_mapa_del_repositorio.md). Si vas a programar, sigue con el [manual del desarrollador](desarrollador/README.md).
 
@@ -19,7 +19,7 @@ Actualizado: 10 de octubre de 2026 (`main` con los PR #25, #26 y #27 fusionados)
 | 7 | [Herramientas de la plataforma](#7-herramientas-de-la-plataforma) | Quien quiere saber de qué está hecha | [Herramientas](herramientas-de-la-plataforma.md) |
 | 8 | [Operación y despliegue](#8-operación-y-despliegue) | Quien mantiene el servidor | [Plan de despliegue](despliegue/2026-10-05_plan_de_despliegue.md) |
 | 9 | [Dirección y decisiones](#9-dirección-y-decisiones) | Quien decide qué sigue | [Plan maestro v3](reestructuracion/00_plan_maestro.md) |
-| 10 | [Registros](#10-registros-bitácora-e-incidencias) | Quien busca qué pasó en una sesión o una falla | [Última bitácora](bitacora/2026-10-09_el_ejemplo_manda.md) |
+| 10 | [Registros](#10-registros-bitácora-e-incidencias) | Quien busca qué pasó en una sesión o una falla | [Última bitácora](bitacora/2026-10-18_revision_documental_pr_36.md) |
 
 Fuera de `docs/`: [PROYECTO.md](../PROYECTO.md) (prioridades y forma de trabajo), [KANBAN.md](../KANBAN.md) (tablero generado), [CHANGELOG.md](../CHANGELOG.md) (versiones) y los README de cada componente: [frontend](../frontend/README.md), [backend](../backend/README.md), [engine](../engine/README.md), [addon](../addon/README.md), [practices](../practices/README.md), [tablero](../tablero/README.md).
 
@@ -59,6 +59,7 @@ Carpeta [`cursos/`](cursos/README.md): los cuatro cursos de Blender (Principiant
 
 Carpeta [`motor/`](motor/README.md).
 
+- [Amatista Taller (motor 5)](motor/referencia/16_amatista_taller.md) · [Add-on 5.2 y recorrido](plataforma/11_recorrido_y_fusion.md).
 - Etapas: [1 · evalúa](motor/etapas/etapa-1.md) · [2 · acompaña paso a paso](motor/etapas/etapa-2.md) · [3 · enseña (motor v3, add-on 3.0)](motor/etapas/etapa-3.md) · [3.3 · modelo de referencia](motor/referencia/10_modelo_de_referencia.md) · [3.4 · reconocer figuras](motor/referencia/11_reconocer_figuras.md) · [3.5 · el ejemplo manda](motor/referencia/14_ejemplo_y_revision.md)
 - Referencia: [arquitectura](motor/referencia/01_arquitectura.md) · [formato de práctica](motor/referencia/02_formato_de_practica.md) · [add-on](motor/referencia/03_addon.md) · [instalación del alumno](motor/referencia/04_instalacion_alumno.md) · [API](motor/referencia/05_api.md) · [modo desarrollador](motor/referencia/06_modo_desarrollador.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md) · [prácticas v3 y herramientas de autor](motor/referencia/08_practicas_v3_y_herramientas.md) · [validadores](motor/referencia/09_validadores.md) · [modelo de referencia](motor/referencia/10_modelo_de_referencia.md) · [reconocer figuras](motor/referencia/11_reconocer_figuras.md) · [la plataforma maneja Blender](motor/referencia/12_plataforma_y_blender.md) · [instructor y silueta](motor/referencia/13_instructor_y_silueta.md) · [el ejemplo y la revisión](motor/referencia/14_ejemplo_y_revision.md)
 - [Especificaciones originales](motor/especificaciones/) (historia: el concepto antes del código)
@@ -100,6 +101,9 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 
 ## 8. Operación y despliegue
 
+- **[Auditoría, Motor 5.2 y Facetas](despliegue/2026-10-11_auditoria_y_motor_5_2.md)**: prerrequisitos SQL 010–012, diagnóstico, orden de actualización y prueba con ventana T-113 pendiente.
+- [Amatista Taller y SQL 012](despliegue/2026-10-10_amatista_taller_motor_5.md).
+
 - **[Plan de despliegue (5 de octubre)](despliegue/2026-10-05_plan_de_despliegue.md)**: el orden de trabajo desde hoy hasta HTTPS, por fases y sin tocar la VM antes del piloto.
 - [Auditoría de seguridad](seguridad/01_auditoria_2026-10-05.md), [protección del código del add-on](seguridad/02_proteccion_del_codigo.md) e [informe de rendimiento](rendimiento/2026-10-05_informe.md).
 - [Dominio amatista-3d.me con Cloudflare](despliegue/2026-10-04_dominio_amatista-3d.md): DNS, certificados, PWA en Pages, API detrás del proxy y apéndice Fly.io. Registro de la compra: [dominio y SSL](despliegue/2026-10-04_dominio_y_dns-v2.md).
@@ -118,6 +122,8 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 ## 10. Registros: bitácora e incidencias
 
 - **Bitácora** ([`bitacora/`](bitacora/)), de la más reciente a la más antigua:
+  - 18 oct: [revisión documental del PR #36](bitacora/2026-10-18_revision_documental_pr_36.md)
+  - 11 oct: [auditoría, orden y fusión del PR #35](bitacora/2026-10-11_auditoria_y_orden.md)
   - 10 oct: [renovación del repositorio](bitacora/2026-10-10_renovacion_del_repositorio.md)
   - 9 oct: [la plataforma maneja Blender (motor 3.4)](bitacora/2026-10-09_plataforma_y_blender_integrados.md) · [Blender como instructor (motor 3.5)](bitacora/2026-10-09_blender_como_instructor.md) · [el ejemplo manda (motor 3.5)](bitacora/2026-10-09_el_ejemplo_manda.md)
   - 5 oct: [seguridad, rendimiento y Motor 3.3](bitacora/2026-10-05_seguridad_rendimiento_motor.md) · [temáticas y Motor 3.2](bitacora/2026-10-05_temas_y_motor_3_2.md)
