@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-18 19:21 · `main` en `abd9928`
+Último commit: 2026-10-18 19:26 · `main` en `513590f`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -44,7 +44,7 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 | **T-009** Mi primer espacio 3D: lecciones 01–03 (entorno, navegar, seleccionar y transformar)<br><sub>v3.1.0 · contenido</sub> | **T-107** Recursos gráficos nuevos (recorrido por la pantalla, flujo de la conexión, ejes, demo de parámetros, Clasifica, ¿Verdad o mito?) intercalados en los 9 módulos de Blender y CSS de lecciones con más ritmo<br><sub>v3.3.0 · pwa</sub> |   | **T-051** Esqueleto del add-on (manifiesto 4.2+, preferencias, panel de la lección)<br><sub>v3.3.0 · blender</sub> |
 | **T-045** Mi primer espacio 3D: lecciones 04–05 (base de la habitación, guardar y recuperar)<br><sub>v3.1.0 · contenido</sub> | **T-108** Add-on 5.1: primeros pasos dentro de Blender (10 paradas que se comprueban solas) conectados en vivo con la lección por el latido y la orden «recorrido»<br><sub>v3.3.0 · motor</sub> |   | **T-053** Registrar verificaciones de versión desde Blender<br><sub>v3.3.0 · blender</sub> |
 | **T-046** Mi primer espacio 3D: lecciones 06–07 (mesa y primera edición de malla)<br><sub>v3.1.0 · contenido</sub> | **T-109** Probar los primeros pasos en Blender con ventana (barra N, orbitar, elegir y mover, tarjeta de Bip) con la lección abierta en la plataforma<br><sub>v3.3.0 · motor</sub> |   | **T-057** Motor etapa 2: guía paso a paso, «Hazlo conmigo» y acompañante en el add-on<br><sub>v3.3.0 · blender</sub> |
-| **T-047** Mi primer espacio 3D: lecciones 08–09 (lámpara, colores, cámara e iluminación)<br><sub>v3.1.0 · contenido</sub> | **T-114** Publicar los tags v3.0.0-alpha.11 a alpha.14 (y el de esta versión al fusionar) desde la computadora del usuario<br><sub>v3.3.0 · repo</sub> |   | **T-058** Práctica de Blender al cierre de cada módulo, etiquetas y herramientas nuevas en la plataforma<br><sub>v3.3.0 · pwa</sub> |
+| **T-047** Mi primer espacio 3D: lecciones 08–09 (lámpara, colores, cámara e iluminación)<br><sub>v3.1.0 · contenido</sub> | **T-114** Publicar los tags v3.0.0-alpha.11 a alpha.15 desde la computadora del usuario<br><sub>v3.3.0 · repo</sub> |   | **T-058** Práctica de Blender al cierre de cada módulo, etiquetas y herramientas nuevas en la plataforma<br><sub>v3.3.0 · pwa</sub> |
 | **T-048** Mi primer espacio 3D: lecciones 10–11 (error preparado, variante y rúbrica)<br><sub>v3.1.0 · contenido</sub> | **T-115** Sistema de diseño «Facetas» (CSS v4.0): anatomía de página común, migas, encabezado facetado, pie global y fondo low poly con destellos<br><sub>v3.3.0 · pwa</sub> |   | **T-062** Motor v3 y add-on 3.0: plan de estudios de Blender en dos cursos (6 prácticas con teoría, repaso y vigilantes)<br><sub>v3.3.0 · blender</sub> |
 | **T-010** Módulo 2 de A-Frame (cargar modelos GLB)<br><sub>v3.2.0 · pwa</sub> | **T-097** Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)<br><sub>v3.4.0 · pwa</sub> |   | **T-070** Curso de Blender unificado (una tarjeta por curso con árbol de niveles), teoría y Blender intercalados, Intermedio publicado, temáticas, jefe final y medallas<br><sub>v3.3.0 · pwa</sub> |
 | **T-011** Visor de modelos GLB en las lecciones<br><sub>v3.2.0 · pwa</sub> | **T-083** Examen final (jefe) calificado por el servidor: las respuestas dejan de viajar en el JavaScript de la PWA<br><sub>v3.4.0 · api</sub> |   | **T-074** Prácticas detectadas al arrancar el servidor, y temática completa por módulo: escenario animado, mascota original, jefe con silueta propia y add-on 3.2 con la misma temática<br><sub>v3.3.0 · pwa</sub> |
@@ -305,9 +305,9 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 - [ ] **T-113** Probar en Blender con ventana las tres prácticas «Conoce Amatista Motor» y el recorrido de la plataforma con un alumno nuevo · _pendiente_
   - ⏸️ Espera: Lo prueba el usuario después de actualizar el backend, publicar la PWA y reinstalar Amatista Motor 5.2
   - 🎯 Listo cuando: Un alumno nuevo hace el recorrido, instala el add-on y termina las tres prácticas sin ayuda; la página Blender las marca solas
-- [ ] **T-114** Publicar los tags v3.0.0-alpha.11 a alpha.14 (y el de esta versión al fusionar) desde la computadora del usuario · _en-progreso_ — commits: `6d79c51` (2026-10-11), `6296088` (2026-10-11)
+- [ ] **T-114** Publicar los tags v3.0.0-alpha.11 a alpha.15 desde la computadora del usuario · _en-progreso_ — commits: `6d79c51` (2026-10-11), `6296088` (2026-10-11)
   - ⏸️ Espera: La nube no puede publicar tags (403): bash herramientas/crear-tags.sh && git push origin --tags
-  - 🎯 Listo cuando: git ls-remote --tags origin muestra alpha.11 a alpha.14
+  - 🎯 Listo cuando: git ls-remote --tags origin muestra alpha.11 a alpha.15
 - [ ] **T-115** Sistema de diseño «Facetas» (CSS v4.0): anatomía de página común, migas, encabezado facetado, pie global y fondo low poly con destellos · _en-progreso_ — commits: `08707fc` (2026-10-11)
   - 🔎 Evidencia: Rama claude/auditoria-orden-plataforma-wfzu65 (PR #35)
   - 🎯 Listo cuando: docs/diseno/2026-10-11_sistema_facetas.md §8: todas las páginas interiores con migas, encabezado y pie; 0 desbordes a 390 px
