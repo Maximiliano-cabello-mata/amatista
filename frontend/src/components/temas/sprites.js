@@ -12,5 +12,9 @@ export const SPRITES = {
   galeria: ['..........', '...aaaa...', '..aaaaaa..', '.awkaaaaa.', '.aaaaaaaa.', '..assssaas', '...ssss..s', '..a.a..ss.', '..........', '..........'],
   portal: ['.a......a.', '.aa....aa.', '.aaaaaaaa.', '.akaaaaka.', '.aaaooaaa.', '..aaaaaa..', '..assssa..', '..assssa..', '..a.aa.a..', '..........'],
   estacion: ['.a........', '..a.......', '...aaaa...', '..asssaa..', '.aswksaaa.', 'oaasssaaa.', '..aaaaaas.', '...aassss.', '....a.a...', '...kk.kk..'],
+  maqueta: ['..........', '..aaaaaa..', '.asssssaa.', '.askssksa.', '.asssssaa.', '.asswwssa.', '.aaaaaaaa.', '..a....a..', '..a....a..', '.oo....oo.'],
+  museo: ['..........', '.....sss..', '....saaas.', '...sawwas.', '.k.saaaas.', 'kak.saas..', 'aaaaaaaa..', '.aaaaaaaao', '..........', '..........'],
+  feria: ['.ww....ww.', '.wk....kw.', '.aaaaaaaa.', 'aaaaaaaaaa', '.aswwwwsa.', '..aaaaaa..', '...s..s...', '...s..s...', '...s..s...', '..aa..aa..'],
+  orbita: ['...ssss...', '..saaaas..', '.saaaaaas.', '.akaaaaka.', '.aaaaaaaa.', '.aaoaaoaa.', '.a.a..a.a.', '.a.s..s.a.', '..s.aa.s..', '..........'],
   cristal: ['....ss....', '...saas...', '..saaaas..', '..akaaka..', '..aaaaaa..', '..saaaas..', '...saas...', '....aa....', '..........', '..........'],
 };

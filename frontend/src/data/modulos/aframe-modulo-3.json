@@ -1,0 +1,563 @@
+{
+  "module": {
+    "id": "mod_aframe_003",
+    "courseId": "crs_aframe_fundamentos",
+    "title": "Módulo 3: Modelos GLB y texturas",
+    "slug": "modulo-3-modelos-glb-aframe",
+    "description": "Lleva modelos de verdad a la web: qué es glTF, cómo se declaran y cargan los GLB, cómo exportarlos desde Blender (u otro programa) y cómo mantenerlos ligeros. Terminas montando tu galería de modelos.",
+    "estimatedTimeMinutes": 46,
+    "order": 3,
+    "curso": "aframe",
+    "insignia": "Curador de modelos",
+    "disciplinas": [
+      "modelado",
+      "diseno"
+    ],
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "af3_gancho",
+        "title": "glTF: el formato que viaja",
+        "slug": "gltf-el-formato",
+        "type": "theory_interactive",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Explicar qué es glTF/GLB y qué contiene.",
+          "habilidades": [
+            "af-gltf"
+          ],
+          "prerrequisitos": [
+            "af2_jefe"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Decir la diferencia entre .gltf y .glb."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Las primitivas no alcanzan para todo\nUna caja y una esfera sirven para empezar, pero un personaje, un árbol o una casa se modelan en un programa 3D (Blender, Maya, 3ds Max…) y se **exportan**. Para la web, el formato estándar es **glTF**, y su versión de un solo archivo es **GLB**.\n\nA glTF le dicen «el JPEG del 3D»: es abierto, compacto y lo entienden casi todos los programas y navegadores."
+          },
+          {
+            "type": "layers",
+            "title": "¿Qué viaja dentro de un .glb?",
+            "items": [
+              {
+                "title": "Mallas",
+                "text": "Los vértices y las caras de cada objeto."
+              },
+              {
+                "title": "Materiales",
+                "text": "Color, rugosidad y metalicidad (materiales PBR), como en Blender."
+              },
+              {
+                "title": "Texturas",
+                "text": "Las imágenes que se pegan sobre la malla."
+              },
+              {
+                "title": "Jerarquía",
+                "text": "Qué objeto es hijo de cuál, con su posición y giro."
+              },
+              {
+                "title": "Animaciones",
+                "text": "Movimientos guardados, como una puerta que se abre o un personaje que camina."
+              }
+            ],
+            "footer": "Un .gltf guarda lo mismo pero repartido en varios archivos (el .gltf, un .bin y las imágenes). El .glb lo junta todo: es el más cómodo para la web."
+          },
+          {
+            "type": "true_false",
+            "id": "af3_vf_gltf",
+            "title": "¿Verdad o mito?",
+            "statements": [
+              {
+                "text": "Un .glb puede traer las texturas dentro del mismo archivo.",
+                "answer": true,
+                "explanation": "Esa es su gran ventaja: un archivo, una descarga."
+              },
+              {
+                "text": "glTF solo lo puede exportar Blender.",
+                "answer": false,
+                "explanation": "Blender lo exporta de serie; 3ds Max también desde la versión 2023, y Maya con un complemento. Es un estándar abierto."
+              },
+              {
+                "text": "Un modelo pensado para la web debe tener la menor cantidad de polígonos que conserve su forma.",
+                "answer": true,
+                "explanation": "En la web y en los visores de VR cada polígono cuenta: menos polígonos, más fluidez."
+              },
+              {
+                "text": "Las primitivas de A-Frame se guardan como archivos .glb.",
+                "answer": false,
+                "explanation": "Las primitivas se crean en el navegador con código; un .glb es un modelo hecho fuera y cargado."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "af3_explora",
+        "title": "Cargar modelos con a-assets",
+        "slug": "cargar-modelos-a-assets",
+        "type": "theory_interactive",
+        "durationSeconds": 600,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Cargar modelos GLB con a-assets y gltf-model y colocarlos en metros.",
+          "habilidades": [
+            "af-assets",
+            "af-gltf"
+          ],
+          "prerrequisitos": [
+            "af3_gancho"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Declarar un modelo y usarlo dos veces."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Dos pasos: declarar y usar\n1. En `<a-assets>` declaras los archivos con `<a-asset-item id=\"…\" src=\"…\">`. A-Frame los descarga **antes** de mostrar la escena, así nada aparece a medias.\n2. En la entidad usas el componente `gltf-model=\"#id\"` para dibujar el modelo.\n\nAmatista trae tres modelos low poly hechos para el curso: `/modelos/cristal.glb`, `/modelos/arbol.glb` y `/modelos/casa.glb`. Funcionan incluso sin conexión."
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "code": "<a-scene background=\"color: #101018\">\n  <a-assets>\n    <a-asset-item id=\"arbol\" src=\"/modelos/arbol.glb\"></a-asset-item>\n    <a-asset-item id=\"casa\" src=\"/modelos/casa.glb\"></a-asset-item>\n  </a-assets>\n\n  <a-plane rotation=\"-90 0 0\" width=\"10\" height=\"10\" color=\"#1f3326\"></a-plane>\n  <a-light type=\"hemisphere\" color=\"#ffe9c9\" ground-color=\"#1f3326\" intensity=\"0.9\"></a-light>\n  <a-light type=\"directional\" position=\"-2 4 3\" intensity=\"0.6\"></a-light>\n\n  <a-entity gltf-model=\"#casa\" position=\"0 0 -4\"></a-entity>\n  <a-entity gltf-model=\"#arbol\" position=\"-1.8 0 -4.5\"></a-entity>\n  <a-entity gltf-model=\"#arbol\" position=\"1.9 0 -5\" scale=\"1.4 1.4 1.4\" rotation=\"0 60 0\"></a-entity>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "fill_blanks",
+            "id": "af3_huecos_asset",
+            "prompt": "Completa: declara el cristal y úsalo en la escena.",
+            "template": "<a-assets>\n  <[[a-asset-item]] id=\"cristal\" [[src]]=\"/modelos/cristal.glb\"></a-asset-item>\n</a-assets>\n<a-entity [[gltf-model]]=\"[[#cristal]]\"></a-entity>",
+            "code": true,
+            "explanation": "En `<a-assets>` va `<a-asset-item>` con su `src`; en la entidad, `gltf-model` apunta al `id` con `#`."
+          },
+          {
+            "type": "markdown_text",
+            "body": "### El modelo se trata como cualquier entidad\nCon `position`, `rotation` y `scale` lo colocas igual que una caja. Un modelo bien exportado tiene su **origen en la base**: con `position=\"0 0 -4\"` queda parado sobre el suelo.\n\nSi un modelo se ve enorme o diminuto, casi siempre es la escala con la que se exportó. Lo ideal es arreglarlo en el programa de origen (1 unidad = 1 metro); mientras tanto, `scale` lo corrige."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "af3_q_escala",
+            "question": "Cargaste un modelo y se ve 100 veces más grande que la escena. ¿Cuál es la causa más probable?",
+            "options": [
+              {
+                "id": "c",
+                "text": "Falta una luz en la escena",
+                "isCorrect": false
+              },
+              {
+                "id": "d",
+                "text": "El archivo es .glb en vez de .gltf",
+                "isCorrect": false
+              },
+              {
+                "id": "a",
+                "text": "Se exportó en centímetros y A-Frame lo lee en metros",
+                "isCorrect": true
+              },
+              {
+                "id": "b",
+                "text": "A-Frame no puede cargar modelos grandes",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "A-Frame mide en metros. Un modelo hecho en centímetros llega 100 veces más grande: corrígelo al exportar o con `scale=\"0.01 0.01 0.01\"`."
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "body": "Las texturas también se declaran en `<a-assets>`, con `<img id=\"madera\" src=\"madera.jpg\">`, y se usan con `material=\"src: #madera\"`. En las vistas de las lecciones solo se dibujan etiquetas `<a-…>`, así que aquí practicamos con modelos que traen el color dentro.",
+            "title": "Texturas"
+          }
+        ]
+      },
+      {
+        "id": "af3_practica",
+        "title": "De tu programa 3D a la web",
+        "slug": "de-tu-programa-a-la-web",
+        "type": "theory_interactive",
+        "durationSeconds": 600,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Preparar y exportar un modelo a GLB pensando en la web.",
+          "habilidades": [
+            "af-gltf",
+            "af-optimizar"
+          ],
+          "prerrequisitos": [
+            "af3_explora"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Nombrar tres ajustes de exportación.",
+            "Decir dos formas de aligerar un modelo."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### El camino de un modelo\nAquí se juntan los programas que enseña Amatista: modelas en **Blender** (o Maya, o 3ds Max), exportas a **GLB** y lo publicas en **A-Frame**. Lo que aprendiste en un curso sirve en el otro."
+          },
+          {
+            "type": "step_by_step",
+            "title": "Exportar a GLB desde Blender",
+            "steps": [
+              {
+                "title": "Aplica la escala",
+                "text": "Selecciona el modelo y pulsa Ctrl + A › Escala. Así 1 unidad sigue siendo 1 metro en la web."
+              },
+              {
+                "title": "Pon el origen en la base",
+                "text": "El punto naranja del objeto debe quedar en la base: será el punto que toca el suelo en A-Frame."
+              },
+              {
+                "title": "Archivo › Exportar › glTF 2.0",
+                "text": "Elige el formato **glTF Binario (.glb)** para que salga un solo archivo."
+              },
+              {
+                "title": "Incluye solo lo necesario",
+                "text": "Marca «Objetos seleccionados» y deja «+Y arriba» activado: convierte el Z de Blender en el Y de la web."
+              },
+              {
+                "title": "Aplica los modificadores",
+                "text": "En «Malla», activa «Aplicar modificadores»: así el Bisel o el Array viajan dentro del archivo."
+              },
+              {
+                "title": "Pruébalo",
+                "text": "Abre el .glb en el visor de tu sistema o cárgalo en el Estudio A-Frame antes de publicarlo."
+              }
+            ]
+          },
+          {
+            "type": "ordering",
+            "id": "af3_ordena_flujo",
+            "prompt": "Ordena el viaje de un modelo, del programa a la web",
+            "items": [
+              {
+                "id": "o1",
+                "text": "Modelar la pieza en Blender, Maya o 3ds Max"
+              },
+              {
+                "id": "o2",
+                "text": "Aplicar la escala y dejar el origen en la base"
+              },
+              {
+                "id": "o3",
+                "text": "Exportar como glTF binario (.glb)"
+              },
+              {
+                "id": "o4",
+                "text": "Declararlo en `<a-assets>` con `<a-asset-item>`"
+              },
+              {
+                "id": "o5",
+                "text": "Usarlo con `gltf-model` en una entidad"
+              }
+            ],
+            "explanation": "Primero se prepara el modelo, después se exporta y al final se declara y se usa en la escena."
+          },
+          {
+            "type": "markdown_text",
+            "body": "### Que pese poco\nEn un navegador de teléfono o en un visor de VR, cada modelo compite por memoria y por tiempo de dibujo. Un modelo «para la web» se cuida desde el origen."
+          },
+          {
+            "type": "classify",
+            "id": "af3_clasifica_rendimiento",
+            "question": "¿Ayuda o perjudica al rendimiento?",
+            "groups": [
+              {
+                "id": "ayuda",
+                "label": "Ayuda"
+              },
+              {
+                "id": "perjudica",
+                "label": "Perjudica"
+              }
+            ],
+            "items": [
+              {
+                "text": "Usar texturas de 1024 o 2048 píxeles",
+                "group": "ayuda"
+              },
+              {
+                "text": "Exportar con millones de polígonos «por si acaso»",
+                "group": "perjudica"
+              },
+              {
+                "text": "Reutilizar el mismo modelo varias veces",
+                "group": "ayuda"
+              },
+              {
+                "text": "Texturas de 8K en un objeto pequeño",
+                "group": "perjudica"
+              },
+              {
+                "text": "Comprimir la malla (Draco o meshopt) al exportar",
+                "group": "ayuda"
+              },
+              {
+                "text": "Dejar dentro objetos ocultos que nunca se ven",
+                "group": "perjudica"
+              }
+            ],
+            "explanation": "Menos polígonos, texturas del tamaño justo y modelos reutilizados: así la escena vuela incluso en un visor autónomo."
+          }
+        ]
+      },
+      {
+        "id": "af3_reto",
+        "title": "Reto: tu galería de modelos",
+        "slug": "reto-galeria",
+        "type": "code_interactive",
+        "durationSeconds": 900,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Montar una escena con varios modelos GLB reutilizados.",
+          "habilidades": [
+            "af-assets",
+            "af-gltf"
+          ],
+          "prerrequisitos": [
+            "af3_practica"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "La galería cumple las cinco condiciones."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Monta tu propia exposición\nArma una galería con los modelos de Amatista: decláralos una vez en `<a-assets>`, colócalos en la sala, ilumínalos y ponle un cartel. Usa al menos un modelo **dos veces** (con otra escala o giro): así aprovechas lo que ya se descargó."
+          },
+          {
+            "type": "code_challenge",
+            "id": "af3_reto_galeria",
+            "prompt": "Construye la galería: declara **dos o más** modelos en `<a-assets>`, usa `gltf-model` en **tres o más** entidades (apuntando a un `#id`), agrega una luz y un cartel con `<a-text>`.",
+            "language": "html",
+            "starter": "<a-scene background=\"color: #101018\">\n  <a-assets>\n    <!-- 1. Declara aquí tus modelos: /modelos/cristal.glb, /modelos/arbol.glb, /modelos/casa.glb -->\n  </a-assets>\n\n  <a-plane rotation=\"-90 0 0\" width=\"12\" height=\"12\" color=\"#1e1e1e\"></a-plane>\n\n  <!-- 2. Coloca tres o más modelos con gltf-model=\"#id\" -->\n\n  <!-- 3. Una luz y un cartel con a-text -->\n\n</a-scene>",
+            "checks": [
+              {
+                "selector": "a-scene a-assets a-asset-item",
+                "text": "Hay dos o más `<a-asset-item>` dentro de `<a-assets>`",
+                "min": 2
+              },
+              {
+                "selector": "a-scene a-asset-item",
+                "text": "Los modelos vienen de `/modelos/` y son `.glb`",
+                "attr": "src",
+                "contains": ".glb",
+                "min": 2
+              },
+              {
+                "selector": "a-scene [gltf-model^='#']",
+                "text": "Tres o más entidades usan `gltf-model=\"#id\"`",
+                "min": 3
+              },
+              {
+                "selector": "a-scene a-light",
+                "text": "La galería tiene al menos una luz"
+              },
+              {
+                "selector": "a-scene a-text",
+                "text": "Hay un cartel con `<a-text>` y su `value`",
+                "attr": "value"
+              }
+            ],
+            "solution": "<a-scene background=\"color: #101018\">\n  <a-assets>\n    <!-- 1. Declara aquí tus modelos: /modelos/cristal.glb, /modelos/arbol.glb, /modelos/casa.glb -->\n    <a-asset-item id=\"cristal\" src=\"/modelos/cristal.glb\"></a-asset-item>\n    <a-asset-item id=\"arbol\" src=\"/modelos/arbol.glb\"></a-asset-item>\n  </a-assets>\n\n  <a-plane rotation=\"-90 0 0\" width=\"12\" height=\"12\" color=\"#1e1e1e\"></a-plane>\n\n  <!-- 2. Coloca tres o más modelos con gltf-model=\"#id\" -->\n  <a-entity gltf-model=\"#cristal\" position=\"0 0 -4\"></a-entity>\n  <a-entity gltf-model=\"#arbol\" position=\"-2 0 -4.5\"></a-entity>\n  <a-entity gltf-model=\"#arbol\" position=\"2 0 -4.5\" scale=\"0.7 0.7 0.7\" rotation=\"0 90 0\"></a-entity>\n\n  <!-- 3. Una luz y un cartel con a-text -->\n  <a-light type=\"hemisphere\" color=\"#ffffff\" ground-color=\"#101018\" intensity=\"0.9\"></a-light>\n  <a-text value=\"Galería low poly\" align=\"center\" position=\"0 2.4 -4\" width=\"6\" color=\"#C39BD3\"></a-text>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "body": "¿Hiciste un modelo en el curso de Blender? Expórtalo como .glb y súbelo junto con tu página: con la misma línea `<a-asset-item>` lo verás en tu galería.",
+            "title": "Une tus cursos"
+          }
+        ]
+      },
+      {
+        "id": "af3_jefe",
+        "title": "Jefe: el Coleccionista de Polígonos",
+        "slug": "jefe-modulo-3-aframe",
+        "type": "exam",
+        "durationSeconds": 360,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Demostrar el flujo de modelos GLB hacia A-Frame.",
+          "habilidades": [
+            "af-gltf",
+            "af-assets",
+            "af-optimizar"
+          ],
+          "prerrequisitos": [
+            "af3_reto"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Aprobar con 80 % o más."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "q_af3_01",
+              "questionText": "¿Qué ventaja tiene un .glb frente a un .gltf?",
+              "options": [
+                {
+                  "id": "opt_c",
+                  "text": "No guarda materiales",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Lo puede abrir solo A-Frame",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "Junta malla, materiales y texturas en un solo archivo",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Solo funciona en realidad virtual",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Exacto: un archivo, una descarga.",
+              "feedbackIncorrect": "Repasa: los dos guardan lo mismo; cambia cuántos archivos."
+            },
+            {
+              "id": "q_af3_02",
+              "questionText": "¿Dónde se declaran los modelos para que se descarguen antes de mostrar la escena?",
+              "options": [
+                {
+                  "id": "opt_d",
+                  "text": "En el atributo `position`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "En `<a-assets>`, con `<a-asset-item>`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "En `<a-sky>`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "En el `<head>` con `<link>`",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "¡Bien! A-Frame espera a que carguen.",
+              "feedbackIncorrect": "Busca la etiqueta que precarga recursos."
+            },
+            {
+              "id": "q_af3_03",
+              "questionText": "Declaraste `<a-asset-item id=\"nave\" src=\"nave.glb\">`. ¿Cómo la muestras?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "`<a-entity gltf-model=\"#nave\">`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "`<a-nave>`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "`<a-entity src=\"nave\">`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "`<a-box model=\"nave\">`",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Correcto: `gltf-model` con el id y su `#`.",
+              "feedbackIncorrect": "El componente que dibuja modelos es `gltf-model`."
+            },
+            {
+              "id": "q_af3_04",
+              "questionText": "Al exportar desde Blender, ¿para qué sirve «+Y arriba»?",
+              "options": [
+                {
+                  "id": "opt_b",
+                  "text": "Duplica la altura del modelo",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Pone el modelo sobre el suelo",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Activa la compresión",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "Convierte el eje Z de Blender (arriba) en el Y de la web",
+                  "isCorrect": true
+                }
+              ],
+              "feedbackCorrect": "Así es: Blender usa Z arriba y glTF usa Y.",
+              "feedbackIncorrect": "Recuerda qué eje apunta arriba en cada programa."
+            },
+            {
+              "id": "q_af3_05",
+              "questionText": "Tu escena va lenta en el visor. ¿Qué cambio ayuda más?",
+              "options": [
+                {
+                  "id": "opt_c",
+                  "text": "Usar texturas de 8K",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Exportar cada modelo dos veces",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "Reducir polígonos y el tamaño de las texturas",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Agregar más luces",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "¡Eso es! Menos peso, más fluidez.",
+              "feedbackIncorrect": "Piensa en qué consume memoria y tiempo de dibujo."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

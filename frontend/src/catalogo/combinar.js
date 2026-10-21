@@ -16,6 +16,7 @@ export function normalizarModulo(modulo, indice) {
     numero: numeroDe(modulo.numero ?? modulo.contenido?.order, indice + 1),
     titulo: modulo.titulo ?? modulo.contenido?.title ?? `Módulo ${indice + 1}`,
     insignia: modulo.insignia ?? null,
+    disciplinas: Array.isArray(modulo.contenido?.disciplinas) ? modulo.contenido.disciplinas : undefined,
     // Un contenido sin lista de lecciones no se puede mostrar: queda como "Próximamente".
     contenido: Array.isArray(modulo.contenido?.lessons) ? modulo.contenido : null,
   };
@@ -48,7 +49,11 @@ export function combinarModulos(app = [], servidor = []) {
     }
     const previo = resultado[mismoNumero];
     if (!previo.contenido || nuevo.contenido) {
-      resultado[mismoNumero] = { ...nuevo, insignia: nuevo.insignia ?? previo.insignia ?? null };
+      resultado[mismoNumero] = {
+        ...nuevo,
+        insignia: nuevo.insignia ?? previo.insignia ?? null,
+        disciplinas: nuevo.disciplinas ?? previo.disciplinas ?? [],
+      };
     }
   });
   return resultado.sort((a, b) => a.numero - b.numero);

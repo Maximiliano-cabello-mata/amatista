@@ -1,0 +1,614 @@
+{
+  "module": {
+    "id": "mod_aframe_002",
+    "courseId": "crs_aframe_fundamentos",
+    "title": "Módulo 2: Construye tu escena",
+    "slug": "modulo-2-construye-tu-escena-aframe",
+    "description": "Entiende cómo piensa A-Frame: entidades y componentes, coordenadas en metros, padres e hijos, luces y materiales. Terminas armando una habitación low poly en la que se puede estar de pie.",
+    "estimatedTimeMinutes": 45,
+    "order": 2,
+    "curso": "aframe",
+    "insignia": "Escenógrafo web",
+    "disciplinas": [
+      "modelado",
+      "diseno"
+    ],
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "af2_gancho",
+        "title": "Todo es una entidad",
+        "slug": "todo-es-una-entidad",
+        "type": "theory_interactive",
+        "durationSeconds": 300,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Distinguir entidad, componente, propiedad y primitiva.",
+          "habilidades": [
+            "af-ecs"
+          ],
+          "prerrequisitos": [
+            "les_af_003"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Reescribir una primitiva como entidad con componentes."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### El secreto de A-Frame\nCada cosa que ves en una escena (una caja, una luz, la cámara, incluso el cielo) es una **entidad**: una etiqueta `<a-entity>`. Sola no hace nada; lo que la vuelve caja, luz o cámara son sus **componentes**, que se escriben como atributos.\n\nLas etiquetas como `<a-box>` o `<a-sphere>` se llaman **primitivas**: son atajos. Por dentro son una `<a-entity>` con los componentes ya puestos."
+          },
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "Entidad",
+                "definition": "Un objeto vacío de la escena: `<a-entity>`. Es el contenedor al que le agregas todo lo demás."
+              },
+              {
+                "term": "Componente",
+                "definition": "Una capacidad que le das a la entidad: `geometry` le da forma, `material` color, `light` la vuelve luz."
+              },
+              {
+                "term": "Propiedad",
+                "definition": "Un ajuste dentro de un componente: en `material=\"color: red; opacity: 0.5\"` hay dos propiedades."
+              },
+              {
+                "term": "Primitiva",
+                "definition": "Un atajo con componentes ya listos: `<a-box color=\"red\">` es una entidad con `geometry` de caja y `material` rojo."
+              }
+            ]
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "code": "<a-scene background=\"color: #1b1530\">\n  <!-- La primitiva (el atajo)… -->\n  <a-box position=\"-1 1 -3\" color=\"#9B59B6\"></a-box>\n\n  <!-- …y la misma caja escrita como entidad con componentes -->\n  <a-entity position=\"1 1 -3\"\n    geometry=\"primitive: box\"\n    material=\"color: #00E5FF\"></a-entity>\n\n  <a-plane rotation=\"-90 0 0\" width=\"6\" height=\"6\" color=\"#3a2f55\"></a-plane>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "quiz_inline",
+            "id": "af2_q_equivale",
+            "question": "¿Qué etiqueta dibuja exactamente lo mismo que `<a-sphere color=\"red\">`?",
+            "options": [
+              {
+                "id": "a",
+                "text": "`<a-entity geometry=\"primitive: sphere\" material=\"color: red\">`",
+                "isCorrect": true
+              },
+              {
+                "id": "b",
+                "text": "`<a-entity sphere=\"red\">`",
+                "isCorrect": false
+              },
+              {
+                "id": "c",
+                "text": "`<a-sphere-entity color=\"red\">`",
+                "isCorrect": false
+              },
+              {
+                "id": "d",
+                "text": "`<a-entity primitive=\"sphere\" color=\"red\">`",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "Una primitiva es solo un atajo: por dentro es una entidad con el componente `geometry` (la forma) y el componente `material` (el color)."
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "body": "Escribir con componentes parece más largo, pero es lo que te deja combinar cualquier cosa: una entidad puede ser a la vez una forma, una luz y algo que gira.",
+            "title": "¿Por qué importa?"
+          }
+        ]
+      },
+      {
+        "id": "af2_explora",
+        "title": "Coordenadas, metros y jerarquía",
+        "slug": "coordenadas-y-jerarquia",
+        "type": "theory_interactive",
+        "durationSeconds": 540,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Ubicar objetos con position, rotation y scale y agruparlos con padres.",
+          "habilidades": [
+            "af-coordenadas",
+            "af-jerarquia"
+          ],
+          "prerrequisitos": [
+            "af2_gancho"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Poner un objeto delante de la cámara.",
+            "Mover un grupo cambiando solo al padre."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Dónde está cada cosa\nA-Frame mide en **metros**. La cámara empieza en `0 1.6 0`: a 1.6 m del suelo, la altura de los ojos de una persona.\n\n- **X** va a la derecha.\n- **Y** va hacia arriba.\n- **Z** viene hacia ti: para poner algo **delante** de la cámara usas una Z **negativa**.\n\n`position` mueve, `rotation` gira (en grados, uno por eje) y `scale` estira o encoge (1 es el tamaño original)."
+          },
+          {
+            "type": "true_false",
+            "id": "af2_vf_coordenadas",
+            "title": "¿Verdad o mito?",
+            "statements": [
+              {
+                "text": "`position=\"0 0 -3\"` pone el objeto 3 metros delante de la cámara.",
+                "answer": true,
+                "explanation": "La cámara mira hacia la Z negativa, así que -3 está frente a ti."
+              },
+              {
+                "text": "En A-Frame el eje Z apunta hacia arriba, como en Blender.",
+                "answer": false,
+                "explanation": "En A-Frame (y en glTF) arriba es **Y**. Blender usa Z arriba: por eso el exportador glTF convierte los ejes."
+              },
+              {
+                "text": "`rotation` se escribe en grados.",
+                "answer": true,
+                "explanation": "`rotation=\"0 45 0\"` gira 45° alrededor del eje Y. En el código de three.js se usan radianes, pero en las etiquetas son grados."
+              },
+              {
+                "text": "`scale=\"2 2 2\"` hace el objeto el doble de grande.",
+                "answer": true,
+                "explanation": "Escala 1 es el tamaño original; 2 lo duplica en los tres ejes y 0.5 lo deja a la mitad."
+              }
+            ]
+          },
+          {
+            "type": "markdown_text",
+            "body": "### Padres e hijos\nUna entidad puede ir **dentro** de otra. El hijo se coloca **relativo a su padre**: si mueves o giras al padre, los hijos lo siguen. Así se arma una mesa: un padre invisible y, dentro, el tablero y las patas. Para mover la mesa entera cambias un solo `position`."
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "code": "<a-scene background=\"color: #15131c\">\n  <a-plane rotation=\"-90 0 0\" width=\"8\" height=\"8\" color=\"#2b2735\"></a-plane>\n  <a-light type=\"ambient\" intensity=\"0.6\"></a-light>\n  <a-light type=\"directional\" position=\"-1 3 2\" intensity=\"0.8\"></a-light>\n\n  <!-- La mesa: el padre está 3 m al frente y girado 30° -->\n  <a-entity position=\"0 0 -3\" rotation=\"0 30 0\">\n    <a-box position=\"0 0.75 0\" width=\"1.6\" height=\"0.08\" depth=\"0.9\" color=\"#C39BD3\"></a-box>\n    <a-box position=\"-0.7 0.37 -0.35\" width=\"0.08\" height=\"0.74\" depth=\"0.08\" color=\"#9B59B6\"></a-box>\n    <a-box position=\"0.7 0.37 -0.35\" width=\"0.08\" height=\"0.74\" depth=\"0.08\" color=\"#9B59B6\"></a-box>\n    <a-box position=\"-0.7 0.37 0.35\" width=\"0.08\" height=\"0.74\" depth=\"0.08\" color=\"#9B59B6\"></a-box>\n    <a-box position=\"0.7 0.37 0.35\" width=\"0.08\" height=\"0.74\" depth=\"0.08\" color=\"#9B59B6\"></a-box>\n  </a-entity>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "callout",
+            "variant": "reto",
+            "body": "Pulsa **Editar** y cambia el `rotation` del padre a `0 90 0`: la mesa entera gira y sus patas siguen en su lugar.",
+            "title": "Pruébalo"
+          },
+          {
+            "type": "classify",
+            "id": "af2_clasifica_atributos",
+            "question": "¿Qué hace cada atributo?",
+            "groups": [
+              {
+                "id": "mover",
+                "label": "Mueve"
+              },
+              {
+                "id": "girar",
+                "label": "Gira"
+              },
+              {
+                "id": "tamano",
+                "label": "Cambia el tamaño"
+              }
+            ],
+            "items": [
+              {
+                "text": "`position=\"2 0 -4\"`",
+                "group": "mover"
+              },
+              {
+                "text": "`rotation=\"-90 0 0\"`",
+                "group": "girar"
+              },
+              {
+                "text": "`scale=\"0.5 0.5 0.5\"`",
+                "group": "tamano"
+              },
+              {
+                "text": "`position=\"0 1.6 0\"`",
+                "group": "mover"
+              },
+              {
+                "text": "`rotation=\"0 180 0\"`",
+                "group": "girar"
+              },
+              {
+                "text": "`scale=\"1 3 1\"`",
+                "group": "tamano"
+              }
+            ],
+            "explanation": "`position` va en metros, `rotation` en grados y `scale` es un multiplicador: 1 deja el tamaño igual."
+          }
+        ]
+      },
+      {
+        "id": "af2_practica",
+        "title": "Luz, materiales y ambiente",
+        "slug": "luz-materiales-ambiente",
+        "type": "theory_interactive",
+        "durationSeconds": 600,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Elegir luces y materiales y dar ambiente con cielo y niebla.",
+          "habilidades": [
+            "af-luces",
+            "af-materiales"
+          ],
+          "prerrequisitos": [
+            "af2_explora"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Combinar una luz de relleno con una principal.",
+            "Hacer un material mate o metálico."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### La luz decide cómo se ve todo\nSin luces propias, A-Frame pone dos por defecto. En cuanto agregas una `<a-light>`, las de defecto se apagan y tú decides la iluminación."
+          },
+          {
+            "type": "matching",
+            "id": "af2_parejas_luces",
+            "prompt": "Une cada luz con su uso",
+            "pairs": [
+              {
+                "id": "p1",
+                "left": "`ambient`",
+                "right": "Ilumina todo por igual, sin sombras ni dirección"
+              },
+              {
+                "id": "p2",
+                "left": "`directional`",
+                "right": "Rayos paralelos, como el sol"
+              },
+              {
+                "id": "p3",
+                "left": "`point`",
+                "right": "Brilla en todas direcciones desde un punto, como un foco"
+              },
+              {
+                "id": "p4",
+                "left": "`spot`",
+                "right": "Un cono de luz, como una linterna o un reflector"
+              },
+              {
+                "id": "p5",
+                "left": "`hemisphere`",
+                "right": "Un color desde el cielo y otro desde el suelo"
+              }
+            ],
+            "explanation": "Lo habitual es una luz suave de relleno (`ambient` o `hemisphere`) y una luz principal que da forma (`directional`, `point` o `spot`)."
+          },
+          {
+            "type": "markdown_text",
+            "body": "### El material: de qué está hecho\nEl componente `material` (o los atributos de la primitiva) controla la superficie:\n\n- `color`: el color base.\n- `roughness`: 0 es un espejo pulido y 1 es mate.\n- `metalness`: 0 es plástico o madera y 1 es metal.\n- `opacity` con `transparent: true`: deja ver a través.\n- `flatShading: true`: cada cara se ve plana, el look **low poly** de Amatista.\n\nY el ambiente: `<a-sky>` envuelve la escena con un color o una imagen de 360°, y la **niebla** (`fog` en `<a-scene>`) funde lo lejano con el fondo."
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "code": "<a-scene fog=\"type: linear; color: #20152e; near: 3; far: 14\" background=\"color: #20152e\">\n  <a-plane rotation=\"-90 0 0\" width=\"30\" height=\"30\" color=\"#2b2240\"></a-plane>\n  <a-light type=\"hemisphere\" color=\"#d9c2ff\" ground-color=\"#20152e\" intensity=\"0.7\"></a-light>\n  <a-light type=\"spot\" position=\"0 4 -2\" angle=\"40\" intensity=\"1.6\" target=\"#joya\"></a-light>\n\n  <a-icosahedron id=\"joya\" position=\"0 1 -4\" radius=\"0.6\"\n    material=\"color: #9B59B6; roughness: 0.2; metalness: 0.3; flatShading: true\"></a-icosahedron>\n  <a-sphere position=\"-1.6 0.5 -4\" radius=\"0.5\" material=\"color: #00E5FF; roughness: 1\"></a-sphere>\n  <a-box position=\"1.6 0.5 -4\" material=\"color: #F5792A; metalness: 1; roughness: 0.3\"></a-box>\n  <a-cylinder position=\"0 0.5 -9\" radius=\"0.4\" height=\"1\" color=\"#C39BD3\"></a-cylinder>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "fill_blanks",
+            "id": "af2_huecos_material",
+            "prompt": "Completa el material: una esfera azul, mate y con caras planas.",
+            "template": "<a-sphere material=\"[[color]]: #00E5FF; [[roughness]]: 1; [[flatShading]]: true\"></a-sphere>",
+            "code": true,
+            "explanation": "`color` pone el color, `roughness: 1` la deja mate (sin brillo) y `flatShading: true` muestra cada cara plana."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "af2_q_luces",
+            "question": "Agregaste una `<a-light type=\"point\">` y de pronto todo lo que no está cerca se ve negro. ¿Por qué?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Al poner tu propia luz se apagan las de defecto: falta una luz de relleno (`ambient` o `hemisphere`)",
+                "isCorrect": true
+              },
+              {
+                "id": "b",
+                "text": "La luz `point` solo funciona en realidad virtual",
+                "isCorrect": false
+              },
+              {
+                "id": "c",
+                "text": "Las luces vuelven negros los materiales metálicos",
+                "isCorrect": false
+              },
+              {
+                "id": "d",
+                "text": "Hay que poner la luz dentro de `<a-sky>`",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "Las luces por defecto se quitan en cuanto agregas una. Una `ambient` suave o una `hemisphere` evita las zonas completamente negras."
+          }
+        ]
+      },
+      {
+        "id": "af2_reto",
+        "title": "Reto: tu habitación low poly",
+        "slug": "reto-habitacion",
+        "type": "code_interactive",
+        "durationSeconds": 900,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Componer una escena habitable con jerarquía, luces y materiales.",
+          "habilidades": [
+            "af-coordenadas",
+            "af-jerarquia",
+            "af-luces"
+          ],
+          "prerrequisitos": [
+            "af2_practica"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "La escena cumple las cinco condiciones del reto."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Arma un espacio que se sienta real\nVas a construir una habitación pequeña en la que se pueda estar de pie: suelo, paredes, un mueble hecho con partes y una iluminación pensada. Usa lo que viste: metros, padres e hijos, luces y materiales.\n\nCuando termines, ábrela en el [Estudio A-Frame](#/estudio) para seguir decorándola y descargarla."
+          },
+          {
+            "type": "code_challenge",
+            "id": "af2_reto_habitacion",
+            "prompt": "Construye la habitación: un **suelo** acostado, al menos **dos paredes**, una **mesa** hecha con un `<a-entity>` padre y tres o más cajas dentro, una luz `ambient` y otra luz principal.",
+            "language": "html",
+            "starter": "<a-scene background=\"color: #15131c\">\n  <!-- 1. El suelo: un plano acostado (rotation -90 en X) -->\n  <a-plane width=\"6\" height=\"6\" color=\"#2b2735\"></a-plane>\n\n  <!-- 2. Dos paredes (cajas delgadas o planos de pie) -->\n\n  <!-- 3. La mesa: un a-entity padre con el tablero y las patas dentro -->\n\n  <!-- 4. Las luces: una ambient y una principal -->\n\n</a-scene>",
+            "checks": [
+              {
+                "selector": "a-scene a-plane",
+                "text": "El suelo está acostado: `rotation=\"-90 0 0\"`",
+                "attr": "rotation",
+                "contains": "-90"
+              },
+              {
+                "selector": "a-scene > a-box, a-scene > a-plane",
+                "text": "Hay al menos tres superficies sueltas en la escena (el suelo y dos paredes)",
+                "min": 3
+              },
+              {
+                "selector": "a-scene a-entity > a-box",
+                "text": "La mesa: un `<a-entity>` con al menos tres `<a-box>` dentro",
+                "min": 3
+              },
+              {
+                "selector": "a-scene a-light",
+                "text": "Hay una luz de relleno: `type=\"ambient\"`",
+                "attr": "type",
+                "equals": "ambient"
+              },
+              {
+                "selector": "a-scene a-light",
+                "text": "Hay al menos dos luces",
+                "min": 2
+              }
+            ],
+            "solution": "<a-scene background=\"color: #15131c\">\n  <!-- 1. El suelo: un plano acostado (rotation -90 en X) -->\n  <a-plane rotation=\"-90 0 0\" width=\"6\" height=\"6\" color=\"#2b2735\"></a-plane>\n\n  <!-- 2. Dos paredes (cajas delgadas o planos de pie) -->\n  <a-box position=\"0 1.5 -3\" width=\"6\" height=\"3\" depth=\"0.1\" color=\"#3a2f55\"></a-box>\n  <a-box position=\"-3 1.5 0\" width=\"0.1\" height=\"3\" depth=\"6\" color=\"#33294a\"></a-box>\n\n  <!-- 3. La mesa: un a-entity padre con el tablero y las patas dentro -->\n  <a-entity position=\"0 0 -1.8\">\n    <a-box position=\"0 0.75 0\" width=\"1.4\" height=\"0.08\" depth=\"0.8\" color=\"#C39BD3\"></a-box>\n    <a-box position=\"-0.6 0.37 0\" width=\"0.08\" height=\"0.74\" depth=\"0.6\" color=\"#9B59B6\"></a-box>\n    <a-box position=\"0.6 0.37 0\" width=\"0.08\" height=\"0.74\" depth=\"0.6\" color=\"#9B59B6\"></a-box>\n  </a-entity>\n\n  <!-- 4. Las luces: una ambient y una principal -->\n  <a-light type=\"ambient\" intensity=\"0.5\"></a-light>\n  <a-light type=\"point\" position=\"0 2.6 -1\" intensity=\"1.2\" distance=\"8\"></a-light>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "body": "Una habitación se siente más grande si las paredes llegan a 2.5–3 m y la luz principal está cerca del techo, como una lámpara.",
+            "title": "Truco de escenógrafo"
+          }
+        ]
+      },
+      {
+        "id": "af2_jefe",
+        "title": "Jefe: el Arquitecto Desordenado",
+        "slug": "jefe-modulo-2-aframe",
+        "type": "exam",
+        "durationSeconds": 360,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Demostrar las bases de composición de escenas en A-Frame.",
+          "habilidades": [
+            "af-ecs",
+            "af-coordenadas",
+            "af-jerarquia",
+            "af-luces"
+          ],
+          "prerrequisitos": [
+            "af2_reto"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Aprobar con 80 % o más."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "q_af2_01",
+              "questionText": "¿Qué hace que una `<a-entity>` vacía se convierta en una caja roja?",
+              "options": [
+                {
+                  "id": "opt_b",
+                  "text": "Su `id`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Ponerla dentro de `<a-sky>`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Su `position`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "Sus componentes `geometry` y `material`",
+                  "isCorrect": true
+                }
+              ],
+              "feedbackCorrect": "Exacto: los componentes le dan forma y superficie.",
+              "feedbackIncorrect": "Repasa «Todo es una entidad»: la forma y el color son componentes."
+            },
+            {
+              "id": "q_af2_02",
+              "questionText": "Quieres un objeto 2 metros delante de la cámara, en el suelo. ¿Qué `position` usas?",
+              "options": [
+                {
+                  "id": "opt_c",
+                  "text": "`0 -2 0`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "`2 0 0`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "`0 0 -2`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "`0 0 2`",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Bien: la Z negativa está frente a la cámara.",
+              "feedbackIncorrect": "Recuerda: Z viene hacia ti, así que delante es Z negativa."
+            },
+            {
+              "id": "q_af2_03",
+              "questionText": "Un `<a-plane>` aparece de pie como una pared. ¿Cómo lo vuelves suelo?",
+              "options": [
+                {
+                  "id": "opt_d",
+                  "text": "`position=\"0 -90 0\"`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "`rotation=\"-90 0 0\"`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "`rotation=\"0 -90 0\"`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "`scale=\"0 1 1\"`",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "¡Eso es! Girarlo -90° en X lo acuesta.",
+              "feedbackIncorrect": "El plano nace de pie: hay que girarlo en el eje X."
+            },
+            {
+              "id": "q_af2_04",
+              "questionText": "Una silla está hecha con un padre y cuatro patas hijas. Mueves al padre 1 m a la derecha. ¿Qué pasa con las patas?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "Se mueven con él y conservan su lugar relativo",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Se quedan donde estaban",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Se separan el doble",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Desaparecen hasta recargar",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Correcto: los hijos se colocan relativos a su padre.",
+              "feedbackIncorrect": "Repasa la jerarquía: los hijos siguen al padre."
+            },
+            {
+              "id": "q_af2_05",
+              "questionText": "¿Qué luz se parece más al sol?",
+              "options": [
+                {
+                  "id": "opt_b",
+                  "text": "`point`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "`ambient`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "`spot`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "`directional`",
+                  "isCorrect": true
+                }
+              ],
+              "feedbackCorrect": "Así es: rayos paralelos desde una dirección.",
+              "feedbackIncorrect": "El sol está tan lejos que sus rayos llegan paralelos: eso es una luz direccional."
+            },
+            {
+              "id": "q_af2_06",
+              "questionText": "¿Qué propiedad del material da el aspecto low poly de caras planas?",
+              "options": [
+                {
+                  "id": "opt_c",
+                  "text": "`metalness: 1`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "`opacity: 0.5`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "`flatShading: true`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "`roughness: 0`",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "¡Perfecto! Cada cara se ve plana.",
+              "feedbackIncorrect": "Busca la propiedad que cambia cómo se sombrean las caras."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
