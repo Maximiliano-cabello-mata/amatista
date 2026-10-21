@@ -1,8 +1,11 @@
 // Markdown mínimo para las lecciones: títulos (###), párrafos, listas (-),
-// **negritas**, *cursivas* y `código`. Construye elementos de React:
-// nunca inserta HTML, así que el contenido no puede ejecutar código.
+// **negritas**, *cursivas*, `código` y [enlaces](#/estudio) a páginas de la
+// propia plataforma. Construye elementos de React: nunca inserta HTML, así
+// que el contenido no puede ejecutar código. Solo se enlaza a hashes «#/…»:
+// un enlace a otro sitio se muestra como texto.
 
-const PATRON_EN_LINEA = /(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
+const PATRON_EN_LINEA = /(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`|\[[^\]]+\]\([^)\s]+\))/g;
+const PATRON_ENLACE = /^\[([^\]]+)\]\(([^)\s]+)\)$/;
 
 function analizar(texto) {
   const bloques = [];
@@ -48,6 +51,16 @@ export function TextoEnLinea({ texto }) {
       );
     }
     if (/^\*[^*]+\*$/.test(parte)) return <em key={i}>{parte.slice(1, -1)}</em>;
+    const enlace = PATRON_ENLACE.exec(parte);
+    if (enlace) {
+      const [, texto, destino] = enlace;
+      if (!destino.startsWith('#/')) return texto;
+      return (
+        <a key={i} href={destino} className="font-semibold text-neon underline decoration-neon/40 underline-offset-4 hover:decoration-neon">
+          {texto}
+        </a>
+      );
+    }
     return parte;
   });
 }

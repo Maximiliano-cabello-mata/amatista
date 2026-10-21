@@ -2,6 +2,7 @@
 // plataforma, para llegar a cualquier lugar desde cualquier página. Abajo, la versión del add-on.
 import { useAuth } from '../../auth/contexto';
 import { NOMBRE_MOTOR } from '../../blender/logica';
+import { SOFTWARE } from '../../data/software';
 import { useRecorrido } from '../../recorrido/contexto';
 import { rutaEntrar, rutas } from '../../rutas';
 import { CristalLogo } from '../Iconos';
@@ -37,21 +38,24 @@ function PiePagina() {
             <span className="text-lg font-extrabold tracking-[0.25em] text-white">AMATISTA</span>
           </a>
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/55">
-            Aprende 3D creando: teoría corta en la plataforma y práctica guiada en Blender, incluso sin Internet.
+            Aprende 3D creando: modelado, diseño, animación y 3D para la web en varios programas, incluso sin Internet.
           </p>
-          <p className="mt-3 flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-white/40">
-            con <LogoCurso logo="blender" className="h-4 w-5" decorativo={false} /> y <LogoCurso logo="aframe" className="h-4 w-5" decorativo={false} />
+          <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-widest text-white/40">
+            hoy con <LogoCurso logo="blender" className="h-4 w-5" decorativo={false} /> y <LogoCurso logo="aframe" className="h-4 w-5" decorativo={false} />, y más en camino
           </p>
         </div>
         <Columna titulo="Aprender">
-          <li><a href={rutas.inicio} className={ENLACE}>Cursos</a></li>
-          <li><a href={rutas.curso('blender')} className={ENLACE}>Curso de Blender</a></li>
-          <li><a href={rutas.curso('aframe')} className={ENLACE}>Curso de A-Frame</a></li>
+          <li><a href={rutas.explorar} className={ENLACE}>Explorar todo el contenido</a></li>
+          {SOFTWARE.filter((s) => s.estado === 'disponible').map((s) => (
+            <li key={s.id}><a href={rutas.curso(s.ruta)} className={ENLACE}>Curso de {s.nombre}</a></li>
+          ))}
+          <li><a href={`${rutas.explorar}?buscar=1`} className={ENLACE}>Buscar un tema</a></li>
         </Columna>
-        <Columna titulo="Blender">
-          <li><a href={rutas.blender} className={ENLACE}>Cómo se une con la plataforma</a></li>
-          <li><a href={rutas.blender} className={ENLACE}>Descargar {NOMBRE_MOTOR}</a></li>
-          <li><a href={rutas.vincular} className={ENLACE}>Conectar con un código</a></li>
+        <Columna titulo="Herramientas">
+          {SOFTWARE.filter((s) => s.herramienta).map((s) => (
+            <li key={s.id}><a href={s.herramienta.href} className={ENLACE}>{s.herramienta.nombre.includes(s.nombre) ? s.herramienta.nombre : `${s.herramienta.nombre} para ${s.nombre}`}</a></li>
+          ))}
+          <li><a href={rutas.vincular} className={ENLACE}>Conectar Blender con un código</a></li>
         </Columna>
         <Columna titulo="Tu cuenta">
           <li><a href={rutas.panel} className={ENLACE}>Mi panel</a></li>
@@ -75,7 +79,7 @@ function PiePagina() {
       </div>
       <div className="border-t border-white/5">
         <p className="mx-auto flex max-w-6xl flex-wrap justify-between gap-2 px-4 py-4 font-mono text-[11px] uppercase tracking-widest text-white/35 sm:px-6">
-          <span>Amatista · plataforma offline-first de creación 3D</span>
+          <span>Amatista · plataforma multiplataforma de creación 3D</span>
           <span>{NOMBRE_MOTOR}</span>
         </p>
       </div>

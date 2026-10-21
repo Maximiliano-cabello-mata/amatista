@@ -1243,3 +1243,55 @@ html.ligero .recorrido__onda, html.ligero .flujo__paquete { display: none; }
   .recorrido__onda, .flujo__paquete { display: none; }
   * { transition-duration: 0.01ms !important; }
 }
+
+/* ==========================================================================
+   v4.1 · Multiplataforma y accesible (2026-10-21)
+   ========================================================================== */
+
+/* «Saltar al contenido»: invisible hasta que llega el foco del teclado (primer Tab). */
+.saltar-contenido {
+  position: fixed;
+  left: 1rem;
+  top: 0.75rem;
+  z-index: 60;
+  transform: translateY(-160%);
+  clip-path: polygon(var(--corte-sm) 0, 100% 0, 100% calc(100% - var(--corte-sm)), calc(100% - var(--corte-sm)) 100%, 0 100%, 0 var(--corte-sm));
+  background: var(--neon);
+  color: #121212;
+  padding: 0.65rem 1.1rem;
+  font-family: 'JetBrains Mono Variable', ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: transform 0.15s var(--curva-salida);
+}
+.saltar-contenido:focus-visible { transform: translateY(0); outline-offset: 2px; }
+
+/* Tarjeta del índice de Explorar: el filo superior toma el color del mundo del módulo. */
+.tarjeta-indice {
+  position: relative;
+  transition: border-color 0.2s, transform 0.2s var(--curva-salida);
+}
+.tarjeta-indice::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--tema-acento), transparent 80%);
+  opacity: 0.8;
+}
+.tarjeta-indice:hover, .tarjeta-indice:focus-within { border-color: color-mix(in srgb, var(--tema-acento) 55%, transparent); }
+@media (prefers-reduced-motion: no-preference) {
+  .tarjeta-indice:hover { transform: translateY(-2px); }
+}
+.tarjeta-indice summary { list-style: none; }
+.tarjeta-indice summary::-webkit-details-marker { display: none; }
+.tarjeta-indice summary::before { content: '▸ '; display: inline-block; transition: transform 0.15s; }
+.tarjeta-indice details[open] summary::before { transform: rotate(90deg); }
+
+/* Campos de búsqueda: sin la «x» gris del navegador sobre el fondo oscuro. */
+input[type='search']::-webkit-search-cancel-button { filter: invert(1) opacity(0.6); }
+
+/* Los saltos a un módulo o a una sección no quedan tapados por la barra fija. */
+h2[id^='modulo-'], [id^='explorar-'], [id^='software-'], #contenido { scroll-margin-top: 5.5rem; }
