@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "preview": "vite preview",
-    "ilustraciones": "node scripts/ilustraciones.mjs"
+    "ilustraciones": "node scripts/ilustraciones.mjs",
+    "modelos": "node scripts/modelos.mjs"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
