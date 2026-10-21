@@ -27,6 +27,8 @@ El motor de prácticas de Amatista: el alumno practica **dentro de Blender**, Am
 | 5.1 · Primeros pasos | Add-on 5.1: un recorrido de diez paradas dentro de Blender antes del primer taller (la pestaña N, la cuenta, orbitar, elegir y mover el cubo, la tarjeta, las pistas y el enlace) que se marcan solas. La lección «Tus primeros pasos en Blender» lo empieza, lo avanza y lo ve en vivo por el latido. El motor de los talleres no cambia. Sin SQL. | [referencia/17_primeros_pasos_en_blender.md](referencia/17_primeros_pasos_en_blender.md), [guía de actualización](../despliegue/2026-10-11_primeros_pasos_motor_5_1.md) |
 | 5.2 · Conoce Amatista Motor | Add-on 5.2: el recorrido pasa a tres prácticas cortas que explican todo el add-on (tu pestaña Amatista; muévete y usa tus herramientas; así te enseña el taller), empezadas y vistas en vivo desde la página Blender de la plataforma. Paradas que se comprueban solas, incluidos los botones del add-on. Sin SQL. | [plataforma/11_recorrido_y_fusion.md](../plataforma/11_recorrido_y_fusion.md), [guía de actualización](../despliegue/2026-10-11_auditoria_y_motor_5_2.md) |
 
+**Revisión del 21 de octubre de 2026:** [lo que le falta al motor](2026-10-21_lo_que_le_falta_al_motor.md) (probarlo con alumnos, una sola interfaz, menús en el idioma de Blender, UV/texturas/glTF y un adaptador para Maya o 3ds Max; T-120 a T-122).
+
 ## Referencia (estado actual)
 
 1. [Arquitectura](referencia/01_arquitectura.md): cómo encajan las piezas y por qué el servidor vuelve a evaluar.
