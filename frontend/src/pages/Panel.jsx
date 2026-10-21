@@ -15,6 +15,7 @@ import CursosPanel from '../components/panel/CursosPanel';
 import { tieneAvance } from '../components/panel/datos';
 import EncabezadoPanel from '../components/panel/EncabezadoPanel';
 import LogrosPanel from '../components/panel/LogrosPanel';
+import ProgramasPanel from '../components/panel/ProgramasPanel';
 import ExamenesPanel from '../components/panel/ExamenesPanel';
 import MuroInsignias from '../components/panel/MuroInsignias';
 import RetosPanel from '../components/panel/RetosPanel';
@@ -28,8 +29,8 @@ import { rutas } from '../rutas';
 const SECCIONES = [
   ['panel-continuar', 'Qué sigue'],
   ['panel-cursos', 'Cursos'],
+  ['panel-programas', 'Programas'],
   ['panel-retos', 'Retos'],
-  ['panel-blender', 'Blender'],
   ['panel-examenes', 'Exámenes'],
   ['panel-insignias', 'Insignias'],
 ];
@@ -71,6 +72,8 @@ function Panel() {
         <CursosPanel progreso={progreso} cursos={cursos} className="lg:col-span-2" />
         <RetosPanel progreso={progreso} hoy={hoy} className="lg:row-span-2" />
         <ActividadPanel progreso={progreso} hoy={hoy} className="lg:col-span-2" />
+        <ProgramasPanel progreso={progreso} cursos={cursos} className="diferido diferido--corto lg:col-span-3" />
+        {/* Las prácticas que se hacen en un programa (hoy, los talleres y proyectos de Blender). */}
         <BlenderPanel token={token} progreso={progreso} cursos={cursos} className="diferido diferido--corto lg:col-span-3" />
         <ExamenesPanel progreso={progreso} cursos={cursos} className="diferido diferido--corto lg:col-span-3" />
         <LogrosPanel progreso={progreso} cursos={cursos} hoy={hoy} className="diferido diferido--corto lg:col-span-3" />

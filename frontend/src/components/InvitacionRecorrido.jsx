@@ -20,7 +20,7 @@ function InvitacionRecorrido({ className = '' }) {
         <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-neon">¿Primera vez en Amatista?</p>
         <p className="font-bold text-white">Te muestro la plataforma en un minuto</p>
         <p className="mt-0.5 text-sm text-texto/70">
-          {TOTAL_RECORRIDO} paradas por las páginas de verdad: dónde están tus cursos, cómo se une Blender con la plataforma y dónde ves tu
+          {TOTAL_RECORRIDO} paradas por las páginas de verdad: dónde está todo el contenido, cómo se une cada programa con la plataforma y dónde ves tu
           avance. No es un curso ni cuenta para tu progreso.
         </p>
       </div>

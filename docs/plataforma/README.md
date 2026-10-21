@@ -16,7 +16,8 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 | [08 · Auditoría educativa (9 oct)](08_auditoria_educativa_2026-10-09.md) | Qué está bien, qué está fallando y qué se corrige primero en documentación y producto. |
 | [09 · Guía, vista de alumno y auditoría (10 oct)](09_guia_vista_y_auditoria.md) | La guía de primeros pasos para alumnos nuevos, las instrucciones en cada lección y curso, y para el equipo: vista de alumno o administrador, saltar a cualquier lección y la auditoría. |
 | [10 · Primeros pasos y recursos gráficos (11 oct)](10_primeros_pasos_y_recursos.md) | Los siete recursos gráficos nuevos intercalados en las lecciones y el CSS v3.7. Histórico: el curso «Primeros pasos con Amatista» y el recorrido del add-on 5.1 (retirados en el doc 11). |
-| [11 · Recorrido guiado, página Blender y «Conoce Amatista Motor» (11 oct)](11_recorrido_y_fusion.md) | **Vigente.** Cursos · Blender · Mi panel; el recorrido de 10 paradas por las páginas reales; la tarjeta de cómo se unen la plataforma y Blender; las tres prácticas del add-on 5.2; Ayuda y Mi panel. |
+| [11 · Recorrido guiado, página Blender y «Conoce Amatista Motor» (11 oct)](11_recorrido_y_fusion.md) | **Vigente** salvo la barra (ver 12): el recorrido de 10 paradas por las páginas reales; la tarjeta de cómo se unen la plataforma y Blender; las tres prácticas del add-on 5.2; Ayuda y Mi panel. |
+| [12 · Multiplataforma y accesible (21 oct)](12_multiplataforma_y_accesible.md) | **Vigente.** Inicio · Explorar · Mi panel; Explorar con buscador y filtros; el Estudio A-Frame; el curso de A-Frame con 5 módulos; accesibilidad y cómo se suma un programa nuevo (Maya, 3ds Max). |
 | [Diseño «Facetas» (11 oct)](../diseno/2026-10-11_sistema_facetas.md) | **Vigente.** La anatomía común de todas las páginas (migas, encabezado facetado, secciones y pie global), los cuatro anchos y el CSS v4.0 del tema low poly. |
 
 ![Un módulo con su práctica en Blender](img/modulo_ruta.svg)
@@ -63,3 +64,9 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 - **Tres herramientas nuevas:** Paso a paso, Atajos de teclado (con modo «Pruébate») y Comparar.
 - **Panel de administración por tareas:** Enseñanza (Módulos, Prácticas de Blender, Herramientas), Personas y Sistema, con una página de Herramientas que muestra cada bloque como lo ve el alumno.
 - **Sin cambios en Oracle.** Todo vive en el JSON de las lecciones y en el frontend; la única regla nueva (orden de la práctica) la valida el servidor.
+
+## Resumen de cambios (21 de octubre · multiplataforma)
+
+- **Blender deja de ser el centro**: Amatista enseña 3D (modelado, diseño, render, animación, interacción y XR) en varios programas. Hoy Blender y A-Frame; Maya y 3ds Max, próximamente.
+- **Barra Inicio · Explorar · Mi panel** (· Admin) y **Explorar** con todo el contenido en una sola página, buscador y filtros por programa y disciplina.
+- **A-Frame con 5 módulos** y el **Estudio A-Frame**. Detalle en [12](12_multiplataforma_y_accesible.md).

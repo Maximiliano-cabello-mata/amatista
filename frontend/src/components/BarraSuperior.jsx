@@ -7,17 +7,19 @@ import { navegar, rutaEntrar, rutas } from '../rutas';
 import { useVista } from '../vista/contexto';
 import { CristalLogo } from './Iconos';
 
-const PAGINAS_CURSOS = ['inicio', 'curso', 'leccion'];
+// Todo lo que se aprende vive en Explorar: el catálogo, los cursos, las lecciones y las
+// herramientas de cada programa (el add-on de Blender, el Estudio A-Frame).
+const PAGINAS_EXPLORAR = ['explorar', 'curso', 'leccion', 'blender', 'vincular', 'estudio'];
 
 function enlacesDe(verAdmin) {
   const enlaces = [
-    { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
-    { href: rutas.blender, texto: 'Blender', activo: (pagina) => pagina === 'blender' || pagina === 'vincular' },
+    { href: rutas.inicio, texto: 'Inicio', activo: (pagina) => pagina === 'inicio' },
+    { href: rutas.explorar, texto: 'Explorar', activo: (pagina) => PAGINAS_EXPLORAR.includes(pagina) },
     { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
   ];
-  // Estructura fija (auditoría 2026-10-11): Cursos, Blender, Mi panel y, para el equipo, Admin.
-  // Blender vuelve a ser una pestaña: es la mitad de Amatista (cómo se une con la plataforma,
-  // instalar, conocer el add-on y tus ajustes) y escondida en el menú de la cuenta no se encontraba.
+  // Estructura fija (multiplataforma, 2026-10-21): Inicio, Explorar, Mi panel y, para el equipo, Admin.
+  // Ningún programa tiene pestaña propia: Amatista enseña varios (Blender, A-Frame y los que vienen)
+  // y cada uno se encuentra en Explorar, con su curso y su herramienta (#/blender, #/estudio).
   // El diagnóstico técnico (#/laboratorio) se abre desde Admin › Estado.
   // En la vista de alumno el equipo no ve Admin (vuelve desde la franja de vista).
   if (verAdmin) enlaces.push({ href: rutas.admin, texto: 'Admin', activo: (pagina) => pagina === 'admin' });
@@ -204,6 +206,17 @@ function BarraSuperior({ ruta, hash = '' }) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <a
+            href={`${rutas.explorar}?buscar=1`}
+            title="Buscar en todo el contenido"
+            className="corte-poly-sm grid h-8 w-8 place-items-center border border-white/10 bg-superficie/80 text-white/70 transition-colors hover:border-neon hover:text-neon"
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+              <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" strokeWidth="2.2" />
+              <path d="M15.5 15.5L21 21" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+            </svg>
+            <span className="sr-only">Buscar en todo el contenido</span>
+          </a>
           <a
             href={rutas.guia}
             aria-current={pagina === 'guia' ? 'page' : undefined}

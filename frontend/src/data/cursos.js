@@ -3,7 +3,8 @@
 // servidor puede agregar o actualizar módulos (ver catalogo/combinar.js).
 //
 // Forma de un curso: {id, numero, titulo, subtitulo, descripcion, estado, nivel,
-// acento, ruta, recurso, modulos: [{id, numero, titulo, insignia, contenido}]}.
+// acento, ruta, recurso, modulos: [{id, numero, titulo, insignia, disciplinas, contenido}]}.
+// `disciplinas` son ids de data/software.js (DISCIPLINAS): con ellas se filtra #/explorar.
 // `contenido` es el `module` del JSON (lecciones incluidas) o null si el módulo
 // aún no se publica ("Próximamente").
 
@@ -31,9 +32,9 @@ const CURSOS_BASE = [
       url: 'https://www.blender.org/download/',
     },
     modulos: [
-      { titulo: 'La interfaz y navegación 3D', insignia: 'Maquinista 3D' },
-      { titulo: 'Modelado poligonal básico', insignia: 'Forjador low-poly' },
-      { titulo: 'Modificadores', insignia: 'Ingeniero de naves' },
+      { titulo: 'La interfaz y navegación 3D', insignia: 'Maquinista 3D', disciplinas: ['modelado'] },
+      { titulo: 'Modelado poligonal básico', insignia: 'Forjador low-poly', disciplinas: ['modelado'] },
+      { titulo: 'Modificadores', insignia: 'Ingeniero de naves', disciplinas: ['modelado'] },
     ],
   },
   {
@@ -52,9 +53,9 @@ const CURSOS_BASE = [
       url: 'https://www.blender.org/download/',
     },
     modulos: [
-      { titulo: 'Materiales y sombreado', insignia: 'Pintor de naves' },
-      { titulo: 'Iluminación y cámara', insignia: 'Director de foto' },
-      { titulo: 'Animación básica', insignia: 'Animador' },
+      { titulo: 'Materiales y sombreado', insignia: 'Pintor de naves', disciplinas: ['diseno'] },
+      { titulo: 'Iluminación y cámara', insignia: 'Director de foto', disciplinas: ['render'] },
+      { titulo: 'Animación básica', insignia: 'Animador', disciplinas: ['animacion'] },
     ],
   },
   {
@@ -73,9 +74,9 @@ const CURSOS_BASE = [
       url: 'https://www.blender.org/download/',
     },
     modulos: [
-      { titulo: 'Modelado con precisión', insignia: 'Arquitecto de puentes' },
-      { titulo: 'Organiza tu escena', insignia: 'Cartógrafo de escenas' },
-      { titulo: 'Render de portafolio', insignia: 'Curador de galería' },
+      { titulo: 'Modelado con precisión', insignia: 'Arquitecto de puentes', disciplinas: ['modelado'] },
+      { titulo: 'Organiza tu escena', insignia: 'Cartógrafo de escenas', disciplinas: ['modelado', 'diseno'] },
+      { titulo: 'Render de portafolio', insignia: 'Curador de galería', disciplinas: ['render'] },
     ],
   },
   {
@@ -91,20 +92,22 @@ const CURSOS_BASE = [
     acento: 'blender',
     ruta: 'blender',
     modulos: [
-      { titulo: 'Topología y retopología' },
-      { titulo: 'UV y texturas' },
-      { titulo: 'Nodos y primer rig' },
+      { titulo: 'Topología y retopología', disciplinas: ['modelado'] },
+      { titulo: 'UV y texturas', disciplinas: ['diseno'] },
+      { titulo: 'Nodos y primer rig', disciplinas: ['diseno', 'animacion'] },
     ],
   },
   {
+    // Segundo programa de la plataforma (multiplataforma, 2026-10-21): cinco
+    // módulos, de la primera escena a una experiencia WebXR publicada.
     id: 'aframe',
     numero: '05',
     titulo: 'A-Frame',
-    subtitulo: 'Mundos WebXR en el navegador',
+    subtitulo: 'Mundos 3D y WebXR en el navegador',
     descripcion:
-      'Lleva tus modelos a la web: crea escenas 3D con HTML, agrega interacción y visítalas en realidad virtual o aumentada.',
+      'Construye escenas 3D con HTML, carga tus modelos GLB, dales movimiento e interacción y publícalas como una experiencia de realidad virtual que se abre con un enlace.',
     estado: 'disponible',
-    nivel: 'Intermedio',
+    nivel: 'Principiante',
     acento: 'neon',
     ruta: 'aframe',
     recurso: {
@@ -112,10 +115,11 @@ const CURSOS_BASE = [
       url: 'https://aframe.io/docs/',
     },
     modulos: [
-      { titulo: 'La web en 3D', insignia: 'Arquitecto WebXR' },
-      { titulo: 'Cargar modelos GLB' },
-      { titulo: 'Interactividad' },
-      { titulo: 'Experiencias WebXR' },
+      { titulo: 'La web en 3D', insignia: 'Arquitecto WebXR', disciplinas: ['xr'] },
+      { titulo: 'Construye tu escena', insignia: 'Escenógrafo web', disciplinas: ['modelado', 'diseno'] },
+      { titulo: 'Modelos GLB y texturas', insignia: 'Curador de modelos', disciplinas: ['modelado', 'diseno'] },
+      { titulo: 'Animación e interacción', insignia: 'Titiritero digital', disciplinas: ['animacion', 'interaccion'] },
+      { titulo: 'Experiencias WebXR', insignia: 'Explorador XR', disciplinas: ['xr', 'interaccion'] },
     ],
   },
 ];
@@ -162,6 +166,7 @@ export function armarCatalogo(base, archivos) {
         numero,
         titulo: marcador.titulo,
         insignia: marcador.insignia ?? null,
+        disciplinas: marcador.disciplinas ?? [],
         contenido: null,
       });
     });
@@ -173,6 +178,7 @@ export function armarCatalogo(base, archivos) {
         numero,
         titulo: marcador?.titulo ?? tituloCorto(contenido.title),
         insignia: contenido.insignia ?? marcador?.insignia ?? null,
+        disciplinas: contenido.disciplinas ?? marcador?.disciplinas ?? [],
         contenido,
       });
     }

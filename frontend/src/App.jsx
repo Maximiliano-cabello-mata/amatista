@@ -16,6 +16,8 @@ import VistaProvider from './vista/VistaProvider';
 // Páginas bajo demanda: la pantalla de inicio carga rápido.
 // El laboratorio incluye A-Frame (~1.3 MB): solo se descarga si se visita.
 // El panel de administración solo lo descarga quien tiene permiso.
+const Explorar = lazy(() => import('./pages/Explorar'));
+const Estudio = lazy(() => import('./pages/Estudio'));
 const Curso = lazy(() => import('./pages/Curso'));
 const Leccion = lazy(() => import('./pages/Leccion'));
 const Laboratorio = lazy(() => import('./pages/Laboratorio'));
@@ -79,10 +81,10 @@ function RutaAdmin({ ruta, hash }) {
           </a>
         )}
         <a
-          href={rutas.inicio}
+          href={rutas.explorar}
           className="corte-poly-sm inline-block bg-white/5 px-6 py-3 font-extrabold uppercase tracking-widest text-white/80 hover:bg-white/10"
         >
-          ◂ Volver a los cursos
+          ◂ Volver al catálogo
         </a>
       </div>
     </main>
@@ -91,8 +93,12 @@ function RutaAdmin({ ruta, hash }) {
 
 function Pagina({ ruta, hash }) {
   switch (ruta.pagina) {
+    case 'explorar':
+      return <Explorar key={new URLSearchParams(ruta.consulta).toString()} consulta={ruta.consulta} />;
+    case 'estudio':
+      return <Estudio />;
     case 'curso':
-      return <Curso cursoId={ruta.cursoId} />;
+      return <Curso cursoId={ruta.cursoId} consulta={ruta.consulta} />;
     case 'leccion':
       return <Leccion cursoId={ruta.cursoId} leccionId={ruta.leccionId} />;
     case 'laboratorio':
@@ -122,11 +128,23 @@ function Pagina({ ruta, hash }) {
   }
 }
 
+// Las rutas son por hash: el enlace «Saltar al contenido» mueve el foco sin cambiar la página.
+function saltarAlContenido(evento) {
+  evento.preventDefault();
+  const contenido = document.getElementById('contenido');
+  contenido?.focus();
+  contenido?.scrollIntoView({ block: 'start' });
+}
+
 function App() {
   const { ruta, hash } = useRuta();
 
   return (
     <div className="flex min-h-screen flex-col">
+      {/* Accesibilidad: con el teclado, el primer Tab ofrece saltar la barra e ir directo al contenido. */}
+      <a href="#contenido" onClick={saltarAlContenido} className="saltar-contenido">
+        Saltar al contenido
+      </a>
       <FondoLowPoly />
       <AuthProvider>
         <VistaProvider>
@@ -137,7 +155,12 @@ function App() {
               <BarraVista pagina={ruta.pagina} />
               <Suspense fallback={<Cargando />}>
                 {/* Cada cambio de página entra con un fundido corto (sin animación en modo ligero). */}
-                <div key={`${ruta.pagina}:${ruta.cursoId ?? ''}:${ruta.leccionId ?? ''}`} className="animar-pagina flex-1">
+                <div
+                  key={`${ruta.pagina}:${ruta.cursoId ?? ''}:${ruta.leccionId ?? ''}`}
+                  id="contenido"
+                  tabIndex={-1}
+                  className="animar-pagina flex-1 outline-none"
+                >
                   <Pagina ruta={ruta} hash={hash} />
                 </div>
               </Suspense>

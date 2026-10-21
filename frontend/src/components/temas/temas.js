@@ -19,6 +19,10 @@ const CLASES = {
   galeria: { banda: 'from-amatista/35 via-fuchsia-500/15 to-transparent', texto: 'text-amatista-claro', borde: 'border-amatista-claro/40' },
   portal: { banda: 'from-neon/30 via-sky-500/15 to-transparent', texto: 'text-neon', borde: 'border-neon/40' },
   estacion: { banda: 'from-teal-300/30 via-neon/15 to-transparent', texto: 'text-teal-300', borde: 'border-teal-300/40' },
+  maqueta: { banda: 'from-green-400/30 via-emerald-600/15 to-transparent', texto: 'text-green-300', borde: 'border-green-300/40' },
+  museo: { banda: 'from-pink-400/30 via-fuchsia-600/15 to-transparent', texto: 'text-pink-300', borde: 'border-pink-300/40' },
+  feria: { banda: 'from-yellow-300/30 via-amber-500/15 to-transparent', texto: 'text-yellow-200', borde: 'border-yellow-200/40' },
+  orbita: { banda: 'from-blue-400/30 via-sky-600/15 to-transparent', texto: 'text-blue-300', borde: 'border-blue-300/40' },
   cristal: { banda: 'from-amatista/30 via-amatista-oscuro/30 to-transparent', texto: 'text-amatista-claro', borde: 'border-amatista/40' },
 };
 

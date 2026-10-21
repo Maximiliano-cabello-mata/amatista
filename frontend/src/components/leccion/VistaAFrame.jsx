@@ -3,6 +3,9 @@ import 'aframe';
 import { useEffect, useMemo, useRef } from 'react';
 
 const ETIQUETA_AFRAME = /^a-[a-z0-9-]+$/;
+// Atributos de <a-scene> que sí se copian (el cielo de color, la niebla y el cursor del
+// ratón para los clics). El resto de la escena la controla la vista.
+const ATRIBUTOS_ESCENA = ['background', 'fog', 'cursor', 'raycaster'];
 
 // Lee el código sin ejecutarlo (DOMParser crea un documento inerte) y se queda
 // solo con las entidades que están dentro de <a-scene>.
@@ -16,7 +19,8 @@ function analizarEscena(codigo) {
   if (!entidades.length) {
     return { error: 'Tu <a-scene> está vacía. Agrega una primitiva, por ejemplo <a-box>.' };
   }
-  return { entidades };
+  const atributos = ATRIBUTOS_ESCENA.filter((nombre) => escena.hasAttribute(nombre)).map((nombre) => [nombre, escena.getAttribute(nombre)]);
+  return { entidades, atributos };
 }
 
 // Copia segura: solo etiquetas <a-…> y ningún atributo "on…" (eventos).
@@ -53,9 +57,15 @@ function VistaAFrame({ ejecucion }) {
 
   useEffect(() => {
     if (!analisis.entidades || !escena.current) return;
-    const nodos = analisis.entidades.map(copiarSeguro);
-    nodos.forEach((nodo) => escena.current.appendChild(nodo));
-    return () => nodos.forEach((nodo) => nodo.remove());
+    const actual = escena.current;
+    // Cada copia entra a la escena antes de crear la siguiente: así `gltf-model="#id"`
+    // encuentra el <a-asset-item> de <a-assets>, que va primero.
+    const nodos = analisis.entidades.map((entidad) => actual.appendChild(copiarSeguro(entidad)));
+    analisis.atributos.forEach(([nombre, valor]) => actual.setAttribute(nombre, valor));
+    return () => {
+      nodos.forEach((nodo) => nodo.remove());
+      analisis.atributos.forEach(([nombre]) => actual.removeAttribute(nombre));
+    };
   }, [analisis]);
 
   return (

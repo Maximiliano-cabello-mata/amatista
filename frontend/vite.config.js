@@ -49,8 +49,9 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // Precache: la pantalla de cursos completa (HTML, JS, CSS, fuentes, íconos).
-        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // Precache: la pantalla de cursos completa (HTML, JS, CSS, fuentes, íconos) y los
+        // modelos GLB del curso de A-Frame (public/modelos, ~6 KB cada uno).
+        globPatterns: ['**/*.{js,css,html,svg,png,woff2,glb}'],
         // A-Frame (~1.3 MB) no se precachea: se guarda la primera vez que se usa
         // (laboratorio o vista 3D de una lección) y desde ahí funciona sin conexión.
         globIgnores: [

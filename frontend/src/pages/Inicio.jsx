@@ -1,50 +1,30 @@
-// Portada (#/): propuesta de valor, acceso directo a la siguiente lección,
-// catálogo de cursos, la fórmula con la que se aprende y la invitación a
-// crear cuenta. Todo sale del catálogo vigente y del progreso local.
+// Portada (#/): Amatista como plataforma de 3D multiplataforma (2026-10-21). Primero el hero
+// con el acceso directo a la siguiente lección; justo debajo, todo lo que hay a la vista: los
+// programas (Blender, A-Frame y los que vienen), las disciplinas y un buscador que lleva a
+// Explorar. Después los cursos, cómo se aprende y la invitación a crear cuenta. Todo sale del
+// catálogo vigente y del progreso local.
+import { useMemo, useState } from 'react';
 import { useAuth } from '../auth/contexto';
 import { useCatalogo } from '../catalogo/contexto';
 import { agruparPorRuta } from '../catalogo/agrupar';
+import { cifrasPorSoftware, modulosDelCatalogo } from '../catalogo/indice';
 import TituloSeccion from '../components/estructura/TituloSeccion';
 import InvitacionRecorrido from '../components/InvitacionRecorrido';
 import { CristalLogo } from '../components/Iconos';
 import LogoCurso from '../components/LogoCurso';
+import LogoSoftware from '../components/LogoSoftware';
 import TarjetaCurso from '../components/TarjetaCurso';
-import MundosModulos from '../components/temas/MundosModulos';
-import { cifrasCatalogo, cursosParaContinuar, tieneAvance } from '../components/panel/datos';
+import { cursosParaContinuar, tieneAvance } from '../components/panel/datos';
 import { FORMULA } from '../components/panel/formula';
-import { IconoDispositivo, IconoPuntero, IconoRacha } from '../components/panel/IconosPanel';
+import { IconoRacha } from '../components/panel/IconosPanel';
+import { DISCIPLINAS, SOFTWARE } from '../data/software';
 import { useProgreso } from '../progreso/contexto';
-import { rutaEntrar, rutas } from '../rutas';
-
-const RUTA = ['Blender', 'GLB', 'A-Frame', 'WebXR'];
-
-const PILARES = [
-  {
-    id: 'haciendo',
-    titulo: 'Aprendes haciendo',
-    texto: 'Cada módulo termina en algo tuyo: un modelo, una escena, un mundo para visitar en VR.',
-    Icono: ({ className }) => <LogoCurso logo="blender" className={className} />,
-    tono: '',
-  },
-  {
-    id: 'interactivo',
-    titulo: 'Interactivo',
-    texto: 'Manipulas escenas 3D, ordenas, emparejas y escribes código con respuesta al instante.',
-    Icono: IconoPuntero,
-    tono: 'text-neon',
-  },
-  {
-    id: 'offline',
-    titulo: 'Sin conexión',
-    texto: 'Instálala y sigue estudiando sin Internet: tu avance se sincroniza cuando vuelves.',
-    Icono: IconoDispositivo,
-    tono: 'text-amatista-claro',
-  },
-];
+import { navegar, rutaEntrar, rutaExplorar, rutas } from '../rutas';
 
 const BOTON = 'corte-poly-sm inline-flex items-center justify-center gap-2 px-6 py-3.5 text-center font-extrabold uppercase tracking-widest';
+const plural = (n, uno, varios) => `${n} ${n === 1 ? uno : varios}`;
 
-// Composición low poly del hero: el cristal al centro y los dos cursos orbitando.
+// Composición low poly del hero: el cristal al centro y los programas orbitando.
 function EmblemaHero() {
   return (
     <div className="relative mx-auto grid aspect-square w-full max-w-[13rem] place-items-center sm:max-w-[19rem]" aria-hidden="true">
@@ -57,18 +37,29 @@ function EmblemaHero() {
       <div className="hexagono absolute bottom-[12%] right-[2%] grid h-[24%] w-[27%] place-items-center bg-superficie">
         <LogoCurso logo="aframe" className="animar-flotar h-[52%] w-[52%] [animation-delay:-3s]" />
       </div>
+      <div className="hexagono absolute right-[4%] top-[8%] grid h-[17%] w-[19%] place-items-center bg-superficie/80 font-mono text-[10px] font-extrabold text-white/45 sm:text-xs">
+        +
+      </div>
     </div>
   );
 }
 
 // Llamado principal del hero: con avance lleva a la siguiente lección; sin
-// avance, a la primera lección del primer curso disponible.
+// avance, a la primera lección del primer curso disponible. Al lado, Explorar.
 function AccionesHero({ siguiente, hayAvance }) {
+  const explorar = (
+    <a href={rutas.explorar} className={`${BOTON} border border-white/15 bg-white/5 text-white/85 transition-colors hover:bg-white/10`}>
+      Explorar todo
+    </a>
+  );
   if (!siguiente) {
     return (
-      <a href={rutas.panel} className={`${BOTON} bg-amatista text-white transition-[filter] hover:brightness-110`}>
-        Ver mi panel ▸
-      </a>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+        {explorar}
+        <a href={rutas.panel} className={`${BOTON} bg-amatista text-white transition-[filter] hover:brightness-110`}>
+          Ver mi panel ▸
+        </a>
+      </div>
     );
   }
   const { curso, resumen } = siguiente;
@@ -82,73 +73,109 @@ function AccionesHero({ siguiente, hayAvance }) {
         ▶ {hayAvance ? 'Continuar' : 'Empezar ahora'}
         <span className="sr-only">: {leccion.title}</span>
       </a>
-      <a href={rutas.panel} className={`${BOTON} border border-white/15 bg-white/5 text-white/85 transition-colors hover:bg-white/10`}>
-        Mi panel
-      </a>
+      {explorar}
     </div>
   );
 }
 
-// Así está organizada Amatista: los tres lugares de la barra, como áreas del producto.
-const LUGARES = [
-  {
-    id: 'cursos',
-    ante: 'Aprende la idea',
-    titulo: 'Cursos',
-    texto: 'Lecciones cortas e interactivas, ordenadas en niveles y módulos. Cada módulo cierra en Blender y con un jefe final.',
-    href: rutas.curso('blender'),
-    accion: 'Ver el curso de Blender',
-    tono: 'text-neon',
-  },
-  {
-    id: 'blender',
-    ante: 'Hazla en Blender',
-    titulo: 'Blender',
-    texto: 'Amatista Motor vive dentro de Blender, te guía paso a paso y le cuenta a la plataforma lo que haces, en vivo.',
-    href: rutas.blender,
-    accion: 'Conectar Blender',
-    tono: 'text-blender',
-  },
-  {
-    id: 'panel',
-    ante: 'Mira cómo avanzas',
-    titulo: 'Mi panel',
-    texto: 'Lo que sigue, tu nivel, tu racha, tus exámenes y tus insignias. Con cuenta, todo queda guardado en la nube.',
-    href: rutas.panel,
-    accion: 'Abrir Mi panel',
-    tono: 'text-amatista-claro',
-  },
-];
-
-function TresLugares() {
+// Busca desde la portada: lleva a Explorar con la búsqueda puesta.
+function BuscadorPortada() {
+  const [texto, setTexto] = useState('');
+  const enviar = (evento) => {
+    evento.preventDefault();
+    navegar(rutaExplorar({ q: texto.trim() }));
+  };
   return (
-    <section className="revelar diferido mt-16" aria-labelledby="inicio-lugares">
+    <form role="search" onSubmit={enviar} className="flex gap-2">
+      <label htmlFor="portada-buscar" className="sr-only">
+        Buscar en todo el contenido
+      </label>
+      <input
+        id="portada-buscar"
+        type="search"
+        value={texto}
+        onChange={(evento) => setTexto(evento.target.value)}
+        placeholder="¿Qué quieres aprender? Ej.: luz, GLB, animación"
+        className="corte-poly-sm min-w-0 flex-1 border border-white/15 bg-black/30 px-4 py-3 text-white placeholder:text-white/40 focus:border-neon"
+      />
+      <button type="submit" className="corte-poly-sm shrink-0 bg-amatista px-5 font-mono text-xs font-bold uppercase tracking-widest text-white hover:brightness-110">
+        Buscar
+      </button>
+    </form>
+  );
+}
+
+// Todo lo que hay, a la vista desde el inicio: un mosaico por programa y las disciplinas.
+function MapaContenido({ cursos }) {
+  const modulos = useMemo(() => modulosDelCatalogo(cursos), [cursos]);
+  const cifras = useMemo(() => cifrasPorSoftware(modulos), [modulos]);
+  return (
+    <section className="mt-14" aria-labelledby="inicio-mapa" data-recorrido="cursos">
       <TituloSeccion
-        id="inicio-lugares"
+        id="inicio-mapa"
         className="mb-6"
-        antetitulo="Así está organizada"
+        antetitulo="Todo Amatista, a la vista"
         titulo={
           <>
-            Tres lugares, <span className="text-amatista-claro">un solo producto</span>
+            Un lugar para aprender <span className="text-amatista-claro">todo el 3D</span>
           </>
         }
-        descripcion="Todo lo que haces en Amatista está en uno de estos tres lugares, siempre arriba en la barra."
+        descripcion="Modelado, diseño, animación y 3D para la web, en varios programas. Elige uno o busca un tema: todo el contenido está a un clic."
+        accion={
+          <a href={rutas.explorar} className="font-mono text-xs font-bold uppercase tracking-widest text-neon hover:underline">
+            Ver todo el catálogo ▸
+          </a>
+        }
       />
-      <ol className="grid gap-4 md:grid-cols-3">
-        {LUGARES.map((lugar, i) => (
-          <li key={lugar.id} className="borde-gema corte-poly elevar">
-            <a href={lugar.href} className="corte-poly group flex h-full flex-col p-5 sm:p-6">
-              <span className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.25em]">
-                <span className={lugar.tono}>{lugar.ante}</span>
-                <span className="text-white/30">0{i + 1}</span>
-              </span>
-              <span className="mt-2 text-2xl font-extrabold text-white">{lugar.titulo}</span>
-              <span className="mt-2 flex-1 text-sm leading-relaxed text-texto/75">{lugar.texto}</span>
-              <span className={`mt-4 font-mono text-xs font-bold uppercase tracking-widest ${lugar.tono} group-hover:underline`}>{lugar.accion} ▸</span>
-            </a>
-          </li>
-        ))}
-      </ol>
+      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {SOFTWARE.map((software) => {
+          const c = cifras[software.id];
+          const disponible = software.estado === 'disponible';
+          return (
+            <li key={software.id}>
+              <a
+                href={rutaExplorar({ software: software.id })}
+                className={`corte-poly-sm elevar group flex h-full flex-col border p-4 ${
+                  disponible ? 'border-white/10 bg-superficie/90 hover:border-neon' : 'border-dashed border-white/15 bg-superficie/50'
+                }`}
+              >
+                <span className="flex items-center gap-3">
+                  <span className="hexagono grid h-12 w-14 shrink-0 place-items-center bg-black/40">
+                    <LogoSoftware software={software} className="h-7 w-8 text-xs" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-lg font-extrabold text-white">{software.nombre}</span>
+                    <span className={`block font-mono text-[10px] uppercase tracking-widest ${disponible ? 'text-neon' : 'text-amber-200'}`}>
+                      {disponible ? `${plural(c.publicados, 'módulo', 'módulos')} · ${plural(c.lecciones, 'lección', 'lecciones')}` : 'En preparación'}
+                    </span>
+                  </span>
+                </span>
+                <span className="mt-3 flex-1 text-sm leading-snug text-texto/75">{software.lema}</span>
+                <span className="mt-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white/60 group-hover:text-neon">
+                  {disponible ? 'Ver sus módulos ▸' : 'Ver qué enseñará ▸'}
+                </span>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
+        <BuscadorPortada />
+        <ul className="flex flex-wrap gap-2" aria-label="Explorar por disciplina">
+          {DISCIPLINAS.map((disciplina) => (
+            <li key={disciplina.id}>
+              <a
+                href={rutaExplorar({ disciplina: disciplina.id })}
+                title={disciplina.texto}
+                className="corte-poly-sm inline-block border border-white/10 bg-superficie/80 px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-widest text-white/70 hover:border-neon hover:text-neon"
+              >
+                {disciplina.nombre}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }
@@ -159,36 +186,41 @@ function Inicio() {
   const { usuario } = useAuth();
   const hayAvance = tieneAvance(progreso);
   const [siguiente] = cursosParaContinuar(progreso, cursos);
-  const cifras = cifrasCatalogo(cursos);
   // Un curso por tarjeta: los niveles de Blender viven dentro de su tarjeta.
   const tarjetas = agruparPorRuta(cursos);
+  const modulos = useMemo(() => modulosDelCatalogo(cursos).filter((m) => m.publicado), [cursos]);
+  const lecciones = modulos.reduce((suma, m) => suma + m.lecciones, 0);
 
   return (
     <main className="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6 sm:pt-14">
       {/* Hero */}
       <section className="animar-entrar grid items-center gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]" aria-labelledby="inicio-titulo" data-recorrido="hero">
         <div className="min-w-0">
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-neon">Ruta del creador 3D</p>
+          <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-neon">Plataforma de 3D multiplataforma</p>
           <h1 id="inicio-titulo" className="text-4xl font-extrabold leading-[1.05] text-white sm:text-6xl">
-            Aprende 3D <span className="text-amatista-claro">creando</span>, no mirando.
+            Aprende 3D <span className="text-amatista-claro">creando</span>, en el programa que elijas.
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-texto/80">
-            Modela en Blender, lleva tus creaciones a la web con A-Frame y visítalas en realidad virtual. Lecciones cortas e
+            Modelado, diseño, animación y 3D para la web. Hoy con Blender y A-Frame; Maya y 3ds Max vienen en camino. Lecciones cortas e
             interactivas, desde el navegador e incluso sin Internet.
           </p>
 
-          <ol className="mt-6 flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-wider" aria-label="Flujo de trabajo">
-            {RUTA.map((paso, i) => (
-              <li key={paso} className="flex items-center gap-2">
-                <span className="corte-poly-sm border border-white/10 bg-superficie/80 px-3 py-1.5 text-white/80">{paso}</span>
-                {i < RUTA.length - 1 && (
-                  <span className="text-amatista" aria-hidden="true">
-                    ▸
-                  </span>
-                )}
+          <ul className="mt-6 flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-wider" aria-label="Programas">
+            {SOFTWARE.map((software) => (
+              <li key={software.id}>
+                <a
+                  href={rutaExplorar({ software: software.id })}
+                  className={`corte-poly-sm flex items-center gap-2 border px-3 py-1.5 hover:border-neon hover:text-neon ${
+                    software.estado === 'disponible' ? 'border-white/10 bg-superficie/80 text-white/80' : 'border-dashed border-white/15 text-white/50'
+                  }`}
+                >
+                  <LogoSoftware software={software} className="h-4 w-5 text-[9px]" />
+                  {software.nombre}
+                  {software.estado !== 'disponible' && <span className="text-[10px] text-white/40">pronto</span>}
+                </a>
               </li>
             ))}
-          </ol>
+          </ul>
 
           <div className="mt-8">
             <AccionesHero siguiente={siguiente} hayAvance={hayAvance} />
@@ -205,9 +237,9 @@ function Inicio() {
           <EmblemaHero />
           <dl className="mx-auto mt-4 grid max-w-sm grid-cols-3 gap-2 text-center">
             {[
-              ['Cursos', tarjetas.length],
-              ['Módulos', cifras.modulos],
-              ['Lecciones', cifras.lecciones],
+              ['Programas', SOFTWARE.length],
+              ['Módulos', modulos.length],
+              ['Lecciones', lecciones],
             ].map(([etiqueta, valor]) => (
               <div key={etiqueta} className="corte-poly-sm border border-white/10 bg-superficie/80 px-2 py-2.5">
                 <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">{etiqueta}</dt>
@@ -220,36 +252,20 @@ function Inicio() {
 
       <InvitacionRecorrido className="mt-10" />
 
-      {/* Propuesta de valor */}
-      <ul className="mt-12 grid gap-3 sm:grid-cols-3" aria-label="Por qué Amatista">
-        {PILARES.map(({ id, titulo, texto, Icono, tono }, i) => (
-          <li
-            key={id}
-            className="corte-poly-sm animar-entrar flex gap-3 border border-white/10 bg-superficie/80 p-4"
-            style={{ animationDelay: `${150 + i * 80}ms` }}
-          >
-            <Icono className={`h-9 w-9 shrink-0 ${tono}`} />
-            <div className="min-w-0">
-              <p className="font-bold text-white">{titulo}</p>
-              <p className="mt-0.5 text-sm leading-snug text-texto/70">{texto}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <MapaContenido cursos={cursos} />
 
-      <TresLugares />
-
-      {/* Catálogo */}
-      <section className="revelar diferido mt-16" aria-labelledby="inicio-cursos" data-recorrido="cursos">
+      {/* Cursos */}
+      <section className="revelar diferido mt-16" aria-labelledby="inicio-cursos">
         <TituloSeccion
           id="inicio-cursos"
           className="mb-6"
-          antetitulo="Catálogo"
+          antetitulo="Cursos"
           titulo={
             <>
               Elige tu <span className="text-amatista-claro">curso</span>
             </>
           }
+          descripcion="Un curso por programa, con sus niveles y módulos dentro. Cada módulo es un mundo con su guía y su jefe final."
         />
         {tarjetas.length ? (
           <div className="grid gap-6 md:grid-cols-2">
@@ -260,22 +276,6 @@ function Inicio() {
         ) : (
           <p className="text-texto/75">Aún no hay cursos publicados. Vuelve pronto.</p>
         )}
-      </section>
-
-      {/* Un mundo por módulo */}
-      <section className="revelar diferido mt-16" aria-labelledby="inicio-mundos">
-        <TituloSeccion
-          id="inicio-mundos"
-          className="mb-6"
-          antetitulo="Un mundo por módulo"
-          titulo={
-            <>
-              Cada módulo, una <span className="text-amatista-claro">aventura</span>
-            </>
-          }
-          descripcion="Un escenario distinto, un guía que te da consejos y datos curiosos, y un jefe final que pierde vida con cada respuesta correcta."
-        />
-        <MundosModulos cursos={cursos} />
       </section>
 
       {/* La fórmula Amatista */}

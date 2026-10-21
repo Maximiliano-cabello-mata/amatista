@@ -392,18 +392,32 @@ function NivelProximo({ curso }) {
   );
 }
 
-function Curso({ cursoId }) {
+// Con ?modulo=N (enlace desde Explorar) la página baja hasta ese módulo al abrirse.
+function useIrAModulo(cursoId, numero) {
+  useEffect(() => {
+    if (!numero) return undefined;
+    const cuadro = requestAnimationFrame(() => {
+      const titulo = document.getElementById(`modulo-${cursoId}-${numero}`);
+      titulo?.scrollIntoView({ block: 'start' });
+    });
+    return () => cancelAnimationFrame(cuadro);
+  }, [cursoId, numero]);
+}
+
+function Curso({ cursoId, consulta }) {
   const { progreso } = useProgreso();
   const { cursos } = useCatalogo();
   const { revision } = useVista();
   const encontrado = buscarRuta(cursos, cursoId);
+  const nivelElegido = encontrado?.nivel ?? null;
+  useIrAModulo(nivelElegido?.id ?? cursoId, consulta?.modulo);
 
   if (!encontrado) {
     return (
       <main className="mx-auto max-w-3xl px-4 py-16 text-center">
         <p className="text-xl text-white">No encontramos este curso.</p>
-        <a href={rutas.inicio} className="mt-4 inline-block text-neon">
-          ◂ Volver a los cursos
+        <a href={rutas.explorar} className="mt-4 inline-block text-neon">
+          ◂ Ver todo el catálogo
         </a>
       </main>
     );
@@ -424,7 +438,7 @@ function Curso({ cursoId }) {
   return (
     <Pagina
       ancho="contenido"
-      migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Cursos', href: rutas.inicio }, { texto: ruta.titulo }]}
+      migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Explorar', href: rutas.explorar }, { texto: ruta.titulo }]}
       encabezado={{
         tono: conBlender ? 'blender' : 'neon',
         icono: <LogoCurso logo={ruta.logo} className="animar-flotar h-12 w-14" decorativo={false} />,
