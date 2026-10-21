@@ -640,6 +640,49 @@ tareas:
     area: pwa
     aceptacion: "docs/diseno/2026-10-11_sistema_facetas.md §8: todas las páginas interiores con migas, encabezado y pie; 0 desbordes a 390 px"
     evidencia: "Rama claude/auditoria-orden-plataforma-wfzu65 (PR #35)"
+  - id: T-116
+    titulo: "Plataforma multiplataforma: catálogo por programa y disciplina, página Explorar con buscador y filtros, barra Inicio · Explorar · Mi panel sin pestaña de Blender, portada y Mi panel por programa, accesibilidad (saltar al contenido, foco, aria-live)"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "Todo el contenido (cursos, módulos y lecciones) se encuentra desde #/explorar en una sola pantalla, con filtros que quedan en la dirección; Maya y 3ds Max aparecen como próximos; 0 desbordes a 390 px; vitest, lint y build en verde"
+    evidencia: "frontend/src/data/software.js; frontend/src/catalogo/indice.js; frontend/src/pages/Explorar.jsx; docs/plataforma/12_multiplataforma_y_accesible.md"
+  - id: T-117
+    titulo: "Estudio A-Frame (#/estudio): editor libre con vista en vivo, plantillas, piezas para insertar, descarga de la página y modelos GLB low poly propios que funcionan sin conexión"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "Las cinco plantillas se ven sin errores en Chromium, los modelos cargan sin red, la descarga abre sola en el navegador"
+    evidencia: "frontend/src/pages/Estudio.jsx; frontend/src/estudio/plantillas.js; frontend/scripts/modelos.mjs; frontend/public/modelos/"
+  - id: T-118
+    titulo: "Curso de A-Frame ampliado: módulos 2 a 5 (escena, modelos GLB y texturas, animación e interacción, WebXR) con reto de código, jefe final, temática y mascota propia por módulo"
+    version: v3.3.0
+    area: contenido
+    aceptacion: "Los cuatro módulos validan con herramientas/contenido.py validar; cada solución de reto pasa y cada código inicial falla en Chromium; temas en practices/blender/temas.json con nombres de mascota únicos"
+    evidencia: "frontend/src/data/modulos/aframe-modulo-2.json a -5.json; frontend/src/data/aframe.test.js"
+  - id: T-119
+    titulo: "Importar los módulos 2 a 5 de A-Frame en Oracle y publicar la PWA multiplataforma en producción"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-116, T-117, T-118]
+    aceptacion: "docs/despliegue/2026-10-21_multiplataforma.md: importar sin errores, el catálogo de /api trae los cinco módulos de A-Frame y #/explorar los lista"
+    bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-120
+    titulo: "Revisión del motor de Blender: qué le falta para el alumno"
+    version: v3.3.0
+    area: motor
+    aceptacion: "docs/motor/2026-10-21_lo_que_le_falta_al_motor.md con hallazgos ordenados y tareas propuestas"
+    evidencia: "docs/motor/2026-10-21_lo_que_le_falta_al_motor.md"
+  - id: T-121
+    titulo: "Adaptador del motor para un segundo programa (Maya con maya.cmds o 3ds Max con pymxs) que produzca la misma foto de escena"
+    version: v3.4.0
+    area: motor
+    depende_de: [T-120]
+    aceptacion: "Contrato de la foto de escena documentado aparte de Blender; un adaptador que pase las pruebas de validadores existentes con escenas de ese programa"
+  - id: T-122
+    titulo: "El add-on muestra los nombres de menú en el idioma de la interfaz de Blender (o en los dos: «Agregar (Add) › Malla (Mesh)»)"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-120]
+    aceptacion: "Con Blender en inglés y en español, cada instrucción del Taller nombra el menú tal como aparece en pantalla; pruebas del add-on en verde"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
