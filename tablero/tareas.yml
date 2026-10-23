@@ -683,6 +683,44 @@ tareas:
     area: motor
     depende_de: [T-120]
     aceptacion: "Con Blender en inglés y en español, cada instrucción del Taller nombra el menú tal como aparece en pantalla; pruebas del add-on en verde"
+    evidencia: "engine/amatista_engine/terminos.py (menus, tecla); addon/amatista_blender/palabras.py; practices/blender/palabras.json; addon/tests/en_blender.py › probar_idioma"
+  - id: T-123
+    titulo: "Quitar Explorar (buscador) y mostrar todos los cursos como un camino guiado por programa en la portada «Cursos»"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "#/ muestra cada programa como una lista numerada de pasos (módulos) con el siguiente marcado; #/explorar lleva a la portada; nav Cursos · Mi panel; vitest, lint y build en verde"
+    evidencia: "frontend/src/catalogo/camino.js; frontend/src/pages/Inicio.jsx; docs/plataforma/13_camino_graficos_y_motor_web.md"
+  - id: T-124
+    titulo: "Motor Web de Amatista sobre A-Frame: entornos generados, objetos arrastrables, zonas, retos, copias instanciadas, paseo y calidad automática; bloque «Mundo 3D» (motor_scene)"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "Las plantillas del motor en #/estudio y los bloques motor_scene funcionan con ratón, dedo y visor; la página descargada incluye el motor; pruebas de motor3d en verde"
+    evidencia: "frontend/src/motor3d/; frontend/src/components/leccion/interactivos/MundoMotor.jsx"
+  - id: T-125
+    titulo: "Recursos gráficos v4.2 en las lecciones: simulador de la vista 3D, elige la figura y línea de tiempo; lectura opcional «En la industria»"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "Los bloques viewport_sim, image_choice y keyframe_sim se resuelven con la figura y los valida el backend; el aviso «estudio» se pliega"
+    evidencia: "frontend/src/components/leccion/graficos.js; backend/contenido/validacion.py"
+  - id: T-126
+    titulo: "Contenido de Blender revisado: menos listas y verdadero/falso, más actividades gráficas, y una lectura «En la industria» por módulo"
+    version: v3.3.0
+    area: contenido
+    aceptacion: "Los 9 módulos de Blender validan sin errores; cada módulo tiene una lectura opcional sobre cómo se usa Blender hoy en estudios y empresas"
+    evidencia: "frontend/src/data/modulos/blender_*-modulo-*.json"
+  - id: T-127
+    titulo: "A-Frame en dos cursos compactos: Inicial (3 módulos) e Interactivo (3 módulos, uno nuevo con el Motor Amatista), sin perder el avance"
+    version: v3.3.0
+    area: contenido
+    aceptacion: "Los módulos 4 y 5 viejos quedan archivados; el avance y las insignias guardados con «aframe» se leen en «aframe_interactivo»; pruebas en verde"
+    evidencia: "frontend/src/data/modulos/aframe_interactivo-modulo-*.json; frontend/src/progreso/estado.js (TRASLADOS_LECCION)"
+  - id: T-128
+    titulo: "Desplegar el camino guiado, el Motor Web, los dos cursos de A-Frame y el add-on 5.3 en producción"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-119, T-123, T-124, T-125, T-126, T-127, T-122]
+    aceptacion: "docs/despliegue/2026-10-23_camino_y_motor_web.md: importar los módulos nuevos y los archivados sin errores; el catálogo trae A-Frame Inicial y A-Frame Interactivo; el instalador entrega el add-on 5.3"
+    bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0

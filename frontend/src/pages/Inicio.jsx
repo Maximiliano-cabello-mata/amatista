@@ -135,7 +135,7 @@ function Paso({ paso, abierto, alternar, ultimo }) {
           )}
         </div>
         {conContenido && abierto && (
-          <ol id={idLista} className="animar-entrar grid gap-px border-t border-white/5 bg-white/5 sm:grid-cols-2">
+          <ol id={idLista} className="animar-entrar grid gap-px [&>*]:min-w-0 border-t border-white/5 bg-white/5 sm:grid-cols-2">
             {paso.lecciones.map((leccion, i) => {
               const Icono = ICONO_FORMULA[leccion.formula];
               return (
@@ -225,7 +225,7 @@ function Camino({ camino }) {
   return (
     <div>
       {herramientaPrimero && <PasoHerramienta software={software} alInicio />}
-      <div className="grid gap-6">
+      <div className="grid gap-6 [&>*]:min-w-0">
         {camino.niveles.map(({ curso, pasos, hechos, total, minutos }, indice) => (
           <section key={curso.id} aria-labelledby={`nivel-${curso.id}`}>
             <header className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-white/5 pb-2">
