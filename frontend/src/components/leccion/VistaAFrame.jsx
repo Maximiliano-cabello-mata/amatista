@@ -1,5 +1,6 @@
-// Vista 3D en vivo del código del alumno. Se carga bajo demanda con A-Frame.
-import 'aframe';
+// Vista 3D en vivo del código del alumno. Se carga bajo demanda con A-Frame y el Motor Web
+// de Amatista (los componentes am-… funcionan en el Estudio y en los retos de código).
+import '../../motor3d';
 import { useEffect, useMemo, useRef } from 'react';
 
 const ETIQUETA_AFRAME = /^a-[a-z0-9-]+$/;

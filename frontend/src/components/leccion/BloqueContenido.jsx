@@ -17,6 +17,7 @@ import RecorridoBlender from './interactivos/RecorridoBlender';
 import RetoCodigo from './interactivos/RetoCodigo';
 import TallerBlender from './interactivos/TallerBlender';
 import VerdaderoFalso from './interactivos/VerdaderoFalso';
+import MundoMotor from './interactivos/MundoMotor';
 import LineaTiempo from './LineaTiempo';
 import Markdown from './Markdown';
 import PasoAPaso from './PasoAPaso';
@@ -51,6 +52,7 @@ const INTERACTIVOS = {
   classify: Clasificar,
   true_false: VerdaderoFalso,
   blender_tour: RecorridoBlender,
+  motor_scene: MundoMotor,
 };
 
 // Dibuja un bloque de contenido del JSON de la lección según su "type".

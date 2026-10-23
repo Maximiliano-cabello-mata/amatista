@@ -111,6 +111,56 @@ export const PLANTILLAS = [
   <a-entity gltf-model="#arbol" position="-3.5 0 -9" scale="1.5 1.5 1.5"></a-entity>
 </a-scene>`,
   },
+  // Plantillas del Motor Web de Amatista (motor3d/): mundos generados, objetos que se mueven y retos.
+  {
+    id: 'mundo',
+    nombre: 'Mundo generado',
+    motor: true,
+    texto: 'Motor Amatista: un bosque entero con una línea. Cambia el tipo o la semilla.',
+    codigo: `<a-scene>
+  <!-- tipo: pradera, bosque, isla, desierto, nieve, ciudad, cristal, espacio o vacio -->
+  <a-entity am-entorno="tipo: bosque; semilla: 7; tamano: 50; densidad: 0.7"></a-entity>
+  <a-entity light="type: hemisphere; groundColor: #4a3b5c; intensity: 0.9"></a-entity>
+  <a-entity light="type: directional; intensity: 1.1" position="-4 8 5"></a-entity>
+
+  <a-entity am-generar="forma: cristal; patron: circulo; cantidad: 10; radio: 3; color: #B57EDC" am-flotar></a-entity>
+  <a-entity camera am-orbita="distancia: 14" look-controls="enabled: false" wasd-controls="enabled: false"></a-entity>
+</a-scene>`,
+  },
+  {
+    id: 'reto-zona',
+    nombre: 'Reto: llévalo a la meta',
+    motor: true,
+    texto: 'Motor Amatista: arrastra la caja hasta el círculo y la escena celebra.',
+    codigo: `<a-scene>
+  <a-entity am-entorno="tipo: isla; semilla: 3; tamano: 40; densidad: 0.5"></a-entity>
+  <a-entity light="type: hemisphere; groundColor: #4a3b5c; intensity: 0.9"></a-entity>
+  <a-entity light="type: directional; intensity: 1.1" position="-4 8 5"></a-entity>
+
+  <a-entity id="caja" geometry="primitive: box" material="color: #F5792A; flatShading: true" position="-3 0.5 1" am-arrastrable="base: 0.5"></a-entity>
+  <a-entity id="meta" position="3 0 -1" am-zona="radio: 1.2; color: #00E5FF"></a-entity>
+  <a-entity am-reto="tipo: en_zona; objeto: caja; zona: meta"></a-entity>
+
+  <a-entity camera am-orbita="distancia: 11" look-controls="enabled: false" wasd-controls="enabled: false"></a-entity>
+</a-scene>`,
+  },
+  {
+    id: 'paseo',
+    nombre: 'Camina por tu mundo',
+    motor: true,
+    texto: 'Motor Amatista: recorre una ciudad generada con W A S D o mantén el dedo en la pantalla.',
+    codigo: `<a-scene>
+  <a-entity am-entorno="tipo: ciudad; semilla: 12; tamano: 60; densidad: 0.6"></a-entity>
+  <a-entity light="type: hemisphere; groundColor: #4a3b5c; intensity: 0.9"></a-entity>
+  <a-entity light="type: directional; intensity: 1" position="-4 8 5"></a-entity>
+
+  <a-entity id="faro" geometry="primitive: cylinder; radius: 0.4; height: 3" material="color: #00E5FF; flatShading: true" position="0 1.5 -4" am-tocable></a-entity>
+
+  <a-entity am-caminar position="0 0 6">
+    <a-entity camera position="0 1.6 0" look-controls></a-entity>
+  </a-entity>
+</a-scene>`,
+  },
 ];
 
 // Piezas que se insertan donde está el cursor (justo antes de </a-scene> si no hay cursor).
@@ -125,6 +175,18 @@ export const PIEZAS = [
     codigo: '<a-box position="0 1 -3" color="#9B59B6" animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear"></a-box>',
   },
   { id: 'modelo', nombre: 'Modelo GLB', codigo: '<a-entity gltf-model="url(/modelos/cristal.glb)" position="0 0 -3"></a-entity>' },
+  // Piezas del Motor Web de Amatista.
+  { id: 'entorno', nombre: 'Entorno', motor: true, codigo: '<a-entity am-entorno="tipo: pradera; semilla: 1; tamano: 40; densidad: 0.5"></a-entity>' },
+  {
+    id: 'arrastrable',
+    nombre: 'Objeto que se mueve',
+    motor: true,
+    codigo: '<a-entity id="pieza" geometry="primitive: box" material="color: #F5792A; flatShading: true" position="0 0.5 -2" am-arrastrable="base: 0.5"></a-entity>',
+  },
+  { id: 'zona', nombre: 'Zona meta', motor: true, codigo: '<a-entity id="meta" position="2 0 -2" am-zona="radio: 1; color: #00E5FF"></a-entity>' },
+  { id: 'reto', nombre: 'Reto', motor: true, codigo: '<a-entity am-reto="tipo: en_zona; objeto: pieza; zona: meta"></a-entity>' },
+  { id: 'copias', nombre: 'Copias en círculo', motor: true, codigo: '<a-entity am-generar="forma: cristal; patron: circulo; cantidad: 8; radio: 3; color: #B57EDC"></a-entity>' },
+  { id: 'orbita', nombre: 'Cámara que orbita', motor: true, codigo: '<a-entity camera am-orbita="distancia: 10" look-controls="enabled: false" wasd-controls="enabled: false"></a-entity>' },
 ];
 
 // Inserta `pieza` en `codigo` en la posición `cursor` (o antes de </a-scene>).
@@ -142,15 +204,18 @@ export function insertarPieza(codigo, pieza, cursor = null) {
 }
 
 // Página HTML completa, lista para abrir con doble clic o subir a cualquier hosting.
-export function paginaCompleta(codigo, titulo = 'Mi escena A-Frame') {
+// `motor`: el script del Motor Web (motor3d/fuente.js) si la escena usa componentes am-…;
+// va en <head>, después de A-Frame, para que los componentes existan antes que la escena.
+export function paginaCompleta(codigo, titulo = 'Mi escena A-Frame', motor = '') {
   const seguro = String(titulo).replace(/[<>&"]/g, '');
+  const scriptMotor = motor ? `\n    <script>\n${motor.replace(/<\/script/gi, '<\\/script')}\n    </script>` : '';
   return `<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${seguro}</title>
-    <script src="https://aframe.io/releases/${VERSION_AFRAME}/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/${VERSION_AFRAME}/aframe.min.js"></script>${scriptMotor}
   </head>
   <body>
     <!-- Hecho en el Estudio A-Frame de Amatista. Si usas modelos de /modelos/, copia también esos archivos. -->

@@ -20,6 +20,7 @@ const ETIQUETAS = {
   classify: 'Clasifica',
   true_false: '¿Verdad o mito?',
   blender_tour: 'Conoce Amatista Motor',
+  motor_scene: 'Mundo 3D',
 };
 
 // Marco común de las actividades: tipo, estado (pendiente / resuelta), XP

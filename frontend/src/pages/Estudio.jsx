@@ -32,8 +32,11 @@ function guardar(codigo) {
   }
 }
 
-function descargar(codigo) {
-  const blob = new Blob([paginaCompleta(codigo)], { type: 'text/html' });
+// Si la escena usa el Motor Web (am-…), la página lleva el motor adentro y funciona fuera de Amatista.
+async function descargar(codigo) {
+  const { scriptMotor, usaMotor } = await import('../motor3d/fuente');
+  const pagina = paginaCompleta(codigo, 'Mi escena A-Frame', usaMotor(codigo) ? scriptMotor() : '');
+  const blob = new Blob([pagina], { type: 'text/html' });
   const enlace = document.createElement('a');
   enlace.href = URL.createObjectURL(blob);
   enlace.download = 'mi-escena-aframe.html';
@@ -45,6 +48,7 @@ const CONSEJOS = [
   ['Moverte', 'Arrastra la vista para mirar alrededor y usa W A S D (o las flechas) para caminar.'],
   ['Coordenadas', 'X va a la derecha, Y hacia arriba y Z hacia ti: una Z negativa aleja el objeto.'],
   ['Unidades', 'Todo se mide en metros. La cámara está a 1.6 m del suelo, la altura de los ojos.'],
+  ['Motor Amatista', 'Los componentes am-… generan mundos (am-entorno), mueven objetos (am-arrastrable) y revisan retos (am-zona, am-reto). Funcionan aquí y en la página que descargas.'],
   ['Modelos y texto', 'Los modelos de /modelos/ (cristal, árbol y casa) funcionan sin conexión. El texto (<a-text>) descarga su letra de Internet: sin conexión no aparece.'],
 ];
 
@@ -104,7 +108,7 @@ function Estudio() {
         <h2 id="estudio-plantillas" className="font-mono text-[11px] uppercase tracking-[0.25em] text-neon">
           Empieza con una plantilla
         </h2>
-        <ul className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {PLANTILLAS.map((plantilla) => (
             <li key={plantilla.id}>
               <button
@@ -112,7 +116,10 @@ function Estudio() {
                 onClick={() => usarPlantilla(plantilla)}
                 className="corte-poly-sm elevar flex h-full w-full flex-col items-start border border-white/10 bg-superficie/90 p-3 text-left hover:border-neon"
               >
-                <span className="font-bold text-white">{plantilla.nombre}</span>
+                <span className="flex flex-wrap items-center gap-2 font-bold text-white">
+                  {plantilla.nombre}
+                  {plantilla.motor && <span className="corte-poly-sm bg-amatista/30 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-widest text-amatista-claro">Motor</span>}
+                </span>
                 <span className="mt-1 text-xs leading-snug text-texto/65">{plantilla.texto}</span>
               </button>
             </li>
@@ -149,7 +156,7 @@ function Estudio() {
             <p className="font-mono text-[10px] uppercase tracking-widest text-white/45">Insertar en el cursor</p>
             <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Piezas para insertar">
               {PIEZAS.map((pieza) => (
-                <button key={pieza.id} type="button" onClick={() => insertar(pieza)} className={`${BOTON} bg-white/5 text-white/75 hover:bg-white/10`}>
+                <button key={pieza.id} type="button" onClick={() => insertar(pieza)} className={`${BOTON} ${pieza.motor ? 'bg-amatista/20 text-amatista-claro hover:bg-amatista/30' : 'bg-white/5 text-white/75 hover:bg-white/10'}`}>
                   + {pieza.nombre}
                 </button>
               ))}
