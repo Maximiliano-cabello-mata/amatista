@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-23 02:10 · `main` en `d42ae79`
+Último commit: 2026-10-23 02:14 · `main` en `807120a`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -331,7 +331,7 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 - [x] **T-120** Revisión del motor de Blender: qué le falta para el alumno · _hecho_ — commits: `0db2370` (2026-10-21)
   - 🔎 Evidencia: docs/motor/2026-10-21_lo_que_le_falta_al_motor.md
   - 🎯 Listo cuando: docs/motor/2026-10-21_lo_que_le_falta_al_motor.md con hallazgos ordenados y tareas propuestas
-- [ ] **T-122** El add-on muestra los nombres de menú en el idioma de la interfaz de Blender (o en los dos: «Agregar (Add) › Malla (Mesh)») · _en-progreso_ — commits: `3159470` (2026-10-23), `17a488e` (2026-10-23)
+- [ ] **T-122** El add-on muestra los nombres de menú en el idioma de la interfaz de Blender (o en los dos: «Agregar (Add) › Malla (Mesh)») · _en-progreso_ — commits: `3159470` (2026-10-23), `17a488e` (2026-10-23), `7bf7c65` (2026-10-23)
   - 🎯 Listo cuando: Con Blender en inglés y en español, cada instrucción del Taller nombra el menú tal como aparece en pantalla; pruebas del add-on en verde
 - [x] **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas) · _hecho_ — commits: `34af6f3` (2026-10-04), `f9334d5` (2026-10-10)
   - 🔎 Evidencia: docs/motor/referencia/08_practicas_v3_y_herramientas.md; engine/herramientas/practicas.py (nueva, revisar, probar, simular, validadores, plan); addon/amatista_blender/interfaz/paneles.py (panel «Teoría y casos de prueba»); engine/tests/test_v3_herramientas.py
