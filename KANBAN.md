@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-23 02:10 · `main` en `3c39d2a`
+Último commit: 2026-10-23 02:14 · `main` en `3c39d2a`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -21,7 +21,7 @@
 
 ## 📌 Kanban
 
-| 📋 Pendiente (69) | 🔨 En progreso (23) | 👀 Revisión (1) | ✅ Hecho (31) |
+| 📋 Pendiente (68) | 🔨 En progreso (24) | 👀 Revisión (1) | ✅ Hecho (31) |
 |---|---|---|---|
 | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)<br><sub>v2.2.0 · repo</sub> | **T-006** Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)<br><sub>v2.2.0 · api</sub> |
 | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-092** Entregar Amatista Motor 3.5.1 en producción (reinstalar el add-on; requiere 011, T-094)<br><sub>v3.3.0 · lanzamiento</sub> |   | **T-014** Esquema incremental 002–004 (8 tablas, 20 GB) y diagnóstico ampliado<br><sub>v2.2.0 · db</sub> |
@@ -45,8 +45,8 @@
 | **T-039** Inventario de lecciones existentes → niveles y fichas<br><sub>v3.0.0 · contenido</sub> | **T-125** Recursos gráficos v4.2 en las lecciones: simulador de la vista 3D, elige la figura y línea de tiempo; lectura opcional «En la industria»<br><sub>v3.3.0 · pwa</sub> |   | **T-090** Blender como instructor: lista «Tu figura» en Blender y en la lección, y la plataforma maneja la práctica (comprobar, pista, Hazlo conmigo, guardar, empezar de nuevo)<br><sub>v3.3.0 · pwa</sub> |
 | **T-040** Lección modelo completa (10 pasos, recursos, rúbrica y verificación)<br><sub>v3.0.0 · contenido</sub> | **T-126** Contenido de Blender revisado: menos listas y verdadero/falso, más actividades gráficas, y una lectura «En la industria» por módulo<br><sub>v3.3.0 · contenido</sub> |   | **T-093** El ejemplo manda: cada práctica con su ejemplo resuelto en código y revisión autónoma contra él (motor, Blender «Ver el ejemplo» y lección)<br><sub>v3.3.0 · motor</sub> |
 | **T-041** Mapa de niveles en la PWA y «Verificada en…» en cada lección<br><sub>v3.0.0 · pwa</sub> | **T-127** A-Frame en dos cursos compactos: Inicial (3 módulos) e Interactivo (3 módulos, uno nuevo con el Motor Amatista), sin perder el avance<br><sub>v3.3.0 · contenido</sub> |   | **T-096** Herramientas gráficas v3.6: medir librerías, crear visor de malla, diagrama de nodos e imagen ligera, y diseño CSS para condiciones difíciles<br><sub>v3.3.0 · pwa</sub> |
-| **T-042** Habilidades y rúbrica en la API y en el panel del alumno<br><sub>v3.0.0 · api</sub> | **T-097** Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)<br><sub>v3.4.0 · pwa</sub> |   | **T-100** Amatista Taller (motor 5, add-on 5.0): la habilidad como unidad con Mira, Hazlo conmigo, Hazlo tú, Úsalo y Recuérdalo, modelo del alumno, molde, pistas con freno, Mi isla y la lección del taller en la plataforma<br><sub>v3.3.0 · motor</sub> |
-| **T-043** Diagnóstico opcional de entrada que recomienda un nivel<br><sub>v3.0.0 · pwa</sub> |   |   | **T-110** Auditoría completa: historial, tags, pruebas, cada página y cada lección; corregir los errores gráficos, de código y de seguridad encontrados<br><sub>v3.3.0 · repo</sub> |
+| **T-042** Habilidades y rúbrica en la API y en el panel del alumno<br><sub>v3.0.0 · api</sub> | **T-128** Desplegar el camino guiado, el Motor Web, los dos cursos de A-Frame y el add-on 5.3 en producción<br><sub>v3.3.0 · lanzamiento</sub> |   | **T-100** Amatista Taller (motor 5, add-on 5.0): la habilidad como unidad con Mira, Hazlo conmigo, Hazlo tú, Úsalo y Recuérdalo, modelo del alumno, molde, pistas con freno, Mi isla y la lección del taller en la plataforma<br><sub>v3.3.0 · motor</sub> |
+| **T-043** Diagnóstico opcional de entrada que recomienda un nivel<br><sub>v3.0.0 · pwa</sub> | **T-097** Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)<br><sub>v3.4.0 · pwa</sub> |   | **T-110** Auditoría completa: historial, tags, pruebas, cada página y cada lección; corregir los errores gráficos, de código y de seguridad encontrados<br><sub>v3.3.0 · repo</sub> |
 | **T-044** Editor del panel con ficha de lección y nivel del módulo<br><sub>v3.0.0 · pwa</sub> |   |   | **T-111** Plataforma en orden: recorrido guiado por las páginas reales (no un curso), pestaña Blender con la tarjeta de la fusión plataforma ↔ add-on, Ayuda sin candados y Mi panel más corto<br><sub>v3.3.0 · pwa</sub> |
 | **T-009** Mi primer espacio 3D: lecciones 01–03 (entorno, navegar, seleccionar y transformar)<br><sub>v3.1.0 · contenido</sub> |   |   | **T-112** Add-on 5.2 «Conoce Amatista Motor»: tres prácticas cortas que explican todas las herramientas del add-on, empezadas y vistas en vivo desde la página Blender<br><sub>v3.3.0 · motor</sub> |
 | **T-045** Mi primer espacio 3D: lecciones 04–05 (base de la habitación, guardar y recuperar)<br><sub>v3.1.0 · contenido</sub> |   |   | **T-116** Plataforma multiplataforma: catálogo por programa y disciplina, página Explorar con buscador y filtros, barra Inicio · Explorar · Mi panel sin pestaña de Blender, portada y Mi panel por programa, accesibilidad (saltar al contenido, foco, aria-live)<br><sub>v3.3.0 · pwa</sub> |
@@ -76,7 +76,6 @@
 | **T-102** Probar Amatista Taller en Blender con ventana (tarjeta y sus botones, molde, Mira, pistas, Saltar, el tren, Mi isla y Continuar desde la lección) hasta acordar que el add-on funciona<br><sub>v3.3.0 · motor</sub> |   |   |   |
 | **T-113** Probar en Blender con ventana las tres prácticas «Conoce Amatista Motor» y el recorrido de la plataforma con un alumno nuevo<br><sub>v3.3.0 · motor</sub> |   |   |   |
 | **T-121** Adaptador del motor para un segundo programa (Maya con maya.cmds o 3ds Max con pymxs) que produzca la misma foto de escena<br><sub>v3.4.0 · motor</sub> |   |   |   |
-| **T-128** Desplegar el camino guiado, el Motor Web, los dos cursos de A-Frame y el add-on 5.3 en producción<br><sub>v3.3.0 · lanzamiento</sub> |   |   |   |
 | **T-071** Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)<br><sub>v3.4.0 · pwa</sub> |   |   |   |
 | **T-072** Transiciones entre páginas (View Transitions), celebraciones con confeti e ilustración de fondo por temática<br><sub>v3.4.0 · pwa</sub> |   |   |   |
 | **T-073** Diseñar el laboratorio (retos abiertos sin guía después de la ruta)<br><sub>v3.4.0 · contenido</sub> |   |   |   |
@@ -354,7 +353,7 @@
 - [x] **T-120** Revisión del motor de Blender: qué le falta para el alumno · _hecho_ — commits: `0db2370` (2026-10-21)
   - 🔎 Evidencia: docs/motor/2026-10-21_lo_que_le_falta_al_motor.md
   - 🎯 Listo cuando: docs/motor/2026-10-21_lo_que_le_falta_al_motor.md con hallazgos ordenados y tareas propuestas
-- [ ] **T-122** El add-on muestra los nombres de menú en el idioma de la interfaz de Blender (o en los dos: «Agregar (Add) › Malla (Mesh)») · _en-progreso_ — commits: `3159470` (2026-10-23), `17a488e` (2026-10-23)
+- [ ] **T-122** El add-on muestra los nombres de menú en el idioma de la interfaz de Blender (o en los dos: «Agregar (Add) › Malla (Mesh)») · _en-progreso_ — commits: `3159470` (2026-10-23), `17a488e` (2026-10-23), `7bf7c65` (2026-10-23)
   - 🔎 Evidencia: engine/amatista_engine/terminos.py (menus, tecla); addon/amatista_blender/palabras.py; practices/blender/palabras.json; addon/tests/en_blender.py › probar_idioma
   - 🎯 Listo cuando: Con Blender en inglés y en español, cada instrucción del Taller nombra el menú tal como aparece en pantalla; pruebas del add-on en verde
 - [ ] **T-123** Quitar Explorar (buscador) y mostrar todos los cursos como un camino guiado por programa en la portada «Cursos» · _en-progreso_ — commits: `5500815` (2026-10-23)
@@ -372,7 +371,7 @@
 - [ ] **T-127** A-Frame en dos cursos compactos: Inicial (3 módulos) e Interactivo (3 módulos, uno nuevo con el Motor Amatista), sin perder el avance · _en-progreso_ — commits: `a8f92fa` (2026-10-23), `3759b4d` (2026-10-23)
   - 🔎 Evidencia: frontend/src/data/modulos/aframe_interactivo-modulo-*.json; frontend/src/progreso/estado.js (TRASLADOS_LECCION)
   - 🎯 Listo cuando: Los módulos 4 y 5 viejos quedan archivados; el avance y las insignias guardados con «aframe» se leen en «aframe_interactivo»; pruebas en verde
-- [ ] **T-128** Desplegar el camino guiado, el Motor Web, los dos cursos de A-Frame y el add-on 5.3 en producción · _pendiente_
+- [ ] **T-128** Desplegar el camino guiado, el Motor Web, los dos cursos de A-Frame y el add-on 5.3 en producción · _en-progreso_ — commits: `7bf7c65` (2026-10-23)
   - ⏸️ Espera: Lo hace el usuario en la VM (la nube no llega a producción)
   - 🎯 Listo cuando: docs/despliegue/2026-10-23_camino_y_motor_web.md: importar los módulos nuevos y los archivados sin errores; el catálogo trae A-Frame Inicial y A-Frame Interactivo; el instalador entrega el add-on 5.3
 - [x] **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas) · _hecho_ — commits: `f9334d5` (2026-10-10)
