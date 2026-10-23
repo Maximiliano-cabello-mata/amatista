@@ -16,6 +16,11 @@ export const TIPOS_INTERACTIVOS = [
   'classify',
   'true_false',
   'blender_tour',
+  // v4.2: mundo 3D del Motor Web, simulador de la vista, elige la figura y línea de tiempo.
+  'motor_scene',
+  'viewport_sim',
+  'image_choice',
+  'keyframe_sim',
 ];
 
 // La tarjeta del proyecto (blender_taller con vista «proyecto») solo informa: la

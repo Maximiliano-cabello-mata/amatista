@@ -21,6 +21,9 @@ const ETIQUETAS = {
   true_false: '¿Verdad o mito?',
   blender_tour: 'Conoce Amatista Motor',
   motor_scene: 'Mundo 3D',
+  viewport_sim: 'Simulador 3D',
+  image_choice: 'Elige la figura',
+  keyframe_sim: 'Línea de tiempo',
 };
 
 // Marco común de las actividades: tipo, estado (pendiente / resuelta), XP

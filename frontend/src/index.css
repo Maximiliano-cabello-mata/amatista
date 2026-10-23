@@ -1288,3 +1288,7 @@ h2[id^='modulo-'], [id^='nivel-'], #contenido { scroll-margin-top: 5.5rem; }
   50% { filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.75)); }
 }
 html.ligero .camino__pulso { animation: none; }
+
+/* «En la industria»: plegado, sin el triángulo del navegador. */
+.aviso-estudio summary::-webkit-details-marker { display: none; }
+.aviso-estudio summary:focus-visible { outline: 2px solid var(--neon); outline-offset: -2px; }

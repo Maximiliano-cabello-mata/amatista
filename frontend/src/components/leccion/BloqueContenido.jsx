@@ -33,6 +33,10 @@ const RecorridoPantalla = lazy(() => import('./RecorridoPantalla'));
 const FlujoConexion = lazy(() => import('./FlujoConexion'));
 const GizmoEjes = lazy(() => import('./GizmoEjes'));
 const DemoParametro = lazy(() => import('./DemoParametro'));
+// Recursos gráficos v4.2 (graficos.js): también bajo demanda.
+const SimuladorVista = lazy(() => import('./interactivos/SimuladorVista'));
+const ElegirFigura = lazy(() => import('./interactivos/ElegirFigura'));
+const LineaClaves = lazy(() => import('./interactivos/LineaClaves'));
 
 function Diferido({ children, alto }) {
   return <Suspense fallback={<div className="esqueleto corte-poly" style={{ minHeight: alto }} role="status" aria-label="Cargando" />}>{children}</Suspense>;
@@ -53,6 +57,9 @@ const INTERACTIVOS = {
   true_false: VerdaderoFalso,
   blender_tour: RecorridoBlender,
   motor_scene: MundoMotor,
+  viewport_sim: SimuladorVista,
+  image_choice: ElegirFigura,
+  keyframe_sim: LineaClaves,
 };
 
 // Dibuja un bloque de contenido del JSON de la lección según su "type".
@@ -61,7 +68,13 @@ const INTERACTIVOS = {
 // si la lección ya la cuenta como resuelta (por ejemplo, de una visita anterior).
 function BloqueContenido({ bloque, alCompletar, alDescubrirTodas, resuelta = false }) {
   const Interactivo = INTERACTIVOS[bloque.type];
-  if (Interactivo) return <Interactivo bloque={bloque} alCompletar={alCompletar} resuelta={resuelta} />;
+  if (Interactivo) {
+    return (
+      <Diferido alto="18rem">
+        <Interactivo bloque={bloque} alCompletar={alCompletar} resuelta={resuelta} />
+      </Diferido>
+    );
+  }
 
   switch (bloque.type) {
     case 'markdown_text':
