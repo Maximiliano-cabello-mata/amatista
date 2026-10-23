@@ -392,7 +392,7 @@ function NivelProximo({ curso }) {
   );
 }
 
-// Con ?modulo=N (enlace desde Explorar) la página baja hasta ese módulo al abrirse.
+// Con ?modulo=N (enlace desde el camino de Cursos) la página baja hasta ese módulo al abrirse.
 function useIrAModulo(cursoId, numero) {
   useEffect(() => {
     if (!numero) return undefined;
@@ -416,7 +416,7 @@ function Curso({ cursoId, consulta }) {
     return (
       <main className="mx-auto max-w-3xl px-4 py-16 text-center">
         <p className="text-xl text-white">No encontramos este curso.</p>
-        <a href={rutas.explorar} className="mt-4 inline-block text-neon">
+        <a href={rutas.inicio} className="mt-4 inline-block text-neon">
           ◂ Ver todo el catálogo
         </a>
       </main>
@@ -438,7 +438,7 @@ function Curso({ cursoId, consulta }) {
   return (
     <Pagina
       ancho="contenido"
-      migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Explorar', href: rutas.explorar }, { texto: ruta.titulo }]}
+      migas={[{ texto: 'Cursos', href: rutas.inicio }, { texto: ruta.titulo }]}
       encabezado={{
         tono: conBlender ? 'blender' : 'neon',
         icono: <LogoCurso logo={ruta.logo} className="animar-flotar h-12 w-14" decorativo={false} />,

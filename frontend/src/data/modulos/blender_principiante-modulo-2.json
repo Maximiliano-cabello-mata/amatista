@@ -179,6 +179,29 @@
             }
           },
           {
+            "type": "image_choice",
+            "id": "elige_bp2",
+            "question": "Seleccionaste la cara de arriba de un cubo y pulsaste **E**. ¿Cuál es el resultado?",
+            "options": [
+              {
+                "id": "a",
+                "figure": "cubo_bisel",
+                "isCorrect": false
+              },
+              {
+                "id": "b",
+                "figure": "extruido",
+                "isCorrect": true
+              },
+              {
+                "id": "c",
+                "figure": "fila_array",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "Extruir **saca una cara nueva** desde la elegida, con sus paredes: el cubo crece hacia arriba. Si después escalas esa cara (S), la parte nueva queda más angosta, como en la figura."
+          },
+          {
             "type": "param_demo",
             "demo": "resolution",
             "caption": "Más vértices dan un cilindro más redondo, pero más caras que mover. En low-poly, 8 a 12 bastan."
@@ -262,6 +285,12 @@
               }
             ],
             "explanation": "Con estas cuatro ya puedes modelar objetos low-poly completos."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "Cuántos polígonos se usan en la industria",
+            "body": "En **videojuegos** cada objeto tiene un presupuesto de polígonos, porque el juego dibuja la escena muchas veces por segundo: un objeto de fondo puede tener unos cientos de caras y un personaje principal decenas de miles. Por eso se modela **low poly** y el detalle fino se «pinta» después con texturas (lo verás en Avanzado).\n\nEn **cine y publicidad** el límite es el tiempo de render, no el juego, y los modelos son mucho más densos.\n\nEn los dos casos se busca la misma **malla limpia**: caras de cuatro lados (*quads*), sin vértices duplicados (M › Por distancia) y con cortes de bucle (Ctrl + R) solo donde hace falta detalle. Una malla limpia se deforma bien al animarla y otra persona del equipo puede seguir trabajándola."
           }
         ]
       },

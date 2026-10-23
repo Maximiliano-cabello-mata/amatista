@@ -45,11 +45,11 @@ function PiePagina() {
           </p>
         </div>
         <Columna titulo="Aprender">
-          <li><a href={rutas.explorar} className={ENLACE}>Explorar todo el contenido</a></li>
+          <li><a href={rutas.inicio} className={ENLACE}>Todos los cursos, paso a paso</a></li>
           {SOFTWARE.filter((s) => s.estado === 'disponible').map((s) => (
             <li key={s.id}><a href={rutas.curso(s.ruta)} className={ENLACE}>Curso de {s.nombre}</a></li>
           ))}
-          <li><a href={`${rutas.explorar}?buscar=1`} className={ENLACE}>Buscar un tema</a></li>
+          <li><a href={rutas.guia} className={ENLACE}>¿Primera vez? Empieza aquí</a></li>
         </Columna>
         <Columna titulo="Herramientas">
           {SOFTWARE.filter((s) => s.herramienta).map((s) => (

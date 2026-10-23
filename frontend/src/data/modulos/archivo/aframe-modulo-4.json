@@ -1,0 +1,537 @@
+{
+  "module": {
+    "id": "mod_aframe_004",
+    "courseId": "crs_aframe_fundamentos",
+    "title": "Módulo 4: Animación e interacción",
+    "slug": "modulo-4-animacion-interaccion-aframe",
+    "description": "Haz que tus escenas cobren vida: el componente animation, los eventos, el cursor del ratón, las bisagras y las secuencias que se encadenan. Terminas con una puerta mágica que se abre con un clic.",
+    "estimatedTimeMinutes": 48,
+    "order": 4,
+    "curso": "aframe",
+    "insignia": "Titiritero digital",
+    "disciplinas": [
+      "animacion",
+      "interaccion"
+    ],
+    "estado": "archivado",
+    "lessons": [
+      {
+        "id": "af4_gancho",
+        "title": "Dar vida con animation",
+        "slug": "dar-vida-con-animation",
+        "type": "theory_interactive",
+        "durationSeconds": 420,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Animar propiedades con el componente animation.",
+          "habilidades": [
+            "af-animacion"
+          ],
+          "prerrequisitos": [
+            "af3_jefe"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Hacer que algo gire en bucle.",
+            "Hacer que algo vaya y vuelva."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Una línea para que algo se mueva\nEl componente `animation` cambia una propiedad con el tiempo: de dónde parte (`from`), a dónde llega (`to`) y cuánto tarda (`dur`, en milisegundos).\n\n- `property`: qué cambia (`position`, `rotation`, `scale`, `material.color`…).\n- `loop: true`: se repite para siempre. `dir: alternate`: va y vuelve.\n- `easing`: cómo acelera. `linear` es constante; `easeInOutQuad` arranca y frena suave."
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "code": "<a-scene background=\"color: #120f1a\">\n  <a-plane rotation=\"-90 0 0\" width=\"8\" height=\"8\" color=\"#241d33\"></a-plane>\n  <a-light type=\"ambient\" intensity=\"0.5\"></a-light>\n  <a-light type=\"directional\" position=\"1 3 2\" intensity=\"0.9\"></a-light>\n\n  <!-- Gira para siempre a velocidad constante -->\n  <a-entity gltf-model=\"url(/modelos/cristal.glb)\" position=\"-1.2 0 -3\"\n    animation=\"property: rotation; to: 0 360 0; loop: true; dur: 6000; easing: linear\"></a-entity>\n\n  <!-- Sube y baja: va y vuelve, frenando en cada extremo -->\n  <a-sphere position=\"1.2 0.5 -3\" radius=\"0.35\" color=\"#00E5FF\"\n    animation=\"property: position; to: 1.2 1.6 -3; dir: alternate; loop: true; dur: 900; easing: easeInOutQuad\"></a-sphere>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "quiz_inline",
+            "id": "af4_q_alternate",
+            "question": "Quieres que una lámpara se encienda y apague suavemente, sin saltos. ¿Qué combinación usas?",
+            "options": [
+              {
+                "id": "c",
+                "text": "`dur: 0; loop: true`",
+                "isCorrect": false
+              },
+              {
+                "id": "d",
+                "text": "`dir: reverse; dur: 1`",
+                "isCorrect": false
+              },
+              {
+                "id": "a",
+                "text": "`loop: true; dir: alternate; easing: easeInOutQuad`",
+                "isCorrect": true
+              },
+              {
+                "id": "b",
+                "text": "`loop: false; easing: linear`",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "Con `alternate` la animación va y vuelve, y el `easing` suave evita los saltos en los extremos."
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "body": "Puedes poner varias animaciones en la misma entidad si les das nombre: `animation__girar` y `animation__latir`. Cada una es independiente.",
+            "title": "Varias a la vez"
+          }
+        ]
+      },
+      {
+        "id": "af4_explora",
+        "title": "Eventos: cuando algo pasa",
+        "slug": "eventos-cuando-algo-pasa",
+        "type": "theory_interactive",
+        "durationSeconds": 600,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Responder a eventos con animaciones y un cursor.",
+          "habilidades": [
+            "af-eventos",
+            "af-cursor"
+          ],
+          "prerrequisitos": [
+            "af4_gancho"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Hacer un objeto que reaccione al pasar el cursor y al hacer clic."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Interacción = evento + respuesta\nUna escena interactiva escucha **eventos** y responde. Con `startEvents` una animación espera a que ocurra un evento para arrancar: `animation__clic=\"property: scale; to: 1.3 1.3 1.3; startEvents: click\"`.\n\nPara que haya clics hace falta un **cursor**:\n\n- En computadora: `cursor=\"rayOrigin: mouse\"` en `<a-scene>` usa el ratón.\n- En un visor sencillo (sin controles): `<a-cursor>` dentro de la cámara, que «hace clic» al mirar fijo (`fuse: true`).\n- En un visor con controles: `laser-controls`, que lo verás en el siguiente módulo.\n\nCon `raycaster=\"objects: .clicable\"` el cursor solo revisa lo que tiene la clase `clicable`: es más rápido y evita clics accidentales."
+          },
+          {
+            "type": "matching",
+            "id": "af4_parejas_eventos",
+            "prompt": "Une cada evento con el momento en que ocurre",
+            "pairs": [
+              {
+                "id": "p1",
+                "left": "`click`",
+                "right": "Se pulsa sobre el objeto con el cursor"
+              },
+              {
+                "id": "p2",
+                "left": "`mouseenter`",
+                "right": "El cursor empieza a apuntar al objeto"
+              },
+              {
+                "id": "p3",
+                "left": "`mouseleave`",
+                "right": "El cursor deja de apuntar al objeto"
+              },
+              {
+                "id": "p4",
+                "left": "`animationcomplete`",
+                "right": "Una animación termina"
+              },
+              {
+                "id": "p5",
+                "left": "`model-loaded`",
+                "right": "Un modelo GLB terminó de cargar"
+              }
+            ],
+            "explanation": "Con estos cinco eventos ya puedes hacer botones, objetos que reaccionan al mirarlos y secuencias que se encadenan."
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "code": "<a-scene cursor=\"rayOrigin: mouse\" raycaster=\"objects: .clicable\" background=\"color: #121212\">\n  <a-plane rotation=\"-90 0 0\" width=\"8\" height=\"8\" color=\"#262629\"></a-plane>\n  <a-light type=\"ambient\" intensity=\"0.6\"></a-light>\n  <a-light type=\"directional\" position=\"1 3 2\" intensity=\"0.8\"></a-light>\n\n  <a-box class=\"clicable\" position=\"0 0.75 -3\" color=\"#9B59B6\"\n    animation__entrar=\"property: scale; to: 1.2 1.2 1.2; dur: 200; startEvents: mouseenter\"\n    animation__salir=\"property: scale; to: 1 1 1; dur: 200; startEvents: mouseleave\"\n    animation__clic=\"property: rotation; from: 0 0 0; to: 0 360 0; dur: 900; startEvents: click\"></a-box>\n  <a-text value=\"Apunta y haz clic en el cubo\" align=\"center\" position=\"0 2 -3\" color=\"#E0E0E0\"></a-text>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "true_false",
+            "id": "af4_vf_eventos",
+            "title": "¿Verdad o mito?",
+            "statements": [
+              {
+                "text": "Sin un cursor, los objetos no reciben `click`.",
+                "answer": true,
+                "explanation": "El cursor lanza un rayo y avisa a lo que toca: sin él no hay a quién pulsar."
+              },
+              {
+                "text": "`raycaster=\"objects: .clicable\"` hace que el cursor ignore lo que no tiene esa clase.",
+                "answer": true,
+                "explanation": "Así el rayo revisa menos objetos y la escena responde más rápido."
+              },
+              {
+                "text": "Una animación con `startEvents: click` empieza sola al cargar la página.",
+                "answer": false,
+                "explanation": "Con `startEvents` la animación espera al evento. Sin `startEvents` arranca al cargar."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "af4_practica",
+        "title": "Bisagras y secuencias",
+        "slug": "bisagras-y-secuencias",
+        "type": "theory_interactive",
+        "durationSeconds": 600,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Girar desde un pivote y encadenar animaciones con eventos.",
+          "habilidades": [
+            "af-jerarquia",
+            "af-animacion",
+            "af-eventos"
+          ],
+          "prerrequisitos": [
+            "af4_explora"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Abrir una puerta desde su bisagra.",
+            "Encadenar dos animaciones."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Girar desde el borde: la bisagra\nUna puerta no gira desde su centro sino desde un costado. El truco es la jerarquía: un **padre** en el lugar de la bisagra y la puerta como **hija**, desplazada medio ancho. Al girar al padre, la puerta gira desde su borde."
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "code": "<a-scene cursor=\"rayOrigin: mouse\" raycaster=\"objects: .clicable\" background=\"color: #141019\">\n  <a-plane rotation=\"-90 0 0\" width=\"8\" height=\"8\" color=\"#2a2236\"></a-plane>\n  <a-light type=\"ambient\" intensity=\"0.55\"></a-light>\n  <a-light type=\"point\" position=\"0 2.5 -1.5\" intensity=\"1.1\"></a-light>\n\n  <!-- El marco -->\n  <a-box position=\"-0.55 1.1 -3\" width=\"0.1\" height=\"2.2\" depth=\"0.2\" color=\"#3a2f55\"></a-box>\n  <a-box position=\"0.55 1.1 -3\" width=\"0.1\" height=\"2.2\" depth=\"0.2\" color=\"#3a2f55\"></a-box>\n\n  <!-- La bisagra (padre) en el borde izquierdo; la puerta (hija) a medio ancho -->\n  <a-entity position=\"-0.5 0 -3\"\n    animation__abrir=\"property: rotation; to: 0 -100 0; dur: 1200; easing: easeOutBack; startEvents: click\">\n    <a-box class=\"clicable\" position=\"0.5 1.05 0\" width=\"1\" height=\"2.1\" depth=\"0.06\" color=\"#F5792A\"></a-box>\n  </a-entity>\n  <a-text value=\"Haz clic en la puerta\" align=\"center\" position=\"0 2.6 -3\" color=\"#E0E0E0\"></a-text>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "body": "El clic sobre la puerta (la hija) también le llega a su padre: los eventos «suben» por la jerarquía. Por eso la animación puede vivir en la bisagra.",
+            "title": "¿Cómo funciona?"
+          },
+          {
+            "type": "markdown_text",
+            "body": "### Encadenar: una cosa después de otra\nCuando una animación termina lanza `animationcomplete__nombre`. Otra animación puede esperar ese evento con `startEvents` y así se arma una secuencia: la puerta se abre y **después** se enciende una luz."
+          },
+          {
+            "type": "fill_blanks",
+            "id": "af4_huecos_cadena",
+            "prompt": "Completa la cadena: al terminar de abrir, la luz sube su intensidad.",
+            "template": "<a-entity [[animation__abrir]]=\"property: rotation; to: 0 -100 0; startEvents: [[click]]\"></a-entity>\n<a-light animation__encender=\"property: light.intensity; to: 2; startEvents: [[animationcomplete__abrir]]\"></a-light>",
+            "code": true,
+            "explanation": "La primera animación se llama `animation__abrir` y arranca con `click`; la segunda espera `animationcomplete__abrir`, el evento que lanza la primera al terminar (lleva su nombre). `light.intensity` es el brillo de la luz."
+          },
+          {
+            "type": "ordering",
+            "id": "af4_ordena_secuencia",
+            "prompt": "Ordena lo que pasa en una secuencia de dos animaciones",
+            "items": [
+              {
+                "id": "o1",
+                "text": "El alumno hace clic en la puerta"
+              },
+              {
+                "id": "o2",
+                "text": "Arranca `animation__abrir` en la bisagra"
+              },
+              {
+                "id": "o3",
+                "text": "La puerta termina de abrirse"
+              },
+              {
+                "id": "o4",
+                "text": "Se lanza el evento `animationcomplete__abrir`"
+              },
+              {
+                "id": "o5",
+                "text": "Arranca `animation__encender` en la luz"
+              }
+            ],
+            "explanation": "Cada animación termina lanzando su evento, y ese evento puede arrancar la siguiente."
+          }
+        ]
+      },
+      {
+        "id": "af4_reto",
+        "title": "Reto: la puerta mágica",
+        "slug": "reto-puerta-magica",
+        "type": "code_interactive",
+        "durationSeconds": 900,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Construir una escena interactiva con cursor, eventos y animaciones.",
+          "habilidades": [
+            "af-eventos",
+            "af-cursor",
+            "af-animacion"
+          ],
+          "prerrequisitos": [
+            "af4_practica"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "La escena cumple las cinco condiciones."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Haz una escena que responda\nConstruye una puerta que se abra con un clic y algo que nunca deje de moverse (un cristal que gira, una esfera que flota). Ponle nombre a la animación de la puerta: `animation__abrir`."
+          },
+          {
+            "type": "code_challenge",
+            "id": "af4_reto_puerta",
+            "prompt": "Agrega el **cursor del ratón** a la escena, una **bisagra** con `animation__abrir` que arranque con `click`, una **puerta clicable** dentro de ella y otro objeto con una animación en **bucle**.",
+            "language": "html",
+            "starter": "<a-scene background=\"color: #141019\">\n  <!-- 1. Agrega a a-scene: cursor=\"rayOrigin: mouse\" raycaster=\"objects: .clicable\" -->\n  <a-plane rotation=\"-90 0 0\" width=\"8\" height=\"8\" color=\"#2a2236\"></a-plane>\n  <a-light type=\"ambient\" intensity=\"0.6\"></a-light>\n\n  <!-- 2. La bisagra: un a-entity con animation__abrir (startEvents: click) -->\n  <!--    y dentro, la puerta: un a-box con class=\"clicable\" -->\n\n  <!-- 3. Algo que se mueva siempre: animation con loop: true -->\n\n</a-scene>",
+            "checks": [
+              {
+                "selector": "a-scene",
+                "text": "La escena tiene el cursor del ratón: `cursor=\"rayOrigin: mouse\"`",
+                "attr": "cursor",
+                "contains": "mouse"
+              },
+              {
+                "selector": "a-scene [animation__abrir]",
+                "text": "Hay una animación `animation__abrir`"
+              },
+              {
+                "selector": "a-scene [animation__abrir]",
+                "text": "`animation__abrir` arranca con el clic: `startEvents: click`",
+                "attr": "animation__abrir",
+                "contains": "click"
+              },
+              {
+                "selector": "a-scene [animation__abrir] .clicable",
+                "text": "La puerta, con `class=\"clicable\"`, está dentro de la bisagra"
+              },
+              {
+                "selector": "a-scene [animation]",
+                "text": "Otro objeto se mueve siempre: `animation` con `loop: true`",
+                "attr": "animation",
+                "contains": "loop: true"
+              }
+            ],
+            "solution": "<a-scene cursor=\"rayOrigin: mouse\" raycaster=\"objects: .clicable\" background=\"color: #141019\">\n  <!-- 1. Agrega a a-scene: cursor=\"rayOrigin: mouse\" raycaster=\"objects: .clicable\" -->\n  <a-plane rotation=\"-90 0 0\" width=\"8\" height=\"8\" color=\"#2a2236\"></a-plane>\n  <a-light type=\"ambient\" intensity=\"0.6\"></a-light>\n\n  <!-- 2. La bisagra: un a-entity con animation__abrir (startEvents: click) -->\n  <!--    y dentro, la puerta: un a-box con class=\"clicable\" -->\n  <a-entity position=\"-0.5 0 -3\"\n    animation__abrir=\"property: rotation; to: 0 -100 0; dur: 1200; startEvents: click\">\n    <a-box class=\"clicable\" position=\"0.5 1.05 0\" width=\"1\" height=\"2.1\" depth=\"0.06\" color=\"#F5792A\"></a-box>\n  </a-entity>\n\n  <!-- 3. Algo que se mueva siempre: animation con loop: true -->\n  <a-entity gltf-model=\"url(/modelos/cristal.glb)\" position=\"1.8 0 -3.5\"\n    animation=\"property: rotation; to: 0 360 0; loop: true; dur: 6000; easing: linear\"></a-entity>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "body": "Lleva tu puerta al [Estudio A-Frame](#/estudio) y encadena una luz que se encienda cuando termine de abrir.",
+            "title": "Sigue jugando"
+          }
+        ]
+      },
+      {
+        "id": "af4_jefe",
+        "title": "Jefe: el Titiritero de Hilos",
+        "slug": "jefe-modulo-4-aframe",
+        "type": "exam",
+        "durationSeconds": 360,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Demostrar animación e interacción en A-Frame.",
+          "habilidades": [
+            "af-animacion",
+            "af-eventos",
+            "af-cursor"
+          ],
+          "prerrequisitos": [
+            "af4_reto"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Aprobar con 80 % o más."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "q_af4_01",
+              "questionText": "¿Qué hace `dur: 2000` en una animación?",
+              "options": [
+                {
+                  "id": "opt_d",
+                  "text": "Que avance 2000 metros",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "Que dure 2 segundos",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Que se repita 2000 veces",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Que espere 2 segundos antes de empezar",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Exacto: `dur` va en milisegundos.",
+              "feedbackIncorrect": "`dur` es la duración, en milisegundos."
+            },
+            {
+              "id": "q_af4_02",
+              "questionText": "Una animación debe empezar solo cuando el alumno haga clic. ¿Qué agregas?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "`startEvents: click`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "`loop: click`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "`dir: click`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "`easing: click`",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "¡Bien! La animación espera ese evento.",
+              "feedbackIncorrect": "Busca la propiedad que hace esperar a un evento."
+            },
+            {
+              "id": "q_af4_03",
+              "questionText": "En computadora, ¿qué agregas a `<a-scene>` para hacer clic con el ratón?",
+              "options": [
+                {
+                  "id": "opt_b",
+                  "text": "`mouse=\"true\"`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "`click-controls`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "`look-controls=\"mouse\"`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "`cursor=\"rayOrigin: mouse\"`",
+                  "isCorrect": true
+                }
+              ],
+              "feedbackCorrect": "Correcto: el cursor lanza el rayo desde el ratón.",
+              "feedbackIncorrect": "El componente se llama `cursor`."
+            },
+            {
+              "id": "q_af4_04",
+              "questionText": "¿Cómo haces que una puerta gire desde su borde y no desde su centro?",
+              "options": [
+                {
+                  "id": "opt_c",
+                  "text": "Con `easing: linear`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Poniendo la puerta dentro de `<a-sky>`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "Con un padre en la bisagra y la puerta como hija desplazada",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Con `rotation` más grande",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "¡Eso es! El padre es el pivote.",
+              "feedbackIncorrect": "Repasa «Bisagras y secuencias»: el truco es la jerarquía."
+            },
+            {
+              "id": "q_af4_05",
+              "questionText": "¿Qué evento usas para que una animación empiece cuando termina `animation__abrir`?",
+              "options": [
+                {
+                  "id": "opt_d",
+                  "text": "`loaded`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "`animationcomplete__abrir`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "`click__abrir`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "`abrir-terminado`",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Perfecto: así se encadenan las animaciones.",
+              "feedbackIncorrect": "Cada animación con nombre lanza su propio evento al terminar."
+            },
+            {
+              "id": "q_af4_06",
+              "questionText": "¿Para qué sirve `raycaster=\"objects: .clicable\"`?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "Para que el cursor solo revise los objetos con la clase `clicable`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Para que todo sea clicable",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Para que los objetos brillen",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Para cargar modelos más rápido",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Así es: menos objetos que revisar, menos clics accidentales.",
+              "feedbackIncorrect": "Piensa en qué objetos revisa el rayo."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

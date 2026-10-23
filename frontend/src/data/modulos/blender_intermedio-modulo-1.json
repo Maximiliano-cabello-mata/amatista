@@ -166,25 +166,32 @@
             ]
           },
           {
-            "type": "true_false",
-            "id": "bi1_verdad",
-            "statements": [
+            "type": "image_choice",
+            "id": "elige_bi1",
+            "question": "Agregaste un **Array** con 3 copias y separación en X. ¿Cuál es el resultado?",
+            "options": [
               {
-                "text": "Snap ayuda a pegar piezas sin medir a ojo.",
-                "answer": true,
-                "explanation": "Con Snap el objeto se pega a vértices, caras o la rejilla."
+                "id": "a",
+                "figure": "extruido",
+                "isCorrect": false
               },
               {
-                "text": "El panel N muestra medidas exactas.",
-                "answer": true,
-                "explanation": "En Elemento ves y escribes ubicación, rotación y dimensiones."
+                "id": "b",
+                "figure": "fila_array",
+                "isCorrect": true
               },
               {
-                "text": "Aplicar la escala no cambia nada.",
-                "answer": false,
-                "explanation": "Aplicar deja la escala en 1: los biseles y modificadores salen parejos."
+                "id": "c",
+                "figure": "espejo",
+                "isCorrect": false
+              },
+              {
+                "id": "d",
+                "figure": "cubo_bisel",
+                "isCorrect": false
               }
-            ]
+            ],
+            "explanation": "Array repite la pieza en fila sin copiarla a mano: cambias la original y cambian todas. Espejo refleja y Bisel redondea aristas."
           },
           {
             "type": "shortcuts",
@@ -277,6 +284,12 @@
               }
             ],
             "explanation": "Primero la pieza base con la escala aplicada: así el Array calcula bien las distancias."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "Medidas reales: por qué los estudios modelan en metros",
+            "body": "En **arquitectura e interiores** un modelo se construye con las medidas del plano: una puerta mide 2 m y un escalón 18 cm. Así el render se puede comparar con la obra y el modelo se comparte con otros programas (por ejemplo, con un archivo IFC o FBX).\n\nEn **videojuegos** también importa: si una silla mide 5 m, en el motor del juego se verá gigante. En Blender, **1 unidad = 1 metro** (Propiedades › Escena › Unidades), igual que en Unreal, Unity y A-Frame.\n\nY una costumbre de equipo: **aplicar la escala** antes de exportar, para que el otro programa reciba el objeto con escala 1."
           }
         ]
       },

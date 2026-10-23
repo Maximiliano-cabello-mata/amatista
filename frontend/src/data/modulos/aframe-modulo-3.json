@@ -70,31 +70,80 @@
             "footer": "Un .gltf guarda lo mismo pero repartido en varios archivos (el .gltf, un .bin y las imágenes). El .glb lo junta todo: es el más cómodo para la web."
           },
           {
-            "type": "true_false",
-            "id": "af3_vf_gltf",
-            "title": "¿Verdad o mito?",
-            "statements": [
-              {
-                "text": "Un .glb puede traer las texturas dentro del mismo archivo.",
-                "answer": true,
-                "explanation": "Esa es su gran ventaja: un archivo, una descarga."
+            "type": "motor_scene",
+            "id": "af3_mundo_modelos",
+            "title": "Acomoda los modelos GLB",
+            "instructions": "La casa, el árbol y el cristal son **modelos GLB** hechos en Blender: cada uno es un solo archivo con su forma y sus colores. Arrástralos al terreno marcado para armar la plaza. Después verás cómo se cargan con una sola línea de código.",
+            "success": "¡Plaza lista! Tres archivos .glb, tres líneas de A-Frame.",
+            "escena": {
+              "entorno": {
+                "tipo": "pradera",
+                "semilla": 9,
+                "tamano": 36,
+                "densidad": 0.35
               },
-              {
-                "text": "glTF solo lo puede exportar Blender.",
-                "answer": false,
-                "explanation": "Blender lo exporta de serie; 3ds Max también desde la versión 2023, y Maya con un complemento. Es un estándar abierto."
+              "camara": {
+                "distancia": 12
               },
-              {
-                "text": "Un modelo pensado para la web debe tener la menor cantidad de polígonos que conserve su forma.",
-                "answer": true,
-                "explanation": "En la web y en los visores de VR cada polígono cuenta: menos polígonos, más fluidez."
-              },
-              {
-                "text": "Las primitivas de A-Frame se guardan como archivos .glb.",
-                "answer": false,
-                "explanation": "Las primitivas se crean en el navegador con código; un .glb es un modelo hecho fuera y cargado."
-              }
-            ]
+              "objetos": [
+                {
+                  "id": "casa",
+                  "forma": "modelo",
+                  "modelo": "casa",
+                  "posicion": [
+                    -4,
+                    null,
+                    3
+                  ],
+                  "movible": true
+                },
+                {
+                  "id": "arbol",
+                  "forma": "modelo",
+                  "modelo": "arbol",
+                  "posicion": [
+                    -1.5,
+                    null,
+                    4
+                  ],
+                  "movible": true
+                },
+                {
+                  "id": "cristal",
+                  "forma": "modelo",
+                  "modelo": "cristal",
+                  "posicion": [
+                    1.5,
+                    null,
+                    4
+                  ],
+                  "movible": true
+                }
+              ],
+              "zonas": [
+                {
+                  "id": "plaza",
+                  "posicion": [
+                    2,
+                    -2
+                  ],
+                  "radio": 2.6,
+                  "color": "#00E5FF"
+                }
+              ],
+              "retos": [
+                {
+                  "tipo": "todos_en_zona",
+                  "objetos": [
+                    "casa",
+                    "arbol",
+                    "cristal"
+                  ],
+                  "zona": "plaza",
+                  "texto": "Lleva los **tres modelos** a la plaza."
+                }
+              ]
+            }
           }
         ]
       },
@@ -312,6 +361,12 @@
               }
             ],
             "explanation": "Menos polígonos, texturas del tamaño justo y modelos reutilizados: así la escena vuela incluso en un visor autónomo."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "glTF, el «JPEG del 3D»",
+            "body": "glTF (y su versión de un solo archivo, **GLB**) es el formato estándar para 3D en tiempo real: lo usan tiendas en línea, motores de videojuegos, redes sociales y visores de AR. En la industria el flujo típico es: modelar en Blender (o Maya / 3ds Max), **reducir polígonos**, hornear texturas, exportar a GLB y **comprimir** con Draco o Meshopt (herramientas como gltf-transform lo hacen en un comando).\n\nUna referencia que usan muchos equipos: un producto para la web debería pesar **menos de 5 MB** y abrir en menos de tres segundos en un teléfono."
           }
         ]
       },

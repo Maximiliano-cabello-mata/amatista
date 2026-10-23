@@ -2,7 +2,7 @@
   "module": {
     "id": "mod_aframe_001",
     "courseId": "crs_aframe_fundamentos",
-    "title": "Módulo 1: La Web en 3D (Tus primeros pasos en A-Frame)",
+    "title": "Módulo 1: La web en 3D (tus primeros pasos en A-Frame)",
     "slug": "modulo-1-fundamentos-aframe",
     "description": "Descubre cómo la web ha evolucionado. Aprenderemos qué es WebXR y cómo A-Frame nos permite construir experiencias de Realidad Virtual directamente en el navegador usando etiquetas que ya conoces.",
     "estimatedTimeMinutes": 40,
@@ -117,6 +117,12 @@
               }
             ],
             "explanation": "Tú solo escribes la primera capa: A-Frame la traduce a three.js, three.js dibuja con WebGL y WebXR lleva el resultado a los visores."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "WebXR en las empresas hoy",
+            "body": "Muchas tiendas en línea ya muestran sus productos en 3D dentro de la página: giras la silla, cambias el color de la tela y la ves en tu sala con el botón **AR**, sin instalar nada. Lo mismo hacen museos (salas virtuales), inmobiliarias (recorridos de casas que aún no existen) y empresas que capacitan a su personal con simulaciones.\n\n¿Por qué en la web y no en una app? Porque **un enlace llega a todos**: se abre en el teléfono, en la computadora y en el visor. A-Frame se usa mucho para prototipos rápidos y proyectos educativos; los equipos grandes también usan three.js (la base de A-Frame), Babylon.js o PlayCanvas. Lo que aprendes aquí (escenas, entidades, modelos glTF) sirve en todos ellos."
           }
         ],
         "cover": {

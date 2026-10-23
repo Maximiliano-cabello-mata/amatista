@@ -145,3 +145,11 @@ describe('combinarCatalogos', () => {
     expect(originales).toEqual(copia);
   });
 });
+
+describe('módulos retirados', () => {
+  it('ignora los módulos 4 y 5 del curso «aframe» si el servidor todavía los envía', () => {
+    const app = [{ id: 'aframe', numero: '05', modulos: [{ id: 'mod_aframe_001', numero: 1, titulo: 'Uno', contenido: null }] }];
+    const servidor = [{ id: 'aframe', modulos: [{ id: 'mod_aframe_004', numero: 4, titulo: 'Viejo' }, { id: 'mod_aframe_005', numero: 5 }] }];
+    expect(combinarCatalogos(app, servidor)[0].modulos.map((m) => m.id)).toEqual(['mod_aframe_001']);
+  });
+});

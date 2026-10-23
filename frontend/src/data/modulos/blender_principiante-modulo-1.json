@@ -59,9 +59,22 @@
             ]
           },
           {
-            "type": "axis_gizmo",
-            "title": "Gira los ejes de Blender",
-            "caption": "Arrastra para orbitar o pulsa 1, 3 y 7 como en el teclado numérico. X es rojo, Y verde y Z azul."
+            "type": "callout",
+            "variant": "dato",
+            "title": "¿Tu Blender está en inglés?",
+            "body": "Es normal: Blender viene en inglés al instalarlo. Donde aquí diga **Malla**, allá dice **Mesh**; donde diga **Agregar**, **Add**. Tienes todas las palabras, con su nombre en inglés, en [Palabras de Blender](#/blender), y el add-on te muestra los menús tal como los ves."
+          },
+          {
+            "type": "viewport_sim",
+            "id": "vista_bp1",
+            "title": "Muévete por la vista 3D, como en Blender",
+            "caption": "Arrastra para girar la vista, usa la rueda (o pellizca) para acercarte y prueba las vistas **1**, **3** y **7**. Aquí no puedes romper nada: es para perderle el miedo.",
+            "missions": [
+              "orbitar",
+              "acercar",
+              "frente",
+              "arriba"
+            ]
           },
           {
             "type": "quiz_inline",
@@ -91,6 +104,12 @@
             "variant": "dato",
             "title": "La teoría también vive en Blender",
             "body": "En la práctica, la pestaña **Aprender** del add-on te muestra cada idea en el momento justo, con las teclas en grande."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "Blender en la industria hoy",
+            "body": "Blender es **libre y gratuito** (licencia GPL), pero no es un programa «de aficionados». Lo usan estudios de animación, videojuegos, arquitectura y publicidad, y su desarrollo lo pagan empresas como **Epic Games, NVIDIA, AMD, Ubisoft y Apple** a través del Blender Development Fund.\n\n- **Cine**: *Flow* (2024), hecha con Blender y renderizada con EEVEE, ganó el **Óscar a mejor película animada**.\n- **Estudios**: Ubisoft Animation Studio y el estudio japonés Khara (*Evangelion*) trabajan con Blender.\n- **Versiones LTS**: cada año sale una versión con **soporte de dos años** (por ejemplo, 4.2 LTS). Los estudios fijan una LTS para todo un proyecto y así nadie abre el archivo con otra versión. Amatista pide **4.2 LTS o más nueva** por la misma razón.\n\nLo que aprendes aquí (la vista, los ejes, mover, girar y escalar) es igual en Maya, 3ds Max o Unreal: cambia el atajo, no la idea."
           }
         ]
       },
@@ -215,30 +234,96 @@
             ]
           },
           {
-            "type": "true_false",
-            "id": "bp1_verdad",
-            "statements": [
-              {
-                "text": "Orbitar mueve el objeto.",
-                "answer": false,
-                "explanation": "Orbitar mueve tu mirada: el objeto se queda donde estaba."
+            "type": "motor_scene",
+            "id": "mundo_bp1",
+            "title": "Mueve las piezas a la estación",
+            "instructions": "En Blender, **G** mueve el objeto que elegiste. Aquí lo haces con el ratón o el dedo: **arrastra la locomotora y el vagón** hasta la estación (el círculo). Arrastra el pasto para girar la vista y mírala desde otro lado.",
+            "success": "¡Tren en la estación! En Blender harás lo mismo con G, y con G y luego Z para moverte solo hacia arriba.",
+            "escena": {
+              "entorno": {
+                "tipo": "pradera",
+                "semilla": 4,
+                "tamano": 40,
+                "densidad": 0.5
               },
-              {
-                "text": "En Blender, Z es la altura.",
-                "answer": true,
-                "explanation": "Z, el eje azul, apunta al cielo."
+              "camara": {
+                "distancia": 11
               },
-              {
-                "text": "G mueve, R gira y S escala.",
-                "answer": true,
-                "explanation": "Grab, Rotate y Scale: las tres transformaciones."
-              },
-              {
-                "text": "Para cambiar un objeto primero lo eliges.",
-                "answer": true,
-                "explanation": "Lo elegido se ve con borde naranja."
-              }
-            ]
+              "objetos": [
+                {
+                  "id": "locomotora",
+                  "forma": "caja",
+                  "color": "#9B59B6",
+                  "escala": [
+                    1.6,
+                    1,
+                    1
+                  ],
+                  "posicion": [
+                    -3.5,
+                    null,
+                    2
+                  ],
+                  "movible": true
+                },
+                {
+                  "id": "vagon",
+                  "forma": "caja",
+                  "color": "#F5792A",
+                  "escala": [
+                    1.2,
+                    0.8,
+                    1
+                  ],
+                  "posicion": [
+                    -1,
+                    null,
+                    3.2
+                  ],
+                  "movible": true
+                },
+                {
+                  "id": "farol",
+                  "forma": "cilindro",
+                  "color": "#00E5FF",
+                  "escala": [
+                    0.3,
+                    2,
+                    0.3
+                  ],
+                  "posicion": [
+                    5.2,
+                    null,
+                    -2.6
+                  ]
+                }
+              ],
+              "zonas": [
+                {
+                  "id": "estacion",
+                  "posicion": [
+                    3,
+                    -1
+                  ],
+                  "radio": 1.8,
+                  "color": "#00E5FF"
+                }
+              ],
+              "retos": [
+                {
+                  "tipo": "en_zona",
+                  "objeto": "locomotora",
+                  "zona": "estacion",
+                  "texto": "Lleva la **locomotora** a la estación."
+                },
+                {
+                  "tipo": "en_zona",
+                  "objeto": "vagon",
+                  "zona": "estacion",
+                  "texto": "Lleva el **vagón** a la estación."
+                }
+              ]
+            }
           },
           {
             "type": "matching",

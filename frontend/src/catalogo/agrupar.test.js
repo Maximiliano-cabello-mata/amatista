@@ -17,7 +17,7 @@ describe('un curso por tarjeta', () => {
       'blender_intermedio',
       'blender_avanzado',
     ]);
-    expect(grupos[1].niveles).toHaveLength(1);
+    expect(grupos[1].niveles.map((c) => c.id)).toEqual(['aframe', 'aframe_interactivo']);
   });
 
   it('el curso archivado de la v2 no aparece como nivel', () => {
@@ -29,7 +29,8 @@ describe('un curso por tarjeta', () => {
   it('encuentra la ruta por su id o por el de un nivel', () => {
     expect(buscarRuta(cursos, 'blender')).toMatchObject({ ruta: { id: 'blender' }, nivel: null });
     expect(buscarRuta(cursos, 'blender_principiante_intermedio').nivel.id).toBe('blender_principiante_intermedio');
-    expect(buscarRuta(cursos, 'aframe').nivel.id).toBe('aframe');
+    expect(buscarRuta(cursos, 'aframe')).toMatchObject({ ruta: { id: 'aframe' }, nivel: { id: 'aframe' } });
+    expect(buscarRuta(cursos, 'aframe_interactivo')).toMatchObject({ ruta: { id: 'aframe' }, nivel: { id: 'aframe_interactivo' } });
     expect(buscarRuta(cursos, 'nada')).toBeNull();
   });
 

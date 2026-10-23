@@ -1,330 +1,464 @@
-// Portada (#/): Amatista como plataforma de 3D multiplataforma (2026-10-21). Primero el hero
-// con el acceso directo a la siguiente lección; justo debajo, todo lo que hay a la vista: los
-// programas (Blender, A-Frame y los que vienen), las disciplinas y un buscador que lleva a
-// Explorar. Después los cursos, cómo se aprende y la invitación a crear cuenta. Todo sale del
-// catálogo vigente y del progreso local.
+// Portada y página «Cursos» (#/, 2026-10-23): todo el catálogo compactado en un camino guiado.
+// Quien llega no sabe qué cursos hay, así que no se le pide buscar: primero elige qué quiere
+// crear (un programa) y ve una sola lista numerada, en orden, con el paso que le toca resaltado.
+// Cada paso es un módulo: una línea de lo que vas a lograr, sus lecciones al tocarlo y un botón
+// que abre la lección que sigue. Reemplaza a Explorar (buscador y filtros del 21 de octubre).
+// Todo sale del catálogo vigente y del progreso local (catalogo/camino.js).
 import { useMemo, useState } from 'react';
 import { useAuth } from '../auth/contexto';
 import { useCatalogo } from '../catalogo/contexto';
-import { agruparPorRuta } from '../catalogo/agrupar';
-import { cifrasPorSoftware, modulosDelCatalogo } from '../catalogo/indice';
+import { caminos, programaInicial } from '../catalogo/camino';
 import TituloSeccion from '../components/estructura/TituloSeccion';
 import InvitacionRecorrido from '../components/InvitacionRecorrido';
-import { CristalLogo } from '../components/Iconos';
+import { CristalLogo, IconoCandado } from '../components/Iconos';
 import LogoCurso from '../components/LogoCurso';
 import LogoSoftware from '../components/LogoSoftware';
-import TarjetaCurso from '../components/TarjetaCurso';
 import { cursosParaContinuar, tieneAvance } from '../components/panel/datos';
 import { FORMULA } from '../components/panel/formula';
-import { IconoRacha } from '../components/panel/IconosPanel';
-import { DISCIPLINAS, SOFTWARE } from '../data/software';
+import { IconoPalomita, IconoRacha } from '../components/panel/IconosPanel';
+import { disciplinaPorId } from '../data/software';
 import { useProgreso } from '../progreso/contexto';
-import { navegar, rutaEntrar, rutaExplorar, rutas } from '../rutas';
+import { rutaEntrar, rutas } from '../rutas';
 
 const BOTON = 'corte-poly-sm inline-flex items-center justify-center gap-2 px-6 py-3.5 text-center font-extrabold uppercase tracking-widest';
+const CLAVE_PROGRAMA = 'amatista:programa';
 const plural = (n, uno, varios) => `${n} ${n === 1 ? uno : varios}`;
+const horas = (minutos) => (minutos >= 90 ? `${Math.round(minutos / 6) / 10} h` : `${minutos} min`);
 
-// Composición low poly del hero: el cristal al centro y los programas orbitando.
-function EmblemaHero() {
+// Lo que se crea con cada programa, en palabras de quien no conoce los nombres.
+const QUE_CREAS = {
+  blender: 'Objetos, personajes y escenas 3D',
+  aframe: 'Mundos 3D para la web y la realidad virtual',
+  maya: 'Animación de personajes',
+  '3dsmax': 'Arquitectura y diseño de producto',
+};
+
+const ICONO_FORMULA = Object.fromEntries(FORMULA.map((paso) => [paso.paso, paso.Icono]));
+
+function leerPrograma() {
+  try {
+    return window.localStorage.getItem(CLAVE_PROGRAMA);
+  } catch {
+    return null;
+  }
+}
+
+function guardarPrograma(id) {
+  try {
+    window.localStorage.setItem(CLAVE_PROGRAMA, id);
+  } catch {
+    // Sin almacenamiento (ventana privada): solo no se recuerda la elección.
+  }
+}
+
+const ESTADOS = {
+  hecho: { texto: 'Hecho', clase: 'border-emerald-400/40 bg-emerald-400/10 text-emerald-200' },
+  siguiente: { texto: 'Siguiente', clase: 'border-neon/60 bg-neon/15 text-neon' },
+  'en-curso': { texto: 'En curso', clase: 'border-amatista-claro/50 bg-amatista/15 text-amatista-claro' },
+  disponible: { texto: 'Abierto', clase: 'border-white/15 bg-white/5 text-white/60' },
+  proximamente: { texto: 'Pronto', clase: 'border-dashed border-white/15 text-white/45' },
+  bloqueado: { texto: 'Más adelante', clase: 'border-dashed border-white/15 text-white/45' },
+};
+
+function Hexagono({ paso }) {
+  const { estado, numero } = paso;
+  const clase =
+    estado === 'hecho'
+      ? 'bg-emerald-400 text-base'
+      : estado === 'siguiente'
+        ? 'bg-neon text-base camino__pulso'
+        : estado === 'en-curso'
+          ? 'bg-amatista text-white'
+          : estado === 'proximamente' || estado === 'bloqueado'
+            ? 'bg-white/10 text-white/40'
+            : 'bg-superficie text-white ring-1 ring-inset ring-white/20';
   return (
-    <div className="relative mx-auto grid aspect-square w-full max-w-[13rem] place-items-center sm:max-w-[19rem]" aria-hidden="true">
-      <div className="hexagono absolute inset-[6%] bg-gradient-to-br from-amatista/30 via-amatista-oscuro/50 to-transparent" />
-      <div className="hexagono absolute inset-[22%] bg-base/80" />
-      <CristalLogo className="animar-flotar relative h-[42%] w-[42%] drop-shadow-[0_0_24px_rgba(155,89,182,0.55)]" />
-      <div className="hexagono absolute left-[2%] top-[14%] grid h-[24%] w-[27%] place-items-center bg-superficie">
-        <LogoCurso logo="blender" className="animar-flotar h-[58%] w-[62%] [animation-delay:-1.5s]" />
-      </div>
-      <div className="hexagono absolute bottom-[12%] right-[2%] grid h-[24%] w-[27%] place-items-center bg-superficie">
-        <LogoCurso logo="aframe" className="animar-flotar h-[52%] w-[52%] [animation-delay:-3s]" />
-      </div>
-      <div className="hexagono absolute right-[4%] top-[8%] grid h-[17%] w-[19%] place-items-center bg-superficie/80 font-mono text-[10px] font-extrabold text-white/45 sm:text-xs">
-        +
-      </div>
-    </div>
+    <span className={`hexagono relative z-[1] grid h-11 w-12 shrink-0 place-items-center font-mono text-sm font-extrabold ${clase}`} aria-hidden="true">
+      {estado === 'hecho' ? <IconoPalomita className="h-5 w-5" /> : estado === 'bloqueado' ? <IconoCandado className="h-4 w-4" /> : numero}
+    </span>
   );
 }
 
-// Llamado principal del hero: con avance lleva a la siguiente lección; sin
-// avance, a la primera lección del primer curso disponible. Al lado, Explorar.
-function AccionesHero({ siguiente, hayAvance }) {
-  const explorar = (
-    <a href={rutas.explorar} className={`${BOTON} border border-white/15 bg-white/5 text-white/85 transition-colors hover:bg-white/10`}>
-      Explorar todo
+// Un paso del camino: compacto (una línea de lo que logras) y, al tocarlo, sus lecciones.
+function Paso({ paso, abierto, alternar, ultimo }) {
+  const estado = ESTADOS[paso.estado] ?? ESTADOS.disponible;
+  const conContenido = paso.lecciones.length > 0 && paso.estado !== 'bloqueado';
+  const idLista = `paso-${paso.id.replace(/[^a-z0-9_-]/gi, '-')}`;
+  const accion = paso.estado === 'hecho' ? 'Repasar' : paso.estado === 'en-curso' || (paso.estado === 'siguiente' && paso.hechas) ? 'Seguir' : paso.estado === 'siguiente' ? 'Empezar' : 'Abrir';
+  return (
+    <li className={`camino__paso relative flex gap-3 sm:gap-4 ${ultimo ? '' : 'pb-3'}`} data-estado={paso.estado}>
+      {!ultimo && <span className="camino__linea absolute bottom-0 left-6 top-11 w-px" aria-hidden="true" />}
+      <Hexagono paso={paso} />
+      <div
+        className={`corte-poly-sm min-w-0 flex-1 border transition-colors ${
+          paso.estado === 'siguiente' ? 'border-neon/50 bg-gradient-to-r from-neon/10 to-superficie/95' : 'border-white/10 bg-superficie/90'
+        }`}
+      >
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 p-3 sm:flex-nowrap sm:p-4">
+          <button
+            type="button"
+            onClick={alternar}
+            disabled={!conContenido}
+            aria-expanded={conContenido ? abierto : undefined}
+            aria-controls={conContenido ? idLista : undefined}
+            className="group min-w-0 flex-1 text-left disabled:cursor-default"
+          >
+            <span className="flex flex-wrap items-center gap-2">
+              <span className="text-base font-extrabold text-white sm:text-lg">{paso.titulo}</span>
+              <span className={`corte-poly-sm border px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest ${estado.clase}`}>{estado.texto}</span>
+            </span>
+            {paso.resumen && <span className="mt-0.5 block text-sm leading-snug text-texto/70">{paso.resumen}</span>}
+            <span className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-widest text-white/45">
+              {conContenido && (
+                <span>
+                  {paso.hechas ? `${paso.hechas} de ${paso.lecciones.length}` : plural(paso.lecciones.length, 'lección', 'lecciones')}
+                </span>
+              )}
+              {paso.minutos && conContenido && <span>{horas(paso.minutos)}</span>}
+              {paso.insignia && conContenido && <span className="text-amatista-claro/80">Insignia: {paso.insignia}</span>}
+              {conContenido && (
+                <span className="text-white/55 group-hover:text-neon">
+                  {abierto ? 'Ocultar lecciones ▴' : 'Ver lecciones ▾'}
+                </span>
+              )}
+            </span>
+          </button>
+          {conContenido && (
+            <a
+              href={paso.href}
+              className={`corte-poly-sm shrink-0 px-4 py-2 font-mono text-xs font-bold uppercase tracking-widest transition-[filter,background-color] ${
+                paso.estado === 'siguiente' ? 'destello bg-neon text-base hover:brightness-110' : 'bg-white/5 text-white/80 hover:bg-white/10'
+              }`}
+            >
+              {accion} ▸<span className="sr-only">: {paso.titulo}</span>
+            </a>
+          )}
+        </div>
+        {conContenido && abierto && (
+          <ol id={idLista} className="animar-entrar grid gap-px [&>*]:min-w-0 border-t border-white/5 bg-white/5 sm:grid-cols-2">
+            {paso.lecciones.map((leccion, i) => {
+              const Icono = ICONO_FORMULA[leccion.formula];
+              return (
+                <li key={leccion.id} className="bg-superficie/95">
+                  <a href={leccion.href} className="flex items-center gap-3 px-3 py-2.5 text-sm hover:bg-white/5 sm:px-4">
+                    <span
+                      className={`hexagono grid h-7 w-8 shrink-0 place-items-center ${leccion.hecha ? 'bg-emerald-400/20 text-emerald-300' : 'bg-black/30 text-white/60'}`}
+                      aria-hidden="true"
+                    >
+                      {leccion.hecha ? <IconoPalomita className="h-3.5 w-3.5" /> : Icono ? <Icono className="h-4 w-4" /> : <span className="font-mono text-[10px]">{i + 1}</span>}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className={`block truncate ${leccion.hecha ? 'text-white/60' : 'text-white'}`}>{leccion.titulo}</span>
+                    </span>
+                    {leccion.minutos && <span className="shrink-0 font-mono text-[10px] text-white/40">{leccion.minutos} min</span>}
+                    {leccion.hecha && <span className="sr-only">(hecha)</span>}
+                  </a>
+                </li>
+              );
+            })}
+          </ol>
+        )}
+      </div>
+    </li>
+  );
+}
+
+// La herramienta del programa como un paso más: en Blender va antes (se prepara una vez), en
+// A-Frame al final (es el taller libre).
+function PasoHerramienta({ software, alInicio }) {
+  const herramienta = software.herramienta;
+  if (!herramienta) return null;
+  return (
+    <a
+      href={herramienta.href}
+      className={`corte-poly-sm elevar flex items-center gap-3 border border-dashed p-3 sm:p-4 ${
+        software.acento === 'blender' ? 'border-blender/40 bg-blender/5 hover:border-blender' : 'border-neon/40 bg-neon/5 hover:border-neon'
+      } ${alInicio ? 'mb-4' : 'mt-4'}`}
+    >
+      <span className="hexagono grid h-11 w-12 shrink-0 place-items-center bg-black/40">
+        <LogoSoftware software={software} className="h-6 w-7 text-[10px]" />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block font-mono text-[10px] uppercase tracking-widest text-white/50">{alInicio ? 'Antes del paso 1 · una sola vez' : 'Cuando quieras · crea libre'}</span>
+        <span className="block font-extrabold text-white">{herramienta.nombre}</span>
+        <span className="block text-sm text-texto/70">
+          {alInicio
+            ? 'Instala Blender y el add-on, y conecta tu cuenta. La página te lleva de la mano: no tienes que programar.'
+            : 'Arma tu propia escena con plantillas y piezas, mírala al instante y descárgala como página web.'}
+        </span>
+      </span>
+      <span className="shrink-0 font-mono text-xs font-bold uppercase tracking-widest text-white/70">{herramienta.texto} ▸</span>
     </a>
   );
-  if (!siguiente) {
+}
+
+function Camino({ camino }) {
+  const { software } = camino;
+  const [abiertos, setAbiertos] = useState(() => new Set(camino.siguiente ? [camino.siguiente.id] : []));
+  const alternar = (id) =>
+    setAbiertos((previos) => {
+      const nuevos = new Set(previos);
+      if (nuevos.has(id)) nuevos.delete(id);
+      else nuevos.add(id);
+      return nuevos;
+    });
+
+  if (!camino.disponible) {
     return (
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
-        {explorar}
-        <a href={rutas.panel} className={`${BOTON} bg-amatista text-white transition-[filter] hover:brightness-110`}>
-          Ver mi panel ▸
-        </a>
-      </div>
-    );
-  }
-  const { curso, resumen } = siguiente;
-  const leccion = resumen.siguiente.leccion;
-  return (
-    <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
-      <a
-        href={rutas.leccion(curso.id, leccion.id)}
-        className={`${BOTON} bg-neon text-base transition-[filter] hover:brightness-110 sm:text-lg`}
-      >
-        ▶ {hayAvance ? 'Continuar' : 'Empezar ahora'}
-        <span className="sr-only">: {leccion.title}</span>
-      </a>
-      {explorar}
-    </div>
-  );
-}
-
-// Busca desde la portada: lleva a Explorar con la búsqueda puesta.
-function BuscadorPortada() {
-  const [texto, setTexto] = useState('');
-  const enviar = (evento) => {
-    evento.preventDefault();
-    navegar(rutaExplorar({ q: texto.trim() }));
-  };
-  return (
-    <form role="search" onSubmit={enviar} className="flex gap-2">
-      <label htmlFor="portada-buscar" className="sr-only">
-        Buscar en todo el contenido
-      </label>
-      <input
-        id="portada-buscar"
-        type="search"
-        value={texto}
-        onChange={(evento) => setTexto(evento.target.value)}
-        placeholder="¿Qué quieres aprender? Ej.: luz, GLB, animación"
-        className="corte-poly-sm min-w-0 flex-1 border border-white/15 bg-black/30 px-4 py-3 text-white placeholder:text-white/40 focus:border-neon"
-      />
-      <button type="submit" className="corte-poly-sm shrink-0 bg-amatista px-5 font-mono text-xs font-bold uppercase tracking-widest text-white hover:brightness-110">
-        Buscar
-      </button>
-    </form>
-  );
-}
-
-// Todo lo que hay, a la vista desde el inicio: un mosaico por programa y las disciplinas.
-function MapaContenido({ cursos }) {
-  const modulos = useMemo(() => modulosDelCatalogo(cursos), [cursos]);
-  const cifras = useMemo(() => cifrasPorSoftware(modulos), [modulos]);
-  return (
-    <section className="mt-14" aria-labelledby="inicio-mapa" data-recorrido="cursos">
-      <TituloSeccion
-        id="inicio-mapa"
-        className="mb-6"
-        antetitulo="Todo Amatista, a la vista"
-        titulo={
-          <>
-            Un lugar para aprender <span className="text-amatista-claro">todo el 3D</span>
-          </>
-        }
-        descripcion="Modelado, diseño, animación y 3D para la web, en varios programas. Elige uno o busca un tema: todo el contenido está a un clic."
-        accion={
-          <a href={rutas.explorar} className="font-mono text-xs font-bold uppercase tracking-widest text-neon hover:underline">
-            Ver todo el catálogo ▸
-          </a>
-        }
-      />
-      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {SOFTWARE.map((software) => {
-          const c = cifras[software.id];
-          const disponible = software.estado === 'disponible';
-          return (
-            <li key={software.id}>
-              <a
-                href={rutaExplorar({ software: software.id })}
-                className={`corte-poly-sm elevar group flex h-full flex-col border p-4 ${
-                  disponible ? 'border-white/10 bg-superficie/90 hover:border-neon' : 'border-dashed border-white/15 bg-superficie/50'
-                }`}
-              >
-                <span className="flex items-center gap-3">
-                  <span className="hexagono grid h-12 w-14 shrink-0 place-items-center bg-black/40">
-                    <LogoSoftware software={software} className="h-7 w-8 text-xs" />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-lg font-extrabold text-white">{software.nombre}</span>
-                    <span className={`block font-mono text-[10px] uppercase tracking-widest ${disponible ? 'text-neon' : 'text-amber-200'}`}>
-                      {disponible ? `${plural(c.publicados, 'módulo', 'módulos')} · ${plural(c.lecciones, 'lección', 'lecciones')}` : 'En preparación'}
-                    </span>
-                  </span>
-                </span>
-                <span className="mt-3 flex-1 text-sm leading-snug text-texto/75">{software.lema}</span>
-                <span className="mt-3 font-mono text-[11px] font-bold uppercase tracking-widest text-white/60 group-hover:text-neon">
-                  {disponible ? 'Ver sus módulos ▸' : 'Ver qué enseñará ▸'}
-                </span>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-
-      <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
-        <BuscadorPortada />
-        <ul className="flex flex-wrap gap-2" aria-label="Explorar por disciplina">
-          {DISCIPLINAS.map((disciplina) => (
-            <li key={disciplina.id}>
-              <a
-                href={rutaExplorar({ disciplina: disciplina.id })}
-                title={disciplina.texto}
-                className="corte-poly-sm inline-block border border-white/10 bg-superficie/80 px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-widest text-white/70 hover:border-neon hover:text-neon"
-              >
-                {disciplina.nombre}
-              </a>
+      <div className="corte-poly-sm border border-dashed border-white/15 bg-superficie/60 p-6 text-center">
+        <LogoSoftware software={software} className="mx-auto h-12 w-14 text-base" />
+        <p className="mt-3 text-xl font-extrabold text-white">{software.nombre} llega pronto</p>
+        <p className="mx-auto mt-2 max-w-xl text-texto/75">{software.descripcion}</p>
+        <ul className="mt-4 flex flex-wrap justify-center gap-2">
+          {software.disciplinas.map((id) => (
+            <li key={id} className="corte-poly-sm border border-white/10 px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-white/60">
+              {disciplinaPorId(id)?.nombre ?? id}
             </li>
           ))}
         </ul>
+        <p className="mt-4 text-sm text-white/50">Mientras tanto, lo que aprendas en Blender te sirve: los conceptos de 3D son los mismos en todos los programas.</p>
       </div>
-    </section>
+    );
+  }
+
+  const herramientaPrimero = software.id === 'blender';
+  return (
+    <div>
+      {herramientaPrimero && <PasoHerramienta software={software} alInicio />}
+      <div className="grid gap-6 [&>*]:min-w-0">
+        {camino.niveles.map(({ curso, pasos, hechos, total, minutos }, indice) => (
+          <section key={curso.id} aria-labelledby={`nivel-${curso.id}`}>
+            <header className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-white/5 pb-2">
+              <div className="min-w-0">
+                <h3 id={`nivel-${curso.id}`} className="text-lg font-extrabold text-white">
+                  <span className="mr-2 font-mono text-xs uppercase tracking-widest text-white/40">Nivel {indice + 1}</span>
+                  {curso.titulo}
+                </h3>
+                {curso.para && <p className="text-sm text-texto/65">{curso.para}</p>}
+              </div>
+              <p className="flex gap-3 font-mono text-[10px] uppercase tracking-widest text-white/45">
+                {curso.estado === 'bloqueado' ? (
+                  <span>Se abre más adelante</span>
+                ) : (
+                  <>
+                    <span>
+                      {hechos} / {total} pasos
+                    </span>
+                    {minutos > 0 && <span>{horas(minutos)}</span>}
+                    <a href={rutas.curso(curso.id)} className="text-white/60 hover:text-neon">
+                      Ver el curso ▸
+                    </a>
+                  </>
+                )}
+              </p>
+            </header>
+            {curso.estado === 'bloqueado' ? (
+              <p className="corte-poly-sm flex items-center gap-3 border border-dashed border-white/10 bg-superficie/50 p-3 text-sm text-white/55">
+                <IconoCandado className="h-4 w-4 shrink-0" />
+                <span>Lo que vendrá: {pasos.map((p) => p.titulo).join(' · ')}.</span>
+              </p>
+            ) : (
+              <ol className="camino">
+                {pasos.map((paso, i) => (
+                  <Paso key={paso.id} paso={paso} abierto={abiertos.has(paso.id)} alternar={() => alternar(paso.id)} ultimo={i === pasos.length - 1} />
+                ))}
+              </ol>
+            )}
+          </section>
+        ))}
+      </div>
+      {!herramientaPrimero && <PasoHerramienta software={software} />}
+    </div>
   );
 }
 
-function Inicio() {
+// «¿Qué quieres crear?»: un botón grande por programa (es la única elección que se pide).
+function ElegirPrograma({ lista, elegido, elegir }) {
+  return (
+    <div role="tablist" aria-label="¿Qué quieres crear?" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4" data-recorrido="programas">
+      {lista.map((camino) => {
+        const { software } = camino;
+        const activo = software.id === elegido;
+        return (
+          <button
+            key={software.id}
+            type="button"
+            role="tab"
+            id={`tab-${software.id}`}
+            aria-selected={activo}
+            aria-controls="camino-programa"
+            onClick={() => elegir(software.id)}
+            className={`corte-poly-sm flex items-center gap-3 border p-3 text-left transition-colors ${
+              activo
+                ? 'border-neon bg-neon/10'
+                : camino.disponible
+                  ? 'border-white/10 bg-superficie/90 hover:border-white/30'
+                  : 'border-dashed border-white/10 bg-superficie/50 hover:border-white/25'
+            }`}
+          >
+            <span className="hexagono grid h-11 w-12 shrink-0 place-items-center bg-black/40">
+              <LogoSoftware software={software} className="h-6 w-7 text-[10px]" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-bold leading-snug text-white">{QUE_CREAS[software.id] ?? software.lema}</span>
+              <span className={`block font-mono text-[10px] uppercase tracking-widest ${activo ? 'text-neon' : 'text-white/45'}`}>
+                {software.nombre}
+                {camino.disponible ? ` · ${plural(camino.total, 'paso', 'pasos')}` : ' · pronto'}
+              </span>
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function Inicio({ consulta = {} }) {
   const { cursos } = useCatalogo();
   const { progreso, xp, nivel } = useProgreso();
   const { usuario } = useAuth();
   const hayAvance = tieneAvance(progreso);
-  const [siguiente] = cursosParaContinuar(progreso, cursos);
-  // Un curso por tarjeta: los niveles de Blender viven dentro de su tarjeta.
-  const tarjetas = agruparPorRuta(cursos);
-  const modulos = useMemo(() => modulosDelCatalogo(cursos).filter((m) => m.publicado), [cursos]);
-  const lecciones = modulos.reduce((suma, m) => suma + m.lecciones, 0);
+  const [continuar] = cursosParaContinuar(progreso, cursos);
+  const lista = useMemo(() => caminos(cursos, progreso), [cursos, progreso]);
+  const [elegido, setElegido] = useState(() =>
+    programaInicial(lista, {
+      elegido: consulta.programa ?? leerPrograma(),
+      ultimoCurso: hayAvance ? continuar?.curso.id : null,
+    }),
+  );
+  const camino = lista.find((c) => c.software.id === elegido) ?? lista[0];
+  const elegir = (id) => {
+    setElegido(id);
+    guardarPrograma(id);
+  };
+
+  // El botón grande: la lección que sigue (con avance, donde te quedaste; sin avance, el paso 1).
+  const siguiente = hayAvance && continuar ? { href: rutas.leccion(continuar.curso.id, continuar.resumen.siguiente.leccion.id), titulo: continuar.resumen.siguiente.leccion.title, curso: continuar.curso.titulo } : null;
+  const primero = camino?.siguiente;
 
   return (
-    <main className="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6 sm:pt-14">
-      {/* Hero */}
-      <section className="animar-entrar grid items-center gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]" aria-labelledby="inicio-titulo" data-recorrido="hero">
-        <div className="min-w-0">
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.3em] text-neon">Plataforma de 3D multiplataforma</p>
-          <h1 id="inicio-titulo" className="text-4xl font-extrabold leading-[1.05] text-white sm:text-6xl">
-            Aprende 3D <span className="text-amatista-claro">creando</span>, en el programa que elijas.
-          </h1>
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-texto/80">
-            Modelado, diseño, animación y 3D para la web. Hoy con Blender y A-Frame; Maya y 3ds Max vienen en camino. Lecciones cortas e
-            interactivas, desde el navegador e incluso sin Internet.
-          </p>
-
-          <ul className="mt-6 flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-wider" aria-label="Programas">
-            {SOFTWARE.map((software) => (
-              <li key={software.id}>
-                <a
-                  href={rutaExplorar({ software: software.id })}
-                  className={`corte-poly-sm flex items-center gap-2 border px-3 py-1.5 hover:border-neon hover:text-neon ${
-                    software.estado === 'disponible' ? 'border-white/10 bg-superficie/80 text-white/80' : 'border-dashed border-white/15 text-white/50'
-                  }`}
-                >
-                  <LogoSoftware software={software} className="h-4 w-5 text-[9px]" />
-                  {software.nombre}
-                  {software.estado !== 'disponible' && <span className="text-[10px] text-white/40">pronto</span>}
-                </a>
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-8">
-            <AccionesHero siguiente={siguiente} hayAvance={hayAvance} />
-            {hayAvance && siguiente && (
-              <p className="mt-3 text-sm text-white/55">
-                Sigues con <strong className="text-white/85">{siguiente.resumen.siguiente.leccion.title}</strong> en{' '}
-                {siguiente.curso.titulo} · Nivel {nivel.nivel} · {xp} XP
-              </p>
-            )}
-          </div>
+    <main className="mx-auto max-w-5xl px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
+      {/* Bienvenida corta: qué es, que no hace falta saber nada y un solo botón. */}
+      <section className="animar-entrar flex flex-col gap-6 sm:flex-row sm:items-center" aria-labelledby="inicio-titulo" data-recorrido="hero">
+        <div className="relative hidden h-28 w-28 shrink-0 place-items-center sm:grid" aria-hidden="true">
+          <div className="hexagono absolute inset-0 bg-gradient-to-br from-amatista/40 via-amatista-oscuro/50 to-transparent" />
+          <CristalLogo className="animar-flotar relative h-14 w-14 drop-shadow-[0_0_20px_rgba(155,89,182,0.55)]" />
+          <span className="hexagono absolute -left-2 top-1 grid h-9 w-10 place-items-center bg-superficie">
+            <LogoCurso logo="blender" className="h-5 w-6" />
+          </span>
+          <span className="hexagono absolute -right-1 bottom-0 grid h-9 w-10 place-items-center bg-superficie">
+            <LogoCurso logo="aframe" className="h-5 w-5" />
+          </span>
         </div>
-
-        <div className="min-w-0">
-          <EmblemaHero />
-          <dl className="mx-auto mt-4 grid max-w-sm grid-cols-3 gap-2 text-center">
-            {[
-              ['Programas', SOFTWARE.length],
-              ['Módulos', modulos.length],
-              ['Lecciones', lecciones],
-            ].map(([etiqueta, valor]) => (
-              <div key={etiqueta} className="corte-poly-sm border border-white/10 bg-superficie/80 px-2 py-2.5">
-                <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">{etiqueta}</dt>
-                <dd className="text-2xl font-extrabold text-white">{valor}</dd>
-              </div>
-            ))}
-          </dl>
+        <div className="min-w-0 flex-1">
+          <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">{hayAvance ? `Nivel ${nivel.nivel} · ${xp} XP` : 'No necesitas saber nada'}</p>
+          <h1 id="inicio-titulo" className="mt-1 text-3xl font-extrabold leading-tight text-white sm:text-5xl">
+            {hayAvance ? (
+              <>
+                Sigue <span className="text-amatista-claro">donde te quedaste</span>
+              </>
+            ) : (
+              <>
+                Aprende 3D <span className="text-amatista-claro">paso a paso</span>
+              </>
+            )}
+          </h1>
+          <p className="mt-2 max-w-2xl text-texto/80">
+            {siguiente
+              ? `Tu siguiente lección es «${siguiente.titulo}», en ${siguiente.curso}.`
+              : 'Elige qué quieres crear y sigue los pasos en orden. Cada lección dura menos de diez minutos y te dice qué hacer.'}
+          </p>
+        </div>
+        <div className="flex shrink-0 flex-col gap-2">
+          {siguiente ? (
+            <a href={siguiente.href} className={`${BOTON} destello bg-neon text-base transition-[filter] hover:brightness-110`}>
+              ▶ Continuar
+            </a>
+          ) : (
+            primero && (
+              <a href={primero.href} className={`${BOTON} destello bg-neon text-base transition-[filter] hover:brightness-110`}>
+                ▶ Empezar el paso 1
+              </a>
+            )
+          )}
         </div>
       </section>
 
-      <InvitacionRecorrido className="mt-10" />
+      <InvitacionRecorrido className="mt-8" />
 
-      <MapaContenido cursos={cursos} />
-
-      {/* Cursos */}
-      <section className="revelar diferido mt-16" aria-labelledby="inicio-cursos">
+      {/* El camino: elegir programa y la lista de pasos. */}
+      <section className="mt-10" aria-labelledby="inicio-cursos" data-recorrido="cursos">
         <TituloSeccion
           id="inicio-cursos"
-          className="mb-6"
+          className="mb-4"
           antetitulo="Cursos"
           titulo={
             <>
-              Elige tu <span className="text-amatista-claro">curso</span>
+              ¿Qué quieres <span className="text-amatista-claro">crear</span>?
             </>
           }
-          descripcion="Un curso por programa, con sus niveles y módulos dentro. Cada módulo es un mundo con su guía y su jefe final."
+          descripcion="Todos los cursos ya están ordenados para ti. Elige un programa y sigue su camino desde el paso marcado como Siguiente."
         />
-        {tarjetas.length ? (
-          <div className="grid gap-6 md:grid-cols-2">
-            {tarjetas.map((ruta, i) => (
-              <TarjetaCurso key={ruta.id} ruta={ruta} indice={i} />
-            ))}
+        <ElegirPrograma lista={lista} elegido={camino?.software.id} elegir={elegir} />
+        {camino && (
+          <div id="camino-programa" role="tabpanel" aria-labelledby={`tab-${camino.software.id}`} className="mt-6">
+            {camino.disponible && (
+              <p className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-white/60">
+                <span>
+                  <strong className="text-white">{camino.software.nombre}</strong>: {camino.software.lema.toLowerCase()}.
+                </span>
+                <span className="font-mono text-[11px] uppercase tracking-widest">
+                  {camino.hechos} de {camino.total} pasos hechos
+                </span>
+              </p>
+            )}
+            <Camino key={camino.software.id} camino={camino} />
           </div>
-        ) : (
-          <p className="text-texto/75">Aún no hay cursos publicados. Vuelve pronto.</p>
         )}
       </section>
 
-      {/* La fórmula Amatista */}
-      <section className="revelar diferido mt-16" aria-labelledby="inicio-formula">
+      {/* Cómo es cada paso: la fórmula, compacta. */}
+      <section className="mt-14" aria-labelledby="inicio-formula">
         <TituloSeccion
           id="inicio-formula"
-          antetitulo="El ciclo del cristal"
+          antetitulo="Así es cada paso"
           titulo={
             <>
-              Cómo aprendes en <span className="text-amatista-claro">Amatista</span>
+              Cinco lecciones cortas y <span className="text-amatista-claro">una insignia</span>
             </>
           }
-          descripcion="Cada módulo sigue los mismos cinco pasos: una idea por lección, menos de diez minutos y siempre algo que hacer con tus manos."
         />
-        <ol className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {FORMULA.map(({ paso, nombre, duracion, descripcion, Icono }, i) => (
-            <li key={paso} className="revelar elevar corte-poly-sm relative flex gap-4 border border-white/10 bg-superficie/90 p-4 lg:flex-col lg:gap-3 lg:p-5">
-              <span className="hexagono grid h-14 w-16 shrink-0 place-items-center bg-amatista-oscuro text-amatista-claro">
-                <Icono className="h-7 w-7" />
+        <ol className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-5">
+          {FORMULA.map(({ paso, nombre, descripcion, Icono }, i) => (
+            <li key={paso} className="corte-poly-sm flex flex-col gap-2 border border-white/10 bg-superficie/90 p-3">
+              <span className="flex items-center gap-2">
+                <span className="hexagono grid h-9 w-10 shrink-0 place-items-center bg-amatista-oscuro text-amatista-claro">
+                  <Icono className="h-5 w-5" />
+                </span>
+                <span className="font-extrabold text-white">
+                  <span className="mr-1 font-mono text-[10px] text-white/40">{i + 1}</span>
+                  {nombre}
+                </span>
               </span>
-              <div className="min-w-0">
-                <p className="font-mono text-[10px] uppercase tracking-widest text-white/45">
-                  Paso {i + 1} · {duracion}
-                </p>
-                <p className="text-lg font-extrabold text-white">{nombre}</p>
-                <p className="mt-1 text-sm leading-snug text-texto/70">{descripcion}</p>
-              </div>
+              <span className="text-xs leading-snug text-texto/65">{descripcion}</span>
             </li>
           ))}
         </ol>
-        <p className="mt-4 flex items-center gap-2 text-sm text-white/55">
+        <p className="mt-3 flex items-center gap-2 text-sm text-white/55">
           <IconoRacha className="h-4 w-4 shrink-0 text-blender" />
-          Ganas XP en cada lección, subes de nivel, mantienes tu racha diaria y coleccionas una insignia por módulo.
+          Ganas XP en cada lección, subes de nivel y mantienes tu racha diaria.
         </p>
       </section>
 
-      {/* Cuenta */}
       {!usuario && (
-        <section
-          className="corte-poly mt-16 bg-gradient-to-br from-amatista via-amatista-oscuro to-superficie p-[2px]"
-          aria-labelledby="inicio-cuenta"
-        >
-          <div className="corte-poly flex flex-col gap-5 bg-superficie/95 p-6 sm:flex-row sm:items-center sm:p-8">
-            <CristalLogo className="h-16 w-16 shrink-0" />
+        <section className="corte-poly mt-14 bg-gradient-to-br from-amatista via-amatista-oscuro to-superficie p-[2px]" aria-labelledby="inicio-cuenta">
+          <div className="corte-poly flex flex-col gap-5 bg-superficie/95 p-6 sm:flex-row sm:items-center">
+            <CristalLogo className="h-14 w-14 shrink-0" />
             <div className="min-w-0 flex-1">
-              <h2 id="inicio-cuenta" className="text-2xl font-extrabold text-white">
+              <h2 id="inicio-cuenta" className="text-xl font-extrabold text-white">
                 Guarda tu progreso en la nube
               </h2>
-              <p className="mt-1 leading-relaxed text-texto/75">
+              <p className="mt-1 text-texto/75">
                 {hayAvance
                   ? `Tus ${xp} XP viven solo en este navegador. Crea una cuenta y lo que ya hiciste se suma a ella.`
                   : 'Puedes empezar sin cuenta. Cuando quieras, crea una para respaldar tu avance y seguir desde cualquier dispositivo.'}

@@ -222,28 +222,33 @@
             "caption": "El bisel redondea los bordes: con más segmentos, más suave el canto y más luz que atrapa."
           },
           {
-            "type": "ordering",
-            "id": "orden_bp3",
-            "prompt": "Ordena el flujo para modelar con Espejo.",
-            "items": [
+            "type": "image_choice",
+            "id": "elige_bp3",
+            "question": "Modelaste solo la mitad de la nave. ¿Qué figura muestra el modificador **Espejo** trabajando?",
+            "options": [
               {
-                "id": "p1",
-                "text": "Ctrl + A › Escala"
+                "id": "a",
+                "figure": "espejo",
+                "isCorrect": true
               },
               {
-                "id": "p2",
-                "text": "Agregar modificador Espejo"
+                "id": "b",
+                "figure": "fila_array",
+                "isCorrect": false
               },
               {
-                "id": "p3",
-                "text": "En Edición, borrar la mitad que sobra"
-              },
-              {
-                "id": "p4",
-                "text": "Modelar un solo lado"
+                "id": "c",
+                "figure": "cubo_suave",
+                "isCorrect": false
               }
             ],
-            "explanation": "Primero la escala, luego el Espejo; así lo que modelas de un lado aparece bien en el otro."
+            "explanation": "Espejo copia tu mitad del otro lado del eje (la línea verde) y las dos se mueven juntas. Array repite en fila y Subdivisión suaviza."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "Trabajar «sin destruir»: así se hace en un estudio",
+            "body": "Los modificadores son la base del **flujo no destructivo**: el modelo original queda intacto y el efecto se puede apagar o cambiar en cualquier momento. En un estudio eso vale mucho, porque el cliente siempre pide cambios («¿la nave puede ser más ancha?»).\n\n- Se **aplica** un modificador solo al final, cuando el modelo va a otro programa (un motor de juegos, por ejemplo).\n- **Aplicar la escala** (Ctrl + A) antes de usar modificadores es una regla de equipo: si no, el Bisel y el Espejo salen torcidos.\n- La misma idea, más potente, son los **Geometry Nodes**: modelos que se arman con reglas (un edificio de N pisos, un bosque). Hoy se usan en efectos visuales, arquitectura y videojuegos."
           }
         ]
       },

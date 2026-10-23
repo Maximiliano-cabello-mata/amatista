@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { analizarRuta, destinoTrasEntrar, rutaEntrar, rutaExplorar, rutas } from './rutas';
+import { analizarRuta, destinoTrasEntrar, rutaEntrar, rutas } from './rutas';
 
 describe('rutas', () => {
   it('páginas del contrato', () => {
     expect(analizarRuta('')).toMatchObject({ pagina: 'inicio' });
     expect(analizarRuta('#/')).toMatchObject({ pagina: 'inicio' });
-    for (const pagina of ['explorar', 'estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil']) {
+    for (const pagina of ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil']) {
       expect(analizarRuta(`#/${pagina}`)).toMatchObject({ pagina });
     }
     expect(analizarRuta(rutas.curso('blender'))).toMatchObject({ pagina: 'curso', cursoId: 'blender' });
@@ -16,10 +16,8 @@ describe('rutas', () => {
     });
   });
 
-  it('explorar lleva sus filtros en la consulta y el curso abre un módulo', () => {
-    expect(rutaExplorar()).toBe('#/explorar');
-    expect(rutaExplorar({ software: 'aframe', disciplina: '', q: 'luz roja' })).toBe('#/explorar?software=aframe&q=luz+roja');
-    expect(analizarRuta(rutaExplorar({ software: 'aframe', q: 'luz' }))).toMatchObject({ pagina: 'explorar', consulta: { software: 'aframe', q: 'luz' } });
+  it('el viejo #/explorar lleva a Cursos y el curso abre un módulo', () => {
+    expect(analizarRuta('#/explorar?software=aframe&q=luz')).toEqual({ pagina: 'inicio', consulta: {} });
     expect(analizarRuta(rutas.modulo('aframe', 3))).toMatchObject({ pagina: 'curso', cursoId: 'aframe', consulta: { modulo: '3' } });
   });
 

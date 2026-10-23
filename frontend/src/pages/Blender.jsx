@@ -1,6 +1,6 @@
 // #/blender (Amatista Motor, la herramienta de Blender): todo lo que une la plataforma con Blender en
 // un solo lugar y en el orden en que se vive. Desde el 21 de octubre no es una pestaña de la barra
-// (Amatista es multiplataforma): se llega desde Explorar, el curso de Blender y sus lecciones.
+// (Amatista es multiplataforma): se llega desde Cursos (primer paso del camino de Blender), el curso de Blender y sus lecciones.
 //   1. Cómo se unen la plataforma y Blender (la tarjeta del proceso, paso a paso).
 //   2. Prepárate una sola vez: descargar Amatista Motor, instalarlo y vincular la cuenta.
 //   3. Conoce Amatista Motor: las tres prácticas que explican todo el add-on.
@@ -22,6 +22,7 @@ import {
 } from '../blender/logica';
 import ConoceAmatistaMotor from '../components/blender/ConoceAmatistaMotor';
 import FusionPlataformaBlender from '../components/blender/FusionPlataformaBlender';
+import PalabrasBlender from '../components/blender/PalabrasBlender';
 import Pagina from '../components/estructura/Pagina';
 import TituloSeccion from '../components/estructura/TituloSeccion';
 import { CristalLogo } from '../components/Iconos';
@@ -479,7 +480,7 @@ function Blender() {
       ancho="contenido"
       migas={[
         { texto: 'Inicio', href: rutas.inicio },
-        { texto: 'Explorar', href: rutas.explorar },
+        { texto: 'Cursos', href: rutas.inicio },
         { texto: 'Blender', href: rutas.curso('blender') },
         { texto: NOMBRE_MOTOR },
       ]}
@@ -528,6 +529,13 @@ function Blender() {
       <Etapa numero="2" titulo="Conoce el add-on" id="blender-conoce">
         <ConoceAmatistaMotor token={token} usuario={usuario} />
       </Etapa>
+
+      <section className="mt-12" aria-labelledby="blender-palabras">
+        <TituloSeccion id="blender-palabras" antetitulo="Sin tecnicismos" titulo="Palabras de Blender" />
+        <div className="mt-5">
+          <PalabrasBlender />
+        </div>
+      </section>
 
       <Etapa numero="3" titulo="Tu Blender y tus prácticas" id="blender-ajustes">
         <div className="grid gap-6 lg:grid-cols-2 [&>*]:min-w-0">

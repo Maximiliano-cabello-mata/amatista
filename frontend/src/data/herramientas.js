@@ -90,7 +90,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Recorrer una pantalla (la plataforma, una lección o Blender con el add-on) zona por zona.',
     cuando: 'La primera vez que el alumno ve una interfaz: sabe qué es cada parte antes de usarla.',
     formula: ['gancho', 'explora'],
-    nueva: true,
   },
   connection_flow: {
     nombre: 'Quién le habla a quién',
@@ -98,7 +97,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Mostrar mensajes que viajan entre partes (plataforma, servidor, Blender) y qué lleva cada uno.',
     cuando: 'Para explicar una conexión o un proceso entre programas sin texto largo.',
     formula: ['explora'],
-    nueva: true,
   },
   axis_gizmo: {
     nombre: 'Ejes que se giran',
@@ -106,7 +104,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Orbitar un cubo con X, Y y Z y probar las vistas 1, 3 y 7 del teclado numérico.',
     cuando: 'Al presentar los ejes y la navegación: el alumno gira antes de abrir Blender.',
     formula: ['gancho', 'explora'],
-    nueva: true,
   },
   param_demo: {
     nombre: 'Demo con control',
@@ -114,7 +111,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Mover un valor (copias de Array, segmentos de Bisel, niveles, luz…) y ver la figura cambiar.',
     cuando: 'Antes de usar un modificador o un ajuste en Blender: entiende qué hace el número.',
     formula: ['explora'],
-    nueva: true,
   },
   concept_cards: {
     nombre: 'Tarjetas de concepto',
@@ -185,7 +181,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Poner cada tarjeta en su grupo (2 a 4 grupos).',
     cuando: 'Para distinguir familias: qué va en la plataforma y qué en Blender, qué modificador usar.',
     formula: ['explora', 'practica'],
-    nueva: true,
   },
   true_false: {
     nombre: '¿Verdad o mito?',
@@ -193,7 +188,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Desarmar ideas equivocadas, una afirmación a la vez, con su explicación.',
     cuando: 'Después de explicar algo que suele entenderse mal.',
     formula: ['gancho', 'practica'],
-    nueva: true,
   },
   scene_explorer: {
     nombre: 'Explorador 3D',
@@ -222,6 +216,38 @@ export const HERRAMIENTAS = {
     paraQue: 'Empezar desde la lección la práctica del add-on que toca y verla en vivo, paso a paso.',
     cuando: 'Rara vez: las tres prácticas ya viven en la página Blender. Úsalo solo si una lección necesita repasar el add-on.',
     formula: ['practica'],
+  },
+  // Recursos gráficos v4.2 y Motor Web (2026-10-23): se aprende manipulando, no leyendo listas.
+  viewport_sim: {
+    nombre: 'Simulador de la vista 3D',
+    categoria: 'practicar',
+    paraQue: 'Practicar orbitar, acercar y las vistas de frente, arriba y lado con el ratón, como en Blender.',
+    cuando: 'Antes de la primera práctica en Blender: quien nunca abrió un programa 3D aprende a moverse sin miedo.',
+    formula: ['gancho', 'explora'],
+    nueva: true,
+  },
+  image_choice: {
+    nombre: 'Elige la figura',
+    categoria: 'practicar',
+    paraQue: 'Una pregunta cuyas respuestas son figuras 3D dibujadas (bisel, suavizado, Array, Espejo…), no textos.',
+    cuando: 'Para reconocer a simple vista lo que hace una herramienta. Reemplaza a una pregunta de texto.',
+    formula: ['explora', 'practica'],
+    nueva: true,
+  },
+  keyframe_sim: {
+    nombre: 'Línea de tiempo',
+    categoria: 'practicar',
+    paraQue: 'Poner fotogramas clave a una pelota y verla animarse, como en la línea de tiempo de Blender.',
+    cuando: 'Al presentar la animación: el alumno entiende qué es una clave antes de abrir Blender.',
+    formula: ['explora', 'practica'],
+    nueva: true,
+  },
+  motor_scene: {
+    nombre: 'Mundo 3D (Motor Web)',
+    categoria: 'practicar',
+    paraQue: 'Un mundo A-Frame generado (bosque, isla, ciudad…) con objetos que se arrastran, zonas y retos que se revisan solos.',
+    cuando: 'Cuando la idea se entiende mejor haciéndola en 3D: mover, ordenar, construir. Funciona en PC, celular y visor de VR.',
+    formula: ['gancho', 'explora', 'practica', 'reto'],
     nueva: true,
   },
 };

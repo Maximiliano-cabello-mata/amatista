@@ -200,6 +200,27 @@
             "explanation": "Cae acelerando y estirada, se aplasta al tocar el suelo y sube frenando hasta el punto más alto."
           },
           {
+            "type": "keyframe_sim",
+            "id": "claves_bpi3",
+            "title": "Pon las claves del rebote",
+            "caption": "Así se anima en Blender: eliges el fotograma, colocas la pelota y guardas una **clave** con la tecla **I**. Pon las tres claves de las metas y reproduce: Blender (y este simulador) dibujan todo lo que pasa entre ellas.",
+            "frames": 36,
+            "targets": [
+              {
+                "frame": 1,
+                "height": 1
+              },
+              {
+                "frame": 12,
+                "height": 0
+              },
+              {
+                "frame": 24,
+                "height": 1
+              }
+            ]
+          },
+          {
             "type": "shortcuts",
             "title": "Los atajos del módulo",
             "practice": true,
@@ -239,6 +260,12 @@
             "template": "Fotograma 1: pelota arriba y pulsa [[I]]. Fotograma 12: pelota en el [[suelo|piso]] y otra clave. Fotograma 24: arriba otra vez y clave.",
             "code": false,
             "explanation": "Tres claves bastan para un rebote: arriba, suelo y arriba."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "Los 12 principios de la animación",
+            "body": "Los animadores de Disney Frank Thomas y Ollie Johnston los reunieron en el libro *The Illusion of Life* (1981) y todavía se enseñan en todas las escuelas de animación, en 2D y en 3D. La pelota que rebota practica los dos primeros:\n\n- **Estirar y aplastar** (*squash and stretch*): la pelota se aplasta al tocar el suelo y se estira al caer rápido.\n- **Entrar y salir despacio** (*slow in, slow out*): frena arriba y acelera al bajar. Las curvas de Blender lo hacen por defecto.\n\nEn un estudio, la pelota que rebota es el primer ejercicio de casi todos los animadores; después viene la misma idea con un personaje."
           }
         ]
       },

@@ -3,7 +3,6 @@ const parte = (valor) => encodeURIComponent(valor);
 
 export const rutas = {
   inicio: '#/',
-  explorar: '#/explorar',
   estudio: '#/estudio',
   panel: '#/panel',
   laboratorio: '#/laboratorio',
@@ -31,13 +30,6 @@ export const rutas = {
   adminLeccion: (cursoId, leccionId) => `#/admin/contenido/${parte(cursoId)}/${parte(leccionId)}`,
   adminNuevaLeccion: (moduloId) => `#/admin/contenido/nueva/${parte(moduloId)}`,
 };
-
-// Explorar con filtros ya puestos: #/explorar?software=aframe&disciplina=animacion&q=luz.
-export function rutaExplorar(filtros = {}) {
-  const consulta = new URLSearchParams(Object.entries(filtros).filter(([, valor]) => valor));
-  const texto = consulta.toString();
-  return texto ? `${rutas.explorar}?${texto}` : rutas.explorar;
-}
 
 // Secciones del panel de administración (página "admin" con {seccion, params}):
 //   #/admin                              → resumen
@@ -69,7 +61,7 @@ function rutaAdmin(partes) {
   return { seccion: 'resumen', params: {} };
 }
 
-const PAGINAS_SIMPLES = ['explorar', 'estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'guia'];
+const PAGINAS_SIMPLES = ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'guia'];
 
 // Devuelve {pagina, ...}. Una consulta tras "?" (por ejemplo
 // "#/entrar?volver=%23%2Fperfil") llega en `consulta`.
@@ -88,6 +80,8 @@ export function analizarRuta(hash = '') {
     });
 
   if (PAGINAS_SIMPLES.includes(partes[0])) return { pagina: partes[0], consulta };
+  // #/explorar (el buscador del 21 de octubre) se retiró el 23: sus enlaces llevan a Cursos.
+  if (partes[0] === 'explorar') return { pagina: 'inicio', consulta: {} };
   if (partes[0] === 'admin') return { pagina: 'admin', ...rutaAdmin(partes.slice(1)), consulta };
   if (partes[0] === 'curso' && partes[1] && partes[2] === 'leccion' && partes[3]) {
     return { pagina: 'leccion', cursoId: partes[1], leccionId: partes[3], consulta };

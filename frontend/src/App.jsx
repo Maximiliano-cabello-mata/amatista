@@ -16,7 +16,6 @@ import VistaProvider from './vista/VistaProvider';
 // Páginas bajo demanda: la pantalla de inicio carga rápido.
 // El laboratorio incluye A-Frame (~1.3 MB): solo se descarga si se visita.
 // El panel de administración solo lo descarga quien tiene permiso.
-const Explorar = lazy(() => import('./pages/Explorar'));
 const Estudio = lazy(() => import('./pages/Estudio'));
 const Curso = lazy(() => import('./pages/Curso'));
 const Leccion = lazy(() => import('./pages/Leccion'));
@@ -81,10 +80,10 @@ function RutaAdmin({ ruta, hash }) {
           </a>
         )}
         <a
-          href={rutas.explorar}
+          href={rutas.inicio}
           className="corte-poly-sm inline-block bg-white/5 px-6 py-3 font-extrabold uppercase tracking-widest text-white/80 hover:bg-white/10"
         >
-          ◂ Volver al catálogo
+          ◂ Volver a los cursos
         </a>
       </div>
     </main>
@@ -93,8 +92,6 @@ function RutaAdmin({ ruta, hash }) {
 
 function Pagina({ ruta, hash }) {
   switch (ruta.pagina) {
-    case 'explorar':
-      return <Explorar key={new URLSearchParams(ruta.consulta).toString()} consulta={ruta.consulta} />;
     case 'estudio':
       return <Estudio />;
     case 'curso':
@@ -124,7 +121,7 @@ function Pagina({ ruta, hash }) {
     case 'admin':
       return <RutaAdmin ruta={ruta} hash={hash} />;
     default:
-      return <Inicio />;
+      return <Inicio consulta={ruta.consulta} />;
   }
 }
 

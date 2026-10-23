@@ -16,5 +16,6 @@ export const SPRITES = {
   museo: ['..........', '.....sss..', '....saaas.', '...sawwas.', '.k.saaaas.', 'kak.saas..', 'aaaaaaaa..', '.aaaaaaaao', '..........', '..........'],
   feria: ['.ww....ww.', '.wk....kw.', '.aaaaaaaa.', 'aaaaaaaaaa', '.aswwwwsa.', '..aaaaaa..', '...s..s...', '...s..s...', '...s..s...', '..aa..aa..'],
   orbita: ['...ssss...', '..saaaas..', '.saaaaaas.', '.akaaaaka.', '.aaaaaaaa.', '.aaoaaoaa.', '.a.a..a.a.', '.a.s..s.a.', '..s.aa.s..', '..........'],
+  semillero: ['....kk....', '...k..k...', '....kk....', '...saas...', '..saaaas..', '..akaaka..', '..aaooaa..', '..saaaas..', '...saas...', '....ss....'],
   cristal: ['....ss....', '...saas...', '..saaaas..', '..akaaka..', '..aaaaaa..', '..saaaas..', '...saas...', '....aa....', '..........', '..........'],
 };
