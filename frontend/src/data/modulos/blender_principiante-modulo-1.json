@@ -59,6 +59,12 @@
             ]
           },
           {
+            "type": "callout",
+            "variant": "dato",
+            "title": "¿Tu Blender está en inglés?",
+            "body": "Es normal: Blender viene en inglés al instalarlo. Donde aquí diga **Malla**, allá dice **Mesh**; donde diga **Agregar**, **Add**. Tienes todas las palabras, con su nombre en inglés, en [Palabras de Blender](#/blender), y el add-on te muestra los menús tal como los ves."
+          },
+          {
             "type": "viewport_sim",
             "id": "vista_bp1",
             "title": "Muévete por la vista 3D, como en Blender",

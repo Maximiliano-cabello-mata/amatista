@@ -22,6 +22,7 @@ import {
 } from '../blender/logica';
 import ConoceAmatistaMotor from '../components/blender/ConoceAmatistaMotor';
 import FusionPlataformaBlender from '../components/blender/FusionPlataformaBlender';
+import PalabrasBlender from '../components/blender/PalabrasBlender';
 import Pagina from '../components/estructura/Pagina';
 import TituloSeccion from '../components/estructura/TituloSeccion';
 import { CristalLogo } from '../components/Iconos';
@@ -528,6 +529,13 @@ function Blender() {
       <Etapa numero="2" titulo="Conoce el add-on" id="blender-conoce">
         <ConoceAmatistaMotor token={token} usuario={usuario} />
       </Etapa>
+
+      <section className="mt-12" aria-labelledby="blender-palabras">
+        <TituloSeccion id="blender-palabras" antetitulo="Sin tecnicismos" titulo="Palabras de Blender" />
+        <div className="mt-5">
+          <PalabrasBlender />
+        </div>
+      </section>
 
       <Etapa numero="3" titulo="Tu Blender y tus prácticas" id="blender-ajustes">
         <div className="grid gap-6 lg:grid-cols-2 [&>*]:min-w-0">
