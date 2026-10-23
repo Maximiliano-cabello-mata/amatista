@@ -247,6 +247,12 @@
               }
             ],
             "explanation": "Primero el encuadre: las luces se ubican mirando desde la cámara."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "La iluminación de tres puntos viene del cine",
+            "body": "La **luz principal, el relleno y el contraluz** se usan desde hace un siglo en cine, televisión y fotografía de producto. En 3D se aprende igual porque la cámara virtual «ve» como una de verdad.\n\nEn **visualización de producto** (un teléfono, unos tenis) se suma un fondo infinito y luces de área grandes para reflejos suaves. En **arquitectura** se ilumina con el sol y un cielo (un mapa HDRI) y se ajusta la **exposición** como en una cámara de fotos."
           }
         ]
       },

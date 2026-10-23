@@ -239,6 +239,12 @@
             "template": "Selecciona los techos, pulsa [[M|m]] y elige Nueva colección; llámala [[Techos|techos]].",
             "code": false,
             "explanation": "Con M y un nombre claro cada grupo queda en su carpeta."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "Cómo se organiza un archivo en un equipo",
+            "body": "En un estudio, tu archivo lo abren otras personas. Las reglas más comunes:\n\n- **Nombres con prefijo y sin espacios**: `Casa_Molino`, `LUZ_Principal`, `CAM_Plano01`. Nada de *Cube.037*.\n- **Colecciones por tipo** (personajes, escenario, luces, cámaras), que se pueden ocultar o renderizar por separado.\n- **Versiones del archivo**: `aldea_v001.blend`, `aldea_v002.blend`… Nunca se trabaja sobre la única copia.\n- **Vincular en lugar de copiar** (Archivo › Vincular): la casa vive en su propio archivo y la aldea la usa; si alguien mejora la casa, se actualiza en todas las escenas.\n- El **Explorador de recursos** (*Asset Browser*) guarda materiales y objetos listos para arrastrar y reutilizar."
           }
         ]
       },

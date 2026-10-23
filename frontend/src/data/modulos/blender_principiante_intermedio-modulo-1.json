@@ -332,6 +332,12 @@
               }
             ],
             "explanation": "Cada ranura es un material; Asignar lo pone en las caras seleccionadas."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "PBR: el mismo material en Blender, en un juego y en la web",
+            "body": "El **Principled BSDF** sigue el modelo **PBR** (renderizado basado en la física) de «color base, metálico y rugosidad». Es el mismo modelo que usan Unreal Engine, Unity y el formato **glTF**, que es el que lees en A-Frame.\n\nPor eso un material bien hecho en Blender se ve parecido al exportarlo a un juego o a una página 3D. En los equipos, las texturas PBR se pintan en programas como Substance Painter y se conectan en Blender a estas mismas entradas.\n\nRegla práctica de la industria: algo es **metal (1) o no metal (0)**; los valores intermedios casi nunca existen en la vida real."
           }
         ]
       },

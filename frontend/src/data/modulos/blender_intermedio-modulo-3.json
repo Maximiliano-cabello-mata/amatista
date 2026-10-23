@@ -237,6 +237,12 @@
                 "explanation": "Lo ubica en los cruces de las líneas, no al centro."
               }
             ]
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "EEVEE y Cycles en la industria",
+            "body": "- **Cycles** traza rayos de luz: se usa cuando importa el realismo, como en arquitectura, producto y efectos visuales. Con una tarjeta gráfica (NVIDIA OptiX, AMD HIP o Apple Metal) renderiza muchas veces más rápido que solo con el procesador.\n- **EEVEE** es tiempo real: desde Blender 4.2 tiene sombras e iluminación mucho más realistas (*EEVEE Next*). La película *Flow*, ganadora del Óscar, se renderizó con EEVEE.\n\nPara el **portafolio**, los reclutadores miran pocas imágenes muy cuidadas: un buen encuadre, luz con intención y la misma pieza vista también en alambre o sin texturas, para mostrar cómo está construida."
           }
         ]
       },
