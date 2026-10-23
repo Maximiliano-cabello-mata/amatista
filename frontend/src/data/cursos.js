@@ -102,16 +102,18 @@ const CURSOS_BASE = [
     ],
   },
   {
-    // Segundo programa de la plataforma (multiplataforma, 2026-10-21): cinco
-    // módulos, de la primera escena a una experiencia WebXR publicada.
+    // Programa A-Frame en dos cursos compactos (2026-10-23): Inicial (escena, coordenadas, modelos)
+    // e Interactivo (animación, Motor Amatista y WebXR). Los módulos 4 y 5 del curso «aframe» de la
+    // v4.1 pasaron al Interactivo con los mismos ids de lección (progreso/estado.js traslada el avance).
     id: 'aframe',
     numero: '05',
-    titulo: 'A-Frame',
-    subtitulo: 'Mundos 3D y WebXR en el navegador',
+    titulo: 'A-Frame Inicial',
+    subtitulo: 'Tu primera escena 3D en el navegador',
     descripcion:
-      'Construye escenas 3D con HTML, carga tus modelos GLB, dales movimiento e interacción y publícalas como una experiencia de realidad virtual que se abre con un enlace.',
+      'Construye escenas 3D con HTML: entidades, coordenadas, luces y materiales, y carga tus propios modelos GLB hechos en Blender.',
     estado: 'disponible',
-    nivel: 'Principiante',
+    nivel: 'Inicial',
+    para: 'Nunca hiciste 3D para la web: empiezas aquí (basta saber copiar y pegar).',
     acento: 'neon',
     ruta: 'aframe',
     recurso: {
@@ -122,7 +124,27 @@ const CURSOS_BASE = [
       { titulo: 'La web en 3D', insignia: 'Arquitecto WebXR', disciplinas: ['xr'] },
       { titulo: 'Construye tu escena', insignia: 'Escenógrafo web', disciplinas: ['modelado', 'diseno'] },
       { titulo: 'Modelos GLB y texturas', insignia: 'Curador de modelos', disciplinas: ['modelado', 'diseno'] },
+    ],
+  },
+  {
+    id: 'aframe_interactivo',
+    numero: '06',
+    titulo: 'A-Frame Interactivo',
+    subtitulo: 'Mundos que se mueven, se juegan y se visitan en VR',
+    descripcion:
+      'Da vida a tus escenas: animaciones y clics, mundos generados con el Motor Amatista en los que se arrastran objetos y se cumplen retos, y tu experiencia WebXR publicada.',
+    estado: 'disponible',
+    nivel: 'Interactivo',
+    para: 'Ya armas escenas y cargas modelos: ahora las haces jugables.',
+    acento: 'neon',
+    ruta: 'aframe',
+    recurso: {
+      texto: 'Documentación de A-Frame',
+      url: 'https://aframe.io/docs/',
+    },
+    modulos: [
       { titulo: 'Animación e interacción', insignia: 'Titiritero digital', disciplinas: ['animacion', 'interaccion'] },
+      { titulo: 'Mundos con el Motor Amatista', insignia: 'Creador de mundos', disciplinas: ['xr', 'interaccion', 'diseno'] },
       { titulo: 'Experiencias WebXR', insignia: 'Explorador XR', disciplinas: ['xr', 'interaccion'] },
     ],
   },

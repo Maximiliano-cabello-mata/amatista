@@ -1,13 +1,13 @@
 {
   "module": {
-    "id": "mod_aframe_004",
-    "courseId": "crs_aframe_fundamentos",
-    "title": "Módulo 4: Animación e interacción",
-    "slug": "modulo-4-animacion-interaccion-aframe",
+    "id": "mod_afi_001",
+    "courseId": "crs_aframe_interactivo",
+    "title": "Módulo 1: Animación e interacción",
+    "slug": "interactivo-modulo-1-animacion",
     "description": "Haz que tus escenas cobren vida: el componente animation, los eventos, el cursor del ratón, las bisagras y las secuencias que se encadenan. Terminas con una puerta mágica que se abre con un clic.",
     "estimatedTimeMinutes": 48,
-    "order": 4,
-    "curso": "aframe",
+    "order": 1,
+    "curso": "aframe_interactivo",
     "insignia": "Titiritero digital",
     "disciplinas": [
       "animacion",
@@ -153,26 +153,80 @@
             "preview": true
           },
           {
-            "type": "true_false",
-            "id": "af4_vf_eventos",
-            "title": "¿Verdad o mito?",
-            "statements": [
-              {
-                "text": "Sin un cursor, los objetos no reciben `click`.",
-                "answer": true,
-                "explanation": "El cursor lanza un rayo y avisa a lo que toca: sin él no hay a quién pulsar."
+            "type": "motor_scene",
+            "id": "af4_mundo_eventos",
+            "title": "Toca los cristales",
+            "instructions": "Un **evento** es un aviso: «me hicieron clic», «terminó la animación». Aquí cada cristal escucha el clic (o el toque en el teléfono). Toca los tres y fíjate en que **solo responde el que tocas**: así funciona `startEvents: click`.",
+            "success": "Tres eventos, tres respuestas. En el código, cada una sería un `animation` con `startEvents: click`.",
+            "escena": {
+              "entorno": {
+                "tipo": "cristal",
+                "semilla": 5,
+                "tamano": 36,
+                "densidad": 0.4
               },
-              {
-                "text": "`raycaster=\"objects: .clicable\"` hace que el cursor ignore lo que no tiene esa clase.",
-                "answer": true,
-                "explanation": "Así el rayo revisa menos objetos y la escena responde más rápido."
+              "camara": {
+                "distancia": 9
               },
-              {
-                "text": "Una animación con `startEvents: click` empieza sola al cargar la página.",
-                "answer": false,
-                "explanation": "Con `startEvents` la animación espera al evento. Sin `startEvents` arranca al cargar."
-              }
-            ]
+              "objetos": [
+                {
+                  "id": "cristal_1",
+                  "forma": "cristal",
+                  "color": "#B57EDC",
+                  "escala": 1.2,
+                  "posicion": [
+                    -2.5,
+                    null,
+                    0
+                  ],
+                  "tocable": true,
+                  "flotar": true
+                },
+                {
+                  "id": "cristal_2",
+                  "forma": "cristal",
+                  "color": "#00E5FF",
+                  "escala": 1.2,
+                  "posicion": [
+                    0,
+                    null,
+                    -1.5
+                  ],
+                  "tocable": true,
+                  "flotar": true
+                },
+                {
+                  "id": "cristal_3",
+                  "forma": "cristal",
+                  "color": "#F5792A",
+                  "escala": 1.2,
+                  "posicion": [
+                    2.5,
+                    null,
+                    0
+                  ],
+                  "tocable": true,
+                  "flotar": true
+                }
+              ],
+              "retos": [
+                {
+                  "tipo": "tocar",
+                  "objeto": "cristal_1",
+                  "texto": "Toca el cristal **morado**."
+                },
+                {
+                  "tipo": "tocar",
+                  "objeto": "cristal_2",
+                  "texto": "Toca el cristal **celeste**."
+                },
+                {
+                  "tipo": "tocar",
+                  "objeto": "cristal_3",
+                  "texto": "Toca el cristal **naranja**."
+                }
+              ]
+            }
           }
         ]
       },
@@ -257,6 +311,12 @@
               }
             ],
             "explanation": "Cada animación termina lanzando su evento, y ese evento puede arrancar la siguiente."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "Microinteracciones: lo que hace que algo «se sienta bien»",
+            "body": "En los configuradores de productos (autos, muebles, zapatillas) cada clic tiene una respuesta pequeña: el objeto se ilumina al pasar el cursor, la puerta se abre con una curva suave (`easing`), un sonido corto confirma la acción. Los equipos de diseño llaman a esto **microinteracciones** y las prueban con personas reales antes de publicar.\n\nRegla práctica de la industria: toda acción debe tener respuesta en **menos de 100 ms** (la persona la siente inmediata) y ninguna animación de interfaz debería pasar de **medio segundo**."
           }
         ]
       },

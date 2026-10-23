@@ -277,3 +277,29 @@ describe('sincronización', () => {
     expect(a).toMatchObject({ tipo: 'sync_succeeded', ocurrido_en: HOY.toISOString(), version_app: expect.any(String) });
   });
 });
+
+describe('lecciones que cambiaron de curso (A-Frame en dos cursos, 2026-10-23)', () => {
+  const registro = { completada: true, intentos: 1, puntaje: 90, actualizadoEn: '2026-10-20T10:00:00Z' };
+
+  it('el avance local de los módulos 4 y 5 de «aframe» pasa a «aframe_interactivo»', () => {
+    const estado = normalizarEstado({
+      lecciones: { 'aframe:af4_gancho': registro, 'aframe:af2_gancho': registro, 'aframe:af5_jefe': registro },
+      insignias: { 'aframe:mod_aframe_004': '2026-10-20T10:00:00Z', 'aframe:mod_aframe_002': '2026-10-20T10:00:00Z' },
+      pendientes: ['aframe:af4_gancho'],
+    });
+    expect(Object.keys(estado.lecciones).sort()).toEqual(['aframe:af2_gancho', 'aframe_interactivo:af4_gancho', 'aframe_interactivo:af5_jefe']);
+    expect(Object.keys(estado.insignias).sort()).toEqual(['aframe:mod_aframe_002', 'aframe_interactivo:mod_afi_001']);
+    expect(estado.pendientes).toEqual(['aframe_interactivo:af4_gancho']);
+  });
+
+  it('lo que el servidor guarda con el curso viejo se lee con el nuevo', () => {
+    const estado = combinarConServidor(normalizarEstado({}), {
+      lecciones: [{ curso_id: 'aframe', leccion_id: 'af5_reto', completada: true, intentos: 1, actualizado_en: '2026-10-20T10:00:00' }],
+      insignias: [{ id: 'aframe:mod_aframe_005', obtenido_en: '2026-10-20T10:00:00' }],
+    });
+    expect(estado.lecciones['aframe_interactivo:af5_reto'].completada).toBe(true);
+    expect(estado.lecciones['aframe:af5_reto']).toBeUndefined();
+    expect(estado.insignias['aframe_interactivo:mod_afi_003']).toBeTruthy();
+    expect(estado.pendientes).toEqual([]);
+  });
+});

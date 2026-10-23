@@ -91,6 +91,22 @@ export function crearEvento(tipo, { cursoId, leccionId, sesion, datos, momento =
 
 // --- Normalización y migración ---------------------------------------------------------
 
+// Lecciones que cambiaron de curso sin cambiar de id (2026-10-23): los módulos 4 y 5 del curso
+// «aframe» forman ahora el curso «aframe_interactivo». El avance guardado con la clave vieja
+// (aquí o en el servidor) se lee con la nueva; las insignias de esos módulos, igual.
+export const TRASLADOS_LECCION = [{ de: 'aframe', a: 'aframe_interactivo', prefijos: ['af4_', 'af5_'] }];
+export const TRASLADOS_INSIGNIA = {
+  'aframe:mod_aframe_004': 'aframe_interactivo:mod_afi_001',
+  'aframe:mod_aframe_005': 'aframe_interactivo:mod_afi_003',
+};
+
+export function trasladarClave(clave) {
+  const [curso, leccion] = separarClave(clave);
+  const traslado = TRASLADOS_LECCION.find((t) => t.de === curso && t.prefijos.some((p) => leccion.startsWith(p)));
+  return traslado ? claveLeccion(traslado.a, leccion) : clave;
+}
+export const trasladarInsignia = (id) => TRASLADOS_INSIGNIA[id] ?? id;
+
 function normalizarDatos(datos) {
   if (!esObjeto(datos)) return undefined;
   const resultado = { ...datos };
@@ -133,18 +149,22 @@ export function normalizarEstado(guardado, { cuentaId } = {}) {
   });
 
   for (const [clave, registro] of Object.entries(esObjeto(base.lecciones) ? base.lecciones : {})) {
-    if (clave.includes(':')) estado.lecciones[clave] = normalizarRegistro(registro);
+    if (!clave.includes(':')) continue;
+    const nueva = trasladarClave(clave);
+    const normal = normalizarRegistro(registro);
+    estado.lecciones[nueva] = estado.lecciones[nueva] ? combinarRegistros(estado.lecciones[nueva], normal) : normal;
   }
   for (const [id, fecha] of Object.entries(esObjeto(base.insignias) ? base.insignias : {})) {
-    estado.insignias[id] = fechaIso(fecha) ?? new Date(0).toISOString();
+    const nueva = trasladarInsignia(id);
+    estado.insignias[nueva] = minIso(estado.insignias[nueva], fecha) ?? new Date(0).toISOString();
   }
   for (const [dia, cantidad] of Object.entries(esObjeto(base.actividad) ? base.actividad : {})) {
     if (entero(cantidad) > 0) estado.actividad[dia] = entero(cantidad);
   }
   estado.actividad = recortarActividad(estado.actividad);
   const lista = (valor) => (Array.isArray(valor) ? valor.filter((x) => typeof x === 'string') : []);
-  estado.pendientes = unicos(lista(base.pendientes)).filter((clave) => estado.lecciones[clave]);
-  estado.insigniasPendientes = unicos(lista(base.insigniasPendientes));
+  estado.pendientes = unicos(lista(base.pendientes).map(trasladarClave)).filter((clave) => estado.lecciones[clave]);
+  estado.insigniasPendientes = unicos(lista(base.insigniasPendientes).map(trasladarInsignia));
   estado.eventos = (Array.isArray(base.eventos) ? base.eventos : [])
     .filter((evento) => esObjeto(evento) && evento.id && evento.tipo)
     .slice(-MAX_EVENTOS);
@@ -263,7 +283,7 @@ export function combinarConServidor(estado, datos) {
   const enServidor = new Set();
   for (const fila of Array.isArray(datos?.lecciones) ? datos.lecciones : []) {
     if (!fila?.curso_id || !fila?.leccion_id) continue;
-    const clave = claveLeccion(fila.curso_id, fila.leccion_id);
+    const clave = trasladarClave(claveLeccion(fila.curso_id, fila.leccion_id));
     enServidor.add(clave);
     const remoto = normalizarRegistro({
       completada: fila.completada,
@@ -285,8 +305,9 @@ export function combinarConServidor(estado, datos) {
   const remotas = new Set();
   for (const insignia of Array.isArray(datos?.insignias) ? datos.insignias : []) {
     if (!insignia?.id) continue;
-    remotas.add(insignia.id);
-    insignias[insignia.id] = minIso(insignias[insignia.id], insignia.obtenido_en) ?? new Date().toISOString();
+    const id = trasladarInsignia(insignia.id);
+    remotas.add(id);
+    insignias[id] = minIso(insignias[id], insignia.obtenido_en) ?? new Date().toISOString();
   }
   const faltantes = Object.keys(estado.insignias).filter((id) => !remotas.has(id));
 

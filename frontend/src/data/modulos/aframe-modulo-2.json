@@ -135,31 +135,93 @@
             "body": "### Dónde está cada cosa\nA-Frame mide en **metros**. La cámara empieza en `0 1.6 0`: a 1.6 m del suelo, la altura de los ojos de una persona.\n\n- **X** va a la derecha.\n- **Y** va hacia arriba.\n- **Z** viene hacia ti: para poner algo **delante** de la cámara usas una Z **negativa**.\n\n`position` mueve, `rotation` gira (en grados, uno por eje) y `scale` estira o encoge (1 es el tamaño original)."
           },
           {
-            "type": "true_false",
-            "id": "af2_vf_coordenadas",
-            "title": "¿Verdad o mito?",
-            "statements": [
-              {
-                "text": "`position=\"0 0 -3\"` pone el objeto 3 metros delante de la cámara.",
-                "answer": true,
-                "explanation": "La cámara mira hacia la Z negativa, así que -3 está frente a ti."
+            "type": "motor_scene",
+            "id": "af2_mundo_coordenadas",
+            "title": "Pon cada caja en su coordenada",
+            "instructions": "Cada círculo es una posición. El **morado** está en `position=\"3 0 0\"` (3 m a la **derecha**, eje X) y el **celeste** en `position=\"0 0 -4\"` (4 m **delante** de la cámara: Z negativa). Arrastra cada caja a su círculo. Arrastra el suelo para girar la vista y comprobar desde otro lado.",
+            "success": "¡Eso es! X va a la derecha y la Z negativa queda delante de ti. Y (arriba) la usarás para levantar cosas.",
+            "escena": {
+              "entorno": {
+                "tipo": "vacio",
+                "semilla": 2,
+                "tamano": 24,
+                "densidad": 0
               },
-              {
-                "text": "En A-Frame el eje Z apunta hacia arriba, como en Blender.",
-                "answer": false,
-                "explanation": "En A-Frame (y en glTF) arriba es **Y**. Blender usa Z arriba: por eso el exportador glTF convierte los ejes."
+              "camara": {
+                "distancia": 10
               },
-              {
-                "text": "`rotation` se escribe en grados.",
-                "answer": true,
-                "explanation": "`rotation=\"0 45 0\"` gira 45° alrededor del eje Y. En el código de three.js se usan radianes, pero en las etiquetas son grados."
-              },
-              {
-                "text": "`scale=\"2 2 2\"` hace el objeto el doble de grande.",
-                "answer": true,
-                "explanation": "Escala 1 es el tamaño original; 2 lo duplica en los tres ejes y 0.5 lo deja a la mitad."
-              }
-            ]
+              "objetos": [
+                {
+                  "id": "caja_x",
+                  "forma": "caja",
+                  "color": "#9B59B6",
+                  "escala": 0.9,
+                  "posicion": [
+                    -2.5,
+                    null,
+                    2.5
+                  ],
+                  "movible": true
+                },
+                {
+                  "id": "caja_z",
+                  "forma": "caja",
+                  "color": "#00B8D4",
+                  "escala": 0.9,
+                  "posicion": [
+                    -1,
+                    null,
+                    3.5
+                  ],
+                  "movible": true
+                },
+                {
+                  "id": "origen",
+                  "forma": "esfera",
+                  "color": "#F5792A",
+                  "escala": 0.35,
+                  "posicion": [
+                    0,
+                    null,
+                    0
+                  ]
+                }
+              ],
+              "zonas": [
+                {
+                  "id": "x_tres",
+                  "posicion": [
+                    3,
+                    0
+                  ],
+                  "radio": 0.9,
+                  "color": "#9B59B6"
+                },
+                {
+                  "id": "z_menos_cuatro",
+                  "posicion": [
+                    0,
+                    -4
+                  ],
+                  "radio": 0.9,
+                  "color": "#00E5FF"
+                }
+              ],
+              "retos": [
+                {
+                  "tipo": "en_zona",
+                  "objeto": "caja_x",
+                  "zona": "x_tres",
+                  "texto": "Caja morada a `3 0 0` (X: derecha)."
+                },
+                {
+                  "tipo": "en_zona",
+                  "objeto": "caja_z",
+                  "zona": "z_menos_cuatro",
+                  "texto": "Caja celeste a `0 0 -4` (Z negativa: delante)."
+                }
+              ]
+            }
           },
           {
             "type": "markdown_text",
@@ -332,6 +394,12 @@
               }
             ],
             "explanation": "Las luces por defecto se quitan en cuanto agregas una. Una `ambient` suave o una `hemisphere` evita las zonas completamente negras."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "Escenas ligeras: la regla de los estudios web",
+            "body": "En un proyecto real la escena tiene que abrir rápido en un teléfono de gama media. Por eso los equipos web 3D cuidan tres números: **cuántos objetos** se dibujan por cuadro (cada uno es una «llamada de dibujo»), **cuántas luces** proyectan sombra (una, como mucho) y **cuánto pesan** las texturas.\n\nEl truco más usado es la **luz horneada**: la iluminación se calcula una vez en Blender y se guarda en la textura, así el navegador no tiene que calcularla. El estilo low poly de Amatista existe justo por esto: se ve bien y cuesta poco."
           }
         ]
       },

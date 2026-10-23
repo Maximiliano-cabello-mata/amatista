@@ -1,0 +1,698 @@
+{
+  "module": {
+    "id": "mod_afi_002",
+    "courseId": "crs_aframe_interactivo",
+    "title": "Módulo 2: Mundos con el Motor Amatista",
+    "slug": "interactivo-modulo-2-motor-amatista",
+    "description": "Genera mundos enteros con una línea: terrenos, bosques, islas y ciudades low poly. Agrega objetos que se arrastran con el ratón, el dedo o el visor, metas que detectan lo que llega y retos que celebran. Terminas con tu propia isla con misión.",
+    "estimatedTimeMinutes": 45,
+    "order": 2,
+    "curso": "aframe_interactivo",
+    "insignia": "Creador de mundos",
+    "disciplinas": [
+      "xr",
+      "interaccion",
+      "diseno"
+    ],
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "afm_gancho",
+        "title": "Un mundo en una línea",
+        "slug": "un-mundo-en-una-linea",
+        "type": "theory_interactive",
+        "durationSeconds": 360,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Generar un entorno completo con am-entorno.",
+          "habilidades": [
+            "af-motor",
+            "af-entornos"
+          ],
+          "prerrequisitos": [
+            "af4_jefe"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Cambiar el tipo y la semilla de un entorno."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### El Motor Amatista\nHasta ahora armaste cada cosa a mano: una caja, una luz, un plano. Para un mundo entero (colinas, árboles, agua, cielo) serían cientos de líneas. El **Motor Amatista** es un conjunto de componentes propios (todos empiezan con `am-`) que hacen ese trabajo por ti y funcionan en la computadora, el teléfono y el visor.\n\nEl primero es `am-entorno`: **una línea, un mundo**."
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "code": "<a-entity am-entorno=\"tipo: bosque; semilla: 3\"></a-entity>"
+          },
+          {
+            "type": "markdown_text",
+            "body": "- `tipo`: pradera, bosque, isla, desierto, nieve, ciudad, cristal, espacio o vacío.\n- `semilla`: cualquier número o palabra. **La misma semilla da siempre el mismo mundo**; cámbiala y aparece otro.\n- `densidad`: de 0 (vacío) a 1 (lleno de árboles, rocas o edificios)."
+          },
+          {
+            "type": "motor_scene",
+            "id": "afm_mundo_isla",
+            "title": "Recorre una isla generada",
+            "instructions": "Esta isla salió de **una sola línea**: `am-entorno=\"tipo: isla; semilla: 3\"`. Gira la vista arrastrando el suelo, acércate con la rueda y lleva la **bandera** a la cima marcada.",
+            "success": "Todo lo que ves (agua, palmeras, rocas y relieve) lo generó el motor.",
+            "escena": {
+              "entorno": {
+                "tipo": "isla",
+                "semilla": 3,
+                "tamano": 44,
+                "densidad": 0.55
+              },
+              "camara": {
+                "distancia": 13
+              },
+              "objetos": [
+                {
+                  "id": "bandera",
+                  "forma": "cono",
+                  "color": "#F5792A",
+                  "escala": [
+                    0.6,
+                    1.4,
+                    0.6
+                  ],
+                  "posicion": [
+                    -3,
+                    null,
+                    3
+                  ],
+                  "movible": true
+                }
+              ],
+              "zonas": [
+                {
+                  "id": "cima",
+                  "posicion": [
+                    2.5,
+                    -2.5
+                  ],
+                  "radio": 1.3,
+                  "color": "#F5792A"
+                }
+              ],
+              "retos": [
+                {
+                  "tipo": "en_zona",
+                  "objeto": "bandera",
+                  "zona": "cima",
+                  "texto": "Planta la **bandera** en la cima."
+                }
+              ]
+            }
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "preview": true,
+            "code": "<a-scene>\n  <!-- Cambia el tipo (bosque, nieve, ciudad, espacio…) y la semilla -->\n  <a-entity am-entorno=\"tipo: nieve; semilla: 8; densidad: 0.6\"></a-entity>\n  <a-entity light=\"type: hemisphere; groundColor: #4a3b5c; intensity: 0.9\"></a-entity>\n  <a-entity light=\"type: directional; intensity: 1.1\" position=\"-4 8 5\"></a-entity>\n  <a-entity camera am-orbita=\"distancia: 14\" look-controls=\"enabled: false\" wasd-controls=\"enabled: false\"></a-entity>\n</a-scene>"
+          },
+          {
+            "type": "quiz_inline",
+            "id": "afm_q_semilla",
+            "question": "Quieres que todos tus alumnos vean **exactamente el mismo bosque**. ¿Qué haces?",
+            "options": [
+              {
+                "id": "a",
+                "text": "Usar la misma `semilla` en `am-entorno`",
+                "isCorrect": true
+              },
+              {
+                "id": "b",
+                "text": "Subir la `densidad` a 1",
+                "isCorrect": false
+              },
+              {
+                "id": "c",
+                "text": "Copiar cada árbol a mano",
+                "isCorrect": false
+              },
+              {
+                "id": "d",
+                "text": "No se puede: siempre sale distinto",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "El motor usa un azar con semilla: la misma semilla repite el mismo mundo en cualquier equipo."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "Generación procedural en la industria",
+            "body": "Los videojuegos (Minecraft, No Man's Sky) y muchas herramientas de cine generan terrenos y bosques con reglas y semillas en vez de colocar cada pieza: se llama **generación procedural**. En Blender existe lo mismo con **Geometry Nodes**, y en la web se usa para mundos que pesan casi nada: el código viaja, no los modelos."
+          }
+        ]
+      },
+      {
+        "id": "afm_explora",
+        "title": "Objetos que se mueven y metas",
+        "slug": "objetos-que-se-mueven-y-metas",
+        "type": "theory_interactive",
+        "durationSeconds": 540,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Hacer objetos arrastrables, zonas y retos.",
+          "habilidades": [
+            "af-motor",
+            "af-interaccion"
+          ],
+          "prerrequisitos": [
+            "afm_gancho"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Armar una escena en la que un objeto llega a una meta."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Tres piezas para jugar\n- `am-arrastrable`: el objeto se mueve con el **ratón**, el **dedo** o el **láser del visor**, siempre apoyado en el terreno. `base` es la distancia de su centro al suelo (la mitad de su alto).\n- `am-zona`: un **círculo en el suelo** que sabe qué objetos tiene dentro. Lleva un `id` para nombrarla.\n- `am-reto`: revisa una condición y **celebra** cuando se cumple. Los tipos: `en_zona`, `todos_en_zona`, `tocar`, `cerca` y `altura`."
+          },
+          {
+            "type": "concept_cards",
+            "items": [
+              {
+                "term": "am-arrastrable",
+                "definition": "Lo vuelve movible: `am-arrastrable=\"base: 0.5\"` para una caja de 1 m de alto."
+              },
+              {
+                "term": "am-zona",
+                "definition": "La meta: `<a-entity id=\"meta\" am-zona=\"radio: 1.2\">`."
+              },
+              {
+                "term": "am-reto",
+                "definition": "La condición: `am-reto=\"tipo: en_zona; objeto: caja; zona: meta\"`."
+              },
+              {
+                "term": "am-tocable",
+                "definition": "Responde a un clic o toque; el reto `tocar` lo detecta."
+              }
+            ]
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "preview": true,
+            "code": "<a-scene>\n  <a-entity am-entorno=\"tipo: pradera; semilla: 2; densidad: 0.4\"></a-entity>\n  <a-entity light=\"type: hemisphere; groundColor: #4a3b5c; intensity: 0.9\"></a-entity>\n  <a-entity light=\"type: directional; intensity: 1.1\" position=\"-4 8 5\"></a-entity>\n\n  <a-entity id=\"caja\" geometry=\"primitive: box\" material=\"color: #F5792A; flatShading: true\"\n    position=\"-3 0.5 1\" am-arrastrable=\"base: 0.5\"></a-entity>\n  <a-entity id=\"meta\" position=\"3 0 -1\" am-zona=\"radio: 1.2\"></a-entity>\n  <a-entity am-reto=\"tipo: en_zona; objeto: caja; zona: meta\"></a-entity>\n\n  <a-entity camera am-orbita=\"distancia: 11\" look-controls=\"enabled: false\" wasd-controls=\"enabled: false\"></a-entity>\n</a-scene>"
+          },
+          {
+            "type": "motor_scene",
+            "id": "afm_mundo_granja",
+            "title": "Ordena la granja",
+            "instructions": "Esta escena usa justo esas piezas. Lleva los **dos fardos** (cajas amarillas) al **granero** y la **pelota** cerca del árbol. Cada reto se marca solo cuando se cumple.",
+            "success": "¡Granja ordenada! Usaste `todos_en_zona` y `cerca`, dos de los cinco tipos de reto.",
+            "escena": {
+              "entorno": {
+                "tipo": "pradera",
+                "semilla": 11,
+                "tamano": 40,
+                "densidad": 0.4
+              },
+              "camara": {
+                "distancia": 12
+              },
+              "objetos": [
+                {
+                  "id": "fardo_1",
+                  "forma": "caja",
+                  "color": "#F1C40F",
+                  "escala": [
+                    1.2,
+                    0.7,
+                    0.8
+                  ],
+                  "posicion": [
+                    -4,
+                    null,
+                    2
+                  ],
+                  "movible": true
+                },
+                {
+                  "id": "fardo_2",
+                  "forma": "caja",
+                  "color": "#F1C40F",
+                  "escala": [
+                    1.2,
+                    0.7,
+                    0.8
+                  ],
+                  "posicion": [
+                    -2,
+                    null,
+                    3.5
+                  ],
+                  "movible": true
+                },
+                {
+                  "id": "pelota",
+                  "forma": "esfera",
+                  "color": "#E74C3C",
+                  "escala": 0.6,
+                  "posicion": [
+                    0,
+                    null,
+                    3
+                  ],
+                  "movible": true
+                },
+                {
+                  "id": "arbol_viejo",
+                  "forma": "modelo",
+                  "modelo": "arbol",
+                  "posicion": [
+                    -3.5,
+                    null,
+                    -3
+                  ]
+                },
+                {
+                  "id": "granero_casa",
+                  "forma": "modelo",
+                  "modelo": "casa",
+                  "posicion": [
+                    4.5,
+                    null,
+                    -3.5
+                  ]
+                }
+              ],
+              "zonas": [
+                {
+                  "id": "granero",
+                  "posicion": [
+                    3.5,
+                    -1
+                  ],
+                  "radio": 1.8,
+                  "color": "#F5792A"
+                }
+              ],
+              "retos": [
+                {
+                  "tipo": "todos_en_zona",
+                  "objetos": [
+                    "fardo_1",
+                    "fardo_2"
+                  ],
+                  "zona": "granero",
+                  "texto": "Los **dos fardos** en el granero."
+                },
+                {
+                  "tipo": "cerca",
+                  "objeto": "pelota",
+                  "de": "arbol_viejo",
+                  "distancia": 2,
+                  "texto": "La **pelota** junto al árbol."
+                }
+              ]
+            }
+          },
+          {
+            "type": "fill_blanks",
+            "id": "afm_completa_reto",
+            "code": true,
+            "prompt": "Completa la escena: la caja se arrastra y el reto revisa que llegue a la meta.",
+            "explanation": "`am-arrastrable` mueve la caja, `am-zona` marca la meta y el reto `en_zona` une las dos por sus ids.",
+            "template": "<a-entity id=\"caja\" geometry=\"primitive: box\" [[am-arrastrable]]=\"base: 0.5\"></a-entity>\n<a-entity id=\"meta\" [[am-zona]]=\"radio: 1.2\"></a-entity>\n<a-entity am-reto=\"tipo: [[en_zona]]; objeto: caja; zona: [[meta]]\"></a-entity>"
+          }
+        ]
+      },
+      {
+        "id": "afm_practica",
+        "title": "Copias, patrones y paseo",
+        "slug": "copias-patrones-y-paseo",
+        "type": "theory_interactive",
+        "durationSeconds": 540,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Generar copias en patrones y recorrer el mundo en primera persona.",
+          "habilidades": [
+            "af-motor",
+            "af-rendimiento"
+          ],
+          "prerrequisitos": [
+            "afm_explora"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Crear un patrón de copias.",
+            "Caminar por el mundo con W A S D."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Cien objetos, un solo dibujo\n`am-generar` crea **copias** de una forma en `fila`, `rejilla`, `circulo`, `espiral` o `azar`. Lo importante: todas las copias se dibujan **de una sola vez** (se llama *instanciado*), así que cien columnas cuestan casi lo mismo que una. Es la misma idea que el modificador **Array** de Blender.\n\n- `cantidad`: cuántas copias.\n- `radio` (círculo y espiral) o `separacion` (fila y rejilla).\n- `variar`: de 0 a 0.9, cambia un poco el tamaño de cada una para que se vea natural."
+          },
+          {
+            "type": "code_challenge",
+            "id": "afm_reto_patron",
+            "prompt": "La escena ya tiene un **círculo** de columnas. Agrega una **fila de 6 cajas** con `am-generar` y `patron: fila`.",
+            "language": "html",
+            "starter": "<a-scene>\n  <a-entity am-entorno=\"tipo: desierto; semilla: 4; tamano: 40; densidad: 0.3\"></a-entity>\n  <a-entity light=\"type: hemisphere; groundColor: #4a3b5c; intensity: 0.9\"></a-entity>\n  <a-entity light=\"type: directional; intensity: 1.1\" position=\"-4 8 5\"></a-entity>\n\n  <!-- Un círculo de 12 columnas: una sola línea -->\n  <a-entity am-generar=\"forma: cilindro; patron: circulo; cantidad: 12; radio: 5; escala: 0.8; color: #F5792A\"></a-entity>\n\n  <!-- Agrega aquí una fila de cajas (patron: fila) -->\n\n  <a-entity camera am-orbita=\"distancia: 14\" look-controls=\"enabled: false\" wasd-controls=\"enabled: false\"></a-entity>\n</a-scene>",
+            "checks": [
+              {
+                "selector": "a-scene [am-generar]",
+                "text": "Hay al menos un `am-generar`"
+              },
+              {
+                "selector": "a-scene [am-generar*=\"fila\"]",
+                "text": "Uno de ellos usa `patron: fila`"
+              },
+              {
+                "selector": "a-scene [am-generar*=\"caja\"]",
+                "text": "La fila es de cajas: `forma: caja`"
+              }
+            ],
+            "solution": "<a-scene>\n  <a-entity am-entorno=\"tipo: desierto; semilla: 4; tamano: 40; densidad: 0.3\"></a-entity>\n  <a-entity light=\"type: hemisphere; groundColor: #4a3b5c; intensity: 0.9\"></a-entity>\n  <a-entity light=\"type: directional; intensity: 1.1\" position=\"-4 8 5\"></a-entity>\n\n  <!-- Un círculo de 12 columnas: una sola línea -->\n  <a-entity am-generar=\"forma: cilindro; patron: circulo; cantidad: 12; radio: 5; escala: 0.8; color: #F5792A\"></a-entity>\n\n  <!-- Agrega aquí una fila de cajas (patron: fila) -->\n  <a-entity position=\"0 0 -2\" am-generar=\"forma: caja; patron: fila; cantidad: 6; separacion: 1.4; color: #9B59B6\"></a-entity>\n\n  <a-entity camera am-orbita=\"distancia: 14\" look-controls=\"enabled: false\" wasd-controls=\"enabled: false\"></a-entity>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "markdown_text",
+            "body": "### Pasear por tu mundo\n`am-orbita` gira alrededor de la escena (ideal para mirar una maqueta). Para **caminar** dentro, pon la cámara dentro de una entidad con `am-caminar`: se mueve con **W A S D** o las flechas, sigue el relieve del terreno y en el teléfono avanza mientras mantienes el dedo en la pantalla."
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "code": "<a-entity am-caminar position=\"0 0 6\">\n  <a-entity camera position=\"0 1.6 0\" look-controls></a-entity>\n</a-entity>"
+          },
+          {
+            "type": "markdown_text",
+            "body": "Y agrega `am-rendimiento` a la `<a-scene>`: mide los cuadros por segundo y ajusta la resolución sola para que la escena vaya fluida en equipos modestos."
+          },
+          {
+            "type": "matching",
+            "id": "afm_empareja",
+            "prompt": "Une cada necesidad con el componente del motor.",
+            "pairs": [
+              {
+                "id": "p1",
+                "left": "Un bosque entero de fondo",
+                "right": "`am-entorno`"
+              },
+              {
+                "id": "p2",
+                "left": "50 farolas en fila",
+                "right": "`am-generar`"
+              },
+              {
+                "id": "p3",
+                "left": "Recorrer la escena con W A S D",
+                "right": "`am-caminar`"
+              },
+              {
+                "id": "p4",
+                "left": "Que vaya fluida en un teléfono viejo",
+                "right": "`am-rendimiento`"
+              }
+            ],
+            "explanation": "Cuatro componentes, cuatro trabajos: mundo, copias, paseo y velocidad."
+          }
+        ]
+      },
+      {
+        "id": "afm_reto",
+        "title": "Reto: tu isla con misión",
+        "slug": "reto-isla-con-mision",
+        "type": "code_interactive",
+        "durationSeconds": 900,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Construir un mundo jugable con el Motor Amatista.",
+          "habilidades": [
+            "af-motor",
+            "af-interaccion"
+          ],
+          "prerrequisitos": [
+            "afm_practica"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "La escena cumple las cinco condiciones."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Arma tu propio mundo jugable\nConstruye una isla con una misión: el jugador debe llevar el **cofre** y el **farol** hasta el **muelle**. Usa la vista previa para jugarla tú mismo: cuando ambos lleguen, la escena celebra."
+          },
+          {
+            "type": "code_challenge",
+            "id": "afm_reto_isla",
+            "prompt": "Completa los cuatro pasos de los comentarios: el **entorno** de isla, dos piezas **arrastrables** (`cofre` y `farol`), la zona `muelle` y un **reto** `todos_en_zona`.",
+            "language": "html",
+            "starter": "<a-scene>\n  <!-- 1. El mundo: un a-entity con am-entorno (tipo: isla) -->\n\n  <a-entity light=\"type: hemisphere; groundColor: #4a3b5c; intensity: 0.9\"></a-entity>\n  <a-entity light=\"type: directional; intensity: 1.1\" position=\"-4 8 5\"></a-entity>\n\n  <!-- 2. Dos piezas que se arrastran (id=\"cofre\" e id=\"farol\") con am-arrastrable -->\n\n  <!-- 3. El muelle: id=\"muelle\" con am-zona -->\n\n  <!-- 4. El reto: am-reto con tipo: todos_en_zona -->\n\n  <a-entity camera am-orbita=\"distancia: 12\" look-controls=\"enabled: false\" wasd-controls=\"enabled: false\"></a-entity>\n</a-scene>",
+            "checks": [
+              {
+                "selector": "a-scene [am-entorno]",
+                "text": "Hay un mundo con `am-entorno` de tipo isla",
+                "attr": "am-entorno",
+                "contains": "isla"
+              },
+              {
+                "selector": "a-scene #cofre[am-arrastrable]",
+                "text": "El `cofre` se arrastra (`am-arrastrable`)"
+              },
+              {
+                "selector": "a-scene #farol[am-arrastrable]",
+                "text": "El `farol` se arrastra (`am-arrastrable`)"
+              },
+              {
+                "selector": "a-scene #muelle[am-zona]",
+                "text": "El `muelle` es una zona (`am-zona`)"
+              },
+              {
+                "selector": "a-scene [am-reto]",
+                "text": "El reto pide que ambos lleguen: `tipo: todos_en_zona`",
+                "attr": "am-reto",
+                "contains": "todos_en_zona"
+              }
+            ],
+            "solution": "<a-scene>\n  <!-- 1. El mundo: un a-entity con am-entorno (tipo: isla) -->\n  <a-entity am-entorno=\"tipo: isla; semilla: 7; tamano: 44; densidad: 0.5\"></a-entity>\n\n  <a-entity light=\"type: hemisphere; groundColor: #4a3b5c; intensity: 0.9\"></a-entity>\n  <a-entity light=\"type: directional; intensity: 1.1\" position=\"-4 8 5\"></a-entity>\n\n  <!-- 2. Dos piezas que se arrastran (id=\"cofre\" e id=\"farol\") con am-arrastrable -->\n  <a-entity id=\"cofre\" geometry=\"primitive: box; width: 1; height: 0.7; depth: 0.7\" material=\"color: #F5792A; flatShading: true\"\n    position=\"-3 0.35 2\" am-arrastrable=\"base: 0.35\"></a-entity>\n  <a-entity id=\"farol\" geometry=\"primitive: cylinder; radius: 0.25; height: 1.6\" material=\"color: #00E5FF; flatShading: true\"\n    position=\"-1 0.8 3\" am-arrastrable=\"base: 0.8\"></a-entity>\n\n  <!-- 3. El muelle: id=\"muelle\" con am-zona -->\n  <a-entity id=\"muelle\" position=\"3 0 -2\" am-zona=\"radio: 1.8; color: #00E5FF\"></a-entity>\n\n  <!-- 4. El reto: am-reto con tipo: todos_en_zona -->\n  <a-entity am-reto=\"tipo: todos_en_zona; objetos: cofre, farol; zona: muelle\"></a-entity>\n\n  <!-- Extra: un círculo de cristales que flotan -->\n  <a-entity position=\"0 0 0\" am-generar=\"forma: cristal; patron: circulo; cantidad: 10; radio: 6; color: #B57EDC\"></a-entity>\n\n  <a-entity camera am-orbita=\"distancia: 12\" look-controls=\"enabled: false\" wasd-controls=\"enabled: false\"></a-entity>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "title": "Llévalo más lejos",
+            "body": "Abre tu isla en el [Estudio A-Frame](#/estudio), agrega `am-caminar` para recorrerla y descárgala: la página incluye el motor y funciona sin conexión."
+          }
+        ]
+      },
+      {
+        "id": "afm_jefe",
+        "title": "Jefe: el Arquitecto de Mundos",
+        "slug": "jefe-motor-amatista",
+        "type": "exam",
+        "durationSeconds": 360,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Demostrar el uso del Motor Amatista.",
+          "habilidades": [
+            "af-motor",
+            "af-interaccion",
+            "af-rendimiento"
+          ],
+          "prerrequisitos": [
+            "afm_reto"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Aprobar con 80 % o más."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "q_afm_01",
+              "questionText": "¿Qué hace `am-entorno=\"tipo: bosque; semilla: 3\"`?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "Genera un terreno con árboles; con la misma semilla sale siempre el mismo bosque",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Descarga un bosque de internet cada vez que abres la página",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Pone una foto de un bosque de fondo",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Crea tres bosques",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "¡Exacto! La semilla hace que el mundo «al azar» salga igual cada vez.",
+              "feedbackIncorrect": "La semilla no cuenta bosques: fija el azar para que el mundo se repita."
+            },
+            {
+              "id": "q_afm_02",
+              "questionText": "Quieres que el alumno pueda mover una caja con el ratón, el dedo o el láser del visor. ¿Qué le agregas?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "`am-arrastrable`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "`am-zona`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "`animation`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "`am-orbita`",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Sí: `am-arrastrable` la mueve apoyada en el suelo, con cualquier dispositivo.",
+              "feedbackIncorrect": "Busca el componente que hace que algo se arrastre."
+            },
+            {
+              "id": "q_afm_03",
+              "questionText": "¿Para qué sirve `am-zona`?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "Marca un círculo en el suelo que sabe qué objetos tiene dentro",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Delimita hasta dónde camina la cámara",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Cambia el color del cielo",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Crea copias de un objeto",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Correcto: y con `am-reto` revisas si el objeto llegó.",
+              "feedbackIncorrect": "La zona es la «meta»: un círculo que detecta lo que entra."
+            },
+            {
+              "id": "q_afm_04",
+              "questionText": "Necesitas 100 árboles iguales en rejilla. ¿Qué es lo más ligero para el navegador?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "Un solo `am-generar` con `patron: rejilla`: dibuja las 100 copias de una vez (instanciado)",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Cien etiquetas `<a-entity>` con un modelo cada una",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Un modelo GLB de 100 árboles sin optimizar",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Cien luces, una por árbol",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "¡Bien! Una malla instanciada son cien árboles en una sola llamada de dibujo.",
+              "feedbackIncorrect": "Piensa en cuántas veces tiene que dibujar el navegador."
+            },
+            {
+              "id": "q_afm_05",
+              "questionText": "Tu escena va lenta en un teléfono viejo. ¿Qué componente del motor ajusta la resolución sola?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "`am-rendimiento`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "`am-flotar`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "`am-caminar`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "`am-tocable`",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Exacto: mide los cuadros por segundo y baja o sube la resolución.",
+              "feedbackIncorrect": "Busca el componente que vigila la velocidad."
+            },
+            {
+              "id": "q_afm_06",
+              "questionText": "¿Qué reto revisa que **dos o más** objetos estén dentro de la misma zona?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "`tipo: todos_en_zona`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "`tipo: en_zona`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "`tipo: cerca`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "`tipo: altura`",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Sí: `todos_en_zona` con la lista en `objetos`.",
+              "feedbackIncorrect": "`en_zona` revisa uno solo; busca el que acepta una lista."
+            }
+          ]
+        },
+        "contentBlocks": []
+      }
+    ]
+  }
+}

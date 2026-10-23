@@ -1,0 +1,619 @@
+{
+  "module": {
+    "id": "mod_afi_003",
+    "courseId": "crs_aframe_interactivo",
+    "title": "Módulo 3: Experiencias WebXR",
+    "slug": "interactivo-modulo-3-webxr",
+    "description": "Lleva tu escena al visor: cómo cambia la interacción entre computadora, teléfono y VR, el rig con cámara y controles, la comodidad, el rendimiento y cómo publicarla. Terminas con tu propio mundo WebXR.",
+    "estimatedTimeMinutes": 52,
+    "order": 3,
+    "curso": "aframe_interactivo",
+    "insignia": "Explorador XR",
+    "disciplinas": [
+      "xr",
+      "interaccion"
+    ],
+    "estado": "publicado",
+    "lessons": [
+      {
+        "id": "af5_gancho",
+        "title": "Del monitor al visor",
+        "slug": "del-monitor-al-visor",
+        "type": "theory_interactive",
+        "durationSeconds": 420,
+        "isLocked": true,
+        "formula": "gancho",
+        "ficha": {
+          "objetivo": "Explicar cómo cambia la interacción entre computadora, teléfono y visor.",
+          "habilidades": [
+            "af-webxr",
+            "af-comodidad"
+          ],
+          "prerrequisitos": [
+            "afm_jefe"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Nombrar dos reglas de comodidad en VR."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### La misma página, tres formas de verla\nUna escena de A-Frame se abre igual en una computadora, en un teléfono y en un visor de realidad virtual. Cuando el navegador lo permite, aparece el botón **VR** (y en algunos teléfonos y visores, **AR** para verla sobre el mundo real).\n\nLa diferencia está en **cómo se mueve la persona**: con el ratón y el teclado, girando el teléfono o caminando con el visor puesto. Una buena experiencia WebXR funciona bien en las tres."
+          },
+          {
+            "type": "classify",
+            "id": "af5_clasifica_dispositivos",
+            "question": "¿Con qué se interactúa en cada caso?",
+            "groups": [
+              {
+                "id": "pc",
+                "label": "Computadora"
+              },
+              {
+                "id": "visor",
+                "label": "Visor con controles"
+              },
+              {
+                "id": "mirada",
+                "label": "Visor sin controles"
+              }
+            ],
+            "items": [
+              {
+                "text": "El ratón apunta y hace clic",
+                "group": "pc"
+              },
+              {
+                "text": "W A S D para caminar",
+                "group": "pc"
+              },
+              {
+                "text": "Un rayo láser sale del control de la mano",
+                "group": "visor"
+              },
+              {
+                "text": "Se pulsa el gatillo para hacer clic",
+                "group": "visor"
+              },
+              {
+                "text": "Mirar fijo un objeto un momento lo «pulsa»",
+                "group": "mirada"
+              },
+              {
+                "text": "Un punto en el centro de la vista hace de cursor",
+                "group": "mirada"
+              }
+            ],
+            "explanation": "Por eso una escena WebXR suele traer los tres: cursor del ratón, controles láser y, si hace falta, un cursor por mirada."
+          },
+          {
+            "type": "true_false",
+            "id": "af5_vf_comodidad",
+            "title": "Comodidad en VR: ¿verdad o mito?",
+            "statements": [
+              {
+                "text": "Mover la cámara sola, sin que la persona lo decida, puede marear.",
+                "answer": true,
+                "explanation": "Es la causa más común de mareo en VR: el cuerpo no siente el movimiento que ven los ojos."
+              },
+              {
+                "text": "En VR conviene que la escena vaya a 72 cuadros por segundo o más.",
+                "answer": true,
+                "explanation": "Los visores autónomos dibujan a 72–90 cuadros por segundo; si la escena va más lenta, se nota y cansa."
+              },
+              {
+                "text": "Poner el texto muy cerca de los ojos hace que se lea mejor.",
+                "answer": false,
+                "explanation": "Lo cómodo es dejar los paneles de texto a 1.5–3 m, grandes y con buen contraste."
+              },
+              {
+                "text": "Para abrir una experiencia WebXR hace falta una aplicación de tienda.",
+                "answer": false,
+                "explanation": "Basta un enlace: WebXR vive en el navegador. Eso sí, la página debe servirse por HTTPS."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "af5_explora",
+        "title": "El rig: tu cuerpo en la escena",
+        "slug": "el-rig-tu-cuerpo",
+        "type": "theory_interactive",
+        "durationSeconds": 600,
+        "isLocked": true,
+        "formula": "explora",
+        "ficha": {
+          "objetivo": "Armar un rig con cámara y controles para VR.",
+          "habilidades": [
+            "af-rig",
+            "af-webxr"
+          ],
+          "prerrequisitos": [
+            "af5_gancho"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Poner cámara y dos controles dentro de un padre."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Un padre para la cámara y las manos\nEn VR la persona tiene cabeza (la cámara) y manos (los controles). Se agrupan en un **rig**: una entidad padre que, si la mueves, lleva a la persona entera a otro lugar.\n\n- `camera` con `look-controls` y `wasd-controls`: la cabeza, a `0 1.6 0` para quien está en computadora (en el visor, la altura real la pone el propio visor).\n- `laser-controls=\"hand: left\"` y `laser-controls=\"hand: right\"`: un control por mano que lanza un rayo y hace clic con el gatillo. Funciona con los controles de casi todos los visores.\n- `hand-tracking-controls`: las manos sin control, en los visores que las detectan."
+          },
+          {
+            "type": "code_snippet",
+            "language": "html",
+            "code": "<a-scene cursor=\"rayOrigin: mouse\" raycaster=\"objects: .clicable\" background=\"color: #0b0f1d\">\n  <a-plane rotation=\"-90 0 0\" width=\"12\" height=\"12\" color=\"#141a2e\"></a-plane>\n  <a-light type=\"hemisphere\" color=\"#bfe9ff\" ground-color=\"#0b0f1d\" intensity=\"0.9\"></a-light>\n\n  <!-- El rig: mueve este padre y la persona entera se mueve -->\n  <a-entity id=\"rig\" position=\"0 0 0\">\n    <a-entity camera look-controls wasd-controls position=\"0 1.6 0\"></a-entity>\n    <a-entity laser-controls=\"hand: left\" raycaster=\"objects: .clicable\"></a-entity>\n    <a-entity laser-controls=\"hand: right\" raycaster=\"objects: .clicable\"></a-entity>\n  </a-entity>\n\n  <a-box class=\"clicable\" position=\"0 1.2 -2.5\" color=\"#00E5FF\"\n    animation__clic=\"property: rotation; from: 0 0 0; to: 0 360 0; dur: 800; startEvents: click\"></a-box>\n  <a-text value=\"Con el ratón o con el láser del control\" align=\"center\" position=\"0 2.2 -2.5\" width=\"4\" color=\"#E0E0E0\"></a-text>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "matching",
+            "id": "af5_parejas_rig",
+            "prompt": "Une cada pieza del rig con lo que hace",
+            "pairs": [
+              {
+                "id": "p1",
+                "left": "`camera`",
+                "right": "La cabeza: lo que ve la persona"
+              },
+              {
+                "id": "p2",
+                "left": "`look-controls`",
+                "right": "Mirar alrededor con el ratón, el teléfono o el visor"
+              },
+              {
+                "id": "p3",
+                "left": "`wasd-controls`",
+                "right": "Caminar con el teclado en la computadora"
+              },
+              {
+                "id": "p4",
+                "left": "`laser-controls`",
+                "right": "Un rayo desde el control de la mano que hace clic"
+              },
+              {
+                "id": "p5",
+                "left": "El padre `#rig`",
+                "right": "Mover a la persona entera de un lugar a otro"
+              }
+            ],
+            "explanation": "Cabeza, ojos, pies y manos: con estas piezas la misma escena se usa en computadora y en el visor."
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "body": "En visores sin controles, pon un `<a-cursor fuse=\"true\">` dentro de la cámara: un punto en el centro de la vista que hace clic al mirar fijo un segundo y medio.",
+            "title": "Sin controles"
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "body": "Para moverse lejos en VR, lo cómodo es **teletransportarse** (apuntar y aparecer allí) en vez de deslizarse. A-Frame no lo trae de serie: se agrega con un componente de la comunidad que mueve el `#rig`.",
+            "title": "Moverse sin marear"
+          }
+        ]
+      },
+      {
+        "id": "af5_practica",
+        "title": "Que vuele en el visor",
+        "slug": "que-vuele-en-el-visor",
+        "type": "theory_interactive",
+        "durationSeconds": 540,
+        "isLocked": true,
+        "formula": "practica",
+        "ficha": {
+          "objetivo": "Medir y cuidar el rendimiento y publicar una escena WebXR.",
+          "habilidades": [
+            "af-optimizar",
+            "af-publicar"
+          ],
+          "prerrequisitos": [
+            "af5_explora"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Nombrar tres decisiones que ahorran presupuesto.",
+            "Explicar por qué hace falta HTTPS."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### El presupuesto de un visor\nUn visor autónomo dibuja la escena **dos veces** (un ojo y el otro) a 72 cuadros por segundo o más, con el procesador de un teléfono. Cada objeto, luz y textura gasta parte de ese presupuesto.\n\nPara medir, agrega el atributo `stats` a `<a-scene>`: muestra los cuadros por segundo y cuántas **llamadas de dibujo** hace la escena. Como guía para visores autónomos, apunta a menos de 100 llamadas de dibujo y a unos cientos de miles de triángulos en toda la escena."
+          },
+          {
+            "type": "classify",
+            "id": "af5_clasifica_presupuesto",
+            "question": "¿Ahorra o gasta presupuesto?",
+            "groups": [
+              {
+                "id": "ahorra",
+                "label": "Ahorra"
+              },
+              {
+                "id": "gasta",
+                "label": "Gasta"
+              }
+            ],
+            "items": [
+              {
+                "text": "Una luz `hemisphere` de relleno y una sola luz principal",
+                "group": "ahorra"
+              },
+              {
+                "text": "Diez luces `point` con sombras",
+                "group": "gasta"
+              },
+              {
+                "text": "Reutilizar el mismo modelo GLB",
+                "group": "ahorra"
+              },
+              {
+                "text": "Cien objetos sueltos con materiales distintos",
+                "group": "gasta"
+              },
+              {
+                "text": "`raycaster` limitado a `.clicable`",
+                "group": "ahorra"
+              },
+              {
+                "text": "Texturas enormes en objetos lejanos",
+                "group": "gasta"
+              }
+            ],
+            "explanation": "Pocas luces, modelos reutilizados, texturas del tamaño justo y el rayo limitado: así la escena se mantiene fluida en el visor."
+          },
+          {
+            "type": "markdown_text",
+            "body": "### Publicar tu mundo\nTu escena es una página HTML. Descárgala desde el [Estudio A-Frame](#/estudio) y súbela a cualquier hosting estático (GitHub Pages, Netlify o Cloudflare Pages, por ejemplo) junto con sus modelos. Comparte el enlace: quien lo abra en un visor verá el botón **VR**."
+          },
+          {
+            "type": "ordering",
+            "id": "af5_ordena_publicar",
+            "prompt": "Ordena los pasos para publicar tu experiencia",
+            "items": [
+              {
+                "id": "o1",
+                "text": "Probar la escena en la computadora"
+              },
+              {
+                "id": "o2",
+                "text": "Revisar los cuadros por segundo con `stats`"
+              },
+              {
+                "id": "o3",
+                "text": "Descargar la página y juntar sus modelos"
+              },
+              {
+                "id": "o4",
+                "text": "Subirla a un hosting con HTTPS"
+              },
+              {
+                "id": "o5",
+                "text": "Abrir el enlace en el visor y entrar en VR"
+              }
+            ],
+            "explanation": "Primero se prueba y se mide, después se publica por HTTPS y al final se prueba en el visor real."
+          },
+          {
+            "type": "quiz_inline",
+            "id": "af5_q_https",
+            "question": "Subiste tu escena y en el visor no aparece el botón VR. ¿Qué revisas primero?",
+            "options": [
+              {
+                "id": "c",
+                "text": "Que los modelos sean .gltf y no .glb",
+                "isCorrect": false
+              },
+              {
+                "id": "d",
+                "text": "Que la cámara esté a 1.6 m",
+                "isCorrect": false
+              },
+              {
+                "id": "a",
+                "text": "Que la página se sirva por HTTPS",
+                "isCorrect": true
+              },
+              {
+                "id": "b",
+                "text": "Que la escena tenga `<a-sky>`",
+                "isCorrect": false
+              }
+            ],
+            "explanation": "El navegador solo permite WebXR en páginas seguras (HTTPS). Sin HTTPS, la escena se ve pero no puede entrar en VR."
+          },
+          {
+            "type": "callout",
+            "variant": "estudio",
+            "title": "Publicar como lo hace un estudio",
+            "body": "Una experiencia WebXR profesional se publica como cualquier sitio: en un hosting estático con **HTTPS** (obligatorio para entrar en VR), con los modelos comprimidos y en caché. Antes de lanzarla se prueba en un teléfono de gama media, en un visor autónomo (por ejemplo Meta Quest) y en una computadora.\n\nLo que más se mide: **tiempo de carga**, **cuadros por segundo** dentro del visor y cuántas personas llegan al final. El componente `am-rendimiento` del Motor Amatista hace parte de ese trabajo: baja la resolución cuando el equipo no da abasto."
+          }
+        ]
+      },
+      {
+        "id": "af5_reto",
+        "title": "Proyecto final: tu mundo WebXR",
+        "slug": "proyecto-mundo-webxr",
+        "type": "code_interactive",
+        "durationSeconds": 1200,
+        "isLocked": true,
+        "formula": "reto",
+        "ficha": {
+          "objetivo": "Integrar rig, modelos, interacción, luz y texto en una experiencia WebXR publicable.",
+          "habilidades": [
+            "af-rig",
+            "af-gltf",
+            "af-eventos",
+            "af-publicar"
+          ],
+          "prerrequisitos": [
+            "af5_practica"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "El mundo cumple las seis condiciones."
+          ]
+        },
+        "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Junta todo lo que aprendiste\nTu proyecto final es un pequeño mundo listo para el visor: un **rig** con cámara y dos controles, **modelos GLB**, algo **interactivo** que responda al clic (con el ratón o con el láser), **luces** y un **cartel** de bienvenida.\n\nCuando cumpla las condiciones, llévalo al [Estudio A-Frame](#/estudio), descárgalo y publícalo."
+          },
+          {
+            "type": "code_challenge",
+            "id": "af5_reto_mundo",
+            "prompt": "Construye tu mundo WebXR: un rig con **cámara** y **dos `laser-controls`**, al menos un **modelo GLB**, un objeto **clicable** con una animación que arranque con `click`, una **luz** y un cartel con `<a-text>`.",
+            "language": "html",
+            "starter": "<a-scene cursor=\"rayOrigin: mouse\" raycaster=\"objects: .clicable\" background=\"color: #0b0f1d\">\n  <a-assets>\n    <a-asset-item id=\"cristal\" src=\"/modelos/cristal.glb\"></a-asset-item>\n    <a-asset-item id=\"arbol\" src=\"/modelos/arbol.glb\"></a-asset-item>\n  </a-assets>\n  <a-plane rotation=\"-90 0 0\" width=\"16\" height=\"16\" color=\"#141a2e\"></a-plane>\n\n  <!-- 1. El rig: un a-entity con la cámara y dos laser-controls dentro -->\n\n  <!-- 2. Tus modelos con gltf-model -->\n\n  <!-- 3. Algo clicable que se anime con startEvents: click -->\n\n  <!-- 4. Luz y cartel de bienvenida -->\n\n</a-scene>",
+            "checks": [
+              {
+                "selector": "a-scene a-entity > [camera]",
+                "text": "La cámara va dentro de un rig (un `<a-entity>` padre)"
+              },
+              {
+                "selector": "a-scene a-entity > [laser-controls]",
+                "text": "El rig trae dos `laser-controls`, uno por mano",
+                "min": 2
+              },
+              {
+                "selector": "a-scene [gltf-model]",
+                "text": "Hay al menos un modelo con `gltf-model`"
+              },
+              {
+                "selector": "a-scene .clicable",
+                "text": "Un objeto clicable se anima al hacer clic (`startEvents: click`)",
+                "attr": "animation__clic",
+                "contains": "click"
+              },
+              {
+                "selector": "a-scene a-light",
+                "text": "La escena tiene al menos una luz"
+              },
+              {
+                "selector": "a-scene a-text",
+                "text": "Hay un cartel de bienvenida con `<a-text>`",
+                "attr": "value"
+              }
+            ],
+            "solution": "<a-scene cursor=\"rayOrigin: mouse\" raycaster=\"objects: .clicable\" background=\"color: #0b0f1d\">\n  <a-assets>\n    <a-asset-item id=\"cristal\" src=\"/modelos/cristal.glb\"></a-asset-item>\n    <a-asset-item id=\"arbol\" src=\"/modelos/arbol.glb\"></a-asset-item>\n  </a-assets>\n  <a-plane rotation=\"-90 0 0\" width=\"16\" height=\"16\" color=\"#141a2e\"></a-plane>\n\n  <!-- 1. El rig: un a-entity con la cámara y dos laser-controls dentro -->\n  <a-entity id=\"rig\">\n    <a-entity camera look-controls wasd-controls position=\"0 1.6 0\"></a-entity>\n    <a-entity laser-controls=\"hand: left\" raycaster=\"objects: .clicable\"></a-entity>\n    <a-entity laser-controls=\"hand: right\" raycaster=\"objects: .clicable\"></a-entity>\n  </a-entity>\n\n  <!-- 2. Tus modelos con gltf-model -->\n  <a-entity gltf-model=\"#arbol\" position=\"-2 0 -5\"></a-entity>\n  <a-entity gltf-model=\"#arbol\" position=\"2.5 0 -6\" scale=\"1.3 1.3 1.3\"></a-entity>\n\n  <!-- 3. Algo clicable que se anime con startEvents: click -->\n  <a-entity class=\"clicable\" gltf-model=\"#cristal\" position=\"0 0 -3\"\n    animation__clic=\"property: rotation; from: 0 0 0; to: 0 360 0; dur: 1000; startEvents: click\"></a-entity>\n\n  <!-- 4. Luz y cartel de bienvenida -->\n  <a-light type=\"hemisphere\" color=\"#bfe9ff\" ground-color=\"#0b0f1d\" intensity=\"0.9\"></a-light>\n  <a-light type=\"directional\" position=\"-2 4 2\" intensity=\"0.6\"></a-light>\n  <a-text value=\"Bienvenido a mi mundo\" align=\"center\" position=\"0 2.4 -3\" width=\"5\" color=\"#C39BD3\"></a-text>\n</a-scene>",
+            "preview": true
+          },
+          {
+            "type": "callout",
+            "variant": "dato",
+            "body": "Pide a alguien que lo pruebe en un visor o en su teléfono. Mira dónde duda: ahí está tu siguiente mejora.",
+            "title": "Pruébalo con otra persona"
+          }
+        ]
+      },
+      {
+        "id": "af5_jefe",
+        "title": "Jefe: el Guardián del Horizonte",
+        "slug": "jefe-modulo-5-aframe",
+        "type": "exam",
+        "durationSeconds": 360,
+        "isLocked": true,
+        "formula": "jefe",
+        "ficha": {
+          "objetivo": "Demostrar los fundamentos de una experiencia WebXR.",
+          "habilidades": [
+            "af-webxr",
+            "af-rig",
+            "af-comodidad",
+            "af-publicar"
+          ],
+          "prerrequisitos": [
+            "af5_reto"
+          ],
+          "edicion": "1.0",
+          "offline": true,
+          "comprobacion": [
+            "Aprobar con 80 % o más."
+          ]
+        },
+        "quizData": {
+          "passingScore": 80,
+          "questions": [
+            {
+              "id": "q_af5_01",
+              "questionText": "¿Qué necesita una página para poder entrar en VR con WebXR?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "Servirse por HTTPS en un navegador compatible",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Una aplicación instalada desde una tienda",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Estar hecha en Blender",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Tener más de 100 objetos",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Exacto: WebXR solo funciona en páginas seguras.",
+              "feedbackIncorrect": "Recuerda el caso del botón VR que no aparecía."
+            },
+            {
+              "id": "q_af5_02",
+              "questionText": "¿Para qué sirve agrupar la cámara y los controles en un `#rig`?",
+              "options": [
+                {
+                  "id": "opt_b",
+                  "text": "Para que la cámara vea mejor",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Para cargar los modelos antes",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Para que funcione sin luces",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "Para mover a la persona entera moviendo un solo padre",
+                  "isCorrect": true
+                }
+              ],
+              "feedbackCorrect": "¡Bien! El rig es el cuerpo de la persona.",
+              "feedbackIncorrect": "Repasa la jerarquía: mover al padre mueve a sus hijos."
+            },
+            {
+              "id": "q_af5_03",
+              "questionText": "¿Qué componente da a cada mano un rayo que hace clic con el gatillo?",
+              "options": [
+                {
+                  "id": "opt_c",
+                  "text": "`wasd-controls`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "`fog`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "`laser-controls`",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "`look-controls`",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Correcto: funciona con los controles de casi todos los visores.",
+              "feedbackIncorrect": "Busca el componente de las manos."
+            },
+            {
+              "id": "q_af5_04",
+              "questionText": "¿Qué movimiento suele marear en VR?",
+              "options": [
+                {
+                  "id": "opt_d",
+                  "text": "Quedarse quieto",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "Que la cámara se mueva sola, sin que la persona lo decida",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Mirar alrededor girando la cabeza",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Teletransportarse a un punto",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "Así es: el cuerpo no siente lo que ven los ojos.",
+              "feedbackIncorrect": "Piensa en qué no coincide entre los ojos y el cuerpo."
+            },
+            {
+              "id": "q_af5_05",
+              "questionText": "Tu escena va a 40 cuadros por segundo en el visor. ¿Qué haces primero?",
+              "options": [
+                {
+                  "id": "opt_a",
+                  "text": "Medir con `stats` y quitar luces y objetos que sobran",
+                  "isCorrect": true
+                },
+                {
+                  "id": "opt_b",
+                  "text": "Agregar texturas más grandes",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "Poner más luces con sombras",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Duplicar los modelos",
+                  "isCorrect": false
+                }
+              ],
+              "feedbackCorrect": "¡Eso es! Mide y recorta.",
+              "feedbackIncorrect": "Repasa «Que vuele en el visor»."
+            },
+            {
+              "id": "q_af5_06",
+              "questionText": "En un visor sin controles, ¿cómo hace clic la persona?",
+              "options": [
+                {
+                  "id": "opt_b",
+                  "text": "Con `wasd-controls`",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_c",
+                  "text": "No puede hacer clic",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_d",
+                  "text": "Con `laser-controls` sin control",
+                  "isCorrect": false
+                },
+                {
+                  "id": "opt_a",
+                  "text": "Mirando fijo el objeto con un `<a-cursor fuse=\"true\">`",
+                  "isCorrect": true
+                }
+              ],
+              "feedbackCorrect": "Perfecto: el cursor por mirada.",
+              "feedbackIncorrect": "Busca el cursor que «pulsa» al mirar."
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

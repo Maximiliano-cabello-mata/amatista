@@ -66,13 +66,13 @@ export function agruparPorRuta(cursos = []) {
 // («blender_principiante»). Devuelve {ruta, nivel} (nivel puede ser null) o null.
 export function buscarRuta(cursos, id) {
   const grupos = agruparPorRuta(cursos);
-  const porRuta = grupos.find((grupo) => grupo.id === id);
-  if (porRuta) return { ruta: porRuta, nivel: porRuta.niveles.length === 1 ? porRuta.niveles[0] : null };
+  // Primero el curso: «aframe» es a la vez el id de la ruta y el de su nivel Inicial.
   for (const grupo of grupos) {
     const nivel = grupo.niveles.find((curso) => curso.id === id);
     if (nivel) return { ruta: grupo, nivel };
   }
-  return null;
+  const porRuta = grupos.find((grupo) => grupo.id === id);
+  return porRuta ? { ruta: porRuta, nivel: porRuta.niveles.length === 1 ? porRuta.niveles[0] : null } : null;
 }
 
 // Avance de toda la ruta: suma de sus niveles disponibles, el nivel en curso

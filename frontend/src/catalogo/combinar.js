@@ -71,6 +71,10 @@ const textoNumero = (valor, respaldo) => {
 export const CURSOS_ARCHIVADOS = ['blender', 'primeros_pasos'];
 export const sinArchivados = (cursos) => cursos.filter((curso) => !CURSOS_ARCHIVADOS.includes(curso.id));
 
+// Módulos retirados que el servidor puede seguir enviando hasta reimportar el contenido: los
+// módulos 4 y 5 del curso «aframe», que desde el 23 de octubre forman parte de «aframe_interactivo».
+export const MODULOS_ARCHIVADOS = ['mod_aframe_004', 'mod_aframe_005'];
+
 const listaDe = (catalogo) => (Array.isArray(catalogo) ? catalogo : catalogo?.cursos ?? []);
 
 // app y servidor: listas de cursos (o catálogos {cursos}). Devuelve la lista
@@ -80,7 +84,7 @@ export function combinarCatalogos(app, servidor) {
   listaDe(servidor).forEach((cursoServidor) => {
     if (!cursoServidor?.id) return;
     const { modulos, ...datos } = cursoServidor;
-    const lista = Array.isArray(modulos) ? modulos : [];
+    const lista = (Array.isArray(modulos) ? modulos : []).filter((modulo) => !MODULOS_ARCHIVADOS.includes(modulo?.id));
     const indice = resultado.findIndex((curso) => curso.id === cursoServidor.id);
     if (indice >= 0) {
       const previo = resultado[indice];
