@@ -1,6 +1,6 @@
 // #/blender (Amatista Motor, la herramienta de Blender): todo lo que une la plataforma con Blender en
 // un solo lugar y en el orden en que se vive. Desde el 21 de octubre no es una pestaña de la barra
-// (Amatista es multiplataforma): se llega desde Explorar, el curso de Blender y sus lecciones.
+// (Amatista es multiplataforma): se llega desde Cursos (primer paso del camino de Blender), el curso de Blender y sus lecciones.
 //   1. Cómo se unen la plataforma y Blender (la tarjeta del proceso, paso a paso).
 //   2. Prepárate una sola vez: descargar Amatista Motor, instalarlo y vincular la cuenta.
 //   3. Conoce Amatista Motor: las tres prácticas que explican todo el add-on.
@@ -479,7 +479,7 @@ function Blender() {
       ancho="contenido"
       migas={[
         { texto: 'Inicio', href: rutas.inicio },
-        { texto: 'Explorar', href: rutas.explorar },
+        { texto: 'Cursos', href: rutas.inicio },
         { texto: 'Blender', href: rutas.curso('blender') },
         { texto: NOMBRE_MOTOR },
       ]}

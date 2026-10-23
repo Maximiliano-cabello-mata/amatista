@@ -4,7 +4,7 @@
 import { useMemo } from 'react';
 import { agruparPorRuta, resumenRuta } from '../../catalogo/agrupar';
 import { SOFTWARE } from '../../data/software';
-import { rutaExplorar, rutas } from '../../rutas';
+import { rutas } from '../../rutas';
 import LogoSoftware from '../LogoSoftware';
 import Seccion from './Seccion';
 
@@ -59,7 +59,7 @@ function ProgramasPanel({ progreso, cursos, className = '' }) {
                   </p>
                 </>
               ) : (
-                <a href={rutaExplorar({ software: software.id })} className="mt-3 font-mono text-[11px] font-bold uppercase tracking-widest text-amber-200 hover:underline">
+                <a href={`${rutas.inicio}?programa=${software.id}`} className="mt-3 font-mono text-[11px] font-bold uppercase tracking-widest text-amber-200 hover:underline">
                   Pronto · ver qué enseñará
                 </a>
               )}

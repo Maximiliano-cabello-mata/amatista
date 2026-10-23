@@ -25,6 +25,7 @@ const CURSOS_BASE = [
       'Para quien nunca abrió Blender: te mueves en el espacio 3D, modelas tu primera malla y usas modificadores. Practicas dentro de Blender con Amatista a tu lado.',
     estado: 'disponible',
     nivel: 'Principiante',
+    para: 'Nunca abriste Blender: empiezas aquí, sin saber nada.',
     acento: 'blender',
     ruta: 'blender',
     recurso: {
@@ -46,6 +47,7 @@ const CURSOS_BASE = [
       'Ya sabes moverte y modelar: ahora pintas tu nave, la iluminas como un fotógrafo, sacas tu primer render y animas una pelota que rebota.',
     estado: 'disponible',
     nivel: 'Principiante-Intermedio',
+    para: 'Ya te mueves en 3D y armas formas simples.',
     acento: 'blender',
     ruta: 'blender',
     recurso: {
@@ -67,6 +69,7 @@ const CURSOS_BASE = [
       'Precisión con medidas, Array y Bisel; una escena ordenada en colecciones y tu diorama iluminado y renderizado para el portafolio.',
     estado: 'disponible',
     nivel: 'Intermedio',
+    para: 'Quieres trabajar con medidas y orden, como en un estudio.',
     acento: 'blender',
     ruta: 'blender',
     recurso: {
@@ -89,6 +92,7 @@ const CURSOS_BASE = [
       'Topología limpia, UV y texturas, nodos de materiales y el primer rig. Se abre cuando tengamos la teoría que pide: por ahora, termina el Intermedio.',
     estado: 'bloqueado',
     nivel: 'Avanzado',
+    para: 'Terminaste el Intermedio y quieres topología, UV y rigging.',
     acento: 'blender',
     ruta: 'blender',
     modulos: [

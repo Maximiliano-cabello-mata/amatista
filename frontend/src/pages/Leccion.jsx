@@ -240,7 +240,7 @@ function Leccion({ cursoId, leccionId }) {
         <Migas
           className="min-w-0"
           items={[
-            { texto: 'Explorar', href: rutas.explorar },
+            { texto: 'Cursos', href: rutas.inicio },
             { texto: curso.titulo, href: rutas.curso(curso.id) },
             { texto: `Módulo ${numeroModulo}`, href: rutas.modulo(curso.id, numeroModulo) },
           ]}

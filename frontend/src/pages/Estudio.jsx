@@ -1,7 +1,7 @@
 // #/estudio: el Estudio A-Frame. Un editor libre con la escena en vivo al lado,
 // plantillas para empezar, piezas para insertar con un clic y la descarga de la
 // página completa. Es la herramienta de práctica de A-Frame (como Amatista Motor
-// lo es de Blender): se abre desde Explorar y desde las lecciones del curso.
+// lo es de Blender): se abre desde el camino de A-Frame en Cursos y desde las lecciones del curso.
 // El código nunca se ejecuta: la vista copia solo las etiquetas <a-…> (VistaAFrame).
 import { useEffect, useId, useRef, useState } from 'react';
 import Pagina from '../components/estructura/Pagina';
@@ -87,8 +87,7 @@ function Estudio() {
     <Pagina
       ancho="admin"
       migas={[
-        { texto: 'Inicio', href: rutas.inicio },
-        { texto: 'Explorar', href: rutas.explorar },
+        { texto: 'Cursos', href: rutas.inicio },
         { texto: 'A-Frame', href: rutas.curso('aframe') },
         { texto: 'Estudio' },
       ]}
