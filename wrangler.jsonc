@@ -1,0 +1,10 @@
+{
+  // Configuración del Worker que publica la PWA (Cloudflare Workers Builds).
+  // El nombre debe ser igual al del Worker en el panel de Cloudflare.
+  // docs/despliegue/2026-10-29_cloudflare_workers_builds.md
+  "name": "amatista",
+  "compatibility_date": "2026-10-19",
+  "assets": {
+    "directory": "./frontend/dist"
+  }
+}
