@@ -1,22 +1,22 @@
 // src/services/api.js
 // Cliente del backend. Ninguna función lanza: todas devuelven
 // {ok, status, datos, error} con el error ya escrito en español para mostrarlo.
-// Dominio oficial (docs/despliegue/2026-10-04_dominio_amatista-3d.md): la PWA
-// vive en amatista-3d.me y la API en api.amatista-3d.me, las dos con HTTPS.
-export const DOMINIO = "amatista-3d.me";
+// Dominio público: https://amatista-3d.tech; guía operativa:
+// docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md.
+// En Workers la variable de build VITE_API_URL define la URL de API.
+export const DOMINIO = "amatista-3d.tech";
 export const API_DEL_DOMINIO = `https://api.${DOMINIO}`;
-// IP de la VM, sin HTTPS: compilaciones sin VITE_API_URL fuera del dominio y
-// `npm run dev` en tu computadora (habla con el servidor real). Desde https el
-// navegador la bloquea.
-const API_POR_IP = "http://158.101.118.222:8000";
+// Desarrollo local sin variable explícita: usar el backend local, no el
+// puerto interno de la VM (127.0.0.1:8000 solo es accesible en el servidor).
+const API_LOCAL = "http://localhost:8000";
 
 // VITE_API_URL manda (para tu backend local: frontend/.env con
 // VITE_API_URL=http://localhost:8000). Sin ella: en el dominio, su API; en
-// cualquier otro lado, incluida tu computadora, la VM. Así `npm run dev` sin
-// .env ya no dice «No se pudo contactar al servidor» (incidencia 2026-10-05).
+// cualquier otro lado, se usa localhost. Para despliegues personalizados,
+// configurar siempre VITE_API_URL en tiempo de compilación.
 export function apiPorDefecto(host = typeof window === "undefined" ? "" : window.location.hostname) {
   if (host === DOMINIO || host.endsWith(`.${DOMINIO}`)) return API_DEL_DOMINIO;
-  return API_POR_IP;
+  return API_LOCAL;
 }
 
 export const API_URL = import.meta.env.VITE_API_URL || apiPorDefecto();

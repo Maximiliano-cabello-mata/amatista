@@ -1,8 +1,11 @@
 # Documentación de Amatista
 
+**Plataforma pública:** [https://amatista-3d.tech](https://amatista-3d.tech) · **API:** [https://api.amatista-3d.tech](https://api.amatista-3d.tech) · **[Despliegue vigente documentado (Workers + OCI)](despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md)**. El despliegue del antiguo dominio `.me` y la propuesta de Pages son históricos.
+
+
 Toda la documentación del proyecto, ordenada por secciones. Cada sección dice para quién es y por dónde empezar.
 
-Actualizado: 18 de octubre de 2026 (`main` en `abd9928`, PR #35 fusionado en `28b8772`). Etapa vigente: **v3 «Reestructuración»**, con Amatista Taller, add-on 5.2 y diseño «Facetas» en el código; producción pendiente de verificación.
+Estado del código: 18 de octubre de 2026; despliegue público añadido el 29 de octubre de 2026 (`main` en `abd9928`, PR #35 fusionado en `28b8772`). Etapa vigente: **v3 «Reestructuración»**, con Amatista Taller, add-on 5.2 y diseño «Facetas» en el código; producción pendiente de verificación.
 
 > **¿Primera vez?** Lee el [README de la raíz](../README.md), luego la [cronología](historia/01_cronologia.md) y el [mapa del repositorio](manual-del-codigo/01_mapa_del_repositorio.md). Si vas a programar, sigue con el [manual del desarrollador](desarrollador/README.md).
 
@@ -101,12 +104,14 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 
 ## 8. Operación y despliegue
 
+- **[Despliegue público realizado (22–23 oct; documentado 29 oct)](despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md)**: `amatista-3d.tech`, Cloudflare Workers, DNS, Oracle Cloud, Caddy, backend, CORS, métricas reales y pendientes del correo. Esta guía prevalece para operación vigente sobre los planes históricos del `.me`.
+
 - **[Auditoría, Motor 5.2 y Facetas](despliegue/2026-10-11_auditoria_y_motor_5_2.md)**: prerrequisitos SQL 010–012, diagnóstico, orden de actualización y prueba con ventana T-113 pendiente.
 - [Amatista Taller y SQL 012](despliegue/2026-10-10_amatista_taller_motor_5.md).
 
 - **[Plan de despliegue (5 de octubre)](despliegue/2026-10-05_plan_de_despliegue.md)**: el orden de trabajo desde hoy hasta HTTPS, por fases y sin tocar la VM antes del piloto.
 - [Auditoría de seguridad](seguridad/01_auditoria_2026-10-05.md), [protección del código del add-on](seguridad/02_proteccion_del_codigo.md) e [informe de rendimiento](rendimiento/2026-10-05_informe.md).
-- [Dominio amatista-3d.me con Cloudflare](despliegue/2026-10-04_dominio_amatista-3d.md): DNS, certificados, PWA en Pages, API detrás del proxy y apéndice Fly.io. Registro de la compra: [dominio y SSL](despliegue/2026-10-04_dominio_y_dns-v2.md).
+- [Plan histórico: dominio amatista-3d.me con Cloudflare](despliegue/2026-10-04_dominio_amatista-3d.md): DNS, certificados, PWA en Pages, API detrás del proxy y apéndice Fly.io. Registro de la compra: [dominio y SSL](despliegue/2026-10-04_dominio_y_dns-v2.md).
 - [Despliegue en OCI](despliegue/2026-10-04_despliegue_oci.md): VM, servicio systemd, HTTPS con Caddy, PWA, SMTP y actualizaciones.
 - [Oracle paso a paso (002–004)](despliegue/2026-10-02_oracle_paso_a_paso.md) y [manual de Oracle (005–007)](reestructuracion/02_manual_oracle.md); [aplicar 008 y 009](base-de-datos/02_manual_008_009.md), 010 y 011 ([correcciones 3.5.1](despliegue/2026-10-09_correcciones_3_5_1.md); orden en [`backend/sql/LEEME.txt`](../backend/sql/LEEME.txt))
 - Archivos: [`despliegue/`](../despliegue/)

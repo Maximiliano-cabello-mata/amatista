@@ -1,5 +1,10 @@
 # Amatista 💎
 
+**🌐 Plataforma pública: [https://amatista-3d.tech](https://amatista-3d.tech)** · **API: [https://api.amatista-3d.tech](https://api.amatista-3d.tech)** · [Guía del despliegue público (Cloudflare Workers + Oracle Cloud)](docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md)
+
+> **Despliegue verificado con registros del 23 de octubre de 2026.** La PWA pública utiliza Cloudflare Workers; la API funciona en Oracle Cloud con Caddy y Oracle Database. El dominio anterior `.me` es histórico. SMTP y el alta masiva de alumnos siguen pendientes.
+
+
 **Plataforma educativa para aprender creación 3D con Blender y llevarla a la web (GLB, A-Frame, WebXR), que sigue funcionando sin conexión.**
 
 El alumno avanza por cursos y módulos en una PWA. Cada módulo termina con una **práctica en Blender** que el motor **Amatista Engine** revisa y acompaña paso a paso dentro de Blender mediante un add-on. El progreso se guarda primero en el dispositivo y se sincroniza con el servidor (FastAPI + Oracle) cuando hay Internet.
@@ -30,17 +35,17 @@ El alumno avanza por cursos y módulos en una PWA. Cada módulo termina con una 
 
 ## 1. Estado actual
 
-Actualizado: 18 de octubre de 2026 (contrastado con `main` en `abd9928`, PR #35 fusionado en `28b8772`: auditoría completa, recorrido guiado, página Blender, Amatista Motor 5.2 y el diseño «Facetas»):
+Código revisado: 18 de octubre de 2026; estado del despliegue documentado el 29 de octubre (evidencias del 23). Estado del código contrastado con `main` en `abd9928`, PR #35 fusionado en `28b8772`: auditoría completa, recorrido guiado, página Blender, Amatista Motor 5.2 y el diseño «Facetas»):
 
 | Frente | Dónde está |
 |---|---|
-| **Producción** | El repositorio conserva registros históricos de despliegue; esta revisión no verifica la VM ni Oracle. Confirmar versión y esquema con los endpoints de salud y `backend/diagnostico_oracle.py` antes de actualizar. |
+| **Producción** | Verificada por salida de terminal del 23 oct: API y Oracle respondieron correctamente, CORS/preflight 200, el add-on anunció 5.3.0 y motor 5.0.0. Estas evidencias no sustituyen una comprobación actual ni el diagnóstico completo. [Bitácora pública](docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md). |
 | **Lo nuevo en `main`** | Amatista Taller (motor 5), add-on Amatista Motor 5.2, recorrido guiado, página Blender y diseño «Facetas». [Despliegue y prerrequisitos](docs/despliegue/2026-10-11_auditoria_y_motor_5_2.md). La fusión del código no confirma su publicación en producción. |
-| **Amatista Engine y add-on** | Motor 5 (Amatista Taller): aprendizaje por habilidades con Mira, Hazlo conmigo, Hazlo tú, Úsalo y Recuérdalo. Add-on **Amatista Motor 5.2.0**: tres prácticas «Conoce Amatista Motor», iniciadas y seguidas desde la plataforma. Conserva prácticas, ejemplos y comprobaciones anteriores. [Taller](docs/motor/referencia/16_amatista_taller.md) · [Recorrido y enlace](docs/plataforma/11_recorrido_y_fusion.md). |
+| **Amatista Engine y add-on** | Motor 5 (Amatista Taller): aprendizaje por habilidades con Mira, Hazlo conmigo, Hazlo tú, Úsalo y Recuérdalo. En producción el 23 oct se observó **Amatista Motor 5.3.0** (el estado de código de la revisión del 18 oct correspondía a 5.2.0): tres prácticas «Conoce Amatista Motor», iniciadas y seguidas desde la plataforma. Conserva prácticas, ejemplos y comprobaciones anteriores. [Taller](docs/motor/referencia/16_amatista_taller.md) · [Recorrido y enlace](docs/plataforma/11_recorrido_y_fusion.md). |
 | **Cursos de Blender** | Una tarjeta «Blender» con su árbol de niveles: **Principiante**, **Principiante-Intermedio** e **Intermedio** publicados (3 módulos cada uno, 18 prácticas en Blender) y **Avanzado** bloqueado. Teoría y Blender intercalados; cada módulo cierra con su práctica y un jefe final. [Ruta de aprendizaje](docs/cursos/03_ruta_de_aprendizaje_blender.md). |
 | **Temáticas por módulo** | Cada módulo es un mundo (escenario, partículas, colores) con un personaje original que acompaña la lección. [Herramientas gráficas](docs/plataforma/07_herramientas_graficas.md). |
 | **Seguridad y rendimiento** | Auditoría automática (1,449 ataques, 0 hallazgos), informe de rendimiento antes y después, add-on con integridad y marca de agua, PWA sin mapas de fuente. [Auditoría](docs/seguridad/01_auditoria_2026-10-05.md) · [informe](docs/rendimiento/2026-10-05_informe.md) · [protección del código](docs/seguridad/02_proteccion_del_codigo.md). |
-| **Dominio** | `amatista-3d.me`. Plan con Cloudflare: PWA en `amatista-3d.me` y API en `api.amatista-3d.me` (T-065), en la fase 2 del plan de despliegue. |
+| **Dominio / despliegue público (comprobado 23 oct)** | [PWA](https://amatista-3d.tech) en **Cloudflare Workers** y [API](https://api.amatista-3d.tech/api/salud) en **Oracle Cloud con Caddy + FastAPI + Oracle**. [Registro técnico y pasos](docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md). El `.me` es histórico; correo SMTP aún pendiente. |
 | **Plataforma por módulos** | Estructura fija **Cursos · Blender · Mi panel · Admin**, con recorrido guiado y Ayuda. [Documentación](docs/plataforma/README.md) · [recorrido y fusión con Blender](docs/plataforma/11_recorrido_y_fusion.md). |
 | **Diseño «Facetas» (CSS v4.0)** | Piezas comunes de página: migas, encabezado facetado con borde de gema, títulos de sección y pie global, con las excepciones de portada, cuenta y lección descritas en el plan; fondo low poly con destellos. [Plan del diseño](docs/diseno/2026-10-11_sistema_facetas.md). |
 | **Auditoría del 11 de octubre** | 270 commits, tags, seguridad, todas las páginas y las 48 lecciones revisadas; 16 errores corregidos y 5 puntos abiertos. [Informe](docs/auditoria/2026-10-11_auditoria_completa.md). |
@@ -275,7 +280,7 @@ Las ideas grandes entran primero como propuesta fechada en [`docs/propuestas/`](
 | [Manual del desarrollador](docs/desarrollador/README.md) | Entorno, herramientas, pruebas, CI y flujo de trabajo |
 | [Base de datos](docs/base-de-datos/README.md) | Esquema SQL completo y diagrama entidad-relación |
 | [Herramientas de la plataforma](docs/herramientas-de-la-plataforma.md) | Tecnologías y servicios |
-| [Despliegue](docs/despliegue/2026-10-05_plan_de_despliegue.md) | Plan por fases, servidor, HTTPS y actualizaciones |
+| [Despliegue público .tech](docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md) | Estado verificado, Cloudflare Workers, API, Oracle, CORS, seguridad y actualización |
 | [Diseño](docs/diseno/2026-10-11_sistema_facetas.md) | Sistema «Facetas»: anatomía de página, anchos, piezas comunes y CSS v4.0 |
 | [Auditoría completa (11 oct)](docs/auditoria/2026-10-11_auditoria_completa.md) | Qué se revisó, los 16 hallazgos con su commit y los puntos abiertos |
 | [Seguridad](docs/seguridad/01_auditoria_2026-10-05.md) y [rendimiento](docs/rendimiento/2026-10-05_informe.md) | Auditoría, protección del código e informe de rendimiento |
