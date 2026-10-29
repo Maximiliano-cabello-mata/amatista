@@ -5,7 +5,7 @@
 
 Toda la documentación del proyecto, ordenada por secciones. Cada sección dice para quién es y por dónde empezar.
 
-Estado del código: 18 de octubre de 2026; despliegue público añadido el 29 de octubre de 2026 (`main` en `abd9928`, PR #35 fusionado en `28b8772`). Etapa vigente: **v3 «Reestructuración»**, con Amatista Taller, add-on 5.2 y diseño «Facetas» en el código; producción pendiente de verificación.
+Estado del código: 18 de octubre de 2026; despliegue público añadido el 29 de octubre de 2026 (`main` en `abd9928`, PR #35 fusionado en `28b8772`). Etapa vigente: **v3 «Reestructuración»**, con Amatista Taller, add-on 5.3 y diseño «Facetas» en el código; producción en `amatista-3d.tech` comprobada el 23 de octubre.
 
 > **¿Primera vez?** Lee el [README de la raíz](../README.md), luego la [cronología](historia/01_cronologia.md) y el [mapa del repositorio](manual-del-codigo/01_mapa_del_repositorio.md). Si vas a programar, sigue con el [manual del desarrollador](desarrollador/README.md).
 

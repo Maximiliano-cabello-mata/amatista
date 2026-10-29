@@ -1,5 +1,7 @@
 # Plan de despliegue de Amatista (v3.4)
 
+> **Histórico (29 oct 2026).** El dominio vigente es `amatista-3d.tech`, con la PWA en Cloudflare Workers y la API en `api.amatista-3d.tech`. Para operar hoy, usa el [despliegue público](2026-10-29_despliegue_publico_amatista_3d_tech.md); este documento conserva el plan original; sus pasos de las fases 1, 3 y 4 siguen valiendo cambiando `.me` por `.tech` y Pages por Workers.
+
 Actualizado: 5 de octubre de 2026; la fase 1 se revisó el 10 de octubre para Amatista Motor 3.5.1 y los scripts 010 y 011. Reemplaza el orden de trabajo de los documentos anteriores; los detalles de cada paso siguen en sus guías:
 
 - [Despliegue en OCI](2026-10-04_despliegue_oci.md): VM, systemd, Caddy, SMTP, actualizar y revertir.

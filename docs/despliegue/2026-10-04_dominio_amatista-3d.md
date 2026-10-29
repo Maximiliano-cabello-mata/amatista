@@ -1,5 +1,7 @@
 # Dominio amatista-3d.me con Cloudflare: plan de despliegue
 
+> **Histórico (29 oct 2026).** El dominio vigente es `amatista-3d.tech`, con la PWA en Cloudflare Workers y la API en `api.amatista-3d.tech`. Para operar hoy, usa el [despliegue público](2026-10-29_despliegue_publico_amatista_3d_tech.md); este documento conserva el plan original con `amatista-3d.me` y Pages, útil para entender DNS, certificados y la alternativa Fly.io.
+
 Cómo se conecta el dominio oficial `amatista-3d.me` con la PWA, la API y el add-on de Blender, usando Cloudflare delante de la VM de OCI. Centraliza en un solo lugar los nombres, los certificados y el orden de los pasos. Para quien administra el dominio y el servidor.
 
 Actualizado: 4 de octubre de 2026 · Registro de la compra: [2026-10-04_dominio_y_dns-v2.md](2026-10-04_dominio_y_dns-v2.md)

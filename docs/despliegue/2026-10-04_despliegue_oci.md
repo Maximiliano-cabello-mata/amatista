@@ -314,7 +314,7 @@ Configuración del proyecto en Cloudflare Pages (conectado al repositorio de Git
 Detalles que importan:
 
 - **`VITE_API_URL` se fija al compilar.** Vite la incrusta en el JavaScript, así que si cambias la URL de la API hay que volver a desplegar. No es un secreto: cualquiera la ve en el navegador.
-- **Sin `VITE_API_URL`** la PWA usa `http://158.101.118.222:8000` (`frontend/src/services/api.js:4`). Servida por `https`, eso es contenido mixto y la PWA no sincroniza (no da error: simplemente no lo intenta).
+- **Sin `VITE_API_URL`** la PWA usa `https://api.amatista-3d.tech` si se sirve desde `amatista-3d.tech` y `http://localhost:8000` en cualquier otro lado (`apiPorDefecto` en `frontend/src/services/api.js`). Hasta el 29 oct el respaldo era la IP de la VM por http, que desde https era contenido mixto.
 - **Vistas previas.** El plan (§6, paso 2) pide que las vistas previas no escriban en producción: en el entorno *Preview* de Pages no pongas la URL de producción.
 - **Rutas.** La PWA usa rutas con `#` (`#/curso/...`, `#/admin`), así que Pages no necesita reglas de reescritura. El service worker usa `navigateFallback: '/index.html'` y no guarda nada de `/api/` (`frontend/vite.config.js`).
 - **CORS en el backend.** Agrega el origen exacto de Pages a `CORS_ORIGINS` (por ejemplo `CORS_ORIGINS=https://amatista.pages.dev`, separados por comas si hay varios) y reinicia el servicio. El origen no lleva barra final ni ruta. Los orígenes de *Preview* (`https://<hash>.<proyecto>.pages.dev`) no quedan cubiertos: agrégalos solo si de verdad deben hablar con esta API.
