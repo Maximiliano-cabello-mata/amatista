@@ -105,6 +105,7 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 ## 8. Operación y despliegue
 
 - **[Despliegue público realizado (22–23 oct; documentado 29 oct)](despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md)**: `amatista-3d.tech`, Cloudflare Workers, DNS, Oracle Cloud, Caddy, backend, CORS, métricas reales y pendientes del correo. Esta guía prevalece para operación vigente sobre los planes históricos del `.me`.
+- **[Cloudflare Workers Builds](despliegue/2026-10-29_cloudflare_workers_builds.md)**: por qué el check de Cloudflare salió en rojo en el PR #39, `wrangler.jsonc`, versión de Node y qué revisar en el panel antes de una actualización mayor.
 
 - **[Auditoría, Motor 5.2 y Facetas](despliegue/2026-10-11_auditoria_y_motor_5_2.md)**: prerrequisitos SQL 010–012, diagnóstico, orden de actualización y prueba con ventana T-113 pendiente.
 - [Amatista Taller y SQL 012](despliegue/2026-10-10_amatista_taller_motor_5.md).
