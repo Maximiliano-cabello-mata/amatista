@@ -3,17 +3,17 @@ import { API_DEL_DOMINIO, apiPorDefecto } from './api.js';
 
 describe('apiPorDefecto', () => {
   it('en el dominio oficial usa su API con HTTPS', () => {
-    expect(apiPorDefecto('amatista-3d.me')).toBe('https://api.amatista-3d.me');
-    expect(apiPorDefecto('www.amatista-3d.me')).toBe(API_DEL_DOMINIO);
+    expect(apiPorDefecto('amatista-3d.tech')).toBe('https://api.amatista-3d.tech');
+    expect(apiPorDefecto('www.amatista-3d.tech')).toBe(API_DEL_DOMINIO);
   });
 
-  it('en la computadora, sin VITE_API_URL, habla con la VM', () => {
-    expect(apiPorDefecto('localhost')).toBe('http://158.101.118.222:8000');
-    expect(apiPorDefecto('127.0.0.1')).toBe('http://158.101.118.222:8000');
+  it('en la computadora, sin VITE_API_URL, usa la API local', () => {
+    expect(apiPorDefecto('localhost')).toBe('http://localhost:8000');
+    expect(apiPorDefecto('127.0.0.1')).toBe('http://localhost:8000');
   });
 
   it('un dominio parecido no se confunde con el oficial', () => {
-    expect(apiPorDefecto('amatista-3d.me.ejemplo.com')).not.toBe(API_DEL_DOMINIO);
-    expect(apiPorDefecto('falso-amatista-3d.me')).not.toBe(API_DEL_DOMINIO);
+    expect(apiPorDefecto('amatista-3d.tech.ejemplo.com')).not.toBe(API_DEL_DOMINIO);
+    expect(apiPorDefecto('falso-amatista-3d.tech')).not.toBe(API_DEL_DOMINIO);
   });
 });

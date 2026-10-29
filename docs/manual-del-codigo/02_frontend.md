@@ -617,7 +617,7 @@ CI ([`.github/workflows/ci.yml`](../../.github/workflows/ci.yml), job `frontend`
 |---|---|
 | `VITE_API_URL` | URL del backend FastAPI, sin barra final (ejemplo: `http://localhost:8000`). Si el frontend se publica con https, el backend también debe tener https. |
 
-Si no se define, `services/api.js:4` usa por defecto `http://158.101.118.222:8000` (no `localhost`). Copia `.env.example` a `.env` para desarrollo local.
+Si no se define, `apiPorDefecto()` en `services/api.js` elige la URL: en `amatista-3d.tech` (y sus subdominios) usa `https://api.amatista-3d.tech`; en cualquier otro lado, `http://localhost:8000`. En producción, Workers Builds compila con `VITE_API_URL=https://api.amatista-3d.tech`. Copia `.env.example` a `.env` para desarrollo local.
 
 ---
 
@@ -717,7 +717,7 @@ Para un **curso nuevo**: agrégalo a `CURSOS_BASE` en [`data/cursos.js`](../../f
 ## 9. Detalles que conviene saber
 
 - **Los módulos de Blender de la v2 están archivados** en `data/modulos/archivo/` y la app no los lee. Los nueve módulos del plan v3 están publicados y todos tienen bloques `blender_practice`.
-- **`API_URL` por defecto** es una IP fija (`http://158.101.118.222:8000`), no el `localhost` de `.env.example`. Sin `.env`, el desarrollo local apunta a ese servidor.
+- **`API_URL` por defecto** fuera del dominio es `http://localhost:8000`: hasta el 29 oct era la IP de la VM, pero el 8000 ya solo escucha en el servidor. Para probar contra producción desde tu computadora hace falta añadir el origen local a `CORS_ORIGINS`; lo normal es levantar el backend local.
 - **Funciones de servicio sin uso** en `src/`: `iniciarSesionBD` (heredada), `editarModulo`, `estadoAddon`, `urlExtension`, `urlRepositorio`.
 - **`#/laboratorio` no pasa por `RutaAdmin`**: la comprobación de rol está dentro de `Laboratorio.jsx` (y como la página importa `aframe` al cargarse, cualquiera que abra el hash descarga A-Frame aunque luego vea el aviso).
 - **Tailwind 4 con archivo de configuración estilo v3**: `tailwind.config.js` se carga con `@config` desde `index.css`; no hay tema en CSS (`@theme`).

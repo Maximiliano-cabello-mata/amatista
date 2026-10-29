@@ -177,7 +177,7 @@ Requisitos y avisos:
 | Archivo | Qué es | Instalación (encabezado del archivo) |
 |---|---|---|
 | [`despliegue/amatista-api.service`](../../despliegue/amatista-api.service) | Unidad systemd endurecida: usuario `amatista`, repo en `/opt/amatista`, `EnvironmentFile=/etc/amatista/amatista-api.env`, uvicorn en `127.0.0.1:8000` con 1 worker y `--proxy-headers` | `sudo cp despliegue/amatista-api.service /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl enable --now amatista-api` |
-| [`despliegue/Caddyfile`](../../despliegue/Caddyfile) | Caddy detrás de Cloudflare para `api.amatista-3d.me`: HTTPS con el certificado de origen de Cloudflare (opción A; Let's Encrypt es la opción B, sin Cloudflare), cabeceras de seguridad y proxy a `127.0.0.1:8000` | `sudo cp despliegue/Caddyfile /etc/caddy/Caddyfile && sudo caddy validate --config /etc/caddy/Caddyfile && sudo systemctl reload caddy` (antes copia el certificado de origen a `/etc/caddy/certs/`) |
+| [`despliegue/Caddyfile`](../../despliegue/Caddyfile) | Plantilla de Caddy detrás de Cloudflare para `api.amatista-3d.tech` (contrastar con `/etc/caddy/Caddyfile` de la VM): HTTPS con el certificado de origen de Cloudflare (opción A; Let's Encrypt es la opción B, sin Cloudflare), cabeceras de seguridad y proxy a `127.0.0.1:8000` | `sudo cp despliegue/Caddyfile /etc/caddy/Caddyfile && sudo caddy validate --config /etc/caddy/Caddyfile && sudo systemctl reload caddy` (antes copia el certificado de origen a `/etc/caddy/certs/`) |
 
 La diferencia entre esta unidad y la que corre hoy en la VM (`amatista-backend`) está en [05 §6](05_flujo_de_trabajo.md#6-despliegue-en-la-vm).
 
