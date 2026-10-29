@@ -68,6 +68,8 @@ tareas:
     titulo: HTTPS en el backend para publicar en Cloudflare Pages
     version: v2.2.0
     area: api
+    evidencia: "22–23 oct: api.amatista-3d.tech por Cloudflare (Full strict) y Caddy con certificado de origen; /api/salud responde por https (docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md §3–4)"
+    estado: hecho
   - id: T-006
     titulo: Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)
     version: v2.2.0
@@ -132,10 +134,12 @@ tareas:
     aceptacion:
       - "Restauración en menos de 2 horas, respaldo diario (plan, sección 6)"
   - id: T-024
-    titulo: Publicar el frontend en Cloudflare Pages contra la API HTTPS
+    titulo: Publicar el frontend en Cloudflare (Workers) contra la API HTTPS
     version: v2.2.0
     area: pwa
     depende_de: [T-005]
+    evidencia: "23 oct: Workers Builds publica frontend/dist en amatista-3d.tech con VITE_API_URL=https://api.amatista-3d.tech; CORS y preflight 200. Falta comprobar rutas profundas y actualización del service worker"
+    estado: revision
     aceptacion:
       - "VITE_API_URL con https, sin contenido mixto ni errores CORS"
       - "Rutas profundas, recarga y actualización del service worker sin perder progreso"
@@ -192,7 +196,7 @@ tareas:
     titulo: Configurar SMTP y primer admin en el servidor (confirmación y recuperación por correo)
     version: v2.2.0
     area: api
-    depende_de: [T-003]
+    depende_de: [T-003, T-131]
     aceptacion:
       - "Registro con AMATISTA_REQUIERE_CONFIRMACION=1 recibe el código por correo"
   - id: T-033
@@ -721,6 +725,27 @@ tareas:
     depende_de: [T-119, T-123, T-124, T-125, T-126, T-127, T-122]
     aceptacion: "docs/despliegue/2026-10-23_camino_y_motor_web.md: importar los módulos nuevos y los archivados sin errores; el catálogo trae A-Frame Inicial y A-Frame Interactivo; el instalador entrega el add-on 5.3"
     bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-129
+    titulo: "www.amatista-3d.tech: registro DNS y redirección 301 a amatista-3d.tech"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-065]
+    aceptacion: "curl -sSI https://www.amatista-3d.tech/ responde 301 a https://amatista-3d.tech/"
+    bloqueo: "Lo hace el usuario en el panel de Cloudflare"
+  - id: T-130
+    titulo: "Cerrar el 8000 en la Security List de OCI y probar la suplantación de X-Forwarded-For detrás de Cloudflare y Caddy"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-065]
+    aceptacion: "curl -m 5 http://158.101.118.222:8000/api/salud falla; una petición directa a la IP por 443 recibe 403; un X-Forwarded-For falso no cambia la IP que ve api/limites.py"
+    bloqueo: "Lo hace el usuario en OCI y en la VM (docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md §4 y §8)"
+  - id: T-131
+    titulo: "Correo de amatista-3d.tech: proveedor SMTP con SPF, DKIM y DMARC, y MX para soporte@"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-065]
+    aceptacion: "Un correo de prueba desde backend/api/correo.py llega a la bandeja de entrada (no a spam); después sigue T-032 con AMATISTA_REQUIERE_CONFIRMACION=1"
+    bloqueo: "Elegir proveedor (Brevo u otro); Cloudflare Email Routing solo recibe"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
@@ -780,12 +805,14 @@ tareas:
     depende_de: [T-055, T-062]
     aceptacion: "docs/base-de-datos/02_manual_008_009.md completo: respaldo con migrar.py, 008, importar, practicas --publicar y 009; diagnóstico sin faltantes y el progreso v2 intacto"
   - id: T-065
-    titulo: "Dominio amatista-3d.me: Cloudflare (DNS y proxy), PWA en Pages y API con certificado de origen"
+    titulo: "Dominio amatista-3d.tech (antes .me): Cloudflare (DNS y proxy), PWA en Workers y API con certificado de origen"
     version: v2.2.0
     area: lanzamiento
     bloqueo: "Pasos 1 a 4 (DNS y Pages) se pueden hacer ya; los de la VM, después del piloto"
     depende_de: [T-005, T-024]
-    aceptacion: "Sección 7 de docs/despliegue/2026-10-04_dominio_amatista-3d.md: /api/salud por https://api.amatista-3d.me, la PWA sincroniza desde https://amatista-3d.me y el 8000 ya no es público"
+    aceptacion: "/api/salud por https://api.amatista-3d.tech, la PWA sincroniza desde https://amatista-3d.tech y el 8000 ya no es público (T-130)"
+    evidencia: "docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md: salud, CORS y add-on con URLs .tech comprobados el 23 oct; uvicorn solo en 127.0.0.1"
+    estado: revision
   - id: T-066
     titulo: Probar el add-on 3.0 con alumnos (Principiante, módulo 1) y ajustar píldoras y mensajes
     version: v3.3.0
