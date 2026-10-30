@@ -6,5 +6,7 @@
   "compatibility_date": "2026-10-19",
   "assets": {
     "directory": "./frontend/dist"
-  }
+  },
+  // Necesario para `wrangler preview`, el comando de las ramas que no son main.
+  "previews": {}
 }
