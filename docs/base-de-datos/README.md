@@ -54,16 +54,16 @@ Tomado de [`backend/sql/LEEME.txt`](../../backend/sql/LEEME.txt), sección 2:
 
 ```text
 Base NUEVA (sin tablas, o prototipo que se puede borrar):
-    001 -> 002 -> 003 -> 005 -> 006 -> 007 -> 008 -> 010 -> 011 -> 012 -> 013 -> 004 (opcional)
+    001 -> 002 -> 003 -> 005 -> 006 -> 007 -> 008 -> 010 -> 011 -> 012 -> 013 -> 014 -> 004 (opcional)
     (009 solo si hay datos de la v2 que archivar)
 
 Base EXISTENTE CON DATOS (alumnos reales):
-    002 -> 003 -> 005 -> 006 -> 007 -> 008 -> 010 -> 011 -> 012 -> 013 -> 004 (opcional) -> 009
+    002 -> 003 -> 005 -> 006 -> 007 -> 008 -> 010 -> 011 -> 012 -> 013 -> 014 -> 004 (opcional) -> 009
     NUNCA 001: borra usuarios, sesiones y progreso.
 ```
 
 - **001 es destructivo**: borra `PROGRESO_LECCIONES`, `SESIONES_WEB` (tabla de un diseño antiguo), `SESIONES`, `USUARIOS`, `LOGROS`, `EVENTOS_APRENDIZAJE`, `LECCIONES`, `MODULOS` y `CURSOS` con `CASCADE CONSTRAINTS PURGE` y crea limpias las tres tablas base.
-- **002 a 013 son idempotentes**: antes de cada cambio consultan `USER_TABLES`, `USER_TAB_COLUMNS`, `USER_CONSTRAINTS` o `USER_INDEXES`, o usan `CREATE OR REPLACE`. Se pueden repetir.
+- **002 a 014 son idempotentes**: antes de cada cambio consultan `USER_TABLES`, `USER_TAB_COLUMNS`, `USER_CONSTRAINTS` o `USER_INDEXES`, o usan `CREATE OR REPLACE`. Se pueden repetir.
 - **004 requiere 002 y 005.** Da permisos sobre las 21 tablas; las de 007, 010 y 012 son opcionales (`v_opcional`): si ya existen reciben permisos y, si no, 007, 010 y 012 los dan al ejecutarse. Por eso 004 se puede ejecutar hoy en producción. Va al final del orden para dar todos los permisos de una vez.
 - **009 va después de importar** los cursos nuevos (`python herramientas/contenido.py importar`): si se archiva antes, el catálogo se queda sin Blender.
 - Cada script avisa con `RAISE_APPLICATION_ERROR(-20001 …)` si falta un script anterior.
@@ -85,6 +85,7 @@ Base EXISTENTE CON DATOS (alumnos reales):
 | [`011_detalle_instructor.sql`](../../backend/sql/011_detalle_instructor.sql) | Incremental (motor 3.5.1) | Columna `ADDON_ENLACES.DETALLE` (`CLOB`, anulable) con `CK_ENLACES_DETALLE` (`IS JSON`): lo que muestra el instructor del add-on, para que «Ahora en Blender» lo vea aunque el backend corra en varios procesos. Exige 010. ADDON_ENLACES pasa de 11 a 12 columnas. Los permisos que ya tiene `AMATISTA_APP` cubren la columna nueva. | 20 |
 | [`012_taller.sql`](../../backend/sql/012_taller.sql) | Incremental (motor 5) | Amatista Taller: 10 columnas anulables en `HABILIDADES_ALUMNO` (el modelo del alumno: dominio, intentos, aciertos, repaso…) con 3 CHECK y la tabla `TALLERES_ALUMNO` (reto final y pieza de la isla de cada taller). Si existe `AMATISTA_APP`, le da permisos. Sin 012 el backend sigue funcionando: el taller se guarda en Blender y se envía después. | 21 |
 | [`013_avatares_y_buzon.sql`](../../backend/sql/013_avatares_y_buzon.sql) | Incremental (avatares y buzón) | `PERFILES` (avatar low poly de cada cuenta), `SUGERENCIAS` y `SUGERENCIA_MENSAJES` (el buzón del creador). Si existe `AMATISTA_APP`, le da permisos. Sin 013 la plataforma funciona: el avatar se queda en el dispositivo y el buzón responde 503. | 24 |
+| [`014_panel_del_profesor.sql`](../../backend/sql/014_panel_del_profesor.sql) | Incremental (panel del profesor evaluador) | `GRUPOS`, `GRUPO_ALUMNOS`, `ASIGNACIONES` y `ENTREGAS`. El modelo de una entrega solo pasa por la base: se borra cuando el profesor lo recoge o a los 30 días. Si existe `AMATISTA_APP`, le da permisos. Sin 014 el panel del profesor y «Mi grupo» responden 503. | 28 |
 
 El detalle de cada tabla, columna y restricción está en [`esquema.md`](esquema.md).
 
@@ -107,6 +108,7 @@ Según [`backend/sql/LEEME.txt`](../../backend/sql/LEEME.txt) (líneas 60-64) y 
 | 011 | **Pendiente.** Va después de 010 y antes del backend 3.5.1 ([correcciones 3.5.1](../despliegue/2026-10-09_correcciones_3_5_1.md)). |
 | 012 | **Pendiente.** Va después de 011 y antes del backend del motor 5 ([Amatista Taller](../despliegue/2026-10-10_amatista_taller_motor_5.md)). |
 | 013 | **Pendiente** (T-149). Va después de 012; con `AMATISTA_CREADOR` en `backend/.env` ([avatares y buzón](../plataforma/16_avatares_y_buzon.md)). |
+| 014 | **Pendiente** (T-150). Va después de 013 ([panel del profesor](../plataforma/17_panel_del_profesor.md)). |
 
 **Verificación de los números contra el SQL** (hecha leyendo los `CREATE TABLE` de cada script):
 
@@ -121,6 +123,7 @@ Según [`backend/sql/LEEME.txt`](../../backend/sql/LEEME.txt) (líneas 60-64) y 
 | 011 | Ninguna (`ADDON_ENLACES` +1 columna) | 20 | Sí: la verificación de 011 espera 12 columnas en `ADDON_ENLACES`. |
 | 012 | `TALLERES_ALUMNO` (y `HABILIDADES_ALUMNO` +10 columnas) | **21** | Sí: la verificación de 012 espera 21 tablas y 15 columnas en `HABILIDADES_ALUMNO`. |
 | 013 | `PERFILES`, `SUGERENCIAS`, `SUGERENCIA_MENSAJES` | **24** | Sí: la verificación de 013 espera 24 tablas. |
+| 014 | `GRUPOS`, `GRUPO_ALUMNOS`, `ASIGNACIONES`, `ENTREGAS` | **28** | Sí: la verificación de 014 espera 28 tablas. |
 
 003, 006, 008, 009 y 011 no crean tablas, por eso no cambian la cuenta. Los conteos de columnas esperados por las consultas de verificación (USUARIOS 17, SESIONES 7, PROGRESO_LECCIONES 9, LOGROS 3, EVENTOS_APRENDIZAJE 11, CURSOS 12 con 007 y 14 con 008, MODULOS 12, LECCIONES 14, NIVELES 10, HABILIDADES 7, HABILIDADES_ALUMNO 5 y 15 con 012, EVALUACIONES_RUBRICA 8, VERSIONES_BLENDER 6, VERIFICACIONES_BLENDER 12, ADDON_VINCULOS 8, PRACTICAS 13, PRACTICA_VERSIONES 9, PROGRESO_PRACTICAS 16, ADDON_ENLACES 11 con 010 y 12 con 011, ADDON_AJUSTES 3, TALLERES_ALUMNO 5) también cuadran con las columnas de los `CREATE TABLE` y `ALTER TABLE ... ADD`.
 

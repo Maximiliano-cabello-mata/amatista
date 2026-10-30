@@ -99,6 +99,20 @@ CREATE TABLE eventos_aprendizaje (
 CREATE INDEX ix_eventos_fecha ON eventos_aprendizaje (ocurrido_en);
 CREATE INDEX ix_eventos_usuario_fecha ON eventos_aprendizaje (usuario_id, ocurrido_en);
 
+CREATE TABLE grupos (
+	id VARCHAR(40) NOT NULL, 
+	profesor_id VARCHAR(100) NOT NULL, 
+	nombre VARCHAR(120) NOT NULL, 
+	codigo VARCHAR(12) NOT NULL, 
+	archivado INTEGER NOT NULL, 
+	creado_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(profesor_id) REFERENCES usuarios (id), 
+	UNIQUE (codigo)
+);
+
+CREATE INDEX ix_grupos_profesor ON grupos (profesor_id);
+
 CREATE TABLE logros (
 	usuario_id VARCHAR(100) NOT NULL, 
 	insignia_id VARCHAR(100) NOT NULL, 
@@ -230,6 +244,24 @@ CREATE TABLE addon_enlaces (
 
 CREATE INDEX ix_addon_enlaces_usuario ON addon_enlaces (usuario_id);
 
+CREATE TABLE asignaciones (
+	id VARCHAR(40) NOT NULL, 
+	grupo_id VARCHAR(40) NOT NULL, 
+	profesor_id VARCHAR(100) NOT NULL, 
+	practica_id VARCHAR(80) NOT NULL, 
+	titulo VARCHAR(200) NOT NULL, 
+	indicaciones VARCHAR(1000), 
+	fecha_limite TIMESTAMP WITHOUT TIME ZONE, 
+	estado VARCHAR(12) NOT NULL, 
+	creada_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(grupo_id) REFERENCES grupos (id), 
+	FOREIGN KEY(practica_id) REFERENCES practicas (id), 
+	FOREIGN KEY(profesor_id) REFERENCES usuarios (id)
+);
+
+CREATE INDEX ix_asignaciones_grupo ON asignaciones (grupo_id, creada_en);
+
 CREATE TABLE evaluaciones_rubrica (
 	usuario_id VARCHAR(100) NOT NULL, 
 	nivel_id VARCHAR(50) NOT NULL, 
@@ -245,6 +277,17 @@ CREATE TABLE evaluaciones_rubrica (
 	CONSTRAINT ck_evaluaciones_rubrica_criter CHECK (criterio IN ('A', 'B', 'C', 'D', 'E')), 
 	CONSTRAINT ck_evaluaciones_rubrica_logro CHECK (logro IN ('pendiente', 'con_ayuda', 'autonomo'))
 );
+
+CREATE TABLE grupo_alumnos (
+	grupo_id VARCHAR(40) NOT NULL, 
+	alumno_id VARCHAR(100) NOT NULL, 
+	unido_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (grupo_id, alumno_id), 
+	FOREIGN KEY(alumno_id) REFERENCES usuarios (id), 
+	FOREIGN KEY(grupo_id) REFERENCES grupos (id)
+);
+
+CREATE INDEX ix_grupo_alumnos_alumno ON grupo_alumnos (alumno_id);
 
 CREATE TABLE habilidades (
 	id VARCHAR(50) NOT NULL, 
@@ -335,6 +378,29 @@ CREATE TABLE sugerencia_mensajes (
 );
 
 CREATE INDEX ix_sug_mensajes_sug ON sugerencia_mensajes (sugerencia_id, creado_en);
+
+CREATE TABLE entregas (
+	asignacion_id VARCHAR(40) NOT NULL, 
+	alumno_id VARCHAR(100) NOT NULL, 
+	estado VARCHAR(12) NOT NULL, 
+	progreso INTEGER NOT NULL, 
+	completada INTEGER NOT NULL, 
+	intentos INTEGER NOT NULL, 
+	resumen VARCHAR(2000), 
+	modelo TEXT, 
+	modelo_bytes INTEGER NOT NULL, 
+	entregada_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	recogido_en TIMESTAMP WITHOUT TIME ZONE, 
+	calificacion INTEGER, 
+	comentario VARCHAR(1000), 
+	evaluada_en TIMESTAMP WITHOUT TIME ZONE, 
+	vista_alumno INTEGER NOT NULL, 
+	PRIMARY KEY (asignacion_id, alumno_id), 
+	FOREIGN KEY(alumno_id) REFERENCES usuarios (id), 
+	FOREIGN KEY(asignacion_id) REFERENCES asignaciones (id)
+);
+
+CREATE INDEX ix_entregas_alumno ON entregas (alumno_id);
 
 CREATE TABLE habilidades_alumno (
 	usuario_id VARCHAR(100) NOT NULL, 
