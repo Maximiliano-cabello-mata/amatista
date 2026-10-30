@@ -23,8 +23,8 @@ La luz viene de arriba a la derecha, como en los encabezados Facetas. Es un SVG 
 
 ## 2. Dónde vive
 
-- **En todas las páginas, abajo a la izquierda**, sentado sobre un hexágono facetado con su nombre en una cinta azul. La derecha es de la mascota del módulo en las lecciones: no se estorban. Se carga después de la página (`lazy`), así que no retrasa la portada.
-- **Callado por defecto.** No platica solo ni cuenta datos curiosos. Sale con un globo en tres casos: la primera vez que lo conoces (una sola vez), cuando una práctica se pone difícil y cuando sale algo que costó.
+- **En todas las páginas, abajo a la izquierda**, sentado sobre un hexágono facetado, discreto (algo transparente hasta que pasas el ratón). La derecha es de la mascota del módulo en las lecciones: no se estorban. Se carga después de la página (`lazy`), así que no retrasa la portada.
+- **Callado por defecto.** No platica solo ni cuenta datos curiosos. Sale con un globo solo en dos casos: cuando una práctica se pone difícil y cuando sale algo que costó. Desde el 30 oct (doc 16) ya no se presenta solo la primera vez: la interfaz queda libre.
 - **Ayuda › «Conoce a Goliat»**: su retrato grande, quién es, qué hace, sus cinco caras y «Hablar con Goliat».
 - Se esconde durante el recorrido guiado.
 

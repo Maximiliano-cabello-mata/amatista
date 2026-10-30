@@ -1,9 +1,9 @@
 // Goliat, el compañero de toda la plataforma: vive en la esquina inferior
 // izquierda de cada página (la derecha es de la mascota del módulo en las
-// lecciones). Callado por defecto: solo se acerca cuando una práctica se pone
-// difícil, cuando sale algo que costó o la primera vez que lo conoces. Al
-// tocarlo se abre su panel: botones rápidos, una caja para escribirle y el
-// proyecto propio que te ayuda a sacar paso a paso. Todo corre en el
+// lecciones). Callado: no se presenta ni platica solo; solo se acerca cuando
+// una práctica se pone difícil o cuando sale algo que costó. Al tocarlo se
+// abre su panel: botones rápidos, una caja para escribirle y el proyecto
+// propio que te ayuda a sacar paso a paso. Todo corre en el
 // navegador con reglas (cerebro.js): sin servicios externos.
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -19,7 +19,6 @@ import { estadoInicial, registrar } from './frustracion';
 import GoliatFigura from './GoliatFigura';
 
 const CLAVE_DORMIDO = 'amatista.goliat.dormido';
-const CLAVE_CONOCIDO = 'amatista.goliat.conocido';
 const CLAVE_PROYECTO = 'amatista.goliat.proyecto';
 const AVISO_MS = 14000;
 const GESTO_MS = 6000;
@@ -176,21 +175,6 @@ function Goliat() {
     },
     [contexto],
   );
-
-  // Primera visita: se presenta una sola vez, sin abrir nada.
-  useEffect(() => {
-    if (leer(CLAVE_CONOCIDO, false)) return undefined;
-    const reloj = window.setTimeout(() => {
-      guardar(CLAVE_CONOCIDO, true);
-      avisar({
-        clave: 'presentacion',
-        gesto: 'atento',
-        texto: 'Grr… soy Goliat. No hablo mucho, pero si te atoras o quieres armar un proyecto, tócame.',
-        acciones: [],
-      });
-    }, 2500);
-    return () => window.clearTimeout(reloj);
-  }, [avisar]);
 
   // Resultados de las prácticas y exámenes: apoyo cuando se pone difícil.
   useEffect(() => {
@@ -382,7 +366,6 @@ function Goliat() {
         aria-label={abierto ? 'Cerrar a Goliat' : 'Abrir a Goliat, tu compañero'}
       >
         <GoliatFigura gesto={gestoVisible} className="goliat-boton__figura" />
-        <span className="goliat-boton__nombre">Goliat</span>
       </button>
     </aside>,
     document.body,
