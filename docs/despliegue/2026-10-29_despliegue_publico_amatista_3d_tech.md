@@ -35,10 +35,12 @@ Proyecto Cloudflare Workers conectado a GitHub:
 | Rama | `main` |
 | Directorio raíz | `/` |
 | Comando de build | `cd frontend && npm ci && npm run build` |
-| Comando de despliegue | `npx wrangler deploy --assets ./frontend/dist --compatibility-date 2026-10-19` |
+| Comando de despliegue | `npx wrangler deploy --assets ./frontend/dist --compatibility-date 2026-10-19` (desde el 29 oct basta `npx wrangler deploy`: lo demás está en `wrangler.jsonc`) |
 | Variable de compilación | `VITE_API_URL=https://api.amatista-3d.tech` |
 | Dominio personalizado | `amatista-3d.tech` |
 | Subdominio de Worker observado | `amatista.233242024.workers.dev` |
+
+Configuración versionada en `wrangler.jsonc` y `.node-version` (raíz). Por qué falló el check de vista previa del PR #39 y qué revisar en el panel: [Cloudflare Workers Builds](2026-10-29_cloudflare_workers_builds.md).
 
 La compilación reportó creación de PWA (precache de 76 recursos) y publicación satisfactoria. **`VITE_API_URL` es una variable de compilación**, por lo que cambiarla exige recompilar/republicar el frontend. No debe incluir credenciales.
 

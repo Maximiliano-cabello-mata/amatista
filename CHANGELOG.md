@@ -27,6 +27,7 @@ Estado verificado el 18 de octubre de 2026: publicados los tags hasta `v3.0.0-al
 
 ### Corregido
 
+- El check «Workers Builds» de Cloudflare fallaba en las ramas que no son `main`: su comando (`wrangler preview`) pedía un `wrangler.jsonc` con bloque `previews`, y esas ramas no tienen comando de build en el panel. Nuevos `wrangler.jsonc` y `.node-version` (Node 22) en la raíz; falta ajustar el panel; guía `docs/despliegue/2026-10-29_cloudflare_workers_builds.md` (29 oct).
 - La vista A-Frame de las lecciones no cargaba modelos `gltf-model="#id"` (agregaba las etiquetas antes de tener sus `a-assets`) e ignoraba `fog`, `cursor` y `raycaster` de la escena (21 oct).
 - Auditoría del 11 oct: «¿Verdad o mito?» no volteaba; el formulario del código de Blender desbordaba a 390 px (18 lecciones y `#/vincular`); el curso v2 archivado aparecía en Mi panel; el código de vinculación tiene 8 caracteres, no «6 letras»; Admin › Resumen contaba lecciones de módulos archivados; el jefe final de A-Frame módulo 1 no tenía duración; Vite 8 ignoraba `esbuild.legalComments` (ahora `build.rolldownOptions.output.comments: false`); desbordes en `#/blender` y Mi panel a 390 px; nombre y rol montados en Admin › Auditoría.
 - Esta sección «3.5.1» estaba antes del título del archivo; se movió aquí.
