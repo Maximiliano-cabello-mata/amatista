@@ -814,6 +814,34 @@ tareas:
     depende_de: [T-137, T-138, T-139]
     aceptacion: "docs/despliegue/2026-10-30_motor_6.md: contenido importado sin errores, /api/addon/v1/estado con 6.0.0 y la PWA nueva publicada"
     bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-142
+    titulo: "Fichas de herramientas para novatos: una sola fuente (practices/blender/fichas.json) que el motor, el add-on, el servidor y la plataforma leen; andamio que se retira y modo curioso"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-137]
+    aceptacion: "26 fichas y 9 zonas validadas; Blender presenta como mucho 2 por actividad, las recuerda hasta 3 veces y explica lo que se toca en modo curioso; pruebas del motor, del add-on y en_blender.py en verde"
+    evidencia: "practices/blender/fichas.json; engine/amatista_engine/taller/fichas.py; addon/amatista_blender/fichas.py; addon/amatista_blender/taller/vista/ficha.py; docs/motor/referencia/20_motor_6_1.md"
+  - id: T-143
+    titulo: "Probar con ventana las fichas en la vista 3D, el brillo por zona en cada editor y el modo curioso (add-on 6.1)"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-142]
+    aceptacion: "docs/despliegue/2026-10-30_motor_6_1.md pasos 8 y 10: la ficha se lee entera, la zona correcta brilla y tocar una herramienta nueva muestra su ficha"
+    bloqueo: "Lo hace el usuario en su computadora (la nube no tiene pantalla)"
+  - id: T-144
+    titulo: "Blender como extensión de la plataforma: orden «leccion», avance automático entre lecciones, Blender que sigue a la lección y la teoría de los 9 módulos con fichas y el mapa de Blender"
+    version: v3.3.0
+    area: pwa
+    depende_de: [T-142]
+    aceptacion: "Blender muestra la lección de la plataforma; al cumplir la etapa la lección pasa sola (con «Quedarme aquí») y Blender no abre otra pestaña; herramienta_blender y blender_mapa validados en los 9 módulos"
+    evidencia: "frontend/src/blender/leccion.js; frontend/src/blender/useLeccionEnBlender.js; frontend/src/components/leccion/fichas.js; frontend/src/components/leccion/interactivos/HerramientaBlender.jsx; frontend/src/components/leccion/interactivos/BlenderMapa.jsx; addon/amatista_blender/plataforma.py; backend/api/enlace.py"
+  - id: T-145
+    titulo: "Desplegar Amatista Motor 6.1 y la teoría con fichas en producción"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-141, T-142, T-144]
+    aceptacion: "docs/despliegue/2026-10-30_motor_6_1.md: contenido importado sin errores, /api/addon/v1/estado con 6.1.0 y la PWA nueva publicada"
+    bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
