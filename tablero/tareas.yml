@@ -814,6 +814,19 @@ tareas:
     depende_de: [T-137, T-138, T-139]
     aceptacion: "docs/despliegue/2026-10-30_motor_6.md: contenido importado sin errores, /api/addon/v1/estado con 6.0.0 y la PWA nueva publicada"
     bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-146
+    titulo: "Goliat, el compañero de Amatista: el perro de Maximiliano en low poly en todas las páginas, asistente por reglas sin servicios externos, proyecto propio paso a paso y apoyo cuando una práctica se pone difícil"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "Goliat en todas las páginas sin estorbar a la mascota del módulo; responde atajos, avance y proyecto; se acerca al tercer intento fallido o con un examen sin aprobar; cero desbordes a 390 px; vitest, lint y build en verde"
+    evidencia: "frontend/src/goliat/; docs/plataforma/15_goliat.md"
+  - id: T-147
+    titulo: "Revisar a Goliat con el creador (parecido, gestos y textos) y publicar la PWA con él"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-146]
+    aceptacion: "El creador aprueba el parecido y los textos; la PWA publicada en amatista-3d.tech muestra a Goliat"
+    bloqueo: "Lo hace el usuario (revisión personal y publicación)"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
