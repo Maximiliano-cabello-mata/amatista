@@ -202,13 +202,37 @@ Referencias:
 - [Blender como instructor](../bitacora/2026-10-09_blender_como_instructor.md)
 - [el ejemplo manda](../bitacora/2026-10-09_el_ejemplo_manda.md)
 
+## Etapa 11 · Motor 4 y 5, guía y Facetas (9 al 11 de octubre)
+
+- **PR #28** (9 oct, 19:26): renovación del repositorio, errores corregidos y documentación al día ([bitácora](../bitacora/2026-10-10_renovacion_del_repositorio.md)).
+- **PR #29** (10 oct, 00:07): herramientas gráficas v3.6 (visor de malla, diagrama de nodos, imagen ligera).
+- **PR #30** (01:41, `a9df7e9`, tag `v3.0.0-alpha.11`): **Amatista Motor 4.0**, ruta de misiones y tarjeta animada. **PR #31** (02:41): investigación del add-on de enseñanza. **PR #32** (16:48, `48025f7`, `alpha.12`): **Amatista Taller** (motor 5, Oracle 012).
+- **PR #33** (17:47, `7d17f81`, `alpha.13`): guía del alumno y vista de administrador. **PR #34** (22:44, `70064b2`, `alpha.14`): Primeros pasos, recursos gráficos y Motor 5.1.
+- **PR #35** (11 oct, 12:47, `28b8772`, `alpha.15`): auditoría completa, recorrido guiado, página Blender, Motor 5.2 y diseño **«Facetas»** ([bitácora](../bitacora/2026-10-11_auditoria_y_orden.md)). **PR #36** (18 oct): revisión documental.
+
+## Etapa 12 · Plataforma multiplataforma y Motor Web (21 al 23 de octubre)
+
+- **PR #37** (21 oct, 00:48, `0ba722a`): Amatista deja de girar alrededor de Blender: plataforma de varios programas, Estudio A-Frame y curso de A-Frame con cinco módulos ([bitácora](../bitacora/2026-10-21_plataforma_multiplataforma.md)).
+- **PR #38** (22 oct, 21:01, `8f53c05`): camino guiado en lugar de Explorar, recursos gráficos v4.2, **Motor Web** sobre A-Frame, A-Frame en dos cursos y add-on 5.3 ([bitácora](../bitacora/2026-10-23_camino_graficos_y_motor_web.md)).
+
+## Etapa 13 · Dominio público amatista-3d.tech (22 al 29 de octubre)
+
+- **PR #39** (del usuario) y **PR #40** (29 oct, 09:29, `cca2c19`): la PWA en Cloudflare Workers y la API en `api.amatista-3d.tech`; el `.me` queda como histórico ([guía](../despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md)).
+- **PR #41** (18:11, `37df869`): por qué fallaba «Workers Builds» en las ramas, `wrangler.jsonc` y Node 22 ([guía](../despliegue/2026-10-29_cloudflare_workers_builds.md)).
+
+## Etapa 14 · Blender se abre desde la plataforma y Motor 6 (29 y 30 de octubre)
+
+- **PR #42** (29 oct, 19:33, `5b84d60`): «Abrir en Blender» lo arranca aunque esté cerrado (enlace `amatista://`), **add-on 5.4** con Amatista dentro de Blender (menú, botón de la vista 3D, barra de estado, espacio de trabajo), botones Facetas 4.1 y tres dinámicas nuevas ([bitácora](../bitacora/2026-10-30_refinamiento_y_motor_5_4.md)).
+- **PR #43** (29 oct, 21:10, `63028c4`): **Amatista Motor 6 y add-on 6.0**: una sola copia de Amatista encendida, una sola tarjeta que se achica, la plataforma marca la etapa (exploración o práctica), «Mira» con las piezas de la actividad, molde más estricto, la herramienta que brilla y **Blender Amatista** como plantilla de aplicación sin recompilar ([bitácora](../bitacora/2026-10-30_motor_6_blender_amatista.md), [referencia](../motor/referencia/19_motor_6.md)).
+
 ## Lo que viene
 
 | Fecha | Qué |
 |---|---|
-| 10 oct (estado actual) | Motor 3.5.1 en `main`; producción sigue en la v2.2 con 14 tablas y le faltan los scripts 007 a 011 |
-| próximo bloque | Cierre operativo y despliegue: T-065, T-078, T-079, T-032 |
-| siguiente versión | Examen final en servidor (T-083), optimización de portada móvil (T-080), varias aulas (T-081), curso avanzado (T-067) |
+| 30 oct (estado actual) | Motor 6 y add-on 6.0 en `main`; producción en `amatista-3d.tech` pendiente de actualizar con las guías del 30 de octubre (T-136 y T-141) |
+| pruebas del usuario | Enlace `amatista://` en Windows, macOS y Linux (T-133), Blender con ventana (T-134, T-139) y dos versiones de Amatista instaladas a la vez (T-140) |
+| cierre operativo | `www` (T-129), cerrar el puerto 8000 en OCI (T-130), correo del dominio (T-131) |
+| siguiente versión | Examen final en servidor (T-083), varias aulas (T-081), curso avanzado (T-067), un segundo programa además de Blender y A-Frame (T-121) |
 
 ## Números del proyecto
 
