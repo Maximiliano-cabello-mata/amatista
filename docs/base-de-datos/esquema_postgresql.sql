@@ -124,6 +124,14 @@ CREATE TABLE niveles (
 	CONSTRAINT ck_niveles_estado CHECK (estado IN ('borrador', 'publicado', 'archivado'))
 );
 
+CREATE TABLE perfiles (
+	usuario_id VARCHAR(100) NOT NULL, 
+	avatar VARCHAR(40), 
+	actualizado_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (usuario_id), 
+	FOREIGN KEY(usuario_id) REFERENCES usuarios (id)
+);
+
 CREATE TABLE practicas (
 	id VARCHAR(80) NOT NULL, 
 	curso_id VARCHAR(50), 
@@ -174,6 +182,23 @@ CREATE TABLE sesiones (
 );
 
 CREATE INDEX ix_sesiones_usuario_id ON sesiones (usuario_id);
+
+CREATE TABLE sugerencias (
+	id VARCHAR(40) NOT NULL, 
+	usuario_id VARCHAR(100) NOT NULL, 
+	categoria VARCHAR(20) NOT NULL, 
+	pagina VARCHAR(200), 
+	estado VARCHAR(20) NOT NULL, 
+	sin_leer_alumno INTEGER NOT NULL, 
+	sin_leer_creador INTEGER NOT NULL, 
+	creada_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	actualizada_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(usuario_id) REFERENCES usuarios (id)
+);
+
+CREATE INDEX ix_sugerencias_estado ON sugerencias (estado, actualizada_en);
+CREATE INDEX ix_sugerencias_usuario ON sugerencias (usuario_id, actualizada_en);
 
 CREATE TABLE talleres_alumno (
 	usuario_id VARCHAR(100) NOT NULL, 
@@ -296,6 +321,20 @@ CREATE TABLE progreso_practicas (
 );
 
 CREATE INDEX ix_prog_practicas_practica ON progreso_practicas (practica_id);
+
+CREATE TABLE sugerencia_mensajes (
+	id VARCHAR(40) NOT NULL, 
+	sugerencia_id VARCHAR(40) NOT NULL, 
+	autor_id VARCHAR(100) NOT NULL, 
+	de_creador INTEGER NOT NULL, 
+	texto VARCHAR(2000) NOT NULL, 
+	creado_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(autor_id) REFERENCES usuarios (id), 
+	FOREIGN KEY(sugerencia_id) REFERENCES sugerencias (id)
+);
+
+CREATE INDEX ix_sug_mensajes_sug ON sugerencia_mensajes (sugerencia_id, creado_en);
 
 CREATE TABLE habilidades_alumno (
 	usuario_id VARCHAR(100) NOT NULL, 

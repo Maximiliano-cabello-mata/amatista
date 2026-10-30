@@ -53,3 +53,11 @@ describe('rutas', () => {
     expect(rutaEntrar('#/entrar')).toBe(rutas.entrar);
   });
 });
+
+describe('buzón del creador', () => {
+  it('tiene página propia y sección en el panel', () => {
+    expect(analizarRuta(rutas.buzon)).toMatchObject({ pagina: 'buzon' });
+    expect(analizarRuta('#/buzon?desde=%23%2Fpanel')).toMatchObject({ pagina: 'buzon', consulta: { desde: '#/panel' } });
+    expect(analizarRuta(rutas.adminBuzon)).toMatchObject({ pagina: 'admin', seccion: 'buzon' });
+  });
+});

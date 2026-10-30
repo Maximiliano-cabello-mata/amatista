@@ -54,7 +54,7 @@ function Emparejar({ bloque, alCompletar, resuelta }) {
   const [seleccion, setSeleccion] = useState(null);
   const [fallos, setFallos] = useState(0);
   const [ultimo, setUltimo] = useState(null);
-  const { resultado, resolver } = useActividad(alCompletar);
+  const { resultado, resolver, fallar } = useActividad(alCompletar);
 
   const izquierdaDe = (idDerecha) => Object.keys(uniones).find((izquierda) => uniones[izquierda] === idDerecha);
   const colorDe = (idIzquierda) => COLORES[pares.findIndex((par) => par.id === idIzquierda) % COLORES.length];
@@ -108,6 +108,7 @@ function Emparejar({ bloque, alCompletar, resuelta }) {
       return;
     }
     setFallos(fallos + 1);
+    fallar(fallos + 1);
     setUltimo({ bien: correctas.length });
     setUniones(Object.fromEntries(correctas.map((id) => [id, id])));
     setSeleccion(null);
