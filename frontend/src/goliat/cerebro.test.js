@@ -43,6 +43,7 @@ describe('responder', () => {
     expect(responder('olvidé mi contraseña').intencion).toBe('cuenta');
     expect(responder('quién eres').intencion).toBe('quien');
     expect(responder('hola goliat').intencion).toBe('saludo');
+    expect(responder('quiero reportar algo que no funciona').intencion).toBe('sugerencia');
   });
 
   it('si no entiende, lo dice y ofrece caminos', () => {

@@ -98,6 +98,15 @@ export const INTENCIONES = [
     ],
   },
   {
+    id: 'sugerencia',
+    gesto: 'atento',
+    claves: [['sugerencia', 3], ['sugerir', 2], ['reportar', 3], ['reporte', 2], ['bug', 3], ['buzon', 3], ['creador', 2], ['opinion', 2], ['queja', 2], ['algo no funciona', 3], ['esta roto', 2], ['maximiliano', 2]],
+    respuestas: [
+      'Eso se lo cuentas a Maximiliano, el que hizo todo esto. Tiene un buzón: le escribes qué pasó y dónde, y te responde ahí mismo. Lo lee todo, aunque gruña menos que yo.',
+    ],
+    acciones: [{ texto: 'Abrir el buzón del creador', href: '#/buzon' }],
+  },
+  {
     id: 'examen',
     gesto: 'atento',
     claves: [['examen', 2], ['prueba', 1.5], ['calificacion', 2], ['aprobar', 2], ['reprobe', 2], ['repetir', 1]],

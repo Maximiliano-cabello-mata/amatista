@@ -6,6 +6,7 @@ import NavAdmin from '../../components/admin/NavAdmin';
 import Pagina from '../../components/estructura/Pagina';
 import { Mensaje } from '../../components/admin/ui';
 import Auditoria from './Auditoria';
+import Buzon from './Buzon';
 import Contenido from './Contenido';
 import EditorLeccion from './EditorLeccion';
 import Herramientas from './Herramientas';
@@ -29,6 +30,7 @@ const TITULOS = {
   herramientas: 'Herramientas de enseñanza',
   revision: 'Ver la plataforma',
   auditoria: 'Auditoría',
+  buzon: 'Buzón del creador',
 };
 
 const GRUPOS = { usuario: 'usuarios', leccion: 'contenido', 'nueva-leccion': 'contenido' };
@@ -51,6 +53,8 @@ function Seccion({ seccion, params, esAdmin }) {
       return <Revision />;
     case 'auditoria':
       return <Auditoria />;
+    case 'buzon':
+      return <Buzon />;
     case 'practicas':
       return <Practicas esAdmin={esAdmin} />;
     case 'sistema':

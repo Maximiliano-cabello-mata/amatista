@@ -205,3 +205,20 @@ export async function descargarCatalogo(versionPrevia) {
     error: resultado.status === 304 ? null : resultado.error,
   };
 }
+
+// --- Avatar y buzón del creador ----------------------------------------------------
+
+export const obtenerPerfil = (token) => pedirJSON("/api/perfil", { token, espera: 6000 });
+
+export const guardarAvatar = (token, avatar) => pedirJSON("/api/perfil", { metodo: "PUT", token, cuerpo: { avatar } });
+
+export const listarSugerencias = (token) => pedirJSON("/api/buzon", { token });
+
+export const enviarSugerencia = (token, { categoria, texto, pagina }) =>
+  pedirJSON("/api/buzon", { metodo: "POST", token, cuerpo: { categoria, texto, pagina } });
+
+export const responderSugerencia = (token, id, texto) =>
+  pedirJSON(`/api/buzon/${encodeURIComponent(id)}/mensajes`, { metodo: "POST", token, cuerpo: { texto } });
+
+export const marcarSugerenciaLeida = (token, id) =>
+  pedirJSON(`/api/buzon/${encodeURIComponent(id)}/leida`, { metodo: "POST", token });

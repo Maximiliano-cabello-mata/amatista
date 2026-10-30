@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import AuthProvider from './auth/AuthProvider';
+import AvatarProvider from './avatares/AvatarProvider';
 import { useAuth } from './auth/contexto';
 import CatalogoProvider from './catalogo/CatalogoProvider';
 import BarraSuperior from './components/BarraSuperior';
@@ -30,6 +31,7 @@ const Confirmar = lazy(() => import('./pages/cuenta/Confirmar'));
 const Recuperar = lazy(() => import('./pages/cuenta/Recuperar'));
 const Perfil = lazy(() => import('./pages/cuenta/Perfil'));
 const Guia = lazy(() => import('./pages/Guia'));
+const Buzon = lazy(() => import('./pages/Buzon'));
 // Goliat, el compañero de toda la plataforma: llega después de la página.
 const Goliat = lazy(() => import('./goliat/Goliat'));
 
@@ -120,6 +122,8 @@ function Pagina({ ruta, hash }) {
       return <Perfil />;
     case 'guia':
       return <Guia />;
+    case 'buzon':
+      return <Buzon consulta={ruta.consulta} />;
     case 'admin':
       return <RutaAdmin ruta={ruta} hash={hash} />;
     default:
@@ -146,6 +150,7 @@ function App() {
       </a>
       <FondoLowPoly />
       <AuthProvider>
+        <AvatarProvider>
         <VistaProvider>
         <CatalogoProvider>
           <ProgresoProvider>
@@ -171,6 +176,7 @@ function App() {
           </ProgresoProvider>
         </CatalogoProvider>
         </VistaProvider>
+        </AvatarProvider>
       </AuthProvider>
     </div>
   );

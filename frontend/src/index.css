@@ -1483,8 +1483,10 @@ button.tecla-chip:active { transform: translateY(2px); border-bottom-width: 1px;
 .goliat-boton {
   position: relative;
   display: grid;
-  width: 68px;
-  height: 68px;
+  width: 60px;
+  height: 60px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
   place-items: end center;
   padding: 0 0 6px;
   border: 0;
@@ -1503,23 +1505,10 @@ button.tecla-chip:active { transform: translateY(2px); border-bottom-width: 1px;
   box-shadow: inset 0 0 0 1.5px rgb(195 155 211 / 0.55);
   transition: transform 0.25s var(--curva-salida);
 }
+.goliat-boton:hover, .goliat-boton:focus-visible, .goliat-boton[aria-expanded='true'] { opacity: 1; }
 .goliat-boton:hover::before, .goliat-boton[aria-expanded='true']::before { transform: scale(1.06); }
 .goliat-boton:focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
-.goliat-boton__figura { position: relative; width: 62px; height: 62px; transform-origin: 50% 100%; animation: goliat-respirar 3.2s ease-in-out infinite; }
-.goliat-boton__nombre {
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  translate: -50% 0;
-  padding: 1px 6px;
-  background: #2b5bd0;
-  color: #fff;
-  font: 700 9px/1.4 'JetBrains Mono Variable', 'JetBrains Mono respaldo', monospace;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
-}
-
+.goliat-boton__figura { position: relative; width: 54px; height: 54px; transform-origin: 50% 100%; animation: goliat-respirar 3.2s ease-in-out infinite; }
 /* Gestos vivos de la figura (GoliatFigura.jsx). */
 .goliat__ojo { transform-box: fill-box; transform-origin: center; animation: personaje-parpadeo 5.2s infinite; }
 .goliat__oreja-parada { transform-box: fill-box; transform-origin: 30% 100%; animation: goliat-oreja 7s ease-in-out infinite; }
@@ -1641,8 +1630,8 @@ button.tecla-chip:active { transform: translateY(2px); border-bottom-width: 1px;
 
 /* En el teléfono el panel ocupa el ancho de la pantalla. */
 @media (max-width: 640px) {
-  .goliat-boton { width: 56px; height: 56px; }
-  .goliat-boton__figura { width: 52px; height: 52px; }
+  .goliat-boton { width: 52px; height: 52px; }
+  .goliat-boton__figura { width: 46px; height: 46px; }
   .goliat-zona--abierta { right: max(12px, env(safe-area-inset-right)); max-width: none; z-index: 45; }
   .goliat-panel { width: 100%; }
 }
@@ -1661,3 +1650,37 @@ html.ligero .goliat__cola, html.ligero .goliat__zzz text { animation: none !impo
   .goliat-boton__figura, .goliat-zona *, .goliat, .goliat * { animation: none !important; }
 }
 @media print { .goliat-zona { display: none !important; } }
+
+/* ==========================================================================
+   Personajes: avatares low poly y el pavo real del creador (avatares/)
+   ========================================================================== */
+.pavo__cola, .pavo__arriba, .pavo__cresta { transform-box: view-box; }
+.pavo__cola { transform-origin: 60px 78px; transition: transform 0.6s var(--curva-rebote); }
+.pavo--quieto .pavo__cola { transform: scale(0.34, 0.82); }
+.pavo__arriba { transform-origin: 60px 66px; }
+.pavo__cresta { transform-origin: 60px 25px; animation: pavo-cresta 4.8s ease-in-out infinite; }
+/* Gracias: reverencia y la cola que se abre en abanico. */
+.pavo--gracias .pavo__cola { animation: pavo-abanico 2.4s var(--curva-salida) both; }
+.pavo--gracias .pavo__arriba { animation: pavo-reverencia 2.4s ease-in-out both; }
+@keyframes pavo-abanico {
+  0% { transform: scale(0.34, 0.82); }
+  35%, 100% { transform: scale(1, 1); }
+  45% { transform: scale(1.04, 1.03); }
+}
+@keyframes pavo-reverencia {
+  0%, 100% { transform: rotate(0deg); }
+  30%, 55% { transform: rotate(24deg) translateY(4px); }
+}
+@keyframes pavo-cresta { 0%, 90%, 100% { transform: rotate(0deg); } 94% { transform: rotate(-6deg); } 97% { transform: rotate(4deg); } }
+
+.avatar-opcion { transition: transform 0.2s var(--curva-salida), border-color 0.2s ease, background-color 0.2s ease; }
+.avatar-opcion:hover { transform: translateY(-2px); }
+.avatar-opcion:has(input:checked) { border-color: var(--neon); background: rgb(0 229 255 / 0.08); }
+.avatar-opcion:has(input:focus-visible) { outline: 2px solid var(--neon); outline-offset: 2px; }
+
+html.ligero .pavo__cresta, html.ligero .pavo--gracias .pavo__cola, html.ligero .pavo--gracias .pavo__arriba { animation: none; }
+html.ligero .pavo--gracias .pavo__cola { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .pavo *, .avatar-opcion { animation: none !important; transition: none !important; }
+  .pavo--gracias .pavo__cola { transform: none; }
+}

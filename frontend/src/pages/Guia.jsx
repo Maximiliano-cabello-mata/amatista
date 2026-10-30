@@ -93,6 +93,9 @@ function Guia() {
         <a href={rutas.panel} className={`${BOTON} border border-white/15 bg-white/5 text-white/85 hover:bg-white/10`}>
           Mi panel
         </a>
+        <a href={rutas.buzon} className={`${BOTON} border border-amatista/40 bg-amatista/10 text-amatista-claro hover:bg-amatista/20`}>
+          Escribirle al creador
+        </a>
       </nav>
     </Pagina>
   );

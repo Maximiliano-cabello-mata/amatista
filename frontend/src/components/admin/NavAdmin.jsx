@@ -21,7 +21,13 @@ const SECCIONES = [
       { grupo: 'herramientas', texto: 'Herramientas', href: rutas.adminHerramientas, icono: '✦' },
     ],
   },
-  { titulo: 'Personas', entradas: [{ grupo: 'usuarios', texto: 'Usuarios', href: rutas.adminUsuarios, icono: '◎' }] },
+  {
+    titulo: 'Personas',
+    entradas: [
+      { grupo: 'usuarios', texto: 'Usuarios', href: rutas.adminUsuarios, icono: '◎' },
+      { grupo: 'buzon', texto: 'Buzón del creador', href: rutas.adminBuzon, icono: '✉', soloAdmin: true },
+    ],
+  },
   { titulo: 'Sistema', entradas: [{ grupo: 'sistema', texto: 'Estado', href: rutas.adminSistema, icono: '⚙', soloAdmin: true }] },
 ];
 

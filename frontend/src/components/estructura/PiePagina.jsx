@@ -70,6 +70,7 @@ function PiePagina() {
         </Columna>
         <Columna titulo="Ayuda">
           <li><a href={rutas.guia} className={ENLACE}>Cómo funciona Amatista</a></li>
+          <li><a href={rutas.buzon} className={ENLACE}>Buzón del creador</a></li>
           <li>
             <button type="button" onClick={() => empezar(0)} className={`${ENLACE} text-left`}>
               Recorrido por la plataforma
