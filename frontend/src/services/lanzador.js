@@ -6,6 +6,8 @@
 //
 //   amatista://abrir · amatista://practica/<id> · amatista://taller/<id>?actividad=<id>
 //   amatista://isla · amatista://recorrido/<pestana|vista|taller>
+// Motor 6: el taller lleva su etapa: …?etapa=exploracion&habilidades=a,b&leccion=<id> (Blender
+// Amatista no sale de ella y vuelve a esa lección al terminar).
 
 export const ESQUEMA = 'amatista';
 const parte = (valor) => encodeURIComponent(String(valor));
@@ -14,7 +16,13 @@ const parte = (valor) => encodeURIComponent(String(valor));
 export function urlBlender(tipo, datos = {}) {
   if (tipo === 'abrir_practica' && datos.practica_id) return `${ESQUEMA}://practica/${parte(datos.practica_id)}`;
   if (tipo === 'taller_abrir' && datos.taller) {
-    return `${ESQUEMA}://taller/${parte(datos.taller)}${datos.actividad ? `?actividad=${parte(datos.actividad)}` : ''}`;
+    const consulta = [
+      datos.actividad ? `actividad=${parte(datos.actividad)}` : '',
+      datos.etapa ? `etapa=${parte(datos.etapa)}` : '',
+      datos.etapa === 'exploracion' && datos.habilidades?.length ? `habilidades=${datos.habilidades.slice(0, 4).map(parte).join(',')}` : '',
+      datos.leccion ? `leccion=${parte(datos.leccion)}` : '',
+    ].filter(Boolean);
+    return `${ESQUEMA}://taller/${parte(datos.taller)}${consulta.length ? `?${consulta.join('&')}` : ''}`;
   }
   if (tipo === 'isla') return `${ESQUEMA}://isla`;
   if (tipo === 'recorrido') return `${ESQUEMA}://recorrido${datos.recorrido ? `/${parte(datos.recorrido)}` : ''}`;

@@ -15,6 +15,20 @@ describe('enlace amatista:// (add-on 5.4)', () => {
     expect(urlBlender('otra')).toBe('amatista://abrir');
   });
 
+  it('lleva la etapa de la lección a Blender Amatista (motor 6)', () => {
+    expect(
+      urlBlender('taller_abrir', {
+        taller: 'blender.bp.m1',
+        etapa: 'exploracion',
+        habilidades: ['bl-agregar-primitivas', 'bl-mover'],
+        leccion: 'bp1_blender',
+      }),
+    ).toBe('amatista://taller/blender.bp.m1?etapa=exploracion&habilidades=bl-agregar-primitivas,bl-mover&leccion=bp1_blender');
+    expect(urlBlender('taller_abrir', { taller: 'blender.bp.m1', etapa: 'practica', habilidades: ['x'] })).toBe(
+      'amatista://taller/blender.bp.m1?etapa=practica',
+    );
+  });
+
   it('solo lanza si ningún Blender abierto recibió la orden', () => {
     expect(hayQueLanzar({ ok: true, datos: { enlace: true, entregada: false } })).toBe(true);
     expect(hayQueLanzar({ ok: true, datos: { enlace: false, entregada: false } })).toBe(true);

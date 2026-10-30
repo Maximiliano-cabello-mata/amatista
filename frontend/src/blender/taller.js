@@ -140,6 +140,9 @@ export function vivoDelTaller(d) {
     habilidades: Array.isArray(d.habilidades) ? d.habilidades : [],
     proyectoAbierto: Boolean(d.proyecto_abierto),
     repasos: textos(d.repasos),
+    // Motor 6: la etapa que mandó la lección y si Blender ya la dio por cumplida.
+    etapa: ETAPAS.includes(d.etapa) ? d.etapa : '',
+    etapaCumplida: Boolean(d.etapa_cumplida),
   };
 }
 
@@ -228,9 +231,49 @@ export function repasosDelPlan(plan, vivo = null) {
 
 // --- Cuándo cuenta la lección ------------------------------------------------------------
 
-// La lección del taller se da por hecha cuando el proyecto del módulo se abre: todas sus
-// habilidades ya salen solas (igual que una práctica se da por hecha al completarla).
-export const tallerResuelto = (plan, vivo = null) => Boolean(plan?.proyecto_abierto || vivo?.proyectoAbierto);
+// --- Motor 6: la etapa de la lección (engine/amatista_engine/taller/etapas.py) -------------
+// La guía de aprendizaje pone dos momentos en Blender por módulo: la exploración (las primeras
+// habilidades, Mira y un Hazlo conmigo, antes de la teoría) y la práctica de cierre (el resto del
+// ciclo hasta el proyecto). La lección manda su etapa y Blender no sale de ella.
+export const ETAPAS = ['exploracion', 'practica'];
+export const EXPLORAR = 2;
+
+export const etapaDe = (bloque) => (bloque?.etapa === 'exploracion' ? 'exploracion' : 'practica');
+
+// Las habilidades que prueba la exploración: las que diga la lección (del taller) o las primeras dos.
+export function habilidadesDeExploracion(plan, bloque) {
+  const delTaller = (plan?.habilidades ?? []).map((h) => h?.id).filter(Boolean);
+  const pedidas = textos(bloque?.habilidades).filter((id) => !delTaller.length || delTaller.includes(id));
+  return (pedidas.length ? [...new Set(pedidas)] : delTaller.slice(0, EXPLORAR)).slice(0, 4);
+}
+
+// Ya la vio hacer y la intentó una vez (o ya la sabía).
+export const explorada = (h) =>
+  Boolean(h) && (Boolean(h.lista) || (entero(h.intentos) > 0 && (Boolean(h.vio_demo) || (h.fase && h.fase !== 'nueva'))));
+
+export function exploracionHecha(plan, ids) {
+  const porId = new Map((plan?.habilidades ?? []).filter((h) => h?.id).map((h) => [h.id, h]));
+  return ids.length > 0 && ids.every((id) => explorada(porId.get(id)));
+}
+
+// Lo que la orden «taller_abrir» lleva de la etapa (y la lección a la que Blender vuelve).
+export function datosDeEtapa(bloque, plan, leccionId = '') {
+  const etapa = etapaDe(bloque);
+  return {
+    etapa,
+    ...(etapa === 'exploracion' ? { habilidades: habilidadesDeExploracion(plan, bloque) } : {}),
+    ...(leccionId ? { leccion: leccionId } : {}),
+  };
+}
+
+// La lección del taller se da por hecha: en la exploración, cuando sus habilidades se probaron (o
+// Blender avisa que la etapa se cumplió); en la práctica, cuando el proyecto del módulo se abre.
+export function tallerResuelto(plan, vivo = null, bloque = null) {
+  if (etapaDe(bloque) === 'exploracion') {
+    return Boolean(vivo?.etapa === 'exploracion' && vivo.etapaCumplida) || exploracionHecha(plan, habilidadesDeExploracion(plan, bloque));
+  }
+  return Boolean(plan?.proyecto_abierto || vivo?.proyectoAbierto);
+}
 
 // Un servidor que no conoce el taller (404) no traba la lección: se puede seguir sin él.
 export const tallerNoDisponible = (respuesta) => Boolean(respuesta && !respuesta.ok && respuesta.status === 404);

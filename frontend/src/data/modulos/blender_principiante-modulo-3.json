@@ -73,14 +73,14 @@
       },
       {
         "id": "bp3_blender",
-        "title": "Taller en Blender: espejo, subdivisión y escala aplicada",
+        "title": "Explora en Blender: aplicar la escala y espejo",
         "slug": "blender-primer-modificador",
         "type": "theory_interactive",
-        "durationSeconds": 480,
+        "durationSeconds": 360,
         "isLocked": true,
         "formula": "practica",
         "ficha": {
-          "objetivo": "Aprender en Blender cada habilidad del módulo (usar el Espejo, la Subdivisión y aplicar la escala): mirarla, hacerla con ayuda y hacerla sin ayuda, hasta que salga sola.",
+          "objetivo": "Probar en Blender, antes de la teoría, aplicar la escala y espejo: mirar cómo se hace y hacerlo una vez con el molde.",
           "habilidades": [
             "bl-modificadores",
             "bl-aplicar-escala"
@@ -102,13 +102,14 @@
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### Tu taller en Blender\nAquí aprendes cada habilidad del módulo (usar el Espejo, la Subdivisión y aplicar la escala) como en un taller: primero la miras en tu vista 3D, después la haces con ayuda y al final la haces sin ayuda. Cuando todas te salgan, se abre el proyecto: la nave para el puerto espacial de tu isla."
+            "body": "### Explora en Blender (unos minutos)\nAntes de la teoría, prueba con tus manos las dos primeras herramientas del módulo: **aplicar la escala** y **espejo**. Amatista te muestra cada una en tu vista 3D («Mira») y después la haces una vez con el molde a la vista («Hazlo conmigo»). Sin presión y sin examen: cuando las pruebes, Blender te manda de vuelta aquí para entender el porqué. El resto de las habilidades y el proyecto vienen en la práctica de cierre."
           },
           {
             "type": "blender_taller",
             "id": "taller_bp3",
             "taller": "blender.bp.m3",
-            "title": "Tu taller: espejo, subdivisión y escala aplicada"
+            "title": "Explora en Blender: aplicar la escala y espejo",
+            "etapa": "exploracion"
           }
         ]
       },
@@ -313,6 +314,17 @@
           ]
         },
         "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Primero, termina tu taller\nEn Blender sigue con lo que falta del módulo (suavizar y la pila de modificadores) y repasa lo que exploraste. Cuando todo te salga sin ayuda, se abre el proyecto de abajo."
+          },
+          {
+            "type": "blender_taller",
+            "id": "taller_practica_bp3",
+            "taller": "blender.bp.m3",
+            "etapa": "practica",
+            "title": "Tu taller: todas las habilidades del módulo"
+          },
           {
             "type": "markdown_text",
             "body": "### Media nave, nave completa\nModela solo la mitad de una nave espacial: el Espejo dibuja la otra. Al final la suavizas con Subdivisión. Guarda bien el archivo: en el siguiente curso **la vas a pintar**."

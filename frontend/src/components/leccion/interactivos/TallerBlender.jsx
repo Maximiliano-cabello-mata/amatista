@@ -5,6 +5,9 @@
 // máximo). Bloque: {"type": "blender_taller", "taller": "blender.bp.m1", "title"?, "vista"?}.
 //   vista «taller» (por defecto): el taller del módulo; se resuelve cuando se abre el proyecto.
 //   vista «proyecto»: tarjeta corta en la lección del proyecto (la pieza de la isla y el reto).
+//   etapa «exploracion» (motor 6): solo las primeras habilidades (o las de "habilidades"), Mira y
+//     un Hazlo conmigo, antes de la teoría; se resuelve cuando se probaron. Blender no sigue solo.
+//   etapa «practica» (por defecto): el ciclo completo; se resuelve cuando se abre el proyecto.
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../../auth/contexto';
 import PrepararBlender from '../../../blender/PrepararBlender';
@@ -12,6 +15,9 @@ import {
   anchoDominio,
   CICLO,
   controlesTaller,
+  datosDeEtapa,
+  etapaDe,
+  habilidadesDeExploracion,
   ESTADOS_PIEZA,
   estadoProyecto,
   habilidadesConVivo,
@@ -29,7 +35,7 @@ import {
 import { useLanzadorBlender } from '../../../blender/useLanzador';
 import { useAvisoTemporal, useEnlaceTaller, usePlanTaller } from '../../../blender/useTaller';
 import { useCatalogo } from '../../../catalogo/contexto';
-import { ubicarTaller } from '../../../modulos/practica';
+import { leccionDelBloque, ubicarTaller } from '../../../modulos/practica';
 import { useProgreso } from '../../../progreso/contexto';
 import { estaCompletada, estaDesbloqueada } from '../../../progreso/reglas';
 import { rutaEntrar, rutas } from '../../../rutas';
@@ -237,11 +243,12 @@ function LineaBlender({ enlace, aviso }) {
 }
 
 // Abierto el proyecto: un enlace claro a su lección (y qué falta antes, si falta algo).
-function IrAlProyecto({ tallerId }) {
+function IrAlProyecto({ tallerId, leccionActual = '' }) {
   const { cursos } = useCatalogo();
   const { progreso } = useProgreso();
   const ubicacion = ubicarTaller(cursos, tallerId);
-  if (!ubicacion?.leccionProyecto) return null;
+  // Motor 6: el taller se termina en la lección del proyecto; ahí el proyecto ya está a la vista.
+  if (!ubicacion?.leccionProyecto || ubicacion.leccionProyecto.id === leccionActual) return null;
   const { curso, modulo, leccionTaller, leccionProyecto, indiceProyecto, indiceTaller } = ubicacion;
   const lecciones = modulo.contenido?.lessons ?? [];
   const abierta = estaDesbloqueada(progreso, curso.id, modulo, indiceProyecto);
@@ -283,8 +290,14 @@ function TallerHabilidades({ bloque, alCompletar, resuelta }) {
     resolverRef.current = resolver;
   });
 
+  const { cursos } = useCatalogo();
   const vivo = enlace?.estado === 'aqui' ? enlace.vivo : null;
-  const abierto = tallerResuelto(plan, vivo);
+  const etapa = etapaDe(bloque);
+  const explorar = etapa === 'exploracion' ? habilidadesDeExploracion(plan, bloque) : null;
+  const abierto = tallerResuelto(plan, vivo, bloque);
+  // Motor 6: la orden lleva la etapa y la lección a la que Blender vuelve al cumplirla.
+  const leccionActual = leccionDelBloque(cursos, bloque)?.leccion?.id ?? '';
+  const etapaOrden = datosDeEtapa(bloque, plan, leccionActual);
 
   // Cuando Blender avanza (otra actividad, otra pieza, lograda), el plan se vuelve a pedir.
   const claveVivo = vivo ? [vivo.actividad?.id, vivo.estado, vivo.llenas, vivo.proyectoAbierto].join('|') : '';
@@ -302,11 +315,11 @@ function TallerHabilidades({ bloque, alCompletar, resuelta }) {
   const ordenar = async (tipo, extra = {}) => {
     if (enviando) return;
     setEnviando(true);
-    const datos = { taller: bloque.taller, ...extra };
+    const datos = { taller: bloque.taller, ...(tipo === 'taller_abrir' ? etapaOrden : {}), ...extra };
     const r = await ordenarTaller(token, tipo, datos);
     setEnviando(false);
     if (hayQueLanzar(r) && ['taller_abrir', 'taller_probar', 'taller_repaso'].includes(tipo)) {
-      lanzador.lanzar('taller_abrir', { taller: bloque.taller, actividad: extra.actividad });
+      lanzador.lanzar('taller_abrir', { taller: bloque.taller, actividad: extra.actividad, ...etapaOrden });
       return;
     }
     avisar(textoOrden(r));
@@ -321,12 +334,19 @@ function TallerHabilidades({ bloque, alCompletar, resuelta }) {
   const actividad = vivo?.actividad ?? plan?.actual ?? null;
   const habilidades = habilidadesConVivo(plan?.habilidades, vivo?.habilidades);
   // Sin nada que hacer en el taller (terminado) no hay botones de Blender: solo los repasos.
-  const controles = plan && actividad ? controlesTaller(plan, enlace) : [];
-  const probar = habilidadesParaProbar(plan);
+  // Cumplida la exploración no hay botones de Blender: lo que sigue es la teoría, aquí.
+  const controles = plan && actividad && !(explorar && abierto) ? controlesTaller(plan, enlace) : [];
+  const probar = explorar ? [] : habilidadesParaProbar(plan);
   const repasos = repasosDelPlan(plan, vivo);
 
   let retro = null;
-  if (abierto) {
+  if (abierto && explorar) {
+    retro = {
+      tipo: 'bien',
+      titulo: '¡Exploración lista!',
+      texto: 'Ya las probaste con tus manos. Sigue con la teoría: el resto del taller y el proyecto vienen en la práctica de cierre.',
+    };
+  } else if (abierto) {
     retro = {
       tipo: 'bien',
       titulo: '¡Tus habilidades del taller ya te salen!',
@@ -368,7 +388,7 @@ function TallerHabilidades({ bloque, alCompletar, resuelta }) {
 
       {plan && (
         <>
-          <Ahora actividad={actividad} vivo={vivo} enlace={enlace} />
+          {!(explorar && abierto) && <Ahora actividad={actividad} vivo={vivo} enlace={enlace} />}
           {!actividad && plan.completo && (
             <p className="mt-4 text-sm text-emerald-200/90">Terminaste este taller: proyecto hecho y habilidades listas.</p>
           )}
@@ -431,8 +451,8 @@ function TallerHabilidades({ bloque, alCompletar, resuelta }) {
             </div>
           )}
 
-          <Habilidades lista={habilidades} actual={actividad?.habilidad} />
-          {abierto && <IrAlProyecto tallerId={bloque.taller} />}
+          <Habilidades lista={explorar ? habilidades.filter((h) => explorar.includes(h.id)) : habilidades} actual={actividad?.habilidad} />
+          {abierto && !explorar && <IrAlProyecto tallerId={bloque.taller} leccionActual={leccionActual} />}
         </>
       )}
 
@@ -516,6 +536,7 @@ function ProyectoTaller({ bloque }) {
   const isla = plan.isla ?? {};
   const color = /^#[0-9a-f]{3,6}$/i.test(isla.color ?? '') ? isla.color : '#9b59b6';
   const ubicacion = estado.proyecto === 'cerrado' ? ubicarTaller(cursos, bloque.taller) : null;
+  const enEstaLeccion = ubicacion?.leccionTaller?.id === leccionDelBloque(cursos, bloque)?.leccion?.id;
 
   const reto = async () => {
     const orden = ordenReto(plan);
@@ -560,7 +581,7 @@ function ProyectoTaller({ bloque }) {
             Hacer el reto en Blender
           </button>
         )}
-        {ubicacion?.leccionTaller && (
+        {ubicacion?.leccionTaller && !enEstaLeccion && (
           <a href={rutas.leccion(ubicacion.curso.id, ubicacion.leccionTaller.id)} className={`${BOTON_SECUNDARIO} shrink-0 text-center`}>
             Volver al taller
           </a>

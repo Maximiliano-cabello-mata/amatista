@@ -779,6 +779,41 @@ tareas:
     depende_de: [T-132, T-134, T-135]
     aceptacion: "docs/despliegue/2026-10-30_refinamiento_motor_5_4.md: contenido importado sin errores, /api/addon/v1/estado con 5.4.0 y la PWA nueva publicada"
     bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-137
+    titulo: "Amatista Motor 6: autosanación (una sola copia encendida, sin manejadores huérfanos), una sola tarjeta que se achica mientras trabajas, «Mira» y «Mírame» de la actividad de ahora, molde con cordura y la herramienta que brilla"
+    version: v3.3.0
+    area: motor
+    aceptacion: "Con dos copias de Amatista queda una; nunca dos tarjetas; la demostración solo usa piezas de la actividad; un molde lleno de piezas sueltas no cuenta; pruebas del motor, del add-on y en_blender.py en verde"
+    evidencia: "addon/amatista_blender/saneamiento.py; addon/amatista_blender/interfaz/turno.py; addon/amatista_blender/taller/vista/brillo.py; engine/amatista_engine/taller/demo.py; engine/amatista_engine/taller/molde.py; docs/motor/referencia/19_motor_6.md"
+  - id: T-138
+    titulo: "La plataforma marca la ruta: cada lección de Blender manda su etapa (exploración o práctica), Blender no sale de ella y manda de vuelta a la plataforma; los 9 módulos alineados con la guía de aprendizaje"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-137]
+    aceptacion: "La exploración de cada módulo pide solo sus dos primeras habilidades y se completa sola; con la cuenta conectada Blender no deja elegir módulos; el validador exige exploración antes que práctica"
+    evidencia: "engine/amatista_engine/taller/etapas.py; addon/amatista_blender/taller/sesion.py; backend/api/enlace.py; backend/contenido/validacion.py; frontend/src/blender/taller.js; frontend/src/data/modulos/blender_*.json"
+  - id: T-139
+    titulo: "Blender Amatista (sin recompilar): plantilla de aplicación con pantalla de inicio, colores y barra de Amatista, acceso directo en el menú del sistema y el enlace amatista:// que la abre; probarlo con ventana en Windows, macOS y Linux"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-137]
+    aceptacion: "El acceso directo abre Blender Amatista con su pantalla de inicio y sus colores; Blender normal se ve como siempre; «Mi lección» vuelve a la plataforma"
+    evidencia: "addon/amatista_blender/blender_amatista.py; addon/amatista_blender/plantilla_amatista/; addon/amatista_blender/protocolo.py"
+    bloqueo: "La parte con ventana la prueba el usuario en sus equipos (la nube no tiene pantalla, Windows ni macOS)"
+  - id: T-140
+    titulo: "Probar la autosanación con Amatista 5.4 (clásico o extensión) y 6.0 instalados a la vez"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-137]
+    aceptacion: "Al abrir Blender queda encendido solo el 6.0, Preferencias › Amatista lista la copia apagada y hay una sola tarjeta y un solo menú Amatista"
+    bloqueo: "Lo hace el usuario en su computadora"
+  - id: T-141
+    titulo: "Desplegar Amatista Motor 6 y los módulos con etapas en producción"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-137, T-138, T-139]
+    aceptacion: "docs/despliegue/2026-10-30_motor_6.md: contenido importado sin errores, /api/addon/v1/estado con 6.0.0 y la PWA nueva publicada"
+    bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0

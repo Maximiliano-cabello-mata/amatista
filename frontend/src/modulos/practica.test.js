@@ -9,6 +9,7 @@ import {
   practicasDelCatalogo,
   practicasDelModulo,
   secuenciaDelModulo,
+  leccionDelBloque,
   ubicarTaller,
 } from './practica';
 
@@ -65,10 +66,21 @@ describe('teoría y Blender intercalados (v3.2)', () => {
   it('ubica el taller: su lección y la del proyecto con la isla', () => {
     const cursos = [{ id: 'blender_principiante', modulos: [bp1] }];
     const lugar = ubicarTaller(cursos, 'blender.bp.m1');
-    expect(lugar.leccionTaller.id).toBe('bp1_blender');
+    // Motor 6: la exploración va en bp1_blender; el taller se termina en la lección de la práctica.
+    expect(lugar.leccionExploracion.id).toBe('bp1_blender');
+    expect(lugar.leccionTaller.id).toBe('bp1_practica');
     expect(lugar.leccionProyecto.id).toBe('bp1_practica');
     expect(lugar.curso.id).toBe('blender_principiante');
     expect(ubicarTaller(cursos, 'blender.bp.m9')).toBeNull();
     expect(ubicarTaller(cursos, '')).toBeNull();
+  });
+
+  it('encuentra la lección de un bloque del taller por su id (motor 6)', () => {
+    const cursos = [{ id: 'blender_principiante', modulos: [bp1] }];
+    const explora = bp1.contenido.lessons.find((l) => l.id === 'bp1_blender').contentBlocks.find((b) => b.type === 'blender_taller');
+    expect(explora.etapa).toBe('exploracion');
+    expect(leccionDelBloque(cursos, explora).leccion.id).toBe('bp1_blender');
+    expect(leccionDelBloque(cursos, { ...explora, id: 'otro' })).toBeNull();
+    expect(leccionDelBloque(cursos, null)).toBeNull();
   });
 });

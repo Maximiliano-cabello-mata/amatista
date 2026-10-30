@@ -19,6 +19,10 @@ import {
   resumenTaller,
   tallerNoDisponible,
   tallerResuelto,
+  datosDeEtapa,
+  etapaDe,
+  exploracionHecha,
+  habilidadesDeExploracion,
   textoFase,
   textoOrden,
   tituloDeId,
@@ -240,6 +244,36 @@ describe('cuándo cuenta la lección del taller', () => {
     expect(tallerResuelto(plan({ proyecto_abierto: true }))).toBe(true);
     expect(tallerResuelto(plan(), { proyectoAbierto: true })).toBe(true);
     expect(tallerResuelto(null)).toBe(false);
+  });
+
+  it('la exploración cuenta al probar sus habilidades, no al abrir el proyecto (motor 6)', () => {
+    const explora = { type: 'blender_taller', taller: 'blender.bp.m1', etapa: 'exploracion' };
+    expect(etapaDe(explora)).toBe('exploracion');
+    expect(etapaDe({ taller: 'blender.bp.m1' })).toBe('practica');
+    expect(habilidadesDeExploracion(plan(), explora)).toEqual(['bl-agregar-primitivas', 'bl-escalar-eje']);
+    expect(habilidadesDeExploracion(plan(), { ...explora, habilidades: ['bl-rotar', 'bl-luces'] })).toEqual(['bl-rotar']);
+    // Agregar está lista y escalar ya se vio y se intentó: la exploración está hecha.
+    expect(exploracionHecha(plan(), ['bl-agregar-primitivas', 'bl-escalar-eje'])).toBe(true);
+    expect(exploracionHecha(plan(), ['bl-rotar'])).toBe(false);
+    expect(tallerResuelto(plan(), null, explora)).toBe(true);
+    expect(tallerResuelto(plan(), null, { ...explora, habilidades: ['bl-rotar'] })).toBe(false);
+    expect(tallerResuelto(plan(), { etapa: 'exploracion', etapaCumplida: true }, { ...explora, habilidades: ['bl-rotar'] })).toBe(true);
+    // La práctica sigue esperando el proyecto.
+    expect(tallerResuelto(plan(), null, { taller: 'blender.bp.m1', etapa: 'practica' })).toBe(false);
+  });
+
+  it('la orden lleva la etapa y la lección a la que vuelve Blender', () => {
+    expect(datosDeEtapa({ etapa: 'exploracion' }, plan(), 'bp1_blender')).toEqual({
+      etapa: 'exploracion',
+      habilidades: ['bl-agregar-primitivas', 'bl-escalar-eje'],
+      leccion: 'bp1_blender',
+    });
+    expect(datosDeEtapa({}, plan())).toEqual({ etapa: 'practica' });
+    expect(vivoDelTaller({ taller: 'x', etapa: 'exploracion', etapa_cumplida: true })).toMatchObject({
+      etapa: 'exploracion',
+      etapaCumplida: true,
+    });
+    expect(vivoDelTaller({ taller: 'x', etapa: 'otra' }).etapa).toBe('');
   });
 
   it('un servidor que no conoce el taller no traba la lección', () => {
