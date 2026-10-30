@@ -224,7 +224,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Practicar orbitar, acercar y las vistas de frente, arriba y lado con el ratón, como en Blender.',
     cuando: 'Antes de la primera práctica en Blender: quien nunca abrió un programa 3D aprende a moverse sin miedo.',
     formula: ['gancho', 'explora'],
-    nueva: true,
   },
   image_choice: {
     nombre: 'Elige la figura',
@@ -232,7 +231,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Una pregunta cuyas respuestas son figuras 3D dibujadas (bisel, suavizado, Array, Espejo…), no textos.',
     cuando: 'Para reconocer a simple vista lo que hace una herramienta. Reemplaza a una pregunta de texto.',
     formula: ['explora', 'practica'],
-    nueva: true,
   },
   keyframe_sim: {
     nombre: 'Línea de tiempo',
@@ -240,7 +238,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Poner fotogramas clave a una pelota y verla animarse, como en la línea de tiempo de Blender.',
     cuando: 'Al presentar la animación: el alumno entiende qué es una clave antes de abrir Blender.',
     formula: ['explora', 'practica'],
-    nueva: true,
   },
   motor_scene: {
     nombre: 'Mundo 3D (Motor Web)',
@@ -248,6 +245,30 @@ export const HERRAMIENTAS = {
     paraQue: 'Un mundo A-Frame generado (bosque, isla, ciudad…) con objetos que se arrastran, zonas y retos que se revisan solos.',
     cuando: 'Cuando la idea se entiende mejor haciéndola en 3D: mover, ordenar, construir. Funciona en PC, celular y visor de VR.',
     formula: ['gancho', 'explora', 'practica', 'reto'],
+  },
+  // Dinámicas v4.3 (docs/plataforma/14_refinamiento_y_dinamicas.md).
+  shortcut_drill: {
+    nombre: 'Entrena tus teclas',
+    categoria: 'practicar',
+    paraQue: 'Pulsar en el navegador las mismas teclas que en Blender (G, R, S, X, Tab…) y ver al cubo reaccionar.',
+    cuando: 'Justo después de presentar un atajo y antes de la práctica en Blender: el gesto ya sale solo.',
+    formula: ['explora', 'practica'],
+    nueva: true,
+  },
+  transform_challenge: {
+    nombre: 'Ajusta el valor',
+    categoria: 'practicar',
+    paraQue: 'Llenar un molde moviendo un campo como el de Blender (Ubicación, Rotación, Escala); el campo dice «te falta» o «te pasaste».',
+    cuando: 'Al presentar los números exactos del panel N: medir en vez de calcular a ojo.',
+    formula: ['practica', 'reto'],
+    nueva: true,
+  },
+  spot_error: {
+    nombre: 'Encuentra el error',
+    categoria: 'practicar',
+    paraQue: 'Revisar la receta de otro alumno y marcar los pasos mal hechos; cada paso explica por qué.',
+    cuando: 'Después de enseñar un procedimiento: detectar errores ajenos enseña a revisar los propios.',
+    formula: ['practica', 'reto'],
     nueva: true,
   },
 };

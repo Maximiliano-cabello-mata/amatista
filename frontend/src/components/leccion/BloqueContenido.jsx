@@ -37,6 +37,10 @@ const DemoParametro = lazy(() => import('./DemoParametro'));
 const SimuladorVista = lazy(() => import('./interactivos/SimuladorVista'));
 const ElegirFigura = lazy(() => import('./interactivos/ElegirFigura'));
 const LineaClaves = lazy(() => import('./interactivos/LineaClaves'));
+// Dinámicas v4.3 (dinamicas.js): también bajo demanda.
+const EntrenaTeclas = lazy(() => import('./interactivos/EntrenaTeclas'));
+const AjustaValor = lazy(() => import('./interactivos/AjustaValor'));
+const EncuentraError = lazy(() => import('./interactivos/EncuentraError'));
 
 function Diferido({ children, alto }) {
   return <Suspense fallback={<div className="esqueleto corte-poly" style={{ minHeight: alto }} role="status" aria-label="Cargando" />}>{children}</Suspense>;
@@ -60,6 +64,9 @@ const INTERACTIVOS = {
   viewport_sim: SimuladorVista,
   image_choice: ElegirFigura,
   keyframe_sim: LineaClaves,
+  shortcut_drill: EntrenaTeclas,
+  transform_challenge: AjustaValor,
+  spot_error: EncuentraError,
 };
 
 // Dibuja un bloque de contenido del JSON de la lección según su "type".

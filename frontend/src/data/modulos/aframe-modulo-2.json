@@ -368,6 +368,36 @@
             "explanation": "`color` pone el color, `roughness: 1` la deja mate (sin brillo) y `flatShading: true` muestra cada cara plana."
           },
           {
+            "type": "spot_error",
+            "id": "error_af2",
+            "title": "Encuentra el error: la mesa que no aparece",
+            "text": "Teo armó su habitación en A-Frame, pero la mesa no se ve como esperaba. Revisa su receta.",
+            "steps": [
+              {
+                "text": "Puso todo dentro de `<a-scene>`.",
+                "explanation": "Bien: todo lo de A-Frame vive dentro de la escena."
+              },
+              {
+                "text": "Dejó la mesa en `position=\"0 0.75 -3\"`, delante de la cámara.",
+                "explanation": "Bien: la cámara mira hacia −Z, así que −3 es «3 m al frente»."
+              },
+              {
+                "text": "Le dio a la tabla `width=\"160\"` porque mide 160 cm.",
+                "wrong": true,
+                "explanation": "A-Frame mide en **metros**: 160 serían 160 m. La tabla va con `width=\"1.6\"`."
+              },
+              {
+                "text": "Agregó una luz `ambient` y otra `directional`.",
+                "explanation": "Bien: la ambiental llena las sombras y la direccional marca el volumen."
+              },
+              {
+                "text": "Pintó la mesa con `color=\"café\"`.",
+                "wrong": true,
+                "explanation": "Los colores van en inglés o en hexadecimal: `color=\"#8b5a2b\"` o `color=\"brown\"`. «café» no lo entiende y la deja blanca."
+              }
+            ]
+          },
+          {
             "type": "quiz_inline",
             "id": "af2_q_luces",
             "question": "Agregaste una `<a-light type=\"point\">` y de pronto todo lo que no está cerca se ve negro. ¿Por qué?",

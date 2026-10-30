@@ -23,6 +23,9 @@ const ETIQUETAS = {
   viewport_sim: 'Simulador 3D',
   image_choice: 'Elige la figura',
   keyframe_sim: 'Línea de tiempo',
+  shortcut_drill: 'Entrena tus teclas',
+  transform_challenge: 'Ajusta el valor',
+  spot_error: 'Encuentra el error',
 };
 
 // Marco común de las actividades: tipo, estado (pendiente / resuelta), XP
