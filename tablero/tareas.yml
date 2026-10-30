@@ -746,6 +746,39 @@ tareas:
     depende_de: [T-065]
     aceptacion: "Un correo de prueba desde backend/api/correo.py llega a la bandeja de entrada (no a spam); después sigue T-032 con AMATISTA_REQUIERE_CONFIRMACION=1"
     bloqueo: "Elegir proveedor (Brevo u otro); Cloudflare Email Routing solo recibe"
+  - id: T-132
+    titulo: "«Abrir en Blender» abre Blender aunque esté cerrado: enlace amatista:// registrado por el instalador y el add-on 5.4; la lección avisa si no se abrió"
+    version: v3.3.0
+    area: motor
+    aceptacion: "Con Blender cerrado, «Abrir en Blender», «Abrir el taller», «Mi isla» y «Conoce Amatista Motor» lo arrancan en la actividad; pruebas de protocolo.py y lanzador.js en verde"
+    evidencia: "addon/amatista_blender/protocolo.py; addon/amatista_blender/integracion.py; frontend/src/services/lanzador.js; frontend/src/blender/useLanzador.js; docs/motor/referencia/18_amatista_dentro_de_blender.md"
+  - id: T-133
+    titulo: "Probar el enlace amatista:// en Windows, macOS y Linux reales (instalador 5.4 y «Abrir Blender ahora»)"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-132]
+    aceptacion: "En los tres sistemas el navegador abre Blender en la práctica pedida; si no, «Reparar “Abrir en Blender”» lo arregla"
+    bloqueo: "Lo hace el usuario en sus equipos (la nube no tiene Windows ni macOS)"
+  - id: T-134
+    titulo: "Amatista dentro de Blender (add-on 5.4): menú Amatista arriba, botón de la vista 3D con el taller, actividad en la barra de estado y espacio de trabajo «Amatista»; probarlo con ventana"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-102]
+    aceptacion: "Con Blender con ventana, un alumno nuevo llega a su actividad sin la tecla N; en_blender.py en verde"
+    evidencia: "addon/amatista_blender/integracion.py; addon/tests/en_blender.py › probar_integracion"
+  - id: T-135
+    titulo: "Facetas 4.1: botones de 44 px en frase, tarjetas para elegir nivel, navegación legible; dinámicas v4.3 (Entrena tus teclas, Ajusta el valor, Encuentra el error) en cuatro lecciones"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "Los bloques shortcut_drill, transform_challenge y spot_error se resuelven y los valida el backend; vitest, lint y build en verde"
+    evidencia: "frontend/src/index.css (v4.1); frontend/src/components/leccion/dinamicas.js; docs/plataforma/14_refinamiento_y_dinamicas.md"
+  - id: T-136
+    titulo: "Desplegar el refinamiento, las dinámicas v4.3 y Amatista Motor 5.4 en producción"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-132, T-134, T-135]
+    aceptacion: "docs/despliegue/2026-10-30_refinamiento_motor_5_4.md: contenido importado sin errores, /api/addon/v1/estado con 5.4.0 y la PWA nueva publicada"
+    bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
