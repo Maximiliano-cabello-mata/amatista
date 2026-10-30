@@ -113,7 +113,7 @@ function LineaClaves({ bloque, alCompletar, resuelta }) {
             </g>
           </svg>
           <div className="flex flex-col items-center gap-1">
-            <label htmlFor={idAltura} className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+            <label htmlFor={idAltura} className="font-mono text-[11px] uppercase tracking-widest text-white/50">
               Altura
             </label>
             <input
@@ -132,7 +132,7 @@ function LineaClaves({ bloque, alCompletar, resuelta }) {
           </div>
         </div>
         <aside className="text-sm">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-white/45">Tus metas</p>
+          <p className="font-mono text-[11px] uppercase tracking-widest text-white/45">Tus metas</p>
           <ul className="mt-2 grid gap-1.5" aria-live="polite">
             {revision.map(({ meta, ok }) => (
               <li key={meta.frame} className={`flex items-start gap-2 ${ok ? 'text-emerald-300' : 'text-white/80'}`}>

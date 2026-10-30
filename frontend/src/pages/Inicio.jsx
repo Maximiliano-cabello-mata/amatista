@@ -20,7 +20,7 @@ import { disciplinaPorId } from '../data/software';
 import { useProgreso } from '../progreso/contexto';
 import { rutaEntrar, rutas } from '../rutas';
 
-const BOTON = 'corte-poly-sm inline-flex items-center justify-center gap-2 px-6 py-3.5 text-center font-extrabold uppercase tracking-widest';
+const BOTON = 'boton boton--grande';
 const CLAVE_PROGRAMA = 'amatista:programa';
 const plural = (n, uno, varios) => `${n} ${n === 1 ? uno : varios}`;
 const horas = (minutos) => (minutos >= 90 ? `${Math.round(minutos / 6) / 10} h` : `${minutos} min`);
@@ -95,20 +95,20 @@ function Paso({ paso, abierto, alternar, ultimo }) {
         }`}
       >
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 p-3 sm:flex-nowrap sm:p-4">
+          {/* Tocar el título también abre las lecciones; para el teclado está el botón «Ver lecciones». */}
           <button
             type="button"
             onClick={alternar}
             disabled={!conContenido}
-            aria-expanded={conContenido ? abierto : undefined}
-            aria-controls={conContenido ? idLista : undefined}
+            tabIndex={-1}
             className="group min-w-0 flex-1 text-left disabled:cursor-default"
           >
             <span className="flex flex-wrap items-center gap-2">
               <span className="text-base font-extrabold text-white sm:text-lg">{paso.titulo}</span>
-              <span className={`corte-poly-sm border px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest ${estado.clase}`}>{estado.texto}</span>
+              <span className={`corte-poly-sm border px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-widest ${estado.clase}`}>{estado.texto}</span>
             </span>
             {paso.resumen && <span className="mt-0.5 block text-sm leading-snug text-texto/70">{paso.resumen}</span>}
-            <span className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-widest text-white/45">
+            <span className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-widest text-white/45">
               {conContenido && (
                 <span>
                   {paso.hechas ? `${paso.hechas} de ${paso.lecciones.length}` : plural(paso.lecciones.length, 'lección', 'lecciones')}
@@ -116,22 +116,24 @@ function Paso({ paso, abierto, alternar, ultimo }) {
               )}
               {paso.minutos && conContenido && <span>{horas(paso.minutos)}</span>}
               {paso.insignia && conContenido && <span className="text-amatista-claro/80">Insignia: {paso.insignia}</span>}
-              {conContenido && (
-                <span className="text-white/55 group-hover:text-neon">
-                  {abierto ? 'Ocultar lecciones ▴' : 'Ver lecciones ▾'}
-                </span>
-              )}
             </span>
           </button>
           {conContenido && (
-            <a
-              href={paso.href}
-              className={`corte-poly-sm shrink-0 px-4 py-2 font-mono text-xs font-bold uppercase tracking-widest transition-[filter,background-color] ${
-                paso.estado === 'siguiente' ? 'destello bg-neon text-base hover:brightness-110' : 'bg-white/5 text-white/80 hover:bg-white/10'
-              }`}
-            >
-              {accion} ▸<span className="sr-only">: {paso.titulo}</span>
-            </a>
+            <div className="flex w-full shrink-0 flex-wrap items-center gap-2 sm:w-auto sm:flex-nowrap">
+              <button
+                type="button"
+                onClick={alternar}
+                aria-expanded={abierto}
+                aria-controls={idLista}
+                className="boton boton--fantasma boton--chico text-white/75"
+              >
+                {abierto ? 'Ocultar' : 'Ver'} lecciones <span className="boton__flecha boton__flecha--abajo" aria-hidden="true">▸</span>
+              </button>
+              <a href={paso.href} className={`boton ${paso.estado === 'siguiente' ? 'boton--primario destello' : 'boton--secundario'} flex-1 sm:flex-none`}>
+                {accion} <span className="boton__flecha" aria-hidden="true">▸</span>
+                <span className="sr-only">: {paso.titulo}</span>
+              </a>
+            </div>
           )}
         </div>
         {conContenido && abierto && (
@@ -145,12 +147,12 @@ function Paso({ paso, abierto, alternar, ultimo }) {
                       className={`hexagono grid h-7 w-8 shrink-0 place-items-center ${leccion.hecha ? 'bg-emerald-400/20 text-emerald-300' : 'bg-black/30 text-white/60'}`}
                       aria-hidden="true"
                     >
-                      {leccion.hecha ? <IconoPalomita className="h-3.5 w-3.5" /> : Icono ? <Icono className="h-4 w-4" /> : <span className="font-mono text-[10px]">{i + 1}</span>}
+                      {leccion.hecha ? <IconoPalomita className="h-3.5 w-3.5" /> : Icono ? <Icono className="h-4 w-4" /> : <span className="font-mono text-[11px]">{i + 1}</span>}
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className={`block truncate ${leccion.hecha ? 'text-white/60' : 'text-white'}`}>{leccion.titulo}</span>
                     </span>
-                    {leccion.minutos && <span className="shrink-0 font-mono text-[10px] text-white/40">{leccion.minutos} min</span>}
+                    {leccion.minutos && <span className="shrink-0 font-mono text-[11px] text-white/40">{leccion.minutos} min</span>}
                     {leccion.hecha && <span className="sr-only">(hecha)</span>}
                   </a>
                 </li>
@@ -176,10 +178,10 @@ function PasoHerramienta({ software, alInicio }) {
       } ${alInicio ? 'mb-4' : 'mt-4'}`}
     >
       <span className="hexagono grid h-11 w-12 shrink-0 place-items-center bg-black/40">
-        <LogoSoftware software={software} className="h-6 w-7 text-[10px]" />
+        <LogoSoftware software={software} className="h-6 w-7 text-[11px]" />
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block font-mono text-[10px] uppercase tracking-widest text-white/50">{alInicio ? 'Antes del paso 1 · una sola vez' : 'Cuando quieras · crea libre'}</span>
+        <span className="block font-mono text-[11px] uppercase tracking-widest text-white/50">{alInicio ? 'Antes del paso 1 · una sola vez' : 'Cuando quieras · crea libre'}</span>
         <span className="block font-extrabold text-white">{herramienta.nombre}</span>
         <span className="block text-sm text-texto/70">
           {alInicio
@@ -236,7 +238,7 @@ function Camino({ camino }) {
                 </h3>
                 {curso.para && <p className="text-sm text-texto/65">{curso.para}</p>}
               </div>
-              <p className="flex gap-3 font-mono text-[10px] uppercase tracking-widest text-white/45">
+              <p className="flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-widest text-white/50">
                 {curso.estado === 'bloqueado' ? (
                   <span>Se abre más adelante</span>
                 ) : (
@@ -245,8 +247,8 @@ function Camino({ camino }) {
                       {hechos} / {total} pasos
                     </span>
                     {minutos > 0 && <span>{horas(minutos)}</span>}
-                    <a href={rutas.curso(curso.id)} className="text-white/60 hover:text-neon">
-                      Ver el curso ▸
+                    <a href={rutas.curso(curso.id)} className="boton boton--secundario boton--chico -my-1 normal-case tracking-normal">
+                      Ver el curso <span className="boton__flecha" aria-hidden="true">▸</span>
                     </a>
                   </>
                 )}
@@ -297,11 +299,11 @@ function ElegirPrograma({ lista, elegido, elegir }) {
             }`}
           >
             <span className="hexagono grid h-11 w-12 shrink-0 place-items-center bg-black/40">
-              <LogoSoftware software={software} className="h-6 w-7 text-[10px]" />
+              <LogoSoftware software={software} className="h-6 w-7 text-[11px]" />
             </span>
             <span className="min-w-0">
               <span className="block text-sm font-bold leading-snug text-white">{QUE_CREAS[software.id] ?? software.lema}</span>
-              <span className={`block font-mono text-[10px] uppercase tracking-widest ${activo ? 'text-neon' : 'text-white/45'}`}>
+              <span className={`block font-mono text-[11px] uppercase tracking-widest ${activo ? 'text-neon' : 'text-white/45'}`}>
                 {software.nombre}
                 {camino.disponible ? ` · ${plural(camino.total, 'paso', 'pasos')}` : ' · pronto'}
               </span>
@@ -436,7 +438,7 @@ function Inicio({ consulta = {} }) {
                   <Icono className="h-5 w-5" />
                 </span>
                 <span className="font-extrabold text-white">
-                  <span className="mr-1 font-mono text-[10px] text-white/40">{i + 1}</span>
+                  <span className="mr-1 font-mono text-[11px] text-white/40">{i + 1}</span>
                   {nombre}
                 </span>
               </span>

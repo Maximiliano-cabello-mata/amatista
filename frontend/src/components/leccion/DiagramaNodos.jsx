@@ -155,7 +155,7 @@ function DiagramaNodos({ bloque }) {
       <div className="nodos__nota mt-3 min-h-[3.5rem]" aria-live="polite">
         {nodoActivo ? (
           <p className="leading-relaxed text-texto/90">
-            <span className="mr-2 inline-block px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest text-white" style={{ background: (CLASES_NODO[nodoActivo.kind] ?? CLASES_NODO.converter).color }}>
+            <span className="mr-2 inline-block px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-widest text-white" style={{ background: (CLASES_NODO[nodoActivo.kind] ?? CLASES_NODO.converter).color }}>
               {(CLASES_NODO[nodoActivo.kind] ?? CLASES_NODO.converter).nombre}
             </span>
             <strong className="text-white">{nodoActivo.title}.</strong> {nodoActivo.note ?? ''}

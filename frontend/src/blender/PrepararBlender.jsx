@@ -58,7 +58,7 @@ function PrepararBlender({ token }) {
   if (conectados > 0 && !abierto) {
     return (
       <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-emerald-200/90">
-        <span className="hexagono grid h-5 w-6 place-items-center bg-emerald-400 text-[10px] font-extrabold text-base">✓</span>
+        <span className="hexagono grid h-5 w-6 place-items-center bg-emerald-400 text-[11px] font-extrabold text-base">✓</span>
         Tu Blender está conectado con Amatista.
         <button type="button" onClick={() => setAbierto(true)} className="font-mono text-xs uppercase tracking-widest text-white/50 hover:text-neon">
           ¿Otro computador?

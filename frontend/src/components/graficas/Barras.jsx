@@ -115,7 +115,7 @@ function Barras({
                 dy="0.32em"
                 textAnchor="end"
                 fill={COLORES.textoSuave}
-                className="font-mono text-[10px] tabular-nums"
+                className="font-mono text-[11px] tabular-nums"
               >
                 {marca}
               </text>
@@ -145,7 +145,7 @@ function Barras({
                     y={base + 15}
                     textAnchor="middle"
                     fill={resaltada ? COLORES.texto : COLORES.textoSuave}
-                    className={`font-mono text-[10px] ${resaltada ? 'font-bold' : ''}`}
+                    className={`font-mono text-[11px] ${resaltada ? 'font-bold' : ''}`}
                   >
                     {dato.etiqueta}
                   </text>
@@ -172,7 +172,7 @@ function Barras({
             style={{ left: limitar(centro(activo), 64, ancho - 64), top: Math.max(4, y(seleccionado.valor) - 8) }}
           >
             <strong className="block text-sm text-white">{texto(Number(seleccionado.valor) || 0)}</strong>
-            <span className="block font-mono text-[10px] uppercase tracking-wider text-white/55">{seleccionado.detalle ?? seleccionado.etiqueta}</span>
+            <span className="block font-mono text-[11px] uppercase tracking-wider text-white/55">{seleccionado.detalle ?? seleccionado.etiqueta}</span>
           </div>
         )}
       </div>

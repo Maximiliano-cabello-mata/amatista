@@ -385,8 +385,8 @@ export function recorridoDelEnlace(datos) {
 }
 
 export const TEXTO_RECORRIDO = {
-  sin_enlace: 'El servidor todavía no tiene el enlace en vivo: haz «Conoce Amatista Motor» desde la pestaña Amatista de Blender.',
-  cerrado: 'Tu Blender está cerrado. Ábrelo: «Conoce Amatista Motor» te espera en la pestaña Amatista (tecla N).',
+  sin_enlace: 'El servidor todavía no tiene el enlace en vivo: haz «Conoce Amatista Motor» desde el menú Amatista de Blender (arriba).',
+  cerrado: 'Tu Blender está cerrado. Pulsa «Empezar en Blender»: se abre solo en la práctica.',
   viejo: 'Tu Amatista Motor es anterior a estas prácticas. Descarga el nuevo desde la página Blender y reinstálalo.',
   abierto: 'Tu Blender está conectado. Pulsa «Empezar en Blender» y mira tu pantalla.',
   recorriendo: 'Estás en una práctica del add-on. Aquí ves el mismo paso que en Blender.',

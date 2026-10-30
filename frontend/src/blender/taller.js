@@ -152,7 +152,7 @@ export function enlaceDelTaller(datos, tallerId) {
   const base = estadoBlender(datos);
   if (base.estado === 'sin_enlace') return { ...base, vivo: null };
   if (base.estado === 'cerrado') {
-    return { ...base, vivo: null, texto: 'Tu Blender está cerrado. Ábrelo y el taller te espera ahí.' };
+    return { ...base, vivo: null, texto: 'Tu Blender está cerrado: el botón lo abre directo en el taller.' };
   }
   const abiertos = (datos.blender ?? []).filter((b) => b?.en_linea);
   const aqui = tallerId ? abiertos.find((b) => b?.detalle?.taller?.taller === tallerId) : null;
@@ -203,7 +203,7 @@ export function controlesTaller(plan, enlace) {
 // Qué decirle al alumno después de mandar una orden a Blender (POST /ordenes).
 export function textoOrden(respuesta) {
   if (respuesta?.ok && respuesta.datos?.entregada) return 'Enviado a tu Blender.';
-  if (respuesta?.ok) return 'Tu Blender no respondió: ábrelo, pulsa N › pestaña Amatista y vuelve a intentarlo.';
+  if (respuesta?.ok) return 'Tu Blender no respondió: ábrelo (menú Amatista, arriba) y vuelve a intentarlo.';
   // Un servidor de antes del taller no conoce estas órdenes (422) o la ruta (404).
   if (respuesta?.status === 404 || respuesta?.status === 422) {
     return 'El servidor todavía no conoce las órdenes del taller: hay que actualizarlo.';

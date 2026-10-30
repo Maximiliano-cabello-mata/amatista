@@ -121,7 +121,7 @@ function BlenderPanel({ token, progreso, cursos, className = '' }) {
                   <IconoCubo className="h-5 w-5" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block font-mono text-[10px] uppercase tracking-widest text-white/45">
+                  <span className="block font-mono text-[11px] uppercase tracking-widest text-white/45">
                     {curso.titulo} · Módulo {modulo.numero} · {tituloCorto(modulo.titulo)}
                   </span>
                   <span className="block truncate font-bold text-white">{bloque.title ?? leccion.title}</span>

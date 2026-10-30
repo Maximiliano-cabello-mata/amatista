@@ -33,7 +33,7 @@ function Aviso({ titulo, texto, enlace, textoEnlace }) {
       <p className="mt-3 text-texto/75">{texto}</p>
       <a
         href={enlace}
-        className="corte-poly-sm destello mt-8 inline-block bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
+        className="boton boton--amatista boton--grande destello mt-8"
       >
         {textoEnlace}
       </a>
@@ -77,8 +77,8 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, res
     window.location.hash = siguiente ? rutas.leccion(curso.id, siguiente.id) : rutas.curso(curso.id);
   };
 
-  let textoBoton = 'Completar lección ▶';
-  if (completada) textoBoton = siguiente ? 'Siguiente lección ▶' : 'Volver al curso ▶';
+  let textoBoton = 'Completar lección';
+  if (completada) textoBoton = siguiente ? 'Siguiente lección' : 'Volver al curso';
   else if (siguiente?.type === 'exam') textoBoton = 'Completar e ir al examen ▶';
 
   const porIndice = new Map(actividades.map((a) => [a.indice, a]));
@@ -117,9 +117,9 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, res
         {anterior ? (
           <a
             href={rutas.leccion(curso.id, anterior.id)}
-            className="font-mono text-xs uppercase tracking-widest text-white/50 hover:text-neon sm:pt-4"
+            className="boton boton--fantasma max-w-full justify-start text-left text-white/70 sm:mt-1"
           >
-            ◂ {anterior.title}
+            <span aria-hidden="true">◂</span> <span className="truncate">Anterior: {anterior.title}</span>
           </a>
         ) : (
           <span />
@@ -142,9 +142,9 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, res
             onClick={continuar}
             disabled={bloqueado}
             aria-describedby={completada ? undefined : `estado-${leccion.id}`}
-            className="corte-poly-sm destello bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white transition-[filter] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
+            className="boton boton--amatista boton--grande destello"
           >
-            {textoBoton}
+            {textoBoton} <span className="boton__flecha" aria-hidden="true">▸</span>
           </button>
           {!completada && (
             <span id={`estado-${leccion.id}`} className="text-center font-mono text-xs text-white/50 sm:text-right" aria-live="polite">
@@ -157,9 +157,9 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, res
             <button
               type="button"
               onClick={irAPendiente}
-              className="self-center font-mono text-xs uppercase tracking-widest text-neon underline-offset-4 hover:underline sm:self-end"
+              className="boton boton--fantasma boton--chico self-center sm:self-end"
             >
-              Ir a la actividad pendiente ▾
+              Ir a la actividad pendiente <span className="boton__flecha boton__flecha--abajo" aria-hidden="true">▸</span>
             </button>
           )}
         </div>

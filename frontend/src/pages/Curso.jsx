@@ -95,13 +95,16 @@ function FilaLeccion({ curso, modulo, leccion, indice, acento, progreso, tema, r
           ) : null}
         </span>
       </span>
-      <span
-        className={`shrink-0 font-mono text-xs uppercase tracking-widest ${
-          actual ? 'animar-pulso text-neon' : `hidden sm:inline ${hecha ? 'text-white/50' : 'text-white/30'}`
-        }`}
-      >
-        {actual ? (examen ? '¡Pelear! ▶' : 'Jugar ▶') : hecha ? (examen ? 'Vencido' : 'Repasar') : porRevision ? 'Revisar' : 'Bloqueada'}
-      </span>
+      {actual ? (
+        // La lección que toca se ve como botón; las demás dicen su estado sin competir con ella.
+        <span className="boton boton--primario boton--chico shrink-0" aria-hidden="true">
+          {examen ? '¡Pelear!' : 'Empezar'} <span className="boton__flecha">▸</span>
+        </span>
+      ) : (
+        <span className={`hidden shrink-0 text-sm font-semibold sm:inline ${hecha ? 'text-white/60' : 'text-white/35'}`}>
+          {hecha ? (examen ? 'Vencido ✓' : 'Repasar ▸') : porRevision ? 'Revisar ▸' : 'Bloqueada'}
+        </span>
+      )}
     </>
   );
   return abierta ? (
@@ -211,6 +214,7 @@ function ArbolNiveles({ ruta, elegido, progreso, acento }) {
   const n = ruta.niveles.length;
   return (
     <nav aria-label={`Niveles de ${ruta.titulo}`} className="mt-8">
+      <p className="mb-2 text-sm font-bold text-white">Elige tu nivel <span className="font-normal text-texto/60">· empieza por el 1 si nunca usaste el programa</span></p>
       {/* Ramas: del tronco salen curvas hacia cada nivel (solo en pantallas anchas). */}
       <svg viewBox={`0 0 ${n * 100} 40`} preserveAspectRatio="none" className="hidden h-10 w-full md:block" aria-hidden="true">
         {ruta.niveles.map((curso, i) => {
@@ -230,38 +234,57 @@ function ArbolNiveles({ ruta, elegido, progreso, acento }) {
           );
         })}
       </svg>
-      <ol className={`grid grid-cols-2 gap-3 ${n > 4 ? 'md:grid-cols-5' : 'md:grid-cols-4'}`}>
+      <ol className={`grid gap-3 sm:grid-cols-2 ${n > 4 ? 'lg:grid-cols-5' : 'lg:grid-cols-4'}`}>
         {ruta.niveles.map((curso, i) => {
           const estado = estadoNivel(progreso, curso);
           const { porcentaje } = resumenCurso(progreso, curso);
           const actual = curso.id === elegido.id;
           const bloqueado = estado === 'bloqueado';
-          return (
-            <li key={curso.id}>
-              <a
-                href={rutas.curso(curso.id)}
-                aria-current={actual ? 'page' : undefined}
-                className={`corte-poly-sm elevar flex h-full flex-col gap-2 border p-3 ${
-                  actual ? `border-transparent bg-gradient-to-br ${acento.borde} text-base` : 'border-white/10 bg-superficie/90 hover:border-white/25'
-                }`}
-              >
-                <span className="flex items-center gap-2">
-                  <span className={`hexagono grid h-8 w-9 shrink-0 place-items-center font-mono text-xs font-bold ${NODO_NIVEL[estado]}`}>
-                    {estado === 'completado' ? '✓' : bloqueado ? <IconoCandado className="h-3.5 w-3.5" /> : numeroNivel(curso, i)}
+          const contenido = (
+            <>
+              <span className="flex items-center gap-2.5">
+                <span className={`hexagono grid h-9 w-10 shrink-0 place-items-center font-mono text-sm font-bold ${NODO_NIVEL[estado]}`}>
+                  {estado === 'completado' ? '✓' : bloqueado ? <IconoCandado className="h-4 w-4" /> : numeroNivel(curso, i)}
+                </span>
+                <span className="min-w-0">
+                  <span className="block font-mono text-[11px] font-bold uppercase tracking-widest text-white/55">
+                    Nivel {numeroNivel(curso, i)}
+                    {estado === 'completado' || estado === 'en-curso' ? ` · ${TEXTO_NIVEL[estado]}` : ''}
                   </span>
-                  <span className={`font-mono text-[10px] font-bold uppercase tracking-widest ${actual ? 'text-white' : 'text-white/50'}`}>
-                    {TEXTO_NIVEL[estado]}
+                  <span className={`block text-lg font-extrabold leading-tight ${bloqueado ? 'text-white/55' : 'text-white'}`}>
+                    {curso.nivel || curso.titulo}
                   </span>
                 </span>
-                <span className={`font-extrabold leading-tight ${actual ? 'text-white' : bloqueado ? 'text-white/50' : 'text-white'}`}>
-                  {curso.nivel || curso.titulo}
-                </span>
+              </span>
+              {curso.para && <span className="text-sm leading-snug text-texto/70">{curso.para}</span>}
+              <span className="mt-auto flex items-center gap-3 pt-1">
                 {!bloqueado && (
-                  <span className={`barra quieta mt-auto h-1 ${actual ? 'bg-black/30' : ''}`} aria-hidden="true">
-                    <span className={`relleno block ${actual ? 'bg-white' : acento.fondo}`} style={{ width: `${porcentaje}%` }} />
+                  <span className="barra quieta h-1.5 flex-1" aria-hidden="true">
+                    <span className={`relleno block ${acento.fondo}`} style={{ width: `${porcentaje}%` }} />
                   </span>
                 )}
-              </a>
+                <span className={`shrink-0 text-sm font-bold ${actual ? 'text-white' : bloqueado ? 'text-white/45' : 'text-neon'}`}>
+                  {actual ? 'Estás aquí' : bloqueado ? 'Pronto' : <>Ver nivel <span className="boton__flecha">▸</span></>}
+                </span>
+              </span>
+            </>
+          );
+          return (
+            <li key={curso.id} className="flex">
+              {bloqueado ? (
+                <div className="nivel-tarjeta w-full opacity-70" aria-disabled="true">
+                  {contenido}
+                </div>
+              ) : (
+                <a
+                  href={rutas.curso(curso.id)}
+                  aria-current={actual ? 'true' : undefined}
+                  className="nivel-tarjeta w-full"
+                  style={{ '--nivel-acento': acento.hex }}
+                >
+                  {contenido}
+                </a>
+              )}
             </li>
           );
         })}
@@ -310,7 +333,7 @@ function TuBlender({ niveles }) {
         <span className={`absolute -right-0.5 top-1 h-3 w-3 rounded-full ${conectado ? 'bg-emerald-400' : 'bg-white/25'}`} aria-hidden="true" />
       </span>
       <div className="min-w-0 flex-1">
-        <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-blender">Tu Blender</p>
+        <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-blender">Tu Blender</p>
         <p className="font-bold text-white">{estado}</p>
         <p className="mt-0.5 text-sm text-texto/70">
           {talleres > 0
@@ -321,9 +344,9 @@ function TuBlender({ niveles }) {
       </div>
       <a
         href={rutas.blender}
-        className="corte-poly-sm destello shrink-0 bg-blender px-4 py-2.5 text-center font-mono text-xs font-bold uppercase tracking-widest text-base hover:brightness-110"
+        className="boton boton--blender destello shrink-0"
       >
-        {conectado ? 'Ir a Blender ▸' : 'Conectar Blender ▸'}
+        {conectado ? 'Ir a Blender' : 'Conectar Blender'} <span className="boton__flecha" aria-hidden="true">▸</span>
       </a>
     </aside>
   );
@@ -346,8 +369,8 @@ function ComoAvanzas({ conBlender }) {
         <h2 id="como-avanzas" className="font-mono text-xs uppercase tracking-[0.25em] text-neon">
           Así avanzas en este curso
         </h2>
-        <a href={rutas.guia} className="font-mono text-[11px] uppercase tracking-widest text-white/55 hover:text-neon">
-          ¿Dudas? Ayuda ▸
+        <a href={rutas.guia} className="boton boton--fantasma boton--chico">
+          ¿Dudas? Ayuda <span className="boton__flecha" aria-hidden="true">▸</span>
         </a>
       </div>
       <ol className={`mt-3 grid gap-3 ${pasos.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
@@ -382,7 +405,7 @@ function NivelProximo({ curso }) {
         <ul className="mt-4 grid gap-2 sm:grid-cols-3">
           {curso.modulos.map((m) => (
             <li key={m.id} className="corte-poly-sm bg-white/5 px-3 py-2 text-sm text-white/55">
-              <span className="block font-mono text-[10px] uppercase tracking-widest text-white/35">Módulo {m.numero}</span>
+              <span className="block font-mono text-[11px] uppercase tracking-widest text-white/35">Módulo {m.numero}</span>
               {m.titulo}
             </li>
           ))}

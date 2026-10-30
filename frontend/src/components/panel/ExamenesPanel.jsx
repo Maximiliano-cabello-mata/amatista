@@ -10,7 +10,7 @@ import VerTodo from './VerTodo';
 
 const VISIBLES = 3;
 
-const CHIP = 'corte-poly-sm flex shrink-0 items-center gap-1 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest';
+const CHIP = 'corte-poly-sm flex shrink-0 items-center gap-1 px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-widest';
 
 const ESTADOS = {
   aprobado: { texto: 'Aprobado', clase: 'bg-amatista/25 text-amatista-claro', Icono: IconoPalomita },
@@ -31,7 +31,7 @@ function Examen({ examen }) {
     <li className="corte-poly-sm border border-white/5 bg-base/50 p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-white/45">
+          <p className="font-mono text-[11px] uppercase tracking-widest text-white/45">
             {curso.titulo} · Módulo {modulo.numero}
           </p>
           <p className="font-semibold leading-snug text-white">{titulo}</p>
@@ -101,7 +101,7 @@ function ExamenesPanel({ progreso, cursos, className = '' }) {
             ))}
           </ul>
           <VerTodo abierto={todo} ocultos={examenes.length - visibles.length} texto="Ver todos los exámenes" alCambiar={setTodo} />
-          <p className="mt-3 flex items-center gap-2 font-mono text-[10px] uppercase tracking-wider text-white/40">
+          <p className="mt-3 flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-white/40">
             <span className="h-3 w-0.5 bg-white/80" aria-hidden="true" /> Marca: puntaje mínimo para aprobar
           </p>
         </>

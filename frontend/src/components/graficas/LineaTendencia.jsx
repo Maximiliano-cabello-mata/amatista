@@ -51,7 +51,7 @@ function LineaTendencia({ datos = [], titulo, altura = 72, color = COLORES.neon,
   return (
     <figure className={`m-0 ${className}`}>
       <figcaption id={id} className="mb-2 flex items-baseline justify-between gap-2">
-        <span className="font-mono text-[10px] uppercase tracking-wider text-white/55">{titulo}</span>
+        <span className="font-mono text-[11px] uppercase tracking-wider text-white/55">{titulo}</span>
         <span className="text-xs text-white/60">
           {tendencia} · {ultimo}
         </span>

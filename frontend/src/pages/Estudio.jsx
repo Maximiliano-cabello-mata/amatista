@@ -14,7 +14,7 @@ import { rutas } from '../rutas';
 
 const cargarVista = () => import('../components/leccion/VistaAFrame');
 const PAUSA_VISTA = 600;
-const BOTON = 'corte-poly-sm px-3 py-2 font-mono text-[11px] font-bold uppercase tracking-widest transition-colors';
+const BOTON = 'boton boton--chico';
 
 function leerGuardado() {
   try {
@@ -118,7 +118,7 @@ function Estudio() {
               >
                 <span className="flex flex-wrap items-center gap-2 font-bold text-white">
                   {plantilla.nombre}
-                  {plantilla.motor && <span className="corte-poly-sm bg-amatista/30 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-widest text-amatista-claro">Motor</span>}
+                  {plantilla.motor && <span className="corte-poly-sm bg-amatista/30 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-widest text-amatista-claro">Motor</span>}
                 </span>
                 <span className="mt-1 text-xs leading-snug text-texto/65">{plantilla.texto}</span>
               </button>
@@ -153,7 +153,7 @@ function Estudio() {
             className="block min-h-[22rem] w-full flex-1 resize-y bg-transparent p-4 font-mono text-sm leading-relaxed text-texto focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-neon/60"
           />
           <div className="border-t border-white/10 bg-black/30 px-4 py-3">
-            <p className="font-mono text-[10px] uppercase tracking-widest text-white/45">Insertar en el cursor</p>
+            <p className="font-mono text-[11px] uppercase tracking-widest text-white/45">Insertar en el cursor</p>
             <div className="mt-2 flex flex-wrap gap-2" role="group" aria-label="Piezas para insertar">
               {PIEZAS.map((pieza) => (
                 <button key={pieza.id} type="button" onClick={() => insertar(pieza)} className={`${BOTON} ${pieza.motor ? 'bg-amatista/20 text-amatista-claro hover:bg-amatista/30' : 'bg-white/5 text-white/75 hover:bg-white/10'}`}>
@@ -184,7 +184,7 @@ function Estudio() {
           <dl className="mt-4 grid gap-2 sm:grid-cols-2">
             {CONSEJOS.map(([titulo, texto]) => (
               <div key={titulo} className="corte-poly-sm border border-white/10 bg-superficie/80 p-3">
-                <dt className="font-mono text-[10px] font-bold uppercase tracking-widest text-neon">{titulo}</dt>
+                <dt className="font-mono text-[11px] font-bold uppercase tracking-widest text-neon">{titulo}</dt>
                 <dd className="mt-1 text-sm leading-snug text-texto/75">{texto}</dd>
               </div>
             ))}

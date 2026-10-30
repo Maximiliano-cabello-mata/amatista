@@ -47,7 +47,7 @@ function EstacionBlender({ cursoId, estado, comoElemento = 'div' }) {
         )}
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-blender">
+        <span className="block font-mono text-[11px] font-bold uppercase tracking-[0.25em] text-blender">
           {taller ? 'Taller en Blender · habilidades' : cierre ? 'Úsalo en Blender · proyecto del módulo' : 'En Blender · exploración'}
         </span>
         <span className={`mt-0.5 block font-extrabold ${cierre ? 'text-lg' : 'text-base'} ${abierta ? 'text-white' : 'text-white/50'}`}>

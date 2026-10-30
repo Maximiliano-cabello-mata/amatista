@@ -219,7 +219,7 @@ function SimuladorVista({ bloque, alCompletar, resuelta }) {
           </div>
         </div>
         <aside className="text-sm">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-white/45">
+          <p className="font-mono text-[11px] uppercase tracking-widest text-white/45">
             Misiones · {hechas.filter((m) => misiones.includes(m)).length} de {misiones.length}
           </p>
           <ul className="mt-2 grid gap-1.5" aria-live="polite">
@@ -227,7 +227,7 @@ function SimuladorVista({ bloque, alCompletar, resuelta }) {
               const hecha = hechas.includes(m);
               return (
                 <li key={m} className={`flex items-start gap-2 ${hecha ? 'text-emerald-300' : 'text-white/80'}`}>
-                  <span className={`hexagono mt-0.5 grid h-4 w-[1.15rem] shrink-0 place-items-center text-[9px] font-bold ${hecha ? 'bg-emerald-400 text-base' : 'bg-white/15'}`} aria-hidden="true">
+                  <span className={`hexagono mt-0.5 grid h-4 w-[1.15rem] shrink-0 place-items-center text-[10px] font-bold ${hecha ? 'bg-emerald-400 text-base' : 'bg-white/15'}`} aria-hidden="true">
                     {hecha ? '✓' : ''}
                   </span>
                   <span>

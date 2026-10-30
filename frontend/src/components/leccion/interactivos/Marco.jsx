@@ -2,10 +2,9 @@ import { useId, useState } from 'react';
 import { XP_POR_ACTIVIDAD_PERFECTA } from '../../../progreso/reglas';
 import { TextoEnLinea } from '../Markdown';
 
-export const BOTON_PRINCIPAL =
-  'corte-poly-sm bg-amatista px-5 py-2.5 font-bold uppercase tracking-widest text-white transition-[filter] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40';
-export const BOTON_SECUNDARIO =
-  'corte-poly-sm bg-white/5 px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-white/75 transition-colors hover:bg-white/10 hover:text-white';
+// Facetas 4.1 (index.css › .boton): botones de 44 px con texto que se lee a la primera.
+export const BOTON_PRINCIPAL = 'boton boton--amatista';
+export const BOTON_SECUNDARIO = 'boton boton--secundario';
 
 const ETIQUETAS = {
   quiz_inline: 'Pregunta rápida',

@@ -112,11 +112,11 @@ function FilaPractica({ practica, esAdmin, token, alCambiar, preguntar }) {
         </div>
         <dl className="grid grid-cols-2 gap-2 text-center">
           <div>
-            <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">Alumnos</dt>
+            <dt className="font-mono text-[11px] uppercase tracking-widest text-white/50">Alumnos</dt>
             <dd className="text-2xl font-extrabold tabular-nums text-white">{practica.alumnos ?? 0}</dd>
           </div>
           <div>
-            <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">Completas</dt>
+            <dt className="font-mono text-[11px] uppercase tracking-widest text-white/50">Completas</dt>
             <dd className="text-2xl font-extrabold tabular-nums text-emerald-300">{practica.completadas ?? 0}</dd>
           </div>
         </dl>

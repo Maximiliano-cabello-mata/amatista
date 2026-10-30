@@ -75,7 +75,7 @@ function useObjetivo(paso, activo) {
   return { rect, buscando };
 }
 
-const BOTON = 'corte-poly-sm px-4 py-2 font-mono text-xs font-bold uppercase tracking-widest transition';
+const BOTON = 'boton';
 
 function CapaRecorrido({ indice, alSeguir, alVolver, alCerrar }) {
   const paso = PASOS_RECORRIDO[indice];
@@ -142,7 +142,7 @@ function CapaRecorrido({ indice, alSeguir, alVolver, alCerrar }) {
         className="recorrido-tarjeta corte-poly-sm fixed border border-neon/50 bg-superficie p-5 shadow-2xl outline-none"
         style={estiloTarjeta}
       >
-        <div className="flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.25em]">
+        <div className="flex items-center justify-between gap-3 font-mono text-[11px] uppercase tracking-[0.25em]">
           <span className="text-neon">Recorrido · {indice + 1} de {TOTAL_RECORRIDO}</span>
           <button type="button" onClick={alCerrar} className="text-white/50 hover:text-white">
             Salir ✕
@@ -159,7 +159,7 @@ function CapaRecorrido({ indice, alSeguir, alVolver, alCerrar }) {
         <p id="recorrido-texto" className="mt-1.5 text-sm leading-relaxed text-texto/85">
           <TextoEnLinea texto={paso.texto} />
         </p>
-        {buscando && <p className="mt-2 font-mono text-[10px] uppercase tracking-widest text-white/40">Abriendo la página…</p>}
+        {buscando && <p className="mt-2 font-mono text-[11px] uppercase tracking-widest text-white/40">Abriendo la página…</p>}
         <div className="mt-4 flex flex-wrap items-center justify-between gap-2">
           <button type="button" onClick={alVolver} disabled={indice === 0} className={`${BOTON} bg-white/5 text-white/75 hover:bg-white/10 disabled:opacity-40`}>
             ◂ Atrás

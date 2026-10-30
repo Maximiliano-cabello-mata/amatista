@@ -3,8 +3,7 @@ import EstadoGuardado from '../EstadoGuardado';
 import { IconoPalomita } from './IconosPanel';
 import Seccion from './Seccion';
 
-const BOTON =
-  'corte-poly-sm block px-5 py-3 text-center font-extrabold uppercase tracking-widest transition-[filter,background-color]';
+const BOTON = 'boton boton--ancho';
 
 // Anónimo: invita a crear una cuenta para respaldar el progreso. Con cuenta:
 // estado de la sincronización y del correo.

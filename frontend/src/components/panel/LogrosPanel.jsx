@@ -65,7 +65,7 @@ function Logro({ logro, indice }) {
     >
       <div className="flex items-baseline justify-between gap-2">
         <p className="font-bold text-white">{logro.nombre}</p>
-        <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">{logro.ganados} / 3</p>
+        <p className="font-mono text-[11px] uppercase tracking-widest text-white/50">{logro.ganados} / 3</p>
       </div>
       <ul className="flex items-center gap-2">
         {logro.grados.map((g) => (
@@ -91,7 +91,7 @@ function Logro({ logro, indice }) {
           <div className="barra mt-1.5 h-1.5" aria-hidden="true">
             <div className="relleno" style={{ width: `${Math.round(logro.avance * 100)}%`, background: siguiente.color }} />
           </div>
-          <p className="mt-1 font-mono text-[10px] text-white/45">
+          <p className="mt-1 font-mono text-[11px] text-white/45">
             {logro.valor} de {siguiente.meta} {logro.unidad}
           </p>
         </div>

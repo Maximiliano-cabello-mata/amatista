@@ -26,6 +26,7 @@ import {
   textoOrden,
   unirConY,
 } from '../../../blender/taller';
+import { useLanzadorBlender } from '../../../blender/useLanzador';
 import { useAvisoTemporal, useEnlaceTaller, usePlanTaller } from '../../../blender/useTaller';
 import { useCatalogo } from '../../../catalogo/contexto';
 import { ubicarTaller } from '../../../modulos/practica';
@@ -33,6 +34,8 @@ import { useProgreso } from '../../../progreso/contexto';
 import { estaCompletada, estaDesbloqueada } from '../../../progreso/reglas';
 import { rutaEntrar, rutas } from '../../../rutas';
 import { ordenarTaller } from '../../../services/blender';
+import { hayQueLanzar } from '../../../services/lanzador';
+import AvisoLanzador from '../../blender/AvisoLanzador';
 import { IconoGuia } from '../../etiquetas/IconosEtiqueta';
 import { TextoEnLinea } from '../Markdown';
 import { useActividad } from './hooks';
@@ -99,7 +102,7 @@ function Ciclo({ actual }) {
               <strong className={ahora ? 'text-white' : 'text-texto/90'}>{paso.nombre}</strong>
               <span className="text-texto/60"> · {paso.texto}</span>
             </span>
-            {ahora && <span className="shrink-0 font-mono text-[10px] uppercase tracking-widest text-neon">Ahora</span>}
+            {ahora && <span className="shrink-0 font-mono text-[11px] uppercase tracking-widest text-neon">Ahora</span>}
           </li>
         );
       })}
@@ -128,12 +131,12 @@ function Habilidades({ lista, actual }) {
               <p className="flex items-start justify-between gap-2">
                 <span className="font-bold leading-snug text-white">{h.titulo}</span>
                 {h.lista && (
-                  <span className="hexagono grid h-5 w-6 shrink-0 place-items-center bg-emerald-400 text-[10px] font-extrabold text-base">
+                  <span className="hexagono grid h-5 w-6 shrink-0 place-items-center bg-emerald-400 text-[11px] font-extrabold text-base">
                     ✓<span className="sr-only"> lista</span>
                   </span>
                 )}
               </p>
-              <p className={`mt-1 font-mono text-[10px] uppercase tracking-widest ${estilo.texto}`}>
+              <p className={`mt-1 font-mono text-[11px] uppercase tracking-widest ${estilo.texto}`}>
                 {textoFase(h.fase)}
                 {ahora && <span className="text-neon"> · ahora</span>}
                 {h.repaso_vencido && <span className="text-amatista-claro"> · toca recordarla</span>}
@@ -156,7 +159,7 @@ function Ahora({ actividad, vivo, enlace }) {
   const enBlender = enlace?.estado === 'aqui' && vivo;
   return (
     <div key={actividad.id} className="corte-poly-sm animar-entrar mt-4 border border-neon/25 bg-neon/5 p-4">
-      <p className="font-mono text-[10px] uppercase tracking-widest text-neon">
+      <p className="font-mono text-[11px] uppercase tracking-widest text-neon">
         {enBlender ? 'Ahora en tu Blender' : 'Lo que sigue'} · {nombreTipo(actividad)}
         {numero}
       </p>
@@ -179,7 +182,7 @@ function EnVivo({ vivo }) {
       )}
       {vivo.total > 0 && (
         <div className="mt-2">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+          <p className="font-mono text-[11px] uppercase tracking-widest text-white/50">
             {vivo.llenas} de {vivo.total} {vivo.total === 1 ? 'pieza' : 'piezas'}
           </p>
           <div className="mt-1 h-1.5 overflow-hidden bg-white/10" aria-hidden="true">
@@ -190,7 +193,7 @@ function EnVivo({ vivo }) {
       {vivo.pieza && (
         <p className="mt-2 flex flex-wrap items-center gap-2 text-sm text-texto/85">
           <strong className="text-white">{vivo.pieza.nombre}</strong>
-          <span className={`corte-poly-sm px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest ${ESTILO_PIEZA[vivo.pieza.estado]}`}>
+          <span className={`corte-poly-sm px-2 py-0.5 font-mono text-[11px] uppercase tracking-widest ${ESTILO_PIEZA[vivo.pieza.estado]}`}>
             {ESTADOS_PIEZA[vivo.pieza.estado]}
           </span>
           {vivo.pieza.mensaje && <span>{vivo.pieza.mensaje}</span>}
@@ -199,7 +202,7 @@ function EnVivo({ vivo }) {
       {vivo.mensaje && vivo.mensaje !== vivo.pieza?.mensaje && <p className="mt-2 text-sm leading-relaxed text-texto/85">{vivo.mensaje}</p>}
       {vivo.pista && (
         <div className="corte-poly-sm animar-entrar mt-3 border-l-4 border-amber-300/70 bg-amber-300/5 p-3">
-          <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-amber-200">
+          <p className="font-mono text-[11px] font-bold uppercase tracking-widest text-amber-200">
             Pista {vivo.pista.nivel}{vivo.pista.titulo ? ` · ${vivo.pista.titulo}` : ''}
           </p>
           {vivo.pista.texto && <p className="mt-1 text-sm leading-relaxed text-texto/90">{vivo.pista.texto}</p>}
@@ -253,7 +256,7 @@ function IrAlProyecto({ tallerId }) {
   return (
     <div className="corte-poly-sm animar-entrar mt-5 flex flex-col gap-3 border border-emerald-400/35 bg-emerald-400/5 p-4 sm:flex-row sm:items-center">
       <div className="min-w-0 flex-1">
-        <p className="font-mono text-[10px] uppercase tracking-widest text-emerald-300">Úsalo · el proyecto está abierto</p>
+        <p className="font-mono text-[11px] uppercase tracking-widest text-emerald-300">Úsalo · el proyecto está abierto</p>
         <p className="mt-1 font-bold text-white">{leccionProyecto.title}</p>
         <p className="mt-0.5 text-sm text-texto/75">
           {abierta || !antes.length
@@ -294,11 +297,18 @@ function TallerHabilidades({ bloque, alCompletar, resuelta }) {
     if (abierto && !resuelta) resolverRef.current(true, 1);
   }, [abierto, resuelta]);
 
+  // Add-on 5.4: con Blender cerrado, «Abrir el taller» lo arranca directo en la actividad (amatista://).
+  const lanzador = useLanzadorBlender(token, { alAbrirse: () => refrescar() });
   const ordenar = async (tipo, extra = {}) => {
     if (enviando) return;
     setEnviando(true);
-    const r = await ordenarTaller(token, tipo, { taller: bloque.taller, ...extra });
+    const datos = { taller: bloque.taller, ...extra };
+    const r = await ordenarTaller(token, tipo, datos);
     setEnviando(false);
+    if (hayQueLanzar(r) && ['taller_abrir', 'taller_probar', 'taller_repaso'].includes(tipo)) {
+      lanzador.lanzar('taller_abrir', { taller: bloque.taller, actividad: extra.actividad });
+      return;
+    }
     avisar(textoOrden(r));
     if (r.ok && r.datos?.entregada) {
       refrescar();
@@ -377,6 +387,7 @@ function TallerHabilidades({ bloque, alCompletar, resuelta }) {
             ))}
           </div>
           <LineaBlender enlace={enlace} aviso={aviso} />
+          <AvisoLanzador estado={lanzador.estado} alCerrar={lanzador.cerrar} />
 
           {(probar.length > 0 || repasos.length > 0) && (
             <div className="mt-4 grid gap-3">
@@ -403,7 +414,7 @@ function TallerHabilidades({ bloque, alCompletar, resuelta }) {
               )}
               {repasos.length > 0 && (
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-amatista-claro">Recuérdalo · 1 min</span>
+                  <span className="font-mono text-[11px] uppercase tracking-widest text-amatista-claro">Recuérdalo · 1 min</span>
                   {repasos.map((r) => (
                     <button
                       key={r.id}
@@ -498,6 +509,7 @@ function ProyectoTaller({ bloque }) {
   const { token, usuario } = useAuth();
   const { plan, recargar } = usePlanTaller(usuario ? token : null, bloque.taller);
   const [aviso, avisar] = useAvisoTemporal();
+  const lanzador = useLanzadorBlender(token);
   const { cursos } = useCatalogo();
   if (!plan) return null;
   const estado = estadoProyecto(plan);
@@ -506,8 +518,10 @@ function ProyectoTaller({ bloque }) {
   const ubicacion = estado.proyecto === 'cerrado' ? ubicarTaller(cursos, bloque.taller) : null;
 
   const reto = async () => {
-    const r = await ordenarTaller(token, 'taller_abrir', ordenReto(plan));
-    avisar(textoOrden(r));
+    const orden = ordenReto(plan);
+    const r = await ordenarTaller(token, 'taller_abrir', orden);
+    if (hayQueLanzar(r)) lanzador.lanzar('taller_abrir', orden);
+    else avisar(textoOrden(r));
     if (r.ok) recargar();
   };
 
@@ -519,7 +533,7 @@ function ProyectoTaller({ bloque }) {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
         <PiezaIsla color={color} hecho={estado.proyecto === 'hecho'} estrella={estado.reto === 'hecho'} />
         <div className="min-w-0 flex-1">
-          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-blender">{bloque.title ?? 'Úsalo · tu isla'}</p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-blender">{bloque.title ?? 'Úsalo · tu isla'}</p>
           {isla.pieza && <p className="mt-0.5 text-lg font-extrabold text-white">{isla.pieza}</p>}
           {isla.texto && <p className="text-sm text-texto/75">{isla.texto}</p>}
           <dl className="mt-3 grid gap-1.5 text-sm">
@@ -539,6 +553,7 @@ function ProyectoTaller({ bloque }) {
               {aviso}
             </p>
           )}
+          <AvisoLanzador estado={lanzador.estado} alCerrar={lanzador.cerrar} />
         </div>
         {estado.reto === 'disponible' && (
           <button type="button" onClick={reto} className={`${BOTON_PRINCIPAL} shrink-0`}>

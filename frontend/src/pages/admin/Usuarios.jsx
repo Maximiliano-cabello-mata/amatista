@@ -135,7 +135,7 @@ function Usuarios() {
           ) : (
             <div className={`-mx-4 overflow-x-auto px-4 transition-opacity sm:mx-0 sm:px-0 ${cargando ? 'opacity-60' : ''}`} aria-busy={cargando}>
               <table className="w-full min-w-[44rem] text-left text-sm">
-                <thead className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+                <thead className="font-mono text-[11px] uppercase tracking-widest text-white/50">
                   <tr>
                     <th scope="col" className="py-2 pr-3 font-normal">Usuario</th>
                     <th scope="col" className="py-2 pr-3 font-normal">Estado</th>

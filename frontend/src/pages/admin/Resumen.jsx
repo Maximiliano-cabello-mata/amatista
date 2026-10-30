@@ -173,7 +173,7 @@ function Resumen() {
         {datos.por_curso?.length ? (
           <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
             <table className="w-full min-w-[32rem] text-left text-sm">
-              <thead className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+              <thead className="font-mono text-[11px] uppercase tracking-widest text-white/50">
                 <tr>
                   <th scope="col" className="py-2 pr-3 font-normal">Curso</th>
                   <th scope="col" className="py-2 pr-3 text-right font-normal">Alumnos</th>

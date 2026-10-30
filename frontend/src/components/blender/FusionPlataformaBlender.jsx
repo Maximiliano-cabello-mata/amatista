@@ -111,20 +111,20 @@ function FusionPlataformaBlender({ progreso = null, resumida = false }) {
       {/* Las dos partes y el puente entre ellas. */}
       <div className="fusion__partes mt-6 grid items-stretch gap-3 md:grid-cols-[1fr_auto_1fr]" aria-hidden="true">
         <div className="corte-poly-sm border border-neon/30 bg-base/60 p-4">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-neon">La plataforma</p>
+          <p className="font-mono text-[11px] uppercase tracking-widest text-neon">La plataforma</p>
           <p className="mt-1 text-sm text-texto/85">Teoría corta, actividades, tu curso, Mi panel y los botones que mandan órdenes a Blender.</p>
         </div>
         <div className="fusion__puente flex flex-row items-center justify-center gap-2 md:flex-col">
-          <span className="fusion__flecha font-mono text-[10px] uppercase tracking-widest text-white/60">órdenes ▸</span>
-          <span className="hexagono grid h-14 w-16 place-items-center bg-amatista text-center font-mono text-[9px] font-extrabold leading-tight text-white">
+          <span className="fusion__flecha font-mono text-[11px] uppercase tracking-widest text-white/60">órdenes ▸</span>
+          <span className="hexagono grid h-14 w-16 place-items-center bg-amatista text-center font-mono text-[10px] font-extrabold leading-tight text-white">
             TU
             <br />
             CUENTA
           </span>
-          <span className="fusion__flecha font-mono text-[10px] uppercase tracking-widest text-white/60">◂ latido</span>
+          <span className="fusion__flecha font-mono text-[11px] uppercase tracking-widest text-white/60">◂ latido</span>
         </div>
         <div className="corte-poly-sm border border-blender/30 bg-base/60 p-4">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-blender">Blender + Amatista Motor</p>
+          <p className="font-mono text-[11px] uppercase tracking-widest text-blender">Blender + Amatista Motor</p>
           <p className="mt-1 text-sm text-texto/85">La tarjeta 3D, el molde, las pistas, tus herramientas y la revisión de tu escena.</p>
         </div>
       </div>
@@ -150,8 +150,8 @@ function FusionPlataformaBlender({ progreso = null, resumida = false }) {
               <div className="min-w-0">
                 <p className="flex flex-wrap items-center gap-2">
                   <span className="font-bold text-white">{paso.titulo}</span>
-                  <span className={`corte-poly-sm border px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest ${lugar.clase}`}>{lugar.texto}</span>
-                  {listo && <span className="font-mono text-[10px] uppercase tracking-widest text-emerald-300">{paso.id === 'vivo' ? 'Ahora mismo' : 'Ya lo tienes'}</span>}
+                  <span className={`corte-poly-sm border px-2 py-0.5 font-mono text-[11px] uppercase tracking-widest ${lugar.clase}`}>{lugar.texto}</span>
+                  {listo && <span className="font-mono text-[11px] uppercase tracking-widest text-emerald-300">{paso.id === 'vivo' ? 'Ahora mismo' : 'Ya lo tienes'}</span>}
                 </p>
                 <p className="mt-1 text-sm leading-relaxed text-texto/80">{paso.texto}</p>
               </div>

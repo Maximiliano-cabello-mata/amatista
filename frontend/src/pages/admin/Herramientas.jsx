@@ -67,7 +67,7 @@ function Detalle({ tipo, ejemplo }) {
           <pre className="corte-poly-sm max-h-[32rem] overflow-auto bg-base/80 p-4 font-mono text-xs leading-relaxed text-white/80">{json}</pre>
         ) : (
           <div className="corte-poly border border-white/10 bg-base/60 p-4 sm:p-6">
-            <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">Así lo ve el alumno (ejemplo)</p>
+            <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.25em] text-white/40">Así lo ve el alumno (ejemplo)</p>
             <BloqueContenido key={tipo} bloque={ejemplo ?? { type: tipo }} alCompletar={() => {}} />
           </div>
         )}
@@ -116,7 +116,7 @@ function Herramientas() {
                     >
                       {nombreHerramienta(tipo)}
                       {HERRAMIENTAS[tipo]?.nueva && (
-                        <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-neon">
+                        <span className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-widest text-neon">
                           <IconoNuevo className="h-3 w-3" />
                           Nueva
                         </span>

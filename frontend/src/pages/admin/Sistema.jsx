@@ -105,7 +105,7 @@ function Sistema() {
             />
           </dl>
           <table className="mt-5 w-full text-left text-sm">
-            <thead className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+            <thead className="font-mono text-[11px] uppercase tracking-widest text-white/50">
               <tr>
                 <th scope="col" className="py-2 font-normal">Tabla</th>
                 <th scope="col" className="py-2 text-right font-normal">Filas</th>

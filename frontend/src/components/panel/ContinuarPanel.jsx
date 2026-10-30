@@ -10,7 +10,7 @@ import { cursosParaContinuar } from './datos';
 import Seccion from './Seccion';
 
 const ETIQUETA_NUEVA =
-  'corte-poly-sm bg-neon/15 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest text-neon';
+  'corte-poly-sm bg-neon/15 px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-widest text-neon';
 
 function detalleLeccion({ modulo, leccion, indice }) {
   const partes = [`Lección ${indice + 1} de ${modulo.contenido.lessons.length}`, TIPOS_LECCION[leccion.type]];
@@ -109,7 +109,7 @@ function ContinuarPanel({ progreso, cursos, className = '' }) {
                   >
                     <LogoCurso logo={logoDeCurso(otro)} className="h-8 w-8 shrink-0" />
                     <span className="min-w-0 flex-1">
-                      <span className="block font-mono text-[10px] uppercase tracking-widest text-white/45">
+                      <span className="block font-mono text-[11px] uppercase tracking-widest text-white/45">
                         {otro.titulo} · {suyo.completadas} / {suyo.total}
                       </span>
                       <span className="block truncate font-semibold text-white">{suyo.siguiente.leccion.title}</span>

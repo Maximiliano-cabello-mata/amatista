@@ -36,7 +36,7 @@ function Insignia({ insignia }) {
       </div>
       <p className={`font-bold leading-tight ${ganada ? 'text-white' : 'text-white/60'}`}>{nombre}</p>
       {modulo && (
-        <p className={`font-mono text-[10px] uppercase tracking-widest ${ganada && tema ? tema.texto : 'text-white/40'}`}>
+        <p className={`font-mono text-[11px] uppercase tracking-widest ${ganada && tema ? tema.texto : 'text-white/40'}`}>
           Módulo {modulo.numero}
           {tema ? ` · ${tema.nombre}` : ''}
         </p>

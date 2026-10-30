@@ -31,7 +31,7 @@ function ProgramasPanel({ progreso, cursos, className = '' }) {
               </p>
               {disponible ? (
                 <>
-                  <p className="mt-3 flex justify-between font-mono text-[10px] uppercase tracking-widest text-white/50">
+                  <p className="mt-3 flex justify-between font-mono text-[11px] uppercase tracking-widest text-white/50">
                     <span>{resumen.porcentaje}%</span>
                     <span>
                       {resumen.completadas} / {resumen.total} lecciones

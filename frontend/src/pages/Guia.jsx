@@ -12,7 +12,7 @@ import { useRecorrido } from '../recorrido/contexto';
 import { TOTAL_RECORRIDO } from '../recorrido/pasos';
 import { rutas } from '../rutas';
 
-const BOTON = 'corte-poly-sm inline-flex items-center justify-center gap-2 px-6 py-3 text-center font-extrabold uppercase tracking-widest';
+const BOTON = 'boton boton--grande';
 
 function Tema({ tema, abierto, alAlternar }) {
   const idPanel = `ayuda-${tema.id}`;
