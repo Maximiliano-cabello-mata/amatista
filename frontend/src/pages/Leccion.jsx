@@ -1,4 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useAuth } from '../auth/contexto';
+import { CUENTA_REGRESIVA, EVENTO_LISTO, datosLeccion, queSigue } from '../blender/leccion';
+import { useLeccionEnBlender } from '../blender/useLeccionEnBlender';
 import { useCatalogo } from '../catalogo/contexto';
 import { IconoCandado } from '../components/Iconos';
 import BloqueContenido from '../components/leccion/BloqueContenido';
@@ -41,6 +44,34 @@ function Aviso({ titulo, texto, enlace, textoEnlace }) {
   );
 }
 
+function irA(hash) {
+  window.location.hash = hash;
+}
+
+// Motor 6.1: Blender cumplió la etapa de esta lección y la plataforma sigue sola (se puede frenar).
+function AvisoBlenderListo({ segundos, siguiente, alSeguir, alQuedarse }) {
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      className="corte-poly animar-entrar fixed inset-x-4 bottom-4 z-40 mx-auto flex max-w-xl flex-col gap-3 border border-blender/60 bg-superficie/95 p-4 shadow-2xl sm:flex-row sm:items-center"
+    >
+      <p className="flex-1 text-sm leading-relaxed text-texto/90">
+        <strong className="block text-white">Blender terminó esta parte.</strong>
+        {siguiente ? `Sigues con «${siguiente.title}» en ${segundos} s.` : `Vuelves al curso en ${segundos} s.`}
+      </p>
+      <div className="flex gap-2">
+        <button type="button" onClick={alSeguir} className="boton boton--amatista boton--chico">
+          Seguir ahora
+        </button>
+        <button type="button" onClick={alQuedarse} className="boton boton--fantasma boton--chico">
+          Quedarme aquí
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // Contenido de una lección que no es examen, con su botón para completarla.
 // El botón se habilita cuando todas las actividades requeridas (bloques
 // interactivos y tarjetas de concepto) están resueltas; en un repaso no se bloquea.
@@ -74,8 +105,38 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, res
 
   const continuar = () => {
     if (!completada) alCompletar();
-    window.location.hash = siguiente ? rutas.leccion(curso.id, siguiente.id) : rutas.curso(curso.id);
+    irA(siguiente ? rutas.leccion(curso.id, siguiente.id) : rutas.curso(curso.id));
   };
+
+  // Motor 6.1: cuando Blender cumple la etapa de esta lección, la plataforma pasa sola a la siguiente
+  // (con unos segundos para frenarla). Si quedan actividades, lleva a la que falta.
+  const [cuenta, setCuenta] = useState(null);
+  const bloqueadoRef = useRef(bloqueado);
+  const accionesRef = useRef({ continuar, irAPendiente });
+  useEffect(() => {
+    bloqueadoRef.current = bloqueado;
+    accionesRef.current = { continuar, irAPendiente };
+  });
+  useEffect(() => {
+    const alListo = () => {
+      // La actividad que acaba de resolverse se cuenta en el render siguiente: se decide un momento después.
+      window.setTimeout(() => {
+        if (queSigue({ bloqueado: bloqueadoRef.current }) === 'pendiente') accionesRef.current.irAPendiente();
+        else setCuenta(CUENTA_REGRESIVA);
+      }, 400);
+    };
+    window.addEventListener(EVENTO_LISTO, alListo);
+    return () => window.removeEventListener(EVENTO_LISTO, alListo);
+  }, []);
+  useEffect(() => {
+    if (cuenta === null) return undefined;
+    const t = window.setTimeout(() => {
+      if (cuenta > 1) return setCuenta(cuenta - 1);
+      setCuenta(null);
+      accionesRef.current.continuar();
+    }, 1000);
+    return () => window.clearTimeout(t);
+  }, [cuenta]);
 
   let textoBoton = 'Completar lección';
   if (completada) textoBoton = siguiente ? 'Siguiente lección' : 'Volver al curso';
@@ -112,6 +173,18 @@ function ContenidoLeccion({ curso, leccion, completada, anterior, siguiente, res
           );
         })}
       </div>
+
+      {cuenta !== null && (
+        <AvisoBlenderListo
+          segundos={cuenta}
+          siguiente={siguiente}
+          alSeguir={() => {
+            setCuenta(null);
+            continuar();
+          }}
+          alQuedarse={() => setCuenta(null)}
+        />
+      )}
 
       <footer className="mt-12 flex flex-col-reverse gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-start sm:justify-between">
         {anterior ? (
@@ -179,12 +252,16 @@ function Leccion({ cursoId, leccionId }) {
   } = useProgreso();
   const { buscarCurso } = useCatalogo();
   const { revision } = useVista();
+  const { token, usuario } = useAuth();
   const curso = buscarCurso(cursoId);
   const ubicacion = curso && buscarLeccion(curso, leccionId);
   const desbloqueada = Boolean(ubicacion) && estaDesbloqueada(progreso, curso.id, ubicacion.modulo, ubicacion.indice);
   // Vista de administrador: cualquier lección se abre para revisarla (el progreso no cambia por eso).
   const abierta = Boolean(ubicacion) && (desbloqueada || revision);
   const idAbierta = abierta ? ubicacion.leccion.id : null;
+
+  // Motor 6.1: Blender sabe en qué lección va el alumno (y lo muestra en su barra).
+  useLeccionEnBlender(usuario ? token : null, abierta ? datosLeccion(curso, ubicacion) : null);
 
   // learning_session_started: el proveedor lo registra una vez por lección y día.
   useEffect(() => {

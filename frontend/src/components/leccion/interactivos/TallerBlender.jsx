@@ -33,6 +33,7 @@ import {
   unirConY,
 } from '../../../blender/taller';
 import { useLanzadorBlender } from '../../../blender/useLanzador';
+import { EVENTO_LISTO } from '../../../blender/leccion';
 import { useAvisoTemporal, useEnlaceTaller, usePlanTaller } from '../../../blender/useTaller';
 import { useCatalogo } from '../../../catalogo/contexto';
 import { leccionDelBloque, ubicarTaller } from '../../../modulos/practica';
@@ -43,6 +44,7 @@ import { ordenarTaller } from '../../../services/blender';
 import { hayQueLanzar } from '../../../services/lanzador';
 import AvisoLanzador from '../../blender/AvisoLanzador';
 import { IconoGuia } from '../../etiquetas/IconosEtiqueta';
+import { ficha } from '../fichas';
 import { TextoEnLinea } from '../Markdown';
 import { useActividad } from './hooks';
 import { BOTON_PRINCIPAL, BOTON_SECUNDARIO, MarcoActividad, Retroalimentacion } from './Marco';
@@ -65,6 +67,7 @@ const TEXTO_ESTADO_VIVO = {
   mirando: 'Mira tu vista 3D: Amatista lo está haciendo, con las teclas en pantalla.',
   pausa: 'En pausa. Cuando quieras, sigue donde quedaste.',
   lograda: '¡Lograda! Sigue con la siguiente cuando quieras.',
+  presentando: 'Blender te está presentando una herramienta nueva: lee su ficha en la vista 3D y pulsa «Empezar».',
 };
 
 const BOTON_CHIP =
@@ -179,6 +182,19 @@ function Ahora({ actividad, vivo, enlace }) {
   );
 }
 
+// Motor 6.1: la misma ficha que Blender muestra en la vista 3D, por si el alumno mira la plataforma.
+function FichaEnVivo({ id, nombre }) {
+  const f = ficha(id);
+  return (
+    <div className="corte-poly-sm mb-3 border-l-4 border-amatista/70 bg-amatista/10 p-3">
+      <p className="font-mono text-[11px] font-bold uppercase tracking-widest text-amatista-claro">Herramienta nueva en Blender</p>
+      <p className="mt-1 font-semibold text-white">{f?.nombre ?? nombre}</p>
+      {f && <p className="mt-1 text-sm leading-relaxed text-texto/85">{f.para_que}</p>}
+      {f?.donde && <p className="mt-1 text-sm text-texto/65">{f.donde}</p>}
+    </div>
+  );
+}
+
 function EnVivo({ vivo }) {
   const porcentaje = vivo.total ? Math.round((100 * Math.min(vivo.llenas, vivo.total)) / vivo.total) : 0;
   return (
@@ -186,6 +202,7 @@ function EnVivo({ vivo }) {
       {TEXTO_ESTADO_VIVO[vivo.estado] && (
         <p className={`text-sm ${vivo.estado === 'lograda' ? 'text-emerald-300' : 'text-amber-200'}`}>{TEXTO_ESTADO_VIVO[vivo.estado]}</p>
       )}
+      {vivo.ficha && <FichaEnVivo id={vivo.ficha.id} nombre={vivo.ficha.nombre} />}
       {vivo.total > 0 && (
         <div className="mt-2">
           <p className="font-mono text-[11px] uppercase tracking-widest text-white/50">
@@ -306,9 +323,17 @@ function TallerHabilidades({ bloque, alCompletar, resuelta }) {
   }, [claveVivo, recargar]);
 
   // Se resuelve al abrirse el proyecto. Al volver a una lección ya resuelta no se celebra otra vez.
+  // Motor 6.1: si se cumplió con la lección a la vista, la lección pasa sola a la siguiente.
+  // (Solo si se vio sin cumplir en esta visita: abrir una lección ya cumplida no la salta.)
+  const vistoSinCumplir = useRef(false);
   useEffect(() => {
-    if (abierto && !resuelta) resolverRef.current(true, 1);
-  }, [abierto, resuelta]);
+    if (plan && !abierto) vistoSinCumplir.current = true;
+  });
+  useEffect(() => {
+    if (!abierto || resuelta) return;
+    resolverRef.current(true, 1);
+    if (vistoSinCumplir.current) window.dispatchEvent(new CustomEvent(EVENTO_LISTO, { detail: { taller: bloque.taller } }));
+  }, [abierto, resuelta, bloque.taller]);
 
   // Add-on 5.4: con Blender cerrado, «Abrir el taller» lo arranca directo en la actividad (amatista://).
   const lanzador = useLanzadorBlender(token, { alAbrirse: () => refrescar() });
@@ -328,6 +353,20 @@ function TallerHabilidades({ bloque, alCompletar, resuelta }) {
       recargar();
     }
   };
+
+  // Motor 6.1: Blender sigue a la plataforma. Si está abierto en otra cosa al llegar a esta
+  // lección, se lleva solo al taller (una vez por visita; los botones siguen ahí).
+  const seguido = useRef(false);
+  const ordenarRef = useRef(ordenar);
+  useEffect(() => {
+    ordenarRef.current = ordenar;
+  });
+  const debeSeguir = Boolean(plan) && !abierto && !resultado && !resuelta && enlace?.estado === 'otra';
+  useEffect(() => {
+    if (!debeSeguir || seguido.current) return;
+    seguido.current = true;
+    ordenarRef.current('taller_abrir');
+  }, [debeSeguir]);
 
   const noDisponible = tallerNoDisponible(respuesta) && !plan;
   const paso = pasoDelCiclo(plan, vivo);

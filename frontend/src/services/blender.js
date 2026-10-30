@@ -107,6 +107,11 @@ export const ordenarTaller = (token, tipo, { taller, actividad, habilidad, etapa
     },
   });
 
+// Motor 6.1: la lección abierta en la plataforma, para que Blender sepa dónde va el alumno
+// ({curso, leccion, titulo, clase, numero, total}; blender/leccion.js › datosLeccion).
+export const ordenarLeccion = (token, datos) =>
+  pedirJSON(`${BASE}/ordenes`, { metodo: "POST", token, cuerpo: { tipo: "leccion", ...datos } });
+
 // «Conoce Amatista Motor» (add-on 5.2, recorrido.py): #/blender empieza y avanza desde aquí las tres
 // prácticas del add-on. accion: empezar · siguiente · anterior · salir. `recorrido` es la práctica
 // (pestana · vista · taller); sin ella, «empezar» abre la primera sin terminar.
