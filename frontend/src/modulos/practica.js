@@ -76,7 +76,13 @@ export function ubicarTaller(cursos = [], tallerId) {
   for (const curso of cursos ?? []) {
     for (const modulo of curso.modulos ?? []) {
       const lecciones = leccionesDe(modulo);
-      const indiceTaller = lecciones.findIndex((leccion) => bloqueTaller(leccion)?.taller === tallerId);
+      const delTaller = (leccion) =>
+        bloquesDe(leccion).filter((b) => b?.type === 'blender_taller' && b.vista !== 'proyecto' && b.taller === tallerId);
+      // Motor 6: la lección del taller es la de su práctica (donde se terminan las habilidades); la
+      // exploración va antes, en su propia lección.
+      const indicePractica = lecciones.findIndex((leccion) => delTaller(leccion).some((b) => b.etapa !== 'exploracion'));
+      const indiceExploracion = lecciones.findIndex((leccion) => delTaller(leccion).some((b) => b.etapa === 'exploracion'));
+      const indiceTaller = indicePractica >= 0 ? indicePractica : indiceExploracion;
       if (indiceTaller < 0) continue;
       const conVista = lecciones.findIndex((leccion) =>
         bloquesDe(leccion).some((b) => b?.type === 'blender_taller' && b.vista === 'proyecto' && b.taller === tallerId),
@@ -88,9 +94,25 @@ export function ubicarTaller(cursos = [], tallerId) {
         modulo,
         leccionTaller: lecciones[indiceTaller],
         indiceTaller,
+        leccionExploracion: indiceExploracion >= 0 ? lecciones[indiceExploracion] : null,
         leccionProyecto: indiceProyecto >= 0 ? lecciones[indiceProyecto] : null,
         indiceProyecto,
       };
+    }
+  }
+  return null;
+}
+
+// La lección (y su curso) donde vive un bloque, por su id y su tipo: la orden del taller dice a qué
+// lección vuelve Blender al cumplir la etapa (motor 6). null si no está en el catálogo.
+export function leccionDelBloque(cursos = [], bloque = null) {
+  if (!bloque?.id) return null;
+  for (const curso of cursos ?? []) {
+    for (const modulo of curso.modulos ?? []) {
+      const leccion = leccionesDe(modulo).find((l) =>
+        bloquesDe(l).some((b) => b?.id === bloque.id && b?.type === bloque.type && b?.taller === bloque.taller),
+      );
+      if (leccion) return { curso, modulo, leccion };
     }
   }
   return null;

@@ -67,14 +67,14 @@
       },
       {
         "id": "bpi1_blender",
-        "title": "Taller en Blender: tus materiales",
+        "title": "Explora en Blender: ponerle material y metal, plástico y vidrio",
         "slug": "blender-primer-material",
         "type": "theory_interactive",
-        "durationSeconds": 480,
+        "durationSeconds": 360,
         "isLocked": true,
         "formula": "practica",
         "ficha": {
-          "objetivo": "Aprender en Blender cada habilidad del módulo (crear un material y ajustar su color, lo metálico y la rugosidad): mirarla, hacerla con ayuda y hacerla sin ayuda, hasta que salga sola.",
+          "objetivo": "Probar en Blender, antes de la teoría, ponerle material y metal, plástico y vidrio: mirar cómo se hace y hacerlo una vez con el molde.",
           "habilidades": [
             "bl-materiales"
           ],
@@ -95,13 +95,14 @@
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### Tu taller en Blender\nAquí aprendes cada habilidad del módulo (crear un material y ajustar su color, lo metálico y la rugosidad) como en un taller: primero la miras en tu vista 3D, después la haces con ayuda y al final la haces sin ayuda. Cuando todas te salgan, se abre el proyecto: pintar tu nave, que queda en tu isla."
+            "body": "### Explora en Blender (unos minutos)\nAntes de la teoría, prueba con tus manos las dos primeras herramientas del módulo: **ponerle material** y **metal, plástico y vidrio**. Amatista te muestra cada una en tu vista 3D («Mira») y después la haces una vez con el molde a la vista («Hazlo conmigo»). Sin presión y sin examen: cuando las pruebes, Blender te manda de vuelta aquí para entender el porqué. El resto de las habilidades y el proyecto vienen en la práctica de cierre."
           },
           {
             "type": "blender_taller",
             "id": "taller_bpi1",
             "taller": "blender.bpi.m1",
-            "title": "Tu taller: color, metal y rugosidad"
+            "title": "Explora en Blender: ponerle material y metal, plástico y vidrio",
+            "etapa": "exploracion"
           }
         ]
       },
@@ -370,6 +371,17 @@
           ]
         },
         "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Primero, termina tu taller\nEn Blender sigue con lo que falta del módulo (dos materiales en una pieza) y repasa lo que exploraste. Cuando todo te salga sin ayuda, se abre el proyecto de abajo."
+          },
+          {
+            "type": "blender_taller",
+            "id": "taller_practica_bpi1",
+            "taller": "blender.bpi.m1",
+            "etapa": "practica",
+            "title": "Tu taller: todas las habilidades del módulo"
+          },
           {
             "type": "markdown_text",
             "body": "### Tu nave, ahora con color\nAbre tu `mi_nave.blend` del curso Principiante. Si no lo tienes, Amatista arma una nave básica para que empieces igual."

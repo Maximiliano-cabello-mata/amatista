@@ -115,14 +115,14 @@
       },
       {
         "id": "bp1_blender",
-        "title": "Taller en Blender: agrega, mueve, escala y gira",
+        "title": "Explora en Blender: agregar formas y mover y mirar",
         "slug": "blender-explora-la-vista",
         "type": "theory_interactive",
-        "durationSeconds": 480,
+        "durationSeconds": 360,
         "isLocked": true,
         "formula": "practica",
         "ficha": {
-          "objetivo": "Aprender en Blender cada habilidad del módulo (agregar formas, moverlas, estirarlas en un eje, girarlas, duplicarlas y guardar): mirarla, hacerla con ayuda y hacerla sin ayuda, hasta que salga sola.",
+          "objetivo": "Probar en Blender, antes de la teoría, agregar formas y mover y mirar: mirar cómo se hace y hacerlo una vez con el molde.",
           "habilidades": [
             "bl-navegar-vista",
             "bl-agregar-primitivas",
@@ -145,13 +145,14 @@
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### Tu taller en Blender\nAquí aprendes cada habilidad del módulo (agregar formas, moverlas, estirarlas en un eje, girarlas, duplicarlas y guardar) como en un taller: primero la miras en tu vista 3D, después la haces con ayuda y al final la haces sin ayuda. Cuando todas te salgan, se abre el proyecto: el tren que llega a la estación de tu isla."
+            "body": "### Explora en Blender (unos minutos)\nAntes de la teoría, prueba con tus manos las dos primeras herramientas del módulo: **agregar formas** y **mover y mirar**. Amatista te muestra cada una en tu vista 3D («Mira») y después la haces una vez con el molde a la vista («Hazlo conmigo»). Sin presión y sin examen: cuando las pruebes, Blender te manda de vuelta aquí para entender el porqué. El resto de las habilidades y el proyecto vienen en la práctica de cierre."
           },
           {
             "type": "blender_taller",
             "id": "taller_bp1",
             "taller": "blender.bp.m1",
-            "title": "Tu taller: agrega, mueve, escala y gira"
+            "title": "Explora en Blender: agregar formas y mover y mirar",
+            "etapa": "exploracion"
           }
         ]
       },
@@ -471,6 +472,17 @@
           ]
         },
         "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Primero, termina tu taller\nEn Blender sigue con lo que falta del módulo (estirar en un solo eje, girar, duplicar piezas y guardar tu trabajo) y repasa lo que exploraste. Cuando todo te salga sin ayuda, se abre el proyecto de abajo."
+          },
+          {
+            "type": "blender_taller",
+            "id": "taller_practica_bp1",
+            "taller": "blender.bp.m1",
+            "etapa": "practica",
+            "title": "Tu taller: todas las habilidades del módulo"
+          },
           {
             "type": "markdown_text",
             "body": "### Un tren con piezas de juguete\nVas a armar un tren con **cubos** (locomotora y vagón) y **cilindros** (ruedas y chimenea). Nada se modela todavía: solo agregas, mueves, giras y escalas.\n\nArriba de los pasos está **el ejemplo resuelto**: una versión posible del tren terminado, con su imagen y sus pasos. Amatista revisa que las ruedas estén **de pie**, **apoyadas en el suelo** y **unidas**, y al final compara tu tren completo con el ejemplo resuelto: puede ser más grande, más chico o estar girado; lo que cuenta es que **se vea como un tren**."

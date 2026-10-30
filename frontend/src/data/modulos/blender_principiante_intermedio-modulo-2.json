@@ -69,14 +69,14 @@
       },
       {
         "id": "bpi2_blender",
-        "title": "Taller en Blender: luz, cámara y render",
+        "title": "Explora en Blender: agregar una luz y tres puntos de luz",
         "slug": "blender-luz-y-camara",
         "type": "theory_interactive",
-        "durationSeconds": 480,
+        "durationSeconds": 360,
         "isLocked": true,
         "formula": "practica",
         "ficha": {
-          "objetivo": "Aprender en Blender cada habilidad del módulo (poner una luz de Área, iluminar con tres puntos, encuadrar con la cámara y hacer el render): mirarla, hacerla con ayuda y hacerla sin ayuda, hasta que salga sola.",
+          "objetivo": "Probar en Blender, antes de la teoría, agregar una luz y tres puntos de luz: mirar cómo se hace y hacerlo una vez con el molde.",
           "habilidades": [
             "bl-iluminacion",
             "bl-camara",
@@ -99,13 +99,14 @@
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### Tu taller en Blender\nAquí aprendes cada habilidad del módulo (poner una luz de Área, iluminar con tres puntos, encuadrar con la cámara y hacer el render) como en un taller: primero la miras en tu vista 3D, después la haces con ayuda y al final la haces sin ayuda. Cuando todas te salgan, se abre el proyecto: la primera foto de tu isla."
+            "body": "### Explora en Blender (unos minutos)\nAntes de la teoría, prueba con tus manos las dos primeras herramientas del módulo: **agregar una luz** y **tres puntos de luz**. Amatista te muestra cada una en tu vista 3D («Mira») y después la haces una vez con el molde a la vista («Hazlo conmigo»). Sin presión y sin examen: cuando las pruebes, Blender te manda de vuelta aquí para entender el porqué. El resto de las habilidades y el proyecto vienen en la práctica de cierre."
           },
           {
             "type": "blender_taller",
             "id": "taller_bpi2",
             "taller": "blender.bpi.m2",
-            "title": "Tu taller: luz, cámara y render"
+            "title": "Explora en Blender: agregar una luz y tres puntos de luz",
+            "etapa": "exploracion"
           }
         ]
       },
@@ -287,6 +288,17 @@
           ]
         },
         "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Primero, termina tu taller\nEn Blender sigue con lo que falta del módulo (encuadrar con la cámara y hacer el render) y repasa lo que exploraste. Cuando todo te salga sin ayuda, se abre el proyecto de abajo."
+          },
+          {
+            "type": "blender_taller",
+            "id": "taller_practica_bpi2",
+            "taller": "blender.bpi.m2",
+            "etapa": "practica",
+            "title": "Tu taller: todas las habilidades del módulo"
+          },
           {
             "type": "markdown_text",
             "body": "### Tu estudio fotográfico\nAmatista arma un estudio con tu modelo sobre un piso, sin luces ni cámara y con el motor Workbench. Tu trabajo: convertirlo en una foto."

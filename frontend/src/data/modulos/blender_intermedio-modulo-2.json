@@ -69,14 +69,14 @@
       },
       {
         "id": "bi2_blender",
-        "title": "Taller en Blender: colecciones y orden",
+        "title": "Explora en Blender: nombres que se entienden y colecciones",
         "slug": "blender-colecciones",
         "type": "theory_interactive",
-        "durationSeconds": 480,
+        "durationSeconds": 360,
         "isLocked": true,
         "formula": "practica",
         "ficha": {
-          "objetivo": "Aprender en Blender cada habilidad del módulo (nombrar, ordenar en colecciones y compartir materiales): mirarla, hacerla con ayuda y hacerla sin ayuda, hasta que salga sola.",
+          "objetivo": "Probar en Blender, antes de la teoría, nombres que se entienden y colecciones: mirar cómo se hace y hacerlo una vez con el molde.",
           "habilidades": [
             "bl-colecciones",
             "bl-organizar"
@@ -98,13 +98,14 @@
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### Tu taller en Blender\nAquí aprendes cada habilidad del módulo (nombrar, ordenar en colecciones y compartir materiales) como en un taller: primero la miras en tu vista 3D, después la haces con ayuda y al final la haces sin ayuda. Cuando todas te salgan, se abre el proyecto: la aldea de tu isla, con tus casas."
+            "body": "### Explora en Blender (unos minutos)\nAntes de la teoría, prueba con tus manos las dos primeras herramientas del módulo: **nombres que se entienden** y **colecciones**. Amatista te muestra cada una en tu vista 3D («Mira») y después la haces una vez con el molde a la vista («Hazlo conmigo»). Sin presión y sin examen: cuando las pruebes, Blender te manda de vuelta aquí para entender el porqué. El resto de las habilidades y el proyecto vienen en la práctica de cierre."
           },
           {
             "type": "blender_taller",
             "id": "taller_bi2",
             "taller": "blender.bi.m2",
-            "title": "Tu taller: colecciones y orden"
+            "title": "Explora en Blender: nombres que se entienden y colecciones",
+            "etapa": "exploracion"
           }
         ]
       },
@@ -283,6 +284,17 @@
           ]
         },
         "contentBlocks": [
+          {
+            "type": "markdown_text",
+            "body": "### Primero, termina tu taller\nEn Blender sigue con lo que falta del módulo (compartir un material) y repasa lo que exploraste. Cuando todo te salga sin ayuda, se abre el proyecto de abajo."
+          },
+          {
+            "type": "blender_taller",
+            "id": "taller_practica_bi2",
+            "taller": "blender.bi.m2",
+            "etapa": "practica",
+            "title": "Tu taller: todas las habilidades del módulo"
+          },
           {
             "type": "markdown_text",
             "body": "### Tu proyecto\nLevanta tres casas con techo, cada una con su color, y ordénalas en las colecciones «Casas» y «Techos».\n\nEsta lección se hace **dentro de Blender, conectado a Amatista**: no basta con leer. Pulsa **Abrir en Blender**, abre Blender y entra a la pestaña Amatista (tecla N). Cada paso que das queda **registrado** en tu cuenta y en el motor de prácticas."

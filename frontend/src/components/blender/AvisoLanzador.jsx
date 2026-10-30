@@ -41,7 +41,7 @@ function AvisoLanzador({ estado, alCerrar, className = '' }) {
         ) : (
           <ol className="mt-1 list-decimal space-y-1 pl-5 text-texto/85">
             <li>
-              ¿Ya instalaste Amatista Motor 5.4 o más nuevo? Si no, <a href={rutas.blender} className="font-bold text-neon underline-offset-2 hover:underline">instálalo aquí</a> (un minuto) y vuelve a pulsar el botón.
+              ¿Ya instalaste Amatista Motor 6 o más nuevo? Si no, <a href={rutas.blender} className="font-bold text-neon underline-offset-2 hover:underline">instálalo aquí</a> (un minuto) y vuelve a pulsar el botón.
             </li>
             <li>
               Abre Blender tú mismo: la actividad te espera en el menú <strong className="text-white">Amatista</strong> de arriba. Ahí mismo, «Reparar “Abrir en Blender”» arregla este botón.

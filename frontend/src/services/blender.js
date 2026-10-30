@@ -90,7 +90,9 @@ export const listarTalleres = (token) => pedirJSON(`${BASE}/talleres`, { token }
 
 // tipo: taller_abrir · taller_continuar · taller_pausa · taller_pista · taller_mirame ·
 // taller_probar · taller_repaso · isla. Solo viajan los campos con valor.
-export const ordenarTaller = (token, tipo, { taller, actividad, habilidad } = {}) =>
+// Motor 6: «taller_abrir» lleva la etapa de la lección (exploración con sus habilidades o práctica) y la
+// lección a la que Blender manda de vuelta; Blender no sale de esa etapa.
+export const ordenarTaller = (token, tipo, { taller, actividad, habilidad, etapa, habilidades, leccion } = {}) =>
   pedirJSON(`${BASE}/ordenes`, {
     metodo: "POST",
     token,
@@ -99,6 +101,9 @@ export const ordenarTaller = (token, tipo, { taller, actividad, habilidad } = {}
       ...(taller ? { taller } : {}),
       ...(actividad ? { actividad } : {}),
       ...(habilidad ? { habilidad } : {}),
+      ...(etapa ? { etapa } : {}),
+      ...(etapa === "exploracion" && habilidades?.length ? { habilidades: habilidades.slice(0, 4) } : {}),
+      ...(leccion ? { leccion } : {}),
     },
   });
 
