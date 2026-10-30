@@ -827,6 +827,20 @@ tareas:
     depende_de: [T-146]
     aceptacion: "El creador aprueba el parecido y los textos; la PWA publicada en amatista-3d.tech muestra a Goliat"
     bloqueo: "Lo hace el usuario (revisión personal y publicación)"
+  - id: T-148
+    titulo: "Interfaz más libre, avatares low poly por cuenta (pavo real del creador) y buzón del creador"
+    version: v3.3.0
+    area: pwa
+    depende_de: [T-146]
+    aceptacion: "Goliat y la mascota sin saludos ni charla periódica; 8 avatares + pavo real solo para el creador; #/buzon con gracias animado y Admin › Buzón; SQL 013; pytest, vitest, lint y build en verde; cero desbordes a 390 px"
+    evidencia: "frontend/src/avatares/, frontend/src/buzon/, backend/api/buzon.py, backend/api/perfil.py, backend/sql/013_avatares_y_buzon.sql; docs/plataforma/16_avatares_y_buzon.md"
+  - id: T-149
+    titulo: "Aplicar 013 en Oracle, poner AMATISTA_CREADOR en backend/.env y desplegar avatares y buzón"
+    version: v3.3.0
+    area: oracle
+    depende_de: [T-148]
+    aceptacion: "diagnostico_oracle.py ve 24 tablas; la cuenta del creador ve el pavo real y el buzón en Admin"
+    bloqueo: "Lo hace el usuario (Database Actions y la VM)"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0

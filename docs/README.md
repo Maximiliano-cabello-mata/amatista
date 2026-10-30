@@ -55,6 +55,7 @@ Carpeta [`plataforma/`](plataforma/README.md): estructura fija Cursos · Blender
 - [Camino guiado, recursos gráficos v4.2 y Motor Web (23 oct)](plataforma/13_camino_graficos_y_motor_web.md)
 - [Refinamiento, botones Facetas 4.1 y dinámicas v4.3 (30 oct)](plataforma/14_refinamiento_y_dinamicas.md)
 - [Goliat, el compañero de Amatista (30 oct)](plataforma/15_goliat.md)
+- [Interfaz libre, avatares y buzón del creador (30 oct)](plataforma/16_avatares_y_buzon.md)
 - [Diseño «Facetas» (CSS v4.0)](diseno/2026-10-11_sistema_facetas.md)
 - [Auditoría completa del 11 de octubre](auditoria/2026-10-11_auditoria_completa.md)
 
