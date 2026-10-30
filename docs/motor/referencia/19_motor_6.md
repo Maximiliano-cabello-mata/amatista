@@ -102,6 +102,6 @@ Decisión del creador (tarjeta del 30 de octubre): **sin recompilar Blender**. U
 
 ## 9. Probado y por probar
 
-- Sin Blender: `engine/tests/test_motor6.py` (etapas, demostración de la actividad, cordura del molde), `addon/tests/test_motor6.py` (enlace con la etapa, acceso directo, autosanación), `backend/tests/test_taller.py` (la orden y la validación de la etapa), `frontend/src/blender/taller.test.js`, `services/lanzador.test.js` y `modulos/practica.test.js`.
+- Sin Blender: `engine/tests/test_motor6.py` (etapas, demostración de la actividad, cordura del molde), `addon/tests/test_addon_motor6.py` (enlace con la etapa, acceso directo, autosanación), `backend/tests/test_taller.py` (la orden y la validación de la etapa), `frontend/src/blender/taller.test.js`, `services/lanzador.test.js` y `modulos/practica.test.js`.
 - Con Blender 5.0 sin ventana (`addon/tests/en_blender.py › probar_motor6`): la etapa de exploración de punta a punta (Mira de esta actividad, una orden de otra habilidad que no la saca, «Volver a la plataforma»), la ruta con la cuenta conectada, la tarjeta compacta y el ratón, el brillo, el molde revuelto, la plantilla instalada y sus colores puestos y devueltos, y la autosanación.
 - Por probar con ventana (T-139): cómo se ven la pantalla de inicio, los colores, el borde que brilla y la tarjeta compacta, y el acceso directo en Windows, macOS y Linux. Y con el 5.4 y el 6.0 instalados a la vez, que quede uno solo (T-140).
