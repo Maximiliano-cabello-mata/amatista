@@ -43,6 +43,18 @@
             "body": "### El caos crece solo\nUna escena con 60 objetos llamados *Cube.001…Cube.060* es un laberinto. En un estudio, otra persona tiene que abrir tu archivo y entenderlo en segundos.\n\nLa receta: **nombres claros**, **colecciones** como carpetas y **materiales compartidos**."
           },
           {
+            "type": "herramienta_blender",
+            "id": "bi2_gancho_ficha_object_rename",
+            "tool": "object.rename",
+            "text": "En la siguiente lección la usas en Blender. Allí aparece esta misma ficha y su lugar se ilumina."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bi2_gancho_ficha_collection_move",
+            "tool": "collection.move",
+            "text": "Las colecciones son carpetas para tus objetos. Con ellas una aldea de cien piezas se entiende de un vistazo."
+          },
+          {
             "type": "quiz_inline",
             "id": "quiz_bi2_1",
             "question": "¿Cuál nombre ayuda más a encontrar un objeto?",
@@ -240,6 +252,23 @@
             "template": "Selecciona los techos, pulsa [[M|m]] y elige Nueva colección; llámala [[Techos|techos]].",
             "code": false,
             "explanation": "Con M y un nombre claro cada grupo queda en su carpeta."
+          },
+          {
+            "type": "blender_mapa",
+            "id": "bi2_explora_mapa",
+            "mode": "find",
+            "questions": [
+              {
+                "tool": "object.rename"
+              },
+              {
+                "tool": "collection.move"
+              },
+              {
+                "tool": "material.basic"
+              }
+            ],
+            "title": "Repaso: ordenar la escena"
           },
           {
             "type": "callout",

@@ -42,6 +42,25 @@
             "body": "### Una pieza de juguete vs. plastilina\nEn **Modo Objeto** mueves el modelo entero, como una pieza de juguete. En **Modo Edición** entras a la pieza y la deformas como plastilina. **Tab** cambia entre los dos."
           },
           {
+            "type": "herramienta_blender",
+            "id": "bp2_gancho_ficha_mesh_edit",
+            "tool": "mesh.edit",
+            "text": "En la siguiente lección la usas en Blender. Allí aparece esta misma ficha y su lugar se ilumina."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp2_gancho_ficha_select_box",
+            "tool": "select.box",
+            "text": "En Modo Edición eliges puntos, aristas o caras. Con la caja eliges muchos de una vez.",
+            "check": false
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp2_gancho_ficha_mesh_extrude",
+            "tool": "mesh.extrude",
+            "text": "En la siguiente lección la usas en Blender. Allí aparece esta misma ficha y su lugar se ilumina."
+          },
+          {
             "type": "concept_cards",
             "items": [
               {
@@ -286,6 +305,36 @@
               }
             ],
             "explanation": "Con estas cuatro ya puedes modelar objetos low-poly completos."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp2_explora_ficha_mesh_loopcut",
+            "tool": "mesh.loopcut",
+            "text": "Para la espada vas a necesitar más caras donde doblar la hoja. El corte de bucle las agrega sin romper la forma."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp2_explora_ficha_mesh_merge",
+            "tool": "mesh.merge",
+            "text": "Cuando dos puntos quedan uno encima del otro, la malla queda sucia. Fusionarlos la limpia.",
+            "check": false
+          },
+          {
+            "type": "blender_mapa",
+            "id": "bp2_explora_mapa",
+            "mode": "find",
+            "questions": [
+              {
+                "tool": "mesh.edit"
+              },
+              {
+                "tool": "mesh.extrude"
+              },
+              {
+                "tool": "mesh.merge"
+              }
+            ],
+            "title": "Repaso: las herramientas de la malla"
           },
           {
             "type": "callout",
