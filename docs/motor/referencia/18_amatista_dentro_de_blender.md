@@ -1,5 +1,7 @@
 # Amatista dentro de Blender y el enlace amatista:// (add-on 5.4)
 
+> Sigue en el **Motor 6** ([19_motor_6.md](19_motor_6.md)): el enlace abre **Blender Amatista** (`--app-template amatista`), lleva la etapa de la lección y el menú Amatista manda a la plataforma cuando no hay actividad.
+
 Código: `addon/amatista_blender/integracion.py` (lo que se ve en Blender) y `addon/amatista_blender/protocolo.py` (el enlace, sin `bpy`). Contexto y motivo: `docs/plataforma/14_refinamiento_y_dinamicas.md`.
 
 ## Por qué

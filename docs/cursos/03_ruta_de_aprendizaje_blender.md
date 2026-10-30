@@ -42,10 +42,12 @@ Todos los módulos de Blender tienen el mismo ritmo, para que el alumno sepa qu�
 | # | Paso | Dónde | Duración | Para qué |
 |---|---|---|---|---|
 | 1 | **Gancho** | Plataforma | 4 a 6 min | Una pregunta o un problema que despierta curiosidad («¿por qué el metal brilla?»). |
-| 2 | **Exploración** | Blender, conectado | 3 a 6 min | Probar la herramienta nueva con las manos, sin presión. Pocos pasos, se registra. |
+| 2 | **Exploración** | Blender, conectado | 3 a 6 min | Probar la herramienta nueva con las manos, sin presión: las dos primeras habilidades del taller, «Mira» y un «Hazlo conmigo» de cada una. Se registra. |
 | 3 | **Teoría con detalle** | Plataforma | 6 a 10 min | Ahora sí, el porqué, con gráficos, tarjetas, emparejar y ordenar. |
-| 4 | **Práctica de cierre** | Blender, conectado | 15 a 30 min | El proyecto del módulo, guiado paso a paso por el motor. |
+| 4 | **Práctica de cierre** | Blender, conectado | 15 a 30 min | El resto del taller (cada habilidad hasta que salga sola) y el proyecto del módulo. |
 | 5 | **Jefe final** | Plataforma | 5 min | Examen de 5 preguntas con aprobado en 80: cada acierto le baja vida al jefe del módulo. |
+
+Desde el **Motor 6** la plataforma marca el paso: cada lección de Blender manda su **etapa** (exploración o práctica) y Blender no sale de ella. Al terminar la exploración, Blender no sigue solo: dice «Vuelve a la plataforma» y el alumno pasa a la teoría. Con la cuenta conectada, en Blender no se eligen módulos; se llega a cada uno desde su lección. Detalle: [Amatista Motor 6](../motor/referencia/19_motor_6.md) §4.
 
 Cada módulo tiene además su **temática** para que cada sesión se sienta distinta: un escenario animado, una **mascota** original (personaje en pixel art, estilo videojuego retro) que da consejos y datos curiosos, y un **jefe final** con su propia silueta. El add-on usa la misma temática en Blender. Todo vive en `practices/blender/temas.json`.
 

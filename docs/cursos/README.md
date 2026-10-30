@@ -60,9 +60,9 @@ Desde la v3.2 cada módulo intercala teoría y Blender: **5 lecciones**, dos de 
 | Lección | Tipo | Qué hace |
 |---|---|---|
 | `…_gancho` | teoría interactiva | La pregunta o el problema que abre el módulo. |
-| `…_blender` | bloque `blender_practice` (exploración) | Unos minutos en Blender para probar la herramienta nueva antes de la teoría. Se registra. |
+| `…_blender` | bloque `blender_taller` con `"etapa": "exploracion"` | Unos minutos en Blender para probar las dos primeras habilidades antes de la teoría («Mira» y un «Hazlo conmigo»). Blender no sigue solo: manda de vuelta a la plataforma (Motor 6). |
 | `…_explora` | teoría interactiva | Las herramientas del módulo, con sus teclas. |
-| `…_practica` | teoría + bloque `blender_practice` (cierre) | Prepara Blender y abre la práctica guiada; al terminarla, la lección se completa. |
+| `…_practica` | `blender_taller` con `"etapa": "practica"` + bloque `blender_practice` (cierre) | Primero termina el taller (cada habilidad hasta que sale sola); se abre el proyecto y, al terminarlo, la lección se completa. |
 | `…_jefe` | examen (aprueba con 80) | El jefe final del módulo: cada acierto le quita vida. Da la insignia. |
 
 Ninguna lección de Blender se puede marcar a mano (`allowManual: false`): solo cuenta lo que registra el add-on. En `practices/blender/cursos.json` cada módulo declara su `explore` y su `practice`, y el motor los recorre en ese orden (`ModuleEntry.sequence`).
