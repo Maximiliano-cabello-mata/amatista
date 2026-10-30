@@ -30,6 +30,8 @@ const Confirmar = lazy(() => import('./pages/cuenta/Confirmar'));
 const Recuperar = lazy(() => import('./pages/cuenta/Recuperar'));
 const Perfil = lazy(() => import('./pages/cuenta/Perfil'));
 const Guia = lazy(() => import('./pages/Guia'));
+// Goliat, el compañero de toda la plataforma: llega después de la página.
+const Goliat = lazy(() => import('./goliat/Goliat'));
 
 function useRuta() {
   const [hash, setHash] = useState(() => window.location.hash);
@@ -162,6 +164,9 @@ function App() {
                 </div>
               </Suspense>
               <PiePagina />
+              <Suspense fallback={null}>
+                <Goliat />
+              </Suspense>
             </RecorridoProvider>
           </ProgresoProvider>
         </CatalogoProvider>

@@ -1458,3 +1458,206 @@ button.tecla-chip:active { transform: translateY(2px); border-bottom-width: 1px;
 .error-paso[aria-pressed='true'] { border-color: var(--blender); background: color-mix(in srgb, var(--blender) 12%, transparent); }
 .error-paso[data-revision='acierto'] { border-color: #34d399; background: color-mix(in srgb, #34d399 10%, transparent); }
 .error-paso[data-revision='fallo'] { border-color: #f87171; background: color-mix(in srgb, #f87171 10%, transparent); }
+
+/* ==========================================================================
+   Goliat, el compañero de la plataforma (goliat/Goliat.jsx)
+   Vive en la esquina inferior izquierda de todas las páginas; la derecha es
+   de la mascota del módulo en las lecciones. Facetas: esquinas cortadas,
+   borde de gema y luz arriba a la derecha. Solo transform y opacity.
+   ========================================================================== */
+.goliat-zona {
+  position: fixed;
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 41;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: min(23rem, calc(100vw - 24px));
+  pointer-events: none;
+}
+.goliat-zona > * { pointer-events: auto; }
+
+/* El botón: Goliat sentado sobre su hexágono facetado. */
+.goliat-boton {
+  position: relative;
+  display: grid;
+  width: 68px;
+  height: 68px;
+  place-items: end center;
+  padding: 0 0 6px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.goliat-boton::before {
+  content: '';
+  position: absolute;
+  inset: 8px 2px 0;
+  clip-path: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0 50%);
+  background:
+    radial-gradient(120% 120% at 85% 10%, rgb(0 229 255 / 0.22), transparent 55%),
+    radial-gradient(circle at 50% 70%, rgb(155 89 182 / 0.45), rgb(18 18 18 / 0.92) 72%);
+  box-shadow: inset 0 0 0 1.5px rgb(195 155 211 / 0.55);
+  transition: transform 0.25s var(--curva-salida);
+}
+.goliat-boton:hover::before, .goliat-boton[aria-expanded='true']::before { transform: scale(1.06); }
+.goliat-boton:focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
+.goliat-boton__figura { position: relative; width: 62px; height: 62px; transform-origin: 50% 100%; animation: goliat-respirar 3.2s ease-in-out infinite; }
+.goliat-boton__nombre {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  translate: -50% 0;
+  padding: 1px 6px;
+  background: #2b5bd0;
+  color: #fff;
+  font: 700 9px/1.4 'JetBrains Mono Variable', 'JetBrains Mono respaldo', monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  clip-path: polygon(4px 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+}
+
+/* Gestos vivos de la figura (GoliatFigura.jsx). */
+.goliat__ojo { transform-box: fill-box; transform-origin: center; animation: personaje-parpadeo 5.2s infinite; }
+.goliat__oreja-parada { transform-box: fill-box; transform-origin: 30% 100%; animation: goliat-oreja 7s ease-in-out infinite; }
+.goliat__cola { transform-box: fill-box; transform-origin: 0% 100%; }
+.goliat--contento .goliat__cola { animation: goliat-cola 0.32s ease-in-out infinite alternate; }
+.goliat--atento .goliat__cabeza, .goliat--preocupado .goliat__cabeza { transform-box: view-box; transform-origin: 60px 60px; transform: rotate(-5deg); transition: transform 0.3s var(--curva-salida); }
+.goliat__cabeza { transition: transform 0.3s var(--curva-salida); }
+.goliat--atento .goliat__oreja-doblada { transform-box: fill-box; transform-origin: 100% 100%; transform: rotate(10deg); }
+.goliat--dormido .goliat__cabeza { transform: translateY(3px); }
+.goliat__zzz text { animation: goliat-zzz 2.4s ease-in-out infinite; }
+.goliat__zzz text:nth-child(2) { animation-delay: 0.4s; }
+.goliat__zzz text:nth-child(3) { animation-delay: 0.8s; }
+@keyframes goliat-respirar { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.015, 0.985); } }
+@keyframes goliat-oreja { 0%, 88%, 100% { transform: rotate(0deg); } 91% { transform: rotate(8deg); } 94% { transform: rotate(-4deg); } }
+@keyframes goliat-cola { from { transform: rotate(-14deg); } to { transform: rotate(16deg); } }
+@keyframes goliat-zzz { 0%, 100% { opacity: 0.35; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
+
+/* Aviso: el globo que sale solo cuando una práctica se pone difícil. */
+.goliat-aviso {
+  position: relative;
+  max-width: 20rem;
+  margin-left: 6px;
+  padding: 0.7rem 0.95rem 0.55rem;
+  border: 1px solid rgb(60 114 234 / 0.6);
+  background: rgb(18 18 18 / 0.95);
+  color: #e8e8e8;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  box-shadow: var(--sombra-flotante);
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  animation: globo-entrar 0.42s var(--curva-rebote) both;
+  transform-origin: 10% 100%;
+}
+.goliat-aviso__quien, .goliat-panel__antetitulo {
+  display: block;
+  font: 700 10px/1.4 'JetBrains Mono Variable', 'JetBrains Mono respaldo', monospace;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #7ea3ff;
+}
+.goliat-aviso__acciones { display: flex; justify-content: flex-end; gap: 0.9rem; margin-top: 0.3rem; }
+.goliat-aviso__acciones button, .goliat-panel__enlace {
+  font: 600 10px/1 'JetBrains Mono Variable', 'JetBrains Mono respaldo', monospace;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.6);
+  transition: color 0.2s ease;
+}
+.goliat-aviso__acciones button:hover, .goliat-panel__enlace:hover { color: #fff; }
+
+/* Panel: la conversación, los botones rápidos y el proyecto propio. */
+.goliat-panel {
+  display: flex;
+  width: min(23rem, calc(100vw - 24px));
+  max-height: min(34rem, calc(100dvh - 120px));
+  flex-direction: column;
+  padding: 1.5px;
+  background: var(--gema-suave);
+  box-shadow: var(--sombra-gema), var(--sombra-flotante);
+  clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+  animation: globo-entrar 0.36s var(--curva-salida) both;
+  transform-origin: 10% 100%;
+}
+.goliat-panel > * { background: #161619; }
+.goliat-panel__cabeza {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.9rem 0.5rem 0.6rem;
+  background: var(--faceta-luz), #1b1b1f !important;
+  border-bottom: 1px solid var(--borde);
+}
+.goliat-panel__cabeza h2 { color: #fff; font-size: 1.15rem; font-weight: 800; line-height: 1.1; }
+.goliat-panel__retrato { width: 52px; height: 52px; flex-shrink: 0; }
+.goliat-panel__cerrar { padding: 0.25rem 0.35rem; color: rgb(255 255 255 / 0.6); }
+.goliat-panel__cerrar:hover { color: #fff; }
+.goliat-panel__cuerpo { min-height: 7rem; flex: 1 1 auto; overflow-y: auto; overscroll-behavior: contain; }
+.goliat-panel__mensajes { display: flex; flex-direction: column; gap: 0.55rem; padding: 0.8rem 0.9rem; }
+.goliat-mensaje { max-width: 92%; padding: 0.5rem 0.75rem; font-size: 0.875rem; line-height: 1.5; }
+.goliat-mensaje--goliat { align-self: flex-start; border-left: 2px solid #3c72ea; background: rgb(43 91 208 / 0.12); color: #e8e8e8; }
+.goliat-mensaje--alumno { align-self: flex-end; background: rgb(155 89 182 / 0.22); color: #fff; clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%); }
+.goliat-mensaje__acciones, .goliat-panel__rapidos { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.goliat-mensaje__acciones { margin-top: 0.45rem; }
+.goliat-mensaje__acciones :is(a, button), .goliat-panel__rapidos :is(a, button) {
+  padding: 0.3rem 0.6rem;
+  border: 1px solid rgb(126 163 255 / 0.45);
+  color: #dfe7ff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.goliat-mensaje__acciones :is(a, button):hover, .goliat-panel__rapidos :is(a, button):hover { border-color: var(--neon); background: rgb(0 229 255 / 0.1); }
+.goliat-panel__rapidos { padding: 0.55rem 0.9rem; border-top: 1px solid var(--borde); }
+.goliat-panel__escribir { display: flex; gap: 0.4rem; padding: 0 1.4rem 1rem 0.9rem; }
+.goliat-panel__escribir input {
+  min-width: 0;
+  flex: 1;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--borde-fuerte);
+  background: #0f0f12;
+  color: #fff;
+  font-size: 0.875rem;
+}
+.goliat-panel__escribir input:focus { border-color: var(--neon); outline: none; }
+.goliat-panel__escribir button { padding: 0 0.85rem; background: #2b5bd0; color: #fff; font-weight: 800; }
+.goliat-panel__escribir button:hover { background: #3c72ea; }
+.goliat-panel__proyecto { padding: 0.7rem 0.9rem; border-bottom: 1px solid var(--borde); }
+.goliat-panel__proyecto header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.5rem; margin-bottom: 0.4rem; }
+.goliat-panel__proyecto header strong { flex: 1; color: #fff; font-size: 0.95rem; }
+.goliat-panel__proyecto header .goliat-panel__antetitulo { flex-basis: 100%; }
+.goliat-panel__cuenta { color: var(--neon); font: 700 0.75rem/1 'JetBrains Mono Variable', 'JetBrains Mono respaldo', monospace; }
+.goliat-panel__proyecto ol { display: grid; gap: 0.2rem; margin-bottom: 0.45rem; font-size: 0.82rem; }
+.goliat-panel__proyecto label { display: flex; gap: 0.5rem; align-items: flex-start; cursor: pointer; color: rgb(255 255 255 / 0.75); }
+.goliat-panel__proyecto input { margin-top: 0.2rem; accent-color: #3c72ea; }
+.goliat-panel__proyecto li.hecho label { color: rgb(255 255 255 / 0.45); text-decoration: line-through; }
+.goliat-panel__proyecto li.actual label { color: #fff; }
+.goliat-panel__proyecto small { display: block; color: rgb(255 255 255 / 0.6); font-size: 0.75rem; }
+
+/* En el teléfono el panel ocupa el ancho de la pantalla. */
+@media (max-width: 640px) {
+  .goliat-boton { width: 56px; height: 56px; }
+  .goliat-boton__figura { width: 52px; height: 52px; }
+  .goliat-zona--abierta { right: max(12px, env(safe-area-inset-right)); max-width: none; z-index: 45; }
+  .goliat-panel { width: 100%; }
+}
+
+/* En pantallas anchas el aviso vive en el margen, sin tapar la lección (como la mascota). */
+@media (min-width: 1100px) {
+  .goliat-aviso { max-width: min(20rem, calc((100vw - 48rem) / 2 - 30px)); }
+}
+
+/* Retrato grande (Ayuda › Conoce a Goliat). */
+.goliat-retrato { width: 100%; max-width: 15rem; height: auto; }
+
+html.ligero .goliat-boton__figura, html.ligero .goliat__ojo, html.ligero .goliat__oreja-parada,
+html.ligero .goliat__cola, html.ligero .goliat__zzz text { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .goliat-boton__figura, .goliat-zona *, .goliat, .goliat * { animation: none !important; }
+}
+@media print { .goliat-zona { display: none !important; } }
