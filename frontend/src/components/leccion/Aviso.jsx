@@ -16,7 +16,7 @@ function AvisoEstudio({ title, body }) {
       <summary className="flex cursor-pointer list-none items-center gap-3 p-4 sm:p-5">
         <IconoLeccion nombre="empresa" className="h-9 w-9 shrink-0" />
         <span className="min-w-0 flex-1">
-          <span className="block font-mono text-[10px] uppercase tracking-widest text-amatista-claro">En la industria · lectura opcional</span>
+          <span className="block font-mono text-[11px] uppercase tracking-widest text-amatista-claro">En la industria · lectura opcional</span>
           <span className="block font-bold text-white">{title}</span>
         </span>
         <span className="shrink-0 font-mono text-xs text-white/50 transition-transform group-open:rotate-90" aria-hidden="true">

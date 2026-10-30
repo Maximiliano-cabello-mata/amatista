@@ -8,9 +8,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../../auth/contexto';
 import { conoceDelEnlace, siguientePractica } from '../../../blender/conoce';
 import PrepararBlender from '../../../blender/PrepararBlender';
+import { useLanzadorBlender } from '../../../blender/useLanzador';
 import { useAvisoTemporal } from '../../../blender/useTaller';
 import { rutaEntrar, rutas } from '../../../rutas';
 import { estadoEnlace, ordenarRecorrido } from '../../../services/blender';
+import { hayQueLanzar } from '../../../services/lanzador';
+import AvisoLanzador from '../../blender/AvisoLanzador';
 import { TextoEnLinea } from '../Markdown';
 import { recorridoDelEnlace, TEXTO_RECORRIDO } from '../recursos';
 import { useActividad } from './hooks';
@@ -107,7 +110,7 @@ function Espejo({ vivo }) {
       {vivo.texto && <p className="mt-1 text-texto/80">{vivo.texto}</p>}
       {vivo.hacer && (
         <p className="corte-poly-sm mt-3 flex flex-wrap items-center gap-2 bg-base/70 px-3 py-2 text-sm text-white">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-amatista-claro">Qué hacer</span>
+          <span className="font-mono text-[11px] uppercase tracking-widest text-amatista-claro">Qué hacer</span>
           <TextoEnLinea texto={vivo.hacer} />
           {vivo.teclas.map((t, i) => (
             <kbd key={`${t}-${i}`} className="rounded border border-white/25 bg-base px-1.5 py-0.5 font-mono text-[11px]">
@@ -124,6 +127,7 @@ function RecorridoBlender({ bloque, alCompletar, resuelta }) {
   const { token, usuario } = useAuth();
   const { resultado, resolver } = useActividad(alCompletar);
   const { enlace, refrescar } = useRecorridoVivo(usuario ? token : null);
+  const lanzador = useLanzadorBlender(token, { alAbrirse: () => refrescar() });
   const [aviso, avisar] = useAvisoTemporal();
   const [enviando, setEnviando] = useState(false);
   const estado = enlace?.estado ?? (usuario ? 'cargando' : 'sin_cuenta');
@@ -142,6 +146,7 @@ function RecorridoBlender({ bloque, alCompletar, resuelta }) {
     const r = await ordenarRecorrido(token, accion, recorrido);
     setEnviando(false);
     if (!r.ok) avisar(r.error || 'No se pudo avisar a tu Blender.');
+    else if (hayQueLanzar(r) && accion === 'empezar') lanzador.lanzar('recorrido', { recorrido });
     else if (r.datos?.entregada === false) avisar('Tu Blender no está abierto: ábrelo y vuelve a intentarlo.');
     else avisar(accion === 'empezar' ? 'Enviado: mira tu Blender.' : 'Enviado a tu Blender.');
     refrescar();
@@ -169,7 +174,7 @@ function RecorridoBlender({ bloque, alCompletar, resuelta }) {
 
       {enlace?.vivo && (estado === 'recorriendo' || hecho) && <Espejo vivo={enlace.vivo} />}
 
-      {usuario && ['abierto', 'recorriendo', 'hecho'].includes(estado) && (
+      {usuario && ['abierto', 'recorriendo', 'hecho', 'cerrado'].includes(estado) && (
         <div className="mt-4 flex flex-wrap gap-2">
           {estado !== 'recorriendo' && (
             <button type="button" disabled={enviando} onClick={() => ordenar('empezar')} className={BOTON_PRINCIPAL}>
@@ -193,6 +198,7 @@ function RecorridoBlender({ bloque, alCompletar, resuelta }) {
           {aviso}
         </p>
       )}
+      <AvisoLanzador estado={lanzador.estado} alCerrar={lanzador.cerrar} />
 
       {!usuario && (
         <div className="mt-5 flex flex-wrap gap-3">

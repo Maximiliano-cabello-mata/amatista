@@ -2,9 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../../auth/contexto';
 import { controlesDisponibles, estadoBlender, instructorEnVivo, pasosConEstado, textoAutonomia } from '../../../blender/logica';
 import PrepararBlender from '../../../blender/PrepararBlender';
+import { useLanzadorBlender } from '../../../blender/useLanzador';
+import AvisoLanzador from '../../blender/AvisoLanzador';
 import { IconoGuia } from '../../etiquetas/IconosEtiqueta';
 import { rutaEntrar, rutas } from '../../../rutas';
 import { abrirPractica, estadoEnlace, obtenerPractica, ordenarBlender, progresoPractica } from '../../../services/blender';
+import { hayQueLanzar } from '../../../services/lanzador';
 import { TextoEnLinea } from '../Markdown';
 import { useActividad } from './hooks';
 import { BOTON_PRINCIPAL, BOTON_SECUNDARIO, MarcoActividad, Retroalimentacion } from './Marco';
@@ -47,7 +50,7 @@ function Pasos({ pasos }) {
               {paso.titulo}
             </span>
             {paso.estado === 'actual' && (
-              <span className="ml-auto font-mono text-[10px] uppercase tracking-widest text-neon">Ahora</span>
+              <span className="ml-auto font-mono text-[11px] uppercase tracking-widest text-neon">Ahora</span>
             )}
           </li>
         );
@@ -71,7 +74,7 @@ function ListaEjemplo({ instructor }) {
   const abiertas = instructor.lista.filter((i) => i.consejo).slice(0, 2);
   return (
     <div className="mt-3">
-      <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+      <p className="font-mono text-[11px] uppercase tracking-widest text-white/50">
         Comparado con el ejemplo · {instructor.hechas} de {instructor.lista.length}
       </p>
       {instructor.aspectos.map((grupo) => (
@@ -148,7 +151,7 @@ function InstructorEnVivo({ instructor, ordenar, enviando }) {
   };
   return (
     <div className="corte-poly-sm mt-3 border border-neon/25 bg-neon/5 p-3">
-      <p className="font-mono text-[10px] uppercase tracking-widest text-neon">
+      <p className="font-mono text-[11px] uppercase tracking-widest text-neon">
         Ahora en Blender{instructor.paso ? ` · ${instructor.paso}` : ''}{instructor.modo ? ` · ${instructor.modo}` : ''}
       </p>
       {instructor.viendoEjemplo && (
@@ -339,6 +342,8 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
     };
   }, [token, completa]);
 
+  // Add-on 5.4: con Blender cerrado, el enlace amatista:// lo arranca directo en la práctica.
+  const lanzador = useLanzadorBlender(token, { alAbrirse: () => refrescarEnlace.current() });
   const abrir = async () => {
     setAbriendo(true);
     const r = await abrirPractica(token, bloque.practica);
@@ -347,20 +352,16 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
       const { abierta_en_blender: enVivo, ...fila } = r.datos;
       setProgreso(fila);
       refrescarEnlace.current();
-      setAviso(
-        enVivo
-          ? {
-              tipo: 'info',
-              titulo: 'Abriendo en tu Blender',
-              texto: 'Mira tu Blender: la práctica se abre ahí en unos segundos y Amatista te guía paso a paso. Tu avance aparece aquí mientras trabajas.',
-            }
-          : {
-              tipo: 'info',
-              titulo: 'Lista en Blender',
-              texto:
-                'Abre Blender y pulsa N › pestaña Amatista: la práctica se abre sola y Amatista te guía paso a paso. Tu avance aparece aquí mientras trabajas.',
-            },
-      );
+      if (hayQueLanzar(r)) {
+        setAviso(null);
+        lanzador.lanzar('abrir_practica', { practica_id: bloque.practica });
+      } else if (enVivo) {
+        setAviso({
+          tipo: 'info',
+          titulo: 'Abriendo en tu Blender',
+          texto: 'Mira tu Blender: la práctica se abre ahí en unos segundos y Amatista te guía paso a paso. Tu avance aparece aquí mientras trabajas.',
+        });
+      }
     } else {
       setAviso({ tipo: 'mal', titulo: 'No se pudo abrir', texto: r.error });
     }
@@ -409,13 +410,13 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
           )}
         </div>
         <div className="corte-poly-sm flex flex-col items-center justify-center gap-2 border border-white/10 bg-base/60 p-4 text-center">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-white/50">Tu avance</span>
+          <span className="font-mono text-[11px] uppercase tracking-widest text-white/50">Tu avance</span>
           <span className={`text-4xl font-extrabold tabular-nums ${completa ? 'text-emerald-300' : 'text-white'}`}>{avance}%</span>
           <div className="h-1.5 w-full overflow-hidden bg-white/10" aria-hidden="true">
             <div className={`h-full transition-[width] duration-700 ${completa ? 'bg-emerald-400' : 'bg-neon'}`} style={{ width: `${avance}%` }} />
           </div>
-          {bloque.minutes && <span className="font-mono text-[10px] text-white/45">≈ {bloque.minutes} min</span>}
-          {progreso?.version_blender && <span className="font-mono text-[10px] text-white/45">Blender {progreso.version_blender}</span>}
+          {bloque.minutes && <span className="font-mono text-[11px] text-white/45">≈ {bloque.minutes} min</span>}
+          {progreso?.version_blender && <span className="font-mono text-[11px] text-white/45">Blender {progreso.version_blender}</span>}
         </div>
       </div>
 
@@ -437,6 +438,7 @@ function PracticaBlender({ bloque, alCompletar, resuelta }) {
           </button>
         )}
       </div>
+      {usuario && !completa && <AvisoLanzador estado={lanzador.estado} alCerrar={lanzador.cerrar} />}
       {usuario && !completa && (
         <BlenderEnVivo enlace={enlace} token={token} practicaId={bloque.practica} abrir={abrir} abriendo={abriendo} />
       )}

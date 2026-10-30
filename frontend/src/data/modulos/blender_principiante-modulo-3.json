@@ -217,6 +217,36 @@
             ]
           },
           {
+            "type": "spot_error",
+            "id": "error_bp3",
+            "title": "Encuentra el error: la nave que salió chueca",
+            "text": "Lu siguió estos pasos para su nave simétrica, pero el resultado salió raro. ¿Qué hizo mal?",
+            "steps": [
+              {
+                "text": "Agregó un cubo y lo estiró con **S X** para hacer el cuerpo.",
+                "explanation": "Bien: estirar en un eje es la forma rápida de hacer el cuerpo."
+              },
+              {
+                "text": "Le puso el modificador **Espejo** sin aplicar la escala.",
+                "wrong": true,
+                "explanation": "Con la escala sin aplicar (Ctrl + A › Escala), Espejo y Bisel calculan con las medidas viejas y salen deformes. Primero se aplica la escala."
+              },
+              {
+                "text": "Movió la mitad del modelo en Modo Edición, con el origen en el centro.",
+                "explanation": "Bien: Espejo refleja respecto al origen; por eso el origen se deja en el centro."
+              },
+              {
+                "text": "Activó **Recorte** (Clipping) en Espejo para que el centro no se abra.",
+                "explanation": "Bien: así los vértices del centro no cruzan al otro lado."
+              },
+              {
+                "text": "Puso **Subdivisión** con 6 niveles en la vista para verla suave.",
+                "wrong": true,
+                "explanation": "6 niveles multiplican las caras por 4 seis veces: Blender se pone lento. En la vista bastan 1 o 2."
+              }
+            ]
+          },
+          {
             "type": "param_demo",
             "demo": "bevel",
             "caption": "El bisel redondea los bordes: con más segmentos, más suave el canto y más luz que atrapa."

@@ -105,7 +105,7 @@ function MapaCalor({
       >
         <svg viewBox={`0 0 ${ancho} ${alto}`} width="100%" className="block" aria-hidden="true">
           {meses.map(({ semana, mes }) => (
-            <text key={`${semana}-${mes}`} x={IZQUIERDA + semana * paso} y={10} fill={COLORES.textoSuave} className="font-mono text-[9px]">
+            <text key={`${semana}-${mes}`} x={IZQUIERDA + semana * paso} y={10} fill={COLORES.textoSuave} className="font-mono text-[10px]">
               {MESES_CORTOS[mes]}
             </text>
           ))}
@@ -117,7 +117,7 @@ function MapaCalor({
               dy="0.32em"
               textAnchor="end"
               fill={COLORES.textoSuave}
-              className="font-mono text-[9px]"
+              className="font-mono text-[10px]"
             >
               {DIAS_CORTOS[fila]}
             </text>
@@ -179,7 +179,7 @@ function MapaCalor({
             }}
           >
             <strong className="block text-sm text-white">{conUnidad(seleccionado.valor, unidad)}</strong>
-            <span className="block font-mono text-[10px] uppercase tracking-wider text-white/55">
+            <span className="block font-mono text-[11px] uppercase tracking-wider text-white/55">
               {fechaCorta(seleccionado.fecha)}
               {seleccionado.fecha === hoyTexto ? ' · hoy' : ''}
             </span>
@@ -187,7 +187,7 @@ function MapaCalor({
         )}
       </div>
 
-      <figcaption className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-wider text-white/45">
+      <figcaption className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[11px] uppercase tracking-wider text-white/45">
         <span className="flex items-center gap-1.5">
           Menos
           <span className="h-3 w-3 rounded-[2px]" style={{ backgroundColor: CELDA_VACIA }} title="Sin actividad" aria-hidden="true" />

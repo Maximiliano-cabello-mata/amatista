@@ -22,8 +22,8 @@ function Cortina({ before, after }) {
         <img src={before.image} alt={before.alt} className="block h-full max-w-none object-cover object-left" style={{ width: `${10000 / Math.max(corte, 1)}%` }} />
       </div>
       <span className="pointer-events-none absolute inset-y-0 w-0.5 bg-neon" style={{ left: `${corte}%` }} aria-hidden="true" />
-      <span className="absolute left-2 top-2 bg-black/60 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-white">{before.label}</span>
-      <span className="absolute right-2 top-2 bg-black/60 px-2 py-0.5 font-mono text-[10px] uppercase tracking-widest text-white">{after.label}</span>
+      <span className="absolute left-2 top-2 bg-black/60 px-2 py-0.5 font-mono text-[11px] uppercase tracking-widest text-white">{before.label}</span>
+      <span className="absolute right-2 top-2 bg-black/60 px-2 py-0.5 font-mono text-[11px] uppercase tracking-widest text-white">{after.label}</span>
       <input
         type="range"
         min={0}

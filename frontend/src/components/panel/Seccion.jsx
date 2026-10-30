@@ -20,7 +20,7 @@ function Seccion({ id, etiqueta, titulo, accion, children, className = '', recor
 export function Cifra({ etiqueta, valor, unidad, detalle, Icono, tono = 'text-amatista-claro', compacta = false, className = '' }) {
   return (
     <div className={`corte-poly-sm min-w-0 border border-white/10 bg-base/60 ${compacta ? 'px-3 py-2.5' : 'px-4 py-3'} ${className}`}>
-      <dt className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/50">
+      <dt className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-widest text-white/50">
         {Icono && <Icono className={`h-3.5 w-3.5 ${tono}`} />}
         {etiqueta}
       </dt>

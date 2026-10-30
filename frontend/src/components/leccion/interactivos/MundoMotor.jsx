@@ -83,13 +83,13 @@ function MundoMotor({ bloque, alCompletar, resuelta }) {
         <aside className="flex flex-col gap-3 text-sm">
           {!sinRetos && (
             <div>
-              <p className="font-mono text-[10px] uppercase tracking-widest text-white/45">
+              <p className="font-mono text-[11px] uppercase tracking-widest text-white/45">
                 Retos · {retos.cumplidos} de {retos.total}
               </p>
               <ul className="mt-2 grid gap-1.5" aria-live="polite">
                 {retos.lista.map((reto) => (
                   <li key={reto.indice} className={`flex items-start gap-2 ${reto.cumplido ? 'text-emerald-300' : 'text-white/80'}`}>
-                    <span className={`hexagono mt-0.5 grid h-4 w-[1.15rem] shrink-0 place-items-center text-[9px] font-bold ${reto.cumplido ? 'bg-emerald-400 text-base' : 'bg-white/15'}`} aria-hidden="true">
+                    <span className={`hexagono mt-0.5 grid h-4 w-[1.15rem] shrink-0 place-items-center text-[10px] font-bold ${reto.cumplido ? 'bg-emerald-400 text-base' : 'bg-white/15'}`} aria-hidden="true">
                       {reto.cumplido ? '✓' : ''}
                     </span>
                     <span>

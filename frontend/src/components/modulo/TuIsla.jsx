@@ -6,8 +6,11 @@
 import { useEffect, useId, useState } from 'react';
 import { useAuth } from '../../auth/contexto';
 import { disenoIsla, textoOrden } from '../../blender/taller';
+import { useLanzadorBlender } from '../../blender/useLanzador';
 import { useAvisoTemporal } from '../../blender/useTaller';
 import { listarTalleres, ordenarTaller } from '../../services/blender';
+import { hayQueLanzar } from '../../services/lanzador';
+import AvisoLanzador from '../blender/AvisoLanzador';
 
 const ANCHO = 320;
 const ALTO = 180;
@@ -32,6 +35,7 @@ function TuIsla({ className = '' }) {
   const { token, usuario } = useAuth();
   const [talleres, setTalleres] = useState(null);
   const [aviso, avisar] = useAvisoTemporal();
+  const lanzador = useLanzadorBlender(token);
   const [enviando, setEnviando] = useState(false);
   const idTitulo = useId();
 
@@ -54,7 +58,8 @@ function TuIsla({ className = '' }) {
     setEnviando(true);
     const r = await ordenarTaller(token, 'isla');
     setEnviando(false);
-    avisar(textoOrden(r));
+    if (hayQueLanzar(r)) lanzador.lanzar('isla');
+    else avisar(textoOrden(r));
   };
 
   return (
@@ -64,7 +69,7 @@ function TuIsla({ className = '' }) {
     >
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="min-w-0">
-          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-amatista-claro">Úsalo · tu mundo</p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-amatista-claro">Úsalo · tu mundo</p>
           <h2 id={idTitulo} className="font-extrabold text-white">
             Tu isla
           </h2>
@@ -90,6 +95,7 @@ function TuIsla({ className = '' }) {
           )}
         </div>
       </div>
+      <AvisoLanzador estado={lanzador.estado} alCerrar={lanzador.cerrar} />
 
       <svg
         viewBox={`0 0 ${ANCHO} ${ALTO}`}

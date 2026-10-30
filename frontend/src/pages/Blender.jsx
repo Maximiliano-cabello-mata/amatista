@@ -8,6 +8,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../auth/contexto';
 import FormularioCodigo from '../blender/FormularioCodigo';
+import { useLanzadorBlender } from '../blender/useLanzador';
 import {
   AJUSTES_POR_DEFECTO,
   BLENDER_MINIMO,
@@ -20,6 +21,7 @@ import {
   SISTEMAS,
   versionDelServidor,
 } from '../blender/logica';
+import AvisoLanzador from '../components/blender/AvisoLanzador';
 import ConoceAmatistaMotor from '../components/blender/ConoceAmatistaMotor';
 import FusionPlataformaBlender from '../components/blender/FusionPlataformaBlender';
 import PalabrasBlender from '../components/blender/PalabrasBlender';
@@ -413,6 +415,27 @@ function useConexionBlender(token) {
   return estado;
 }
 
+// Add-on 5.4: después de instalar, un botón comprueba que la plataforma ya abre Blender (amatista://).
+function ProbarAbrir({ token }) {
+  const lanzador = useLanzadorBlender(token);
+  return (
+    <div className="corte-poly-sm mt-3 border border-blender/30 bg-blender/5 p-4 sm:p-5">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="min-w-0 flex-1">
+          <p className="text-lg font-extrabold text-white">¿Ya instalaste? Pruébalo</p>
+          <p className="mt-1 text-sm text-texto/75">
+            Este botón abre tu Blender desde aquí, como lo harán las lecciones. Dentro, busca el menú <strong className="text-white">Amatista</strong> arriba (junto a Ayuda) y el botón Amatista de la vista 3D.
+          </p>
+        </div>
+        <button type="button" onClick={() => lanzador.lanzar('abrir')} className="boton boton--blender boton--grande">
+          Abrir Blender ahora
+        </button>
+      </div>
+      <AvisoLanzador estado={lanzador.estado} alCerrar={lanzador.cerrar} />
+    </div>
+  );
+}
+
 function Instalar({ token, usuario }) {
   return (
     <>
@@ -450,10 +473,11 @@ function Instalar({ token, usuario }) {
               </span>
             ))}
           </Paso>
-          <Paso numero="3" titulo="Abre Blender">
-            Pulsa N en la vista 3D y elige la pestaña Amatista. Si te muestra un código, escríbelo en «Blender conectados».
+          <Paso numero="3" titulo="Ábrelo desde la plataforma">
+            Pulsa «Abrir Blender ahora» (o «Abrir en Blender» en cualquier lección). Si Amatista te muestra un código, escríbelo en «Blender conectados».
           </Paso>
         </ol>
+        <ProbarAbrir token={usuario ? token : null} />
       </section>
     </>
   );

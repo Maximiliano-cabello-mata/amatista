@@ -3,12 +3,15 @@
 // y esta tarjeta muestra en vivo el mismo paso que la pestaña Amatista.
 import { useEffect, useRef, useState } from 'react';
 import { conoceDelEnlace, estadoPractica, PRACTICAS_ADDON, siguientePractica, TEXTO_CONOCE } from '../../blender/conoce';
+import { useLanzadorBlender } from '../../blender/useLanzador';
 import { useAvisoTemporal } from '../../blender/useTaller';
 import { estadoEnlace, ordenarRecorrido } from '../../services/blender';
+import { hayQueLanzar } from '../../services/lanzador';
+import AvisoLanzador from '../blender/AvisoLanzador';
 import { TextoEnLinea } from '../leccion/Markdown';
 
 const ESPERA_MS = { en_curso: 2500, abierto: 5000, cerrado: 20000, viejo: 20000, sin_enlace: 60000 };
-const BOTON = 'corte-poly-sm px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-widest transition disabled:cursor-wait disabled:opacity-50';
+const BOTON = 'boton disabled:cursor-wait';
 
 // El Blender del alumno, preguntado de a una vez (se pausa con la pestaña oculta).
 function useConoceVivo(token) {
@@ -78,7 +81,7 @@ function Espejo({ vivo, enviando, alOrdenar }) {
       {vivo.texto && <p className="mt-1 text-sm text-texto/80">{vivo.texto}</p>}
       {vivo.hacer && (
         <p className="corte-poly-sm mt-3 flex flex-wrap items-center gap-2 bg-black/30 px-3 py-2 text-sm text-white">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-amatista-claro">Qué hacer</span>
+          <span className="font-mono text-[11px] uppercase tracking-widest text-amatista-claro">Qué hacer</span>
           <TextoEnLinea texto={vivo.hacer} />
           {vivo.teclas.map((t, i) => (
             <kbd key={`${t}-${i}`} className="rounded border border-white/25 bg-base px-1.5 py-0.5 font-mono text-[11px]">
@@ -104,10 +107,12 @@ function Espejo({ vivo, enviando, alOrdenar }) {
 
 function ConoceAmatistaMotor({ token, usuario }) {
   const { conoce, refrescar } = useConoceVivo(usuario ? token : null);
+  const lanzador = useLanzadorBlender(token, { alAbrirse: () => refrescar() });
   const [aviso, avisar] = useAvisoTemporal();
   const [enviando, setEnviando] = useState(false);
   const estado = conoce?.estado ?? (usuario ? 'cargando' : 'sin_cuenta');
-  const puedeOrdenar = usuario && ['abierto', 'en_curso'].includes(estado);
+  // Con Blender cerrado también: «Empezar en Blender» lo abre con el enlace amatista:// (add-on 5.4).
+  const puedeOrdenar = usuario && ['abierto', 'en_curso', 'cerrado'].includes(estado);
   const toca = siguientePractica(conoce?.hechos);
 
   const ordenar = async (accion, recorrido = null) => {
@@ -115,6 +120,7 @@ function ConoceAmatistaMotor({ token, usuario }) {
     const r = await ordenarRecorrido(token, accion, recorrido ?? conoce?.actual ?? null);
     setEnviando(false);
     if (!r.ok) avisar(r.error || 'No se pudo avisar a tu Blender.');
+    else if (hayQueLanzar(r) && accion === 'empezar') lanzador.lanzar('recorrido', { recorrido: recorrido ?? conoce?.actual ?? undefined });
     else if (r.datos?.entregada === false) avisar('Tu Blender no está abierto: ábrelo y vuelve a intentarlo.');
     else avisar(accion === 'empezar' ? 'Enviado: mira tu Blender.' : 'Enviado a tu Blender.');
     refrescar();
@@ -153,7 +159,7 @@ function ConoceAmatistaMotor({ token, usuario }) {
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="font-mono text-[11px] uppercase tracking-widest text-white/50">Práctica {i + 1}</span>
-                <span className={`corte-poly-sm px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest ${etiqueta.clase}`}>{etiqueta.texto}</span>
+                <span className={`corte-poly-sm px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-widest ${etiqueta.clase}`}>{etiqueta.texto}</span>
               </div>
               <h3 className="mt-2 text-lg font-bold leading-snug text-white">{p.nombre}</h3>
               <p className="mt-1 text-sm text-texto/75">{p.resumen}</p>
@@ -187,7 +193,7 @@ function ConoceAmatistaMotor({ token, usuario }) {
       {conoce?.estado === 'en_curso' && conoce.vivo && <Espejo vivo={conoce.vivo} enviando={enviando} alOrdenar={(accion) => ordenar(accion)} />}
 
       <p className={`mt-4 text-sm ${estado === 'en_curso' ? 'text-neon' : 'text-texto/75'}`} aria-live="polite">
-        {!usuario && 'Entra con tu cuenta para empezarlas desde aquí. También están en la pestaña Amatista de Blender (tecla N).'}
+        {!usuario && 'Entra con tu cuenta para empezarlas desde aquí. También están en el menú Amatista de Blender (arriba).'}
         {usuario && !conoce && 'Buscando tu Blender…'}
         {usuario && conoce && TEXTO_CONOCE[conoce.estado]}
       </p>
@@ -196,6 +202,7 @@ function ConoceAmatistaMotor({ token, usuario }) {
           {aviso}
         </p>
       )}
+      <AvisoLanzador estado={lanzador.estado} alCerrar={lanzador.cerrar} />
     </section>
   );
 }

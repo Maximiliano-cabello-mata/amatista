@@ -4,7 +4,7 @@ import { TONOS } from './catalogo';
 // tamano: "sm" (listas) o "md" (encabezados).
 function Etiqueta({ texto, Icono, tono = 'gris', tamano = 'sm', className = '', titulo }) {
   const medidas =
-    tamano === 'md' ? 'gap-1.5 px-2.5 py-1 text-[11px]' : 'gap-1 px-2 py-0.5 text-[10px]';
+    tamano === 'md' ? 'gap-1.5 px-2.5 py-1 text-[11px]' : 'gap-1 px-2 py-0.5 text-[11px]';
   return (
     <span
       title={titulo}

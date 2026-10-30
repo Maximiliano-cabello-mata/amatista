@@ -62,7 +62,7 @@ function Mascota({ tema, className = '', automatico = true, inicial = 0, paseo =
         className="globo animar-aparecer relative min-w-0 flex-1 border border-white/15 bg-base/85 px-4 py-3 text-sm leading-relaxed text-texto/90"
         aria-live="polite"
       >
-        <span className="mb-1 flex items-center justify-between gap-3 font-mono text-[10px] font-bold uppercase tracking-[0.2em]">
+        <span className="mb-1 flex items-center justify-between gap-3 font-mono text-[11px] font-bold uppercase tracking-[0.2em]">
           <span style={{ color: tema.colores?.acento }}>
             {mascota.nombre} {ETIQUETA[mensaje.tipo]}
           </span>

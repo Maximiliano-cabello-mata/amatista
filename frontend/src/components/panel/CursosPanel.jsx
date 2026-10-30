@@ -9,7 +9,7 @@ import { estadoModulo } from './datos';
 import { IconoPalomita } from './IconosPanel';
 import Seccion from './Seccion';
 
-const CHIP = 'corte-poly-sm shrink-0 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest';
+const CHIP = 'corte-poly-sm shrink-0 px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-widest';
 
 function EstadoModulo({ estado, completadas, total, nuevas }) {
   switch (estado) {
@@ -99,7 +99,7 @@ function TarjetaRuta({ ruta, progreso }) {
           </span>
         </AnilloProgreso>
         <div className="min-w-0">
-          <p className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-white/50">
+          <p className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-widest text-white/50">
             <LogoCurso logo={ruta.logo} className="h-4 w-4" /> Curso {ruta.numero}
             {varios ? ` · ${ruta.niveles.length} niveles` : ''}
           </p>

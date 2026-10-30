@@ -234,6 +234,59 @@
             ]
           },
           {
+            "type": "shortcut_drill",
+            "id": "teclas_bp1",
+            "title": "Entrena tus teclas antes de abrir Blender",
+            "text": "Son las mismas teclas que usarás en Blender, con el ratón sobre la Vista 3D. Aquí no se rompe nada: equivócate todas las veces que quieras.",
+            "drills": [
+              {
+                "prompt": "Mueve el cubo libremente",
+                "keys": [
+                  "G"
+                ],
+                "explanation": "**G** de *grab* (agarrar): el objeto sigue al ratón hasta que haces clic."
+              },
+              {
+                "prompt": "Muévelo **solo en el eje X** (el rojo)",
+                "keys": [
+                  "G",
+                  "X"
+                ],
+                "explanation": "Después de G, la letra del eje lo deja ir solo por esa línea: así no se te escapa hacia arriba."
+              },
+              {
+                "prompt": "Gíralo sobre el eje Z, como una peonza",
+                "keys": [
+                  "R",
+                  "Z"
+                ],
+                "explanation": "**R** rota. Z es el eje azul, el que apunta hacia arriba."
+              },
+              {
+                "prompt": "Hazlo más alto, solo hacia arriba",
+                "keys": [
+                  "S",
+                  "Z"
+                ],
+                "explanation": "**S** escala; con Z, solo crece en altura. Así se hace una torre a partir de un cubo."
+              },
+              {
+                "prompt": "Agrega otro cubo",
+                "keys": [
+                  "Shift+A"
+                ],
+                "explanation": "**Shift + A** abre el menú Agregar (Add). En Blender eliges Malla › Cubo."
+              },
+              {
+                "prompt": "Entra al Modo Edición para ver sus vértices",
+                "keys": [
+                  "Tab"
+                ],
+                "explanation": "**Tab** cambia entre Modo Objeto y Modo Edición. Lo usarás mucho en el módulo 2."
+              }
+            ]
+          },
+          {
             "type": "motor_scene",
             "id": "mundo_bp1",
             "title": "Mueve las piezas a la estación",

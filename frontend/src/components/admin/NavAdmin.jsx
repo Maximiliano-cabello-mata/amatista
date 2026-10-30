@@ -36,7 +36,7 @@ function NavAdmin({ grupo, esAdmin }) {
         {secciones.map((seccion) => (
           <li key={seccion.titulo ?? 'inicio'} className="flex shrink-0 gap-1 lg:flex-col">
             {seccion.titulo && (
-              <p className="hidden px-1 font-mono text-[10px] uppercase tracking-[0.25em] text-white/40 lg:block">{seccion.titulo}</p>
+              <p className="hidden px-1 font-mono text-[11px] uppercase tracking-[0.25em] text-white/40 lg:block">{seccion.titulo}</p>
             )}
             <ul className="flex gap-1 lg:flex-col">
               {seccion.entradas.map((entrada) => {

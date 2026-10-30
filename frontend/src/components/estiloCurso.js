@@ -9,12 +9,14 @@ export const ACENTOS = {
     borde: 'from-blender via-amatista to-amatista-oscuro',
     texto: 'text-blender',
     fondo: 'bg-blender',
+    hex: '#f5792a',
     brillo: 'shadow-[0_0_40px_-8px_rgba(245,121,42,0.55)]',
   },
   neon: {
     borde: 'from-neon via-amatista to-amatista-oscuro',
     texto: 'text-neon',
     fondo: 'bg-neon',
+    hex: '#00e5ff',
     brillo: 'shadow-[0_0_40px_-8px_rgba(0,229,255,0.45)]',
   },
 };

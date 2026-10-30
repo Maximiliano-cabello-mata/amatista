@@ -33,7 +33,7 @@ export function Tarjeta({ etiqueta, titulo, accion, children, className = '', id
 export function Kpi({ etiqueta, valor, detalle, tono = 'text-white' }) {
   return (
     <div className="corte-poly-sm min-w-0 border border-white/10 bg-base/60 px-4 py-3">
-      <dt className="font-mono text-[10px] uppercase tracking-widest text-white/55">{etiqueta}</dt>
+      <dt className="font-mono text-[11px] uppercase tracking-widest text-white/55">{etiqueta}</dt>
       <dd className="mt-1">
         <span className={`text-3xl font-extrabold leading-none tabular-nums ${tono}`}>{valor}</span>
         {detalle && <span className="mt-1.5 block text-xs leading-snug text-white/55">{detalle}</span>}
@@ -54,7 +54,7 @@ const TEXTOS_ESTADO = { publicado: 'Publicado', borrador: 'Borrador', archivado:
 export function EtiquetaEstado({ estado }) {
   return (
     <span
-      className={`corte-poly-sm inline-block whitespace-nowrap px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest ${
+      className={`corte-poly-sm inline-block whitespace-nowrap px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-widest ${
         ESTILOS_ESTADO[estado] ?? 'bg-white/5 text-white/60'
       }`}
     >
@@ -67,7 +67,7 @@ export function Pastilla({ children, tono = 'bg-white/5 text-white/65', titulo }
   return (
     <span
       title={titulo}
-      className={`corte-poly-sm inline-block whitespace-nowrap px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest ${tono}`}
+      className={`corte-poly-sm inline-block whitespace-nowrap px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-widest ${tono}`}
     >
       {children}
     </span>

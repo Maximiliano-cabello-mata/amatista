@@ -21,7 +21,7 @@ function MundosModulos({ cursos }) {
             <span className="relative flex items-end gap-3 pt-10">
               <Personaje tema={tema} interactivo={false} className="personaje--chico shrink-0" />
               <span className="min-w-0">
-                <span className={`block truncate font-mono text-[10px] uppercase tracking-[0.15em] ${tema.texto}`}>
+                <span className={`block truncate font-mono text-[11px] uppercase tracking-[0.15em] ${tema.texto}`}>
                   {curso.ruta === 'blender' ? curso.nivel : curso.titulo} · Módulo {modulo.numero}
                 </span>
                 <span className="block truncate font-extrabold text-white">{tema.nombre}</span>

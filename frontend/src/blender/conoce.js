@@ -67,8 +67,8 @@ export function estadoPractica(id, conoce) {
 }
 
 export const TEXTO_CONOCE = {
-  sin_enlace: 'El servidor todavía no tiene el enlace en vivo: haz las prácticas desde la pestaña Amatista de Blender (tecla N).',
-  cerrado: 'Tu Blender está cerrado. Ábrelo y pulsa «Empezar en Blender»: la práctica se abre ahí.',
+  sin_enlace: 'El servidor todavía no tiene el enlace en vivo: haz las prácticas desde el menú Amatista de Blender (arriba, junto a Ayuda).',
+  cerrado: 'Tu Blender está cerrado. Pulsa «Empezar en Blender»: se abre solo en la práctica.',
   viejo: 'Tu Amatista Motor es anterior a estas prácticas. Descarga el nuevo aquí abajo y reinstálalo.',
   abierto: 'Tu Blender está conectado. Elige una práctica y mira tu pantalla.',
   en_curso: 'Estás en una práctica dentro de Blender. Aquí ves el mismo paso que allá.',

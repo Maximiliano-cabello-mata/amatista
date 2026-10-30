@@ -60,7 +60,7 @@ function Arena({ tema, vida, golpeado, fallosPermitidos, fallos }) {
       <div className={`pointer-events-none absolute inset-0 bg-gradient-to-r ${tema.banda}`} aria-hidden="true" />
       {tema.mascota && (
         <p className="absolute bottom-2 right-3 hidden items-end gap-1.5 sm:flex" aria-hidden="true">
-          <span className="globo bg-base/85 px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-wider text-white/80">
+          <span className="globo bg-base/85 px-2 py-1 font-mono text-[11px] font-bold uppercase tracking-wider text-white/80">
             {vida.derrotado ? '¡Lo lograste!' : golpeado ? '¡Otro golpe!' : '¡Tú puedes!'}
           </span>
           <Personaje tema={tema} interactivo={false} forzar={vida.derrotado ? 'voltereta' : golpeado ? 'festejo' : ''} className="personaje--mini" />
@@ -69,12 +69,12 @@ function Arena({ tema, vida, golpeado, fallosPermitidos, fallos }) {
       <div className="relative flex items-center gap-4">
         <Jefe jefe={jefe} golpeado={golpeado} derrotado={vida.derrotado} className="h-24 w-24 shrink-0 sm:h-28 sm:w-28" />
         <div className="min-w-0 flex-1">
-          <p className={`font-mono text-[10px] uppercase tracking-[0.25em] ${tema.texto}`}>Jefe final · {tema.nombre}</p>
+          <p className={`font-mono text-[11px] uppercase tracking-[0.25em] ${tema.texto}`}>Jefe final · {tema.nombre}</p>
           <p className="text-xl font-extrabold text-white sm:text-2xl">{jefe.nombre}</p>
           <p className="mt-0.5 text-sm italic text-texto/75">«{frase}»</p>
           <div className="mt-3">
             <BarraVida vida={vida.vida} restante={vida.restante} color={jefe.piel} />
-            <p className="mt-1.5 flex flex-wrap justify-between gap-x-3 font-mono text-[10px] uppercase tracking-widest text-white/50">
+            <p className="mt-1.5 flex flex-wrap justify-between gap-x-3 font-mono text-[11px] uppercase tracking-widest text-white/50">
               <span>
                 Vida {vida.restante} / {vida.vida}
                 {vida.criticos > 0 && <span className="ml-2 text-neon">+{vida.criticos} crítico{vida.criticos > 1 ? 's' : ''}</span>}

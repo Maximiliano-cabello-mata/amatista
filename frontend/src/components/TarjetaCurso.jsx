@@ -34,7 +34,7 @@ function RamasNiveles({ ruta, progreso }) {
               <span className={`min-w-0 flex-1 truncate font-semibold ${estado === 'bloqueado' ? 'text-white/45' : 'text-white'}`}>
                 {curso.nivel || curso.titulo}
               </span>
-              <span className={`corte-poly-sm shrink-0 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest ${estilo.clase}`}>
+              <span className={`corte-poly-sm shrink-0 px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-widest ${estilo.clase}`}>
                 {estado === 'en-curso' ? `${porcentaje}%` : estilo.texto}
               </span>
             </li>
@@ -63,11 +63,11 @@ function ListaModulos({ curso, progreso, acento }) {
             </span>
             <span className={publicado ? 'text-white' : 'text-white/45'}>{modulo.titulo}</span>
             {nuevas > 0 && (
-              <span className="corte-poly-sm bg-neon/15 px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest text-neon">
+              <span className="corte-poly-sm bg-neon/15 px-2 py-0.5 font-mono text-[11px] font-bold uppercase tracking-widest text-neon">
                 Nuevo
               </span>
             )}
-            <span className={`ml-auto font-mono text-[10px] uppercase tracking-widest ${publicado ? acento.texto : 'text-white/30'}`}>
+            <span className={`ml-auto font-mono text-[11px] uppercase tracking-widest ${publicado ? acento.texto : 'text-white/30'}`}>
               {publicado ? `${modulo.contenido.lessons.length} lecciones` : 'Pronto'}
             </span>
           </li>

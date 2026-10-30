@@ -228,6 +228,30 @@
             ]
           },
           {
+            "type": "transform_challenge",
+            "id": "valor_bi1_pilar",
+            "title": "Ajusta el valor: el pilar del puente",
+            "text": "El plano dice que el pilar va **1,5 m a la derecha** del centro. En vez de arrastrarlo a ojo, escribe la medida en el panel N, como en Blender.",
+            "property": "location",
+            "axis": "X",
+            "target": 1.5,
+            "step": 0.1,
+            "tolerance": 0.05,
+            "explanation": "En Blender: N › Elemento › Ubicación X = 1.5 m. Escribir la medida es más rápido y exacto que arrastrar."
+          },
+          {
+            "type": "transform_challenge",
+            "id": "valor_bi1_tabla",
+            "title": "Ajusta el valor: gira la tabla",
+            "text": "Las tablas del puente van cruzadas: gira esta **90° en Z** para que quede atravesada.",
+            "property": "rotation",
+            "axis": "Z",
+            "target": 90,
+            "step": 5,
+            "tolerance": 2.5,
+            "explanation": "En Blender: N › Elemento › Rotación Z = 90°. También sirve R Z 90 Enter, con el ratón sobre la Vista 3D."
+          },
+          {
             "type": "matching",
             "id": "parejas_bi1",
             "prompt": "Une cada herramienta con su uso en el puente.",

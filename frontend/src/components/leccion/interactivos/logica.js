@@ -21,6 +21,10 @@ export const TIPOS_INTERACTIVOS = [
   'viewport_sim',
   'image_choice',
   'keyframe_sim',
+  // v4.3: entrena tus teclas, ajusta el valor y encuentra el error (dinamicas.js).
+  'shortcut_drill',
+  'transform_challenge',
+  'spot_error',
 ];
 
 // La tarjeta del proyecto (blender_taller con vista «proyecto») solo informa: la

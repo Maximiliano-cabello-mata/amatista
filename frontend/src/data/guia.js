@@ -130,9 +130,8 @@ export const TEMAS_AYUDA = [
             text: 'El instalador busca tu Blender, revisa la versión y deja el add-on listo. Si Blender es muy viejo, te avisa y no cambia nada.',
           },
           {
-            title: 'Abre Blender y busca la pestaña Amatista',
-            keys: ['N'],
-            text: 'Con el ratón sobre la vista 3D pulsa N: aparece la barra lateral. Elige la pestaña «Amatista».',
+            title: 'Vuelve a la lección y pulsa «Abrir en Blender»',
+            text: 'Blender se abre solo en la actividad. La primera vez tu navegador pregunta si puede abrir «Amatista para Blender»: elige Abrir. Dentro de Blender, Amatista está en el menú «Amatista» de arriba, en el botón Amatista de la vista 3D y en la pestaña de trabajo «Amatista».',
           },
           {
             title: '¿Te pide un código? Conéctalo',

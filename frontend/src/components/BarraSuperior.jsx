@@ -54,7 +54,7 @@ function IndicadorXP({ xp, nivel }) {
       title={`Nivel ${nivel.nivel} · ${nivel.titulo}: faltan ${nivel.faltan} XP para el siguiente nivel`}
       aria-label={`Nivel ${nivel.nivel}, ${nivel.titulo}, ${xp} XP. Ver mi panel`}
     >
-      <span className="hexagono grid h-5 w-6 place-items-center bg-amatista text-[10px] text-white" aria-hidden="true">
+      <span className="hexagono grid h-5 w-6 place-items-center bg-amatista text-[11px] text-white" aria-hidden="true">
         {nivel.nivel}
       </span>
       <span aria-hidden="true">
@@ -192,9 +192,7 @@ function BarraSuperior({ ruta, hash = '' }) {
                   <a
                     href={enlace.href}
                     aria-current={activo ? 'page' : undefined}
-                    className={`corte-poly-sm px-3 py-1.5 font-mono text-xs uppercase tracking-widest transition-colors ${
-                      activo ? 'bg-white/10 text-white' : 'text-white/60 hover:text-neon'
-                    }`}
+                    className={`nav-principal__enlace ${activo ? 'nav-principal__enlace--activo' : ''}`}
                   >
                     {enlace.texto}
                   </a>
@@ -231,7 +229,7 @@ function BarraSuperior({ ruta, hash = '' }) {
               !enCuenta && (
                 <a
                   href={rutaEntrar(hash)}
-                  className="corte-poly-sm destello block bg-neon px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-base hover:brightness-110"
+                  className="boton boton--primario boton--chico destello"
                 >
                   Entrar
                 </a>

@@ -40,7 +40,7 @@ function TarjetaRacha({ racha, actividad = {}, hoy = new Date() }) {
         <span className="absolute bottom-0 text-lg font-extrabold text-white drop-shadow">{racha.actual}</span>
       </div>
       <div className="min-w-0 flex-1">
-        <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">
+        <p className="font-mono text-[11px] uppercase tracking-widest text-white/50">
           Racha · {racha.actual} {dias(racha.actual)} · récord {racha.mejor}
         </p>
         <ol className="mt-1.5 flex gap-1.5" aria-label="Actividad de los últimos siete días">
@@ -51,7 +51,7 @@ function TarjetaRacha({ racha, actividad = {}, hoy = new Date() }) {
                   dia.activo ? 'bg-blender' : dia.esHoy ? 'border border-dashed border-blender/60 bg-transparent' : 'bg-white/10'
                 } ${dia.activo && dia.esHoy ? 'animar-aparecer' : ''}`}
               />
-              <span className={`font-mono text-[9px] ${dia.esHoy ? 'text-white' : 'text-white/40'}`}>{dia.letra}</span>
+              <span className={`font-mono text-[10px] ${dia.esHoy ? 'text-white' : 'text-white/40'}`}>{dia.letra}</span>
               <span className="sr-only">
                 {dia.fecha}: {dia.activo ? 'con actividad' : 'sin actividad'}
               </span>
@@ -89,7 +89,7 @@ function EncabezadoPanel({ usuario, xp, nivel, racha, lecciones, hayAvance, acti
             etiqueta={`Avance hacia el nivel ${nivel.nivel + 1}`}
             textoValor={`${nivel.xpNivel} de ${nivel.xpSiguiente} XP`}
           >
-            <span className="font-mono text-[10px] uppercase tracking-widest text-white/60">Nivel</span>
+            <span className="font-mono text-[11px] uppercase tracking-widest text-white/60">Nivel</span>
             <span className="text-4xl font-extrabold leading-none text-white">{nivel.nivel}</span>
           </AnilloProgreso>
           <div className="min-w-0">
