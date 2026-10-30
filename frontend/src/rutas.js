@@ -14,6 +14,7 @@ export const rutas = {
   recuperar: '#/recuperar',
   perfil: '#/perfil',
   guia: '#/guia',
+  buzon: '#/buzon',
   admin: '#/admin',
   adminUsuarios: '#/admin/usuarios',
   adminContenido: '#/admin/contenido',
@@ -22,6 +23,7 @@ export const rutas = {
   adminSistema: '#/admin/sistema',
   adminRevision: '#/admin/revision',
   adminAuditoria: '#/admin/auditoria',
+  adminBuzon: '#/admin/buzon',
   curso: (cursoId) => `#/curso/${parte(cursoId)}`,
   // Abre el curso en ese nivel y baja hasta el módulo (Curso.jsx lee ?modulo=N).
   modulo: (cursoId, numero) => `#/curso/${parte(cursoId)}?modulo=${parte(numero)}`,
@@ -43,6 +45,7 @@ export const rutas = {
 //   #/admin/sistema                      → sistema
 //   #/admin/revision                     → revision (ver la plataforma y saltar a cualquier lección)
 //   #/admin/auditoria                    → auditoria
+//   #/admin/buzon                        → buzon (sugerencias de los alumnos al creador)
 function rutaAdmin(partes) {
   const [seccion, a, b, c] = partes;
   if (seccion === 'usuarios') {
@@ -58,10 +61,11 @@ function rutaAdmin(partes) {
   if (seccion === 'herramientas') return { seccion: 'herramientas', params: {} };
   if (seccion === 'revision') return { seccion: 'revision', params: {} };
   if (seccion === 'auditoria') return { seccion: 'auditoria', params: {} };
+  if (seccion === 'buzon') return { seccion: 'buzon', params: {} };
   return { seccion: 'resumen', params: {} };
 }
 
-const PAGINAS_SIMPLES = ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'guia'];
+const PAGINAS_SIMPLES = ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'guia', 'buzon'];
 
 // Devuelve {pagina, ...}. Una consulta tras "?" (por ejemplo
 // "#/entrar?volver=%23%2Fperfil") llega en `consulta`.

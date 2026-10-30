@@ -1,6 +1,6 @@
 // Ayuda (#/guia, botón «?» de la barra): no es un curso. Arriba, el recorrido por la plataforma
 // (un minuto por las páginas reales); después, la tarjeta de cómo se unen la plataforma y Blender;
-// al final, respuestas cortas que se abren de a una (data/guia.js), sin candados ni preguntas.
+// luego, Goliat, el compañero; al final, respuestas cortas que se abren de a una (data/guia.js).
 import { useState } from 'react';
 import FusionPlataformaBlender from '../components/blender/FusionPlataformaBlender';
 import Pagina from '../components/estructura/Pagina';
@@ -8,6 +8,7 @@ import TituloSeccion from '../components/estructura/TituloSeccion';
 import { CristalLogo } from '../components/Iconos';
 import BloqueContenido from '../components/leccion/BloqueContenido';
 import { TEMAS_AYUDA } from '../data/guia';
+import ConoceGoliat from '../goliat/ConoceGoliat';
 import { useRecorrido } from '../recorrido/contexto';
 import { TOTAL_RECORRIDO } from '../recorrido/pasos';
 import { rutas } from '../rutas';
@@ -71,6 +72,8 @@ function Guia() {
         <FusionPlataformaBlender resumida />
       </div>
 
+      <ConoceGoliat />
+
       <section className="mt-12" aria-labelledby="ayuda-preguntas">
         <TituloSeccion id="ayuda-preguntas" antetitulo="Respuestas cortas" titulo="Preguntas rápidas" />
         <ul className="mt-5 grid gap-3">
@@ -89,6 +92,9 @@ function Guia() {
         </a>
         <a href={rutas.panel} className={`${BOTON} border border-white/15 bg-white/5 text-white/85 hover:bg-white/10`}>
           Mi panel
+        </a>
+        <a href={rutas.buzon} className={`${BOTON} border border-amatista/40 bg-amatista/10 text-amatista-claro hover:bg-amatista/20`}>
+          Escribirle al creador
         </a>
       </nav>
     </Pagina>

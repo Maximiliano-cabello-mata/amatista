@@ -7,6 +7,12 @@
   "assets": {
     "directory": "./frontend/dist"
   },
+  // Las ramas que no son main no tienen comando de build en el panel: Wrangler
+  // compila la PWA antes de publicar si frontend/dist no existe. En main el
+  // build del panel ya la dejó lista y este paso no hace nada.
+  "build": {
+    "command": "test -f frontend/dist/index.html || (cd frontend && npm ci --no-audit --no-fund && npm run build)"
+  },
   // Necesario para `wrangler preview`, el comando de las ramas que no son main.
   "previews": {}
 }

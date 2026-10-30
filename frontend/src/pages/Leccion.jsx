@@ -312,7 +312,7 @@ function Leccion({ cursoId, leccionId }) {
   return (
     <main className="mundo-pagina mx-auto max-w-3xl px-4 pb-24 pt-6 sm:px-6">
       <MundoTema tema={tema} />
-      {leccion.type !== 'exam' && <CompaneroMascota key={`${modulo.id}-${leccion.id}`} tema={tema} titulo={leccion.title} />}
+      {leccion.type !== 'exam' && <CompaneroMascota key={`${modulo.id}-${leccion.id}`} tema={tema} />}
       <nav className="mb-4 flex items-center justify-between gap-3 font-mono text-xs uppercase tracking-widest">
         <Migas
           className="min-w-0"
