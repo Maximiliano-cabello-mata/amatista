@@ -18,7 +18,7 @@ function Completar({ bloque, alCompletar, resuelta }) {
   const [valores, setValores] = useState(() => huecos.map(() => ''));
   const [marcas, setMarcas] = useState(() => huecos.map(() => null));
   const [fallos, setFallos] = useState(0);
-  const { resultado, resolver } = useActividad(alCompletar);
+  const { resultado, resolver, fallar } = useActividad(alCompletar);
   const campos = useRef([]);
 
   const escribir = (indice, valor) => {
@@ -35,6 +35,7 @@ function Completar({ bloque, alCompletar, resuelta }) {
       resolver(true, fallos + 1);
     } else {
       setFallos(fallos + 1);
+      fallar(fallos + 1);
       campos.current[nuevas.indexOf(false)]?.focus();
     }
   };
