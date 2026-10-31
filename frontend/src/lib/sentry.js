@@ -5,6 +5,12 @@
 
 const PRIVADAS = ['authorization', 'cookie', 'x-sesion-id'];
 
+// Solo registra un estado técnico; nunca expone el DSN, datos de usuario ni errores.
+// En producción se consulta con window.__AMATISTA_SENTRY_ESTADO__ en DevTools.
+function marcarEstado(estado) {
+  if (typeof window !== 'undefined') window.__AMATISTA_SENTRY_ESTADO__ = estado;
+}
+
 // Quita del evento lo que pueda identificar a un alumno.
 export function limpiar(evento) {
   if (!evento) return evento;
@@ -25,7 +31,12 @@ export function limpiar(evento) {
 }
 
 export async function iniciarSentry(dsn = import.meta.env.VITE_SENTRY_DSN) {
-  if (!dsn || typeof window === 'undefined') return false;
+  if (typeof window === 'undefined') return false;
+  if (!dsn) {
+    marcarEstado('sin-dsn');
+    return false;
+  }
+  marcarEstado('cargando');
   try {
     const Sentry = await import('./sentrySdk');
     Sentry.init({
@@ -38,8 +49,15 @@ export async function iniciarSentry(dsn = import.meta.env.VITE_SENTRY_DSN) {
       beforeSend: limpiar,
       beforeBreadcrumb: (miga) => (miga?.category === 'ui.input' ? null : miga),
     });
+    // Una importación correcta no garantiza que un DSN válido haya creado cliente.
+    if (typeof Sentry.getClient === 'function' && !Sentry.getClient()) {
+      marcarEstado('sin-cliente');
+      return false;
+    }
+    marcarEstado('activo');
     return true;
   } catch {
+    marcarEstado('fallo');
     return false; // Sentry nunca rompe la plataforma
   }
 }
