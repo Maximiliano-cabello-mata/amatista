@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-31 18:34 · `main` en `b23933d`
+Último commit: 2026-10-31 18:58 · `main` en `b23933d`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -21,7 +21,7 @@
 
 ## 📌 Kanban
 
-| 📋 Pendiente (113) | 🔨 En progreso (29) | 👀 Revisión (3) | ✅ Hecho (18) |
+| 📋 Pendiente (111) | 🔨 En progreso (31) | 👀 Revisión (3) | ✅ Hecho (18) |
 |---|---|---|---|
 | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-024** Publicar el frontend en Cloudflare (Workers) contra la API HTTPS<br><sub>v2.2.0 · pwa</sub> | **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> |
 | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-032** Configurar SMTP y primer admin en el servidor (confirmación y recuperación por correo)<br><sub>v2.2.0 · api</sub> | **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)<br><sub>v2.2.0 · repo</sub> | **T-006** Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)<br><sub>v2.2.0 · api</sub> |
@@ -50,10 +50,10 @@
 | **T-046** Mi primer espacio 3D: lecciones 06–07 (mesa y primera edición de malla)<br><sub>v3.1.0 · contenido</sub> | **T-180** Corazón Amatista (amatista.corazon/1): director, andamio por herramienta, señales que no caducan por reloj, perfiles, extensiones, ramas y conformidad, en Python puro<br><sub>v3.3.0 · motor</sub> |   |   |
 | **T-047** Mi primer espacio 3D: lecciones 08–09 (lámpara, colores, cámara e iluminación)<br><sub>v3.1.0 · contenido</sub> | **T-181** Add-on 7.1: el guion usa el corazón; adaptador de Blender con señal comprobada cada 0,5 s y «Señálalo otra vez»; historial del andamio por cuenta (en memoria para admin)<br><sub>v3.3.0 · motor</sub> |   |   |
 | **T-048** Mi primer espacio 3D: lecciones 10–11 (error preparado, variante y rúbrica)<br><sub>v3.1.0 · contenido</sub> | **T-183** Adaptador del corazón dentro de Maya o 3ds Max (perfil en borrador ya listo) y que pase conformidad.revisar_adaptador<br><sub>v3.4.0 · motor</sub> |   |   |
-| **T-010** Módulo 2 de A-Frame (cargar modelos GLB)<br><sub>v3.2.0 · pwa</sub> | **T-160** PWA para escuelas con pocos datos: sincronización en una petición comprimida, reintentos, envío al salir y «Ahorro de datos»<br><sub>v3.3.0 · pwa</sub> |   |   |
-| **T-011** Visor de modelos GLB en las lecciones<br><sub>v3.2.0 · pwa</sub> | **T-161** Desplegar el backend con /api/sincronizar y probar la PWA en una escuela con datos móviles<br><sub>v3.3.0 · lanzamiento</sub> |   |   |
-| **T-049** Laboratorio mínimo (escena de ejemplo, reinicio, avisos de recurso faltante) y lección 12<br><sub>v3.2.0 · pwa</sub> |   |   |   |
-| **T-052** Comprobaciones locales de la lección 03 en el add-on<br><sub>v3.3.0 · blender</sub> |   |   |   |
+| **T-010** Módulo 2 de A-Frame (cargar modelos GLB)<br><sub>v3.2.0 · pwa</sub> | **T-184** Sentry opcional en el backend (SENTRY_DSN) y en la PWA (VITE_SENTRY_DSN), sin datos personales y sin cargar el SDK si no hay DSN<br><sub>v3.3.0 · repo</sub> |   |   |
+| **T-011** Visor de modelos GLB en las lecciones<br><sub>v3.2.0 · pwa</sub> | **T-185** Crear en Sentry los proyectos amatista-backend (FastAPI) y amatista-web (React), poner los DSN en la VM y en Cloudflare y conectar GitHub<br><sub>v3.3.0 · lanzamiento</sub> |   |   |
+| **T-049** Laboratorio mínimo (escena de ejemplo, reinicio, avisos de recurso faltante) y lección 12<br><sub>v3.2.0 · pwa</sub> | **T-160** PWA para escuelas con pocos datos: sincronización en una petición comprimida, reintentos, envío al salir y «Ahorro de datos»<br><sub>v3.3.0 · pwa</sub> |   |   |
+| **T-052** Comprobaciones locales de la lección 03 en el add-on<br><sub>v3.3.0 · blender</sub> | **T-161** Desplegar el backend con /api/sincronizar y probar la PWA en una escuela con datos móviles<br><sub>v3.3.0 · lanzamiento</sub> |   |   |
 | **T-013** Add-on de Blender conectado con la plataforma (MVP publicado)<br><sub>v3.3.0 · blender</sub> |   |   |   |
 | **T-055** Aplicar 007 en Oracle y publicar la práctica de la mesa y el módulo 2 (después del piloto)<br><sub>v3.3.0 · db</sub> |   |   |   |
 | **T-056** Probar el paquete de instalación en Windows y macOS reales<br><sub>v3.3.0 · blender</sub> |   |   |   |
@@ -119,8 +119,6 @@
 | **T-174** Instaladores de verdad: .exe de Windows sin administrador (Inno Setup) y .deb de Linux con el lanzador «Amatista»; la plataforma los ofrece antes que el .zip<br><sub>v3.3.0 · motor</sub> |   |   |   |
 | **T-178** Probar con ventana el Motor 7: el tren paso a paso, la banda sin encimarse, «¿Dónde está?» con la herramienta resaltada y el administrador que empieza de cero<br><sub>v3.3.0 · motor</sub> |   |   |   |
 | **T-182** Probar con ventana el Corazón: la herramienta se elige sola la primera vez, cambiar de herramienta muestra «Señálalo otra vez», y en un segundo tren Mover ya no se señala solo<br><sub>v3.3.0 · motor</sub> |   |   |   |
-| **T-184** Sentry opcional en el backend (SENTRY_DSN) y en la PWA (VITE_SENTRY_DSN), sin datos personales y sin cargar el SDK si no hay DSN<br><sub>v3.3.0 · repo</sub> |   |   |   |
-| **T-185** Crear en Sentry los proyectos amatista-backend (FastAPI) y amatista-web (React), poner los DSN en la VM y en Cloudflare y conectar GitHub<br><sub>v3.3.0 · lanzamiento</sub> |   |   |   |
 | **T-097** Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)<br><sub>v3.4.0 · pwa</sub> |   |   |   |
 | **T-071** Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)<br><sub>v3.4.0 · pwa</sub> |   |   |   |
 | **T-072** Transiciones entre páginas (View Transitions), celebraciones con confeti e ilustración de fondo por temática<br><sub>v3.4.0 · pwa</sub> |   |   |   |
@@ -525,10 +523,10 @@
 - [ ] **T-182** Probar con ventana el Corazón: la herramienta se elige sola la primera vez, cambiar de herramienta muestra «Señálalo otra vez», y en un segundo tren Mover ya no se señala solo · _pendiente_
   - ⏸️ Espera: Lo hace el usuario en su computadora (la nube no tiene pantalla)
   - 🎯 Listo cuando: docs/motor/referencia/23_corazon.md §8
-- [ ] **T-184** Sentry opcional en el backend (SENTRY_DSN) y en la PWA (VITE_SENTRY_DSN), sin datos personales y sin cargar el SDK si no hay DSN · _pendiente_
+- [ ] **T-184** Sentry opcional en el backend (SENTRY_DSN) y en la PWA (VITE_SENTRY_DSN), sin datos personales y sin cargar el SDK si no hay DSN · _en-progreso_ — commits: `7f7daa9` (2026-10-31)
   - 🔎 Evidencia: backend/observabilidad.py, frontend/src/lib/sentry.js; docs/despliegue/2026-10-31_sentry.md
   - 🎯 Listo cuando: backend/tests/test_observabilidad.py y frontend/src/lib/sentry.test.js en verde; sin DSN el build no precachea sentrySdk-*.js
-- [ ] **T-185** Crear en Sentry los proyectos amatista-backend (FastAPI) y amatista-web (React), poner los DSN en la VM y en Cloudflare y conectar GitHub · _pendiente_
+- [ ] **T-185** Crear en Sentry los proyectos amatista-backend (FastAPI) y amatista-web (React), poner los DSN en la VM y en Cloudflare y conectar GitHub · _en-progreso_ — commits: `7f7daa9` (2026-10-31)
   - ⏸️ Espera: Lo hace el usuario (cuenta de Sentry, VM y Cloudflare)
   - 🎯 Listo cuando: docs/despliegue/2026-10-31_sentry.md §3: el error de prueba llega a cada proyecto sin IP, correo ni cookies
 - [ ] **T-160** PWA para escuelas con pocos datos: sincronización en una petición comprimida, reintentos, envío al salir y «Ahorro de datos» · _en-progreso_ — commits: `2459b94` (2026-10-31), `4385d8e` (2026-10-31), `8c8c60c` (2026-10-30)
