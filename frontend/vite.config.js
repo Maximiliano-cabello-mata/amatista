@@ -65,6 +65,8 @@ export default defineConfig({
           // sí los usa los guarda al abrirlos (abajo) y siguen sin conexión.
           '**/Admin-*.js',
           '**/Profesor*-*.js',
+          // SDK de Sentry (~360 KB): solo se baja si hay VITE_SENTRY_DSN (src/lib/sentry.js).
+          '**/sentrySdk-*.js',
         ],
         runtimeCaching: [
           {
