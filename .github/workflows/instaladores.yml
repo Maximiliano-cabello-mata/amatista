@@ -1,6 +1,6 @@
 # Instaladores de Amatista (motor 6.2): .exe para Windows y .deb para Linux.
 #
-# - En cada PR que toca el add-on o los instaladores: se compilan sin firmar (para ver que funcionan).
+# - En cada push que toca el add-on o los instaladores: se compilan sin firmar (para ver que funcionan).
 # - A mano (Actions › Instaladores › Run workflow) o con una etiqueta v*: se firman si están los secretos
 #   y, con la etiqueta, se suben a la página de la versión (Releases).
 #
@@ -12,15 +12,16 @@
 name: Instaladores
 
 on:
-  pull_request:
+  # Como CI: en cada push que toca el add-on (las etiquetas v* no miran las rutas).
+  push:
+    branches: ["**"]
+    tags: ["v*"]
     paths:
       - "addon/**"
       - "engine/**"
       - "practices/blender/**"
       - ".github/workflows/instaladores.yml"
   workflow_dispatch:
-  push:
-    tags: ["v*"]
 
 permissions:
   contents: write
@@ -94,7 +95,7 @@ jobs:
           $comun = (Resolve-Path dist/instaladores/comun).Path
           $salida = (Resolve-Path dist/instaladores).Path
           $parametros = @("/DVersion=$env:VERSION", "/DComun=$comun", "/DSalida=$salida")
-          if ($env:PFX -ne "" -and "${{ github.event_name }}" -ne "pull_request") {
+          if ($env:PFX -ne "" -and "${{ github.ref_type }}" -eq "tag" -or "${{ github.event_name }}" -eq "workflow_dispatch") {
             [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\firma.pfx", [Convert]::FromBase64String($env:PFX))
             $signtool = (Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin\*\x64\signtool.exe" | Sort-Object FullName | Select-Object -Last 1).FullName
             $parametros += "/DFirmar"
@@ -114,7 +115,7 @@ jobs:
           name: windows-sin-firmar
           path: dist/instaladores/Amatista-*-Windows.exe
       - name: Firmar con SignPath
-        if: ${{ env.SIGNPATH != '' && github.event_name != 'pull_request' }}
+        if: ${{ env.SIGNPATH != '' && (github.ref_type == 'tag' || github.event_name == 'workflow_dispatch') }}
         uses: signpath/github-action-submit-signing-request@v1
         with:
           api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
