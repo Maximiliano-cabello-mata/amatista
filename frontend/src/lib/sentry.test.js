@@ -1,9 +1,50 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { iniciarSentry, limpiar } from './sentry';
+import * as sentrySdk from './sentrySdk';
+
+vi.mock('./sentrySdk', () => ({
+  init: vi.fn(),
+  getClient: vi.fn(() => ({})),
+}));
 
 describe('Sentry en la PWA', () => {
-  it('no se activa sin DSN', async () => {
+  beforeEach(() => {
+    vi.stubGlobal('window', {});
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.clearAllMocks();
+  });
+
+  it('no carga el SDK sin DSN y explica por qué en el diagnóstico', async () => {
     expect(await iniciarSentry('')).toBe(false);
+    expect(window.__AMATISTA_SENTRY_ESTADO__).toBe('sin-dsn');
+    expect(sentrySdk.init).not.toHaveBeenCalled();
+  });
+
+  it('se inicializa con DSN y marca el estado activo', async () => {
+    const dsn = 'https://publickey@o0.ingest.sentry.io/123';
+    expect(await iniciarSentry(dsn)).toBe(true);
+    expect(sentrySdk.init).toHaveBeenCalledWith(expect.objectContaining({
+      dsn,
+      sendDefaultPii: false,
+      tracesSampleRate: 0,
+      beforeSend: limpiar,
+    }));
+    expect(window.__AMATISTA_SENTRY_ESTADO__).toBe('activo');
+  });
+
+  it('detecta un DSN que no pudo crear cliente sin mostrarlo', async () => {
+    vi.mocked(sentrySdk.getClient).mockReturnValueOnce(null);
+    expect(await iniciarSentry('https://publickey@o0.ingest.sentry.io/123')).toBe(false);
+    expect(window.__AMATISTA_SENTRY_ESTADO__).toBe('sin-cliente');
+  });
+
+  it('informa del fallo de inicialización sin bloquear la PWA', async () => {
+    vi.mocked(sentrySdk.init).mockImplementationOnce(() => { throw new Error('falla controlada'); });
+    expect(await iniciarSentry('https://publickey@o0.ingest.sentry.io/123')).toBe(false);
+    expect(window.__AMATISTA_SENTRY_ESTADO__).toBe('fallo');
   });
 
   it('quita los datos personales del evento', () => {
