@@ -41,6 +41,9 @@ const LineaClaves = lazy(() => import('./interactivos/LineaClaves'));
 const EntrenaTeclas = lazy(() => import('./interactivos/EntrenaTeclas'));
 const AjustaValor = lazy(() => import('./interactivos/AjustaValor'));
 const EncuentraError = lazy(() => import('./interactivos/EncuentraError'));
+// Motor 6.1 (fichas.js): las fichas de herramientas y el mapa de Blender en la teoría.
+const HerramientaBlender = lazy(() => import('./interactivos/HerramientaBlender'));
+const BlenderMapa = lazy(() => import('./interactivos/BlenderMapa'));
 
 function Diferido({ children, alto }) {
   return <Suspense fallback={<div className="esqueleto corte-poly" style={{ minHeight: alto }} role="status" aria-label="Cargando" />}>{children}</Suspense>;
@@ -67,6 +70,8 @@ const INTERACTIVOS = {
   shortcut_drill: EntrenaTeclas,
   transform_challenge: AjustaValor,
   spot_error: EncuentraError,
+  herramienta_blender: HerramientaBlender,
+  blender_mapa: BlenderMapa,
 };
 
 // Dibuja un bloque de contenido del JSON de la lección según su "type".

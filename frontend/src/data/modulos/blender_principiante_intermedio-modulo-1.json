@@ -41,6 +41,28 @@
             "body": "### La luz rebota distinto en cada cosa\nUn **material** le dice a Blender cómo rebota la luz en una superficie: el metal refleja, la goma es mate y el vidrio deja pasar la luz.\n\nEn la vista **Sólida** todo se ve gris. Pulsa **Z › Vista previa de material** para ver los colores de verdad."
           },
           {
+            "type": "herramienta_blender",
+            "id": "bpi1_gancho_ficha_material_basic",
+            "tool": "material.basic",
+            "text": "En la siguiente lección la usas en Blender. Allí aparece esta misma ficha y su lugar se ilumina."
+          },
+          {
+            "type": "blender_mapa",
+            "id": "bpi1_gancho_mapa",
+            "mode": "find",
+            "questions": [
+              {
+                "zone": "propiedades",
+                "prompt": "¿Dónde le pones un material a un objeto?"
+              },
+              {
+                "zone": "barra_superior",
+                "prompt": "¿Dónde cambias al espacio de trabajo Shading para ver los materiales?"
+              }
+            ],
+            "title": "¿Dónde se pinta en Blender?"
+          },
+          {
             "type": "quiz_inline",
             "id": "quiz_bpi1_1",
             "question": "Todo tu modelo se ve gris aunque le pusiste color. ¿Qué pasa?",
@@ -333,6 +355,12 @@
               }
             ],
             "explanation": "Cada ranura es un material; Asignar lo pone en las caras seleccionadas."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bpi1_explora_ficha_material_principled",
+            "tool": "material.principled",
+            "text": "Ya le pusiste material. Ahora entiende sus tres controles más importantes."
           },
           {
             "type": "callout",

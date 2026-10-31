@@ -19,3 +19,6 @@ rendimiento_tokens.json
 auditoria*.json
 rendimiento*.json
 !frontend/scripts/*.json
+
+# Motor 6.2: instaladores firmados que se copian al servidor (no van al repositorio)
+/backend/instaladores/

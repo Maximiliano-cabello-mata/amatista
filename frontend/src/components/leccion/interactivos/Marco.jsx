@@ -26,6 +26,8 @@ const ETIQUETAS = {
   shortcut_drill: 'Entrena tus teclas',
   transform_challenge: 'Ajusta el valor',
   spot_error: 'Encuentra el error',
+  herramienta_blender: 'Conoce la herramienta',
+  blender_mapa: 'La ventana de Blender',
 };
 
 // Marco común de las actividades: tipo, estado (pendiente / resuelta), XP

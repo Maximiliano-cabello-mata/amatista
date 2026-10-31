@@ -90,6 +90,8 @@ Todas se cargan bajo demanda (no pesan en la primera carga), funcionan con tecla
 
 ### Encuentra el error · `spot_error`
 
+> Motor 6.1 suma dos bloques más para la teoría de Blender: `herramienta_blender` y `blender_mapa` ([20_motor_6_1.md](../motor/referencia/20_motor_6_1.md) §5).
+
 ```json
 {"type": "spot_error", "id": "error_bp3", "steps": [
   {"text": "…", "explanation": "…"},

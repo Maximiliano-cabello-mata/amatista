@@ -43,6 +43,34 @@
             "body": "### Del juguete al estudio\nHasta ahora modelaste *a ojo*. En un estudio, una puerta mide **2 m** y una tabla **20 cm**: así las piezas encajan y se pueden reutilizar.\n\nTres herramientas cambian tu forma de trabajar:\n- **Panel N**: muestra y edita las medidas exactas.\n- **Array**: repite una pieza sin copiarla a mano.\n- **Bisel**: redondea las aristas para que atrapen la luz."
           },
           {
+            "type": "herramienta_blender",
+            "id": "bi1_gancho_ficha_modifier_array",
+            "tool": "modifier.array",
+            "text": "En la siguiente lección la usas en Blender. Allí aparece esta misma ficha y su lugar se ilumina."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bi1_gancho_ficha_modifier_bevel",
+            "tool": "modifier.bevel",
+            "text": "Los bordes perfectos no existen en la vida real. El bisel los redondea un poco y la luz los delata.",
+            "check": false
+          },
+          {
+            "type": "blender_mapa",
+            "id": "bi1_gancho_mapa",
+            "mode": "find",
+            "questions": [
+              {
+                "zone": "lateral",
+                "prompt": "¿Dónde escribes la medida exacta de un objeto (panel N)?"
+              },
+              {
+                "tool": "modifier.array"
+              }
+            ],
+            "title": "¿Dónde se mide en Blender?"
+          },
+          {
             "type": "quiz_inline",
             "id": "quiz_bi1_1",
             "question": "Tienes que poner 20 tablones iguales en un puente. ¿Qué haces?",

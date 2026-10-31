@@ -43,6 +43,19 @@
             "body": "### La luz cuenta la historia\nLa misma nave puede verse épica o aburrida según la luz. Dos luces básicas:\n\n- **Área**: un panel que da sombras suaves, como una ventana.\n- **Sol**: luz pareja desde una dirección, como un día despejado."
           },
           {
+            "type": "herramienta_blender",
+            "id": "bpi2_gancho_ficha_light_add",
+            "tool": "light.add",
+            "text": "En la siguiente lección la usas en Blender. Allí aparece esta misma ficha y su lugar se ilumina."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bpi2_gancho_ficha_camera_add",
+            "tool": "camera.add",
+            "text": "La cámara decide qué se ve en la foto final. Sin cámara no hay render.",
+            "check": false
+          },
+          {
             "type": "quiz_inline",
             "id": "quiz_bpi2_1",
             "question": "Quieres sombras suaves para un retrato de tu nave. ¿Qué luz usas?",
@@ -248,6 +261,29 @@
               }
             ],
             "explanation": "Primero el encuadre: las luces se ubican mirando desde la cámara."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bpi2_explora_ficha_render_f12",
+            "tool": "render.f12",
+            "text": "Con luces y cámara listas, falta sacar la foto."
+          },
+          {
+            "type": "blender_mapa",
+            "id": "bpi2_explora_mapa",
+            "mode": "find",
+            "questions": [
+              {
+                "tool": "light.add"
+              },
+              {
+                "tool": "camera.add"
+              },
+              {
+                "tool": "render.f12"
+              }
+            ],
+            "title": "Repaso: luz, cámara y foto"
           },
           {
             "type": "callout",

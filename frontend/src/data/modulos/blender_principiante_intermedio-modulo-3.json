@@ -43,6 +43,27 @@
             "body": "### Animar es guardar momentos\nUna animación son muchas imágenes seguidas: normalmente **24 por segundo**. No dibujas todas: guardas cómo está el objeto en algunos momentos (**fotogramas clave**) y Blender rellena el resto."
           },
           {
+            "type": "herramienta_blender",
+            "id": "bpi3_gancho_ficha_anim_keyframe",
+            "tool": "anim.keyframe",
+            "text": "En la siguiente lección la usas en Blender. Allí aparece esta misma ficha y su lugar se ilumina."
+          },
+          {
+            "type": "blender_mapa",
+            "id": "bpi3_gancho_mapa",
+            "mode": "find",
+            "questions": [
+              {
+                "zone": "linea_tiempo",
+                "prompt": "¿Dónde ves los fotogramas y el cursor del tiempo?"
+              },
+              {
+                "tool": "anim.keyframe"
+              }
+            ],
+            "title": "¿Dónde vive el tiempo en Blender?"
+          },
+          {
             "type": "quiz_inline",
             "id": "quiz_bpi3_1",
             "question": "Guardaste la pelota arriba en el fotograma 1 y abajo en el 12. ¿Qué pasa en el 6?",
@@ -261,6 +282,24 @@
             "template": "Fotograma 1: pelota arriba y pulsa [[I]]. Fotograma 12: pelota en el [[suelo|piso]] y otra clave. Fotograma 24: arriba otra vez y clave.",
             "code": false,
             "explanation": "Tres claves bastan para un rebote: arriba, suelo y arriba."
+          },
+          {
+            "type": "blender_mapa",
+            "id": "bpi3_explora_mapa",
+            "mode": "find",
+            "questions": [
+              {
+                "zone": "linea_tiempo",
+                "prompt": "¿Dónde mueves el cursor para ver tu pelota en otro momento?"
+              },
+              {
+                "tool": "transform.scale"
+              },
+              {
+                "tool": "anim.keyframe"
+              }
+            ],
+            "title": "Repaso: animar el rebote"
           },
           {
             "type": "callout",

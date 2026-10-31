@@ -253,7 +253,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Pulsar en el navegador las mismas teclas que en Blender (G, R, S, X, Tab…) y ver al cubo reaccionar.',
     cuando: 'Justo después de presentar un atajo y antes de la práctica en Blender: el gesto ya sale solo.',
     formula: ['explora', 'practica'],
-    nueva: true,
   },
   transform_challenge: {
     nombre: 'Ajusta el valor',
@@ -261,7 +260,6 @@ export const HERRAMIENTAS = {
     paraQue: 'Llenar un molde moviendo un campo como el de Blender (Ubicación, Rotación, Escala); el campo dice «te falta» o «te pasaste».',
     cuando: 'Al presentar los números exactos del panel N: medir en vez de calcular a ojo.',
     formula: ['practica', 'reto'],
-    nueva: true,
   },
   spot_error: {
     nombre: 'Encuentra el error',
@@ -269,6 +267,21 @@ export const HERRAMIENTAS = {
     paraQue: 'Revisar la receta de otro alumno y marcar los pasos mal hechos; cada paso explica por qué.',
     cuando: 'Después de enseñar un procedimiento: detectar errores ajenos enseña a revisar los propios.',
     formula: ['practica', 'reto'],
+  },
+  herramienta_blender: {
+    nombre: 'Conoce la herramienta',
+    categoria: 'blender',
+    paraQue: 'La ficha de una herramienta de Blender para novatos: para qué sirve, a qué se parece, dónde está (en el esquema de Blender) y cómo se usa. Blender muestra la misma ficha cuando la práctica la estrena.',
+    cuando: 'En la teoría, antes de la práctica que usa la herramienta por primera vez. El alumno la ubica en el esquema de Blender («check»: false lo quita).',
+    formula: ['gancho', 'explora'],
+    nueva: true,
+  },
+  blender_mapa: {
+    nombre: 'La ventana de Blender',
+    categoria: 'blender',
+    paraQue: 'La ventana de Blender en bloques: explorar qué es cada zona o encontrar dónde está cada cosa («¿dónde le pones un material?»).',
+    cuando: 'Antes de abrir Blender por primera vez (explorar) y al empezar cada módulo (encontrar).',
+    formula: ['gancho', 'explora'],
     nueva: true,
   },
 };

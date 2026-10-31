@@ -67,7 +67,7 @@ Carpeta [`cursos/`](cursos/README.md): los cuatro cursos de Blender (Principiant
 
 Carpeta [`motor/`](motor/README.md).
 
-- **[Amatista Motor 6 y Blender Amatista](motor/referencia/19_motor_6.md)** (vigente) · [Amatista dentro de Blender (add-on 5.4)](motor/referencia/18_amatista_dentro_de_blender.md) · [Primeros pasos en Blender](motor/referencia/17_primeros_pasos_en_blender.md) · [Amatista Taller (motor 5)](motor/referencia/16_amatista_taller.md) · [experiencia del alumno](motor/referencia/15_experiencia_del_alumno.md) · [Add-on 5.2 y recorrido](plataforma/11_recorrido_y_fusion.md).
+- **[Amatista Motor 6.2: acompañar según el ánimo, volver a tu práctica e instaladores .exe/.deb](motor/referencia/21_motor_6_2.md)** (vigente) · [Amatista Motor 6.1: Blender como extensión de la plataforma](motor/referencia/20_motor_6_1.md) · [Amatista Motor 6 y Blender Amatista](motor/referencia/19_motor_6.md) · [Amatista dentro de Blender (add-on 5.4)](motor/referencia/18_amatista_dentro_de_blender.md) · [Primeros pasos en Blender](motor/referencia/17_primeros_pasos_en_blender.md) · [Amatista Taller (motor 5)](motor/referencia/16_amatista_taller.md) · [experiencia del alumno](motor/referencia/15_experiencia_del_alumno.md) · [Add-on 5.2 y recorrido](plataforma/11_recorrido_y_fusion.md).
 - Etapas: [1 · evalúa](motor/etapas/etapa-1.md) · [2 · acompaña paso a paso](motor/etapas/etapa-2.md) · [3 · enseña (motor v3, add-on 3.0)](motor/etapas/etapa-3.md) · [3.3 · modelo de referencia](motor/referencia/10_modelo_de_referencia.md) · [3.4 · reconocer figuras](motor/referencia/11_reconocer_figuras.md) · [3.5 · el ejemplo manda](motor/referencia/14_ejemplo_y_revision.md)
 - Referencia: [arquitectura](motor/referencia/01_arquitectura.md) · [formato de práctica](motor/referencia/02_formato_de_practica.md) · [add-on](motor/referencia/03_addon.md) · [instalación del alumno](motor/referencia/04_instalacion_alumno.md) · [API](motor/referencia/05_api.md) · [modo desarrollador](motor/referencia/06_modo_desarrollador.md) · [guía y acompañamiento](motor/referencia/07_guia_y_acompanamiento.md) · [prácticas v3 y herramientas de autor](motor/referencia/08_practicas_v3_y_herramientas.md) · [validadores](motor/referencia/09_validadores.md) · [modelo de referencia](motor/referencia/10_modelo_de_referencia.md) · [reconocer figuras](motor/referencia/11_reconocer_figuras.md) · [la plataforma maneja Blender](motor/referencia/12_plataforma_y_blender.md) · [instructor y silueta](motor/referencia/13_instructor_y_silueta.md) · [el ejemplo y la revisión](motor/referencia/14_ejemplo_y_revision.md)
 - [Especificaciones originales](motor/especificaciones/) (historia: el concepto antes del código)
@@ -109,7 +109,8 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 
 ## 8. Operación y despliegue
 
-- **[Motor 6 y Blender Amatista (30 oct)](despliegue/2026-10-30_motor_6.md)**: la actualización más nueva (T-141); va después del [refinamiento y Motor 5.4](despliegue/2026-10-30_refinamiento_motor_5_4.md) (T-136). Sin SQL.
+- **[Motor 6.1 (30 oct)](despliegue/2026-10-30_motor_6_1.md)**: la actualización más nueva (T-145); va después de la del Motor 6. Sin SQL.
+- **[Motor 6 y Blender Amatista (30 oct)](despliegue/2026-10-30_motor_6.md)** (T-141); va después del [refinamiento y Motor 5.4](despliegue/2026-10-30_refinamiento_motor_5_4.md) (T-136). Sin SQL.
 - [Camino guiado y Motor Web (23 oct)](despliegue/2026-10-23_camino_y_motor_web.md) · [Plataforma multiplataforma (21 oct)](despliegue/2026-10-21_multiplataforma.md).
 - **[Despliegue público realizado (22–23 oct; documentado 29 oct)](despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md)**: `amatista-3d.tech`, Cloudflare Workers, DNS, Oracle Cloud, Caddy, backend, CORS, métricas reales y pendientes del correo. Esta guía prevalece para operación vigente sobre los planes históricos del `.me`.
 - **[Cloudflare Workers Builds](despliegue/2026-10-29_cloudflare_workers_builds.md)**: por qué el check de Cloudflare salió en rojo en el PR #39, `wrangler.jsonc`, versión de Node y qué revisar en el panel antes de una actualización mayor.
@@ -135,7 +136,7 @@ Carpeta [`base-de-datos/`](base-de-datos/README.md).
 ## 10. Registros: bitácora e incidencias
 
 - **Bitácora** ([`bitacora/`](bitacora/)), de la más reciente a la más antigua:
-  - 30 oct: [Amatista Motor 6 y Blender Amatista](bitacora/2026-10-30_motor_6_blender_amatista.md) · [refinamiento y Motor 5.4](bitacora/2026-10-30_refinamiento_y_motor_5_4.md)
+  - 30 oct: [Amatista Motor 6.1: fichas y Blender que sigue a la plataforma](bitacora/2026-10-30_motor_6_1_fichas.md) · [Amatista Motor 6 y Blender Amatista](bitacora/2026-10-30_motor_6_blender_amatista.md) · [refinamiento y Motor 5.4](bitacora/2026-10-30_refinamiento_y_motor_5_4.md)
   - 23 oct: [camino guiado, gráficos y Motor Web](bitacora/2026-10-23_camino_graficos_y_motor_web.md)
   - 21 oct: [plataforma multiplataforma](bitacora/2026-10-21_plataforma_multiplataforma.md)
   - 18 oct: [revisión documental del PR #36](bitacora/2026-10-18_revision_documental_pr_36.md)

@@ -44,6 +44,19 @@
             "body": "### Dos motores, dos usos\n- **EEVEE**: tiempo real. Perfecto para probar y para animaciones rápidas.\n- **Cycles**: traza rayos de luz que rebotan. Más lento y más realista: ideal para la imagen final del portafolio."
           },
           {
+            "type": "herramienta_blender",
+            "id": "bi3_gancho_ficha_render_f12",
+            "tool": "render.f12",
+            "text": "En este módulo la foto es el trabajo. Recuerda cómo se saca y dónde se guarda.",
+            "check": false
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bi3_gancho_ficha_camera_add",
+            "tool": "camera.add",
+            "text": "Para un portafolio, la cámara decide si tu modelo luce o no."
+          },
+          {
             "type": "quiz_inline",
             "id": "quiz_bi3_1",
             "question": "Tu imagen de portafolio necesita sombras y reflejos realistas. ¿Qué motor eliges?",
@@ -238,6 +251,23 @@
                 "explanation": "Lo ubica en los cruces de las líneas, no al centro."
               }
             ]
+          },
+          {
+            "type": "blender_mapa",
+            "id": "bi3_explora_mapa",
+            "mode": "find",
+            "questions": [
+              {
+                "tool": "camera.add"
+              },
+              {
+                "tool": "render.f12"
+              },
+              {
+                "tool": "file.save"
+              }
+            ],
+            "title": "Repaso: de la escena al portafolio"
           },
           {
             "type": "callout",
