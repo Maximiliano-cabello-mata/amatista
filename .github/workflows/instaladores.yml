@@ -95,7 +95,7 @@ jobs:
           $comun = (Resolve-Path dist/instaladores/comun).Path
           $salida = (Resolve-Path dist/instaladores).Path
           $parametros = @("/DVersion=$env:VERSION", "/DComun=$comun", "/DSalida=$salida")
-          if ($env:PFX -ne "" -and "${{ github.ref_type }}" -eq "tag" -or "${{ github.event_name }}" -eq "workflow_dispatch") {
+          if ($env:PFX -ne "" -and ("${{ github.ref_type }}" -eq "tag" -or "${{ github.event_name }}" -eq "workflow_dispatch")) {
             [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\firma.pfx", [Convert]::FromBase64String($env:PFX))
             $signtool = (Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\bin\*\x64\signtool.exe" | Sort-Object FullName | Select-Object -Last 1).FullName
             $parametros += "/DFirmar"
