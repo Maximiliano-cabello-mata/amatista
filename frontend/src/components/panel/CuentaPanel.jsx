@@ -1,4 +1,5 @@
 import { rutaEntrar, rutas } from '../../rutas';
+import AhorroDatos from '../AhorroDatos';
 import EstadoGuardado from '../EstadoGuardado';
 import { IconoPalomita } from './IconosPanel';
 import Seccion from './Seccion';
@@ -31,6 +32,7 @@ function CuentaPanel({ usuario, sesionVencida, lecciones, xp, className = '' }) 
             Ya tengo cuenta
           </a>
         </div>
+        <AhorroDatos className="mt-5 border-t border-white/5 pt-4" />
       </Seccion>
     );
   }
@@ -53,6 +55,7 @@ function CuentaPanel({ usuario, sesionVencida, lecciones, xp, className = '' }) 
         </p>
       )}
       <EstadoGuardado className="mt-4 border-t border-white/5 pt-4 leading-relaxed" />
+      <AhorroDatos className="mt-4 border-t border-white/5 pt-4" />
       <a
         href={rutas.perfil}
         className="mt-4 inline-block font-mono text-xs font-bold uppercase tracking-widest text-neon underline-offset-4 hover:underline"

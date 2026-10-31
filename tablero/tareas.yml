@@ -910,6 +910,19 @@ tareas:
     depende_de: [T-145, T-173, T-174]
     aceptacion: "docs/despliegue/2026-10-31_motor_6_2.md: /api/addon/v1/estado con 6.2.0 e instaladores.windows/linux; la página Blender baja el .exe"
     bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-160
+    titulo: "PWA para escuelas con pocos datos: sincronización en una petición comprimida, reintentos, envío al salir y «Ahorro de datos»"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "POST /api/sincronizar (gzip) y GET /api/progreso?desde=; la PWA descubre el backend y vuelve a las rutas de siempre si es anterior; ajuste Ahorro de datos en Mi panel; pytest, vitest, lint y build en verde"
+    evidencia: "backend/api/sincronizar.py, backend/main.py (DescomprimirCuerpo), frontend/src/lib/red.js, frontend/src/progreso/canal.js; docs/plataforma/17_pocos_datos.md"
+  - id: T-161
+    titulo: "Desplegar el backend con /api/sincronizar y probar la PWA en una escuela con datos móviles"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-160]
+    aceptacion: "En la VM: curl -X POST https://api.amatista-3d.tech/api/sincronizar responde 422 (no 404); un teléfono en 3G sincroniza con un solo POST comprimido"
+    bloqueo: "Lo hace el usuario (actualizar la VM y probar en una escuela)"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
