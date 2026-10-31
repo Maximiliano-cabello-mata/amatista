@@ -869,6 +869,47 @@ tareas:
     depende_de: [T-148]
     aceptacion: "diagnostico_oracle.py ve 24 tablas; la cuenta del creador ve el pavo real y el buzón en Admin"
     bloqueo: "Lo hace el usuario (Database Actions y la VM)"
+  - id: T-170
+    titulo: "Termómetro de ánimo y luz según el dominio: el motor lee intentos, deshacer, ráfagas de clics y tiempo sin avanzar, y decide cuánta ayuda se enciende (plena al principio, más seria con el curso, lo débil siempre señalado)"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-142]
+    aceptacion: "engine/tests/test_acompanamiento.py en verde; tres fallos llevan a «atorado»; avanzar calma; en retos la luz no pasa de tenue"
+    evidencia: "engine/amatista_engine/taller/acompanamiento.py; docs/motor/referencia/21_motor_6_2.md"
+  - id: T-171
+    titulo: "Add-on 6.2: faro sobre la pieza que toca, herramienta que brilla sola, «Te toca / Estás haciendo», cambio de práctica limpio y «Volver a mi práctica» desde cualquier escena"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-170]
+    aceptacion: "en_blender.py › probar_motor62 en verde: escena propia al cambiar, sin molde viejo, luz plena con habilidad nueva, ayuda ofrecida al atorarse, pastilla «Volver» que regresa a la actividad"
+    evidencia: "addon/amatista_blender/taller/acompanar.py; addon/amatista_blender/navegar.py; addon/amatista_blender/practicas.py; addon/amatista_blender/taller/vista/molde.py; addon/amatista_blender/taller/vista/tarjeta.py"
+  - id: T-172
+    titulo: "Probar con ventana el faro, la línea «Te toca · Estás haciendo», el ánimo y la pastilla «Volver a mi práctica» (add-on 6.2)"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-171]
+    aceptacion: "docs/despliegue/2026-10-31_motor_6_2.md pasos 7 a 10"
+    bloqueo: "Lo hace el usuario en su computadora (la nube no tiene pantalla)"
+  - id: T-173
+    titulo: "Elegir la firma de código de Windows (SignPath Foundation o certificado propio) y la llave GPG de Linux, y cargar los secretos en GitHub"
+    version: v3.3.0
+    area: lanzamiento
+    aceptacion: "El flujo Instaladores firma el .exe (Get-AuthenticodeSignature: Valid) y el .deb lleva su .asc"
+    bloqueo: "Lo hace el usuario (alta en SignPath o compra del certificado; secretos del repositorio)"
+  - id: T-174
+    titulo: "Instaladores de verdad: .exe de Windows sin administrador (Inno Setup) y .deb de Linux con el lanzador «Amatista»; la plataforma los ofrece antes que el .zip"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-171]
+    aceptacion: "El flujo Instaladores compila el .exe y el .deb en cada PR; GET /api/addon/v1/instaladores/{windows,linux} los sirve desde AMATISTA_INSTALADORES; addon/tests/test_addon_motor62.py en verde"
+    evidencia: "addon/herramientas/instaladores.py; addon/herramientas/instalador/windows/amatista.iss; addon/herramientas/instalador/linux/; .github/workflows/instaladores.yml; backend/api/addon.py"
+  - id: T-175
+    titulo: "Desplegar Amatista Motor 6.2 y copiar los instaladores firmados al servidor"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-145, T-173, T-174]
+    aceptacion: "docs/despliegue/2026-10-31_motor_6_2.md: /api/addon/v1/estado con 6.2.0 e instaladores.windows/linux; la página Blender baja el .exe"
+    bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0

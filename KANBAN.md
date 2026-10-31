@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-30 21:06 · `main` en `ee15dcb`
+Último commit: 2026-10-31 01:15 · `main` en `ee15dcb`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -16,12 +16,12 @@
 | **v3.0.0** | Reestructuración | Niveles, habilidades, versiones de Blender y herramientas de autor en Oracle; documentación y tablero nuevos. | ▰▱▱▱▱▱▱▱▱▱ 1/12 |
 | **v3.1.0** | Mi primer espacio 3D | Primera entrega de contenido por niveles (lecciones 01–11 de la propuesta) con fichas, rúbrica y versión verificada. | ▱▱▱▱▱▱▱▱▱▱ 0/5 |
 | **v3.2.0** | Laboratorio 3D | Visor GLB en las lecciones, escena de ejemplo y lección 12 (exportar y comprobar). | ▱▱▱▱▱▱▱▱▱▱ 0/3 |
-| **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▱▱▱▱▱▱▱▱▱ 12/84 |
+| **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▱▱▱▱▱▱▱▱▱ 12/90 |
 | **v3.4.0** | Especialidades y tutor | Primera rama del nivel 5 y tutor IA dentro de las lecciones. | ▱▱▱▱▱▱▱▱▱▱ 0/16 |
 
 ## 📌 Kanban
 
-| 📋 Pendiente (93) | 🔨 En progreso (27) | 👀 Revisión (3) | ✅ Hecho (22) |
+| 📋 Pendiente (99) | 🔨 En progreso (27) | 👀 Revisión (3) | ✅ Hecho (22) |
 |---|---|---|---|
 | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-024** Publicar el frontend en Cloudflare (Workers) contra la API HTTPS<br><sub>v2.2.0 · pwa</sub> | **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> |
 | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-032** Configurar SMTP y primer admin en el servidor (confirmación y recuperación por correo)<br><sub>v2.2.0 · api</sub> | **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue)<br><sub>v2.2.0 · repo</sub> | **T-006** Autenticación de alumnos (cuentas, confirmación, recuperación y fusión offline → cuenta)<br><sub>v2.2.0 · api</sub> |
@@ -101,6 +101,12 @@
 | **T-143** Probar con ventana las fichas en la vista 3D, el brillo por zona en cada editor y el modo curioso (add-on 6.1)<br><sub>v3.3.0 · motor</sub> |   |   |   |
 | **T-144** Blender como extensión de la plataforma: orden «leccion», avance automático entre lecciones, Blender que sigue a la lección y la teoría de los 9 módulos con fichas y el mapa de Blender<br><sub>v3.3.0 · pwa</sub> |   |   |   |
 | **T-147** Revisar a Goliat con el creador (parecido, gestos y textos) y publicar la PWA con él<br><sub>v3.3.0 · lanzamiento</sub> |   |   |   |
+| **T-170** Termómetro de ánimo y luz según el dominio: el motor lee intentos, deshacer, ráfagas de clics y tiempo sin avanzar, y decide cuánta ayuda se enciende (plena al principio, más seria con el curso, lo débil siempre señalado)<br><sub>v3.3.0 · motor</sub> |   |   |   |
+| **T-171** Add-on 6.2: faro sobre la pieza que toca, herramienta que brilla sola, «Te toca / Estás haciendo», cambio de práctica limpio y «Volver a mi práctica» desde cualquier escena<br><sub>v3.3.0 · motor</sub> |   |   |   |
+| **T-172** Probar con ventana el faro, la línea «Te toca · Estás haciendo», el ánimo y la pastilla «Volver a mi práctica» (add-on 6.2)<br><sub>v3.3.0 · motor</sub> |   |   |   |
+| **T-173** Elegir la firma de código de Windows (SignPath Foundation o certificado propio) y la llave GPG de Linux, y cargar los secretos en GitHub<br><sub>v3.3.0 · lanzamiento</sub> |   |   |   |
+| **T-174** Instaladores de verdad: .exe de Windows sin administrador (Inno Setup) y .deb de Linux con el lanzador «Amatista»; la plataforma los ofrece antes que el .zip<br><sub>v3.3.0 · motor</sub> |   |   |   |
+| **T-175** Desplegar Amatista Motor 6.2 y copiar los instaladores firmados al servidor<br><sub>v3.3.0 · lanzamiento</sub> |   |   |   |
 | **T-097** Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)<br><sub>v3.4.0 · pwa</sub> |   |   |   |
 | **T-071** Visor del modelo del alumno con model-viewer (exportación glTF desde el add-on al terminar una práctica)<br><sub>v3.4.0 · pwa</sub> |   |   |   |
 | **T-072** Transiciones entre páginas (View Transitions), celebraciones con confeti e ilustración de fondo por temática<br><sub>v3.4.0 · pwa</sub> |   |   |   |
@@ -466,6 +472,24 @@
 - [ ] **T-149** Aplicar 013 en Oracle, poner AMATISTA_CREADOR en backend/.env y desplegar avatares y buzón · _en-progreso_ — commits: `2133591` (2026-10-30)
   - ⏸️ Espera: Lo hace el usuario (Database Actions y la VM)
   - 🎯 Listo cuando: diagnostico_oracle.py ve 24 tablas; la cuenta del creador ve el pavo real y el buzón en Admin
+- [ ] **T-170** Termómetro de ánimo y luz según el dominio: el motor lee intentos, deshacer, ráfagas de clics y tiempo sin avanzar, y decide cuánta ayuda se enciende (plena al principio, más seria con el curso, lo débil siempre señalado) · _pendiente_
+  - 🔎 Evidencia: engine/amatista_engine/taller/acompanamiento.py; docs/motor/referencia/21_motor_6_2.md
+  - 🎯 Listo cuando: engine/tests/test_acompanamiento.py en verde; tres fallos llevan a «atorado»; avanzar calma; en retos la luz no pasa de tenue
+- [ ] **T-171** Add-on 6.2: faro sobre la pieza que toca, herramienta que brilla sola, «Te toca / Estás haciendo», cambio de práctica limpio y «Volver a mi práctica» desde cualquier escena · _pendiente_
+  - 🔎 Evidencia: addon/amatista_blender/taller/acompanar.py; addon/amatista_blender/navegar.py; addon/amatista_blender/practicas.py; addon/amatista_blender/taller/vista/molde.py; addon/amatista_blender/taller/vista/tarjeta.py
+  - 🎯 Listo cuando: en_blender.py › probar_motor62 en verde: escena propia al cambiar, sin molde viejo, luz plena con habilidad nueva, ayuda ofrecida al atorarse, pastilla «Volver» que regresa a la actividad
+- [ ] **T-172** Probar con ventana el faro, la línea «Te toca · Estás haciendo», el ánimo y la pastilla «Volver a mi práctica» (add-on 6.2) · _pendiente_
+  - ⏸️ Espera: Lo hace el usuario en su computadora (la nube no tiene pantalla)
+  - 🎯 Listo cuando: docs/despliegue/2026-10-31_motor_6_2.md pasos 7 a 10
+- [ ] **T-173** Elegir la firma de código de Windows (SignPath Foundation o certificado propio) y la llave GPG de Linux, y cargar los secretos en GitHub · _pendiente_
+  - ⏸️ Espera: Lo hace el usuario (alta en SignPath o compra del certificado; secretos del repositorio)
+  - 🎯 Listo cuando: El flujo Instaladores firma el .exe (Get-AuthenticodeSignature: Valid) y el .deb lleva su .asc
+- [ ] **T-174** Instaladores de verdad: .exe de Windows sin administrador (Inno Setup) y .deb de Linux con el lanzador «Amatista»; la plataforma los ofrece antes que el .zip · _pendiente_
+  - 🔎 Evidencia: addon/herramientas/instaladores.py; addon/herramientas/instalador/windows/amatista.iss; addon/herramientas/instalador/linux/; .github/workflows/instaladores.yml; backend/api/addon.py
+  - 🎯 Listo cuando: El flujo Instaladores compila el .exe y el .deb en cada PR; GET /api/addon/v1/instaladores/{windows,linux} los sirve desde AMATISTA_INSTALADORES; addon/tests/test_addon_motor62.py en verde
+- [ ] **T-175** Desplegar Amatista Motor 6.2 y copiar los instaladores firmados al servidor · _pendiente_
+  - ⏸️ Espera: Lo hace el usuario en la VM (la nube no llega a producción)
+  - 🎯 Listo cuando: docs/despliegue/2026-10-31_motor_6_2.md: /api/addon/v1/estado con 6.2.0 e instaladores.windows/linux; la página Blender baja el .exe
 - [x] **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas) · _hecho_
   - 🔎 Evidencia: docs/motor/referencia/08_practicas_v3_y_herramientas.md; engine/herramientas/practicas.py (nueva, revisar, probar, simular, validadores, plan); addon/amatista_blender/interfaz/paneles.py (panel «Teoría y casos de prueba»); engine/tests/test_v3_herramientas.py
 - [ ] **T-064** Aplicar 008 y 009 en Oracle e importar los cursos Principiante, Principiante-Intermedio e Intermedio (después del piloto) · _pendiente_
