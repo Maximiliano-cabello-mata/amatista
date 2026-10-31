@@ -937,6 +937,33 @@ tareas:
     depende_de: [T-177]
     aceptacion: "/api/addon/v1/estado con version_addon 7.0.0; una cuenta admin recibe sin_progreso en /api/progreso"
     bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-180
+    titulo: "Corazón Amatista (amatista.corazon/1): director, andamio por herramienta, señales que no caducan por reloj, perfiles, extensiones, ramas y conformidad, en Python puro"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-176]
+    aceptacion: "engine/tests/test_corazon.py en verde; python engine/herramientas/corazon.py ramas sin problemas"
+    evidencia: "engine/amatista_engine/corazon/; practices/ramas/; docs/motor/referencia/23_corazon.md"
+  - id: T-181
+    titulo: "Add-on 7.1: el guion usa el corazón; adaptador de Blender con señal comprobada cada 0,5 s y «Señálalo otra vez»; historial del andamio por cuenta (en memoria para admin)"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-180]
+    aceptacion: "en_blender.py › probar_corazon; simular_alumnos.py --motor 7 --n 100: 99 terminan"
+    evidencia: "addon/amatista_blender/corazon/; addon/amatista_blender/guion/"
+  - id: T-182
+    titulo: "Probar con ventana el Corazón: la herramienta se elige sola la primera vez, cambiar de herramienta muestra «Señálalo otra vez», y en un segundo tren Mover ya no se señala solo"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-181]
+    aceptacion: "docs/motor/referencia/23_corazon.md §8"
+    bloqueo: "Lo hace el usuario en su computadora (la nube no tiene pantalla)"
+  - id: T-183
+    titulo: "Adaptador del corazón dentro de Maya o 3ds Max (perfil en borrador ya listo) y que pase conformidad.revisar_adaptador"
+    version: v3.4.0
+    area: motor
+    depende_de: [T-180, T-121]
+    aceptacion: "conformidad.revisar_adaptador sin problemas en el programa real y una rama practices/ramas/<programa>-principiante.json"
   - id: T-160
     titulo: "PWA para escuelas con pocos datos: sincronización en una petición comprimida, reintentos, envío al salir y «Ahorro de datos»"
     version: v3.3.0
