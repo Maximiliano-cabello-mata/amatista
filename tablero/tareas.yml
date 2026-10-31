@@ -841,6 +841,19 @@ tareas:
     depende_de: [T-148]
     aceptacion: "diagnostico_oracle.py ve 24 tablas; la cuenta del creador ve el pavo real y el buzón en Admin"
     bloqueo: "Lo hace el usuario (Database Actions y la VM)"
+  - id: T-150
+    titulo: "Panel del profesor evaluador: grupos con código, prácticas asignadas, entregas con el modelo ligero del alumno (solo en la computadora del profesor) y evaluación"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "El profesor crea un grupo, deja una práctica, ve el modelo de cada alumno armado en su navegador y lo evalúa; el modelo se borra del servidor al recogerlo; Mi grupo y «Entregar a mi profesor» en el add-on; SQL 014; pytest, vitest, lint, build y en_blender en verde"
+    evidencia: "backend/api/evaluacion.py, backend/sql/014_panel_del_profesor.sql, addon/amatista_blender/entrega.py, frontend/src/profesor/, frontend/src/pages/profesor/; docs/plataforma/17_panel_del_profesor.md"
+  - id: T-151
+    titulo: "Aplicar 014 en Oracle, desplegar el panel del profesor y probarlo con un grupo real"
+    version: v3.3.0
+    area: oracle
+    depende_de: [T-150]
+    aceptacion: "diagnostico_oracle.py ve 28 tablas; un profesor recibe y evalúa la entrega de un alumno desde Blender"
+    bloqueo: "Lo hace el usuario (Database Actions, la VM y un grupo de prueba)"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
