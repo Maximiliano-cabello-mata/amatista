@@ -25,6 +25,7 @@ const Blender = lazy(() => import('./pages/Blender'));
 const Vincular = lazy(() => import('./pages/Vincular'));
 const Panel = lazy(() => import('./pages/Panel'));
 const Admin = lazy(() => import('./pages/admin/Admin'));
+const Profesor = lazy(() => import('./pages/profesor/Profesor'));
 const Entrar = lazy(() => import('./pages/cuenta/Entrar'));
 const Registro = lazy(() => import('./pages/cuenta/Registro'));
 const Confirmar = lazy(() => import('./pages/cuenta/Confirmar'));
@@ -94,6 +95,34 @@ function RutaAdmin({ ruta, hash }) {
   );
 }
 
+// El panel del profesor evaluador: para profesores (y administradores que también dan clase).
+function RutaProfesor({ ruta, hash }) {
+  const { listo, usuario, esProfesor } = useAuth();
+  if (!listo) return <Cargando />;
+  if (esProfesor) return <Profesor seccion={ruta.seccion} params={ruta.params} />;
+  return (
+    <main className="mx-auto max-w-2xl px-4 py-16 text-center">
+      <IconoCandado className="mx-auto h-12 w-12 text-white/40" />
+      <h1 className="mt-4 text-3xl font-extrabold text-white">Panel del profesor</h1>
+      <p className="mt-3 text-texto/75">
+        {usuario
+          ? 'Tu cuenta es de alumno. Si eres profesor, pide a un administrador que te asigne el rol. Si tu profesor te dio un código, escríbelo en Mi panel › Mi grupo.'
+          : 'Entra con tu cuenta de profesor para ver tus grupos y las entregas de tus alumnos.'}
+      </p>
+      <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        {!usuario && (
+          <a href={rutaEntrar(hash)} className="corte-poly-sm destello inline-block bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white hover:brightness-110">
+            Entrar ▶
+          </a>
+        )}
+        <a href={rutas.panel} className="corte-poly-sm inline-block bg-white/5 px-6 py-3 font-extrabold uppercase tracking-widest text-white/80 hover:bg-white/10">
+          Ir a Mi panel
+        </a>
+      </div>
+    </main>
+  );
+}
+
 function Pagina({ ruta, hash }) {
   switch (ruta.pagina) {
     case 'estudio':
@@ -126,6 +155,8 @@ function Pagina({ ruta, hash }) {
       return <Buzon consulta={ruta.consulta} />;
     case 'admin':
       return <RutaAdmin ruta={ruta} hash={hash} />;
+    case 'profesor':
+      return <RutaProfesor ruta={ruta} hash={hash} />;
     default:
       return <Inicio consulta={ruta.consulta} />;
   }
@@ -160,7 +191,7 @@ function App() {
               <Suspense fallback={<Cargando />}>
                 {/* Cada cambio de página entra con un fundido corto (sin animación en modo ligero). */}
                 <div
-                  key={`${ruta.pagina}:${ruta.cursoId ?? ''}:${ruta.leccionId ?? ''}`}
+                  key={`${ruta.pagina}:${ruta.cursoId ?? ''}:${ruta.leccionId ?? ''}:${ruta.pagina === 'profesor' ? `${ruta.seccion}:${ruta.params?.id ?? ''}` : ''}`}
                   id="contenido"
                   tabIndex={-1}
                   className="animar-pagina flex-1 outline-none"

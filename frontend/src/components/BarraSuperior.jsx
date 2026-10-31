@@ -13,7 +13,7 @@ import { CristalLogo } from './Iconos';
 // cursos y lecciones y la herramienta de práctica de cada uno (#/blender, #/estudio).
 const PAGINAS_CURSOS = ['inicio', 'curso', 'leccion', 'blender', 'vincular', 'estudio'];
 
-function enlacesDe(verAdmin) {
+function enlacesDe(verEvaluar, verAdmin) {
   const enlaces = [
     { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
     { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
@@ -23,6 +23,8 @@ function enlacesDe(verAdmin) {
   // cada uno es una lista del camino guiado, con su herramienta como primer o último paso.
   // El diagnóstico técnico (#/laboratorio) se abre desde Admin › Estado.
   // En la vista de alumno el equipo no ve Admin (vuelve desde la franja de vista).
+  // 31 oct: el profesor es evaluador, no administrador: ve «Evaluar» (sus grupos y entregas) y no Admin.
+  if (verEvaluar) enlaces.push({ href: rutas.profesor, texto: 'Evaluar', activo: (pagina) => pagina === 'profesor' });
   if (verAdmin) enlaces.push({ href: rutas.admin, texto: 'Admin', activo: (pagina) => pagina === 'admin' });
   return enlaces;
 }
@@ -158,7 +160,7 @@ function BarraSuperior({ ruta, hash = '' }) {
   const enLinea = useConexion();
   const instalar = useInstalarPWA();
   const { xp, nivel } = useProgreso();
-  const { usuario, esProfesor, cerrarSesion } = useAuth();
+  const { usuario, esProfesor, esAdmin, cerrarSesion } = useAuth();
   const { avatar } = useAvatar();
   const { comoAlumno } = useVista();
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -171,13 +173,13 @@ function BarraSuperior({ ruta, hash = '' }) {
   useCerrarFuera(menuAbierto, cerrarMenu, barra);
 
   const pagina = ruta?.pagina ?? 'inicio';
-  const enlaces = enlacesDe(esProfesor && !comoAlumno);
+  const enlaces = enlacesDe(esProfesor && !comoAlumno, esAdmin && !comoAlumno);
   const enCuenta = ['entrar', 'registro', 'confirmar', 'recuperar'].includes(pagina);
 
   const salir = async () => {
     setMenuAbierto(false);
     await cerrarSesion();
-    if (pagina === 'perfil' || pagina === 'admin') navegar(rutas.inicio);
+    if (pagina === 'perfil' || pagina === 'admin' || pagina === 'profesor') navegar(rutas.inicio);
   };
 
   // Sin backdrop-blur: desenfocar lo que se anima detrás costaba ~15 cuadros

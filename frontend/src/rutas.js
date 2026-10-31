@@ -24,6 +24,8 @@ export const rutas = {
   adminRevision: '#/admin/revision',
   adminAuditoria: '#/admin/auditoria',
   adminBuzon: '#/admin/buzon',
+  profesor: '#/profesor',
+  profesorEquipo: '#/profesor/equipo',
   curso: (cursoId) => `#/curso/${parte(cursoId)}`,
   // Abre el curso en ese nivel y baja hasta el módulo (Curso.jsx lee ?modulo=N).
   modulo: (cursoId, numero) => `#/curso/${parte(cursoId)}?modulo=${parte(numero)}`,
@@ -31,6 +33,8 @@ export const rutas = {
   adminUsuario: (usuarioId) => `#/admin/usuarios/${parte(usuarioId)}`,
   adminLeccion: (cursoId, leccionId) => `#/admin/contenido/${parte(cursoId)}/${parte(leccionId)}`,
   adminNuevaLeccion: (moduloId) => `#/admin/contenido/nueva/${parte(moduloId)}`,
+  profesorGrupo: (grupoId) => `#/profesor/grupo/${parte(grupoId)}`,
+  profesorPractica: (asignacionId) => `#/profesor/practica/${parte(asignacionId)}`,
 };
 
 // Secciones del panel de administración (página "admin" con {seccion, params}):
@@ -65,6 +69,17 @@ function rutaAdmin(partes) {
   return { seccion: 'resumen', params: {} };
 }
 
+// Panel del profesor evaluador (página "profesor" con {seccion, params}):
+//   #/profesor                 → grupos
+//   #/profesor/grupo/:id       → grupo     {id}
+//   #/profesor/practica/:id    → practica  {id} (las entregas de una práctica asignada)
+//   #/profesor/equipo          → equipo    (los modelos guardados en esta computadora)
+function rutaProfesor([seccion, id]) {
+  if ((seccion === 'grupo' || seccion === 'practica') && id) return { seccion, params: { id } };
+  if (seccion === 'equipo') return { seccion, params: {} };
+  return { seccion: 'grupos', params: {} };
+}
+
 const PAGINAS_SIMPLES = ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'guia', 'buzon'];
 
 // Devuelve {pagina, ...}. Una consulta tras "?" (por ejemplo
@@ -86,6 +101,7 @@ export function analizarRuta(hash = '') {
   if (PAGINAS_SIMPLES.includes(partes[0])) return { pagina: partes[0], consulta };
   // #/explorar (el buscador del 21 de octubre) se retiró el 23: sus enlaces llevan a Cursos.
   if (partes[0] === 'explorar') return { pagina: 'inicio', consulta: {} };
+  if (partes[0] === 'profesor') return { pagina: 'profesor', ...rutaProfesor(partes.slice(1)), consulta };
   if (partes[0] === 'admin') return { pagina: 'admin', ...rutaAdmin(partes.slice(1)), consulta };
   if (partes[0] === 'curso' && partes[1] && partes[2] === 'leccion' && partes[3]) {
     return { pagina: 'leccion', cursoId: partes[1], leccionId: partes[3], consulta };

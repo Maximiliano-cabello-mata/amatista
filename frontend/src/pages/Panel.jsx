@@ -14,6 +14,7 @@ import CuentaPanel from '../components/panel/CuentaPanel';
 import CursosPanel from '../components/panel/CursosPanel';
 import { tieneAvance } from '../components/panel/datos';
 import EncabezadoPanel from '../components/panel/EncabezadoPanel';
+import GrupoPanel from '../components/panel/GrupoPanel';
 import LogrosPanel from '../components/panel/LogrosPanel';
 import ProgramasPanel from '../components/panel/ProgramasPanel';
 import ExamenesPanel from '../components/panel/ExamenesPanel';
@@ -28,6 +29,7 @@ import { rutas } from '../rutas';
 // Índice de Mi panel. Las rutas son por hash (#/…): los saltos se hacen con scroll, no con el enlace.
 const SECCIONES = [
   ['panel-continuar', 'Qué sigue'],
+  ['panel-grupo', 'Mi grupo'],
   ['panel-cursos', 'Cursos'],
   ['panel-programas', 'Programas'],
   ['panel-retos', 'Retos'],
@@ -58,7 +60,7 @@ function Panel() {
       <InvitacionRecorrido className="mt-6" />
 
       <nav aria-label="Secciones de Mi panel" className="mt-6 flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-widest">
-        {SECCIONES.map(([id, texto]) => (
+        {SECCIONES.filter(([id]) => usuario || id !== 'panel-grupo').map(([id, texto]) => (
           <a key={id} href={`#${id}`} onClick={(e) => irASeccion(e, id)} className="corte-poly-sm border border-white/10 bg-superficie/80 px-3 py-1.5 text-white/65 hover:border-neon hover:text-neon">
             {texto}
           </a>
@@ -69,6 +71,8 @@ function Panel() {
       <div className="mt-6 grid gap-5 lg:grid-cols-3">
         <ContinuarPanel progreso={progreso} cursos={cursos} className="lg:col-span-2" />
         <CuentaPanel usuario={usuario} sesionVencida={sesionVencida} lecciones={cuenta.lecciones} xp={xp} />
+        {/* Las prácticas que deja el profesor (panel del profesor evaluador, sql/014). */}
+        <GrupoPanel token={token} usuario={usuario} className="lg:col-span-3" />
         <CursosPanel progreso={progreso} cursos={cursos} className="lg:col-span-2" />
         <RetosPanel progreso={progreso} hoy={hoy} className="lg:row-span-2" />
         <ActividadPanel progreso={progreso} hoy={hoy} className="lg:col-span-2" />
