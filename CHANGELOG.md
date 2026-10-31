@@ -41,6 +41,7 @@ Estado verificado el 18 de octubre de 2026: publicados los tags hasta `v3.0.0-al
 
 ### Corregido
 
+- **Error 500 en `GET /api/addon/v1/enlace` con Oracle** (31 oct 2026, encontrado por Sentry): la columna `ADDON_ENLACES.DETALLE` tiene `CHECK (detalle IS JSON)` desde el SQL 011 y python-oracledb la entrega como dict, que `json.loads` no acepta. Ahora usa `TextoJSON` como las demás columnas JSON. Además, Sentry ya no recibe las migas del log de acceso de uvicorn, que llevaban la IP del alumno.
 - **Checks rojos de Cloudflare Workers Builds** en las ramas de los PR: `wrangler.jsonc` trae ahora su propio `build.command`, que compila la PWA si `frontend/dist` no existe, así que `wrangler versions upload` y `wrangler preview` ya no fallan aunque el panel no tenga comando de compilación para ramas.
 - El check «Workers Builds» de Cloudflare fallaba en las ramas que no son `main`: su comando (`wrangler preview`) pedía un `wrangler.jsonc` con bloque `previews`, y esas ramas no tienen comando de build en el panel. Nuevos `wrangler.jsonc` y `.node-version` (Node 22) en la raíz; falta ajustar el panel; guía `docs/despliegue/2026-10-29_cloudflare_workers_builds.md` (29 oct).
 - La vista A-Frame de las lecciones no cargaba modelos `gltf-model="#id"` (agregaba las etiquetas antes de tener sus `a-assets`) e ignoraba `fog`, `cursor` y `raycaster` de la escena (21 oct).
