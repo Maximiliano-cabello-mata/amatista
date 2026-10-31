@@ -964,6 +964,19 @@ tareas:
     area: motor
     depende_de: [T-180, T-121]
     aceptacion: "conformidad.revisar_adaptador sin problemas en el programa real y una rama practices/ramas/<programa>-principiante.json"
+  - id: T-184
+    titulo: "Sentry opcional en el backend (SENTRY_DSN) y en la PWA (VITE_SENTRY_DSN), sin datos personales y sin cargar el SDK si no hay DSN"
+    version: v3.3.0
+    area: repo
+    aceptacion: "backend/tests/test_observabilidad.py y frontend/src/lib/sentry.test.js en verde; sin DSN el build no precachea sentrySdk-*.js"
+    evidencia: "backend/observabilidad.py, frontend/src/lib/sentry.js; docs/despliegue/2026-10-31_sentry.md"
+  - id: T-185
+    titulo: "Crear en Sentry los proyectos amatista-backend (FastAPI) y amatista-web (React), poner los DSN en la VM y en Cloudflare y conectar GitHub"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-184]
+    aceptacion: "docs/despliegue/2026-10-31_sentry.md §3: el error de prueba llega a cada proyecto sin IP, correo ni cookies"
+    bloqueo: "Lo hace el usuario (cuenta de Sentry, VM y Cloudflare)"
   - id: T-160
     titulo: "PWA para escuelas con pocos datos: sincronización en una petición comprimida, reintentos, envío al salir y «Ahorro de datos»"
     version: v3.3.0
