@@ -60,6 +60,11 @@ export default defineConfig({
           '**/*-{cyrillic,cyrillic-ext,greek,vietnamese}-*.woff2',
           // Planos de los modelos de referencia: se guardan al verlos (abajo).
           '**/plano-*.svg',
+          // Paneles de administración y del profesor (~35 KB comprimidos): un
+          // alumno nunca los abre y no debe gastar sus datos en bajarlos. Quien
+          // sí los usa los guarda al abrirlos (abajo) y siguen sin conexión.
+          '**/Admin-*.js',
+          '**/Profesor*-*.js',
         ],
         runtimeCaching: [
           {
@@ -67,6 +72,11 @@ export default defineConfig({
             urlPattern: ({ url }) => /\/assets\/(referencia|plano)-[^/]+\.(jpg|svg)$/.test(url.pathname),
             handler: 'CacheFirst',
             options: { cacheName: 'amatista-referencias', expiration: { maxEntries: 60 } },
+          },
+          {
+            urlPattern: ({ url }) => /^\/assets\/(Admin|Profesor[^/]*)-[^/]+\.js$/.test(url.pathname),
+            handler: 'CacheFirst',
+            options: { cacheName: 'amatista-paneles', expiration: { maxEntries: 8 } },
           },
           {
             urlPattern: ({ url }) => url.pathname.startsWith('/assets/aframe-master'),

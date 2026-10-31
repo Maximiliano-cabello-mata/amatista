@@ -4,6 +4,8 @@
 // Dominio público: https://amatista-3d.tech; guía operativa:
 // docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md.
 // En Workers la variable de build VITE_API_URL define la URL de API.
+import { esperaPorRed } from "../lib/red";
+
 export const DOMINIO = "amatista-3d.tech";
 export const API_DEL_DOMINIO = `https://api.${DOMINIO}`;
 // Desarrollo local sin variable explícita: usar el backend local, no el
@@ -22,6 +24,10 @@ export function apiPorDefecto(host = typeof window === "undefined" ? "" : window
 export const API_URL = import.meta.env.VITE_API_URL || apiPorDefecto();
 
 const ESPERA_POR_DEFECTO = 8000;
+// Debajo de esto comprimir no ahorra nada (las cabeceras de gzip pesan ~20 bytes).
+const COMPRIMIR_DESDE = 512;
+// Límite del navegador para el cuerpo de una petición keepalive (64 KB).
+const MAXIMO_KEEPALIVE = 60_000;
 
 // Un sitio servido por https no puede llamar a un backend http: el navegador
 // lo bloquea ("mixed content"). En ese caso ni lo intentamos.
@@ -66,8 +72,29 @@ export function mensajeDeError(status, datos) {
   return `El servidor respondió ${status}.`;
 }
 
+// Cuerpo JSON comprimido con gzip (CompressionStream: Chrome 80+, Safari 16.4+,
+// Firefox 113+). Sin soporte, o si no vale la pena, va tal cual.
+export async function prepararCuerpo(texto, comprimir) {
+  if (!comprimir || texto.length < COMPRIMIR_DESDE || typeof CompressionStream === "undefined") {
+    return { cuerpo: texto, comprimido: false, bytes: new TextEncoder().encode(texto).length };
+  }
+  try {
+    const flujo = new Blob([texto]).stream().pipeThrough(new CompressionStream("gzip"));
+    const datos = new Uint8Array(await new Response(flujo).arrayBuffer());
+    return { cuerpo: datos, comprimido: true, bytes: datos.length };
+  } catch {
+    return { cuerpo: texto, comprimido: false, bytes: new TextEncoder().encode(texto).length };
+  }
+}
+
 // fetch con tiempo máximo: si el servidor no responde, no dejamos la app esperando.
-export async function pedirJSON(ruta, { metodo = "GET", cuerpo, token, espera = ESPERA_POR_DEFECTO, cabeceras } = {}) {
+// En redes 2G/3G el tiempo máximo crece (lib/red.js). `comprimir` manda el
+// cuerpo con gzip (solo a rutas que lo aceptan) y `keepalive` deja terminar
+// el envío aunque el alumno cierre la pestaña.
+export async function pedirJSON(
+  ruta,
+  { metodo = "GET", cuerpo, token, espera = ESPERA_POR_DEFECTO, cabeceras, comprimir = false, keepalive = false } = {},
+) {
   if (!sincronizacionDisponible()) {
     return {
       ok: false,
@@ -77,18 +104,24 @@ export async function pedirJSON(ruta, { metodo = "GET", cuerpo, token, espera = 
     };
   }
   const headers = { Accept: "application/json", ...cabeceras };
-  if (cuerpo !== undefined) headers["Content-Type"] = "application/json";
+  let envio = null;
+  if (cuerpo !== undefined) {
+    headers["Content-Type"] = "application/json";
+    envio = await prepararCuerpo(JSON.stringify(cuerpo), comprimir);
+    if (envio.comprimido) headers["Content-Encoding"] = "gzip";
+  }
   if (token) headers.Authorization = `Bearer ${token}`;
 
   const control = new AbortController();
-  const temporizador = setTimeout(() => control.abort(), espera);
+  const temporizador = setTimeout(() => control.abort(), esperaPorRed(espera));
   let respuesta;
   try {
     respuesta = await fetch(`${API_URL}${ruta}`, {
       method: metodo,
       headers,
-      body: cuerpo === undefined ? undefined : JSON.stringify(cuerpo),
+      body: envio?.cuerpo,
       signal: control.signal,
+      keepalive: keepalive && (envio?.bytes ?? 0) <= MAXIMO_KEEPALIVE,
     });
   } catch (error) {
     const agotado = error?.name === "AbortError";
@@ -96,6 +129,8 @@ export async function pedirJSON(ruta, { metodo = "GET", cuerpo, token, espera = 
       ok: false,
       status: 0,
       datos: null,
+      bytes: envio?.bytes ?? 0,
+      comprimido: Boolean(envio?.comprimido),
       error: agotado
         ? "El servidor tardó demasiado en responder. Intenta de nuevo."
         : "No se pudo contactar al servidor. Revisa tu conexión.",
@@ -117,6 +152,8 @@ export async function pedirJSON(ruta, { metodo = "GET", cuerpo, token, espera = 
     ok: respuesta.ok,
     status: respuesta.status,
     datos,
+    bytes: envio?.bytes ?? 0,
+    comprimido: Boolean(envio?.comprimido),
     error: respuesta.ok ? null : mensajeDeError(respuesta.status, datos),
   };
 }
@@ -181,7 +218,29 @@ export const enviarProgreso = ({ token, usuarioId, eventos = [], insignias = [] 
     },
   });
 
-export const descargarProgreso = (token) => pedirJSON("/api/progreso", { token });
+// `desde` (servidor_en de la descarga anterior): solo lo que cambió. Un
+// backend anterior ignora el parámetro y devuelve todo (sin «parcial»).
+export const descargarProgreso = (token, desde) =>
+  pedirJSON(desde ? `/api/progreso?desde=${encodeURIComponent(desde)}` : "/api/progreso", { token });
+
+// Progreso, insignias y eventos en una sola petición (backend con /api/sincronizar).
+// Comprimir solo cuando ya se sabe que el servidor lo acepta: un backend
+// anterior rechazaría la cabecera Content-Encoding en el preflight de CORS y
+// el envío parecería un fallo de red.
+export const sincronizar = ({ token, usuarioId, progreso = [], insignias = [], eventos = [], comprimir, keepalive }) =>
+  pedirJSON("/api/sincronizar", {
+    metodo: "POST",
+    token,
+    comprimir,
+    keepalive,
+    espera: 15000,
+    cuerpo: {
+      ...(token ? {} : { usuario_id: usuarioId }),
+      ...(progreso.length ? { progreso } : {}),
+      ...(insignias.length ? { insignias } : {}),
+      ...(eventos.length ? { eventos } : {}),
+    },
+  });
 
 export const enviarEventos = ({ token, usuarioId, eventos }) =>
   pedirJSON("/api/eventos", {

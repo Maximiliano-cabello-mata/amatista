@@ -1,3 +1,5 @@
+import { ahorroActivo } from './red';
+
 // Modo ligero (v3.2): en equipos modestos la página se ve igual pero sin
 // animaciones continuas, destellos ni el fondo facetado. Función pura para
 // probarla; main.jsx la aplica al arrancar con los datos del navegador.
@@ -8,12 +10,12 @@ export function esEquipoLigero({ memoria, nucleos, ahorroDatos, movimientoReduci
   return false;
 }
 
-export function aplicarModoLigero(ventana = window) {
+export function aplicarModoLigero(ventana = window, ahorroDatos = ahorroActivo()) {
   const nav = ventana.navigator ?? {};
   const ligero = esEquipoLigero({
     memoria: nav.deviceMemory,
     nucleos: nav.hardwareConcurrency,
-    ahorroDatos: Boolean(nav.connection?.saveData),
+    ahorroDatos,
     movimientoReducido: Boolean(ventana.matchMedia?.('(prefers-reduced-motion: reduce)').matches),
   });
   ventana.document.documentElement.classList.toggle('ligero', ligero);
