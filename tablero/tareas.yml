@@ -910,6 +910,33 @@ tareas:
     depende_de: [T-145, T-173, T-174]
     aceptacion: "docs/despliegue/2026-10-31_motor_6_2.md: /api/addon/v1/estado con 6.2.0 e instaladores.windows/linux; la página Blender baja el .exe"
     bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-176
+    titulo: "Motor 7 «Guion»: la práctica avanza con lo que hay en la escena (pasos con verbo, en cualquier orden, sin exigir herramienta), tres pistas del paso actual y el lugar real de cada herramienta; 100 alumnos simulados"
+    version: v3.3.0
+    area: motor
+    aceptacion: "engine/tests/test_guion.py en verde; simular_alumnos.py --motor 7 --n 100: 99 terminan, 0 «brilla» sin señal, 0 instrucciones vagas, 0 bloqueos"
+    evidencia: "engine/amatista_engine/guion/; addon/tests/simular_alumnos.py; docs/motor/referencia/22_motor_7.md"
+  - id: T-177
+    titulo: "Add-on 7.0: revisión al cambiar, guardar y deshacer; una banda arriba y el panel N › Paso a paso; señales comprobadas (herramienta elegida, menú abierto, piezas seleccionadas); administrador sin progreso en add-on, backend y plataforma"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-176]
+    aceptacion: "en_blender.py › probar_motor7, addon/tests/test_addon_motor7.py, backend/tests/test_sin_progreso.py y vitest en verde"
+    evidencia: "addon/amatista_blender/guion/; backend/api/dependencias.py (sin_progreso); frontend/src/progreso/reglas.js (esSinProgreso)"
+  - id: T-178
+    titulo: "Probar con ventana el Motor 7: el tren paso a paso, la banda sin encimarse, «¿Dónde está?» con la herramienta resaltada y el administrador que empieza de cero"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-177]
+    aceptacion: "docs/despliegue/2026-10-31_motor_7.md pasos 4 a 10"
+    bloqueo: "Lo hace el usuario en su computadora (la nube no tiene pantalla)"
+  - id: T-179
+    titulo: "Desplegar Amatista Motor 7 (backend, prácticas y frontend) y reinstalar el add-on 7.0"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-177]
+    aceptacion: "/api/addon/v1/estado con version_addon 7.0.0; una cuenta admin recibe sin_progreso en /api/progreso"
+    bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
   - id: T-160
     titulo: "PWA para escuelas con pocos datos: sincronización en una petición comprimida, reintentos, envío al salir y «Ahorro de datos»"
     version: v3.3.0
