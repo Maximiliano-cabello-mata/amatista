@@ -38,7 +38,15 @@ import {
   prepararEnvio,
   tieneContenido,
 } from './estado';
-import { calcularNivel, calcularRacha, calcularXP, claveLeccion, fechaLocal, insigniasPorOtorgar } from './reglas';
+import {
+  calcularNivel,
+  calcularRacha,
+  calcularXP,
+  claveLeccion,
+  esSinProgreso,
+  fechaLocal,
+  insigniasPorOtorgar,
+} from './reglas';
 
 const ESPERA_SINCRONIZACION = 1500;
 // Con ahorro de datos se juntan más cambios en cada envío (una petición en
@@ -69,8 +77,17 @@ const conInsignias = (estado, cursos) =>
 // anónimo del dispositivo se une a ella (el servidor ya fusionó lo que se
 // había sincronizado) y el anónimo vuelve a empezar con un id nuevo: el
 // anterior quedó ligado a la cuenta en el servidor.
-async function cargarEstado(cuentaId, idLocal) {
+//
+// Un administrador (motor 7) no lleva progreso: cada vez que entra empieza de
+// cero, lo que tuviera guardado en el equipo se borra y el progreso anónimo
+// del equipo no se une a su cuenta (se queda para el alumno que lo hizo).
+async function cargarEstado(cuentaId, idLocal, sinProgreso = false) {
   if (!cuentaId) return normalizarEstado(await leer(CLAVE_ANONIMO), { cuentaId: null });
+  if (sinProgreso) {
+    const limpio = normalizarEstado(undefined, { cuentaId });
+    await guardar(claveAlmacen(cuentaId), limpio);
+    return limpio;
+  }
 
   const [propio, anonimoGuardado] = await Promise.all([leer(claveAlmacen(cuentaId)), leer(CLAVE_ANONIMO)]);
   let estado = normalizarEstado(propio, { cuentaId });
@@ -87,6 +104,7 @@ async function cargarEstado(cuentaId, idLocal) {
 
 function ProgresoProvider({ children }) {
   const { usuario, token, listo, idLocal, verificarSesion } = useAuth();
+  const sinProgreso = esSinProgreso(usuario);
   const { cursos } = useCatalogo();
   const enLinea = useConexion();
   const { ahorro } = useRed();
@@ -129,7 +147,7 @@ function ProgresoProvider({ children }) {
   useEffect(() => {
     if (!listo) return;
     let activo = true;
-    cargarEstado(cuentaId, idLocal).then((estado) => {
+    cargarEstado(cuentaId, idLocal, sinProgreso).then((estado) => {
       if (!activo) return;
       descargada.current = null;
       setBloqueada(null);
@@ -139,18 +157,19 @@ function ProgresoProvider({ children }) {
     return () => {
       activo = false;
     };
-  }, [listo, cuentaId, idLocal]);
+  }, [listo, cuentaId, idLocal, sinProgreso]);
 
   // 2. Guardar cada cambio en la clave de su propia identidad. Durante el
   //    cambio de cuenta (milisegundos) no se guarda: el anónimo ya se unió a
-  //    la cuenta y se reinició, y no debe volver a escribirse encima.
+  //    la cuenta y se reinició, y no debe volver a escribirse encima. El
+  //    administrador practica solo en memoria: al volver a entrar, de cero.
   useEffect(() => {
-    if (identidadLista) guardar(claveAlmacen(progreso.cuentaId), progreso);
-  }, [progreso, identidadLista]);
+    if (identidadLista && !sinProgreso) guardar(claveAlmacen(progreso.cuentaId), progreso);
+  }, [progreso, identidadLista, sinProgreso]);
 
   // 3. Con cuenta: traer lo hecho en otros dispositivos (una vez por sesión).
   useEffect(() => {
-    if (!identidadLista || !cuentaId || !token || !enLinea || !sincronizacionDisponible()) return;
+    if (!identidadLista || !cuentaId || !token || !enLinea || sinProgreso || !sincronizacionDisponible()) return;
     const marca = `${cuentaId}|${token}|${intentoManual}`;
     if (descargada.current === marca) return;
     descargada.current = marca;
@@ -168,7 +187,7 @@ function ProgresoProvider({ children }) {
         verificarSesion();
       }
     });
-  }, [identidadLista, cuentaId, token, enLinea, cursos, intentoManual, verificarSesion]);
+  }, [identidadLista, cuentaId, token, enLinea, sinProgreso, cursos, intentoManual, verificarSesion]);
 
   // Envía progreso, insignias y eventos pendientes. Con cuenta usa el token;
   // sin cuenta, el id anónimo del dispositivo. Con el backend nuevo va todo
@@ -304,12 +323,13 @@ function ProgresoProvider({ children }) {
     (estado) =>
       Boolean(estado) &&
       identidadLista &&
+      !sinProgreso &&
       enLinea &&
       sincronizacionDisponible() &&
       !(estado.cuentaId && !token) &&
       bloqueada !== (estado.cuentaId ?? estado.alumnoId) &&
       (cantidadPendientes(estado) > 0 || estado.eventos.length > 0),
-    [identidadLista, enLinea, token, bloqueada],
+    [identidadLista, sinProgreso, enLinea, token, bloqueada],
   );
 
   // 4. Enviar lo pendiente cuando hay conexión. Si falla, se reintenta con el
