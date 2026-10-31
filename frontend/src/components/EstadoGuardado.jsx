@@ -7,6 +7,8 @@ const hora = (iso) =>
 
 const plural = (n, uno, varios) => `${n} ${n === 1 ? uno : varios}`;
 
+const tamano = (bytes) => (bytes < 1024 ? `${bytes} B` : `${(bytes / 1024).toFixed(1)} KB`);
+
 // Le dice al alumno dónde está su progreso: siempre en el dispositivo y,
 // cuando se pueda, también en el servidor. Nunca indica "sincronizado" si el
 // servidor no lo confirmó.
@@ -38,7 +40,9 @@ function EstadoGuardado({ className = '' }) {
   } else if (sincronizacion.pendientes > 0) {
     detalle = `${plural(sincronizacion.pendientes, 'cambio pendiente', 'cambios pendientes')}: se enviará al servidor cuando haya conexión.`;
   } else if (sincronizacion.ultima) {
-    detalle = `Sincronizado con el servidor (${hora(sincronizacion.ultima)}).`;
+    detalle = `Sincronizado con el servidor (${hora(sincronizacion.ultima)}${
+      sincronizacion.bytes ? `, último envío ${tamano(sincronizacion.bytes)}` : ''
+    }).`;
   }
 
   const donde = usuario

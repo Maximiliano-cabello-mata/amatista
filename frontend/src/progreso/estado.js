@@ -25,7 +25,17 @@ export const CLAVE_ANONIMO = 'progreso';
 // 'progreso' (anónimo) o 'progreso:<cuentaId>' (cuenta).
 export const claveAlmacen = (cuentaId) => (cuentaId ? `${CLAVE_ANONIMO}:${cuentaId}` : CLAVE_ANONIMO);
 
-const MARCAS_VACIAS = { dia: null, sesiones: [], eventoSync: null, sincronizado: null };
+// descargado: hora del SERVIDOR de la última descarga (el `desde` de la
+// siguiente, así no importa si el reloj del dispositivo está mal);
+// descargaCompleta: hora local de la última descarga completa.
+const MARCAS_VACIAS = {
+  dia: null,
+  sesiones: [],
+  eventoSync: null,
+  sincronizado: null,
+  descargado: null,
+  descargaCompleta: null,
+};
 
 export function estadoVacio({ alumnoId, cuentaId = null } = {}) {
   return {
@@ -174,6 +184,8 @@ export function normalizarEstado(guardado, { cuentaId } = {}) {
       sesiones: lista(base.marcas.sesiones),
       eventoSync: fechaIso(base.marcas.eventoSync),
       sincronizado: fechaIso(base.marcas.sincronizado),
+      descargado: typeof base.marcas.descargado === 'string' ? base.marcas.descargado : null,
+      descargaCompleta: fechaIso(base.marcas.descargaCompleta),
     };
   }
   return estado;
@@ -277,7 +289,10 @@ function superaA(local, servidor) {
 
 // Combina la respuesta de GET /api/progreso con el estado local: el servidor
 // aporta lo hecho en otros dispositivos; lo que solo está aquí queda pendiente.
+// Con datos.parcial (GET /api/progreso?desde=) solo llegan las lecciones que
+// cambiaron: que falte una no significa que el servidor no la tenga.
 export function combinarConServidor(estado, datos) {
+  const parcial = datos?.parcial === true;
   const lecciones = { ...estado.lecciones };
   const pendientes = [...estado.pendientes];
   const enServidor = new Set();
@@ -297,7 +312,7 @@ export function combinarConServidor(estado, datos) {
     lecciones[clave] = combinarRegistros(local, remoto);
     if (local && superaA(local, remoto)) pendientes.push(clave);
   }
-  for (const [clave, registro] of Object.entries(estado.lecciones)) {
+  for (const [clave, registro] of Object.entries(parcial ? {} : estado.lecciones)) {
     if (!enServidor.has(clave) && superaA(registro, null)) pendientes.push(clave);
   }
 
@@ -311,13 +326,32 @@ export function combinarConServidor(estado, datos) {
   }
   const faltantes = Object.keys(estado.insignias).filter((id) => !remotas.has(id));
 
+  const marcas =
+    typeof datos?.servidor_en === 'string'
+      ? {
+          ...estado.marcas,
+          descargado: datos.servidor_en,
+          descargaCompleta: parcial ? estado.marcas.descargaCompleta : new Date().toISOString(),
+        }
+      : estado.marcas;
+
   return {
     ...estado,
     lecciones,
     insignias,
+    marcas,
     pendientes: unicos(pendientes),
     insigniasPendientes: unicos([...estado.insigniasPendientes, ...faltantes]),
   };
+}
+
+// Una vez por semana se descarga todo aunque se tenga `desde`: si algo se
+// escapara de la descarga parcial, se corrige solo.
+const SEMANA = 7 * 24 * 60 * 60 * 1000;
+export function desdeParaDescargar(estado, ahora = Date.now()) {
+  const { descargado, descargaCompleta } = estado.marcas ?? {};
+  if (!descargado || !descargaCompleta) return null;
+  return ahora - Date.parse(descargaCompleta) > SEMANA ? null : descargado;
 }
 
 // --- Acciones del alumno ---------------------------------------------------------
