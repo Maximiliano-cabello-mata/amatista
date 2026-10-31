@@ -52,7 +52,8 @@ function PrepararBlender({ token }) {
   const descargar = async () => {
     setDescarga({ estado: 'descargando', texto: '' });
     const r = await descargarPaquete(token, sistema ?? 'windows');
-    setDescarga(r.ok ? { estado: 'hecha', texto: `Descargado ${r.nombre}.` } : { estado: 'error', texto: r.error });
+    const pasos = r.instalador ? 'Ábrelo con doble clic: instala Amatista en tu Blender.' : 'Descomprímelo y abre «Instalar Amatista».';
+    setDescarga(r.ok ? { estado: 'hecha', texto: `Descargado ${r.nombre}. ${pasos}` } : { estado: 'error', texto: r.error });
   };
 
   if (conectados > 0 && !abierto) {
@@ -86,7 +87,7 @@ function PrepararBlender({ token }) {
                 {descarga.estado === 'descargando' ? 'Preparando…' : `Descargar para ${nombre}`}
               </button>
               <span className="mt-1.5 block text-xs text-white/50">
-                {descarga.texto || `Descomprime y abre «Instalar Amatista». Necesitas Blender ${BLENDER_MINIMO} o más nuevo.`}
+                {descarga.texto || `Abre el instalador que se descarga. Necesitas Blender ${BLENDER_MINIMO} o más nuevo.`}
               </span>
             </>
           ) : (

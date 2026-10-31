@@ -91,7 +91,8 @@ function Descarga({ token, usuario }) {
   const descargar = async () => {
     setEstado({ descargando: true, error: null, nombre: null });
     const resultado = await descargarPaquete(token, elegido);
-    setEstado({ descargando: false, error: resultado.ok ? null : resultado.error, nombre: resultado.nombre ?? null });
+    setEstado({ descargando: false, error: resultado.ok ? null : resultado.error, nombre: resultado.nombre ?? null,
+      instalador: Boolean(resultado.instalador) });
   };
 
   return (
@@ -145,7 +146,10 @@ function Descarga({ token, usuario }) {
       {estado.nombre && (
         <div className="mt-4">
           <Alerta tipo="exito">
-            Descargado <strong>{estado.nombre}</strong>. Ahora descomprímelo y ejecuta el instalador.
+            Descargado <strong>{estado.nombre}</strong>.{' '}
+            {estado.instalador
+              ? 'Ábrelo con doble clic. Al abrir Blender Amatista, pulsa «Conectar mi cuenta».'
+              : 'Ahora descomprímelo y ejecuta el instalador.'}
           </Alerta>
         </div>
       )}

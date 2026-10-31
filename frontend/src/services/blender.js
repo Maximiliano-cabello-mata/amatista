@@ -19,12 +19,31 @@ export const listarDispositivos = (token) => pedirJSON(`${BASE}/dispositivos`, {
 export const desconectarDispositivo = (token, dispositivoId) =>
   pedirJSON(`${BASE}/dispositivos/${parte(dispositivoId)}`, { metodo: "DELETE", token });
 
-// Descarga el paquete con instalador. Con sesión trae un vínculo de un solo
-// uso: al abrir Blender, el add-on ya queda conectado con la cuenta.
-// Devuelve {ok, error, nombre} y guarda el archivo en el equipo.
+// Motor 6.2: si el servidor tiene el instalador firmado (.exe, .deb), se baja ese:
+// se abre con doble clic y la cuenta se conecta después, desde Blender.
+async function instaladorFirmado(sistema) {
+  const r = await estadoAddon();
+  const url = r.ok ? r.datos?.instaladores?.[sistema] : null;
+  return typeof url === "string" && url.startsWith("http") ? url : null;
+}
+
+// Descarga el instalador. Con el instalador firmado devuelve {ok, instalador: true};
+// si no, el paquete .zip de siempre, que con sesión trae un vínculo de un solo
+// uso (al abrir Blender, el add-on ya queda conectado con la cuenta).
+// Devuelve {ok, error, nombre, instalador} y guarda el archivo en el equipo.
 export async function descargarPaquete(token, sistema) {
   if (!sincronizacionDisponible()) {
     return { ok: false, error: "El servidor no está disponible desde este sitio (requiere https)." };
+  }
+  const firmado = await instaladorFirmado(sistema);
+  if (firmado) {
+    const enlace = document.createElement("a");
+    enlace.href = firmado;
+    enlace.rel = "noopener";
+    document.body.appendChild(enlace);
+    enlace.click();
+    enlace.remove();
+    return { ok: true, nombre: sistema === "windows" ? "el instalador de Amatista (.exe)" : "el paquete de Amatista (.deb)", instalador: true };
   }
   let respuesta;
   try {
@@ -49,7 +68,7 @@ export async function descargarPaquete(token, sistema) {
   enlace.click();
   enlace.remove();
   setTimeout(() => URL.revokeObjectURL(enlace.href), 30000);
-  return { ok: true, nombre };
+  return { ok: true, nombre, instalador: false };
 }
 
 // --- Prácticas y progreso -----------------------------------------------------------
