@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-10-31 17:17 · `main` en `2ae1bca`
+Último commit: 2026-11-01 21:25 · `main` en `d3d80cb`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
