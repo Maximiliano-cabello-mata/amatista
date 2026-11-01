@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-11-01 21:25 · `main` en `d3d80cb`
+Último commit: 2026-11-01 15:36 · `main` en `1844dd5`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -18,12 +18,13 @@
 | **v3.2.0** | Laboratorio 3D | Visor GLB en las lecciones, escena de ejemplo y lección 12 (exportar y comprobar). | ▱▱▱▱▱▱▱▱▱▱ 0/3 |
 | **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▰▰▱▱▱▱▱▱▱ 30/101 |
 | **v3.4.0** | Especialidades y tutor | Primera rama del nivel 5 y tutor IA dentro de las lecciones. | ▱▱▱▱▱▱▱▱▱▱ 0/17 |
+| **v3.5.0** | Centro 3D con G7B | Prácticas y recomendaciones que se adaptan al equipo con datos de G7B (repo amatista-g7b-etl); primera prueba en la estadía. Propuesta en docs/propuestas/2026-11-01_centro_3d_y_g7b.md. | ▱▱▱▱▱▱▱▱▱▱ 0/10 |
 
 Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-alpha.8` · `v3.0.0-alpha.7` · `v3.0.0-alpha.6` · `v3.0.0-alpha.5` · `v3.0.0-alpha.4` · `v3.0.0-alpha.3` · `v3.0.0-alpha.2` · `v3.0.0-alpha.1` · `v2.2.0-alpha.2` · `v2.2.0-alpha.1` · `v2.0.1` · `v2.0.0` · `v1.0.0` · `v0.1.0`
 
 ## 📌 Kanban
 
-| 📋 Pendiente (52) | 🔨 En progreso (61) | 👀 Revisión (4) | ✅ Hecho (46) |
+| 📋 Pendiente (62) | 🔨 En progreso (61) | 👀 Revisión (4) | ✅ Hecho (46) |
 |---|---|---|---|
 | **T-008** Proteger main (solo cambios por PR)<br><sub>v2.2.0 · repo</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> |
 | **T-023** Respaldo de Oracle y restauración ensayada en pruebas<br><sub>v2.2.0 · db</sub> | **T-028** Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)<br><sub>v2.2.0 · lanzamiento</sub> | **T-024** Publicar el frontend en Cloudflare (Workers) contra la API HTTPS<br><sub>v2.2.0 · pwa</sub> | **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> |
@@ -77,15 +78,16 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 | **T-067** Curso Blender Avanzado (teoría de topología, UV, nodos y rig; prácticas y desbloqueo)<br><sub>v3.4.0 · contenido</sub> | **T-180** Corazón Amatista (amatista.corazon/1): director, andamio por herramienta, señales que no caducan por reloj, perfiles, extensiones, ramas y conformidad, en Python puro<br><sub>v3.3.0 · motor</sub> |   |   |
 | **T-068** Repaso espaciado sincronizado con el servidor (tabla de repasos por alumno)<br><sub>v3.4.0 · db</sub> | **T-181** Add-on 7.1: el guion usa el corazón; adaptador de Blender con señal comprobada cada 0,5 s y «Señálalo otra vez»; historial del andamio por cuenta (en memoria para admin)<br><sub>v3.3.0 · motor</sub> |   |   |
 | **T-012** Tutor IA con Ollama dentro de las lecciones<br><sub>v3.4.0 · ia</sub> | **T-183** Adaptador del corazón dentro de Maya o 3ds Max (perfil en borrador ya listo) y que pase conformidad.revisar_adaptador<br><sub>v3.4.0 · motor</sub> |   |   |
-|   | **T-184** Sentry opcional en el backend (SENTRY_DSN) y en la PWA (VITE_SENTRY_DSN), sin datos personales y sin cargar el SDK si no hay DSN<br><sub>v3.3.0 · repo</sub> |   |   |
-|   | **T-185** Crear en Sentry los proyectos amatista-backend (FastAPI) y amatista-web (React), poner los DSN en la VM y en Cloudflare y conectar GitHub<br><sub>v3.3.0 · lanzamiento</sub> |   |   |
-|   | **T-160** PWA para escuelas con pocos datos: sincronización en una petición comprimida, reintentos, envío al salir y «Ahorro de datos»<br><sub>v3.3.0 · pwa</sub> |   |   |
-|   | **T-161** Desplegar el backend con /api/sincronizar y probar la PWA en una escuela con datos móviles<br><sub>v3.3.0 · lanzamiento</sub> |   |   |
-|   | **T-097** Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)<br><sub>v3.4.0 · pwa</sub> |   |   |
-|   | **T-083** Examen final (jefe) calificado por el servidor: las respuestas dejan de viajar en el JavaScript de la PWA<br><sub>v3.4.0 · api</sub> |   |   |
-|   | **T-082** Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages<br><sub>v3.4.0 · pwa</sub> |   |   |
-|   | **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)<br><sub>v3.4.0 · db</sub> |   |   |
-|   | **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)<br><sub>v3.4.0 · contenido</sub> |   |   |
+| **T-186** Protocolo de la estadía: pregunta, hipótesis, diseño con y sin perfil, consentimiento y permiso del laboratorio<br><sub>v3.5.0 · lanzamiento</sub> | **T-184** Sentry opcional en el backend (SENTRY_DSN) y en la PWA (VITE_SENTRY_DSN), sin datos personales y sin cargar el SDK si no hay DSN<br><sub>v3.3.0 · repo</sub> |   |   |
+| **T-187** Aviso de privacidad y consentimiento para mediciones del equipo y eventos de práctica<br><sub>v3.5.0 · lanzamiento</sub> | **T-185** Crear en Sentry los proyectos amatista-backend (FastAPI) y amatista-web (React), poner los DSN en la VM y en Cloudflare y conectar GitHub<br><sub>v3.3.0 · lanzamiento</sub> |   |   |
+| **T-188** Add-on: detectar el nivel del equipo (N0 a N4) y aplicar un perfil de perfiles.json, reversible y preguntando la primera vez<br><sub>v3.5.0 · blender</sub> | **T-160** PWA para escuelas con pocos datos: sincronización en una petición comprimida, reintentos, envío al salir y «Ahorro de datos»<br><sub>v3.3.0 · pwa</sub> |   |   |
+| **T-189** Extensión observadora del Corazón: registrar eventos de la práctica (paso, señal, tiempo, pistas) con consentimiento, usando la cola del add-on<br><sub>v3.5.0 · motor</sub> | **T-161** Desplegar el backend con /api/sincronizar y probar la PWA en una escuela con datos móviles<br><sub>v3.3.0 · lanzamiento</sub> |   |   |
+| **T-190** API: recibir los eventos de práctica y exportar a G7B solo agregados de 5 equipos o más, sin datos personales<br><sub>v3.5.0 · api</sub> | **T-097** Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)<br><sub>v3.4.0 · pwa</sub> |   |   |
+| **T-191** Elegir la práctica del experimento de la estadía, que funcione de N1 a N4, con su variante con y sin perfil<br><sub>v3.5.0 · contenido</sub> | **T-083** Examen final (jefe) calificado por el servidor: las respuestas dejan de viajar en el JavaScript de la PWA<br><sub>v3.4.0 · api</sub> |   |   |
+| **T-192** Recomendaciones en Mi panel: versión de Blender, perfil y prácticas según el equipo y el avance<br><sub>v3.5.0 · pwa</sub> | **T-082** Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages<br><sub>v3.4.0 · pwa</sub> |   |   |
+| **T-193** Biblioteca de texturas CC0 curadas (Poly Haven, ambientCG) por nivel de equipo (1K, 2K o 4K) con su lección<br><sub>v3.5.0 · contenido</sub> | **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)<br><sub>v3.4.0 · db</sub> |   |   |
+| **T-194** Revisar la política de marca de la Blender Foundation y usar «Amatista para Blender» en materiales nuevos<br><sub>v3.5.0 · repo</sub> | **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)<br><sub>v3.4.0 · contenido</sub> |   |   |
+| **T-195** Entornos de A-Frame con perfiles por dispositivo medidos con la sonda web de G7B<br><sub>v3.5.0 · pwa</sub> |   |   |   |
 
 ## 📚 Contenido
 
@@ -527,3 +529,27 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 - [ ] **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos) · _en-progreso_ — commits: `53dec44` (2026-10-03)
   - ⏸️ Espera: Decisión pendiente (propuesta: web y videojuegos); el commit que la movió solo la documentó
 - [ ] **T-012** Tutor IA con Ollama dentro de las lecciones · _pendiente_
+
+### v3.5.0 · Centro 3D con G7B
+
+- [ ] **T-186** Protocolo de la estadía: pregunta, hipótesis, diseño con y sin perfil, consentimiento y permiso del laboratorio · _pendiente_
+  - ⏸️ Espera: Lo hace el usuario con su universidad (reglamento de estadías y asesor)
+  - 🎯 Listo cuando: Protocolo aprobado por la universidad; propuesta base en amatista-g7b-etl/docs/estadia/2026-11-01_propuesta_estadia.md
+- [ ] **T-187** Aviso de privacidad y consentimiento para mediciones del equipo y eventos de práctica · _pendiente_
+  - 🎯 Listo cuando: Aviso publicado; el consentimiento se puede retirar; sin él no se mide ni se envía nada
+- [ ] **T-188** Add-on: detectar el nivel del equipo (N0 a N4) y aplicar un perfil de perfiles.json, reversible y preguntando la primera vez · _pendiente_
+  - 🎯 Listo cuando: En Blender con ventana: el add-on muestra el nivel, aplica el perfil a la escena de la práctica y lo revierte con un clic; niveles y perfiles según las fichas técnicas de G7B
+- [ ] **T-189** Extensión observadora del Corazón: registrar eventos de la práctica (paso, señal, tiempo, pistas) con consentimiento, usando la cola del add-on · _pendiente_
+  - 🎯 Listo cuando: Contrato g7b.evento/1; sin consentimiento no se registra nada; pruebas del corazón en verde
+- [ ] **T-190** API: recibir los eventos de práctica y exportar a G7B solo agregados de 5 equipos o más, sin datos personales · _pendiente_
+  - 🎯 Listo cuando: Exportación probada con datos de prueba; ningún campo identifica a una persona
+- [ ] **T-191** Elegir la práctica del experimento de la estadía, que funcione de N1 a N4, con su variante con y sin perfil · _pendiente_
+  - 🎯 Listo cuando: La práctica corre en un equipo de cada nivel disponible en el laboratorio
+- [ ] **T-192** Recomendaciones en Mi panel: versión de Blender, perfil y prácticas según el equipo y el avance · _pendiente_
+  - 🎯 Listo cuando: Las recomendaciones citan la evidencia del cubo de G7B (celdas con 5 o más mediciones)
+- [ ] **T-193** Biblioteca de texturas CC0 curadas (Poly Haven, ambientCG) por nivel de equipo (1K, 2K o 4K) con su lección · _pendiente_
+  - 🎯 Listo cuando: Cada textura con su fuente y licencia; la resolución ofrecida coincide con el nivel del equipo
+- [ ] **T-194** Revisar la política de marca de la Blender Foundation y usar «Amatista para Blender» en materiales nuevos · _pendiente_
+  - 🎯 Listo cuando: Decisión documentada; materiales nuevos sin «Blender Amatista» salvo autorización
+- [ ] **T-195** Entornos de A-Frame con perfiles por dispositivo medidos con la sonda web de G7B · _pendiente_
+  - 🎯 Listo cuando: Un entorno ajusta su calidad según el perfil del dispositivo; probado en celulares reales
