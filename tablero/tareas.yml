@@ -44,6 +44,9 @@ roadmap:
   - version: v3.4.0
     nombre: Especialidades y tutor
     objetivo: Primera rama del nivel 5 y tutor IA dentro de las lecciones.
+  - version: v3.5.0
+    nombre: Centro 3D con G7B
+    objetivo: Prácticas y recomendaciones que se adaptan al equipo con datos de G7B (repo amatista-g7b-etl); primera prueba en la estadía. Propuesta en docs/propuestas/2026-11-01_centro_3d_y_g7b.md.
 
 tareas:
   # --- v2.2.0 · Piloto: lo que quedó abierto de la v2 (mismos ids) ----------
@@ -1090,3 +1093,64 @@ tareas:
     titulo: Tutor IA con Ollama dentro de las lecciones
     version: v3.4.0
     area: ia
+
+  # --- v3.5.0 · Centro 3D con G7B (propuesta del 2026-11-01) ----------------
+  # Amatista y G7B son proyectos separados que se alimentan: G7B mide y decide;
+  # Amatista enseña, recomienda y guarda los datos personales (nunca salen hacia G7B).
+  - id: T-186
+    titulo: "Protocolo de la estadía: pregunta, hipótesis, diseño con y sin perfil, consentimiento y permiso del laboratorio"
+    version: v3.5.0
+    area: lanzamiento
+    aceptacion: "Protocolo aprobado por la universidad; propuesta base en amatista-g7b-etl/docs/estadia/2026-11-01_propuesta_estadia.md"
+    bloqueo: "Lo hace el usuario con su universidad (reglamento de estadías y asesor)"
+  - id: T-187
+    titulo: "Aviso de privacidad y consentimiento para mediciones del equipo y eventos de práctica"
+    version: v3.5.0
+    area: lanzamiento
+    aceptacion: "Aviso publicado; el consentimiento se puede retirar; sin él no se mide ni se envía nada"
+  - id: T-188
+    titulo: "Add-on: detectar el nivel del equipo (N0 a N4) y aplicar un perfil de perfiles.json, reversible y preguntando la primera vez"
+    version: v3.5.0
+    area: blender
+    depende_de: [T-187]
+    aceptacion: "En Blender con ventana: el add-on muestra el nivel, aplica el perfil a la escena de la práctica y lo revierte con un clic; niveles y perfiles según las fichas técnicas de G7B"
+  - id: T-189
+    titulo: "Extensión observadora del Corazón: registrar eventos de la práctica (paso, señal, tiempo, pistas) con consentimiento, usando la cola del add-on"
+    version: v3.5.0
+    area: motor
+    depende_de: [T-187]
+    aceptacion: "Contrato g7b.evento/1; sin consentimiento no se registra nada; pruebas del corazón en verde"
+  - id: T-190
+    titulo: "API: recibir los eventos de práctica y exportar a G7B solo agregados de 5 equipos o más, sin datos personales"
+    version: v3.5.0
+    area: api
+    depende_de: [T-189]
+    aceptacion: "Exportación probada con datos de prueba; ningún campo identifica a una persona"
+  - id: T-191
+    titulo: "Elegir la práctica del experimento de la estadía, que funcione de N1 a N4, con su variante con y sin perfil"
+    version: v3.5.0
+    area: contenido
+    depende_de: [T-186]
+    aceptacion: "La práctica corre en un equipo de cada nivel disponible en el laboratorio"
+  - id: T-192
+    titulo: "Recomendaciones en Mi panel: versión de Blender, perfil y prácticas según el equipo y el avance"
+    version: v3.5.0
+    area: pwa
+    depende_de: [T-188]
+    aceptacion: "Las recomendaciones citan la evidencia del cubo de G7B (celdas con 5 o más mediciones)"
+  - id: T-193
+    titulo: "Biblioteca de texturas CC0 curadas (Poly Haven, ambientCG) por nivel de equipo (1K, 2K o 4K) con su lección"
+    version: v3.5.0
+    area: contenido
+    depende_de: [T-192]
+    aceptacion: "Cada textura con su fuente y licencia; la resolución ofrecida coincide con el nivel del equipo"
+  - id: T-194
+    titulo: "Revisar la política de marca de la Blender Foundation y usar «Amatista para Blender» en materiales nuevos"
+    version: v3.5.0
+    area: repo
+    aceptacion: "Decisión documentada; materiales nuevos sin «Blender Amatista» salvo autorización"
+  - id: T-195
+    titulo: "Entornos de A-Frame con perfiles por dispositivo medidos con la sonda web de G7B"
+    version: v3.5.0
+    area: pwa
+    aceptacion: "Un entorno ajusta su calidad según el perfil del dispositivo; probado en celulares reales"
