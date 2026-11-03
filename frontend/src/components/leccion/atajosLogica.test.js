@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { claveAtajo, claveDeEvento, practicables } from './atajos';
+import { claveAtajo, claveDeEvento, practicables } from './atajosLogica';
 
 describe('atajos de teclado', () => {
   it('normaliza las teclas del bloque y del teclado igual', () => {

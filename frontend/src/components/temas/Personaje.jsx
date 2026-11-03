@@ -10,7 +10,7 @@
 // modo ligero y con «reducir movimiento».
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { SpriteMascota } from './Mascota';
-import { ACCIONES_SOLAS, accionAlTocar, DURACION, mirada, REACCION } from './personaje';
+import { ACCIONES_SOLAS, accionAlTocar, DURACION, mirada, REACCION } from './personajeLogica';
 import { EVENTO_MASCOTA } from './temas';
 
 function movimientoReducido() {

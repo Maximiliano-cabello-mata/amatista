@@ -45,7 +45,7 @@ Todo de una vez: ver [«Tu primer día», paso 6](README.md#6-correr-todas-las-c
 | `src/modulos/practica.test.js` | La práctica de Blender que cierra cada módulo |
 | `src/blender/logica.test.js` | Conexión con Blender; usa `practices/archivo/v2/mesa.json` (los `steps` del bloque deben coincidir con los objetivos) |
 | `src/components/leccion/interactivos/logica.test.js` | Bloques interactivos (quiz, ordenar, emparejar…) con los módulos reales |
-| `src/components/leccion/atajos.test.js` | Atajos de teclado practicables |
+| `src/components/leccion/atajosLogica.test.js` | Atajos de teclado practicables |
 | `src/components/panel/datos.test.js`, `retos.test.js` | Datos y retos del panel del alumno |
 | `src/components/admin/logica.test.js` | Lógica del panel de administración (consultas, armado de lecciones) |
 | `src/components/graficas/graficas.test.js` | Escalas de las gráficas SVG |
