@@ -1,9 +1,11 @@
 # Corte `hack4edu`: estado comparativo (`amatista` + `amatista-g7b-etl`) y plan hasta el viernes
 
+> **Centro de Hack4Edu:** [docs/hack4edu/](hack4edu/README.md) (requisitos, evidencia de antes y ahora, kit del video). Las cifras de este documento se volvieron a comprobar el 3 de noviembre por la noche; las rutas de dos comandos se corrigieron.
+
 - **Fecha del corte:** Martes 3 de noviembre de 2026
 - **Tag oficial en Git:** `hack4edu`
 - **Repositorios auditados y comparados:**
-  - Plataforma y motor educativo: [`Maximiliano-cabello-mata/amatista`](https://github.com/Maximiliano-cabello-mata/amatista) (rama `claude/entender-y-verificar`)
+  - Plataforma y motor educativo: [`Maximiliano-cabello-mata/amatista`](https://github.com/Maximiliano-cabello-mata/amatista) (los commits del corte solo existían en la etiqueta `hack4edu`; desde el 3 de noviembre también están en `claude/peaceful-tesla-ctqaps`, PR hacia `main`)
   - Motor de datos, telemetría y perfiles: [`Maximiliano-cabello-mata/amatista-g7b-etl`](https://github.com/Maximiliano-cabello-mata/amatista-g7b-etl) (`main` + 9 ramas activas)
 - **Horizonte del bloque `hack4edu`:** Martes 3 al Viernes 6 de noviembre de 2026
 
@@ -23,8 +25,8 @@ Este documento establece una **división clara y comprobable** entre:
 | **Frontend (PWA + Facetas v4.4 + Portada viva)** | `cd frontend && npm run lint && npm test && npm run build` | **0 errores** de lint · **46 suites / 390 pruebas pasan** · Build PWA (87 recursos precacheados) y auditoría `revisar-publicacion.mjs` en verde |
 | **Backend (FastAPI + Seguridad + Sincronización)** | `cd backend && python -m pytest -q` | **446 pruebas pasan** (`requirements.lock` congelado y reproducible) |
 | **Motor 3D, Corazón 1.0 y Tablero** | `python -m pytest -q tablero engine/tests` | **594 pruebas pasan** en Python puro (sin requerir Blender abierto) |
-| **Prácticas de Blender (58 ejercicios)** | `python -X utf8 herramientas/practicas.py probar` | **58 de 58 prácticas** pasan con su ejemplo resuelto (`99/100` alumnos simulados aprueban) |
-| **Catálogo educativo (15 módulos)** | `python herramientas/contenido.py validar` | **15 de 15 módulos publicados** cumplen la Fórmula Amatista (5 lecciones + bloque interactivo + jefe) |
+| **Prácticas de Blender (58 ejercicios)** | `python -X utf8 engine/herramientas/practicas.py probar` | **58 de 58 prácticas** pasan con su ejemplo resuelto (`99/100` alumnos simulados aprueban) |
+| **Catálogo educativo (15 módulos)** | `cd backend && python herramientas/contenido.py validar` | **15 de 15 módulos publicados** cumplen la Fórmula Amatista (5 lecciones + bloque interactivo + jefe) |
 
 ### 1.2 Qué incluye exactamente `amatista` en este corte
 

@@ -4,6 +4,8 @@
 
 > **Despliegue verificado con registros del 23 de octubre de 2026; código en `main` actualizado al 2 de noviembre de 2026 (`99d6ea2`).** La PWA pública utiliza Cloudflare Workers; la API funciona en Oracle Cloud con Caddy y Oracle Database. El dominio anterior `.me` es histórico. SMTP, las migraciones `007`–`013` en producción y las pruebas con ventana en Blender siguen pendientes.
 
+> **Hack4Edu 2026:** la etiqueta `hack4edu` separa lo que ya teníamos de lo construido durante la competencia. Requisitos, evidencia comprobable y el kit del video: **[docs/hack4edu/](docs/hack4edu/README.md)**.
+
 **Plataforma educativa para aprender creación 3D con Blender y llevarla a la web (GLB, A-Frame, WebXR), que sigue funcionando sin conexión.**
 
 El alumno avanza por cursos y módulos en una PWA. Cada módulo de Blender combina exploración interactiva, teoría visual con fichas de herramientas y un **proyecto práctico en Blender** que **Amatista Engine** (**Corazón Amatista 1.0** + **Amatista Motor 7.1 «Guion»**) evalúa y acompaña paso a paso dentro de Blender mediante un add-on. El progreso se guarda primero en el dispositivo y se sincroniza en una sola petición comprimida con el servidor (FastAPI + Oracle) cuando hay Internet.
