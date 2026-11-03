@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>Amatista · escenas del video Hack4Edu</title>
+<!--
+  Escenas gráficas del video de Hack4Edu, a 1920×1080, con la identidad de Amatista (Facetas v4.4).
+  Abrir con ?e=1 … ?e=9 (o #e1 … #e9) y agregar &play para que corran las animaciones (generar.mjs lo hace solo).
+  Las cifras de cada escena salen de pruebas corridas el 3 de noviembre de 2026 (ver ../GUION.md).
+-->
+<style>
+@font-face { font-family: Outfit; src: url(fuentes/outfit.woff2) format('woff2'); font-weight: 100 900; }
+@font-face { font-family: Mono; src: url(fuentes/jetbrains-mono.woff2) format('woff2'); font-weight: 100 800; }
+:root {
+  --fondo: #121212; --superficie: #1e1e1e; --texto: #e9e6ee; --suave: rgb(255 255 255 / .62);
+  --amatista: #9b59b6; --amatista-claro: #c39bd3; --neon: #00e5ff; --blender: #f5792a; --exito: #6ee7b7;
+  --gema: linear-gradient(120deg, #c39bd3 0%, #9b59b6 28%, #00e5ff 62%, #f5792a 100%);
+  --salida: cubic-bezier(.2,.8,.2,1); --rebote: cubic-bezier(.2,.9,.3,1.3);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--fondo); }
+body { width: 1920px; height: 1080px; overflow: hidden; color: var(--texto); position: relative;
+  font-family: Outfit, system-ui, sans-serif; }
+section { position: absolute; inset: 0; display: none; padding: 110px 150px; z-index: 1; }
+section.activa { display: block; }
+
+/* Fondo facetado, como la PWA */
+.fondo { position: absolute; inset: 0; z-index: 0; overflow: hidden;
+  background: radial-gradient(70% 90% at 85% 10%, rgb(155 89 182 / .32), transparent 60%),
+              radial-gradient(60% 70% at 10% 100%, rgb(0 229 255 / .10), transparent 60%), var(--fondo); }
+.fondo svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .5; }
+.hud { position: absolute; left: 150px; right: 150px; bottom: 54px; display: flex; justify-content: space-between;
+  font: 500 18px Mono; letter-spacing: .32em; color: rgb(255 255 255 / .42); text-transform: uppercase; z-index: 2; }
+.hud b { color: var(--neon); font-weight: 600; }
+
+/* Animación: todo empieza en pausa y arranca con body.play */
+.a { opacity: 0; animation: var(--n, sube) .9s var(--salida) both; animation-delay: var(--d, 0s);
+  animation-play-state: paused; }
+body.play .a { animation-play-state: running; }
+@keyframes sube { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+@keyframes entra { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: none; } }
+@keyframes zoom { from { opacity: 0; transform: scale(.6) rotate(-12deg); } to { opacity: 1; transform: none; } }
+@keyframes aparece { from { opacity: 0; } to { opacity: 1; } }
+@keyframes traza { from { stroke-dashoffset: 1; opacity: 1; } to { stroke-dashoffset: 0; opacity: 1; } }
+@keyframes flota { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+@keyframes brillo { 0%, 100% { filter: drop-shadow(0 0 18px rgb(155 89 182 / .55)); } 50% { filter: drop-shadow(0 0 46px rgb(0 229 255 / .55)); } }
+@keyframes cuenta { from { --v: 0; } }
+
+.etiqueta { font: 600 22px Mono; letter-spacing: .42em; text-transform: uppercase; color: var(--neon); }
+h1 { font-size: 132px; font-weight: 800; letter-spacing: -.02em; line-height: 1; }
+h2 { font-size: 84px; font-weight: 750; letter-spacing: -.015em; line-height: 1.05; }
+h3 { font-size: 40px; font-weight: 700; }
+.gema { background: var(--gema); -webkit-background-clip: text; background-clip: text; color: transparent; }
+p.lead { font-size: 38px; line-height: 1.4; color: var(--suave); max-width: 1400px; }
+.chip { display: inline-flex; align-items: center; gap: 14px; padding: 14px 26px; font: 600 24px Mono; letter-spacing: .2em;
+  text-transform: uppercase; color: #0d0d0f; background: var(--neon); clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px); }
+.tarjeta { background: rgb(30 30 34 / .86); border: 1px solid rgb(255 255 255 / .12); padding: 34px 36px;
+  clip-path: polygon(22px 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%, 0 22px); }
+.tarjeta .n { font-size: 92px; font-weight: 800; line-height: 1; }
+.tarjeta .t { font-size: 28px; color: var(--suave); margin-top: 12px; line-height: 1.3; }
+.rejilla { display: grid; gap: 28px; }
+.mono { font-family: Mono; }
+
+/* E1 · título */
+#e1 { display: none; place-items: center; text-align: center; }
+#e1.activa { display: grid; }
+#e1 .logo { width: 260px; height: 260px; margin: 0 auto 40px; animation: zoom 1.2s var(--rebote) both, brillo 4s ease-in-out 1.2s infinite;
+  animation-play-state: paused; }
+body.play #e1 .logo { animation-play-state: running; }
+#e1 h1 { font-size: 170px; letter-spacing: .14em; }
+
+/* E2 · problema */
+.lista { list-style: none; margin-top: 60px; display: grid; gap: 34px; }
+.lista li { display: flex; gap: 30px; align-items: flex-start; font-size: 42px; line-height: 1.3; max-width: 1500px; }
+.lista li::before { content: ""; flex: none; width: 26px; height: 26px; margin-top: 14px; background: var(--amatista-claro);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.lista li b { color: #fff; }
+
+/* E4, E5, E7 · diagramas */
+.nodo { position: absolute; width: 330px; padding: 26px 28px; text-align: center; }
+.nodo h3 { font-size: 34px; }
+.nodo .t { font-size: 24px; }
+.nodo img { width: 64px; height: 64px; margin-bottom: 10px; }
+svg.lineas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+svg.lineas path { fill: none; stroke-width: 4; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0;
+  animation: traza 1.1s ease-out both; animation-delay: var(--d); animation-play-state: paused; }
+body.play svg.lineas path { animation-play-state: running; }
+
+/* E6 · niveles */
+.niveles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; margin-top: 50px; }
+.nivel { text-align: left; }
+.nivel .n { font: 800 64px Mono; }
+.nivel h3 { font-size: 30px; margin-top: 6px; }
+.nivel .t { font-size: 23px; }
+.nivel.marcado { outline: 4px solid var(--neon); outline-offset: -4px; background: rgb(0 229 255 / .10); }
+.plan { margin-top: 44px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px; }
+.plan code { display: block; font: 500 25px/1.6 Mono; color: #d7d0e4; white-space: pre; }
+.plan code i { color: var(--neon); font-style: normal; }
+.boton { display: inline-block; margin-top: 22px; padding: 16px 26px; background: var(--neon); color: #0d0d0f; font: 700 26px Outfit; }
+.boton.sec { background: transparent; color: var(--texto); border: 2px solid rgb(255 255 255 / .4); margin-left: 14px; }
+
+/* E8 · evidencia */
+.linea-tiempo { margin-top: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.tramo { padding: 30px 34px; border-top: 6px solid; }
+.tramo.antes { border-color: var(--amatista); background: rgb(155 89 182 / .12); }
+.tramo.ahora { border-color: var(--neon); background: rgb(0 229 255 / .08); }
+.tramo .t { font-size: 26px; color: var(--suave); line-height: 1.4; margin-top: 10px; }
+.tramo h3 { font-size: 34px; }
+</style>
+</head>
+<body>
+<div class="fondo">
+  <svg viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true">
+    <g fill="none" stroke="rgb(195 155 211 / .18)" stroke-width="1.4">
+      <path d="M1180 0 L1520 260 L1920 120 M1520 260 L1640 640 L1920 560 M1640 640 L1360 1080 M1520 260 L1180 520 L1640 640 M1180 520 L1360 1080 M0 760 L320 1080 M0 900 L520 820 L320 1080"/>
+    </g>
+    <g fill="rgb(155 89 182 / .08)"><path d="M1520 260 L1640 640 L1180 520 Z"/><path d="M0 900 L520 820 L320 1080 Z"/></g>
+  </svg>
+</div>
+
+<!-- E1 · Título -->
+<section id="e1">
+  <div>
+    <img class="logo" src="img/amatista.svg" alt="">
+    <h1 class="a" style="--d:.5s">AMATISTA</h1>
+    <p class="lead a" style="--d:1s; margin: 34px auto 0; font-size: 46px; color: var(--texto)">Aprende 3D paso a paso, <span class="gema" style="font-weight:700">en la computadora que tienes</span></p>
+    <div class="a" style="--d:1.6s; margin-top: 54px"><span class="chip">Hack4Edu 2026</span></div>
+  </div>
+</section>
+
+<!-- E2 · El problema -->
+<section id="e2">
+  <div class="etiqueta a">El problema</div>
+  <h2 class="a" style="--d:.2s; margin-top: 24px">Aprender 3D pide <span class="gema">cada vez más computadora</span></h2>
+  <ul class="lista">
+    <li class="a" style="--d:1s; --n:entra"><span>Desde la versión 4.0, <b>Blender exige OpenGL 4.3</b>: muchas gráficas integradas de laptops y laboratorios escolares ya no lo abren.</span></li>
+    <li class="a" style="--d:2s; --n:entra"><span>Los cursos de 3D suelen estar <b>en inglés</b> y dan por hecho <b>buen equipo y buena conexión</b>.</span></li>
+    <li class="a" style="--d:3s; --n:entra"><span>Nadie te dice <b>qué versión y qué ajustes</b> usar en <b>tu</b> equipo: lo descubres cuando ya no avanza.</span></li>
+  </ul>
+</section>
+
+<!-- E3 · La solución -->
+<section id="e3">
+  <div class="etiqueta a">La solución</div>
+  <h2 class="a" style="--d:.2s; margin-top: 24px"><span class="gema">Amatista</span> enseña 3D paso a paso, en español</h2>
+  <p class="lead a" style="--d:.6s; margin-top: 24px">Una plataforma web que funciona sin conexión, conectada con Blender y con A‑Frame para llevar el 3D a la web y la realidad virtual.</p>
+  <div class="rejilla" style="grid-template-columns: repeat(4, 1fr); margin-top: 64px">
+    <div class="tarjeta a" style="--d:1.2s"><div class="n gema">15</div><div class="t">módulos publicados: 9 de Blender y 6 de A‑Frame</div></div>
+    <div class="tarjeta a" style="--d:1.5s"><div class="n" style="color:var(--blender)">58</div><div class="t">prácticas en Blender que se revisan solas</div></div>
+    <div class="tarjeta a" style="--d:1.8s"><div class="n" style="color:var(--neon)">0</div><div class="t">conexión necesaria para estudiar: el avance se guarda y se sincroniza después</div></div>
+    <div class="tarjeta a" style="--d:2.1s"><div class="n" style="color:var(--exito)">≤10</div><div class="t">minutos por lección, cada una con actividades y un «jefe final»</div></div>
+  </div>
+</section>
+
+<!-- E4 · Blender conectado -->
+<section id="e4">
+  <div class="etiqueta a">Blender conectado</div>
+  <h2 class="a" style="--d:.2s; margin-top: 24px">La plataforma <span class="gema">te acompaña dentro de Blender</span></h2>
+  <svg class="lineas" viewBox="0 0 1920 1080">
+    <defs><linearGradient id="g4" gradientUnits="userSpaceOnUse" x1="560" x2="1370" y1="0" y2="0"><stop offset="0" stop-color="#9b59b6"/><stop offset="1" stop-color="#00e5ff"/></linearGradient></defs>
+    <path pathLength="1" style="--d:1.4s" stroke="url(#g4)" d="M560 560 L 830 560"/>
+    <path pathLength="1" style="--d:2.2s" stroke="url(#g4)" d="M1160 560 L 1370 560"/>
+  </svg>
+  <div class="nodo tarjeta a" style="--d:.9s; left:230px; top:420px"><img src="img/amatista.svg" alt=""><h3>Lección en la PWA</h3><div class="t">«Ahora en Blender»: la práctica se abre con un clic</div></div>
+  <div class="nodo tarjeta a" style="--d:1.7s; left:830px; top:420px"><img src="img/blender.svg" alt=""><h3>Amatista Motor</h3><div class="t">El add-on revisa tu escena cada 0.5 s y te da pistas</div></div>
+  <div class="nodo tarjeta a" style="--d:2.5s; left:1370px; top:420px"><h3 class="mono" style="font-size:30px; color:var(--neon)">corazón/1</h3><div class="t">Director pedagógico: decide qué ves y qué sigue</div></div>
+  <div class="rejilla a" style="--d:3.2s; position:absolute; left:150px; right:150px; bottom:120px; grid-template-columns: repeat(3,1fr)">
+    <div class="mono" style="font-size:30px"><b style="color:var(--blender); font-size:48px">43</b> validadores</div>
+    <div class="mono" style="font-size:30px"><b style="color:var(--blender); font-size:48px">33</b> habilidades medidas</div>
+    <div class="mono" style="font-size:30px"><b style="color:var(--blender); font-size:48px">58/58</b> prácticas con ejemplo resuelto</div>
+  </div>
+</section>
+
+<!-- E5 · G7B -->
+<section id="e5">
+  <div class="etiqueta a">G7B · el motor de datos</div>
+  <h2 class="a" style="--d:.2s; margin-top: 24px">Mide equipos reales y <span class="gema">reúne el conocimiento del 3D libre</span></h2>
+  <svg class="lineas" viewBox="0 0 1920 1080">
+    <defs><linearGradient id="g5" gradientUnits="userSpaceOnUse" x1="500" x2="1560" y1="0" y2="0"><stop offset="0" stop-color="#c39bd3"/><stop offset="1" stop-color="#00e5ff"/></linearGradient></defs>
+    <path pathLength="1" style="--d:1.3s" stroke="url(#g5)" d="M500 520 L 640 520"/>
+    <path pathLength="1" style="--d:1.9s" stroke="url(#g5)" d="M970 520 L 1110 520"/>
+    <path pathLength="1" style="--d:2.5s" stroke="url(#g5)" d="M1440 520 L 1560 520"/>
+    <path pathLength="1" style="--d:3.3s" stroke="url(#g5)" d="M500 820 L 640 820"/>
+    <path pathLength="1" style="--d:3.9s" stroke="url(#g5)" d="M970 820 C 1080 820, 1080 820, 1110 820"/>
+  </svg>
+  <div class="nodo tarjeta a" style="--d:.9s; left:170px; top:430px"><h3>Geodar Radar</h3><div class="t">31 fuentes: foros, manuales, texturas CC0, herramientas libres</div></div>
+  <div class="nodo tarjeta a" style="--d:1.5s; left:640px; top:430px"><h3>Lago en Azure</h3><div class="t">Todo entra crudo, con fuente y licencia</div></div>
+  <div class="nodo tarjeta a" style="--d:2.1s; left:1110px; top:430px"><h3>Embudo</h3><div class="t">5 filtros de calidad, cada rechazo con su motivo</div></div>
+  <div class="nodo tarjeta a" style="--d:2.7s; left:1560px; top:430px; width:240px"><h3>MongoDB</h3><div class="t"><b style="color:#fff; font-size:34px">987</b> documentos</div></div>
+  <div class="nodo tarjeta a" style="--d:3.1s; left:170px; top:730px"><h3>Sonda</h3><div class="t">Mide Blender en cualquier equipo: vista 3D, edición, render</div></div>
+  <div class="nodo tarjeta a" style="--d:3.7s; left:640px; top:730px"><h3>Telemetría</h3><div class="t">Sonda + Blender Open Data (CC0) con controles</div></div>
+  <div class="nodo tarjeta a" style="--d:4.3s; left:1110px; top:730px; width:690px; text-align:left"><h3>Cubo DuckDB</h3><div class="t"><b style="color:#fff; font-size:34px">3,003</b> mediciones · versionado y verificado en Azure</div></div>
+</section>
+
+<!-- E6 · Geoda -->
+<section id="e6">
+  <div class="etiqueta a">Geoda · el kernel</div>
+  <h2 class="a" style="--d:.2s; margin-top: 24px">Adapta Blender <span class="gema">al equipo de cada estudiante</span></h2>
+  <div class="niveles">
+    <div class="nivel tarjeta a" style="--d:.8s"><div class="n" style="color:var(--amatista-claro)">N0</div><h3>Celular o Chromebook</h3><div class="t">Editor web y A‑Frame</div></div>
+    <div class="nivel tarjeta a" style="--d:1.0s"><div class="n" style="color:var(--amatista-claro)">N1</div><h3>Sin OpenGL 4.3 o &lt; 8 GB</h3><div class="t">Blender 3.6 LTS · perfil mínimo</div></div>
+    <div class="nivel tarjeta a marcado" style="--d:1.2s"><div class="n" style="color:var(--neon)">N2</div><h3>Gráfica integrada</h3><div class="t">Blender actual · perfil ligero</div></div>
+    <div class="nivel tarjeta a" style="--d:1.4s"><div class="n" style="color:var(--amatista-claro)">N3</div><h3>Dedicada 4–8 GB</h3><div class="t">EEVEE fluido</div></div>
+    <div class="nivel tarjeta a" style="--d:1.6s"><div class="n" style="color:var(--amatista-claro)">N4</div><h3>Dedicada ≥ 12 GB</h3><div class="t">Cycles en GPU</div></div>
+  </div>
+  <div class="plan">
+    <div class="tarjeta a" style="--d:2.4s">
+      <code>scene.render.use_simplify          <i>→ True</i>
+scene.render.simplify_subdivision  <i>→ 1</i>
+scene.render.resolution_percentage <i>→ 75</i>
+scene.eevee.taa_render_samples     <i>→ 16</i></code>
+    </div>
+    <div class="tarjeta a" style="--d:3s">
+      <div style="font-size:30px; line-height:1.35">Tu equipo es <b style="color:var(--neon)">N2</b>. Te recomendamos <b>Blender 4.5</b> con el perfil <b>ligero</b>.</div>
+      <div><span class="boton">Ajustar a mi equipo</span><span class="boton sec">Deshacer</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- E7 · El ciclo -->
+<section id="e7">
+  <div class="etiqueta a">Tres proyectos, un ciclo</div>
+  <h2 class="a" style="--d:.2s; margin-top: 24px">Cada estudiante <span class="gema">mejora la experiencia del siguiente</span></h2>
+  <svg class="lineas" viewBox="0 0 1920 1080">
+    <defs><linearGradient id="g7" x1="0" x2="1"><stop offset="0" stop-color="#9b59b6"/><stop offset="1" stop-color="#00e5ff"/></linearGradient></defs>
+    <path pathLength="1" style="--d:1.6s" stroke="url(#g7)" d="M810 500 C 900 420, 1020 420, 1110 500"/>
+    <path pathLength="1" style="--d:2.3s" stroke="url(#g7)" d="M1275 640 C 1275 730, 1200 770, 1125 770"/>
+    <path pathLength="1" style="--d:3s" stroke="url(#g7)" d="M795 770 C 720 770, 645 730, 645 650"/>
+  </svg>
+  <div class="nodo tarjeta a" style="--d:.8s; left:480px; top:420px"><img src="img/amatista.svg" alt=""><h3>Amatista</h3><div class="t">enseña y recomienda</div></div>
+  <div class="nodo tarjeta a" style="--d:1.2s; left:1110px; top:420px"><h3 style="color:var(--neon)">Geoda</h3><div class="t">adapta Blender al equipo y mide cómo le fue</div></div>
+  <div class="nodo tarjeta a" style="--d:1.0s; left:795px; top:690px"><h3 class="gema">G7B</h3><div class="t">mide, aprende y decide</div></div>
+  <p class="a mono" style="--d:3.6s; position:absolute; left:150px; right:150px; bottom:105px; font-size:24px; color:var(--suave)">Los datos personales se quedan en Amatista. A G7B solo llegan mediciones sin identificar o agregados de 5 equipos o más.</p>
+</section>
+
+<!-- E8 · Evidencia -->
+<section id="e8">
+  <div class="etiqueta a">Comprobable</div>
+  <h2 class="a" style="--d:.2s; margin-top: 24px"><span class="gema">1,542</span> pruebas automáticas en verde</h2>
+  <div class="rejilla" style="grid-template-columns: repeat(4, 1fr); margin-top: 50px">
+    <div class="tarjeta a" style="--d:.8s"><div class="n" style="font-size:72px">390</div><div class="t">frontend (PWA)</div></div>
+    <div class="tarjeta a" style="--d:1.0s"><div class="n" style="font-size:72px">446</div><div class="t">backend (API)</div></div>
+    <div class="tarjeta a" style="--d:1.2s"><div class="n" style="font-size:72px">594</div><div class="t">motor, Corazón y tablero</div></div>
+    <div class="tarjeta a" style="--d:1.4s"><div class="n" style="font-size:72px">112</div><div class="t">G7B y Geoda</div></div>
+  </div>
+  <div class="linea-tiempo">
+    <div class="tramo antes a" style="--d:2.2s"><div class="etiqueta" style="color:var(--amatista-claro)">Antes · hasta el 2 de noviembre</div><h3 style="margin-top:12px">Lo que ya teníamos</h3><div class="t">Plataforma con 15 módulos, motor de prácticas, add-on de Blender y la primera integración de datos (987 documentos)</div></div>
+    <div class="tramo ahora a" style="--d:2.8s"><div class="etiqueta">Hack4Edu · 3 al 6 de noviembre</div><h3 style="margin-top:12px">Lo que construimos</h3><div class="t">Telemetría real, cubo de mediciones, Geoda, portada viva y la conexión plataforma ↔ equipo</div></div>
+  </div>
+  <p class="a mono" style="--d:3.4s; margin-top:30px; font-size:24px; color:var(--suave)">git log hack4edu..main  ·  etiqueta «hack4edu» en los dos repositorios</p>
+</section>
+
+<!-- E9 · Cierre -->
+<section id="e9" style="text-align:center; padding-top:200px">
+  <img class="a" src="img/amatista.svg" alt="" style="--n:zoom; width:170px; height:170px">
+  <h2 class="a" style="--d:.5s; margin-top: 30px; font-size:96px">3D para quien aprende<br><span class="gema">con lo que tiene</span></h2>
+  <p class="lead a mono" style="--d:1.4s; margin: 54px auto 0; font-size:30px; line-height:1.8">github.com/Maximiliano-cabello-mata/amatista<br>github.com/Maximiliano-cabello-mata/amatista-g7b-etl</p>
+  <div class="a" style="--d:2s; margin-top: 44px"><span class="chip">Amatista · G7B · Geoda</span></div>
+</section>
+
+<div class="hud"><span><b>◆</b> Amatista · Hack4Edu 2026</span><span id="numero"></span></div>
+
+<script>
+  const consulta = new URLSearchParams(location.search);
+  const id = consulta.get('e') ? 'e' + consulta.get('e') : (location.hash || '#e1').slice(1);
+  const escena = document.getElementById(id) || document.getElementById('e1');
+  escena.classList.add('activa');
+  document.getElementById('numero').textContent = escena.id.replace('e', '0') + ' / 09';
+  const correr = () => document.body.classList.add('play');
+  if (consulta.has('play')) document.fonts.ready.then(() => setTimeout(correr, 300));
+  window.correr = correr;
+</script>
+</body>
+</html>
