@@ -1154,3 +1154,26 @@ tareas:
     version: v3.5.0
     area: pwa
     aceptacion: "Un entorno ajusta su calidad según el perfil del dispositivo; probado en celulares reales"
+  - id: T-196
+    titulo: "Oracle: script 014_g7b.sql con la tabla G7B_CACHE (copia verificada de lo que publica G7B)"
+    version: v3.5.0
+    area: db
+    aceptacion: "Script aditivo ejecutado en Oracle; no toca tablas existentes"
+  - id: T-197
+    titulo: "Sincronizar G7B cada 6 h: manifiesto, calidad aprobada y SHA-256 verificados, con respaldo en Pages y versión visible en Admin › Estado"
+    version: v3.5.0
+    area: api
+    depende_de: [T-196]
+    aceptacion: "Con la API de G7B caída se conserva la copia anterior; un hash que no cuadra no se guarda"
+  - id: T-198
+    titulo: "API: /api/g7b/v1/recomendacion y /api/g7b/v1/modelo-costos responden desde la caché, sin guardar la consulta con la cuenta"
+    version: v3.5.0
+    area: api
+    depende_de: [T-197]
+    aceptacion: "Responde sin red hacia G7B; pruebas del backend en verde"
+  - id: T-199
+    titulo: "Geoda en el add-on: decidir con el modelo de costos, medir fps en la práctica y encender perfiles por porcentaje con ConfigCat"
+    version: v3.5.0
+    area: blender
+    depende_de: [T-188, T-198]
+    aceptacion: "Una práctica en un equipo N1 termina con el perfil aplicado, el evento en la cola y la bandera apagable al instante"
