@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-11-02 18:01 · `main` en `99d6ea2`
+Último commit: 2026-11-02 21:36 · `main` en `4d58bc6`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -18,13 +18,13 @@
 | **v3.2.0** | Laboratorio 3D | Visor GLB en las lecciones, escena de ejemplo y lección 12 (exportar y comprobar). | ▱▱▱▱▱▱▱▱▱▱ 0/3 |
 | **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▰▰▱▱▱▱▱▱▱ 30/101 |
 | **v3.4.0** | Especialidades y tutor | Primera rama del nivel 5 y tutor IA dentro de las lecciones. | ▱▱▱▱▱▱▱▱▱▱ 0/17 |
-| **v3.5.0** | Centro 3D con G7B | Prácticas y recomendaciones que se adaptan al equipo con datos de G7B (repo amatista-g7b-etl); primera prueba en la estadía. Propuesta en docs/propuestas/2026-11-01_centro_3d_y_g7b.md. | ▱▱▱▱▱▱▱▱▱▱ 0/10 |
+| **v3.5.0** | Centro 3D con G7B | Prácticas y recomendaciones que se adaptan al equipo con datos de G7B (repo amatista-g7b-etl); primera prueba en la estadía. Propuesta en docs/propuestas/2026-11-01_centro_3d_y_g7b.md. | ▱▱▱▱▱▱▱▱▱▱ 0/14 |
 
 Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-alpha.8` · `v3.0.0-alpha.7` · `v3.0.0-alpha.6` · `v3.0.0-alpha.5` · `v3.0.0-alpha.4` · `v3.0.0-alpha.3` · `v3.0.0-alpha.2` · `v3.0.0-alpha.1` · `v2.2.0-alpha.2` · `v2.2.0-alpha.1` · `v2.0.1` · `v2.0.0` · `v1.0.0` · `v0.1.0`
 
 ## 📌 Kanban
 
-| 📋 Pendiente (62) | 🔨 En progreso (61) | 👀 Revisión (4) | ✅ Hecho (46) |
+| 📋 Pendiente (66) | 🔨 En progreso (61) | 👀 Revisión (4) | ✅ Hecho (46) |
 |---|---|---|---|
 | **T-008** Proteger main (solo cambios por PR)<br><sub>v2.2.0 · repo</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> |
 | **T-023** Respaldo de Oracle y restauración ensayada en pruebas<br><sub>v2.2.0 · db</sub> | **T-028** Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)<br><sub>v2.2.0 · lanzamiento</sub> | **T-024** Publicar el frontend en Cloudflare (Workers) contra la API HTTPS<br><sub>v2.2.0 · pwa</sub> | **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> |
@@ -88,6 +88,10 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 | **T-193** Biblioteca de texturas CC0 curadas (Poly Haven, ambientCG) por nivel de equipo (1K, 2K o 4K) con su lección<br><sub>v3.5.0 · contenido</sub> | **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)<br><sub>v3.4.0 · db</sub> |   |   |
 | **T-194** Revisar la política de marca de la Blender Foundation y usar «Amatista para Blender» en materiales nuevos<br><sub>v3.5.0 · repo</sub> | **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)<br><sub>v3.4.0 · contenido</sub> |   |   |
 | **T-195** Entornos de A-Frame con perfiles por dispositivo medidos con la sonda web de G7B<br><sub>v3.5.0 · pwa</sub> |   |   |   |
+| **T-196** Oracle: script 014_g7b.sql con la tabla G7B_CACHE (copia verificada de lo que publica G7B)<br><sub>v3.5.0 · db</sub> |   |   |   |
+| **T-197** Sincronizar G7B cada 6 h: manifiesto, calidad aprobada y SHA-256 verificados, con respaldo en Pages y versión visible en Admin › Estado<br><sub>v3.5.0 · api</sub> |   |   |   |
+| **T-198** API: /api/g7b/v1/recomendacion y /api/g7b/v1/modelo-costos responden desde la caché, sin guardar la consulta con la cuenta<br><sub>v3.5.0 · api</sub> |   |   |   |
+| **T-199** Geoda en el add-on: decidir con el modelo de costos, medir fps en la práctica y encender perfiles por porcentaje con ConfigCat<br><sub>v3.5.0 · blender</sub> |   |   |   |
 
 ## 📚 Contenido
 
@@ -553,3 +557,11 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
   - 🎯 Listo cuando: Decisión documentada; materiales nuevos sin «Blender Amatista» salvo autorización
 - [ ] **T-195** Entornos de A-Frame con perfiles por dispositivo medidos con la sonda web de G7B · _pendiente_
   - 🎯 Listo cuando: Un entorno ajusta su calidad según el perfil del dispositivo; probado en celulares reales
+- [ ] **T-196** Oracle: script 014_g7b.sql con la tabla G7B_CACHE (copia verificada de lo que publica G7B) · _pendiente_
+  - 🎯 Listo cuando: Script aditivo ejecutado en Oracle; no toca tablas existentes
+- [ ] **T-197** Sincronizar G7B cada 6 h: manifiesto, calidad aprobada y SHA-256 verificados, con respaldo en Pages y versión visible en Admin › Estado · _pendiente_
+  - 🎯 Listo cuando: Con la API de G7B caída se conserva la copia anterior; un hash que no cuadra no se guarda
+- [ ] **T-198** API: /api/g7b/v1/recomendacion y /api/g7b/v1/modelo-costos responden desde la caché, sin guardar la consulta con la cuenta · _pendiente_
+  - 🎯 Listo cuando: Responde sin red hacia G7B; pruebas del backend en verde
+- [ ] **T-199** Geoda en el add-on: decidir con el modelo de costos, medir fps en la práctica y encender perfiles por porcentaje con ConfigCat · _pendiente_
+  - 🎯 Listo cuando: Una práctica en un equipo N1 termina con el perfil aplicado, el evento en la cola y la bandera apagable al instante
