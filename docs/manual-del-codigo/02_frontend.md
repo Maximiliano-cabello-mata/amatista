@@ -254,8 +254,8 @@ Claves que se usan en el almacén: `sesion` (auth), `catalogo` (copia del servid
 | `Figura.jsx` | Imagen con pie. | `default` |
 | `TarjetasConcepto.jsx`, `LineaTiempo.jsx`, `Pipeline.jsx`, `Capas.jsx`, `Aviso.jsx`, `BloqueCodigo.jsx`, `PasoAPaso.jsx`, `Atajos.jsx`, `Comparar.jsx` | Un componente por bloque de contenido. | `default` |
 | `Tecla.jsx` | Teclas dibujadas (usadas por Paso a paso y Atajos). | `Tecla`, `Teclas` |
-| `atajos.js` | Lógica pura del modo «Pruébate» de Atajos. | `claveAtajo`, `claveDeEvento`, `practicables` |
-| `atajos.test.js` | Pruebas. | — |
+| `atajosLogica.js` | Lógica pura del modo «Pruébate» de Atajos. | `claveAtajo`, `claveDeEvento`, `practicables` |
+| `atajosLogica.test.js` | Pruebas. | — |
 | `IconosLeccion.jsx` | Íconos low poly de 48×48 (Aviso, Línea de tiempo, Pipeline). | `default IconoLeccion` |
 | `VistaAFrame.jsx` | Vista 3D del código del alumno: lo lee con `DOMParser` (inerte), copia solo etiquetas `<a-…>` sin atributos `on…`. Importa `aframe`; se carga bajo demanda desde `BloqueCodigo` y `RetoCodigo`. | `default` |
 
@@ -482,7 +482,7 @@ Para qué sirve cada uno, cuándo usarlo y los límites de cada campo: **[docs/p
 | `pipeline` | `leccion/Pipeline.jsx` | `title`, **`steps[]`**: **`title`**, **`text`**, `icon` |
 | `layers` | `leccion/Capas.jsx` | `title`, **`items[]`**: **`title`**, **`text`**, `icon`; `footer` |
 | `step_by_step` | `leccion/PasoAPaso.jsx` | `title`, **`steps[]`**: **`title`**, `text`, `keys`, `then`, `image`+`alt` |
-| `shortcuts` | `leccion/Atajos.jsx` (+ `atajos.js`) | `title`, **`items[]`**: **`keys`**, `then`, **`action`**; `practice` |
+| `shortcuts` | `leccion/Atajos.jsx` (+ `atajosLogica.js`) | `title`, **`items[]`**: **`keys`**, `then`, **`action`**; `practice` |
 | `compare` | `leccion/Comparar.jsx` | `title`, **`before`**, **`after`** (`{label, image?, alt?, text?}`), `mode` (`columns`/`slider`), `caption` |
 
 **Bloques interactivos** (en `components/leccion/interactivos/`; llevan `id` único y `required`, por defecto `true`)
@@ -640,11 +640,11 @@ Vitest con `include: ['src/**/*.test.js']` y `environment: 'node'` (`vite.config
 | `src/blender/referencias.test.js` | Modelo de referencia de cada práctica | 3 |
 | `src/components/admin/logica.test.js` | Lógica del panel y `consultaURL` | 18 |
 | `src/components/graficas/graficas.test.js` | Escalas y fechas | 7 |
-| `src/components/leccion/atajos.test.js` | Modo «Pruébate» | 3 |
+| `src/components/leccion/atajosLogica.test.js` | Modo «Pruébate» | 3 |
 | `src/components/leccion/interactivos/logica.test.js` | Corrección de los interactivos | 17 |
 | `src/components/panel/datos.test.js` | Datos del panel | 12 |
 | `src/components/panel/retos.test.js` | Retos semanales y logros | 13 |
-| `src/components/temas/personaje.test.js` | Movimiento y reacciones del personaje | 3 |
+| `src/components/temas/personajeLogica.test.js` | Movimiento y reacciones del personaje | 3 |
 | `src/components/temas/temas.test.js` | Temática de cada módulo | 7 |
 | `src/lib/rendimiento.test.js` | Modo ligero para equipos modestos | 1 |
 | `src/services/api.test.js` | Cliente de la API | 3 |
