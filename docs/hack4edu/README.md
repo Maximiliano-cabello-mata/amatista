@@ -6,7 +6,8 @@ Todo lo que pide la competencia, en un solo lugar: qué es el proyecto, qué ya 
 |---|---|
 | **Este README** | El proyecto, el antes y el ahora, y cómo comprobarlo |
 | [REQUISITOS.md](REQUISITOS.md) | Lo que suele pedir Hack4Edu y cómo lo cumplimos (hay que confirmarlo con las bases 2026) |
-| [video/](video/README.md) | Guion, escenas gráficas, capturas reales y el primer corte del video |
+| [video/pelicula/](video/pelicula/README.md) | **El video para presentar (4:14):** la historia de Valeria, la plataforma real y Geoda como proyecto hermano |
+| [video/](video/README.md) | Material suelto: primer corte (2:09), escenas, capturas y fotogramas para el pitch |
 | [../CORTE_HACK4EDU.md](../CORTE_HACK4EDU.md) | La auditoría del corte y el plan por día hasta el viernes 6 |
 | [G7B › docs/hack4edu](https://github.com/Maximiliano-cabello-mata/amatista-g7b-etl/tree/main/docs/hack4edu) | El mismo antes y ahora, del lado del motor de datos |
 

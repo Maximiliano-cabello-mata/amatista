@@ -12,7 +12,7 @@ Referencias de ediciones anteriores:
 
 | # | Requisito (probable) | Cómo lo cumplimos | Estado |
 |---|---|---|---|
-| 1 | **Video corto** (unos 3 minutos) | Guion de 2:09 + escenas + capturas + primer corte montado ([video/](video/README.md)). Falta grabar la voz | 🟡 Falta la voz |
+| 1 | **Video** | Película de 4:14 con historia, plataforma real y música de prueba ([video/pelicula/](video/pelicula/README.md)); locución opcional en `LOCUCION.md`. Si las bases piden 3 minutos, se recorta ahí | ✅ · 🟡 Confirmar duración |
 | 2 | **Código público** en GitHub | `amatista` y `amatista-g7b-etl`, con licencias declaradas | ✅ |
 | 3 | **Separar lo previo de lo hecho en el evento** | Etiqueta `hack4edu` en los dos repos + `git log hack4edu..main` + tablas de [README.md](README.md) | ✅ |
 | 4 | **Evidencia comprobable** | Comandos con resultados: 1,542 pruebas, 58/58 prácticas, 15/15 módulos, cubo verificado en Azure | ✅ |
