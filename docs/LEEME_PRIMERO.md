@@ -1,6 +1,8 @@
 # Léeme primero: Amatista en una página
 
-Para quien necesita entender el proyecto sin leer los 150+ documentos. Verificado el 3 de noviembre de 2026 corriendo las pruebas.
+Para quien necesita entender el proyecto sin leer los 150+ documentos. Verificado el 3 de noviembre de 2026 corriendo las pruebas en el corte [`hack4edu`](CORTE_HACK4EDU.md).
+
+> **Corte actual (`hack4edu`):** consulta en [`docs/CORTE_HACK4EDU.md`](CORTE_HACK4EDU.md) la división exacta y comprobable entre **lo que ya está terminado hoy (martes 3 de noviembre)** y **lo que se trabajará de aquí al viernes 6 de noviembre**.
 
 ## Qué es
 
@@ -38,7 +40,7 @@ Desde la raíz del repo, con Python 3.12 y Node instalados:
 |---|---|---|
 | Backend | `cd backend` y `python -m pytest -q` | 446 pasan |
 | Motor, add-on, tablero | `python -m pytest -q tablero engine/tests addon/tests` | Todas pasan en CI (Linux). En Windows pasan 672 y fallan 3 por saltos de línea, ver más abajo |
-| Frontend | `cd frontend`, `npm ci`, `npm run lint`, `npm test`, `npm run build` | 389 pruebas pasan y el build termina |
+| Frontend | `cd frontend`, `npm ci`, `npm run lint`, `npm test`, `npm run build` | 390 pruebas pasan y el build termina |
 
 Si algo de esto se pone en rojo, **no sigas añadiendo funciones**: arréglalo primero.
 

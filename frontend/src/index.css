@@ -2020,6 +2020,35 @@ ol[id^='paso-'] a:hover .hexagono {
   animation: tecla-pulso 1.8s ease-in-out infinite;
 }
 
+/* Emblema interactivo del héroe: satélites flotantes y giro 3D al tocar el cristal */
+@keyframes emblema-giro {
+  0% { transform: scale(1) rotateY(0deg) rotateZ(0deg); }
+  35% { transform: scale(1.22) rotateY(180deg) rotateZ(-12deg); }
+  70% { transform: scale(1.1) rotateY(360deg) rotateZ(8deg); }
+  100% { transform: scale(1) rotateY(360deg) rotateZ(0deg); }
+}
+@keyframes emblema-satelite {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(6deg); }
+}
+.emblema-heroe {
+  cursor: pointer;
+  perspective: 600px;
+}
+.emblema-heroe--giro .emblema-heroe__cristal {
+  animation: emblema-giro 0.8s var(--curva-resorte);
+}
+.emblema-heroe__satelite {
+  animation: emblema-satelite 4.2s ease-in-out infinite;
+  transition: transform 0.28s var(--curva-resorte);
+}
+.emblema-heroe__satelite--tarde {
+  animation-delay: -2.1s;
+}
+.emblema-heroe:hover .emblema-heroe__satelite {
+  transform: scale(1.14) rotate(-8deg);
+}
+
 /* 7. Desactivación limpia en modo ligero y movimiento reducido */
 html.ligero .animar-pagina,
 html.ligero .camino > .camino__paso,
@@ -2032,7 +2061,9 @@ html.ligero .pie-pagina__facetas polygon,
 html.ligero .fondo-pesado > g:first-of-type > polygon,
 html.ligero .titulo-seccion__ante::before,
 html.ligero .titulo-seccion__ante::after,
-html.ligero .tecla-chip--toca {
+html.ligero .tecla-chip--toca,
+html.ligero .emblema-heroe__satelite,
+html.ligero .emblema-heroe--giro .emblema-heroe__cristal {
   animation: none !important;
 }
 html.ligero .elevar:hover,
@@ -2053,7 +2084,9 @@ html.ligero .boton:hover {
   .fondo-pesado > g:first-of-type > polygon,
   .titulo-seccion__ante::before,
   .titulo-seccion__ante::after,
-  .tecla-chip--toca {
+  .tecla-chip--toca,
+  .emblema-heroe__satelite,
+  .emblema-heroe--giro .emblema-heroe__cristal {
     animation: none !important;
   }
   .elevar:hover,
