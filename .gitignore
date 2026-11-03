@@ -25,3 +25,4 @@ rendimiento*.json
 
 # Video de Hack4Edu: clips y montaje se regeneran con docs/hack4edu/video/generar.cjs
 docs/hack4edu/video/salida/
+docs/hack4edu/video/pelicula/salida/
