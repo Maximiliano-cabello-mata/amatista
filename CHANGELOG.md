@@ -17,6 +17,17 @@ Estado verificado el 18 de octubre de 2026: publicados los tags hasta `v3.0.0-al
 
 ## [Sin publicar]
 
+### Hack4Edu (desde la etiqueta `hack4edu`, 3 de noviembre de 2026)
+
+La etiqueta `hack4edu` (`7c8be0e`) separa lo que ya teníamos de lo construido durante la competencia: `git log hack4edu..main`. Evidencia y kit del video en `docs/hack4edu/`.
+
+- **En la etiqueta** (3 nov, antes de etiquetar): portada viva con mundos y mascotas, animaciones Facetas v4.4 solo en GPU, portabilidad en Windows y Mac, y el documento del corte (`docs/CORTE_HACK4EDU.md`).
+- **Después de la etiqueta:**
+  - centro `docs/hack4edu/` con requisitos, antes y ahora comprobable, guion y kit del video (9 escenas, 14 capturas reales y el montaje con `docs/hack4edu/video/generar.cjs`);
+  - los commits del corte se rescatan a una rama, porque solo estaban en la etiqueta;
+  - dos comandos del documento del corte se corrigen;
+  - las cifras se vuelven a comprobar: 390 + 446 + 594 pruebas, 58/58 prácticas y 15/15 módulos.
+
 ### Agregado
 
 - **Sentry opcional para ver los errores** (31 oct 2026, T-184, `docs/despliegue/2026-10-31_sentry.md`). El backend (`SENTRY_DSN`) y la PWA (`VITE_SENTRY_DSN`) mandan sus errores a Sentry con la traza, la versión y el commit, y con la integración de GitHub se vuelven issues. Sin DSN no cambia nada: la PWA ni descarga el SDK, que va en su propio trozo fuera del precache. Nunca se envían datos personales (ni usuario, IP, cookies, sesiones, consulta de la URL ni el cuerpo de las peticiones). Sin SQL; en la VM hay que instalar `requirements.txt` otra vez.

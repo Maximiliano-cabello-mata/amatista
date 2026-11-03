@@ -8,6 +8,8 @@ Estado del código: **2 de noviembre de 2026** (`main` en `99d6ea2`). Etapa vige
 
 > **¿Primera vez?** Lee el [README de la raíz](../README.md), luego la [cronología](historia/01_cronologia.md) y el [mapa del repositorio](manual-del-codigo/01_mapa_del_repositorio.md). Si vas a programar, sigue con el [manual del desarrollador](desarrollador/README.md).
 
+> **Hack4Edu (3 al 6 de noviembre de 2026):** [hack4edu/](hack4edu/README.md) reúne el antes y el ahora con evidencia, los [requisitos](hack4edu/REQUISITOS.md) y el [kit del video](hack4edu/video/README.md). Corte y plan por día: [CORTE_HACK4EDU.md](CORTE_HACK4EDU.md).
+
 ## Secciones
 
 | # | Sección | Para quién | Empieza por |

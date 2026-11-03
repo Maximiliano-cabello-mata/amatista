@@ -2,7 +2,7 @@
 
 Punto de entrada para Maximiliano como desarrollador único. Aquí se decide **qué sigue, por qué y dónde está la información**. Las carpetas técnicas y los documentos existentes conservan su ubicación.
 
-[Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Mapa del repositorio](docs/manual-del-codigo/01_mapa_del_repositorio.md) · [Plataforma](docs/plataforma/README.md) · [Amatista Engine](docs/motor/README.md) · [Última bitácora (1 nov)](docs/bitacora/2026-11-01_g7b_y_centro_3d.md) · [Despliegue público .tech](docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md) · [Cronología](docs/historia/01_cronologia.md) · [Manual del desarrollador](docs/desarrollador/README.md)
+[Hack4Edu](docs/hack4edu/README.md) · [Corte hack4edu (3–6 nov)](docs/CORTE_HACK4EDU.md) · [Léeme primero](docs/LEEME_PRIMERO.md) · [Tablero actual](KANBAN.md) · [Tareas y versiones](tablero/tareas.yml) · [Operar el Kanban](tablero/README.md) · [Historial de entregas](CHANGELOG.md) · [Índice de docs](docs/README.md) · [Mapa del repositorio](docs/manual-del-codigo/01_mapa_del_repositorio.md) · [Plataforma](docs/plataforma/README.md) · [Amatista Engine](docs/motor/README.md) · [Última bitácora (1 nov)](docs/bitacora/2026-11-01_g7b_y_centro_3d.md) · [Despliegue público .tech](docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md) · [Cronología](docs/historia/01_cronologia.md) · [Manual del desarrollador](docs/desarrollador/README.md)
 
 ## 1. Dirección y límite de trabajo
 

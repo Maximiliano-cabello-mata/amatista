@@ -22,3 +22,6 @@ rendimiento*.json
 
 # Motor 6.2: instaladores firmados que se copian al servidor (no van al repositorio)
 /backend/instaladores/
+
+# Video de Hack4Edu: clips y montaje se regeneran con docs/hack4edu/video/generar.cjs
+docs/hack4edu/video/salida/

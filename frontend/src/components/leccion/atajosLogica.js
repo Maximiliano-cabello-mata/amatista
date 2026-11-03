@@ -1,4 +1,4 @@
-// Lógica pura de «Atajos de teclado» (pruebas en atajos.test.js).
+// Lógica pura de «Atajos de teclado» (pruebas en atajosLogica.test.js).
 
 const NORMAL = { control: 'ctrl', return: 'enter', escape: 'esc', ' ': 'espacio' };
 

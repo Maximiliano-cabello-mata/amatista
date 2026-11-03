@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { claveAtajo, claveDeEvento, practicables } from './atajos';
+import { claveAtajo, claveDeEvento, practicables } from './atajosLogica';
 import { Teclas } from './Tecla';
 
 // Herramienta «Atajos de teclado» (shortcuts, v3.1): tarjetas con las teclas

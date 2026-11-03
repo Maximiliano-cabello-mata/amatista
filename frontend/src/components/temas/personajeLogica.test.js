@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ACCIONES_TOQUE, accionAlTocar, DURACION, mirada, REACCION } from './personaje';
+import { ACCIONES_TOQUE, accionAlTocar, DURACION, mirada, REACCION } from './personajeLogica';
 
 describe('personaje de cada módulo', () => {
   it('al tocarlo nunca repite la acción anterior', () => {
