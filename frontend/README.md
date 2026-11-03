@@ -1,81 +1,69 @@
 # Amatista · Frontend
 
-PWA de Amatista hecha con React 19, Vite 8, Tailwind v4 y A-Frame.
+PWA de Amatista hecha con React 19, Vite 8, Tailwind v4 y A-Frame 1.8.
 
 ```bash
 npm install
 npm run dev            # desarrollo (sin service worker)
-npm run build          # producción: genera dist/ con manifest y service worker
+npm run build          # producción: genera dist/ con manifest, service worker y revisión postbuild
 npm run preview        # sirve dist/ para probar la PWA y el modo sin conexión
 npm run ilustraciones  # regenera los SVG de public/ilustraciones/
+npm run modelos        # regenera los modelos GLB low poly de public/modelos/
 npm run lint           # ESLint (CI lo exige)
 npm test               # pruebas con Vitest (CI lo exige)
 ```
 
-El backend se configura con `VITE_API_URL` (ver `.env.example`).
+El backend se configura con `VITE_API_URL` y Sentry opcional con `VITE_SENTRY_DSN` (ver `.env.example`).
 
-## Estructura
+## Estructura (`src/`, 310 archivos)
 
 ```text
 src/
-├── App.jsx                 # proveedores y rutas por hash
-├── rutas.js                # todas las rutas (#/, #/panel, #/entrar, #/admin/..., ver abajo)
+├── App.jsx                 # proveedores globales, carga diferida (lazy) y rutas por hash
+├── rutas.js                # analizador y generador de todas las rutas (#/...)
 ├── auth/                   # sesión del alumno (AuthProvider, guardada en IndexedDB)
-├── catalogo/               # catálogo combinado: JSON empaquetados + catálogo del servidor
+├── avatares/               # avatares low poly por cuenta (zorro, búho, ajolote… y pavo real del creador)
+├── buzon/                  # cliente y componentes del Buzón del creador (#/buzon)
+├── catalogo/               # catálogo combinado: 15 módulos JSON empaquetados + catálogo del servidor
 ├── data/
-│   ├── cursos.js           # cursos y títulos de módulos «Próximamente»
-│   ├── herramientas.js     # catálogo de herramientas de enseñanza (bloques) por categoría
-│   └── modulos/*.json      # contenido de cada módulo (se cargan solos)
-├── modulos/practica.js     # la práctica de Blender que cierra cada módulo (funciones puras)
-├── progreso/               # progreso v2: proveedor, reglas de acople, XP, nivel y racha
-├── blender/                # conexión con Blender: descarga, código de vínculo, «Prepara tu Blender»
-├── lib/                    # IndexedDB y generador de identificadores
-├── hooks/                  # conexión y botón de instalar la PWA
-├── services/               # api.js, admin.js y blender.js (API del add-on)
+│   ├── cursos.js           # rutas de aprendizaje (Blender, A-Frame Inicial e Interactivo)
+│   ├── herramientas.js     # catálogo de bloques de enseñanza por categoría
+│   └── modulos/*.json      # 15 módulos publicados (9 de Blender + 6 de A-Frame) y archivo/
+├── estudio/                # Estudio A-Frame (#/estudio): plantillas, piezas insertables y descarga HTML
+├── motor3d/                # Motor Web de Amatista sobre A-Frame (entornos con semilla, arrastrar, zonas, retos)
+├── goliat/                 # Goliat: compañero low poly con reglas locales, apoyo en prácticas y proyecto guiado
+├── modulos/practica.js     # la práctica de Blender que cierra cada módulo
+├── progreso/               # proveedor offline-first, sincronización comprimida (gzip) y modo Ahorro de datos
+├── recorrido/              # recorrido guiado interactivo de 10 paradas por la plataforma
+├── vista/                  # cambio de vista (Alumno / Profesor / Admin) y salto rápido de lecciones
+├── blender/                # conexión en vivo con Blender, instaladores (.exe, .deb, .zip), taller e isla
+├── lib/                    # IndexedDB (almacen.js), telemetría opcional Sentry y utilidades
+├── hooks/                  # estado de red, ahorro de datos e instalación de la PWA
+├── services/               # api.js, admin.js y blender.js (API del add-on, enlace y taller)
 ├── components/
-│   ├── leccion/            # los bloques de contenido (Paso a paso, Atajos, Comparar…), examen y vista A-Frame
-│   │   └── interactivos/   # bloques interactivos (quiz, ordenar, …, práctica en Blender)
-│   ├── modulo/             # ruta del módulo y estación de la práctica en Blender
-│   ├── etiquetas/          # sistema de etiquetas low poly (íconos, catálogo, chip)
-│   ├── panel/              # tarjetas del panel del alumno
+│   ├── estructura/         # sistema de diseño «Facetas»: Pagina, EncabezadoPagina, Migas, TituloSeccion, PiePagina
+│   ├── leccion/            # reproductor de lecciones, bloques gráficos v4.2, dinámicas v4.3, fichas y examen
+│   │   └── interactivos/   # bloques interactivos (quiz, ordenar, emparejar, visor de malla, nodos, Mundo 3D, Blender)
+│   ├── modulo/             # ruta del módulo y estación de Blender
+│   ├── etiquetas/          # sistema de etiquetas low poly
+│   ├── panel/              # tarjetas de Mi panel y ajuste de Ahorro de datos
 │   ├── graficas/           # anillo, barras, mapa de calor y medidor (SVG)
-│   ├── admin/              # piezas del panel de administración
-│   └── ...                 # barra superior, fondo low poly, tarjetas, íconos
+│   └── admin/              # piezas del panel de administración
 └── pages/
-    ├── Inicio, Curso, Leccion, Panel, Blender (Mi Blender), Vincular
+    ├── Inicio, Curso, Leccion, Estudio, Panel, Blender, Vincular, Guia (Ayuda), Buzon
     ├── Laboratorio         # diagnóstico técnico (solo profesor y admin)
-    ├── cuenta/             # Entrar, Registro, Confirmar, Recuperar, Perfil
-    └── admin/              # Resumen, Contenido (Módulos), EditorLeccion, Practicas, Herramientas, Usuarios, Usuario, Sistema
+    ├── cuenta/             # Entrar, Registro, Confirmar, Recuperar, Perfil (con selector de avatar)
+    └── admin/              # Admin, Resumen, Contenido, EditorLeccion, Practicas, Herramientas,
+                            # Usuarios, Usuario, Auditoria, Revision, Buzon, Sistema
 ```
 
 | Ruta | Página |
 |---|---|
-| `#/` · `#/curso/:id` · `#/curso/:id/leccion/:id` | Cursos, mapa del curso (módulos con su práctica en Blender) y lección |
-| `#/panel` | Panel del alumno |
-| `#/blender` · `#/vincular?codigo=…` | Mi Blender (menú de la cuenta) y vincular el add-on |
-| `#/entrar` · `#/registro` · `#/confirmar` · `#/recuperar` · `#/perfil` | Cuenta |
-| `#/admin` · `#/admin/contenido[/...]` · `#/admin/practicas` · `#/admin/herramientas` · `#/admin/usuarios[/:id]` · `#/admin/sistema` | Panel de administración (profesor lee, admin modifica) |
-| `#/laboratorio` | Diagnóstico técnico del dispositivo (solo profesor y admin; se abre desde Admin › Estado) |
-
-La organización de la plataforma por rol, las etiquetas y las herramientas están en [`docs/plataforma/`](../docs/plataforma/README.md).
-
-## Contenido
-
-Para agregar un módulo o una lección no hace falta tocar componentes: los
-bloques disponibles y sus campos están en
-[`docs/plataforma/04_herramientas_de_ensenanza.md`](../docs/plataforma/04_herramientas_de_ensenanza.md)
-(formato base: `docs/arquitectura/2026-09-29_formato-lecciones.txt`) y cómo
-diseñar un módulo en `docs/arquitectura/2026-10-02_formula_modulos.txt`. Cada
-módulo de Blender cierra con su práctica en Blender
-([docs/plataforma/02](../docs/plataforma/02_modulos_y_practica.md)). También se
-puede editar desde `#/admin/contenido`.
-
-## Progreso
-
-Se guarda en el dispositivo (IndexedDB), así funciona sin conexión y aunque
-el backend esté caído. Cuando el backend responde, los cambios pendientes se
-envían a `POST /api/progreso` (con el token de la cuenta si el alumno inició
-sesión). Al crear una cuenta, el progreso anónimo del dispositivo se une a ella.
-
-La identidad visual está documentada en
-`docs/arquitectura/2026-09-28_identidad_visual_interfaz.txt`.
+| `#/` · `#/curso/:id` · `#/curso/:id/leccion/:id` | Cursos (camino guiado), mapa del curso (con Tu isla) y lección |
+| `#/estudio` | Estudio A-Frame: editor 3D libre con vista en vivo, plantillas y modelos GLB sin conexión |
+| `#/panel` | Mi panel: avance por programa, talleres, exámenes, insignias y modo Ahorro de datos |
+| `#/blender` · `#/vincular?codigo=…` | Página Blender (fusión plataforma ↔ add-on, instaladores, «Conoce Amatista Motor») y vincular |
+| `#/guia` · `#/buzon` | Ayuda (recorrido guiado, preguntas rápidas y Goliat) · Buzón del creador |
+| `#/entrar` · `#/registro` · `#/confirmar` · `#/recuperar` · `#/perfil` | Cuenta y elección de avatar low poly |
+| `#/admin` · `#/admin/contenido` · `#/admin/practicas` · `#/admin/herramientas` · `#/admin/usuarios` · `#/admin/auditoria` · `#/admin/revision` · `#/admin/buzon` · `#/admin/sistema` | Panel de administración (profesor lee, admin modifica) |
+| `#/laboratorio` | Diagnóstico técnico del dispositivo (desde Admin › Estado) |
