@@ -1,0 +1,20 @@
+/* Película de Hack4Edu: el escenario de 1920×1080 con la identidad de Amatista (index.css › Facetas). */
+:root {
+  --sans: 'Outfit Variable', 'Outfit respaldo', system-ui, sans-serif;
+  --mono: 'JetBrains Mono Variable', 'JetBrains Mono respaldo', ui-monospace, monospace;
+}
+html, body { margin: 0; background: #000; overflow: hidden; }
+.pelicula {
+  position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #08070a; color: #f1eef6;
+  font-family: var(--sans); text-rendering: geometricPrecision; -webkit-font-smoothing: antialiased;
+}
+.pelicula .gema-texto { background: var(--gema); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pelicula .hexagono-pelicula { clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+.pelicula .hexagono-pelicula svg { width: 88%; height: 88%; }
+.pelicula .escenario-ancho { display: block; width: 100%; height: 100%; }
+.pelicula .jefe-pelicula { width: 100%; height: 100%; overflow: visible; }
+.pelicula .sprite-pelicula { width: 100%; height: 100%; }
+.pelicula .chip-pelicula {
+  display: inline-block; padding: 14px 30px; font: 650 26px var(--mono); letter-spacing: 0.24em; color: #0b0b0e; background: #00e5ff;
+  clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+}

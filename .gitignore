@@ -25,3 +25,8 @@ rendimiento*.json
 
 # Video de Hack4Edu: clips y montaje se regeneran con docs/hack4edu/video/generar.cjs
 docs/hack4edu/video/salida/
+docs/hack4edu/video/pelicula/salida/
+
+# App de escritorio: Electron y el paquete se regeneran con escritorio/empaquetar.mjs
+escritorio/node_modules/
+escritorio/salida/

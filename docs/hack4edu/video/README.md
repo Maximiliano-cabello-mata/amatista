@@ -1,5 +1,7 @@
 # Kit del video de Hack4Edu
 
+> **El video para presentar es la película** ([pelicula/](pelicula/README.md)): 4:14, con una historia (Valeria y los tres muros), la plataforma real grabada, Geoda como proyecto hermano y música de prueba. Lo de esta página es el primer corte (2:09) y el material suelto: escenas, capturas y fotogramas, útiles para el pitch.
+
 Todo lo necesario para el video de la plataforma: guion, escenas gráficas con la identidad de Amatista, capturas reales de la PWA y un script que monta el primer corte.
 
 | Carpeta o archivo | Qué hay |

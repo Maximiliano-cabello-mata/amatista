@@ -67,6 +67,8 @@ export default defineConfig({
           '**/Profesor*-*.js',
           // SDK de Sentry (~360 KB): solo se baja si hay VITE_SENTRY_DSN (src/lib/sentry.js).
           '**/sentrySdk-*.js',
+          // Biblioteca de recursos (~20 MB): no se precachea; se guarda lo que se abre (abajo).
+          'biblioteca/**',
         ],
         runtimeCaching: [
           {
@@ -79,6 +81,18 @@ export default defineConfig({
             urlPattern: ({ url }) => /^\/assets\/(Admin|Profesor[^/]*)-[^/]+\.js$/.test(url.pathname),
             handler: 'CacheFirst',
             options: { cacheName: 'amatista-paneles', expiration: { maxEntries: 8 } },
+          },
+          {
+            // El catálogo de la biblioteca: el más nuevo si hay red; si no, el guardado.
+            urlPattern: ({ url }) => url.pathname === '/biblioteca/catalogo.json',
+            handler: 'StaleWhileRevalidate',
+            options: { cacheName: 'amatista-biblioteca-catalogo' },
+          },
+          {
+            // Vistas previas, texturas y modelos: se guardan al abrirlos y quedan sin conexión.
+            urlPattern: ({ url }) => url.pathname.startsWith('/biblioteca/'),
+            handler: 'CacheFirst',
+            options: { cacheName: 'amatista-biblioteca', expiration: { maxEntries: 800, maxAgeSeconds: 60 * 60 * 24 * 365 } },
           },
           {
             urlPattern: ({ url }) => url.pathname.startsWith('/assets/aframe-master'),
