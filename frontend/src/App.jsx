@@ -34,6 +34,8 @@ const Guia = lazy(() => import('./pages/Guia'));
 const Buzon = lazy(() => import('./pages/Buzon'));
 const Geoda = lazy(() => import('./pages/Geoda'));
 const Biblioteca = lazy(() => import('./pages/Biblioteca'));
+const Nube = lazy(() => import('./pages/Nube'));
+const Ecosistema = lazy(() => import('./pages/Ecosistema'));
 // Goliat, el compañero de toda la plataforma: llega después de la página.
 const Goliat = lazy(() => import('./goliat/Goliat'));
 
@@ -130,6 +132,10 @@ function Pagina({ ruta, hash }) {
       return <Geoda />;
     case 'biblioteca':
       return <Biblioteca />;
+    case 'nube':
+      return <Nube />;
+    case 'ecosistema':
+      return <Ecosistema />;
     case 'admin':
       return <RutaAdmin ruta={ruta} hash={hash} />;
     default:

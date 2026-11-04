@@ -16,6 +16,8 @@ export const rutas = {
   guia: '#/guia',
   geoda: '#/geoda',
   biblioteca: '#/biblioteca',
+  nube: '#/nube',
+  ecosistema: '#/ecosistema',
   buzon: '#/buzon',
   admin: '#/admin',
   adminUsuarios: '#/admin/usuarios',
@@ -67,7 +69,7 @@ function rutaAdmin(partes) {
   return { seccion: 'resumen', params: {} };
 }
 
-const PAGINAS_SIMPLES = ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'guia', 'buzon', 'geoda', 'biblioteca'];
+const PAGINAS_SIMPLES = ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'guia', 'buzon', 'geoda', 'biblioteca', 'nube', 'ecosistema'];
 
 // Devuelve {pagina, ...}. Una consulta tras "?" (por ejemplo
 // "#/entrar?volver=%23%2Fperfil") llega en `consulta`.

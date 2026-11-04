@@ -31,6 +31,12 @@ La etiqueta `hack4edu` (`7c8be0e`) separa lo que ya teníamos de lo construido d
   - **biblioteca de recursos** (`#/biblioteca`): 45 texturas, 38 modelos y 19 animaciones CC0, generadas con `herramientas/biblioteca/`, con visor 3D y caché sin conexión fuera del precache;
   - **auditoría de peso y consumo** (`docs/rendimiento/2026-11-04_auditoria_peso.md`) e **inventario archivo por archivo** (`docs/auditoria/2026-11-04_inventario.md`);
   - **app de escritorio** para Windows (`escritorio/`): 301 MB instalada con texturas 2K y 159 MB de descarga.
+  - **Amatista Cloud** (`#/nube`, `backend/api/nube.py`, `sql/014_nube.sql`, `nube/`):
+    - una hora de Blender en la nube para cuentas de la UTN con el correo confirmado;
+    - un token de 60 minutos por sesión, que la API guarda solo como hash;
+    - un nodo (`amatista_nodo.py`) que se anuncia sin abrir puertos y abre contenedores aislados (sin internet, de solo lectura, con CPU y memoria fijas);
+    - medido: 535 MB y 3 s de arranque por sesión; 4 sesiones en la PC local y 1 en Oracle A1 de 2 OCPU;
+  - **Todo Amatista** (`#/ecosistema`) explica cada pieza, y el menú muestra Biblioteca, Geoda y Cloud.
 
 ### Agregado
 

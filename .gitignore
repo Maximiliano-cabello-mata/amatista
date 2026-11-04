@@ -30,3 +30,8 @@ docs/hack4edu/video/pelicula/salida/
 # App de escritorio: Electron y el paquete se regeneran con escritorio/empaquetar.mjs
 escritorio/node_modules/
 escritorio/salida/
+
+# Amatista Cloud: paquetes descargados para construir la imagen sin internet
+nube/imagen/paquetes/*.deb
+nube/nodo/nodo.env
+nube/nodo/.venv/
