@@ -66,6 +66,10 @@ Proyecto iniciado el 27 de septiembre de 2026 (prototipo 0.1.0): 16 versiones et
 | 3-nov | G7B | **Consolidación:** Geodar Radar (31 fuentes), Azure privado, auditoría documental y Deepnote (112 pruebas en total) | PR #10 de G7B |
 | 3-nov | Amatista | **Centro de Hack4Edu** (este directorio), requisitos y **kit del video**: 9 escenas gráficas, 14 capturas reales y el primer corte del video de 2:09 | `docs/hack4edu/` |
 | 3-nov | Amatista | Rescate de los commits del corte a una rama y corrección de dos comandos del documento del corte | `git log hack4edu..claude/peaceful-tesla-ctqaps` |
+| 4-nov | Amatista | **Geoda dentro de la app** (`#/geoda`): detecta el equipo, le da nivel N0–N4, recomienda Blender y su perfil, ajusta Amatista con un clic y lo deshace, y descarga un script reversible para Blender | `frontend/src/geoda/` (4 pruebas) |
+| 4-nov | Amatista | **Biblioteca de recursos** (`#/biblioteca`): 45 texturas, 38 modelos y 19 animaciones CC0 con visor 3D, guardada sin conexión a medida que se usa | `herramientas/biblioteca/` (48 pruebas) |
+| 4-nov | Amatista | **Auditoría de peso y consumo** e **inventario archivo por archivo** | [peso](../rendimiento/2026-11-04_auditoria_peso.md) · [inventario](../auditoria/2026-11-04_inventario.md) |
+| 4-nov | Amatista | **App de escritorio** para Windows (`Amatista.exe`, portátil): 301 MB con todo, la mitad de un límite de 512 MB | `escritorio/` |
 | 4 al 6-nov | Ambos | El puente G7B ↔ Amatista: `perfiles.json` en el add-on (T-188), caché y `/api/g7b/v1/recomendacion` (T-196 a T-198), consentimiento (T-187) y recomendaciones en Mi panel (T-192) | [Plan por día](../CORTE_HACK4EDU.md#3-lo-que-se-va-a-trabajar-hasta-el-viernes-hack4edu--4-al-6-de-noviembre) |
 
 **Total de pruebas automáticas en verde al 3 de noviembre: 1,542** (390 + 446 + 594 + 112).

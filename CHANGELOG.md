@@ -27,6 +27,10 @@ La etiqueta `hack4edu` (`7c8be0e`) separa lo que ya teníamos de lo construido d
   - los commits del corte se rescatan a una rama, porque solo estaban en la etiqueta;
   - dos comandos del documento del corte se corrigen;
   - las cifras se vuelven a comprobar: 390 + 446 + 594 pruebas, 58/58 prácticas y 15/15 módulos.
+  - **Geoda en la PWA** (`#/geoda`): huella del equipo, nivel N0–N4, perfil de Blender, ajuste de Amatista con un clic que se puede deshacer, y script reversible para Blender;
+  - **biblioteca de recursos** (`#/biblioteca`): 45 texturas, 38 modelos y 19 animaciones CC0, generadas con `herramientas/biblioteca/`, con visor 3D y caché sin conexión fuera del precache;
+  - **auditoría de peso y consumo** (`docs/rendimiento/2026-11-04_auditoria_peso.md`) e **inventario archivo por archivo** (`docs/auditoria/2026-11-04_inventario.md`);
+  - **app de escritorio** para Windows (`escritorio/`): 301 MB instalada con texturas 2K y 159 MB de descarga.
 
 ### Agregado
 

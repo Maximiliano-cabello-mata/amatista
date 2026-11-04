@@ -541,6 +541,12 @@ function Blender() {
         <FusionPlataformaBlender progreso={progreso} resumida={listo} />
       </div>
 
+      <p className="mt-4 text-sm text-texto/80">
+        ¿No sabes qué versión de Blender va bien en tu computadora?{' '}
+        <a href={rutas.geoda} className="font-bold text-neon hover:underline">Geoda te la recomienda y te da un script con los ajustes</a>
+        {' '}· <a href={rutas.biblioteca} className="font-bold text-neon hover:underline">texturas y modelos libres</a>.
+      </p>
+
       <Etapa numero="1" titulo="Prepárate (una sola vez)" id="blender-preparar" recorrido="instalar">
         {listo ? (
           <details className="corte-poly-sm border border-emerald-400/30 bg-emerald-400/5 p-4">

@@ -56,6 +56,8 @@ function PiePagina() {
             <li key={s.id}><a href={s.herramienta.href} className={ENLACE}>{s.herramienta.nombre.includes(s.nombre) ? s.herramienta.nombre : `${s.herramienta.nombre} para ${s.nombre}`}</a></li>
           ))}
           <li><a href={rutas.vincular} className={ENLACE}>Conectar Blender con un código</a></li>
+          <li><a href={rutas.geoda} className={ENLACE}>Geoda: ajusta todo a tu equipo</a></li>
+          <li><a href={rutas.biblioteca} className={ENLACE}>Biblioteca de recursos libres</a></li>
         </Columna>
         <Columna titulo="Tu cuenta">
           <li><a href={rutas.panel} className={ENLACE}>Mi panel</a></li>
