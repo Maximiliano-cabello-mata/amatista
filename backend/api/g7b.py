@@ -79,11 +79,16 @@ def obtener():
     global _cache, _vence
     ahora = time.monotonic()
     with _CANDADO:
-        if _cache is not None and ahora < _vence:
-            return {**_cache, "estado": "conectado"}
+        if ahora < _vence:
+            if _cache is not None:
+                return {**_cache, "estado": "conectado"}
+            return {"contrato": "g7b.geoda.estado/1", "estado": "sin_conexion",
+                    "cubo": None, "conocimiento": None, "perfiles": []}
         try:
             nuevo = _descargar()
         except (OSError, ValueError, TypeError, UnicodeError) as error:
+            # Un proveedor caído no debe disparar una petición externa por cada alumno.
+            _vence = ahora + 60
             LOG.warning("G7B no disponible; se mantienen reglas base: %s", type(error).__name__)
             if _cache is not None:
                 return {**_cache, "estado": "cache"}
