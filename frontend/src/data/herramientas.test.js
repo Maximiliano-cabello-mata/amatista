@@ -10,7 +10,7 @@ describe('catálogo de herramientas', () => {
 
   it('marca las herramientas nuevas y da nombres legibles', () => {
     const nuevas = Object.keys(HERRAMIENTAS).filter((t) => HERRAMIENTAS[t].nueva);
-    expect(nuevas).toEqual(['shortcut_drill', 'transform_challenge', 'spot_error']);
+    expect(nuevas).toEqual(['herramienta_blender', 'blender_mapa']);
     expect(nombreHerramienta('compare')).toBe('Comparar');
     expect(nombreHerramienta('raro')).toBe('raro');
   });

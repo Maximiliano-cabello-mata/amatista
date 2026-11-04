@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '../auth/contexto';
+import Avatar from '../avatares/Avatar';
+import { useAvatar } from '../avatares/contexto';
 import { useConexion } from '../hooks/useConexion';
 import { useInstalarPWA } from '../hooks/useInstalarPWA';
 import { useProgreso } from '../progreso/contexto';
@@ -14,8 +16,13 @@ const PAGINAS_CURSOS = ['inicio', 'curso', 'leccion', 'blender', 'vincular', 'es
 function enlacesDe(verAdmin) {
   const enlaces = [
     { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
+    { href: rutas.biblioteca, texto: 'Biblioteca', activo: (pagina) => pagina === 'biblioteca' },
+    { href: rutas.geoda, texto: 'Geoda', activo: (pagina) => pagina === 'geoda' || pagina === 'ecosistema' },
+    { href: rutas.nube, texto: 'Cloud', activo: (pagina) => pagina === 'nube', destacado: true },
     { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
   ];
+  // 4 de noviembre de 2026: la biblioteca, Geoda (el kernel que adapta, con G7B detrás) y Amatista
+  // Cloud dejan de estar escondidas y van en el menú; «Todo Amatista» (#/ecosistema) explica cada una.
   // Estructura fija (2026-10-23): Cursos, Mi panel y, para el equipo, Admin. Se retiró Explorar
   // (un buscador no sirve a quien no sabe qué cursos hay) y ningún programa tiene pestaña propia:
   // cada uno es una lista del camino guiado, con su herramienta como primer o último paso.
@@ -84,6 +91,7 @@ const CLASE_BOTON_INSTALAR =
   'corte-poly-sm bg-amatista px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-amatista-claro hover:text-base';
 
 function MenuCuenta({ usuario, alCerrarSesion }) {
+  const { avatar } = useAvatar();
   const [abierto, setAbierto] = useState(false);
   const contenedor = useRef(null);
   const boton = useRef(null);
@@ -103,9 +111,7 @@ function MenuCuenta({ usuario, alCerrarSesion }) {
         aria-controls="menu-cuenta"
         className="corte-poly-sm flex max-w-[12rem] items-center gap-2 border border-white/10 bg-superficie/80 py-1 pl-1.5 pr-3 text-sm text-white hover:border-amatista"
       >
-        <span className="hexagono grid h-7 w-8 shrink-0 place-items-center bg-amatista font-bold" aria-hidden="true">
-          {inicial(usuario)}
-        </span>
+        <Avatar id={avatar} inicial={inicial(usuario)} />
         <span className="truncate">{usuario.nombre || usuario.email}</span>
         <span className="sr-only">: menú de la cuenta</span>
         <span aria-hidden="true" className="text-white/50">
@@ -127,6 +133,11 @@ function MenuCuenta({ usuario, alCerrarSesion }) {
             <li>
               <a href={rutas.guia} onClick={() => setAbierto(false)} className="block px-3 py-2 text-sm text-white hover:bg-white/5">
                 Ayuda y recorrido
+              </a>
+            </li>
+            <li>
+              <a href={rutas.buzon} onClick={() => setAbierto(false)} className="block px-3 py-2 text-sm text-white hover:bg-white/5">
+                Buzón del creador
               </a>
             </li>
             <li>
@@ -153,6 +164,7 @@ function BarraSuperior({ ruta, hash = '' }) {
   const instalar = useInstalarPWA();
   const { xp, nivel } = useProgreso();
   const { usuario, esProfesor, cerrarSesion } = useAuth();
+  const { avatar } = useAvatar();
   const { comoAlumno } = useVista();
   const [menuAbierto, setMenuAbierto] = useState(false);
   const barra = useRef(null);
@@ -192,7 +204,9 @@ function BarraSuperior({ ruta, hash = '' }) {
                   <a
                     href={enlace.href}
                     aria-current={activo ? 'page' : undefined}
-                    className={`nav-principal__enlace ${activo ? 'nav-principal__enlace--activo' : ''}`}
+                    className={`nav-principal__enlace ${activo ? 'nav-principal__enlace--activo' : ''} ${
+                      enlace.destacado ? 'border border-neon/40 text-neon' : ''
+                    }`}
                   >
                     {enlace.texto}
                   </a>
@@ -281,9 +295,7 @@ function BarraSuperior({ ruta, hash = '' }) {
               {usuario ? (
                 <div className="grid gap-1">
                   <p className="flex items-center gap-2 px-3 pb-1 text-sm text-white">
-                    <span className="hexagono grid h-7 w-8 shrink-0 place-items-center bg-amatista font-bold" aria-hidden="true">
-                      {inicial(usuario)}
-                    </span>
+                    <Avatar id={avatar} inicial={inicial(usuario)} />
                     <span className="truncate">{usuario.nombre || usuario.email}</span>
                   </p>
                   <a
@@ -301,6 +313,14 @@ function BarraSuperior({ ruta, hash = '' }) {
                     className="corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest text-white/70 hover:text-neon"
                   >
                     Ayuda
+                  </a>
+                  <a
+                    href={rutas.buzon}
+                    onClick={() => setMenuAbierto(false)}
+                    aria-current={pagina === 'buzon' ? 'page' : undefined}
+                    className="corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest text-white/70 hover:text-neon"
+                  >
+                    Buzón del creador
                   </a>
                   <button
                     type="button"

@@ -17,7 +17,7 @@ const COLORES = [
 ];
 
 function Clasificar({ bloque, alCompletar, resuelta }) {
-  const { resultado, resolver } = useActividad(alCompletar);
+  const { resultado, resolver, fallar } = useActividad(alCompletar);
   const grupos = bloque.groups ?? [];
   const items = bloque.items ?? [];
   const cuantos = items.length;
@@ -46,6 +46,7 @@ function Clasificar({ bloque, alCompletar, resuelta }) {
     }
     setErrores(revision.mal);
     setAsignadas(quitarErrores(asignadas, revision.mal));
+    fallar(nuevos);
   };
 
   const verSolucion = () => {

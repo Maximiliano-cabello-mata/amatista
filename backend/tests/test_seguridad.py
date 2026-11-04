@@ -59,15 +59,18 @@ def test_matriz_de_permisos(cliente, crear_cuenta, app):
     # Las únicas rutas públicas son estas: una ruta pública nueva debe agregarse aquí a propósito.
     publicas = sorted(f"{m} {r}" for (m, r), q in requisitos.items() if q == "publica")
     assert publicas == sorted([
-        "GET /", "GET /api/salud",
+        "GET /", "GET /api/salud", "GET /api/g7b/v1/estado",
+        "GET /api/nube/v1/estado",  # lugares libres y reglas; con sesión, además, si la cuenta puede entrar
         "POST /api/auth/registro", "POST /api/auth/iniciar-sesion", "POST /api/auth/confirmar-correo",
         "POST /api/auth/reenviar-codigo", "POST /api/auth/recuperar", "POST /api/auth/restablecer",
         "POST /api/iniciar-sesion", "POST /api/progreso", "GET /api/progreso/{usuario_id}", "POST /api/eventos",
+        "POST /api/sincronizar",
         "GET /api/contenido/catalogo", "GET /api/blender/versiones",
         "GET /api/addon/v1/estado", "POST /api/addon/v1/vinculos", "POST /api/addon/v1/vinculos/{vinculo_id}/estado",
         "GET /api/addon/v1/practicas", "GET /api/addon/v1/practicas/{practica_id}",
         "GET /api/addon/v1/descargas/{sistema}", "GET /api/addon/v1/extension.zip",
         "GET /api/addon/v1/extensiones/index.json",
+        "GET /api/addon/v1/instaladores/{sistema}",
     ])
 
 

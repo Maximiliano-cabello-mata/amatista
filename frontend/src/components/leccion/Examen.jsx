@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { avisarGoliat } from '../../goliat/eventos';
 import { XP_POR_LECCION } from '../../progreso/reglas';
 import Escenario from '../temas/Escenario';
 import Jefe from '../temas/Jefe';
@@ -141,6 +142,7 @@ function Examen({ quiz, registroPrevio, insignia, completaModulo, hrefCurso, alT
         (registroPrevio?.completada ? Math.max(0, puntaje - mejorAnterior) : Math.max(puntaje, mejorAnterior))
       : 0;
     setResultado({ puntaje, aprobado, aciertos, xpGanada });
+    avisarGoliat({ tipo: 'examen', aprobado });
     alTerminar(puntaje, aprobado);
   };
 

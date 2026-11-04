@@ -110,3 +110,13 @@ export const validarLeccion = (token, leccion) =>
 // Permisos, cuentas, contenido sin publicar y lecciones donde los alumnos se atascan.
 export const obtenerAuditoria = (token, dias = 30) =>
   pedirJSON(`/api/admin/auditoria${consultaURL({ dias })}`, { token, espera: ESPERA_LARGA });
+
+// --- Buzón del creador ---------------------------------------------------------
+
+export const bandejaBuzon = (token, estado) => pedirJSON(`/api/buzon/bandeja${consultaURL({ estado })}`, { token });
+
+export const responderComoCreador = (token, id, texto) =>
+  pedirJSON(`/api/buzon/bandeja/${parte(id)}/responder`, { metodo: "POST", token, cuerpo: { texto } });
+
+export const cambiarEstadoSugerencia = (token, id, estado) =>
+  pedirJSON(`/api/buzon/bandeja/${parte(id)}/estado`, { metodo: "POST", token, cuerpo: { estado } });

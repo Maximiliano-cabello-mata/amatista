@@ -1,4 +1,39 @@
-"""Amatista para Blender (Amatista Motor 6: Blender y Amatista como una sola cosa).
+"""Amatista para Blender (Amatista Motor 7: el guion paso a paso, por el resultado real).
+
+Add-on 7.1 · Corazón Amatista 1.0 (corazon/): quien decide qué ve el alumno
+es el corazón del motor (``amatista_engine.corazon``, contrato estable
+``amatista.corazon/1``), no el add-on. Aquí solo vive el adaptador de
+Blender: hace las señales con lo que Blender muestra y las vuelve a
+comprobar cada 0,5 s; si dejan de ser verdad, la banda lo dice y ofrece
+«Señálalo otra vez». Nada desaparece por reloj.
+
+Motor 7 (add-on 7.0, guion/): un paso a la vez, arriba de la vista 3D y en
+N › Amatista. Avanza en cuanto la escena cumple el paso (se revisa a los
+0,15 s de cada cambio, de cada guardado y de cada Ctrl + Z), en cualquier
+orden y con cualquier herramienta. Lo que falta sale del paso que toca, la
+pista «¿Dónde está?» dice el lugar real de la herramienta y la señala de
+verdad (la deja elegida, abre su menú o su pestaña, selecciona la pieza);
+nada dice «brilla» si no se señaló nada. Mientras el guion manda, la
+tarjeta del taller, el molde del proyecto, el brillo y las fichas no se
+dibujan, y la barra de herramientas ya no se esconde. Un administrador
+practica sin progreso: cada arranque empieza de cero.
+
+Motor 6.2 (add-on 6.2): Amatista acompaña según cómo vas (taller/acompanar.py):
+lee tu ánimo con lo que Blender ya registra (intentos, deshacer, ráfagas de
+clics, tiempo sin avanzar) y enciende la luz que haga falta: la pieza que
+toca pulsa con un faro, la herramienta brilla sola y la tarjeta dice «Te
+toca» y «Estás haciendo». Mucha luz al principio, más seria con el dominio,
+y lo que no dominas se sigue señalando. Cambiar de práctica sale limpio y
+«Volver a mi práctica» (navegar.py) te regresa desde cualquier escena.
+
+Motor 6.1 (add-on 6.1): Blender es una extensión de la plataforma, no una
+cosa aparte. La plataforma le dice a Blender en qué lección va (plataforma.py)
+y, al cumplir la etapa en Blender, la lección avanza sola; Blender sigue a la
+lección sin abrir pestañas nuevas. La ayuda enseña (fichas.py): cada
+herramienta nueva se presenta con su ficha (para qué sirve, dónde está, cómo
+se usa, el error típico), brilla en su zona de la ventana y, en los primeros
+pasos, el modo curioso explica lo que el alumno toca. Las fichas son las mismas
+que la teoría de la plataforma (practices/blender/fichas.json).
 
 Motor 6 (add-on 6.0): autosanación (saneamiento.py: una sola copia de
 Amatista encendida, sin manejadores huérfanos), una sola tarjeta a la vez
@@ -65,7 +100,7 @@ Documentación: docs/motor/ en el repositorio.
 bl_info = {  # solo para instalarlo como add-on clásico; en 4.2+ manda blender_manifest.toml
     "name": "Amatista Motor",
     "author": "Maximiliano Cabello Mata",
-    "version": (6, 0, 0),
+    "version": (7, 1, 0),
     "blender": (4, 2, 0),
     "location": "Vista 3D › Barra lateral (N) › Amatista",
     "description": "Aprende Blender habilidad por habilidad con Amatista Taller",
@@ -74,8 +109,8 @@ bl_info = {  # solo para instalarlo como add-on clásico; en 4.2+ manda blender_
 
 import bpy  # noqa: E402
 
-from . import (ajustes, blender_amatista, cuenta, desarrollo, enfoque, enlace, escenarios, estado, guia, integracion, mision,
-               operadores, practicas, recorrido, red, saneamiento)
+from . import (ajustes, blender_amatista, cuenta, desarrollo, enfoque, enlace, escenarios, estado, fichas, guia, guion,
+               integracion, mision, navegar, operadores, plataforma, practicas, recorrido, red, saneamiento)
 from . import taller
 from .interfaz import aprender, dialogos, estilo, herramientas, hud, paneles
 
@@ -108,11 +143,14 @@ def register():
     for clase in CLASES:
         bpy.utils.register_class(clase)
     taller.register()  # después de los paneles: su panel cuelga de AMATISTA_PT_principal
+    guion.register()  # motor 7: el guion paso a paso (panel, banda y revisión en el momento)
     practicas.register()
     enlace.register()
     hud.register()
     integracion.register()  # menú, cabecera, barra de estado y la orden que trajo amatista://
     blender_amatista.register()  # motor 6: la plantilla «Blender Amatista» y su acceso directo
+    fichas.register()  # motor 6.1: las fichas de herramientas y el modo curioso
+    navegar.register()  # motor 6.2: «Volver a mi práctica» desde cualquier escena
     bpy.app.timers.register(_primer_arranque, first_interval=1.5)
     saneamiento.despues_de_registrar()  # apaga las otras copias de Amatista (en un temporizador)
 
@@ -125,6 +163,9 @@ def unregister():
     except Exception as error:  # noqa: BLE001 - desregistrar nunca debe fallar
         print(f"[Amatista] No se pudo restaurar el mundo: {error}")
     saneamiento.al_desregistrar()
+    navegar.unregister()
+    fichas.unregister()
+    plataforma.reiniciar()
     blender_amatista.unregister()
     integracion.unregister()
     enfoque.unregister()  # Blender completo otra vez, como estaba
@@ -135,6 +176,7 @@ def unregister():
     cuenta.unregister()  # deja de preguntar por el código de vinculación
     guia.unregister()
     mision.unregister()
+    guion.unregister()
     taller.unregister()
     red.unregister()
     for clase in reversed(CLASES):

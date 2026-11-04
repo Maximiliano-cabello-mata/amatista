@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import AuthProvider from './auth/AuthProvider';
+import AvatarProvider from './avatares/AvatarProvider';
 import { useAuth } from './auth/contexto';
 import CatalogoProvider from './catalogo/CatalogoProvider';
 import BarraSuperior from './components/BarraSuperior';
@@ -30,6 +31,13 @@ const Confirmar = lazy(() => import('./pages/cuenta/Confirmar'));
 const Recuperar = lazy(() => import('./pages/cuenta/Recuperar'));
 const Perfil = lazy(() => import('./pages/cuenta/Perfil'));
 const Guia = lazy(() => import('./pages/Guia'));
+const Buzon = lazy(() => import('./pages/Buzon'));
+const Geoda = lazy(() => import('./pages/Geoda'));
+const Biblioteca = lazy(() => import('./pages/Biblioteca'));
+const Nube = lazy(() => import('./pages/Nube'));
+const Ecosistema = lazy(() => import('./pages/Ecosistema'));
+// Goliat, el compañero de toda la plataforma: llega después de la página.
+const Goliat = lazy(() => import('./goliat/Goliat'));
 
 function useRuta() {
   const [hash, setHash] = useState(() => window.location.hash);
@@ -118,6 +126,16 @@ function Pagina({ ruta, hash }) {
       return <Perfil />;
     case 'guia':
       return <Guia />;
+    case 'buzon':
+      return <Buzon consulta={ruta.consulta} />;
+    case 'geoda':
+      return <Geoda />;
+    case 'biblioteca':
+      return <Biblioteca />;
+    case 'nube':
+      return <Nube />;
+    case 'ecosistema':
+      return <Ecosistema />;
     case 'admin':
       return <RutaAdmin ruta={ruta} hash={hash} />;
     default:
@@ -144,6 +162,7 @@ function App() {
       </a>
       <FondoLowPoly />
       <AuthProvider>
+        <AvatarProvider>
         <VistaProvider>
         <CatalogoProvider>
           <ProgresoProvider>
@@ -162,10 +181,14 @@ function App() {
                 </div>
               </Suspense>
               <PiePagina />
+              <Suspense fallback={null}>
+                <Goliat />
+              </Suspense>
             </RecorridoProvider>
           </ProgresoProvider>
         </CatalogoProvider>
         </VistaProvider>
+        </AvatarProvider>
       </AuthProvider>
     </div>
   );

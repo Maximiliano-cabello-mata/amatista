@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useAuth } from '../../auth/contexto';
 import { validarNombre, validarPassword, validarPasswordNueva, validarTelefono } from '../../auth/validacion';
+import { BustoAvatar } from '../../avatares/Avatar';
+import { useAvatar } from '../../avatares/contexto';
+import SelectorAvatar from '../../avatares/SelectorAvatar';
 import EstadoGuardado from '../../components/EstadoGuardado';
 import Pagina from '../../components/estructura/Pagina';
 import { useProgreso } from '../../progreso/contexto';
@@ -219,6 +222,7 @@ function CerrarSesiones() {
 
 function Perfil() {
   const { usuario, listo } = useAuth();
+  const { avatar } = useAvatar();
 
   if (!listo) return null;
 
@@ -246,7 +250,11 @@ function Perfil() {
       ancho="lectura"
       migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Mi cuenta' }]}
       encabezado={{
-        icono: <span className="text-4xl font-extrabold text-white">{(usuario.nombre || usuario.email || '?').trim().charAt(0).toUpperCase()}</span>,
+        icono: avatar ? (
+          <BustoAvatar id={avatar} className="h-[86%] w-[86%]" />
+        ) : (
+          <span className="text-4xl font-extrabold text-white">{(usuario.nombre || usuario.email || '?').trim().charAt(0).toUpperCase()}</span>
+        ),
         antetitulo: 'Tu cuenta',
         titulo: usuario.nombre || 'Perfil',
         descripcion: usuario.email,
@@ -281,6 +289,10 @@ function Perfil() {
               <dd className="text-white">{fecha(usuario.creado_en)}</dd>
             </div>
           </dl>
+        </Seccion>
+
+        <Seccion id="perfil-personaje" titulo="Tu personaje">
+          <SelectorAvatar />
         </Seccion>
 
         <Seccion id="perfil-editar" titulo="Editar datos">

@@ -5,7 +5,7 @@ describe('rutas', () => {
   it('páginas del contrato', () => {
     expect(analizarRuta('')).toMatchObject({ pagina: 'inicio' });
     expect(analizarRuta('#/')).toMatchObject({ pagina: 'inicio' });
-    for (const pagina of ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil']) {
+    for (const pagina of ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'geoda', 'biblioteca', 'nube', 'ecosistema']) {
       expect(analizarRuta(`#/${pagina}`)).toMatchObject({ pagina });
     }
     expect(analizarRuta(rutas.curso('blender'))).toMatchObject({ pagina: 'curso', cursoId: 'blender' });
@@ -51,5 +51,13 @@ describe('rutas', () => {
     expect(destinoTrasEntrar(ruta.consulta)).toBe('#/perfil');
     expect(destinoTrasEntrar({ volver: 'https://malo.com' })).toBe(rutas.panel);
     expect(rutaEntrar('#/entrar')).toBe(rutas.entrar);
+  });
+});
+
+describe('buzón del creador', () => {
+  it('tiene página propia y sección en el panel', () => {
+    expect(analizarRuta(rutas.buzon)).toMatchObject({ pagina: 'buzon' });
+    expect(analizarRuta('#/buzon?desde=%23%2Fpanel')).toMatchObject({ pagina: 'buzon', consulta: { desde: '#/panel' } });
+    expect(analizarRuta(rutas.adminBuzon)).toMatchObject({ pagina: 'admin', seccion: 'buzon' });
   });
 });

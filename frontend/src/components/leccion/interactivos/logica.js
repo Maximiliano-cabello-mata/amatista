@@ -25,6 +25,9 @@ export const TIPOS_INTERACTIVOS = [
   'shortcut_drill',
   'transform_challenge',
   'spot_error',
+  // Motor 6.1: la ficha de una herramienta y el mapa de la ventana de Blender (fichas.js).
+  'herramienta_blender',
+  'blender_mapa',
 ];
 
 // La tarjeta del proyecto (blender_taller con vista «proyecto») solo informa: la

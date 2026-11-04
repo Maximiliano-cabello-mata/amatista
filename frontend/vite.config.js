@@ -60,6 +60,15 @@ export default defineConfig({
           '**/*-{cyrillic,cyrillic-ext,greek,vietnamese}-*.woff2',
           // Planos de los modelos de referencia: se guardan al verlos (abajo).
           '**/plano-*.svg',
+          // Paneles de administración y del profesor (~35 KB comprimidos): un
+          // alumno nunca los abre y no debe gastar sus datos en bajarlos. Quien
+          // sí los usa los guarda al abrirlos (abajo) y siguen sin conexión.
+          '**/Admin-*.js',
+          '**/Profesor*-*.js',
+          // SDK de Sentry (~360 KB): solo se baja si hay VITE_SENTRY_DSN (src/lib/sentry.js).
+          '**/sentrySdk-*.js',
+          // Biblioteca de recursos (~20 MB): no se precachea; se guarda lo que se abre (abajo).
+          'biblioteca/**',
         ],
         runtimeCaching: [
           {
@@ -67,6 +76,23 @@ export default defineConfig({
             urlPattern: ({ url }) => /\/assets\/(referencia|plano)-[^/]+\.(jpg|svg)$/.test(url.pathname),
             handler: 'CacheFirst',
             options: { cacheName: 'amatista-referencias', expiration: { maxEntries: 60 } },
+          },
+          {
+            urlPattern: ({ url }) => /^\/assets\/(Admin|Profesor[^/]*)-[^/]+\.js$/.test(url.pathname),
+            handler: 'CacheFirst',
+            options: { cacheName: 'amatista-paneles', expiration: { maxEntries: 8 } },
+          },
+          {
+            // El catálogo de la biblioteca: el más nuevo si hay red; si no, el guardado.
+            urlPattern: ({ url }) => url.pathname === '/biblioteca/catalogo.json',
+            handler: 'StaleWhileRevalidate',
+            options: { cacheName: 'amatista-biblioteca-catalogo' },
+          },
+          {
+            // Vistas previas, texturas y modelos: se guardan al abrirlos y quedan sin conexión.
+            urlPattern: ({ url }) => url.pathname.startsWith('/biblioteca/'),
+            handler: 'CacheFirst',
+            options: { cacheName: 'amatista-biblioteca', expiration: { maxEntries: 800, maxAgeSeconds: 60 * 60 * 24 * 365 } },
           },
           {
             urlPattern: ({ url }) => url.pathname.startsWith('/assets/aframe-master'),

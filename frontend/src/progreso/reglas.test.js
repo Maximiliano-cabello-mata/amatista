@@ -5,6 +5,7 @@ import {
   calcularRacha,
   calcularXP,
   claveLeccion,
+  esSinProgreso,
   estaCompletada,
   estaDesbloqueada,
   fechaLocal,
@@ -261,5 +262,14 @@ describe('fechas y racha', () => {
   it('sin actividad', () => {
     expect(calcularRacha({}, '2026-10-02')).toEqual({ actual: 0, mejor: 0, hoy: false });
     expect(calcularRacha(undefined, '2026-10-02')).toEqual({ actual: 0, mejor: 0, hoy: false });
+  });
+});
+
+describe('esSinProgreso', () => {
+  it('solo el administrador practica sin progreso', () => {
+    expect(esSinProgreso({ rol: 'admin' })).toBe(true);
+    expect(esSinProgreso({ rol: 'profesor' })).toBe(false);
+    expect(esSinProgreso({ rol: 'alumno' })).toBe(false);
+    expect(esSinProgreso(null)).toBe(false);
   });
 });

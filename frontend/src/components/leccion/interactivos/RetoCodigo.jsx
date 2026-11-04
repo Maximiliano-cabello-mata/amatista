@@ -49,7 +49,7 @@ function RetoCodigo({ bloque, alCompletar, resuelta }) {
   const [verVista, setVerVista] = useState(false);
   const [ejecucion, setEjecucion] = useState(null);
   const [con3D] = useState(() => webglDisponible());
-  const { resultado, resolver } = useActividad(alCompletar);
+  const { resultado, resolver, fallar } = useActividad(alCompletar);
   const { Componente: VistaAFrame, error } = useModuloDiferido(cargarVista, verVista && con3D);
   const cumplidas = useMemo(() => evaluarCodigo(codigo, revisiones), [codigo, revisiones]);
   const faltan = cumplidas.filter((cumplida) => !cumplida).length;
@@ -76,6 +76,7 @@ function RetoCodigo({ bloque, alCompletar, resuelta }) {
     } else {
       setComprobado(true);
       setFallos(fallos + 1);
+      fallar(fallos + 1);
     }
   };
 

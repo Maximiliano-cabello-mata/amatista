@@ -91,7 +91,8 @@ function Descarga({ token, usuario }) {
   const descargar = async () => {
     setEstado({ descargando: true, error: null, nombre: null });
     const resultado = await descargarPaquete(token, elegido);
-    setEstado({ descargando: false, error: resultado.ok ? null : resultado.error, nombre: resultado.nombre ?? null });
+    setEstado({ descargando: false, error: resultado.ok ? null : resultado.error, nombre: resultado.nombre ?? null,
+      instalador: Boolean(resultado.instalador) });
   };
 
   return (
@@ -145,7 +146,10 @@ function Descarga({ token, usuario }) {
       {estado.nombre && (
         <div className="mt-4">
           <Alerta tipo="exito">
-            Descargado <strong>{estado.nombre}</strong>. Ahora descomprímelo y ejecuta el instalador.
+            Descargado <strong>{estado.nombre}</strong>.{' '}
+            {estado.instalador
+              ? 'Ábrelo con doble clic. Al abrir Blender Amatista, pulsa «Conectar mi cuenta».'
+              : 'Ahora descomprímelo y ejecuta el instalador.'}
           </Alerta>
         </div>
       )}
@@ -536,6 +540,12 @@ function Blender() {
       <div className="mt-6">
         <FusionPlataformaBlender progreso={progreso} resumida={listo} />
       </div>
+
+      <p className="mt-4 text-sm text-texto/80">
+        ¿No sabes qué versión de Blender va bien en tu computadora?{' '}
+        <a href={rutas.geoda} className="font-bold text-neon hover:underline">Geoda te la recomienda y te da un script con los ajustes</a>
+        {' '}· <a href={rutas.biblioteca} className="font-bold text-neon hover:underline">texturas y modelos libres</a>.
+      </p>
 
       <Etapa numero="1" titulo="Prepárate (una sola vez)" id="blender-preparar" recorrido="instalar">
         {listo ? (

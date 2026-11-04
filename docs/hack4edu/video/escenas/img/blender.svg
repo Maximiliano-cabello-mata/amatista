@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 104" role="img" aria-label="Blender">
+  <!-- Logotipo de Blender dibujado para Amatista, inspirado en la marca oficial (blender.org). -->
+  <g fill="#E87D0D">
+    <rect x="4" y="12" width="74" height="17" rx="8.5"/>
+    <polygon points="58,12 80,20 74,44 46,29"/>
+    <rect x="26" y="42" width="42" height="15" rx="7.5"/>
+    <path d="M62 66 L20 92" stroke="#E87D0D" stroke-width="17" stroke-linecap="round"/>
+    <circle cx="80" cy="58" r="38"/>
+  </g>
+  <circle cx="82" cy="56" r="25" fill="#FFFFFF"/>
+  <circle cx="82" cy="56" r="15.5" fill="#265787"/>
+</svg>

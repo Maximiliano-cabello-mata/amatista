@@ -42,6 +42,29 @@
             "body": "### Como un filtro de fotos\nUn **modificador** cambia cómo se ve tu modelo sin tocar la malla original. Puedes apagarlo, cambiarlo o quitarlo cuando quieras. Viven en la pestaña de la **llave inglesa** (azul) del panel Propiedades."
           },
           {
+            "type": "herramienta_blender",
+            "id": "bp3_gancho_ficha_modifier_mirror",
+            "tool": "modifier.mirror",
+            "text": "En la siguiente lección la usas en Blender. Allí aparece esta misma ficha y su lugar se ilumina."
+          },
+          {
+            "type": "blender_mapa",
+            "id": "bp3_gancho_mapa",
+            "mode": "find",
+            "questions": [
+              {
+                "zone": "propiedades",
+                "prompt": "¿Dónde viven los modificadores (la llave inglesa azul)?"
+              },
+              {
+                "zone": "herramientas",
+                "prompt": "¿Dónde está la barra con Mover, Girar y Escalar?"
+              }
+            ],
+            "title": "¿Dónde se ponen los filtros?",
+            "text": "Los modificadores no están en la vista 3D: viven en otro panel. Encuéntralo antes de ir a Blender."
+          },
+          {
             "type": "param_demo",
             "demo": "mirror",
             "caption": "Mueves un vértice de la mitad derecha y el espejo lo copia del otro lado."
@@ -274,6 +297,29 @@
               }
             ],
             "explanation": "Espejo copia tu mitad del otro lado del eje (la línea verde) y las dos se mueven juntas. Array repite en fila y Subdivisión suaviza."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp3_explora_ficha_modifier_subdivision",
+            "tool": "modifier.subdivision",
+            "text": "Ya tienes una mitad con Espejo. Subdivisión la suaviza sin que agregues caras a mano."
+          },
+          {
+            "type": "blender_mapa",
+            "id": "bp3_explora_mapa",
+            "mode": "find",
+            "questions": [
+              {
+                "tool": "modifier.mirror"
+              },
+              {
+                "tool": "modifier.subdivision"
+              },
+              {
+                "tool": "transform.scale"
+              }
+            ],
+            "title": "Repaso: tus filtros y dónde están"
           },
           {
             "type": "callout",

@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Película de Hack4Edu: el metraje grabado (pelicula/media) se regenera con docs/hack4edu/video/pelicula/metraje.cjs
+pelicula/media/

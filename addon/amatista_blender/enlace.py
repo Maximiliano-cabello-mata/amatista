@@ -158,6 +158,19 @@ def _datos():
                                            "mensaje": info["mensaje"][:500]}
         datos["detalle"] = {**detalle, "taller": info}
     try:
+        from . import guion
+
+        g = guion.vista() if guion.activo(sc) else None
+        if g is not None and g["haz"]:
+            # Motor 7: la lección muestra lo mismo que la banda de Blender (el paso, qué falta, cuántos van).
+            datos["detalle"] = {**(datos.get("detalle") or {}), "titulo": (g["titulo"] or "")[:120],
+                                "objetivo": g["haz"][:300], "mensaje": (g["pista"] or g["por_que"] or "")[:500],
+                                "numero": min(99, g["numero"]), "total": min(99, g["total"]),
+                                "parte": (g["parte"] or "")[:60], "completada": bool(g["completo"]),
+                                "hechas": min(99, sum(1 for _t, e in g["pasos"] if e == "hecho"))}
+    except Exception as error:  # noqa: BLE001 - el detalle es un extra: el latido sale igual
+        print(f"[Amatista] Detalle del guion: {error}")
+    try:
         from . import recorrido
 
         datos["detalle"] = {**(datos.get("detalle") or {}), "recorrido": recorrido.info_latido()}
@@ -278,6 +291,15 @@ def cumplir(orden):
     context = bpy.context
     from .taller import sesion
 
+    if tipo == "leccion":  # motor 6.1: en qué lección va el alumno en la plataforma (sin avisos: llega seguido)
+        from . import integracion, plataforma
+
+        ESTADO["cumplidas"] = (ESTADO["cumplidas"] + [orden_id])[-20:]
+        if plataforma.recibir(datos):
+            integracion.redibujar_barras()
+            practicas.redibujar()
+        _terminada(orden_id)
+        return True
     if tipo in sesion.ORDENES:  # add-on 5: la lección maneja el taller
         ESTADO["cumplidas"] = (ESTADO["cumplidas"] + [orden_id])[-20:]
         try:

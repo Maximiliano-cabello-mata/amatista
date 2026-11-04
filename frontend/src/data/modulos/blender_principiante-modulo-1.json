@@ -42,6 +42,32 @@
             "body": "### Tu primer vistazo a Blender\nAl abrir Blender ves muchos botones, pero solo necesitas tres zonas:\n\n- **Vista 3D** (el centro): donde ves y mueves tus objetos.\n- **Outliner** (arriba a la derecha): la lista de todo lo que hay en la escena.\n- **Propiedades** (abajo a la derecha): los detalles del objeto elegido (tamaño, material, modificadores).\n\nLo demás lo irás descubriendo cuando lo necesites."
           },
           {
+            "type": "blender_mapa",
+            "id": "bp1_gancho_mapa",
+            "mode": "explore",
+            "title": "Conoce la ventana de Blender antes de abrirla",
+            "text": "Blender asusta la primera vez porque tiene muchas partes. En realidad está dividido en zonas, y cada una tiene un solo trabajo. Toca cada una: cuando abras Blender desde la plataforma, todo estará en el mismo lugar."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp1_gancho_ficha_view_navigate",
+            "tool": "view.navigate",
+            "text": "Lo primero que harás en Blender es mirar. Mirar nunca cambia la escena.",
+            "check": false
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp1_gancho_ficha_object_add",
+            "tool": "object.add",
+            "text": "En la siguiente lección la usas en Blender. Allí aparece esta misma ficha y su lugar se ilumina."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp1_gancho_ficha_transform_move",
+            "tool": "transform.move",
+            "text": "En la siguiente lección la usas en Blender. Allí aparece esta misma ficha y su lugar se ilumina."
+          },
+          {
             "type": "concept_cards",
             "items": [
               {
@@ -438,6 +464,53 @@
               }
             ],
             "explanation": "Un cilindro nace acostado como una moneda; girarlo 90° en Y lo pone de canto como una rueda."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp1_explora_ficha_transform_rotate",
+            "tool": "transform.rotate",
+            "text": "Ya moviste cosas en Blender. Girar se usa igual que Mover: elige, presiona la tecla y mueve el ratón."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp1_explora_ficha_transform_scale",
+            "tool": "transform.scale",
+            "text": "Escalar es la tercera transformación. Con ella el tren de la práctica tendrá vagones largos y ruedas chatas."
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp1_explora_ficha_object_duplicate",
+            "tool": "object.duplicate",
+            "text": "Para el tren vas a necesitar muchas ruedas iguales. No las hagas una por una.",
+            "check": false
+          },
+          {
+            "type": "herramienta_blender",
+            "id": "bp1_explora_ficha_file_save",
+            "tool": "file.save",
+            "text": "Un archivo sin guardar se pierde si Blender se cierra. Guarda desde el principio.",
+            "check": false
+          },
+          {
+            "type": "blender_mapa",
+            "id": "bp1_explora_mapa",
+            "mode": "find",
+            "questions": [
+              {
+                "tool": "object.add"
+              },
+              {
+                "tool": "transform.scale"
+              },
+              {
+                "tool": "file.save"
+              },
+              {
+                "zone": "outliner",
+                "prompt": "¿Dónde ves la lista de todo lo que hay en tu escena?"
+              }
+            ],
+            "title": "Repaso: ¿dónde está cada cosa?"
           }
         ]
       },

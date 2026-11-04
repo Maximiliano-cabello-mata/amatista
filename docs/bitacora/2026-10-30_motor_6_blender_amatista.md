@@ -29,4 +29,4 @@ Motor 525 y add-on 66, add-on dentro de Blender 5.0.1 sin ventana sin fallas (co
 
 ## Pendiente del usuario
 
-Confirmar la fusión del PR. Después, publicar según `docs/despliegue/2026-10-30_motor_6.md` (T-141), instalar el 6.0 y abrir «Blender Amatista».
+El PR #43 se fusionó en `main` el 30 de octubre (`63028c4`), con la confirmación de Maximiliano. Falta publicar según `docs/despliegue/2026-10-30_motor_6.md` (T-141), instalar el 6.0 y abrir «Blender Amatista».

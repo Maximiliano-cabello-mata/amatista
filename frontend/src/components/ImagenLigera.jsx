@@ -1,11 +1,13 @@
 import { useCallback, useState } from 'react';
+import { ahorroActivo } from '../lib/red';
 
 // Imagen pensada para redes malas (v3.6). Guarda su espacio desde el inicio
 // (la página no salta al llegar la imagen), muestra un relleno facetado
 // mientras carga, aparece con un fundido y, si falla (sin conexión y sin
 // copia guardada), lo dice y ofrece reintentar. Con «Ahorro de datos» activo
-// no descarga nada hasta que el alumno la pide.
-const conAhorro = () => typeof navigator !== 'undefined' && navigator.connection?.saveData === true;
+// (del sistema, por red 2G o elegido en Mi panel) no descarga nada hasta
+// que el alumno la pide.
+const conAhorro = () => typeof window !== 'undefined' && ahorroActivo();
 
 function Imagen({ src, alt, ancho, alto, prioridad = false, className = '', imgClassName = '' }) {
   const [estado, setEstado] = useState(() => (!prioridad && conAhorro() ? 'esperando' : 'cargando'));

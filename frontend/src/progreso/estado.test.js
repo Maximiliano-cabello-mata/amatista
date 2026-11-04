@@ -12,6 +12,7 @@ import {
   confirmarEventos,
   confirmarProgreso,
   crearEvento,
+  desdeParaDescargar,
   estadoVacio,
   fechaIso,
   MAX_EVENTOS,
@@ -237,6 +238,41 @@ describe('fusión', () => {
     const estado = confirmarProgreso(aplicarInsignia(estadoVacio({ cuentaId: 'u' }), 'c:m1', HOY), { insignias: ['c:m1'] });
     expect(estado.insigniasPendientes).toEqual([]);
     expect(combinarConServidor(estado, { lecciones: [], insignias: [] }).insigniasPendientes).toEqual(['c:m1']);
+  });
+
+  it('una descarga parcial no marca como pendiente lo que no vino', () => {
+    let estado = aplicarLeccion(estadoVacio({ cuentaId: 'u' }), 'c', 'vieja', { completada: true }, { momento: HOY });
+    estado = confirmarProgreso(estado, prepararEnvio(estado));
+    const parcial = {
+      lecciones: [{ curso_id: 'c', leccion_id: 'nueva', completada: true, actualizado_en: '2026-10-02T09:00:00' }],
+      insignias: [],
+      parcial: true,
+      servidor_en: '2026-10-02T10:00:00',
+    };
+    const unido = combinarConServidor(estado, parcial);
+    expect(unido.lecciones['c:nueva'].completada).toBe(true);
+    expect(unido.pendientes).toEqual([]);
+    expect(unido.marcas.descargado).toBe('2026-10-02T10:00:00');
+    expect(unido.marcas.descargaCompleta).toBeNull();
+    // La misma respuesta completa sí repara lo que falta en el servidor.
+    expect(combinarConServidor(estado, { ...parcial, parcial: false }).pendientes).toEqual(['c:vieja']);
+  });
+
+  it('pide solo lo cambiado, salvo la primera vez y una vez por semana', () => {
+    const ahora = Date.parse('2026-10-10T12:00:00Z');
+    const conMarcas = (marcas) => ({ marcas: { ...estadoVacio().marcas, ...marcas } });
+    expect(desdeParaDescargar(estadoVacio(), ahora)).toBeNull();
+    const reciente = conMarcas({ descargado: '2026-10-10T11:00:00', descargaCompleta: '2026-10-09T12:00:00.000Z' });
+    expect(desdeParaDescargar(reciente, ahora)).toBe('2026-10-10T11:00:00');
+    const vieja = conMarcas({ descargado: '2026-10-10T11:00:00', descargaCompleta: '2026-10-01T12:00:00.000Z' });
+    expect(desdeParaDescargar(vieja, ahora)).toBeNull();
+  });
+
+  it('conserva las marcas de descarga al recargar', () => {
+    const estado = combinarConServidor(estadoVacio({ cuentaId: 'u' }), { lecciones: [], insignias: [], servidor_en: '2026-10-02T10:00:00' });
+    const recargado = normalizarEstado(JSON.parse(JSON.stringify(estado)), { cuentaId: 'u' });
+    expect(recargado.marcas.descargado).toBe('2026-10-02T10:00:00');
+    expect(recargado.marcas.descargaCompleta).toBe(estado.marcas.descargaCompleta);
   });
 });
 

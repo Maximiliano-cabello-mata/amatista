@@ -19,7 +19,7 @@ const PISTA = {
 const COLOR_EJE = { X: 'text-[#ff3352]', Y: 'text-[#8bdc00]', Z: 'text-[#2890ff]' };
 
 function AjustaValor({ bloque, alCompletar, resuelta }) {
-  const { resultado, resolver } = useActividad(alCompletar);
+  const { resultado, resolver, fallar } = useActividad(alCompletar);
   const idCampo = useId();
   const campo = campoDe(bloque);
   const eje = ['X', 'Y', 'Z'].includes(bloque.axis) ? bloque.axis : 'Z';
@@ -40,6 +40,7 @@ function AjustaValor({ bloque, alCompletar, resuelta }) {
     const p = pistaValor(valor, meta, campo.tolerancia);
     setPista(p);
     if (p === 'justo') resolver(n <= 2, n);
+    else fallar(n);
   };
 
   const listo = Boolean(resultado) || dentroDeTolerancia(valor, meta, campo.tolerancia);

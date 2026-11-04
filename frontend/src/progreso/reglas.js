@@ -10,6 +10,10 @@ export const XP_POR_ACTIVIDAD_PERFECTA = 10;
 
 export const claveLeccion = (cursoId, leccionId) => `${cursoId}:${leccionId}`;
 
+// Motor 7: el administrador practica sin progreso (ni en el equipo ni en el
+// servidor) y cada vez que entra empieza de cero, para probar como alumno nuevo.
+export const esSinProgreso = (usuario) => usuario?.rol === 'admin';
+
 // "curso:leccion" → [curso, leccion] (el id del curso no lleva ":").
 export function separarClave(clave) {
   const separador = clave.indexOf(':');

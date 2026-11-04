@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Openbox mínimo: Blender siempre maximizado, sin menús ni atajos para abrir otros programas. -->
+<openbox_config xmlns="http://openbox.org/3.4/rc">
+  <desktops><number>1</number></desktops>
+  <keyboard></keyboard>
+  <mouse><context name="Root"></context></mouse>
+  <menu></menu>
+  <applications>
+    <application class="Blender" type="normal"><decor>no</decor><maximized>yes</maximized></application>
+  </applications>
+</openbox_config>

@@ -1,16 +1,13 @@
-// La mascota acompaña TODA la lección (v3.4): vive en la esquina de la
-// pantalla, saluda, platica (consejos, charla y datos curiosos) cada rato y
-// reacciona a lo que pasa: celebra un acierto, anima tras un fallo, avisa a
-// la mitad y al final de la lección, y pregunta si sigues ahí cuando no hay
-// actividad. Se puede callar (queda solo el personaje) y lo recuerda.
+// La mascota acompaña la lección desde la esquina, sin interrumpir (v4.4):
+// ya no platica sola ni pregunta si sigues ahí. Habla cuando la tocas (cada
+// toque, un consejo o un dato distinto), anima tras ver una solución y
+// festeja al terminar la lección. Se puede callar y lo recuerda.
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Personaje from './Personaje';
 import { EVENTO_MASCOTA, mensajesDeMascota, reaccionDeMascota } from './temas';
 
-const CADA_MS = 24000; // cada cuánto platica sola
 const VISIBLE_MS = 9000; // cuánto se queda el globo
-const INACTIVO_MS = 75000; // sin tocar nada: «¿sigues ahí?»
 const CLAVE_SILENCIO = 'amatista.mascota.callada';
 
 const ETIQUETA = {
@@ -41,13 +38,12 @@ function guardarSilencio(valor) {
   }
 }
 
-function CompaneroMascota({ tema, titulo }) {
+function CompaneroMascota({ tema }) {
   const mascota = tema?.mascota;
   const [mensaje, setMensaje] = useState(null);
   const [callada, setCallada] = useState(leerSilencio);
   const indice = useRef(0);
   const ocultar = useRef(null);
-  const yaDijo = useRef(new Set());
 
   const decir = useCallback((nuevo, ms = VISIBLE_MS) => {
     if (!nuevo) return;
@@ -64,77 +60,17 @@ function CompaneroMascota({ tema, titulo }) {
     decir(lista[Math.min(indice.current, lista.length - 1)]);
   }, [mascota, decir]);
 
-  // Al entrar a la lección: saludo con el título.
-  useEffect(() => {
-    if (!mascota) return undefined;
-    indice.current = 0;
-    yaDijo.current = new Set();
-    const hola = titulo ? `${mascota.hola} Hoy toca «${titulo}».` : mascota.hola;
-    const reloj = window.setTimeout(() => decir({ tipo: 'hola', texto: hola }, 11000), 900);
-    return () => window.clearTimeout(reloj);
-  }, [mascota, titulo, decir]);
-
-  // Platica sola cada rato (si no está callada y la pestaña se ve).
+  // Solo dos momentos hablan solos: tras ver una solución (ánimo) y al
+  // terminar la lección. Los aciertos ya se celebran en la actividad.
   useEffect(() => {
     if (!mascota || callada) return undefined;
-    const reloj = window.setInterval(() => {
-      if (document.visibilityState === 'visible') siguiente();
-    }, CADA_MS);
-    return () => window.clearInterval(reloj);
-  }, [mascota, callada, siguiente]);
-
-  // Reacciones: aciertos y fallos de las actividades, y la lección terminada.
-  useEffect(() => {
-    if (!mascota) return undefined;
-    const alAvisar = (evento) => decir(reaccionDeMascota(mascota, evento.detail?.tipo));
+    const alAvisar = (evento) => {
+      const tipo = evento.detail?.tipo;
+      if (tipo === 'fallo' || tipo === 'final') decir(reaccionDeMascota(mascota, tipo));
+    };
     window.addEventListener(EVENTO_MASCOTA, alAvisar);
     return () => window.removeEventListener(EVENTO_MASCOTA, alAvisar);
-  }, [mascota, decir]);
-
-  // A la mitad y al final de la página, una vez por lección; y si no hay actividad, pregunta.
-  useEffect(() => {
-    if (!mascota) return undefined;
-    let pendiente = false;
-    let inactivo = null;
-    const reiniciar = () => {
-      window.clearTimeout(inactivo);
-      inactivo = window.setTimeout(() => {
-        if (!yaDijo.current.has('inactivo') && document.visibilityState === 'visible') {
-          yaDijo.current.add('inactivo');
-          decir(reaccionDeMascota(mascota, 'inactivo'));
-        }
-      }, INACTIVO_MS);
-    };
-    const revisar = () => {
-      pendiente = false;
-      const alto = document.documentElement.scrollHeight - window.innerHeight;
-      if (alto < 400) return;
-      const avance = window.scrollY / alto;
-      for (const [tipo, desde] of [['mitad', 0.5], ['final', 0.93]]) {
-        if (avance >= desde && !yaDijo.current.has(tipo)) {
-          yaDijo.current.add(tipo);
-          decir(reaccionDeMascota(mascota, tipo));
-        }
-      }
-    };
-    const alMover = () => {
-      reiniciar();
-      if (!pendiente) {
-        pendiente = true;
-        window.requestAnimationFrame(revisar);
-      }
-    };
-    reiniciar();
-    window.addEventListener('scroll', alMover, { passive: true });
-    window.addEventListener('pointerdown', reiniciar, { passive: true });
-    window.addEventListener('keydown', reiniciar);
-    return () => {
-      window.clearTimeout(inactivo);
-      window.removeEventListener('scroll', alMover);
-      window.removeEventListener('pointerdown', reiniciar);
-      window.removeEventListener('keydown', reiniciar);
-    };
-  }, [mascota, decir]);
+  }, [mascota, callada, decir]);
 
   useEffect(() => () => window.clearTimeout(ocultar.current), []);
 

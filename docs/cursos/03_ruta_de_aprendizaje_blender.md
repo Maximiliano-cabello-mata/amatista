@@ -49,6 +49,8 @@ Todos los módulos de Blender tienen el mismo ritmo, para que el alumno sepa qu�
 
 Desde el **Motor 6** la plataforma marca el paso: cada lección de Blender manda su **etapa** (exploración o práctica) y Blender no sale de ella. Al terminar la exploración, Blender no sigue solo: dice «Vuelve a la plataforma» y el alumno pasa a la teoría. Con la cuenta conectada, en Blender no se eligen módulos; se llega a cada uno desde su lección. Detalle: [Amatista Motor 6](../motor/referencia/19_motor_6.md) §4.
 
+Desde el **Motor 6.1** las dos ventanas van juntas. El **gancho** presenta con su ficha las herramientas que la exploración estrena (para qué sirve, a qué se parece, dónde está) y el alumno las encuentra en el esquema de Blender. Blender las vuelve a presentar con la misma ficha, iluminando la zona. Al cumplir la exploración, la lección pasa sola a la teoría y Blender no abre otra pestaña. El **explora** presenta lo que viene en la práctica y repasa dónde está cada cosa. Detalle: [Amatista Motor 6.1](../motor/referencia/20_motor_6_1.md).
+
 Cada módulo tiene además su **temática** para que cada sesión se sienta distinta: un escenario animado, una **mascota** original (personaje en pixel art, estilo videojuego retro) que da consejos y datos curiosos, y un **jefe final** con su propia silueta. El add-on usa la misma temática en Blender. Todo vive en `practices/blender/temas.json`.
 
 | Módulo | Temática | Mascota | Jefe |

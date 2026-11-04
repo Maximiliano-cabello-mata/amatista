@@ -36,7 +36,7 @@ function Ordenar({ bloque, alCompletar, resuelta }) {
   const [fallos, setFallos] = useState(0);
   const [arrastrado, setArrastrado] = useState(null);
   const [anuncio, setAnuncio] = useState('');
-  const { resultado, resolver } = useActividad(alCompletar);
+  const { resultado, resolver, fallar } = useActividad(alCompletar);
   const filas = useRef(new Map());
   // Al mover una fila, React cambia su nodo de lugar y el foco se pierde: se recupera aquí.
   const enfocar = useRef(null);
@@ -107,7 +107,10 @@ function Ordenar({ bloque, alCompletar, resuelta }) {
     const nuevas = posicionesCorrectas(orden, items);
     setMarcas(nuevas);
     if (nuevas.every(Boolean)) resolver(true, fallos + 1);
-    else setFallos(fallos + 1);
+    else {
+      setFallos(fallos + 1);
+      fallar(fallos + 1);
+    }
   };
 
   const verSolucion = () => {

@@ -1,5 +1,7 @@
 # Amatista Motor 6: Blender y Amatista como una sola cosa (add-on 6.0)
 
+> Sigue en el **Motor 6.1** ([20_motor_6_1.md](20_motor_6_1.md)): fichas de herramientas para novatos, la orden «leccion» y el avance automático entre lecciones.
+
 Pedido del creador (30 de octubre de 2026), después de usar el add-on 5.4: «tiene muchos defectos». Varias versiones instaladas «se cruzan entre ellas», «las tarjetas se enciman», «no hay una ruta clara ni una conexión clara con la plataforma», el motor «toma por válidas cosas que ni siquiera tienen sentido», «Mira cómo lo hace» «hace cosas de otras prácticas que nada que ver». Quería que fuera autosanable, que la plataforma guiara el avance («de nada me sirve que avancen en Blender exclusivamente»), tarjetas que sean «una referencia visual» y no un estorbo, herramientas que «brillen» cuando el alumno no las encuentra, la plataforma de acuerdo con la guía de aprendizaje y un «Blender Amatista». Tareas T-137 a T-141.
 
 ## 1. Lo que se encontró

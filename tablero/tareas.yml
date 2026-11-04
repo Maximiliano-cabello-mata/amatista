@@ -44,6 +44,9 @@ roadmap:
   - version: v3.4.0
     nombre: Especialidades y tutor
     objetivo: Primera rama del nivel 5 y tutor IA dentro de las lecciones.
+  - version: v3.5.0
+    nombre: Centro 3D con G7B
+    objetivo: Prácticas y recomendaciones que se adaptan al equipo con datos de G7B (repo amatista-g7b-etl); primera prueba en la estadía. Propuesta en docs/propuestas/2026-11-01_centro_3d_y_g7b.md.
 
 tareas:
   # --- v2.2.0 · Piloto: lo que quedó abierto de la v2 (mismos ids) ----------
@@ -814,6 +817,182 @@ tareas:
     depende_de: [T-137, T-138, T-139]
     aceptacion: "docs/despliegue/2026-10-30_motor_6.md: contenido importado sin errores, /api/addon/v1/estado con 6.0.0 y la PWA nueva publicada"
     bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-142
+    titulo: "Fichas de herramientas para novatos: una sola fuente (practices/blender/fichas.json) que el motor, el add-on, el servidor y la plataforma leen; andamio que se retira y modo curioso"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-137]
+    aceptacion: "26 fichas y 9 zonas validadas; Blender presenta como mucho 2 por actividad, las recuerda hasta 3 veces y explica lo que se toca en modo curioso; pruebas del motor, del add-on y en_blender.py en verde"
+    evidencia: "practices/blender/fichas.json; engine/amatista_engine/taller/fichas.py; addon/amatista_blender/fichas.py; addon/amatista_blender/taller/vista/ficha.py; docs/motor/referencia/20_motor_6_1.md"
+  - id: T-143
+    titulo: "Probar con ventana las fichas en la vista 3D, el brillo por zona en cada editor y el modo curioso (add-on 6.1)"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-142]
+    aceptacion: "docs/despliegue/2026-10-30_motor_6_1.md pasos 8 y 10: la ficha se lee entera, la zona correcta brilla y tocar una herramienta nueva muestra su ficha"
+    bloqueo: "Lo hace el usuario en su computadora (la nube no tiene pantalla)"
+  - id: T-144
+    titulo: "Blender como extensión de la plataforma: orden «leccion», avance automático entre lecciones, Blender que sigue a la lección y la teoría de los 9 módulos con fichas y el mapa de Blender"
+    version: v3.3.0
+    area: pwa
+    depende_de: [T-142]
+    aceptacion: "Blender muestra la lección de la plataforma; al cumplir la etapa la lección pasa sola (con «Quedarme aquí») y Blender no abre otra pestaña; herramienta_blender y blender_mapa validados en los 9 módulos"
+    evidencia: "frontend/src/blender/leccion.js; frontend/src/blender/useLeccionEnBlender.js; frontend/src/components/leccion/fichas.js; frontend/src/components/leccion/interactivos/HerramientaBlender.jsx; frontend/src/components/leccion/interactivos/BlenderMapa.jsx; addon/amatista_blender/plataforma.py; backend/api/enlace.py"
+  - id: T-145
+    titulo: "Desplegar Amatista Motor 6.1 y la teoría con fichas en producción"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-141, T-142, T-144]
+    aceptacion: "docs/despliegue/2026-10-30_motor_6_1.md: contenido importado sin errores, /api/addon/v1/estado con 6.1.0 y la PWA nueva publicada"
+    bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-146
+    titulo: "Goliat, el compañero de Amatista: el perro de Maximiliano en low poly en todas las páginas, asistente por reglas sin servicios externos, proyecto propio paso a paso y apoyo cuando una práctica se pone difícil"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "Goliat en todas las páginas sin estorbar a la mascota del módulo; responde atajos, avance y proyecto; se acerca al tercer intento fallido o con un examen sin aprobar; cero desbordes a 390 px; vitest, lint y build en verde"
+    evidencia: "frontend/src/goliat/; docs/plataforma/15_goliat.md"
+  - id: T-147
+    titulo: "Revisar a Goliat con el creador (parecido, gestos y textos) y publicar la PWA con él"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-146]
+    aceptacion: "El creador aprueba el parecido y los textos; la PWA publicada en amatista-3d.tech muestra a Goliat"
+    bloqueo: "Lo hace el usuario (revisión personal y publicación)"
+  - id: T-148
+    titulo: "Interfaz más libre, avatares low poly por cuenta (pavo real del creador) y buzón del creador"
+    version: v3.3.0
+    area: pwa
+    depende_de: [T-146]
+    aceptacion: "Goliat y la mascota sin saludos ni charla periódica; 8 avatares + pavo real solo para el creador; #/buzon con gracias animado y Admin › Buzón; SQL 013; pytest, vitest, lint y build en verde; cero desbordes a 390 px"
+    evidencia: "frontend/src/avatares/, frontend/src/buzon/, backend/api/buzon.py, backend/api/perfil.py, backend/sql/013_avatares_y_buzon.sql; docs/plataforma/16_avatares_y_buzon.md"
+  - id: T-149
+    titulo: "Aplicar 013 en Oracle, poner AMATISTA_CREADOR en backend/.env y desplegar avatares y buzón"
+    version: v3.3.0
+    area: oracle
+    depende_de: [T-148]
+    aceptacion: "diagnostico_oracle.py ve 24 tablas; la cuenta del creador ve el pavo real y el buzón en Admin"
+    bloqueo: "Lo hace el usuario (Database Actions y la VM)"
+  - id: T-170
+    titulo: "Termómetro de ánimo y luz según el dominio: el motor lee intentos, deshacer, ráfagas de clics y tiempo sin avanzar, y decide cuánta ayuda se enciende (plena al principio, más seria con el curso, lo débil siempre señalado)"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-142]
+    aceptacion: "engine/tests/test_acompanamiento.py en verde; tres fallos llevan a «atorado»; avanzar calma; en retos la luz no pasa de tenue"
+    evidencia: "engine/amatista_engine/taller/acompanamiento.py; docs/motor/referencia/21_motor_6_2.md"
+  - id: T-171
+    titulo: "Add-on 6.2: faro sobre la pieza que toca, herramienta que brilla sola, «Te toca / Estás haciendo», cambio de práctica limpio y «Volver a mi práctica» desde cualquier escena"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-170]
+    aceptacion: "en_blender.py › probar_motor62 en verde: escena propia al cambiar, sin molde viejo, luz plena con habilidad nueva, ayuda ofrecida al atorarse, pastilla «Volver» que regresa a la actividad"
+    evidencia: "addon/amatista_blender/taller/acompanar.py; addon/amatista_blender/navegar.py; addon/amatista_blender/practicas.py; addon/amatista_blender/taller/vista/molde.py; addon/amatista_blender/taller/vista/tarjeta.py"
+  - id: T-172
+    titulo: "Probar con ventana el faro, la línea «Te toca · Estás haciendo», el ánimo y la pastilla «Volver a mi práctica» (add-on 6.2)"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-171]
+    aceptacion: "docs/despliegue/2026-10-31_motor_6_2.md pasos 7 a 10"
+    bloqueo: "Lo hace el usuario en su computadora (la nube no tiene pantalla)"
+  - id: T-173
+    titulo: "Elegir la firma de código de Windows (SignPath Foundation o certificado propio) y la llave GPG de Linux, y cargar los secretos en GitHub"
+    version: v3.3.0
+    area: lanzamiento
+    aceptacion: "El flujo Instaladores firma el .exe (Get-AuthenticodeSignature: Valid) y el .deb lleva su .asc"
+    bloqueo: "Lo hace el usuario (alta en SignPath o compra del certificado; secretos del repositorio)"
+  - id: T-174
+    titulo: "Instaladores de verdad: .exe de Windows sin administrador (Inno Setup) y .deb de Linux con el lanzador «Amatista»; la plataforma los ofrece antes que el .zip"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-171]
+    aceptacion: "El flujo Instaladores compila el .exe y el .deb en cada PR; GET /api/addon/v1/instaladores/{windows,linux} los sirve desde AMATISTA_INSTALADORES; addon/tests/test_addon_motor62.py en verde"
+    evidencia: "addon/herramientas/instaladores.py; addon/herramientas/instalador/windows/amatista.iss; addon/herramientas/instalador/linux/; .github/workflows/instaladores.yml; backend/api/addon.py"
+  - id: T-175
+    titulo: "Desplegar Amatista Motor 6.2 y copiar los instaladores firmados al servidor"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-145, T-173, T-174]
+    aceptacion: "docs/despliegue/2026-10-31_motor_6_2.md: /api/addon/v1/estado con 6.2.0 e instaladores.windows/linux; la página Blender baja el .exe"
+    bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-176
+    titulo: "Motor 7 «Guion»: la práctica avanza con lo que hay en la escena (pasos con verbo, en cualquier orden, sin exigir herramienta), tres pistas del paso actual y el lugar real de cada herramienta; 100 alumnos simulados"
+    version: v3.3.0
+    area: motor
+    aceptacion: "engine/tests/test_guion.py en verde; simular_alumnos.py --motor 7 --n 100: 99 terminan, 0 «brilla» sin señal, 0 instrucciones vagas, 0 bloqueos"
+    evidencia: "engine/amatista_engine/guion/; addon/tests/simular_alumnos.py; docs/motor/referencia/22_motor_7.md"
+  - id: T-177
+    titulo: "Add-on 7.0: revisión al cambiar, guardar y deshacer; una banda arriba y el panel N › Paso a paso; señales comprobadas (herramienta elegida, menú abierto, piezas seleccionadas); administrador sin progreso en add-on, backend y plataforma"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-176]
+    aceptacion: "en_blender.py › probar_motor7, addon/tests/test_addon_motor7.py, backend/tests/test_sin_progreso.py y vitest en verde"
+    evidencia: "addon/amatista_blender/guion/; backend/api/dependencias.py (sin_progreso); frontend/src/progreso/reglas.js (esSinProgreso)"
+  - id: T-178
+    titulo: "Probar con ventana el Motor 7: el tren paso a paso, la banda sin encimarse, «¿Dónde está?» con la herramienta resaltada y el administrador que empieza de cero"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-177]
+    aceptacion: "docs/despliegue/2026-10-31_motor_7.md pasos 4 a 10"
+    bloqueo: "Lo hace el usuario en su computadora (la nube no tiene pantalla)"
+  - id: T-179
+    titulo: "Desplegar Amatista Motor 7 (backend, prácticas y frontend) y reinstalar el add-on 7.0"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-177]
+    aceptacion: "/api/addon/v1/estado con version_addon 7.0.0; una cuenta admin recibe sin_progreso en /api/progreso"
+    bloqueo: "Lo hace el usuario en la VM (la nube no llega a producción)"
+  - id: T-180
+    titulo: "Corazón Amatista (amatista.corazon/1): director, andamio por herramienta, señales que no caducan por reloj, perfiles, extensiones, ramas y conformidad, en Python puro"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-176]
+    aceptacion: "engine/tests/test_corazon.py en verde; python engine/herramientas/corazon.py ramas sin problemas"
+    evidencia: "engine/amatista_engine/corazon/; practices/ramas/; docs/motor/referencia/23_corazon.md"
+  - id: T-181
+    titulo: "Add-on 7.1: el guion usa el corazón; adaptador de Blender con señal comprobada cada 0,5 s y «Señálalo otra vez»; historial del andamio por cuenta (en memoria para admin)"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-180]
+    aceptacion: "en_blender.py › probar_corazon; simular_alumnos.py --motor 7 --n 100: 99 terminan"
+    evidencia: "addon/amatista_blender/corazon/; addon/amatista_blender/guion/"
+  - id: T-182
+    titulo: "Probar con ventana el Corazón: la herramienta se elige sola la primera vez, cambiar de herramienta muestra «Señálalo otra vez», y en un segundo tren Mover ya no se señala solo"
+    version: v3.3.0
+    area: motor
+    depende_de: [T-181]
+    aceptacion: "docs/motor/referencia/23_corazon.md §8"
+    bloqueo: "Lo hace el usuario en su computadora (la nube no tiene pantalla)"
+  - id: T-183
+    titulo: "Adaptador del corazón dentro de Maya o 3ds Max (perfil en borrador ya listo) y que pase conformidad.revisar_adaptador"
+    version: v3.4.0
+    area: motor
+    depende_de: [T-180, T-121]
+    aceptacion: "conformidad.revisar_adaptador sin problemas en el programa real y una rama practices/ramas/<programa>-principiante.json"
+  - id: T-184
+    titulo: "Sentry opcional en el backend (SENTRY_DSN) y en la PWA (VITE_SENTRY_DSN), sin datos personales y sin cargar el SDK si no hay DSN"
+    version: v3.3.0
+    area: repo
+    aceptacion: "backend/tests/test_observabilidad.py y frontend/src/lib/sentry.test.js en verde; sin DSN el build no precachea sentrySdk-*.js"
+    evidencia: "backend/observabilidad.py, frontend/src/lib/sentry.js; docs/despliegue/2026-10-31_sentry.md"
+  - id: T-185
+    titulo: "Crear en Sentry los proyectos amatista-backend (FastAPI) y amatista-web (React), poner los DSN en la VM y en Cloudflare y conectar GitHub"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-184]
+    aceptacion: "docs/despliegue/2026-10-31_sentry.md §3: el error de prueba llega a cada proyecto sin IP, correo ni cookies"
+    bloqueo: "Lo hace el usuario (cuenta de Sentry, VM y Cloudflare)"
+  - id: T-160
+    titulo: "PWA para escuelas con pocos datos: sincronización en una petición comprimida, reintentos, envío al salir y «Ahorro de datos»"
+    version: v3.3.0
+    area: pwa
+    aceptacion: "POST /api/sincronizar (gzip) y GET /api/progreso?desde=; la PWA descubre el backend y vuelve a las rutas de siempre si es anterior; ajuste Ahorro de datos en Mi panel; pytest, vitest, lint y build en verde"
+    evidencia: "backend/api/sincronizar.py, backend/main.py (DescomprimirCuerpo), frontend/src/lib/red.js, frontend/src/progreso/canal.js; docs/plataforma/17_pocos_datos.md"
+  - id: T-161
+    titulo: "Desplegar el backend con /api/sincronizar y probar la PWA en una escuela con datos móviles"
+    version: v3.3.0
+    area: lanzamiento
+    depende_de: [T-160]
+    aceptacion: "En la VM: curl -X POST https://api.amatista-3d.tech/api/sincronizar responde 422 (no 404); un teléfono en 3G sincroniza con un solo POST comprimido"
+    bloqueo: "Lo hace el usuario (actualizar la VM y probar en una escuela)"
   - id: T-097
     titulo: "Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)"
     version: v3.4.0
@@ -914,3 +1093,87 @@ tareas:
     titulo: Tutor IA con Ollama dentro de las lecciones
     version: v3.4.0
     area: ia
+
+  # --- v3.5.0 · Centro 3D con G7B (propuesta del 2026-11-01) ----------------
+  # Amatista y G7B son proyectos separados que se alimentan: G7B mide y decide;
+  # Amatista enseña, recomienda y guarda los datos personales (nunca salen hacia G7B).
+  - id: T-186
+    titulo: "Protocolo de la estadía: pregunta, hipótesis, diseño con y sin perfil, consentimiento y permiso del laboratorio"
+    version: v3.5.0
+    area: lanzamiento
+    aceptacion: "Protocolo aprobado por la universidad; propuesta base en amatista-g7b-etl/docs/estadia/2026-11-01_propuesta_estadia.md"
+    bloqueo: "Lo hace el usuario con su universidad (reglamento de estadías y asesor)"
+  - id: T-187
+    titulo: "Aviso de privacidad y consentimiento para mediciones del equipo y eventos de práctica"
+    version: v3.5.0
+    area: lanzamiento
+    aceptacion: "Aviso publicado; el consentimiento se puede retirar; sin él no se mide ni se envía nada"
+  - id: T-188
+    titulo: "Add-on: detectar el nivel del equipo (N0 a N4) y aplicar un perfil de perfiles.json, reversible y preguntando la primera vez"
+    version: v3.5.0
+    area: blender
+    depende_de: [T-187]
+    aceptacion: "En Blender con ventana: el add-on muestra el nivel, aplica el perfil a la escena de la práctica y lo revierte con un clic; niveles y perfiles según las fichas técnicas de G7B"
+  - id: T-189
+    titulo: "Extensión observadora del Corazón: registrar eventos de la práctica (paso, señal, tiempo, pistas) con consentimiento, usando la cola del add-on"
+    version: v3.5.0
+    area: motor
+    depende_de: [T-187]
+    aceptacion: "Contrato g7b.evento/1; sin consentimiento no se registra nada; pruebas del corazón en verde"
+  - id: T-190
+    titulo: "API: recibir los eventos de práctica y exportar a G7B solo agregados de 5 equipos o más, sin datos personales"
+    version: v3.5.0
+    area: api
+    depende_de: [T-189]
+    aceptacion: "Exportación probada con datos de prueba; ningún campo identifica a una persona"
+  - id: T-191
+    titulo: "Elegir la práctica del experimento de la estadía, que funcione de N1 a N4, con su variante con y sin perfil"
+    version: v3.5.0
+    area: contenido
+    depende_de: [T-186]
+    aceptacion: "La práctica corre en un equipo de cada nivel disponible en el laboratorio"
+  - id: T-192
+    titulo: "Recomendaciones en Mi panel: versión de Blender, perfil y prácticas según el equipo y el avance"
+    version: v3.5.0
+    area: pwa
+    depende_de: [T-188]
+    aceptacion: "Las recomendaciones citan la evidencia del cubo de G7B (celdas con 5 o más mediciones)"
+  - id: T-193
+    titulo: "Biblioteca de texturas CC0 curadas (Poly Haven, ambientCG) por nivel de equipo (1K, 2K o 4K) con su lección"
+    version: v3.5.0
+    area: contenido
+    depende_de: [T-192]
+    aceptacion: "Cada textura con su fuente y licencia; la resolución ofrecida coincide con el nivel del equipo"
+  - id: T-194
+    titulo: "Revisar la política de marca de la Blender Foundation y usar «Amatista para Blender» en materiales nuevos"
+    version: v3.5.0
+    area: repo
+    aceptacion: "Decisión documentada; materiales nuevos sin «Blender Amatista» salvo autorización"
+  - id: T-195
+    titulo: "Entornos de A-Frame con perfiles por dispositivo medidos con la sonda web de G7B"
+    version: v3.5.0
+    area: pwa
+    aceptacion: "Un entorno ajusta su calidad según el perfil del dispositivo; probado en celulares reales"
+  - id: T-196
+    titulo: "Oracle: script 014_g7b.sql con la tabla G7B_CACHE (copia verificada de lo que publica G7B)"
+    version: v3.5.0
+    area: db
+    aceptacion: "Script aditivo ejecutado en Oracle; no toca tablas existentes"
+  - id: T-197
+    titulo: "Sincronizar G7B cada 6 h: manifiesto, calidad aprobada y SHA-256 verificados, con respaldo en Pages y versión visible en Admin › Estado"
+    version: v3.5.0
+    area: api
+    depende_de: [T-196]
+    aceptacion: "Con la API de G7B caída se conserva la copia anterior; un hash que no cuadra no se guarda"
+  - id: T-198
+    titulo: "API: /api/g7b/v1/recomendacion y /api/g7b/v1/modelo-costos responden desde la caché, sin guardar la consulta con la cuenta"
+    version: v3.5.0
+    area: api
+    depende_de: [T-197]
+    aceptacion: "Responde sin red hacia G7B; pruebas del backend en verde"
+  - id: T-199
+    titulo: "Geoda en el add-on: decidir con el modelo de costos, medir fps en la práctica y encender perfiles por porcentaje con ConfigCat"
+    version: v3.5.0
+    area: blender
+    depende_de: [T-188, T-198]
+    aceptacion: "Una práctica en un equipo N1 termina con el perfil aplicado, el evento en la cola y la bandera apagable al instante"

@@ -1,0 +1,26 @@
+# Servicio de systemd para que el nodo arranque solo (Linux o WSL2 con systemd).
+#   sudo cp amatista-nodo.service /etc/systemd/system/
+#   (cambia User y las rutas si tu usuario o tu carpeta son otros)
+#   sudo systemctl daemon-reload && sudo systemctl enable --now amatista-nodo
+#   journalctl -u amatista-nodo -f        # ver lo que hace
+[Unit]
+Description=Nodo de Amatista Cloud
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+User=amatista
+WorkingDirectory=/home/amatista/amatista/nube/nodo
+ExecStart=/home/amatista/amatista/nube/nodo/.venv/bin/python amatista_nodo.py --config nodo.env ejecutar
+# Al detenerlo cierra las sesiones abiertas (avisa a la API) antes de salir.
+KillSignal=SIGTERM
+TimeoutStopSec=90
+Restart=on-failure
+RestartSec=10
+# El agente solo necesita hablar con Docker y con la red.
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

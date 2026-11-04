@@ -56,6 +56,10 @@ function PiePagina() {
             <li key={s.id}><a href={s.herramienta.href} className={ENLACE}>{s.herramienta.nombre.includes(s.nombre) ? s.herramienta.nombre : `${s.herramienta.nombre} para ${s.nombre}`}</a></li>
           ))}
           <li><a href={rutas.vincular} className={ENLACE}>Conectar Blender con un código</a></li>
+          <li><a href={rutas.geoda} className={ENLACE}>Geoda: ajusta todo a tu equipo</a></li>
+          <li><a href={rutas.biblioteca} className={ENLACE}>Biblioteca de recursos libres</a></li>
+          <li><a href={rutas.nube} className={ENLACE}>Amatista Cloud (UTN)</a></li>
+          <li><a href={rutas.ecosistema} className={ENLACE}>Todo Amatista: qué es cada cosa</a></li>
         </Columna>
         <Columna titulo="Tu cuenta">
           <li><a href={rutas.panel} className={ENLACE}>Mi panel</a></li>
@@ -70,6 +74,7 @@ function PiePagina() {
         </Columna>
         <Columna titulo="Ayuda">
           <li><a href={rutas.guia} className={ENLACE}>Cómo funciona Amatista</a></li>
+          <li><a href={rutas.buzon} className={ENLACE}>Buzón del creador</a></li>
           <li>
             <button type="button" onClick={() => empezar(0)} className={`${ENLACE} text-left`}>
               Recorrido por la plataforma

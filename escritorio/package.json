@@ -1,0 +1,16 @@
+{
+  "name": "amatista-escritorio",
+  "productName": "Amatista",
+  "version": "3.0.0",
+  "description": "Amatista de escritorio: la PWA, Geoda y la biblioteca de recursos en una ventana propia, sin conexión.",
+  "main": "main.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "empaquetar": "node empaquetar.mjs",
+    "empaquetar:2k": "node empaquetar.mjs --con-2k"
+  },
+  "devDependencies": {
+    "@electron/get": "^3.1.0"
+  }
+}

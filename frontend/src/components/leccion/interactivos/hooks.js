@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { avisarGoliat } from '../../../goliat/eventos';
 import { avisarMascota } from '../../temas/temas';
 
 // Estado común de una actividad: se resuelve una sola vez y avisa a la lección
 // con alCompletar({correcto, intentos}). `correcto` es false si se vio la solución.
+// `fallar(n)` cuenta un intento fallido (n = fallos hasta ahora) para que
+// Goliat se acerque si la actividad se está poniendo difícil.
 export function useActividad(alCompletar) {
   const [resultado, setResultado] = useState(null);
 
@@ -12,10 +15,13 @@ export function useActividad(alCompletar) {
     setResultado(final);
     // La mascota del módulo celebra el acierto o anima tras ver la solución.
     avisarMascota(final.correcto ? 'acierto' : 'fallo');
+    avisarGoliat({ tipo: 'actividad', ...final });
     alCompletar?.(final);
   };
 
-  return { resultado, resolver };
+  const fallar = (fallos) => avisarGoliat({ tipo: 'intento', fallos });
+
+  return { resultado, resolver, fallar };
 }
 
 // Carga un módulo pesado (A-Frame) solo cuando `activo` es true. Si falla

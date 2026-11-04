@@ -113,7 +113,7 @@ export const ESTADOS_PIEZA = {
   vacia: 'Falta',
 };
 
-const ESTADOS_TALLER = ['trabajando', 'mirando', 'lograda', 'pausa'];
+const ESTADOS_TALLER = ['trabajando', 'mirando', 'lograda', 'pausa', 'presentando'];
 const entero = (valor) => (Number.isFinite(Number(valor)) ? Math.max(0, Math.round(Number(valor))) : 0);
 const textos = (lista) => (Array.isArray(lista) ? lista.filter((t) => t !== null && t !== undefined && t !== '').map(String) : []);
 
@@ -143,6 +143,8 @@ export function vivoDelTaller(d) {
     // Motor 6: la etapa que mandó la lección y si Blender ya la dio por cumplida.
     etapa: ETAPAS.includes(d.etapa) ? d.etapa : '',
     etapaCumplida: Boolean(d.etapa_cumplida),
+    // Motor 6.1: la herramienta nueva que Blender está presentando con su ficha (o null).
+    ficha: d.ficha?.id ? { id: String(d.ficha.id), nombre: String(d.ficha.nombre || d.ficha.id) } : null,
   };
 }
 

@@ -85,7 +85,9 @@ def _ruta_avance(cuenta):
 
 
 def _vacio():
-    return {"estado": {}, "completadas": [], "cola": [], "isla": {}, "ultimo_taller": "", "actualizado": 0.0}
+    # Motor 6.1: «fichas» = veces que vio la ficha de cada herramienta; «conocidas» = las que marcó «Ya la conozco».
+    return {"estado": {}, "completadas": [], "cola": [], "isla": {}, "ultimo_taller": "", "actualizado": 0.0,
+            "fichas": {}, "conocidas": []}
 
 
 def _leer(ruta):
@@ -105,6 +107,11 @@ def _leer(ruta):
 def avance():
     """El avance de la cuenta vinculada (o el local sin cuenta). Al vincular, lo local pasa a la cuenta."""
     cuenta = _cuenta()
+    if ajustes.sin_progreso():
+        # Motor 7: el administrador empieza de cero cada vez que arranca Blender (solo en memoria).
+        if ESTADO["avance"] is None or ESTADO["cuenta"] != "~admin":
+            ESTADO["avance"], ESTADO["cuenta"] = _vacio(), "~admin"
+        return ESTADO["avance"]
     if ESTADO["avance"] is None or ESTADO["cuenta"] != cuenta:
         datos = _leer(_ruta_avance(cuenta))
         if cuenta:
@@ -130,7 +137,7 @@ def avance():
 
 def guardar():
     datos = ESTADO["avance"]
-    if datos is None:
+    if datos is None or ajustes.sin_progreso() or ESTADO["cuenta"] == "~admin":
         return
     datos["actualizado"] = time.time()
     try:
@@ -248,6 +255,8 @@ def registrar(actividad, correcto, ayuda=0, molde=False, segundos=0.0, escena=No
     }
     if escena is not None:
         intento["escena"] = escena
+    if ajustes.sin_progreso():
+        return cambios  # motor 7: el administrador no deja intentos ni los envía
     datos["cola"] = (datos["cola"] + [intento])[-MAX_COLA:]
     guardar()
     sincronizar_pronto()
@@ -281,7 +290,7 @@ def _mezclar(respuesta):
 
 def sincronizar(al_terminar=None):
     """Envía la cola de intentos (de a 50) y trae el estado del servidor."""
-    if not _vinculado() or not red.en_linea_permitido():
+    if not _vinculado() or not red.en_linea_permitido() or ajustes.sin_progreso():
         return False
     if ESTADO["enviando"]:
         ESTADO["otro_envio"] = True
