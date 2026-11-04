@@ -281,11 +281,60 @@ function Paso({ paso, abierto, alternar, ultimo }) {
   );
 }
 
-// La herramienta del programa como un paso más: en Blender va antes (se prepara una vez), en
-// A-Frame al final (es el taller libre).
+// La herramienta del programa como un paso más: en Blender ofrece tanto conectar el motor en tu PC
+// como abrir Blender en la nube o revisar tu PC con Geoda; en A-Frame va al final (es el taller libre).
 function PasoHerramienta({ software, alInicio }) {
   const herramienta = software.herramienta;
   if (!herramienta) return null;
+  if (software.id === 'blender' && alInicio) {
+    return (
+      <div className="mb-5 grid gap-2.5 sm:grid-cols-2">
+        <a
+          href={herramienta.href}
+          className="corte-poly-sm elevar flex items-center gap-3 border border-blender/45 bg-blender/10 p-3.5 transition-colors hover:border-blender sm:p-4"
+        >
+          <span className="hexagono grid h-11 w-12 shrink-0 place-items-center bg-black/40">
+            <LogoSoftware software={software} className="h-6 w-7 text-[11px]" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-blender">
+              Opción A · En tu computadora (una sola vez)
+            </span>
+            <span className="block font-extrabold text-white">Conectar mi Blender ({herramienta.nombre})</span>
+            <span className="mt-0.5 block text-xs leading-snug text-texto/75">
+              Descarga el complemento y vincula tu Blender para que te guíe en cada práctica.
+            </span>
+          </span>
+          <span className="shrink-0 font-mono text-xs font-bold uppercase tracking-widest text-blender">Conectar ▸</span>
+        </a>
+
+        <div className="grid gap-2">
+          <a
+            href={rutas.nube}
+            className="corte-poly-sm elevar flex items-center justify-between gap-3 border border-neon/40 bg-neon/5 px-3.5 py-2.5 transition-colors hover:border-neon"
+          >
+            <span className="min-w-0">
+              <span className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-neon">
+                <span>Opción B · Sin instalar</span>
+                <span className="border border-neon/40 bg-neon/15 px-1.5 py-0.2 text-[9px]">UTN</span>
+              </span>
+              <span className="block text-sm font-extrabold text-white">Abrir Blender en la nube</span>
+            </span>
+            <span className="shrink-0 font-mono text-xs font-bold uppercase tracking-widest text-neon">Abrir ▸</span>
+          </a>
+
+          <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-xs text-white/55">
+            <a href={rutas.geoda} className="hover:text-emerald-300 hover:underline">
+              ¿No sabes si tu PC corre Blender? Revísala con Geoda ▸
+            </a>
+            <a href={rutas.biblioteca} className="hover:text-amatista-claro hover:underline">
+              Biblioteca 3D ▸
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <a
       href={herramienta.href}

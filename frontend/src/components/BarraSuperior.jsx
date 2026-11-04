@@ -7,30 +7,27 @@ import { useInstalarPWA } from '../hooks/useInstalarPWA';
 import { useProgreso } from '../progreso/contexto';
 import { navegar, rutaEntrar, rutas } from '../rutas';
 import { useVista } from '../vista/contexto';
-import { CristalLogo } from './Iconos';
+import {
+  CristalLogo,
+  IconoAFrame,
+  IconoBiblioteca,
+  IconoBlender,
+  IconoCloud,
+  IconoEcosistema,
+  IconoGeoda,
+} from './Iconos';
 
-// «Cursos» reúne todo lo que se aprende: el camino guiado de cada programa (portada), sus
-// cursos y lecciones y la herramienta de práctica de cada uno (#/blender, #/estudio).
-const PAGINAS_CURSOS = ['inicio', 'curso', 'leccion', 'blender', 'vincular', 'estudio'];
+// «Cursos» reúne el camino guiado de cada programa (portada) y sus lecciones.
+const PAGINAS_CURSOS = ['inicio', 'curso', 'leccion'];
 
-function enlacesDe(verAdmin) {
-  const enlaces = [
-    { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
-    { href: rutas.biblioteca, texto: 'Biblioteca', activo: (pagina) => pagina === 'biblioteca' },
-    { href: rutas.geoda, texto: 'Geoda', activo: (pagina) => pagina === 'geoda' || pagina === 'ecosistema' },
-    { href: rutas.nube, texto: 'Cloud', activo: (pagina) => pagina === 'nube', destacado: true },
-    { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
-  ];
-  // 4 de noviembre de 2026: la biblioteca, Geoda (el kernel que adapta, con G7B detrás) y Amatista
-  // Cloud dejan de estar escondidas y van en el menú; «Todo Amatista» (#/ecosistema) explica cada una.
-  // Estructura fija (2026-10-23): Cursos, Mi panel y, para el equipo, Admin. Se retiró Explorar
-  // (un buscador no sirve a quien no sabe qué cursos hay) y ningún programa tiene pestaña propia:
-  // cada uno es una lista del camino guiado, con su herramienta como primer o último paso.
-  // El diagnóstico técnico (#/laboratorio) se abre desde Admin › Estado.
-  // En la vista de alumno el equipo no ve Admin (vuelve desde la franja de vista).
-  if (verAdmin) enlaces.push({ href: rutas.admin, texto: 'Admin', activo: (pagina) => pagina === 'admin' });
-  return enlaces;
-}
+const HERRAMIENTAS_MOVIL = [
+  { href: rutas.nube, titulo: 'Blender en la nube', desc: 'UTN · Sin instalar', Icono: IconoCloud },
+  { href: rutas.blender, titulo: 'Conectar mi Blender', desc: 'Amatista Motor en PC', Icono: IconoBlender },
+  { href: rutas.biblioteca, titulo: 'Biblioteca 3D', desc: 'Recursos libres CC0', Icono: IconoBiblioteca },
+  { href: rutas.estudio, titulo: 'Estudio Web 3D', desc: 'Escenas A-Frame y VR', Icono: IconoAFrame },
+  { href: rutas.geoda, titulo: 'Ajustar a mi PC (Geoda)', desc: 'Diagnóstico de tu equipo', Icono: IconoGeoda },
+  { href: rutas.ecosistema, titulo: '¿Qué es cada cosa?', desc: 'Guía de la plataforma', Icono: IconoEcosistema },
+];
 
 const inicial = (usuario) => (usuario?.nombre || usuario?.email || '?').trim().charAt(0).toUpperCase();
 
@@ -72,17 +69,15 @@ function IndicadorXP({ xp, nivel }) {
 }
 
 function EstadoConexion({ enLinea }) {
-  const texto = enLinea ? 'En línea' : 'Sin conexión';
+  if (enLinea) return null;
   return (
     <span
       role="status"
-      className={`corte-poly-sm flex items-center gap-2 border px-3 py-1.5 font-mono text-xs uppercase tracking-wider ${
-        enLinea ? 'border-neon/40 bg-neon/10 text-neon' : 'border-amatista-claro/40 bg-amatista/10 text-amatista-claro'
-      }`}
+      className="corte-poly-sm flex items-center gap-2 border border-amatista-claro/40 bg-amatista/10 px-3 py-1.5 font-mono text-xs uppercase tracking-wider text-amatista-claro"
     >
-      <span className={`h-2 w-2 rotate-45 ${enLinea ? 'bg-neon animar-pulso' : 'bg-amatista-claro'}`} aria-hidden="true" />
-      <span className="hidden lg:inline">{texto}</span>
-      <span className="sr-only lg:hidden">{texto}</span>
+      <span className="h-2 w-2 rotate-45 bg-amatista-claro" aria-hidden="true" />
+      <span className="hidden lg:inline">Sin conexión</span>
+      <span className="sr-only lg:hidden">Sin conexión</span>
     </span>
   );
 }
@@ -176,7 +171,7 @@ function BarraSuperior({ ruta, hash = '' }) {
   useCerrarFuera(menuAbierto, cerrarMenu, barra);
 
   const pagina = ruta?.pagina ?? 'inicio';
-  const enlaces = enlacesDe(esProfesor && !comoAlumno);
+  const verAdmin = esProfesor && !comoAlumno;
   const enCuenta = ['entrar', 'registro', 'confirmar', 'recuperar'].includes(pagina);
 
   const salir = async () => {
@@ -185,8 +180,6 @@ function BarraSuperior({ ruta, hash = '' }) {
     if (pagina === 'perfil' || pagina === 'admin') navegar(rutas.inicio);
   };
 
-  // Sin backdrop-blur: desenfocar lo que se anima detrás costaba ~15 cuadros
-  // por segundo en equipos sin GPU (informe de rendimiento 2026-10-05).
   return (
     <header ref={barra} className="sticky top-0 z-20 border-b border-white/5 bg-base/95">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
@@ -195,27 +188,42 @@ function BarraSuperior({ ruta, hash = '' }) {
           <span className="hidden text-xl font-extrabold tracking-[0.25em] text-white min-[440px]:inline">AMATISTA</span>
         </a>
 
+        {/* Navegación central pura y limpia: solo lo esencial para el estudiante */}
         <nav className="hidden md:block" aria-label="Principal" data-recorrido="menu">
-          <ul className="flex items-center gap-1">
-            {enlaces.map((enlace) => {
-              const activo = enlace.activo(pagina);
-              return (
-                <li key={enlace.href}>
-                  <a
-                    href={enlace.href}
-                    aria-current={activo ? 'page' : undefined}
-                    className={`nav-principal__enlace ${activo ? 'nav-principal__enlace--activo' : ''} ${
-                      enlace.destacado ? 'border border-neon/40 text-neon' : ''
-                    }`}
-                  >
-                    {enlace.texto}
-                  </a>
-                </li>
-              );
-            })}
+          <ul className="flex items-center gap-2">
+            <li>
+              <a
+                href={rutas.inicio}
+                aria-current={PAGINAS_CURSOS.includes(pagina) ? 'page' : undefined}
+                className={`nav-principal__enlace ${PAGINAS_CURSOS.includes(pagina) ? 'nav-principal__enlace--activo' : ''}`}
+              >
+                Cursos
+              </a>
+            </li>
+            <li>
+              <a
+                href={rutas.panel}
+                aria-current={pagina === 'panel' ? 'page' : undefined}
+                className={`nav-principal__enlace ${pagina === 'panel' ? 'nav-principal__enlace--activo' : ''}`}
+              >
+                Mi panel
+              </a>
+            </li>
+            {verAdmin && (
+              <li>
+                <a
+                  href={rutas.admin}
+                  aria-current={pagina === 'admin' ? 'page' : undefined}
+                  className={`nav-principal__enlace ${pagina === 'admin' ? 'nav-principal__enlace--activo' : ''}`}
+                >
+                  Admin
+                </a>
+              </li>
+            )}
           </ul>
         </nav>
 
+        {/* Lateral derecho: ayuda, experiencia, conexión y cuenta */}
         <div className="flex items-center gap-2">
           <a
             href={rutas.guia}
@@ -274,23 +282,76 @@ function BarraSuperior({ ruta, hash = '' }) {
       {menuAbierto && (
         <nav id="menu-principal" aria-label="Principal" className="animar-entrar border-t border-white/5 bg-base/95 md:hidden">
           <ul className="mx-auto grid max-w-6xl gap-1 px-4 py-3">
-            {enlaces.map((enlace) => {
-              const activo = enlace.activo(pagina);
-              return (
-                <li key={enlace.href}>
-                  <a
-                    href={enlace.href}
-                    onClick={() => setMenuAbierto(false)}
-                    aria-current={activo ? 'page' : undefined}
-                    className={`corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest ${
-                      activo ? 'bg-white/10 text-white' : 'text-white/70 hover:text-neon'
-                    }`}
-                  >
-                    {enlace.texto}
-                  </a>
-                </li>
-              );
-            })}
+            <li>
+              <a
+                href={rutas.inicio}
+                onClick={() => setMenuAbierto(false)}
+                aria-current={PAGINAS_CURSOS.includes(pagina) ? 'page' : undefined}
+                className={`corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest ${
+                  PAGINAS_CURSOS.includes(pagina) ? 'bg-white/10 text-white' : 'text-white/70 hover:text-neon'
+                }`}
+              >
+                Cursos
+              </a>
+            </li>
+            <li>
+              <a
+                href={rutas.panel}
+                onClick={() => setMenuAbierto(false)}
+                aria-current={pagina === 'panel' ? 'page' : undefined}
+                className={`corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest ${
+                  pagina === 'panel' ? 'bg-white/10 text-white' : 'text-white/70 hover:text-neon'
+                }`}
+              >
+                Mi panel
+              </a>
+            </li>
+            {verAdmin && (
+              <li>
+                <a
+                  href={rutas.admin}
+                  onClick={() => setMenuAbierto(false)}
+                  aria-current={pagina === 'admin' ? 'page' : undefined}
+                  className={`corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest ${
+                    pagina === 'admin' ? 'bg-white/10 text-white' : 'text-white/70 hover:text-neon'
+                  }`}
+                >
+                  Admin
+                </a>
+              </li>
+            )}
+
+            <li className="mt-2 border-t border-white/10 pt-3">
+              <p className="px-3 pb-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/45">
+                Herramientas
+              </p>
+              <div className="grid grid-cols-2 gap-1.5 pt-1">
+                {HERRAMIENTAS_MOVIL.map((item) => {
+                  const Icono = item.Icono;
+                  const activo = pagina === item.href.replace('#/', '');
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMenuAbierto(false)}
+                      aria-current={activo ? 'page' : undefined}
+                      className={`corte-poly-sm flex items-center gap-2 border p-2 ${
+                        activo ? 'border-neon/60 bg-white/10 text-white' : 'border-white/10 bg-superficie/70 text-white/80 hover:text-neon'
+                      }`}
+                    >
+                      <span className="hexagono grid h-7 w-8 shrink-0 place-items-center bg-black/45">
+                        <Icono className="h-4 w-4" />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block truncate text-xs font-bold text-white">{item.titulo}</span>
+                        <span className="block truncate text-[10px] text-texto/60">{item.desc}</span>
+                      </span>
+                    </a>
+                  );
+                })}
+              </div>
+            </li>
+
             <li className="mt-2 border-t border-white/10 pt-3">
               {usuario ? (
                 <div className="grid gap-1">

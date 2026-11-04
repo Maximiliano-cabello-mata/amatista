@@ -17,7 +17,7 @@ export const PASOS_RECORRIDO = [
     ruta: rutas.inicio,
     objetivo: 'menu',
     titulo: 'Siempre arriba',
-    texto: '**Cursos**: todo lo que puedes aprender. **Mi panel**: tu avance. El **?** te trae de vuelta a esta ayuda. En el teléfono están en el menú ☰.',
+    texto: '**Cursos**: tu camino paso a paso. **Mi panel**: tu avance. Las herramientas viven en la barra lateral flotante. El **?** abre esta ayuda.',
   },
   {
     id: 'programa',

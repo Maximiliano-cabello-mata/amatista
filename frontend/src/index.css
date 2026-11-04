@@ -2049,6 +2049,86 @@ ol[id^='paso-'] a:hover .hexagono {
   transform: scale(1.14) rotate(-8deg);
 }
 
+/* Cuadritos de herramientas en la barra superior con animación curiosa e interactiva */
+@keyframes cuadrito-bamboleo {
+  0% { transform: scale(1) rotate(0deg); }
+  22% { transform: scale(1.24) rotate(-14deg); }
+  52% { transform: scale(1.12) rotate(10deg); }
+  78% { transform: scale(1.18) rotate(-4deg); }
+  100% { transform: scale(1.12) rotate(0deg); }
+}
+
+.cuadrito-nav__boton {
+  transition:
+    transform 0.28s var(--curva-resorte),
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.28s var(--curva-elastica);
+}
+.cuadrito-nav__boton:hover {
+  transform: translateY(-2px) scale(1.08);
+  box-shadow: 0 8px 20px -6px rgba(0, 229, 255, 0.4);
+}
+.cuadrito-nav__logo {
+  transition: transform 0.3s var(--curva-resorte);
+}
+.cuadrito-nav:hover .cuadrito-nav__logo {
+  animation: cuadrito-bamboleo 0.6s var(--curva-resorte) both;
+}
+.cuadrito-nav__globo {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(-50%, 8px, 0) scale(0.92);
+  transition:
+    opacity 0.22s var(--curva-salida),
+    transform 0.26s var(--curva-resorte),
+    visibility 0.22s;
+}
+.cuadrito-nav:hover .cuadrito-nav__globo,
+.cuadrito-nav:focus-within .cuadrito-nav__globo {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(-50%, 0, 0) scale(1);
+}
+
+
+.cuadrito-lateral__boton {
+  transition:
+    transform 0.28s var(--curva-resorte),
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.28s var(--curva-elastica);
+}
+.cuadrito-lateral__boton:hover {
+  transform: translateX(-3px) scale(1.08);
+  box-shadow: 0 8px 22px -6px rgba(0, 229, 255, 0.45);
+}
+.cuadrito-lateral__logo {
+  transition: transform 0.3s var(--curva-resorte);
+}
+.cuadrito-lateral:hover .cuadrito-lateral__logo {
+  animation: cuadrito-bamboleo 0.6s var(--curva-resorte) both;
+}
+.cuadrito-lateral__globo {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(8px, -50%, 0) scale(0.92);
+  transition:
+    opacity 0.22s var(--curva-salida),
+    transform 0.26s var(--curva-resorte),
+    visibility 0.22s;
+}
+.cuadrito-lateral:hover .cuadrito-lateral__globo,
+.cuadrito-lateral:focus-within .cuadrito-lateral__globo {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(0, -50%, 0) scale(1);
+}
+
 /* 7. Desactivación limpia en modo ligero y movimiento reducido */
 html.ligero .animar-pagina,
 html.ligero .camino > .camino__paso,

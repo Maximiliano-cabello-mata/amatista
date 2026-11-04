@@ -3,6 +3,7 @@ import AuthProvider from './auth/AuthProvider';
 import AvatarProvider from './avatares/AvatarProvider';
 import { useAuth } from './auth/contexto';
 import CatalogoProvider from './catalogo/CatalogoProvider';
+import BarraLateralHerramientas from './components/BarraLateralHerramientas';
 import BarraSuperior from './components/BarraSuperior';
 import FondoLowPoly from './components/FondoLowPoly';
 import PiePagina from './components/estructura/PiePagina';
@@ -168,6 +169,7 @@ function App() {
           <ProgresoProvider>
             <RecorridoProvider>
               <BarraSuperior ruta={ruta} hash={hash} />
+              <BarraLateralHerramientas pagina={ruta.pagina} />
               <BarraVista pagina={ruta.pagina} />
               <Suspense fallback={<Cargando />}>
                 {/* Cada cambio de página entra con un fundido corto (sin animación en modo ligero). */}

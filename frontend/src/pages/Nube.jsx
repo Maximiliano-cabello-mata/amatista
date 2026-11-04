@@ -154,7 +154,7 @@ export default function Nube() {
         {estado && (
           <dl className="mt-4 grid gap-3 sm:grid-cols-3">
             <Cifra valor={`${estado.minutos} min`} etiqueta="Por sesión" />
-            <Cifra valor={usuario ? `${estado.usadas_hoy} de ${estado.por_dia}` : estado.por_dia} etiqueta={usuario ? 'Tus sesiones hoy' : 'Sesiones al día'} />
+            <Cifra valor={esAdmin ? 'Sin límite' : usuario ? `${estado.usadas_hoy} de ${estado.por_dia}` : estado.por_dia} etiqueta={usuario ? 'Tus sesiones hoy' : 'Sesiones al día'} />
             <Cifra valor={estado.dominios.map((d) => '@' + d).join(' ')} etiqueta="Cuentas permitidas" />
           </dl>
         )}
@@ -173,7 +173,7 @@ export default function Nube() {
           {usuario && estado?.puede && !sesion && (
             <>
               <p className="text-texto/85">Se abre un escritorio con Blender solo para ti durante {estado.minutos} minutos. Cuando esté listo, entras con un clic.</p>
-              <button type="button" onClick={pedir} disabled={ocupado || !estado.libres || estado.usadas_hoy >= estado.por_dia}
+              <button type="button" onClick={pedir} disabled={ocupado || !estado.libres || (!esAdmin && estado.usadas_hoy >= estado.por_dia)}
                 className="boton boton--grande mt-4 disabled:opacity-40">
                 {ocupado ? 'Pidiendo tu lugar…' : 'Abrir mi Blender en la nube'}
               </button>
