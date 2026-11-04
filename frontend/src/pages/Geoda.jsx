@@ -7,8 +7,10 @@ import TituloSeccion from '../components/estructura/TituloSeccion';
 import { aplicarGeoda, deshacerGeoda, EVENTO_GEODA, leerGeoda } from '../geoda/ajustes';
 import { detectarHuella } from '../geoda/huella';
 import { NIVELES } from '../geoda/niveles';
+import { interpretarPublicacion } from '../geoda/publicacion';
 import { decidir, scriptBlender } from '../geoda/plan';
 import { rutas } from '../rutas';
+import { pedirJSON } from '../services/api';
 
 const DESCRIPCION_NIVEL = {
   N0: 'Celular, tableta o Chromebook',
@@ -41,7 +43,17 @@ export default function Geoda() {
   const [aplicado, setAplicado] = useState(() => leerGeoda());
   const [forzar, setForzar] = useState(() => leerGeoda()?.forzado ?? null);
   const [copiado, setCopiado] = useState(false);
-  const plan = useMemo(() => decidir(huella, null, { forzar }), [huella, forzar]);
+  const [estadoG7b, setEstadoG7b] = useState(null);
+  const publicacion = useMemo(() => interpretarPublicacion(estadoG7b), [estadoG7b]);
+  const plan = useMemo(() => decidir(huella, publicacion?.perfiles ?? null, { forzar }), [huella, forzar, publicacion]);
+
+  useEffect(() => {
+    let vivo = true;
+    pedirJSON('/api/g7b/v1/estado', { espera: 5000 })
+      .then((respuesta) => { if (vivo) setEstadoG7b(respuesta.ok ? respuesta.datos : null); })
+      .catch(() => { if (vivo) setEstadoG7b(null); });
+    return () => { vivo = false; };
+  }, []);
   const { nivel, confianza, motivos } = plan.clasificacion;
 
   useEffect(() => {
@@ -99,6 +111,15 @@ export default function Geoda() {
             {forzar && <button type="button" onClick={() => setForzar(null)} className="px-3 py-2 text-sm text-texto/70 underline">Volver a detectar</button>}
           </div>
         </fieldset>
+      </section>
+
+      <section className="mt-8 border border-white/10 bg-base/60 p-4" aria-label="Conexión con G7B">
+        <p className="font-mono text-xs uppercase tracking-widest text-texto/65">Conexión G7B → Geoda → Amatista</p>
+        <p role="status" className="mt-2 text-sm text-texto/80">
+          {publicacion
+            ? `G7B ${publicacion.estado === 'cache' ? '(última copia)' : '(conectado)'}: ${publicacion.documentos} documentos técnicos; ${publicacion.mediciones} mediciones (${publicacion.aceptadas} aceptadas, ${publicacion.revision} en revisión). Sin perfiles validados todavía: Geoda utiliza reglas locales.`
+            : 'G7B aún no publica un estado compatible o no está disponible. Geoda sigue funcionando con las reglas locales.'}
+        </p>
       </section>
 
       <section aria-labelledby="geoda-plan" className="mt-10">
