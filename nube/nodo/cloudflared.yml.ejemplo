@@ -1,0 +1,15 @@
+# Túnel de Cloudflare de un nodo (opción con archivo; la opción con token desde el panel también sirve).
+# Publica el proxy del nodo (127.0.0.1:8730) en https://nodo-casa.amatista-3d.tech sin abrir puertos.
+#   cloudflared tunnel login
+#   cloudflared tunnel create amatista-nodo-casa
+#   cloudflared tunnel route dns amatista-nodo-casa nodo-casa.amatista-3d.tech
+#   cloudflared --config cloudflared.yml tunnel run
+tunnel: amatista-nodo-casa
+credentials-file: /home/amatista/.cloudflared/<ID-DEL-TUNEL>.json
+ingress:
+  - hostname: nodo-casa.amatista-3d.tech
+    service: http://127.0.0.1:8730
+    originRequest:
+      noHappyEyeballs: true
+      connectTimeout: 10s
+  - service: http_status:404

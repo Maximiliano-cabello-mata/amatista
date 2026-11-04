@@ -5,7 +5,7 @@ describe('rutas', () => {
   it('páginas del contrato', () => {
     expect(analizarRuta('')).toMatchObject({ pagina: 'inicio' });
     expect(analizarRuta('#/')).toMatchObject({ pagina: 'inicio' });
-    for (const pagina of ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil']) {
+    for (const pagina of ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'geoda', 'biblioteca', 'nube', 'ecosistema']) {
       expect(analizarRuta(`#/${pagina}`)).toMatchObject({ pagina });
     }
     expect(analizarRuta(rutas.curso('blender'))).toMatchObject({ pagina: 'curso', cursoId: 'blender' });

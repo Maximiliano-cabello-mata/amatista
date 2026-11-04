@@ -16,8 +16,13 @@ const PAGINAS_CURSOS = ['inicio', 'curso', 'leccion', 'blender', 'vincular', 'es
 function enlacesDe(verAdmin) {
   const enlaces = [
     { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
+    { href: rutas.biblioteca, texto: 'Biblioteca', activo: (pagina) => pagina === 'biblioteca' },
+    { href: rutas.geoda, texto: 'Geoda', activo: (pagina) => pagina === 'geoda' || pagina === 'ecosistema' },
+    { href: rutas.nube, texto: 'Cloud', activo: (pagina) => pagina === 'nube', destacado: true },
     { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
   ];
+  // 4 de noviembre de 2026: la biblioteca, Geoda (el kernel que adapta, con G7B detrás) y Amatista
+  // Cloud dejan de estar escondidas y van en el menú; «Todo Amatista» (#/ecosistema) explica cada una.
   // Estructura fija (2026-10-23): Cursos, Mi panel y, para el equipo, Admin. Se retiró Explorar
   // (un buscador no sirve a quien no sabe qué cursos hay) y ningún programa tiene pestaña propia:
   // cada uno es una lista del camino guiado, con su herramienta como primer o último paso.
@@ -199,7 +204,9 @@ function BarraSuperior({ ruta, hash = '' }) {
                   <a
                     href={enlace.href}
                     aria-current={activo ? 'page' : undefined}
-                    className={`nav-principal__enlace ${activo ? 'nav-principal__enlace--activo' : ''}`}
+                    className={`nav-principal__enlace ${activo ? 'nav-principal__enlace--activo' : ''} ${
+                      enlace.destacado ? 'border border-neon/40 text-neon' : ''
+                    }`}
                   >
                     {enlace.texto}
                   </a>

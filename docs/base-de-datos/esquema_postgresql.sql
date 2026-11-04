@@ -124,6 +124,23 @@ CREATE TABLE niveles (
 	CONSTRAINT ck_niveles_estado CHECK (estado IN ('borrador', 'publicado', 'archivado'))
 );
 
+CREATE TABLE nube_sesiones (
+	id VARCHAR(40) NOT NULL, 
+	usuario_id VARCHAR(100) NOT NULL, 
+	nodo VARCHAR(60) NOT NULL, 
+	estado VARCHAR(20) NOT NULL, 
+	token_hash VARCHAR(64) NOT NULL, 
+	creada_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	expira_en TIMESTAMP WITHOUT TIME ZONE NOT NULL, 
+	terminada_en TIMESTAMP WITHOUT TIME ZONE, 
+	motivo_fin VARCHAR(40), 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(usuario_id) REFERENCES usuarios (id)
+);
+
+CREATE INDEX ix_nube_sesiones_estado ON nube_sesiones (estado, expira_en);
+CREATE INDEX ix_nube_sesiones_usuario ON nube_sesiones (usuario_id, creada_en);
+
 CREATE TABLE perfiles (
 	usuario_id VARCHAR(100) NOT NULL, 
 	avatar VARCHAR(40), 
