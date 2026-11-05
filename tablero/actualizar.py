@@ -57,7 +57,7 @@ ARCHIVO_MODULO = re.compile(r"^(.+)-modulo-(\d+)\.json$")
 
 
 def git(*args):
-    return subprocess.run(["git", *args], cwd=RAIZ, capture_output=True, text=True, check=True).stdout
+    return subprocess.run(["git", *args], cwd=RAIZ, capture_output=True, encoding="utf-8", errors="replace", check=True).stdout
 
 
 def normalizar(numero):

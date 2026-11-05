@@ -29,16 +29,6 @@ const HERRAMIENTAS_MOVIL = [
   { href: rutas.ecosistema, titulo: '¿Qué es cada cosa?', desc: 'Guía de la plataforma', Icono: IconoEcosistema },
 ];
 
-function enlacesDe(verEvaluar, verAdmin) {
-  const enlaces = [
-    { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
-    { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
-  ];
-  if (verEvaluar) enlaces.push({ href: rutas.profesor, texto: 'Evaluar', activo: (pagina) => pagina === 'profesor' });
-  if (verAdmin) enlaces.push({ href: rutas.admin, texto: 'Admin', activo: (pagina) => pagina === 'admin' });
-  return enlaces;
-}
-
 const inicial = (usuario) => (usuario?.nombre || usuario?.email || '?').trim().charAt(0).toUpperCase();
 
 // Cierra con Escape o con un clic fuera del elemento.
@@ -183,7 +173,8 @@ function BarraSuperior({ ruta, hash = '' }) {
   useCerrarFuera(menuAbierto, cerrarMenu, barra);
 
   const pagina = ruta?.pagina ?? 'inicio';
-const enlaces = enlacesDe(esProfesor && !comoAlumno, esAdmin && !comoAlumno);
+const verAdmin = esAdmin && !comoAlumno;
+  const verEvaluar = esProfesor && !comoAlumno;
   const enCuenta = ['entrar', 'registro', 'confirmar', 'recuperar'].includes(pagina);
 
   const salir = async () => {
@@ -221,6 +212,17 @@ const enlaces = enlacesDe(esProfesor && !comoAlumno, esAdmin && !comoAlumno);
                 Mi panel
               </a>
             </li>
+            {verEvaluar && (
+              <li>
+                <a
+                  href={rutas.profesor}
+                  aria-current={pagina === 'profesor' ? 'page' : undefined}
+                  className={`nav-principal__enlace ${pagina === 'profesor' ? 'nav-principal__enlace--activo' : ''}`}
+                >
+                  Evaluar
+                </a>
+              </li>
+            )}
             {verAdmin && (
               <li>
                 <a
@@ -318,6 +320,20 @@ const enlaces = enlacesDe(esProfesor && !comoAlumno, esAdmin && !comoAlumno);
                 Mi panel
               </a>
             </li>
+            {verEvaluar && (
+              <li>
+                <a
+                  href={rutas.profesor}
+                  onClick={() => setMenuAbierto(false)}
+                  aria-current={pagina === 'profesor' ? 'page' : undefined}
+                  className={`corte-poly-sm block px-3 py-3 font-mono text-sm uppercase tracking-widest ${
+                    pagina === 'profesor' ? 'bg-white/10 text-white' : 'text-white/70 hover:text-neon'
+                  }`}
+                >
+                  Evaluar
+                </a>
+              </li>
+            )}
             {verAdmin && (
               <li>
                 <a

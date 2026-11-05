@@ -872,7 +872,7 @@ tareas:
     depende_de: [T-148]
     aceptacion: "diagnostico_oracle.py ve 24 tablas; la cuenta del creador ve el pavo real y el buzón en Admin"
     bloqueo: "Lo hace el usuario (Database Actions y la VM)"
-- id: T-170
+  - id: T-170
     titulo: "Termómetro de ánimo y luz según el dominio: el motor lee intentos, deshacer, ráfagas de clics y tiempo sin avanzar, y decide cuánta ayuda se enciende (plena al principio, más seria con el curso, lo débil siempre señalado)"
     version: v3.3.0
     area: motor
@@ -993,7 +993,7 @@ tareas:
     depende_de: [T-160]
     aceptacion: "En la VM: curl -X POST https://api.amatista-3d.tech/api/sincronizar responde 422 (no 404); un teléfono en 3G sincroniza con un solo POST comprimido"
     bloqueo: "Lo hace el usuario (actualizar la VM y probar en una escuela)"
-- id: T-150
+  - id: T-150
     titulo: "Panel del profesor evaluador: grupos con código, prácticas asignadas, entregas con el modelo ligero del alumno (solo en la computadora del profesor) y evaluación"
     version: v3.3.0
     area: pwa

@@ -4,7 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-Último commit: 2026-11-05 12:59 · `main` en `688b430`
+Último commit: 2026-11-05 13:33 · `main` en `dad3d48`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
@@ -16,7 +16,7 @@
 | **v3.0.0** | Reestructuración | Niveles, habilidades, versiones de Blender y herramientas de autor en Oracle; documentación y tablero nuevos. | ▰▰▰▰▱▱▱▱▱▱ 5/12 |
 | **v3.1.0** | Mi primer espacio 3D | Primera entrega de contenido por niveles (lecciones 01–11 de la propuesta) con fichas, rúbrica y versión verificada. | ▱▱▱▱▱▱▱▱▱▱ 0/5 |
 | **v3.2.0** | Laboratorio 3D | Visor GLB en las lecciones, escena de ejemplo y lección 12 (exportar y comprobar). | ▱▱▱▱▱▱▱▱▱▱ 0/3 |
-| **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▰▰▱▱▱▱▱▱▱ 30/101 |
+| **v3.3.0** | Add-on de Blender | Add-on conectado a la plataforma (vincular cuenta, panel de lección, comprobaciones y verificaciones). | ▰▰▰▱▱▱▱▱▱▱ 30/103 |
 | **v3.4.0** | Especialidades y tutor | Primera rama del nivel 5 y tutor IA dentro de las lecciones. | ▱▱▱▱▱▱▱▱▱▱ 0/17 |
 | **v3.5.0** | Centro 3D con G7B | Prácticas y recomendaciones que se adaptan al equipo con datos de G7B (repo amatista-g7b-etl); primera prueba en la estadía. Propuesta en docs/propuestas/2026-11-01_centro_3d_y_g7b.md. | ▱▱▱▱▱▱▱▱▱▱ 0/14 |
 
@@ -24,7 +24,7 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 
 ## 📌 Kanban
 
-| 📋 Pendiente (65) | 🔨 En progreso (62) | 👀 Revisión (4) | ✅ Hecho (46) |
+| 📋 Pendiente (65) | 🔨 En progreso (64) | 👀 Revisión (4) | ✅ Hecho (46) |
 |---|---|---|---|
 | **T-008** Proteger main (solo cambios por PR)<br><sub>v2.2.0 · repo</sub> | **T-003** Desplegar el backend nuevo como servicio systemd<br><sub>v2.2.0 · api</sub> | **T-004** Usuario de aplicación en Oracle (dejar de usar ADMIN)<br><sub>v2.2.0 · db</sub> | **T-002** Ejecutar el esquema SQL nuevo en Oracle y pasar el diagnóstico<br><sub>v2.2.0 · db</sub> |
 | **T-023** Respaldo de Oracle y restauración ensayada en pruebas<br><sub>v2.2.0 · db</sub> | **T-028** Informe semanal de alumnos activos (meta 20 activos al 22 de octubre)<br><sub>v2.2.0 · lanzamiento</sub> | **T-024** Publicar el frontend en Cloudflare (Workers) contra la API HTTPS<br><sub>v2.2.0 · pwa</sub> | **T-005** HTTPS en el backend para publicar en Cloudflare Pages<br><sub>v2.2.0 · api</sub> |
@@ -82,14 +82,14 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 | **T-188** Add-on: detectar el nivel del equipo (N0 a N4) y aplicar un perfil de perfiles.json, reversible y preguntando la primera vez<br><sub>v3.5.0 · blender</sub> | **T-185** Crear en Sentry los proyectos amatista-backend (FastAPI) y amatista-web (React), poner los DSN en la VM y en Cloudflare y conectar GitHub<br><sub>v3.3.0 · lanzamiento</sub> |   |   |
 | **T-189** Extensión observadora del Corazón: registrar eventos de la práctica (paso, señal, tiempo, pistas) con consentimiento, usando la cola del add-on<br><sub>v3.5.0 · motor</sub> | **T-160** PWA para escuelas con pocos datos: sincronización en una petición comprimida, reintentos, envío al salir y «Ahorro de datos»<br><sub>v3.3.0 · pwa</sub> |   |   |
 | **T-190** API: recibir los eventos de práctica y exportar a G7B solo agregados de 5 equipos o más, sin datos personales<br><sub>v3.5.0 · api</sub> | **T-161** Desplegar el backend con /api/sincronizar y probar la PWA en una escuela con datos móviles<br><sub>v3.3.0 · lanzamiento</sub> |   |   |
-| **T-191** Elegir la práctica del experimento de la estadía, que funcione de N1 a N4, con su variante con y sin perfil<br><sub>v3.5.0 · contenido</sub> | **T-097** Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)<br><sub>v3.4.0 · pwa</sub> |   |   |
-| **T-192** Recomendaciones en Mi panel: versión de Blender, perfil y prácticas según el equipo y el avance<br><sub>v3.5.0 · pwa</sub> | **T-080** Portada más ligera en teléfono: el texto de cada módulo se carga al abrir su curso (hoy va en el paquete principal)<br><sub>v3.4.0 · pwa</sub> |   |   |
-| **T-193** Biblioteca de texturas CC0 curadas (Poly Haven, ambientCG) por nivel de equipo (1K, 2K o 4K) con su lección<br><sub>v3.5.0 · contenido</sub> | **T-083** Examen final (jefe) calificado por el servidor: las respuestas dejan de viajar en el JavaScript de la PWA<br><sub>v3.4.0 · api</sub> |   |   |
-| **T-194** Revisar la política de marca de la Blender Foundation y usar «Amatista para Blender» en materiales nuevos<br><sub>v3.5.0 · repo</sub> | **T-082** Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages<br><sub>v3.4.0 · pwa</sub> |   |   |
-| **T-195** Entornos de A-Frame con perfiles por dispositivo medidos con la sonda web de G7B<br><sub>v3.5.0 · pwa</sub> | **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)<br><sub>v3.4.0 · db</sub> |   |   |
-| **T-196** Oracle: script 014_g7b.sql con la tabla G7B_CACHE (copia verificada de lo que publica G7B)<br><sub>v3.5.0 · db</sub> | **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)<br><sub>v3.4.0 · contenido</sub> |   |   |
-| **T-197** Sincronizar G7B cada 6 h: manifiesto, calidad aprobada y SHA-256 verificados, con respaldo en Pages y versión visible en Admin › Estado<br><sub>v3.5.0 · api</sub> |   |   |   |
-| **T-198** API: /api/g7b/v1/recomendacion y /api/g7b/v1/modelo-costos responden desde la caché, sin guardar la consulta con la cuenta<br><sub>v3.5.0 · api</sub> |   |   |   |
+| **T-191** Elegir la práctica del experimento de la estadía, que funcione de N1 a N4, con su variante con y sin perfil<br><sub>v3.5.0 · contenido</sub> | **T-150** Panel del profesor evaluador: grupos con código, prácticas asignadas, entregas con el modelo ligero del alumno (solo en la computadora del profesor) y evaluación<br><sub>v3.3.0 · pwa</sub> |   |   |
+| **T-192** Recomendaciones en Mi panel: versión de Blender, perfil y prácticas según el equipo y el avance<br><sub>v3.5.0 · pwa</sub> | **T-151** Aplicar 014 en Oracle, desplegar el panel del profesor y probarlo con un grupo real<br><sub>v3.3.0 · oracle</sub> |   |   |
+| **T-193** Biblioteca de texturas CC0 curadas (Poly Haven, ambientCG) por nivel de equipo (1K, 2K o 4K) con su lección<br><sub>v3.5.0 · contenido</sub> | **T-097** Decidir el visor del modelo del alumno: model-viewer (301 KB, con materiales) o visor de malla con la malla simplificada que manda el add-on (unos KB, sin materiales)<br><sub>v3.4.0 · pwa</sub> |   |   |
+| **T-194** Revisar la política de marca de la Blender Foundation y usar «Amatista para Blender» en materiales nuevos<br><sub>v3.5.0 · repo</sub> | **T-080** Portada más ligera en teléfono: el texto de cada módulo se carga al abrir su curso (hoy va en el paquete principal)<br><sub>v3.4.0 · pwa</sub> |   |   |
+| **T-195** Entornos de A-Frame con perfiles por dispositivo medidos con la sonda web de G7B<br><sub>v3.5.0 · pwa</sub> | **T-083** Examen final (jefe) calificado por el servidor: las respuestas dejan de viajar en el JavaScript de la PWA<br><sub>v3.4.0 · api</sub> |   |   |
+| **T-196** Oracle: script 014_g7b.sql con la tabla G7B_CACHE (copia verificada de lo que publica G7B)<br><sub>v3.5.0 · db</sub> | **T-082** Política de seguridad de contenido (CSP) para la PWA en Cloudflare Pages<br><sub>v3.4.0 · pwa</sub> |   |   |
+| **T-197** Sincronizar G7B cada 6 h: manifiesto, calidad aprobada y SHA-256 verificados, con respaldo en Pages y versión visible en Admin › Estado<br><sub>v3.5.0 · api</sub> | **T-069** Ensayo de migración a PostgreSQL con herramientas/migrar.py (purga y vistas portadas)<br><sub>v3.4.0 · db</sub> |   |   |
+| **T-198** API: /api/g7b/v1/recomendacion y /api/g7b/v1/modelo-costos responden desde la caché, sin guardar la consulta con la cuenta<br><sub>v3.5.0 · api</sub> | **T-054** Primera rama del nivel 5 (por decidir; propuesta web y videojuegos)<br><sub>v3.4.0 · contenido</sub> |   |   |
 | **T-199** Geoda en el add-on: decidir con el modelo de costos, medir fps en la práctica y encender perfiles por porcentaje con ConfigCat<br><sub>v3.5.0 · blender</sub> |   |   |   |
 
 ## 📚 Contenido
@@ -162,16 +162,16 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
   - 🎯 Listo cuando: Cero defectos que expongan datos, pierdan progreso o impidan estudiar; 5 alumnos reales completan el flujo y 48 h del piloto sin fallos críticos
 - [ ] **T-028** Informe semanal de alumnos activos (meta 20 activos al 22 de octubre) · _en-progreso_ — commits: `cd7c7bc` (2026-10-02)
   - ⏸️ Espera: Empieza con la beta (T-027); el commit que la movió solo preparó las métricas
-- [ ] **T-029** Prueba de punta a punta en navegador (anónimo → cuenta → offline → admin publica → acople) · _en-progreso_ — commits: `8157ace` (2026-10-02), `a45d80c` (2026-10-02)
+- [ ] **T-029** Prueba de punta a punta en navegador (anónimo → cuenta → offline → admin publica → acople) · _en-progreso_ — commits: `a45d80c` (2026-10-02)
   - 🎯 Listo cuando: Recorrido de la sección 2.3 de la bitácora del 2/10 con capturas en 390 px y 1280 px
 - [ ] **T-030** Revisión de seguridad e integridad (permisos, tokens, XSS en contenido, fusión y sincronización) · _pendiente_
   - 🎯 Listo cuando: Hallazgos registrados en docs/incidencias/ y corregidos o con decisión escrita
-- [ ] **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue) · _revision_ — commits: `c01f296` (2026-10-02), `54edda8` (2026-10-02), `ffe3543` (2026-10-04)
+- [ ] **T-031** Documentación de la v2.2 (base de datos, autenticación, panel y despliegue) · _revision_ — commits: `54edda8` (2026-10-02), `ffe3543` (2026-10-04)
   - 🔎 Evidencia: 4 oct: docs/base-de-datos/ (esquema completo), docs/manual-del-codigo/03_backend.md (autenticación y roles), docs/plataforma/05_panel_de_administracion.md y docs/despliegue/2026-10-04_despliegue_oci.md
   - 🎯 Listo cuando: Los documentos pendientes de docs/README.md existen y están enlazados (incluida la guía de despliegue en OCI, que quedó en docs/despliegue/2026-10-04_despliegue_oci.md)
 - [ ] **T-032** Configurar SMTP y primer admin en el servidor (confirmación y recuperación por correo) · _en-progreso_ — commits: `d483e5e` (2026-10-29)
   - 🎯 Listo cuando: Registro con AMATISTA_REQUIERE_CONFIRMACION=1 recibe el código por correo
-- [x] **T-033** Importar el catálogo a Oracle (herramientas/contenido.py importar) · _hecho_ — commits: `8157ace` (2026-10-02), `a45d80c` (2026-10-02), `53dec44` (2026-10-03)
+- [x] **T-033** Importar el catálogo a Oracle (herramientas/contenido.py importar) · _hecho_ — commits: `a45d80c` (2026-10-02), `53dec44` (2026-10-03)
   - 🎯 Listo cuando: GET /api/contenido/catalogo en producción devuelve los 2 módulos publicados
 - [ ] **T-065** Dominio amatista-3d.tech (antes .me): Cloudflare (DNS y proxy), PWA en Workers y API con certificado de origen · _revision_ — commits: `d483e5e` (2026-10-29)
   - ⏸️ Espera: Pasos 1 a 4 (DNS y Pages) se pueden hacer ya; los de la VM, después del piloto
@@ -492,6 +492,12 @@ Versiones publicadas (tags): `v3.0.0-alpha.10` · `v3.0.0-alpha.9` · `v3.0.0-al
 - [ ] **T-161** Desplegar el backend con /api/sincronizar y probar la PWA en una escuela con datos móviles · _en-progreso_ — commits: `2459b94` (2026-10-31), `4385d8e` (2026-10-31)
   - ⏸️ Espera: Lo hace el usuario (actualizar la VM y probar en una escuela)
   - 🎯 Listo cuando: En la VM: curl -X POST https://api.amatista-3d.tech/api/sincronizar responde 422 (no 404); un teléfono en 3G sincroniza con un solo POST comprimido
+- [ ] **T-150** Panel del profesor evaluador: grupos con código, prácticas asignadas, entregas con el modelo ligero del alumno (solo en la computadora del profesor) y evaluación · _en-progreso_ — commits: `55e1a43` (2026-10-30), `0d486be` (2026-10-31), `87afc85` (2026-10-31)
+  - 🔎 Evidencia: backend/api/evaluacion.py, backend/sql/014_panel_del_profesor.sql, addon/amatista_blender/entrega.py, frontend/src/profesor/, frontend/src/pages/profesor/; docs/plataforma/17_panel_del_profesor.md
+  - 🎯 Listo cuando: El profesor crea un grupo, deja una práctica, ve el modelo de cada alumno armado en su navegador y lo evalúa; el modelo se borra del servidor al recogerlo; Mi grupo y «Entregar a mi profesor» en el add-on; SQL 014; pytest, vitest, lint, build y en_blender en verde
+- [ ] **T-151** Aplicar 014 en Oracle, desplegar el panel del profesor y probarlo con un grupo real · _en-progreso_ — commits: `87afc85` (2026-10-31)
+  - ⏸️ Espera: Lo hace el usuario (Database Actions, la VM y un grupo de prueba)
+  - 🎯 Listo cuando: diagnostico_oracle.py ve 28 tablas; un profesor recibe y evalúa la entrega de un alumno desde Blender
 - [x] **T-063** Herramientas de autor del motor v3 (plantillas, pruebas.json, practicas.py y panel Teoría y pruebas) · _hecho_ — commits: `34af6f3` (2026-10-04), `f9334d5` (2026-10-10)
   - 🔎 Evidencia: docs/motor/referencia/08_practicas_v3_y_herramientas.md; engine/herramientas/practicas.py (nueva, revisar, probar, simular, validadores, plan); addon/amatista_blender/interfaz/paneles.py (panel «Teoría y casos de prueba»); engine/tests/test_v3_herramientas.py
 - [ ] **T-064** Aplicar 008 y 009 en Oracle e importar los cursos Principiante, Principiante-Intermedio e Intermedio (después del piloto) · _pendiente_
