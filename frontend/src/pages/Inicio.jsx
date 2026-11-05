@@ -299,7 +299,7 @@ function PasoHerramienta({ software, alInicio }) {
           </span>
           <span className="min-w-0 flex-1">
             <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-blender">
-              Opción A · En tu computadora (una sola vez)
+              Opción A · En tu ordenador (una sola vez)
             </span>
             <span className="block font-extrabold text-white">Conectar mi Blender ({herramienta.nombre})</span>
             <span className="mt-0.5 block text-xs leading-snug text-texto/75">

@@ -1,5 +1,5 @@
 // Amatista Cloud (#/nube): una hora de Blender en la nube, desde el navegador, para cuentas de la UTN.
-// Las sesiones corren en los nodos (la VM de Oracle y computadoras del equipo) que coordina la API
+// Las sesiones corren en los nodos (la VM de Oracle y ordenadores del equipo) que coordina la API
 // (backend/api/nube.py). Guía: docs/nube/README.md.
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../auth/contexto';
@@ -144,7 +144,7 @@ export default function Nube() {
       migas={[{ texto: 'Cursos', href: rutas.inicio }, { texto: 'Amatista Cloud' }]}
       encabezado={{
         antetitulo: 'Amatista Cloud · UTN',
-        titulo: 'Blender en la nube, desde cualquier computadora',
+        titulo: 'Blender en la nube, desde cualquier ordenador',
         descripcion: 'Una hora de Blender en un equipo más potente que el del laboratorio, desde el navegador y sin instalar nada. Para cuentas de la UTN.',
       }}
     >
@@ -212,10 +212,10 @@ export default function Nube() {
       <section aria-labelledby="nube-como" className="mt-10">
         <TituloSeccion id="nube-como" antetitulo="4 · Cómo funciona" titulo="La nube de Oracle y los equipos del laboratorio, juntos" />
         <p className="mt-3 text-texto/85">
-          Amatista Cloud reparte cada sesión en el equipo con más lugar libre: la nube de Oracle o una computadora del equipo de Amatista que presta sus núcleos. Cada escritorio corre aislado, con su propio procesador y memoria, y con el perfil de <a href={rutas.geoda} className="text-neon hover:underline">Geoda</a> para equipos sin tarjeta gráfica.
+          Amatista Cloud reparte cada sesión en el equipo con más lugar libre: la nube de Oracle o un ordenador del equipo de Amatista que presta sus núcleos. Cada escritorio corre aislado, con su propio procesador y memoria, y con el perfil de <a href={rutas.geoda} className="text-neon hover:underline">Geoda</a> para equipos sin tarjeta gráfica.
         </p>
         <p className="mt-3 text-sm text-texto/70">
-          ¿Prefieres tu propia computadora? <a href={rutas.geoda} className="text-neon hover:underline">Geoda</a> te dice qué Blender instalar y <a href={rutas.biblioteca} className="text-neon hover:underline">la biblioteca</a> tiene texturas y modelos libres para tus prácticas.
+          ¿Prefieres tu propio ordenador? <a href={rutas.geoda} className="text-neon hover:underline">Geoda</a> te dice qué Blender instalar y <a href={rutas.biblioteca} className="text-neon hover:underline">la biblioteca</a> tiene texturas y modelos libres para tus prácticas.
         </p>
       </section>
 

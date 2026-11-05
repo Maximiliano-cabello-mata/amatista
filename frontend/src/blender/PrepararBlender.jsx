@@ -91,7 +91,7 @@ function PrepararBlender({ token }) {
               </span>
             </>
           ) : (
-            <>Abre esta lección en tu computador: Blender no corre en celulares.</>
+            <>Abre esta lección en tu ordenador: Blender no corre en dispositivos móviles.</>
           )}
         </Paso>
         <Paso numero="2" titulo="Abre Blender" hecho={conectados > 0}>

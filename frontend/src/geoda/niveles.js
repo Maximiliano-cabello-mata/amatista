@@ -20,7 +20,7 @@ const menor = (...niveles) => niveles.reduce((a, b) => (NIVELES.indexOf(a) <= NI
 export function clasificar(huella = {}) {
   const motivos = [];
   if (huella.movil || /android|ios|ipados|chrome ?os/i.test(huella.so ?? '')) {
-    return { nivel: 'N0', confianza: 'alta', motivos: ['Celular, tableta o Chromebook: Blender de escritorio no corre ahí'] };
+    return { nivel: 'N0', confianza: 'alta', motivos: ['Móvil, tableta o Chromebook: Blender de escritorio no corre ahí'] };
   }
   let faltan = 0;
   const gpu = huella.gpu ?? {};
@@ -29,17 +29,17 @@ export function clasificar(huella = {}) {
   if (tipo === 'dedicada') {
     const vram = gpu.vramGb ?? 0;
     if (!vram) {
-      motivos.push('Gráfica dedicada sin dato de memoria de video: se asume N3');
+      motivos.push('Gráfica dedicada sin dato de memoria de vídeo: se asume N3');
       porGpu = 'N3';
       faltan += 1;
     } else if (vram >= 12) {
-      motivos.push(`Gráfica dedicada con ${vram} GB de memoria de video`);
+      motivos.push(`Gráfica dedicada con ${vram} GB de memoria de vídeo`);
       porGpu = 'N4';
     } else if (vram >= 4) {
-      motivos.push(`Gráfica dedicada con ${vram} GB de memoria de video`);
+      motivos.push(`Gráfica dedicada con ${vram} GB de memoria de vídeo`);
       porGpu = 'N3';
     } else {
-      motivos.push(`Gráfica dedicada con solo ${vram} GB de memoria de video`);
+      motivos.push(`Gráfica dedicada con solo ${vram} GB de memoria de vídeo`);
       porGpu = (huella.opengl ?? 0) >= OPENGL_BLENDER_ACTUAL ? 'N2' : 'N1';
     }
   } else if (typeof huella.opengl === 'number') {

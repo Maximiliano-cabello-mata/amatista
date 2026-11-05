@@ -100,7 +100,7 @@ const RESPUESTA_NO_ENTENDI = {
   acciones: [
     { texto: 'Seguir donde me quedé', intencion: 'continuar' },
     { texto: 'Idea de proyecto', intencion: 'proyecto' },
-    { texto: 'Me atoré', intencion: 'atorado' },
+    { texto: 'Me he atascado', intencion: 'atorado' },
     { texto: 'Ver la ayuda', href: '#/guia' },
   ],
 };
@@ -182,6 +182,6 @@ export function porIntencion(id, contexto = {}) {
   const intencion = INTENCIONES.find((i) => i.id === id);
   if (!intencion) return RESPUESTA_NO_ENTENDI;
   const textos = intencion.respuestas;
-  const texto = textos[(contexto.vuelta ?? 0) % textos.length].replace('{nombre}', contexto.nombre ?? 'compa');
+  const texto = textos[(contexto.vuelta ?? 0) % textos.length].replace('{nombre}', contexto.nombre ?? 'compañero');
   return { intencion: id, gesto: intencion.gesto ?? 'gruñon', texto, acciones: intencion.acciones ?? [] };
 }

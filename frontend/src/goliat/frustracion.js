@@ -51,7 +51,7 @@ export const AVISOS = {
     clave: 'apoyo0',
     gesto: 'preocupado',
     texto: 'Ey. Ya van varias y está bien: así se aprende. Relee solo la instrucción, sin el resto, y prueba una cosa a la vez.',
-    acciones: [{ texto: 'Me atoré', intencion: 'atorado' }],
+    acciones: [{ texto: 'Me he atascado', intencion: 'atorado' }],
   },
   apoyo1: {
     clave: 'apoyo1',

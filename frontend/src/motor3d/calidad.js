@@ -1,4 +1,4 @@
-// Calidad del Motor Web según el equipo: la PWA corre en celulares modestos, computadoras de
+// Calidad del Motor Web según el equipo: la PWA corre en móviles modestos, ordenadores de
 // escuela sin GPU y visores de VR. Se elige al empezar y am-rendimiento la ajusta en vivo
 // (baja la resolución si los cuadros por segundo caen). Funciones puras: pruebas en motor3d.test.js.
 //

@@ -13,7 +13,7 @@ import { rutas } from '../rutas';
 import { pedirJSON } from '../services/api';
 
 const DESCRIPCION_NIVEL = {
-  N0: 'Celular, tableta o Chromebook',
+  N0: 'Móvil, tableta o Chromebook',
   N1: 'Equipo modesto: sin OpenGL 4.3 o menos de 8 GB',
   N2: 'Gráfica integrada capaz, de 8 a 16 GB',
   N3: 'Gráfica dedicada de 4 a 8 GB',
@@ -84,7 +84,7 @@ export default function Geoda() {
       encabezado={{
         antetitulo: 'Geoda · proyecto hermano',
         titulo: 'Ajusta Amatista y Blender a tu equipo',
-        descripcion: 'Geoda reconoce tu computadora y te dice qué versión de Blender y qué ajustes te van a funcionar fluido. Todo se puede deshacer.',
+        descripcion: 'Geoda reconoce tu ordenador y te dice qué versión de Blender y qué ajustes te van a funcionar fluido. Todo se puede deshacer.',
       }}
     >
       <section aria-labelledby="geoda-equipo" className="mt-8">

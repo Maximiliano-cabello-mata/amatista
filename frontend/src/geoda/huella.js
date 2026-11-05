@@ -1,5 +1,5 @@
 // Detectar: la huella técnica del equipo desde el navegador (sin datos personales).
-// El navegador no dice la versión de OpenGL de escritorio ni la memoria de video: Geoda lo marca como
+// El navegador no dice la versión de OpenGL de escritorio ni la memoria de vídeo: Geoda lo marca como
 // «confianza media o baja» y la persona puede corregir su equipo a mano.
 import { tipoDeGpu } from './niveles';
 

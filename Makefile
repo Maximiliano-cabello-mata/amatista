@@ -25,11 +25,13 @@ ia-pull-model:
 
 audit:
 	python3 herramientas/auditoria/estandares_web.py
+	python3 backend/herramientas/contenido.py validar
 
 test-frontend:
 	cd frontend && npm run test
 
 test-backend:
 	cd backend && python3 -m pytest -q
+	python3 -m pytest -q ai_tutor/
 
 test: test-frontend test-backend audit

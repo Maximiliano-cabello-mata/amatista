@@ -9,7 +9,7 @@
 //   am-zona        un círculo en el suelo que sabe qué objetos tiene dentro (evento am-zona-cambio)
 //   am-reto        revisa un reto (motor3d/retos.js) y celebra al cumplirse (evento am-reto-cumplido)
 //   am-orbita      cámara que gira alrededor de la escena con arrastrar, rueda o pellizco
-//   am-caminar     caminar con W A S D o flechas sobre el terreno (y mantener pulsado en el celular)
+//   am-caminar     caminar con W A S D o flechas sobre el terreno (y mantener pulsado en el móvil)
 //   am-flotar      flota y gira despacio (sin el costo del componente animation)
 //   am-mano        agarra objetos arrastrables con el láser del control de VR
 //   am-rendimiento ajusta la resolución en vivo según los cuadros por segundo
@@ -672,7 +672,7 @@ export function registrarMotor(AFRAME) {
           else this.teclas.delete(tecla);
         }
       };
-      // En el celular: mantener el dedo quieto medio segundo camina hacia adelante.
+      // En el móvil: mantener el dedo quieto medio segundo camina hacia adelante.
       this.alPresionar = (e) => {
         if (e.pointerType !== 'touch') return;
         clearTimeout(this.reloj);

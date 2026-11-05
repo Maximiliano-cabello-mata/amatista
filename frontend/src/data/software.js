@@ -40,7 +40,7 @@ export const SOFTWARE = [
     logo: 'aframe',
     acento: 'neon',
     lema: 'Escenas 3D, interacción y realidad virtual en la web',
-    descripcion: 'Construye mundos 3D con etiquetas HTML y publícalos con un enlace: se ven en el navegador, el celular y los visores de VR.',
+    descripcion: 'Construye mundos 3D con etiquetas HTML y publícalos con un enlace: se ven en el navegador, el móvil y los visores de VR.',
     disciplinas: ['modelado', 'diseno', 'animacion', 'interaccion', 'xr'],
     herramienta: { nombre: 'Estudio A-Frame', texto: 'Crea una escena ahora', href: rutas.estudio },
   },

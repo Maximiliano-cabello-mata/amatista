@@ -28,7 +28,7 @@ const RAPIDOS = [
   { texto: 'Seguir donde me quedé', intencion: 'continuar' },
   { texto: 'Idea de proyecto', intencion: 'proyecto' },
   { texto: 'Atajos de Blender', intencion: 'atajos' },
-  { texto: 'Me atoré', intencion: 'atorado' },
+  { texto: 'Me he atascado', intencion: 'atorado' },
 ];
 
 function leer(clave, porDefecto) {
@@ -332,7 +332,7 @@ function Goliat() {
               ref={entrada}
               value={texto}
               onChange={(evento) => setTexto(evento.target.value)}
-              placeholder="¿Cómo extruyo? · Me atoré · Dame una idea"
+              placeholder="¿Cómo extruyo? · Me he atascado · Dame una idea"
               autoComplete="off"
               maxLength={160}
             />

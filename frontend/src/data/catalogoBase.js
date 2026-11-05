@@ -243,7 +243,7 @@ export function buscarInsignia(lista, insigniaId) {
 export const TIPOS_LECCION = {
   theory_reading: 'Lectura',
   theory_interactive: 'Interactiva',
-  video_lesson: 'Video',
+  video_lesson: 'Vídeo',
   code_interactive: 'Código',
   exam: 'Examen',
 };

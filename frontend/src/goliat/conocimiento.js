@@ -111,7 +111,7 @@ export const INTENCIONES = [
     gesto: 'atento',
     claves: [['examen', 2], ['prueba', 1.5], ['calificacion', 2], ['aprobar', 2], ['reprobe', 2], ['repetir', 1]],
     respuestas: [
-      'Cada examen dice su mínimo para aprobar y puedes repetirlo. Si reprobaste, repasa las lecciones del módulo: el examen no pregunta nada que no hayas visto.',
+      'Cada examen dice su mínimo para aprobar y puedes repetirlo. Si has suspendido, repasa las lecciones del módulo: el examen no pregunta nada que no hayas visto.',
     ],
   },
   {

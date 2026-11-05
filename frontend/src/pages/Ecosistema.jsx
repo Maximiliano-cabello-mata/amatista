@@ -26,8 +26,8 @@ const PIEZAS = [
   },
   {
     id: 'geoda', nombre: 'Geoda', etiqueta: 'El kernel que adapta', href: rutas.geoda, boton: 'Ajustar a mi equipo',
-    que: 'Reconoce tu computadora (nivel N0 a N4) y elige la versión de Blender y los ajustes que le van fluidos.',
-    para: 'Que aprender 3D no dependa de tener una computadora cara. Todo lo que cambia se puede deshacer.',
+    que: 'Reconoce tu ordenador (nivel N0 a N4) y elige la versión de Blender y los ajustes que le van fluidos.',
+    para: 'Que aprender 3D no dependa de tener un ordenador caro. Todo lo que cambia se puede deshacer.',
   },
   {
     id: 'g7b', nombre: 'G7B', etiqueta: 'El motor de datos', href: 'https://github.com/Maximiliano-cabello-mata/amatista-g7b-etl', externo: true,
@@ -38,7 +38,7 @@ const PIEZAS = [
   {
     id: 'nube', nombre: 'Amatista Cloud', etiqueta: 'Blender en la nube · UTN', href: rutas.nube, boton: 'Abrir Amatista Cloud', destacado: true,
     que: 'Una hora de Blender en la nube de Oracle o en los equipos del laboratorio, desde el navegador.',
-    para: 'Que un alumno de la UTN con una computadora modesta trabaje en un equipo mejor, sin instalar nada.',
+    para: 'Que un alumno de la UTN con un ordenador modesto trabaje en un equipo mejor, sin instalar nada.',
   },
 ];
 
@@ -65,7 +65,7 @@ export default function Ecosistema() {
       encabezado={{
         antetitulo: 'Todo Amatista',
         titulo: 'Qué es cada cosa y cómo se conectan',
-        descripcion: 'Amatista enseña 3D en la computadora que cada quien tiene. Estas son sus piezas: lo que aprendes, con qué practicas y lo que trabaja por detrás para que te funcione.',
+        descripcion: 'Amatista enseña 3D en el ordenador que cada quien tiene. Estas son sus piezas: lo que aprendes, con qué practicas y lo que trabaja por detrás para que te funcione.',
       }}
     >
       <section aria-labelledby="eco-ciclo" className="mt-8">

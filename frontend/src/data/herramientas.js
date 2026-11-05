@@ -5,7 +5,7 @@
 // Documentación: docs/plataforma/04_herramientas_de_ensenanza.md.
 
 export const CATEGORIAS = [
-  { id: 'explicar', nombre: 'Explicar', detalle: 'Presentar una idea con texto, imagen o video.' },
+  { id: 'explicar', nombre: 'Explicar', detalle: 'Presentar una idea con texto, imagen o vídeo.' },
   { id: 'visualizar', nombre: 'Visualizar', detalle: 'Ordenar la idea en un gráfico: tarjetas, capas, procesos, comparaciones.' },
   { id: 'practicar', nombre: 'Practicar en el navegador', detalle: 'Actividades con respuesta inmediata dentro de la lección.' },
   { id: 'blender', nombre: 'Practicar en Blender', detalle: 'Llevar lo aprendido a Blender, con la guía del motor.' },
@@ -29,7 +29,7 @@ export const HERRAMIENTAS = {
     formula: ['gancho', 'explora'],
   },
   video_player: {
-    nombre: 'Video',
+    nombre: 'Vídeo',
     categoria: 'explicar',
     paraQue: 'Ver el movimiento: una herramienta usada en Blender, de principio a fin.',
     cuando: 'Para demostraciones de menos de 3 minutos.',
@@ -243,7 +243,7 @@ export const HERRAMIENTAS = {
     nombre: 'Mundo 3D (Motor Web)',
     categoria: 'practicar',
     paraQue: 'Un mundo A-Frame generado (bosque, isla, ciudad…) con objetos que se arrastran, zonas y retos que se revisan solos.',
-    cuando: 'Cuando la idea se entiende mejor haciéndola en 3D: mover, ordenar, construir. Funciona en PC, celular y visor de VR.',
+    cuando: 'Cuando la idea se entiende mejor haciéndola en 3D: mover, ordenar, construir. Funciona en ordenador, móvil y visor de VR.',
     formula: ['gancho', 'explora', 'practica', 'reto'],
   },
   // Dinámicas v4.3 (docs/plataforma/14_refinamiento_y_dinamicas.md).
