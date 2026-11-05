@@ -29,6 +29,16 @@ const HERRAMIENTAS_MOVIL = [
   { href: rutas.ecosistema, titulo: '¿Qué es cada cosa?', desc: 'Guía de la plataforma', Icono: IconoEcosistema },
 ];
 
+function enlacesDe(verEvaluar, verAdmin) {
+  const enlaces = [
+    { href: rutas.inicio, texto: 'Cursos', activo: (pagina) => PAGINAS_CURSOS.includes(pagina) },
+    { href: rutas.panel, texto: 'Mi panel', activo: (pagina) => pagina === 'panel' },
+  ];
+  if (verEvaluar) enlaces.push({ href: rutas.profesor, texto: 'Evaluar', activo: (pagina) => pagina === 'profesor' });
+  if (verAdmin) enlaces.push({ href: rutas.admin, texto: 'Admin', activo: (pagina) => pagina === 'admin' });
+  return enlaces;
+}
+
 const inicial = (usuario) => (usuario?.nombre || usuario?.email || '?').trim().charAt(0).toUpperCase();
 
 // Cierra con Escape o con un clic fuera del elemento.
@@ -160,7 +170,7 @@ function BarraSuperior({ ruta, hash = '' }) {
   const enLinea = useConexion();
   const instalar = useInstalarPWA();
   const { xp, nivel } = useProgreso();
-  const { usuario, esProfesor, cerrarSesion } = useAuth();
+  const { usuario, esProfesor, esAdmin, cerrarSesion } = useAuth();
   const { avatar } = useAvatar();
   const { comoAlumno } = useVista();
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -173,13 +183,13 @@ function BarraSuperior({ ruta, hash = '' }) {
   useCerrarFuera(menuAbierto, cerrarMenu, barra);
 
   const pagina = ruta?.pagina ?? 'inicio';
-  const verAdmin = esProfesor && !comoAlumno;
+const enlaces = enlacesDe(esProfesor && !comoAlumno, esAdmin && !comoAlumno);
   const enCuenta = ['entrar', 'registro', 'confirmar', 'recuperar'].includes(pagina);
 
   const salir = async () => {
     setMenuAbierto(false);
     await cerrarSesion();
-    if (pagina === 'perfil' || pagina === 'admin') navegar(rutas.inicio);
+    if (pagina === 'perfil' || pagina === 'admin' || pagina === 'profesor') navegar(rutas.inicio);
   };
 
   return (
