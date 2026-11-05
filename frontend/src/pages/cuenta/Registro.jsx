@@ -3,10 +3,11 @@ import { validarCorreo, validarNombre, validarPasswordNueva, validarTelefono } f
 import { useProgreso } from '../../progreso/contexto';
 import { navegar, rutas } from '../../rutas';
 import { Alerta, BotonEnviar, Campo, CampoPassword, CLASE_ENLACE, PaginaCuenta } from './Formulario';
+import BotonGoogle, { SeparadorO } from './BotonGoogle';
 import { useFormulario } from './useFormulario';
 
 function Registro({ consulta = {} }) {
-  const { usuario, registrar } = useAuth();
+  const { usuario, registrar, iniciarSesionConGoogle } = useAuth();
   const { xp, progreso } = useProgreso();
   const formulario = useFormulario(
     { nombre: '', email: consulta.email ?? '', password: '', telefono: '' },
@@ -27,6 +28,12 @@ function Registro({ consulta = {} }) {
       </PaginaCuenta>
     );
   }
+
+  const alAutenticarGoogle = async (credencial) => {
+    const resultado = await iniciarSesionConGoogle(credencial);
+    if (resultado.ok) navegar(rutas.panel);
+    return resultado;
+  };
 
   const alEnviar = enviar(async ({ nombre, email, password, telefono }) => {
     const datos = { nombre: nombre.trim(), email: email.trim(), password };
@@ -56,7 +63,9 @@ function Registro({ consulta = {} }) {
         El progreso de este dispositivo se conserva: se une a tu nueva cuenta
         {lecciones > 0 ? ` (${lecciones} ${lecciones === 1 ? 'lección' : 'lecciones'} · ${xp} XP).` : '.'}
       </Alerta>
-      <form noValidate onSubmit={alEnviar} className="mt-5 grid gap-4">
+            <BotonGoogle alAutenticar={alAutenticarGoogle} texto="Registrarse con Google" className="mt-4" />
+      <SeparadorO texto="o completa tu registro" />
+      <form noValidate onSubmit={alEnviar} className="grid gap-4">
         <Campo
           etiqueta="Nombre"
           nombre="nombre"

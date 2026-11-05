@@ -2,12 +2,13 @@ import { useAuth } from '../../auth/contexto';
 import { validarCorreo, validarPassword } from '../../auth/validacion';
 import { destinoTrasEntrar, navegar, rutas } from '../../rutas';
 import { Alerta, BotonEnviar, Campo, CampoPassword, CLASE_ENLACE, PaginaCuenta } from './Formulario';
+import BotonGoogle, { SeparadorO } from './BotonGoogle';
 import { useFormulario } from './useFormulario';
 
 const conCorreo = (ruta, email) => (email ? `${ruta}?email=${encodeURIComponent(email.trim())}` : ruta);
 
 function Entrar({ consulta = {} }) {
-  const { usuario, iniciarSesion, cerrarSesion } = useAuth();
+  const { usuario, iniciarSesion, iniciarSesionConGoogle, cerrarSesion } = useAuth();
   const formulario = useFormulario(
     { email: consulta.email ?? '', password: '' },
     { email: validarCorreo, password: validarPassword },
@@ -37,6 +38,12 @@ function Entrar({ consulta = {} }) {
     );
   }
 
+  const alAutenticarGoogle = async (credencial) => {
+    const resultado = await iniciarSesionConGoogle(credencial);
+    if (resultado.ok) navegar(destino);
+    return resultado;
+  };
+
   const alEnviar = enviar(async ({ email, password }) => {
     const resultado = await iniciarSesion({ email: email.trim(), password });
     if (resultado.ok) navegar(destino);
@@ -64,6 +71,8 @@ function Entrar({ consulta = {} }) {
         </>
       }
     >
+            <BotonGoogle alAutenticar={alAutenticarGoogle} texto="Continuar con Google" />
+      <SeparadorO />
       <form noValidate onSubmit={alEnviar} className="grid gap-4">
         <Campo
           etiqueta="Correo"

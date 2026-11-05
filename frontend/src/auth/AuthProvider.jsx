@@ -117,6 +117,21 @@ function AuthProvider({ children }) {
     [entrarCon],
   );
 
+  const iniciarSesionConGoogle = useCallback(
+    async (credencial) => {
+      const anonimo = await leer(CLAVE_ANONIMO);
+      const idLocal = typeof anonimo?.alumnoId === 'string' ? anonimo.alumnoId : null;
+      const respuesta = await api.autenticarConGoogle({ credencial, usuarioLocalId: idLocal });
+      if (respuesta.ok && respuesta.datos?.token && respuesta.datos?.usuario?.id) {
+        validado.current = respuesta.datos.token;
+        setSesionVencida(false);
+        cambiarSesion({ token: respuesta.datos.token, usuario: respuesta.datos.usuario, idLocal });
+      }
+      return resultado(respuesta);
+    },
+    [cambiarSesion],
+  );
+
   // Cerrar sesión funciona sin conexión: el aviso al servidor es de cortesía.
   const cerrarSesion = useCallback(async () => {
     const token = sesion.token;
@@ -226,6 +241,7 @@ function AuthProvider({ children }) {
       sesionVencida,
       registrar,
       iniciarSesion,
+      iniciarSesionConGoogle,
       cerrarSesion,
       cerrarTodas,
       confirmarCorreo,
@@ -244,6 +260,7 @@ function AuthProvider({ children }) {
     sesionVencida,
     registrar,
     iniciarSesion,
+    iniciarSesionConGoogle,
     cerrarSesion,
     cerrarTodas,
     confirmarCorreo,

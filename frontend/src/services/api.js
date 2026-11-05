@@ -183,6 +183,16 @@ export const registrar = (datos) =>
 export const iniciarSesion = (datos) =>
   pedirJSON("/api/auth/iniciar-sesion", { metodo: "POST", cuerpo: { dispositivo: dispositivo(), ...datos } });
 
+export const autenticarConGoogle = ({ credencial, usuarioLocalId }) =>
+  pedirJSON("/api/auth/google", {
+    metodo: "POST",
+    cuerpo: {
+      credencial,
+      usuario_local_id: usuarioLocalId,
+      dispositivo: dispositivo(),
+    },
+  });
+
 export const cerrarSesion = (token) => pedirJSON("/api/auth/cerrar-sesion", { metodo: "POST", token, espera: 4000 });
 
 export const cerrarTodas = (token) => pedirJSON("/api/auth/cerrar-todas", { metodo: "POST", token });
