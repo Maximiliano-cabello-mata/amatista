@@ -58,6 +58,7 @@ Carpeta [`plataforma/`](plataforma/README.md): estructura fija Cursos · Blender
 - [Interfaz libre, avatares y buzón del creador (30 oct)](plataforma/16_avatares_y_buzon.md)
 - [Diseño «Facetas» (CSS v4.0)](diseno/2026-10-11_sistema_facetas.md)
 - [Auditoría completa del 11 de octubre](auditoria/2026-10-11_auditoria_completa.md)
+- [Auditoría de saneamiento, tecnologías y GitHub (5 nov)](auditoria/2026-11-05_auditoria_saneamiento_y_github.md)
 
 ### Cursos
 
