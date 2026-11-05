@@ -69,6 +69,7 @@ function Personaje({ tema, className = '', interactivo = true, mira = true, reac
       nodo.style.setProperty('--inclinar', `${m.inclinar}deg`);
     };
     const alMover = (e) => {
+      if (!visible.current || document.hidden) return;
       ultimo = { x: e.clientX, y: e.clientY };
       if (pendiente === null) pendiente = window.requestAnimationFrame(aplicar);
     };

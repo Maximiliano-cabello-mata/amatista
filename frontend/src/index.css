@@ -142,6 +142,17 @@
   to { stroke-dashoffset: 0; }
 }
 
+/* Se conserva el fotograma al salir de vista y se continúa al regresar. */
+[data-animacion-pausada],
+[data-animacion-pausada] *,
+[data-animacion-pausada]::before,
+[data-animacion-pausada]::after,
+[data-animacion-pausada] *::before,
+[data-animacion-pausada] *::after,
+html[data-pagina-oculta] *,
+html[data-pagina-oculta] *::before,
+html[data-pagina-oculta] *::after { animation-play-state: paused !important; }
+
 .animar-flotar { animation: flotar 5s ease-in-out infinite; }
 .animar-pulso { animation: pulso 2.4s ease-in-out infinite; }
 .animar-entrar { animation: entrar 0.5s ease-out both; }

@@ -3,6 +3,7 @@
 import 'aframe';
 import { useEffect, useRef } from 'react';
 import { geometriaDe } from './logica';
+import { observarEscena } from '../../../lib/visibilidad3d';
 
 const GRADOS = Math.PI / 180;
 
@@ -53,15 +54,23 @@ function EscenaAFrame({ primitiva, valores }) {
     objeto.current = figura;
 
     let anterior = performance.now();
-    let cuadro = requestAnimationFrame(function girar(ahora) {
+    let cuadro;
+    function girar(ahora) {
       const segundos = Math.min(0.1, (ahora - anterior) / 1000);
       anterior = ahora;
       if (figura.object3D && !arrastre.current) figura.object3D.rotation.y += velocidad.current * GRADOS * segundos;
       cuadro = requestAnimationFrame(girar);
+    }
+    const detener = observarEscena(escena, contenedor.current, (activa) => {
+      cancelAnimationFrame(cuadro);
+      if (activa) {
+        anterior = performance.now();
+        cuadro = requestAnimationFrame(girar);
+      }
     });
 
     return () => {
-      cancelAnimationFrame(cuadro);
+      detener();
       escena.remove();
       objeto.current = null;
     };
