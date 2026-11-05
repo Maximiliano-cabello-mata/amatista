@@ -16,3 +16,13 @@ export {
   CircuitBreakerIA,
   clienteIaLocal,
 } from './iaLocal';
+
+export {
+  evaluarNotificacion,
+  ESCENARIOS_NOTIFICACION,
+  guardarHoraPreferencia,
+  leerHoraPreferencia,
+  primerNombre,
+  solicitarPermisoWeb,
+  emitirNotificacionWeb,
+} from './motorNotificaciones';

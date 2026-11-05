@@ -250,7 +250,14 @@ function Perfil() {
       ancho="lectura"
       migas={[{ texto: 'Inicio', href: rutas.inicio }, { texto: 'Mi cuenta' }]}
       encabezado={{
-        icono: avatar ? (
+        icono: usuario.foto ? (
+          <img
+            src={usuario.foto}
+            alt="Avatar"
+            className="h-full w-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+        ) : avatar ? (
           <BustoAvatar id={avatar} className="h-[86%] w-[86%]" />
         ) : (
           <span className="text-4xl font-extrabold text-white">{(usuario.nombre || usuario.email || '?').trim().charAt(0).toUpperCase()}</span>

@@ -105,9 +105,10 @@ function MenuCuenta({ usuario, alCerrarSesion }) {
         aria-expanded={abierto}
         aria-controls="menu-cuenta"
         className="corte-poly-sm flex max-w-[12rem] items-center gap-2 border border-white/10 bg-superficie/80 py-1 pl-1.5 pr-3 text-sm text-white hover:border-amatista"
+        title={usuario.nombre ? `${usuario.nombre} (${usuario.email})` : usuario.email}
       >
-        <Avatar id={avatar} inicial={inicial(usuario)} />
-        <span className="truncate">{usuario.nombre || usuario.email}</span>
+        <Avatar id={avatar} inicial={inicial(usuario)} foto={usuario.foto} />
+        <span className="truncate">{usuario.nombre ? usuario.nombre.split(/\s+/)[0] : usuario.email}</span>
         <span className="sr-only">: menú de la cuenta</span>
         <span aria-hidden="true" className="text-white/50">
           ▾
@@ -118,7 +119,8 @@ function MenuCuenta({ usuario, alCerrarSesion }) {
           id="menu-cuenta"
           className="corte-poly-sm animar-entrar absolute right-0 top-full mt-2 w-60 border border-white/10 bg-superficie p-2 shadow-2xl"
         >
-          <p className="truncate px-3 pb-2 pt-1 text-xs text-white/50">{usuario.email}</p>
+          {usuario.nombre && <p className="truncate px-3 pt-2 text-sm font-bold text-white">{usuario.nombre}</p>}
+          <p className="truncate px-3 pb-2 pt-0.5 text-xs text-white/50">{usuario.email}</p>
           <ul className="grid gap-1">
             <li>
               <a href={rutas.perfil} onClick={() => setAbierto(false)} className="block px-3 py-2 text-sm text-white hover:bg-white/5">
@@ -355,10 +357,13 @@ function BarraSuperior({ ruta, hash = '' }) {
             <li className="mt-2 border-t border-white/10 pt-3">
               {usuario ? (
                 <div className="grid gap-1">
-                  <p className="flex items-center gap-2 px-3 pb-1 text-sm text-white">
-                    <Avatar id={avatar} inicial={inicial(usuario)} />
-                    <span className="truncate">{usuario.nombre || usuario.email}</span>
-                  </p>
+                  <div className="flex items-center gap-2.5 px-3 pb-2 pt-1">
+                    <Avatar id={avatar} inicial={inicial(usuario)} foto={usuario.foto} />
+                    <div className="min-w-0 flex-1">
+                      {usuario.nombre && <p className="truncate text-sm font-bold text-white">{usuario.nombre}</p>}
+                      <p className="truncate text-xs text-white/50">{usuario.email}</p>
+                    </div>
+                  </div>
                   <a
                     href={rutas.perfil}
                     onClick={() => setMenuAbierto(false)}

@@ -10,6 +10,7 @@ import { useCatalogo } from '../catalogo/contexto';
 import { caminos, programaInicial } from '../catalogo/camino';
 import TituloSeccion from '../components/estructura/TituloSeccion';
 import InvitacionRecorrido from '../components/InvitacionRecorrido';
+import CentroNotificaciones from '../components/CentroNotificaciones';
 import { CristalLogo, IconoCandado } from '../components/Iconos';
 import LogoCurso from '../components/LogoCurso';
 import LogoSoftware from '../components/LogoSoftware';
@@ -533,15 +534,18 @@ function Inicio({ consulta = {} }) {
   // El botón grande: la lección que sigue (con avance, donde te quedaste; sin avance, el paso 1).
   const siguiente = hayAvance && continuar ? { href: rutas.leccion(continuar.curso.id, continuar.resumen.siguiente.leccion.id), titulo: continuar.resumen.siguiente.leccion.title, curso: continuar.curso.titulo } : null;
   const primero = camino?.siguiente;
+  const nombreUsuario = (usuario?.nombre || '').trim().split(/\s+/)[0];
 
   return (
     <main className="mx-auto max-w-5xl px-4 pb-16 pt-8 sm:px-6 sm:pt-12">
+      <CentroNotificaciones leccionSiguiente={siguiente || primero} className="mb-6" />
       {/* Bienvenida corta: qué es, que no hace falta saber nada y un solo botón. */}
       <section className="animar-entrar flex flex-col gap-6 sm:flex-row sm:items-center" aria-labelledby="inicio-titulo" data-recorrido="hero">
         <EmblemaHeroe alTocar={tocarCristal} girando={girandoCristal} chispas={chispasCristal} />
         <div className="min-w-0 flex-1">
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">{hayAvance ? `Nivel ${nivel.nivel} · ${xp} XP` : 'No necesitas saber nada'}</p>
           <h1 id="inicio-titulo" className="mt-1 text-3xl font-extrabold leading-tight text-white sm:text-5xl">
+            {nombreUsuario && <span className="block text-2xl font-bold text-amatista-claro sm:text-3xl">¡Hola, {nombreUsuario}!</span>}
             {hayAvance ? (
               <>
                 Sigue <span className="text-amatista-claro">donde te quedaste</span>
@@ -555,7 +559,9 @@ function Inicio({ consulta = {} }) {
           <p className="mt-2 max-w-2xl text-texto/80">
             {siguiente
               ? `Tu siguiente lección es «${siguiente.titulo}», en ${siguiente.curso}.`
-              : 'Elige qué quieres crear y sigue los pasos en orden. Cada lección dura menos de diez minutos y te dice qué hacer.'}
+              : nombreUsuario
+                ? `Bienvenido a tu taller 3D, ${nombreUsuario}. Elige qué quieres crear y sigue los pasos en orden. Cada lección dura menos de diez minutos.`
+                : 'Elige qué quieres crear y sigue los pasos en orden. Cada lección dura menos de diez minutos y te dice qué hacer.'}
           </p>
           {secretoIdx >= 0 && (
             <p

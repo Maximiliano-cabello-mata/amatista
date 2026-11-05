@@ -54,7 +54,14 @@ function AuthProvider({ children }) {
     if (respuesta.ok && respuesta.datos?.id) {
       setSesion((actual) => {
         if (actual.token !== token) return actual;
-        const nueva = { ...actual, usuario: respuesta.datos };
+        const nueva = {
+          ...actual,
+          usuario: {
+            ...actual.usuario,
+            ...respuesta.datos,
+            ...(actual.usuario?.foto ? { foto: actual.usuario.foto } : {}),
+          },
+        };
         guardar(CLAVE, nueva);
         return nueva;
       });
@@ -156,7 +163,14 @@ function AuthProvider({ children }) {
     (usuario, token) =>
       setSesion((actual) => {
         if (!usuario?.id || actual.usuario?.id !== usuario.id || (token && actual.token !== token)) return actual;
-        const nueva = { ...actual, usuario };
+        const nueva = {
+          ...actual,
+          usuario: {
+            ...actual.usuario,
+            ...usuario,
+            ...(actual.usuario?.foto ? { foto: actual.usuario.foto } : {}),
+          },
+        };
         guardar(CLAVE, nueva);
         return nueva;
       }),

@@ -74,10 +74,22 @@ function EncabezadoPanel({ usuario, xp, nivel, racha, lecciones, hayAvance, acti
 
   return (
     <header className="animar-entrar">
-      <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Mi panel</p>
+      <div className="flex items-center gap-4">
+        {usuario?.foto && (
+          <img
+            src={usuario.foto}
+            alt="Avatar"
+            className="hexagono h-14 w-14 shrink-0 object-cover border border-amatista/60 shadow-[0_0_15px_rgba(155,89,182,0.4)]"
+            referrerPolicy="no-referrer"
+          />
+        )}
+        <div className="min-w-0">
+          <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">Mi panel</p>
       <h1 className="mt-1 text-3xl font-extrabold leading-tight text-white sm:text-5xl">
         Hola, <span className="text-amatista-claro">{nombre ?? 'Creador anónimo'}</span>
       </h1>
+        </div>
+      </div>
       <p className="mt-2 max-w-2xl text-texto/75">{mensaje({ hayAvance, racha })}</p>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">

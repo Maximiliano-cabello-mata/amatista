@@ -1,5 +1,5 @@
-// El avatar de una cuenta dentro de su hexágono: el busto low poly del
-// personaje elegido o, si todavía no eligió, la inicial de su nombre.
+// El avatar de una cuenta dentro de su hexágono: foto de perfil (Google / subida),
+// el busto low poly del personaje elegido o, si todavía no eligió, la inicial de su nombre.
 import { ANIMALES } from './animales';
 import { AVATAR_CREADOR, datosAvatar } from './catalogo';
 import PavoReal from './PavoReal';
@@ -17,7 +17,24 @@ export function BustoAvatar({ id, className = '' }) {
   );
 }
 
-function Avatar({ id, inicial = '?', className = 'h-7 w-8', titulo }) {
+function Avatar({ id, inicial = '?', foto = null, className = 'h-7 w-8', titulo }) {
+  if (foto) {
+    return (
+      <span
+        className={`avatar hexagono grid shrink-0 place-items-center overflow-hidden font-bold ${className}`}
+        role={titulo ? 'img' : undefined}
+        aria-label={titulo}
+        aria-hidden={titulo ? undefined : 'true'}
+      >
+        <img
+          src={foto}
+          alt={titulo || 'Avatar'}
+          className="h-full w-full object-cover"
+          referrerPolicy="no-referrer"
+        />
+      </span>
+    );
+  }
   const datos = datosAvatar(id);
   return (
     <span
