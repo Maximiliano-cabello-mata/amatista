@@ -73,11 +73,12 @@ npm run lint
 npm run build
 cd ..
 
-# 2. Pruebas de la API FastAPI y Seguridad (Pytest)
+# 2. Pruebas de la API FastAPI, IA Tutor y Seguridad (Pytest)
 cd backend
 python -m pytest -q
 python herramientas/contenido.py validar
 cd ..
+python -m pytest -q ai_tutor
 
 # 3. Pruebas del Motor Determinista y Add-on de Blender
 python -m pytest -q tablero engine/tests addon/tests
@@ -115,10 +116,53 @@ Tipos comunes:
 
 ---
 
-## 6. Flujo de Trabajo con Ramas y Pull Requests
+## 6. Flujo de Trabajo con Ramas, Colaboradores y Forks
 
-1. Crea una rama descriptiva a partir de `main` (ejemplo: `feat/ia-tutor-diagnostico` o `fix/sw-cache-texturas`).
-2. Implementa tus cambios manteniendo el principio de responsabilidad única.
-3. Asegura que las pruebas nuevas acompañen al código desarrollado.
-4. Ejecuta `make audit` y `make test`.
-5. Abre el Pull Request en GitHub detallando el problema resuelto y la evidencia de pruebas. Todo PR debe ser revisado y aprobado antes de fusionarse a `main`.
+Amatista admite dos modalidades de contribución:
+
+### 6.1. Colaboradores Invitados (Subida Directa de Ramas)
+
+Si formas parte del equipo o has sido invitado como colaborador con permisos de escritura (como Diana Paola):
+
+1. **Aceptar la invitación de GitHub:**
+   - Abre `https://github.com/Maximiliano-cabello-mata/amatista/invitations` y pulsa **Aceptar**.
+2. **Crear una rama temática propia:**
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b feature/nombre-de-tu-mejora
+   ```
+3. **Subir tu rama directamente a GitHub:**
+   ```bash
+   git push -u origin feature/nombre-de-tu-mejora
+   ```
+4. **Abrir un Pull Request:**
+   - En GitHub aparecerá el aviso «Compare & pull request». Ábrelo indicando los cambios realizados y enlazando las tareas del tablero Kanban (`T-xxx`).
+
+### 6.2. Contribuidores Comunitarios (Flujo mediante Fork)
+
+Si has realizado un *fork* del repositorio (p. ej. `https://github.com/<tu-usuario>/amatista`):
+
+1. **Mantener tu fork al día con el repositorio central (`upstream`):**
+   ```bash
+   # Configurar el repositorio central una sola vez:
+   git remote add upstream https://github.com/Maximiliano-cabello-mata/amatista.git
+
+   # Traer los últimos cambios:
+   git fetch upstream
+   git checkout main
+   git merge upstream/main
+   git push origin main
+   ```
+2. **Crear tu rama de trabajo en tu fork:**
+   ```bash
+   git checkout -b fix/mi-aporte
+   ```
+3. **Subir la rama a tu fork personal:**
+   ```bash
+   git push -u origin fix/mi-aporte
+   ```
+4. **Abrir el Pull Request:**
+   - Ve a `https://github.com/Maximiliano-cabello-mata/amatista/pulls` y haz clic en **New pull request**.
+   - Haz clic en **compare across forks**, selecciona tu fork y tu rama, y envía el Pull Request.
+   - La suite automatizada de CI ejecutará las pruebas en tu PR para certificar que cumple con todos los estándares y presupuestos web.

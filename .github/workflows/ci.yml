@@ -1,5 +1,6 @@
 # CI (T-007): revisa cada push y cada pull request.
 # - backend: pytest, validación de los módulos JSON, tablero, motor y constructor del add-on.
+# - ai_tutor: pruebas del motor RAG local y microservicio.
 # - addon-blender: el add-on dentro de Blender (bpy de PyPI).
 # - frontend: lint, pruebas (vitest) y build de producción.
 # Los commits del bot del tablero solo tocan KANBAN.md: no disparan CI.
@@ -39,13 +40,21 @@ jobs:
           cache-dependency-path: backend/requirements*.txt
 
       - name: Instalar dependencias
-        run: pip install -r requirements-dev.txt pyyaml
+        run: pip install -r requirements-dev.txt pyyaml Pillow
 
       - name: Pruebas del backend
         run: python -m pytest -q
 
       - name: Validar los módulos de contenido
         run: python herramientas/contenido.py validar
+
+      - name: Pruebas del motor IA local
+        working-directory: .
+        run: python -m pytest -q ai_tutor
+
+      - name: Auditoría de presupuestos y estándares web
+        working-directory: .
+        run: python herramientas/auditoria/estandares_web.py
 
       - name: Pruebas del tablero
         working-directory: .

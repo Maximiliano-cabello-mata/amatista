@@ -19,6 +19,7 @@ concurrency:
 jobs:
   actualizar:
     runs-on: ubuntu-latest
+    if: github.repository == 'Maximiliano-cabello-mata/amatista'
     steps:
       - uses: actions/checkout@v4
         with:
