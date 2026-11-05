@@ -8,6 +8,7 @@ import { interpolarClaves, revisarClaves, textoMeta } from '../graficos';
 import { TextoEnLinea } from '../Markdown';
 import { Tecla } from '../Tecla';
 import { useActividad } from './hooks';
+import { observarVisibilidad } from '../../../lib/visibilidad';
 import { BOTON_PRINCIPAL, BOTON_SECUNDARIO, MarcoActividad, Retroalimentacion } from './Marco';
 
 const FPS = 24;
@@ -23,6 +24,7 @@ function LineaClaves({ bloque, alCompletar, resuelta }) {
   const idCabezal = useId();
   const idAltura = useId();
   const reloj = useRef(null);
+  const zona = useRef(null);
   const revision = revisarClaves(claves, metas);
   const animada = interpolarClaves(claves, cuadro);
   // Al reproducir, la pelota obedece a la animación; en pausa, a lo que ajustas.
@@ -45,8 +47,17 @@ function LineaClaves({ bloque, alCompletar, resuelta }) {
       }
       reloj.current = requestAnimationFrame(paso);
     };
-    reloj.current = requestAnimationFrame(paso);
-    return () => cancelAnimationFrame(reloj.current);
+    const detener = observarVisibilidad(zona.current, (activa) => {
+      cancelAnimationFrame(reloj.current);
+      if (activa) {
+        anterior = performance.now();
+        reloj.current = requestAnimationFrame(paso);
+      }
+    });
+    return () => {
+      detener();
+      cancelAnimationFrame(reloj.current);
+    };
   }, [reproduciendo, total]);
 
   const irA = (nuevo) => {
@@ -88,7 +99,7 @@ function LineaClaves({ bloque, alCompletar, resuelta }) {
           <TextoEnLinea texto={bloque.caption} />
         </p>
       )}
-      <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_14rem]" onKeyDown={teclear}>
+      <div ref={zona} className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_14rem]" onKeyDown={teclear}>
         <div className="corte-poly flex gap-3 bg-[#2b2b2b] p-3">
           <svg viewBox="0 0 260 220" className="block h-auto min-w-0 flex-1" aria-hidden="true">
             <defs>

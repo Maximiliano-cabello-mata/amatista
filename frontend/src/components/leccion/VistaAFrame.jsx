@@ -2,6 +2,7 @@
 // de Amatista (los componentes am-… funcionan en el Estudio y en los retos de código).
 import '../../motor3d';
 import { useEffect, useMemo, useRef } from 'react';
+import { observarEscena } from '../../lib/visibilidad3d';
 
 const ETIQUETA_AFRAME = /^a-[a-z0-9-]+$/;
 // Atributos de <a-scene> que sí se copian (el cielo de color, la niebla y el cursor del
@@ -50,7 +51,9 @@ function VistaAFrame({ ejecucion }) {
     nueva.style.height = '100%';
     contenedor.current.appendChild(nueva);
     escena.current = nueva;
+    const detener = observarEscena(nueva, contenedor.current);
     return () => {
+      detener();
       nueva.remove();
       escena.current = null;
     };

@@ -4,7 +4,8 @@
 // No aparece en la navegación de los alumnos; se abre desde Admin › Estado.
 // Se carga bajo demanda, así A-Frame no pesa en la pantalla de inicio.
 import 'aframe';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { observarEscena } from '../lib/visibilidad3d';
 import { useAuth } from '../auth/contexto';
 import { useCatalogo } from '../catalogo/contexto';
 import { useProgreso } from '../progreso/contexto';
@@ -67,8 +68,13 @@ function Diagnostico() {
 }
 
 function Laboratorio() {
+  const escena = useRef(null);
   const { esProfesor } = useAuth();
   const [salud, setSalud] = useState(null);
+  useEffect(() => {
+    if (!escena.current) return undefined;
+    return observarEscena(escena.current, escena.current.parentElement);
+  }, [esProfesor]);
 
   useEffect(() => {
     consultarSalud().then(setSalud);
@@ -128,7 +134,7 @@ function Laboratorio() {
           <div className="absolute left-4 top-4 z-10 border border-white/10 bg-base/80 px-3 py-1 font-mono text-sm text-neon">
             Prueba del visor A-Frame
           </div>
-          <a-scene embedded style={{ height: "100%", width: "100%" }}>
+          <a-scene ref={escena} embedded style={{ height: "100%", width: "100%" }}>
             <a-box position="-1 0.5 -3" rotation="0 45 0" color="#9B59B6"></a-box>
             <a-sphere position="0 1.25 -5" radius="1.25" color="#00E5FF"></a-sphere>
             <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFFFFF"></a-cylinder>
