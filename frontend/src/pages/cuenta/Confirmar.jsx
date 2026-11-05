@@ -13,7 +13,7 @@ function Confirmar({ consulta = {} }) {
   // Con sesión el correo es el de la cuenta; sin sesión se escribe (o llega del registro).
   const correoFijo = usuario?.email ?? null;
   const formulario = useFormulario(
-    { email: consulta.email ?? emailPendiente ?? '', codigo: '' },
+    { email: consulta.email ?? emailPendiente ?? '', codigo: consulta.codigo ?? '' },
     correoFijo ? { codigo: validarCodigo } : { email: validarCorreo, codigo: validarCodigo },
   );
   const { valores, cambiar, errores, error, setError, enviando, enviar } = formulario;
