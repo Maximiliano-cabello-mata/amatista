@@ -1,0 +1,84 @@
+# docker-compose.yml — Orquestación de producción y aulas locales de Amatista
+name: amatista-produccion
+
+networks:
+  red_publica:
+    driver: bridge
+  red_interna_ia:
+    driver: bridge
+    internal: true # Sin acceso a Internet para garantizar privacidad en el aula
+
+volumes:
+  datos_bd:
+  modelos_ia:
+
+services:
+  # 1. PWA Gateway (Reverse proxy Caddy + SPA React)
+  pwa:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      api:
+        condition: service_healthy
+      ia-tutor:
+        condition: service_healthy
+    networks:
+      - red_publica
+    security_opt:
+      - "no-new-privileges:true"
+    restart: unless-stopped
+
+  # 2. API Principal (FastAPI + SQLite/Oracle)
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      DATABASE_URL: "sqlite:////datos/amatista.db"
+      AMATISTA_IA_TUTOR_URL: "http://ia-tutor:8090"
+    volumes:
+      - datos_bd:/datos
+    networks:
+      - red_publica
+      - red_interna_ia
+    security_opt:
+      - "no-new-privileges:true"
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/salud')\" || exit 1"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+
+  # 3. Tutor de IA Local (RAG de Fichas 3D + Circuit Breaker)
+  ia-tutor:
+    build:
+      context: .
+      dockerfile: ai_tutor/Dockerfile
+    environment:
+      AMATISTA_LLM_URL: "http://ollama:11434"
+      AMATISTA_LLM_MODELO: "qwen2.5-coder:3b"
+    read_only: true
+    networks:
+      - red_publica
+      - red_interna_ia
+    security_opt:
+      - "no-new-privileges:true"
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/salud')\" || exit 1"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+
+  # 4. Inferencia Local (Ollama aislado de Internet)
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - modelos_ia:/root/.ollama
+    networks:
+      - red_interna_ia
+    restart: unless-stopped
