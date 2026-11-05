@@ -3,7 +3,7 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://api.amatista-3d.tech ws://localhost:8765 http://localhost:8765 ws://127.0.0.1:8765 http://127.0.0.1:8765 https://*.ingest.sentry.io; media-src 'self'; worker-src 'self' blob:; frame-ancestors 'none';
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://accounts.google.com; style-src 'self' 'unsafe-inline' https://accounts.google.com; frame-src 'self' https://accounts.google.com; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' https://api.amatista-3d.tech https://accounts.google.com ws://localhost:8765 http://localhost:8765 ws://127.0.0.1:8765 http://127.0.0.1:8765 https://*.ingest.sentry.io; media-src 'self'; worker-src 'self' blob:; frame-ancestors 'none';
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
