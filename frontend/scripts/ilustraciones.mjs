@@ -45,7 +45,7 @@ const puntos = (lista) => lista.map(([x, y]) => `${n1(x)},${n1(y)}`).join(' ');
 const poligono = (lista, relleno, extra = '') => `<polygon points="${puntos(lista)}" fill="${relleno}"${extra}/>`;
 // Mismo color en el borde: evita las líneas finas entre triángulos vecinos.
 const cara = (lista, relleno, extra = '') =>
-  poligono(lista, relleno, ` stroke="${relleno}" stroke-width="0.7" stroke-linejoin="round"${extra}`);
+  poligono(lista, relleno, ` stroke="${relleno}"${extra}`);
 
 const hexagono = (cx, cy, r, giro = 0, escalaY = 1) =>
   [0, 1, 2, 3, 4, 5].map((i) => {
@@ -54,7 +54,7 @@ const hexagono = (cx, cy, r, giro = 0, escalaY = 1) =>
   });
 
 const svg = (ancho, alto, descripcion, contenido) =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${ancho} ${alto}">\n<!-- ${descripcion} -->\n${contenido.join('\n')}\n</svg>\n`;
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${ancho} ${alto}" stroke-width="0.7" stroke-linejoin="round">\n<!-- ${descripcion} -->\n${contenido.join('\n')}\n</svg>\n`;
 
 // Malla de triángulos para cielos y fondos. color(tx, ty) recibe la posición 0..1.
 function triangulado({ x = 0, y = 0, ancho, alto, columnas, filas, color, semilla, ruido = 0.05 }) {

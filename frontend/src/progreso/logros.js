@@ -8,7 +8,7 @@
 import { agruparPorRuta } from '../catalogo/agrupar';
 import { practicasDelCatalogo } from '../modulos/practica';
 import { calcularRacha, estaCompletada, resumenCurso } from './reglas';
-import { leccionesDelCurso } from '../data/cursos';
+import { leccionesDelCurso } from '../data/catalogoBase';
 
 export const GRADOS = [
   { id: 'bronce', nombre: 'Bronce', color: '#CD7F32', claro: '#F0B27A' },

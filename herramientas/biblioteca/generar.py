@@ -32,7 +32,8 @@ LICENCIA = {'id': 'CC0-1.0', 'texto': 'Dominio público: úsalo como quieras, si
 
 
 def jpg(img, ruta, calidad=86):
-    img.convert('RGB').save(ruta, 'JPEG', quality=calidad, optimize=True, progressive=True)
+    modo = 'L' if img.mode == 'L' else 'RGB'
+    img.convert(modo).save(ruta, 'JPEG', quality=calidad, optimize=True, progressive=True)
     return os.path.getsize(ruta)
 
 
@@ -47,7 +48,7 @@ def textura(id_, nombre, categoria, tamanos):
     col, alto, rug, fuerza = T.generar(id_, n)
     alto = np.asarray(alto, dtype=np.float32)
     rug = np.broadcast_to(np.asarray(rug, dtype=np.float32), alto.shape)
-    mapas = {'color': a_imagen(col), 'normal': a_imagen(T.mapa_normal(alto, fuerza)), 'rugosidad': a_imagen(np.repeat(rug[..., None], 3, -1))}
+    mapas = {'color': a_imagen(col), 'normal': a_imagen(T.mapa_normal(alto, fuerza)), 'rugosidad': a_imagen(rug)}
     archivos = {}
     for etiqueta, lado in tamanos.items():
         for mapa, img in mapas.items():

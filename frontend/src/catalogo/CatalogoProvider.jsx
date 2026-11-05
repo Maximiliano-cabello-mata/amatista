@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { buscarCurso as buscarEn, cursos as cursosApp } from '../data/cursos';
+import { buscarCurso as buscarEn, cursosIniciales as cursosApp } from '../data/catalogoInicial';
 import { useConexion } from '../hooks/useConexion';
 import { useRed } from '../hooks/useRed';
 import { guardar, leer } from '../lib/almacen';

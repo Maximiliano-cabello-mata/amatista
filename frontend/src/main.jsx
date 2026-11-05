@@ -7,7 +7,7 @@ import '@fontsource-variable/jetbrains-mono'
 import './index.css'
 import { aplicarModoLigero } from './lib/rendimiento'
 import { restaurarGeoda } from './geoda/ajustes'
-import { iniciarSentry } from './lib/sentry'
+import { programarSentry } from './lib/sentry'
 import { iniciarPausaDecorativa } from './lib/visibilidad'
 
 // Equipos modestos: sin animaciones continuas ni fondo facetado (index.css › html.ligero).
@@ -15,7 +15,7 @@ aplicarModoLigero()
 // Si la persona ajustó Amatista con Geoda (#/geoda), se respeta su elección.
 restaurarGeoda()
 // Errores a Sentry solo si se compiló con VITE_SENTRY_DSN (lib/sentry.js).
-iniciarSentry()
+programarSentry()
 const detenerPausaDecorativa = iniciarPausaDecorativa()
 if (import.meta.hot) import.meta.hot.dispose(detenerPausaDecorativa)
 

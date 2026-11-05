@@ -11,7 +11,9 @@
     "test": "vitest run",
     "preview": "vite preview",
     "ilustraciones": "node scripts/ilustraciones.mjs",
-    "modelos": "node scripts/modelos.mjs"
+    "modelos": "node scripts/modelos.mjs",
+    "prebuild": "node scripts/indice-modulos.mjs --verificar",
+    "indice": "node scripts/indice-modulos.mjs"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",

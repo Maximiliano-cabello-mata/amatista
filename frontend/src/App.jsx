@@ -8,7 +8,7 @@ import BarraSuperior from './components/BarraSuperior';
 import FondoLowPoly from './components/FondoLowPoly';
 import PiePagina from './components/estructura/PiePagina';
 import { CristalLogo, IconoCandado } from './components/Iconos';
-import Inicio from './pages/Inicio';
+const Inicio = lazy(() => import('./pages/Inicio'));
 import ProgresoProvider from './progreso/ProgresoProvider';
 import RecorridoProvider from './recorrido/RecorridoProvider';
 import { analizarRuta, rutaEntrar, rutas } from './rutas';

@@ -15,6 +15,26 @@ export default defineConfig({
     sourcemap: false,
     // Sin comentarios de licencia ni de autor en el JS publicado. Vite 8 compila con oxc y
     // rolldown: la antigua opción `esbuild.legalComments` se ignoraba (aviso en cada build).
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'vendor-react'
+          }
+          if (id.includes('sentrySdk')) {
+            return 'sentrySdk'
+          }
+          if (id.includes('/data/modulos/')) {
+            const m = id.match(/\/data\/modulos\/([^/]+?)(?:-modulo-\d+)?\.json/)
+            return m ? `modulos-${m[1]}` : 'modulos-contenido'
+          }
+        },
+        chunkFileNames: (chunkInfo) => {
+          if (chunkInfo.name === 'sentrySdk') return 'assets/sentrySdk-[hash].js'
+          return 'assets/[name]-[hash].js'
+        },
+      },
+    },
     rolldownOptions: { output: { comments: false } },
   },
   // Pruebas de funciones puras (reglas del progreso, catálogo): `npm test`.
@@ -67,7 +87,8 @@ export default defineConfig({
           '**/Profesor*-*.js',
           // SDK de Sentry (~360 KB): solo se baja si hay VITE_SENTRY_DSN (src/lib/sentry.js).
           '**/sentrySdk-*.js',
-          // Biblioteca de recursos (~20 MB): no se precachea; se guarda lo que se abre (abajo).
+          // Ilustraciones y biblioteca: no se precachean; se descargan bajo demanda.
+          'ilustraciones/**',
           'biblioteca/**',
         ],
         runtimeCaching: [

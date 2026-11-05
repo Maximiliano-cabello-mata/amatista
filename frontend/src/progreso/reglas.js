@@ -3,7 +3,7 @@
 // Principio: lo completado, el XP y las insignias nunca se pierden aunque el
 // catálogo cambie; el porcentaje de avance sí se recalcula contra el catálogo
 // vigente (si se agrega una lección, el % baja y la lección aparece como "Nueva").
-import { leccionesDelCurso } from '../data/cursos';
+import { leccionesDelCurso } from '../data/catalogoBase';
 
 export const XP_POR_LECCION = 100;
 export const XP_POR_ACTIVIDAD_PERFECTA = 10;

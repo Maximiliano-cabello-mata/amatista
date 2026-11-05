@@ -1,1 +1,2815 @@
-{"contrato":"amatista.biblioteca/1","version":"1.0.0","generado":"2026-11-04","licencia":{"id":"CC0-1.0","texto":"Dominio público: úsalo como quieras, sin atribución.","autor":"Amatista (generado)"},"totales":{"texturas":45,"modelos":38,"animaciones":19,"bytes":20441145},"recursos":[{"id":"ladrillo_rojo","tipo":"textura","nombre":"Ladrillo rojo","categoria":"muros","vista":"texturas/ladrillo_rojo/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/ladrillo_rojo/color_512.jpg","bytes":36067},"normal":{"ruta":"texturas/ladrillo_rojo/normal_512.jpg","bytes":65357},"rugosidad":{"ruta":"texturas/ladrillo_rojo/rugosidad_512.jpg","bytes":14588}},"1k":{"color":{"ruta":"texturas/ladrillo_rojo/color_1k.jpg","bytes":97764},"normal":{"ruta":"texturas/ladrillo_rojo/normal_1k.jpg","bytes":277187},"rugosidad":{"ruta":"texturas/ladrillo_rojo/rugosidad_1k.jpg","bytes":28482}}},"tileable":true,"bytes":519445},{"id":"ladrillo_gris","tipo":"textura","nombre":"Bloque gris","categoria":"muros","vista":"texturas/ladrillo_gris/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/ladrillo_gris/color_512.jpg","bytes":28095},"normal":{"ruta":"texturas/ladrillo_gris/normal_512.jpg","bytes":60420},"rugosidad":{"ruta":"texturas/ladrillo_gris/rugosidad_512.jpg","bytes":11281}},"1k":{"color":{"ruta":"texturas/ladrillo_gris/color_1k.jpg","bytes":95886},"normal":{"ruta":"texturas/ladrillo_gris/normal_1k.jpg","bytes":267925},"rugosidad":{"ruta":"texturas/ladrillo_gris/rugosidad_1k.jpg","bytes":25423}}},"tileable":true,"bytes":489030},{"id":"baldosa_blanca","tipo":"textura","nombre":"Baldosa blanca","categoria":"pisos","vista":"texturas/baldosa_blanca/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/baldosa_blanca/color_512.jpg","bytes":19119},"normal":{"ruta":"texturas/baldosa_blanca/normal_512.jpg","bytes":29078},"rugosidad":{"ruta":"texturas/baldosa_blanca/rugosidad_512.jpg","bytes":16666}},"1k":{"color":{"ruta":"texturas/baldosa_blanca/color_1k.jpg","bytes":40667},"normal":{"ruta":"texturas/baldosa_blanca/normal_1k.jpg","bytes":59913},"rugosidad":{"ruta":"texturas/baldosa_blanca/rugosidad_1k.jpg","bytes":31991}}},"tileable":true,"bytes":197434},{"id":"azulejo_azul","tipo":"textura","nombre":"Azulejo azul","categoria":"pisos","vista":"texturas/azulejo_azul/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/azulejo_azul/color_512.jpg","bytes":23929},"normal":{"ruta":"texturas/azulejo_azul/normal_512.jpg","bytes":38405},"rugosidad":{"ruta":"texturas/azulejo_azul/rugosidad_512.jpg","bytes":23802}},"1k":{"color":{"ruta":"texturas/azulejo_azul/color_1k.jpg","bytes":52195},"normal":{"ruta":"texturas/azulejo_azul/normal_1k.jpg","bytes":93275},"rugosidad":{"ruta":"texturas/azulejo_azul/rugosidad_1k.jpg","bytes":55536}}},"tileable":true,"bytes":287142},{"id":"baldosa_barro","tipo":"textura","nombre":"Baldosa de barro","categoria":"pisos","vista":"texturas/baldosa_barro/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/baldosa_barro/color_512.jpg","bytes":15756},"normal":{"ruta":"texturas/baldosa_barro/normal_512.jpg","bytes":21555},"rugosidad":{"ruta":"texturas/baldosa_barro/rugosidad_512.jpg","bytes":14833}},"1k":{"color":{"ruta":"texturas/baldosa_barro/color_1k.jpg","bytes":39664},"normal":{"ruta":"texturas/baldosa_barro/normal_1k.jpg","bytes":59304},"rugosidad":{"ruta":"texturas/baldosa_barro/rugosidad_1k.jpg","bytes":34188}}},"tileable":true,"bytes":185300},{"id":"madera_roble","tipo":"textura","nombre":"Madera de roble","categoria":"madera","vista":"texturas/madera_roble/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/madera_roble/color_512.jpg","bytes":42251},"normal":{"ruta":"texturas/madera_roble/normal_512.jpg","bytes":69845},"rugosidad":{"ruta":"texturas/madera_roble/rugosidad_512.jpg","bytes":6954}},"1k":{"color":{"ruta":"texturas/madera_roble/color_1k.jpg","bytes":135562},"normal":{"ruta":"texturas/madera_roble/normal_1k.jpg","bytes":261601},"rugosidad":{"ruta":"texturas/madera_roble/rugosidad_1k.jpg","bytes":18917}}},"tileable":true,"bytes":535130},{"id":"madera_oscura","tipo":"textura","nombre":"Madera oscura","categoria":"madera","vista":"texturas/madera_oscura/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/madera_oscura/color_512.jpg","bytes":41348},"normal":{"ruta":"texturas/madera_oscura/normal_512.jpg","bytes":82436},"rugosidad":{"ruta":"texturas/madera_oscura/rugosidad_512.jpg","bytes":7907}},"1k":{"color":{"ruta":"texturas/madera_oscura/color_1k.jpg","bytes":136801},"normal":{"ruta":"texturas/madera_oscura/normal_1k.jpg","bytes":315453},"rugosidad":{"ruta":"texturas/madera_oscura/rugosidad_1k.jpg","bytes":21016}}},"tileable":true,"bytes":604961},{"id":"madera_clara","tipo":"textura","nombre":"Madera clara","categoria":"madera","vista":"texturas/madera_clara/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/madera_clara/color_512.jpg","bytes":35290},"normal":{"ruta":"texturas/madera_clara/normal_512.jpg","bytes":68691},"rugosidad":{"ruta":"texturas/madera_clara/rugosidad_512.jpg","bytes":7639}},"1k":{"color":{"ruta":"texturas/madera_clara/color_1k.jpg","bytes":111724},"normal":{"ruta":"texturas/madera_clara/normal_1k.jpg","bytes":257570},"rugosidad":{"ruta":"texturas/madera_clara/rugosidad_1k.jpg","bytes":20501}}},"tileable":true,"bytes":501415},{"id":"tablones","tipo":"textura","nombre":"Tablones","categoria":"madera","vista":"texturas/tablones/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/tablones/color_512.jpg","bytes":14693},"normal":{"ruta":"texturas/tablones/normal_512.jpg","bytes":25666},"rugosidad":{"ruta":"texturas/tablones/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/tablones/color_1k.jpg","bytes":41100},"normal":{"ruta":"texturas/tablones/normal_1k.jpg","bytes":97478},"rugosidad":{"ruta":"texturas/tablones/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":187667},{"id":"marmol_blanco","tipo":"textura","nombre":"Mármol blanco","categoria":"piedra","vista":"texturas/marmol_blanco/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/marmol_blanco/color_512.jpg","bytes":32305},"normal":{"ruta":"texturas/marmol_blanco/normal_512.jpg","bytes":12354},"rugosidad":{"ruta":"texturas/marmol_blanco/rugosidad_512.jpg","bytes":10826}},"1k":{"color":{"ruta":"texturas/marmol_blanco/color_1k.jpg","bytes":127945},"normal":{"ruta":"texturas/marmol_blanco/normal_1k.jpg","bytes":62954},"rugosidad":{"ruta":"texturas/marmol_blanco/rugosidad_1k.jpg","bytes":31582}}},"tileable":true,"bytes":277966},{"id":"marmol_negro","tipo":"textura","nombre":"Mármol negro","categoria":"piedra","vista":"texturas/marmol_negro/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/marmol_negro/color_512.jpg","bytes":39522},"normal":{"ruta":"texturas/marmol_negro/normal_512.jpg","bytes":9133},"rugosidad":{"ruta":"texturas/marmol_negro/rugosidad_512.jpg","bytes":7854}},"1k":{"color":{"ruta":"texturas/marmol_negro/color_1k.jpg","bytes":146354},"normal":{"ruta":"texturas/marmol_negro/normal_1k.jpg","bytes":45760},"rugosidad":{"ruta":"texturas/marmol_negro/rugosidad_1k.jpg","bytes":23280}}},"tileable":true,"bytes":271903},{"id":"roca","tipo":"textura","nombre":"Roca","categoria":"piedra","vista":"texturas/roca/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/roca/color_512.jpg","bytes":30989},"normal":{"ruta":"texturas/roca/normal_512.jpg","bytes":93498},"rugosidad":{"ruta":"texturas/roca/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/roca/color_1k.jpg","bytes":127070},"normal":{"ruta":"texturas/roca/normal_1k.jpg","bytes":497543},"rugosidad":{"ruta":"texturas/roca/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":757830},{"id":"roca_volcanica","tipo":"textura","nombre":"Roca volcánica","categoria":"piedra","vista":"texturas/roca_volcanica/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/roca_volcanica/color_512.jpg","bytes":18235},"normal":{"ruta":"texturas/roca_volcanica/normal_512.jpg","bytes":88692},"rugosidad":{"ruta":"texturas/roca_volcanica/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/roca_volcanica/color_1k.jpg","bytes":77595},"normal":{"ruta":"texturas/roca_volcanica/normal_1k.jpg","bytes":484844},"rugosidad":{"ruta":"texturas/roca_volcanica/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":678096},{"id":"adoquin","tipo":"textura","nombre":"Adoquín","categoria":"piedra","vista":"texturas/adoquin/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/adoquin/color_512.jpg","bytes":27478},"normal":{"ruta":"texturas/adoquin/normal_512.jpg","bytes":49394},"rugosidad":{"ruta":"texturas/adoquin/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/adoquin/color_1k.jpg","bytes":74042},"normal":{"ruta":"texturas/adoquin/normal_1k.jpg","bytes":127407},"rugosidad":{"ruta":"texturas/adoquin/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":287051},{"id":"empedrado","tipo":"textura","nombre":"Empedrado","categoria":"piedra","vista":"texturas/empedrado/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/empedrado/color_512.jpg","bytes":35575},"normal":{"ruta":"texturas/empedrado/normal_512.jpg","bytes":59621},"rugosidad":{"ruta":"texturas/empedrado/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/empedrado/color_1k.jpg","bytes":95521},"normal":{"ruta":"texturas/empedrado/normal_1k.jpg","bytes":159175},"rugosidad":{"ruta":"texturas/empedrado/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":358622},{"id":"concreto","tipo":"textura","nombre":"Concreto","categoria":"construcción","vista":"texturas/concreto/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/concreto/color_512.jpg","bytes":24004},"normal":{"ruta":"texturas/concreto/normal_512.jpg","bytes":89221},"rugosidad":{"ruta":"texturas/concreto/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/concreto/color_1k.jpg","bytes":90084},"normal":{"ruta":"texturas/concreto/normal_1k.jpg","bytes":476218},"rugosidad":{"ruta":"texturas/concreto/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":688257},{"id":"asfalto","tipo":"textura","nombre":"Asfalto","categoria":"construcción","vista":"texturas/asfalto/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/asfalto/color_512.jpg","bytes":16766},"normal":{"ruta":"texturas/asfalto/normal_512.jpg","bytes":86027},"rugosidad":{"ruta":"texturas/asfalto/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/asfalto/color_1k.jpg","bytes":72287},"normal":{"ruta":"texturas/asfalto/normal_1k.jpg","bytes":474814},"rugosidad":{"ruta":"texturas/asfalto/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":658624},{"id":"metal_cepillado","tipo":"textura","nombre":"Metal cepillado","categoria":"metal","vista":"texturas/metal_cepillado/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/metal_cepillado/color_512.jpg","bytes":10836},"normal":{"ruta":"texturas/metal_cepillado/normal_512.jpg","bytes":4366},"rugosidad":{"ruta":"texturas/metal_cepillado/rugosidad_512.jpg","bytes":12243}},"1k":{"color":{"ruta":"texturas/metal_cepillado/color_1k.jpg","bytes":36311},"normal":{"ruta":"texturas/metal_cepillado/normal_1k.jpg","bytes":19378},"rugosidad":{"ruta":"texturas/metal_cepillado/rugosidad_1k.jpg","bytes":42128}}},"tileable":true,"bytes":125262},{"id":"acero_oscuro","tipo":"textura","nombre":"Acero oscuro","categoria":"metal","vista":"texturas/acero_oscuro/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/acero_oscuro/color_512.jpg","bytes":9467},"normal":{"ruta":"texturas/acero_oscuro/normal_512.jpg","bytes":4351},"rugosidad":{"ruta":"texturas/acero_oscuro/rugosidad_512.jpg","bytes":12647}},"1k":{"color":{"ruta":"texturas/acero_oscuro/color_1k.jpg","bytes":31680},"normal":{"ruta":"texturas/acero_oscuro/normal_1k.jpg","bytes":19984},"rugosidad":{"ruta":"texturas/acero_oscuro/rugosidad_1k.jpg","bytes":43607}}},"tileable":true,"bytes":121736},{"id":"metal_oxidado","tipo":"textura","nombre":"Metal oxidado","categoria":"metal","vista":"texturas/metal_oxidado/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/metal_oxidado/color_512.jpg","bytes":35564},"normal":{"ruta":"texturas/metal_oxidado/normal_512.jpg","bytes":44968},"rugosidad":{"ruta":"texturas/metal_oxidado/rugosidad_512.jpg","bytes":35885}},"1k":{"color":{"ruta":"texturas/metal_oxidado/color_1k.jpg","bytes":127699},"normal":{"ruta":"texturas/metal_oxidado/normal_1k.jpg","bytes":185627},"rugosidad":{"ruta":"texturas/metal_oxidado/rugosidad_1k.jpg","bytes":118430}}},"tileable":true,"bytes":548173},{"id":"placa_metalica","tipo":"textura","nombre":"Placa antiderrapante","categoria":"metal","vista":"texturas/placa_metalica/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/placa_metalica/color_512.jpg","bytes":28959},"normal":{"ruta":"texturas/placa_metalica/normal_512.jpg","bytes":53256},"rugosidad":{"ruta":"texturas/placa_metalica/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/placa_metalica/color_1k.jpg","bytes":83056},"normal":{"ruta":"texturas/placa_metalica/normal_1k.jpg","bytes":136244},"rugosidad":{"ruta":"texturas/placa_metalica/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":310245},{"id":"pasto","tipo":"textura","nombre":"Pasto","categoria":"naturaleza","vista":"texturas/pasto/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/pasto/color_512.jpg","bytes":35463},"normal":{"ruta":"texturas/pasto/normal_512.jpg","bytes":83305},"rugosidad":{"ruta":"texturas/pasto/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/pasto/color_1k.jpg","bytes":153206},"normal":{"ruta":"texturas/pasto/normal_1k.jpg","bytes":440635},"rugosidad":{"ruta":"texturas/pasto/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":721339},{"id":"musgo","tipo":"textura","nombre":"Musgo","categoria":"naturaleza","vista":"texturas/musgo/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/musgo/color_512.jpg","bytes":29848},"normal":{"ruta":"texturas/musgo/normal_512.jpg","bytes":85403},"rugosidad":{"ruta":"texturas/musgo/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/musgo/color_1k.jpg","bytes":127657},"normal":{"ruta":"texturas/musgo/normal_1k.jpg","bytes":449702},"rugosidad":{"ruta":"texturas/musgo/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":701340},{"id":"tierra","tipo":"textura","nombre":"Tierra","categoria":"naturaleza","vista":"texturas/tierra/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/tierra/color_512.jpg","bytes":20549},"normal":{"ruta":"texturas/tierra/normal_512.jpg","bytes":68963},"rugosidad":{"ruta":"texturas/tierra/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/tierra/color_1k.jpg","bytes":102428},"normal":{"ruta":"texturas/tierra/normal_1k.jpg","bytes":422605},"rugosidad":{"ruta":"texturas/tierra/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":623275},{"id":"arena","tipo":"textura","nombre":"Arena","categoria":"naturaleza","vista":"texturas/arena/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/arena/color_512.jpg","bytes":18299},"normal":{"ruta":"texturas/arena/normal_512.jpg","bytes":68493},"rugosidad":{"ruta":"texturas/arena/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/arena/color_1k.jpg","bytes":91891},"normal":{"ruta":"texturas/arena/normal_1k.jpg","bytes":420423},"rugosidad":{"ruta":"texturas/arena/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":607836},{"id":"nieve","tipo":"textura","nombre":"Nieve","categoria":"naturaleza","vista":"texturas/nieve/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/nieve/color_512.jpg","bytes":17688},"normal":{"ruta":"texturas/nieve/normal_512.jpg","bytes":66877},"rugosidad":{"ruta":"texturas/nieve/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/nieve/color_1k.jpg","bytes":84733},"normal":{"ruta":"texturas/nieve/normal_1k.jpg","bytes":406495},"rugosidad":{"ruta":"texturas/nieve/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":584523},{"id":"barro","tipo":"textura","nombre":"Barro","categoria":"naturaleza","vista":"texturas/barro/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/barro/color_512.jpg","bytes":15637},"normal":{"ruta":"texturas/barro/normal_512.jpg","bytes":69039},"rugosidad":{"ruta":"texturas/barro/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/barro/color_1k.jpg","bytes":74347},"normal":{"ruta":"texturas/barro/normal_1k.jpg","bytes":415710},"rugosidad":{"ruta":"texturas/barro/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":583463},{"id":"corteza","tipo":"textura","nombre":"Corteza","categoria":"naturaleza","vista":"texturas/corteza/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/corteza/color_512.jpg","bytes":18551},"normal":{"ruta":"texturas/corteza/normal_512.jpg","bytes":33139},"rugosidad":{"ruta":"texturas/corteza/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/corteza/color_1k.jpg","bytes":67899},"normal":{"ruta":"texturas/corteza/normal_1k.jpg","bytes":127999},"rugosidad":{"ruta":"texturas/corteza/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":256318},{"id":"agua","tipo":"textura","nombre":"Agua","categoria":"naturaleza","vista":"texturas/agua/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/agua/color_512.jpg","bytes":28603},"normal":{"ruta":"texturas/agua/normal_512.jpg","bytes":32622},"rugosidad":{"ruta":"texturas/agua/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/agua/color_1k.jpg","bytes":84378},"normal":{"ruta":"texturas/agua/normal_1k.jpg","bytes":134681},"rugosidad":{"ruta":"texturas/agua/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":289014},{"id":"hielo","tipo":"textura","nombre":"Hielo","categoria":"naturaleza","vista":"texturas/hielo/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/hielo/color_512.jpg","bytes":20879},"normal":{"ruta":"texturas/hielo/normal_512.jpg","bytes":31975},"rugosidad":{"ruta":"texturas/hielo/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/hielo/color_1k.jpg","bytes":58261},"normal":{"ruta":"texturas/hielo/normal_1k.jpg","bytes":129986},"rugosidad":{"ruta":"texturas/hielo/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":249831},{"id":"lava","tipo":"textura","nombre":"Lava","categoria":"fantasía","vista":"texturas/lava/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/lava/color_512.jpg","bytes":44433},"normal":{"ruta":"texturas/lava/normal_512.jpg","bytes":32617},"rugosidad":{"ruta":"texturas/lava/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/lava/color_1k.jpg","bytes":135370},"normal":{"ruta":"texturas/lava/normal_1k.jpg","bytes":134325},"rugosidad":{"ruta":"texturas/lava/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":355475},{"id":"cristal_amatista","tipo":"textura","nombre":"Cristal de amatista","categoria":"fantasía","vista":"texturas/cristal_amatista/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/cristal_amatista/color_512.jpg","bytes":41529},"normal":{"ruta":"texturas/cristal_amatista/normal_512.jpg","bytes":14722},"rugosidad":{"ruta":"texturas/cristal_amatista/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/cristal_amatista/color_1k.jpg","bytes":132626},"normal":{"ruta":"texturas/cristal_amatista/normal_1k.jpg","bytes":37152},"rugosidad":{"ruta":"texturas/cristal_amatista/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":234759},{"id":"escamas","tipo":"textura","nombre":"Escamas","categoria":"fantasía","vista":"texturas/escamas/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/escamas/color_512.jpg","bytes":40002},"normal":{"ruta":"texturas/escamas/normal_512.jpg","bytes":69226},"rugosidad":{"ruta":"texturas/escamas/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/escamas/color_1k.jpg","bytes":109786},"normal":{"ruta":"texturas/escamas/normal_1k.jpg","bytes":188550},"rugosidad":{"ruta":"texturas/escamas/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":416294},{"id":"hexagonos","tipo":"textura","nombre":"Hexágonos","categoria":"ciencia ficción","vista":"texturas/hexagonos/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/hexagonos/color_512.jpg","bytes":38314},"normal":{"ruta":"texturas/hexagonos/normal_512.jpg","bytes":46578},"rugosidad":{"ruta":"texturas/hexagonos/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/hexagonos/color_1k.jpg","bytes":92636},"normal":{"ruta":"texturas/hexagonos/normal_1k.jpg","bytes":117323},"rugosidad":{"ruta":"texturas/hexagonos/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":303581},{"id":"panel_scifi","tipo":"textura","nombre":"Panel sci-fi","categoria":"ciencia ficción","vista":"texturas/panel_scifi/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/panel_scifi/color_512.jpg","bytes":11098},"normal":{"ruta":"texturas/panel_scifi/normal_512.jpg","bytes":7859},"rugosidad":{"ruta":"texturas/panel_scifi/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/panel_scifi/color_1k.jpg","bytes":24256},"normal":{"ruta":"texturas/panel_scifi/normal_1k.jpg","bytes":17189},"rugosidad":{"ruta":"texturas/panel_scifi/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":69132},{"id":"circuito","tipo":"textura","nombre":"Circuito","categoria":"ciencia ficción","vista":"texturas/circuito/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/circuito/color_512.jpg","bytes":69537},"normal":{"ruta":"texturas/circuito/normal_512.jpg","bytes":58264},"rugosidad":{"ruta":"texturas/circuito/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/circuito/color_1k.jpg","bytes":186513},"normal":{"ruta":"texturas/circuito/normal_1k.jpg","bytes":209487},"rugosidad":{"ruta":"texturas/circuito/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":532531},{"id":"tela_lona","tipo":"textura","nombre":"Lona","categoria":"tela","vista":"texturas/tela_lona/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/tela_lona/color_512.jpg","bytes":31651},"normal":{"ruta":"texturas/tela_lona/normal_512.jpg","bytes":53454},"rugosidad":{"ruta":"texturas/tela_lona/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/tela_lona/color_1k.jpg","bytes":109186},"normal":{"ruta":"texturas/tela_lona/normal_1k.jpg","bytes":226436},"rugosidad":{"ruta":"texturas/tela_lona/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":429457},{"id":"tela_cuadros","tipo":"textura","nombre":"Tela a cuadros","categoria":"tela","vista":"texturas/tela_cuadros/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/tela_cuadros/color_512.jpg","bytes":22191},"normal":{"ruta":"texturas/tela_cuadros/normal_512.jpg","bytes":53447},"rugosidad":{"ruta":"texturas/tela_cuadros/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/tela_cuadros/color_1k.jpg","bytes":81989},"normal":{"ruta":"texturas/tela_cuadros/normal_1k.jpg","bytes":226463},"rugosidad":{"ruta":"texturas/tela_cuadros/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":392820},{"id":"alfombra","tipo":"textura","nombre":"Alfombra","categoria":"tela","vista":"texturas/alfombra/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/alfombra/color_512.jpg","bytes":32422},"normal":{"ruta":"texturas/alfombra/normal_512.jpg","bytes":53408},"rugosidad":{"ruta":"texturas/alfombra/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/alfombra/color_1k.jpg","bytes":110796},"normal":{"ruta":"texturas/alfombra/normal_1k.jpg","bytes":226374},"rugosidad":{"ruta":"texturas/alfombra/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":431730},{"id":"mezclilla","tipo":"textura","nombre":"Mezclilla","categoria":"tela","vista":"texturas/mezclilla/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/mezclilla/color_512.jpg","bytes":35529},"normal":{"ruta":"texturas/mezclilla/normal_512.jpg","bytes":53485},"rugosidad":{"ruta":"texturas/mezclilla/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/mezclilla/color_1k.jpg","bytes":122644},"normal":{"ruta":"texturas/mezclilla/normal_1k.jpg","bytes":226408},"rugosidad":{"ruta":"texturas/mezclilla/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":446796},{"id":"cuero","tipo":"textura","nombre":"Cuero","categoria":"tela","vista":"texturas/cuero/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/cuero/color_512.jpg","bytes":19236},"normal":{"ruta":"texturas/cuero/normal_512.jpg","bytes":76462},"rugosidad":{"ruta":"texturas/cuero/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/cuero/color_1k.jpg","bytes":74945},"normal":{"ruta":"texturas/cuero/normal_1k.jpg","bytes":402715},"rugosidad":{"ruta":"texturas/cuero/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":582088},{"id":"papel","tipo":"textura","nombre":"Papel","categoria":"otros","vista":"texturas/papel/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/papel/color_512.jpg","bytes":11239},"normal":{"ruta":"texturas/papel/normal_512.jpg","bytes":77530},"rugosidad":{"ruta":"texturas/papel/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/papel/color_1k.jpg","bytes":60246},"normal":{"ruta":"texturas/papel/normal_1k.jpg","bytes":485647},"rugosidad":{"ruta":"texturas/papel/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":643392},{"id":"carton","tipo":"textura","nombre":"Cartón","categoria":"otros","vista":"texturas/carton/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/carton/color_512.jpg","bytes":15317},"normal":{"ruta":"texturas/carton/normal_512.jpg","bytes":77974},"rugosidad":{"ruta":"texturas/carton/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/carton/color_1k.jpg","bytes":81942},"normal":{"ruta":"texturas/carton/normal_1k.jpg","bytes":488675},"rugosidad":{"ruta":"texturas/carton/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":672638},{"id":"plastico_rojo","tipo":"textura","nombre":"Plástico rojo","categoria":"otros","vista":"texturas/plastico_rojo/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/plastico_rojo/color_512.jpg","bytes":3953},"normal":{"ruta":"texturas/plastico_rojo/normal_512.jpg","bytes":2112},"rugosidad":{"ruta":"texturas/plastico_rojo/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/plastico_rojo/color_1k.jpg","bytes":12452},"normal":{"ruta":"texturas/plastico_rojo/normal_1k.jpg","bytes":7429},"rugosidad":{"ruta":"texturas/plastico_rojo/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":34676},{"id":"goma_negra","tipo":"textura","nombre":"Goma negra","categoria":"otros","vista":"texturas/goma_negra/vista.jpg","mapas":["color","normal","rugosidad"],"resoluciones":{"512":{"color":{"ruta":"texturas/goma_negra/color_512.jpg","bytes":3005},"normal":{"ruta":"texturas/goma_negra/normal_512.jpg","bytes":2144},"rugosidad":{"ruta":"texturas/goma_negra/rugosidad_512.jpg","bytes":2061}},"1k":{"color":{"ruta":"texturas/goma_negra/color_1k.jpg","bytes":9594},"normal":{"ruta":"texturas/goma_negra/normal_1k.jpg","bytes":7792},"rugosidad":{"ruta":"texturas/goma_negra/rugosidad_1k.jpg","bytes":6669}}},"tileable":true,"bytes":31265},{"id":"arbol","tipo":"modelo","nombre":"Árbol frondoso","categoria":"naturaleza","vista":"modelos/arbol.jpg","archivo":{"ruta":"modelos/arbol.glb","bytes":11812,"formato":"glb"},"triangulos":134,"bytes":11812},{"id":"pino","tipo":"modelo","nombre":"Pino","categoria":"naturaleza","vista":"modelos/pino.jpg","archivo":{"ruta":"modelos/pino.glb","bytes":10756,"formato":"glb"},"triangulos":120,"bytes":10756},{"id":"roca","tipo":"modelo","nombre":"Roca","categoria":"naturaleza","vista":"modelos/roca.jpg","archivo":{"ruta":"modelos/roca.glb","bytes":3968,"formato":"glb"},"triangulos":42,"bytes":3968},{"id":"hongo","tipo":"modelo","nombre":"Hongo","categoria":"naturaleza","vista":"modelos/hongo.jpg","archivo":{"ruta":"modelos/hongo.glb","bytes":9600,"formato":"glb"},"triangulos":112,"bytes":9600},{"id":"nube","tipo":"modelo","nombre":"Nube","categoria":"naturaleza","vista":"modelos/nube.jpg","archivo":{"ruta":"modelos/nube.glb","bytes":19372,"formato":"glb"},"triangulos":256,"bytes":19372},{"id":"montana","tipo":"modelo","nombre":"Montaña nevada","categoria":"naturaleza","vista":"modelos/montana.jpg","archivo":{"ruta":"modelos/montana.glb","bytes":5572,"formato":"glb"},"triangulos":56,"bytes":5572},{"id":"isla","tipo":"modelo","nombre":"Isla flotante","categoria":"naturaleza","vista":"modelos/isla.jpg","archivo":{"ruta":"modelos/isla.glb","bytes":16600,"formato":"glb"},"triangulos":192,"bytes":16600},{"id":"maceta","tipo":"modelo","nombre":"Maceta","categoria":"hogar","vista":"modelos/maceta.jpg","archivo":{"ruta":"modelos/maceta.glb","bytes":9040,"formato":"glb"},"triangulos":104,"bytes":9040},{"id":"casa","tipo":"modelo","nombre":"Casa","categoria":"construcción","vista":"modelos/casa.jpg","archivo":{"ruta":"modelos/casa.glb","bytes":6180,"formato":"glb"},"triangulos":48,"bytes":6180},{"id":"columna","tipo":"modelo","nombre":"Columna","categoria":"construcción","vista":"modelos/columna.jpg","archivo":{"ruta":"modelos/columna.glb","bytes":6136,"formato":"glb"},"triangulos":72,"bytes":6136},{"id":"escalera","tipo":"modelo","nombre":"Escalera","categoria":"construcción","vista":"modelos/escalera.jpg","archivo":{"ruta":"modelos/escalera.glb","bytes":6092,"formato":"glb"},"triangulos":72,"bytes":6092},{"id":"puerta","tipo":"modelo","nombre":"Puerta","categoria":"construcción","vista":"modelos/puerta.jpg","archivo":{"ruta":"modelos/puerta.glb","bytes":6416,"formato":"glb"},"triangulos":60,"bytes":6416},{"id":"valla","tipo":"modelo","nombre":"Valla","categoria":"construcción","vista":"modelos/valla.jpg","archivo":{"ruta":"modelos/valla.glb","bytes":7548,"formato":"glb"},"triangulos":84,"bytes":7548},{"id":"puente","tipo":"modelo","nombre":"Puente","categoria":"construcción","vista":"modelos/puente.jpg","archivo":{"ruta":"modelos/puente.glb","bytes":7212,"formato":"glb"},"triangulos":72,"bytes":7212},{"id":"faro","tipo":"modelo","nombre":"Faro","categoria":"construcción","vista":"modelos/faro.jpg","archivo":{"ruta":"modelos/faro.glb","bytes":12476,"formato":"glb"},"triangulos":144,"bytes":12476},{"id":"molino","tipo":"modelo","nombre":"Molino (base)","categoria":"construcción","vista":"modelos/molino.jpg","archivo":{"ruta":"modelos/molino.glb","bytes":6060,"formato":"glb"},"triangulos":64,"bytes":6060},{"id":"silla","tipo":"modelo","nombre":"Silla","categoria":"hogar","vista":"modelos/silla.jpg","archivo":{"ruta":"modelos/silla.glb","bytes":6712,"formato":"glb"},"triangulos":72,"bytes":6712},{"id":"mesa","tipo":"modelo","nombre":"Mesa","categoria":"hogar","vista":"modelos/mesa.jpg","archivo":{"ruta":"modelos/mesa.glb","bytes":5852,"formato":"glb"},"triangulos":60,"bytes":5852},{"id":"lampara","tipo":"modelo","nombre":"Lámpara","categoria":"hogar","vista":"modelos/lampara.jpg","archivo":{"ruta":"modelos/lampara.glb","bytes":9012,"formato":"glb"},"triangulos":104,"bytes":9012},{"id":"taza","tipo":"modelo","nombre":"Taza","categoria":"hogar","vista":"modelos/taza.jpg","archivo":{"ruta":"modelos/taza.glb","bytes":10740,"formato":"glb"},"triangulos":136,"bytes":10740},{"id":"banca","tipo":"modelo","nombre":"Banca","categoria":"ciudad","vista":"modelos/banca.jpg","archivo":{"ruta":"modelos/banca.glb","bytes":5000,"formato":"glb"},"triangulos":48,"bytes":5000},{"id":"farol","tipo":"modelo","nombre":"Farol","categoria":"ciudad","vista":"modelos/farol.jpg","archivo":{"ruta":"modelos/farol.glb","bytes":5292,"formato":"glb"},"triangulos":52,"bytes":5292},{"id":"barril","tipo":"modelo","nombre":"Barril","categoria":"utilería","vista":"modelos/barril.jpg","archivo":{"ruta":"modelos/barril.glb","bytes":18832,"formato":"glb"},"triangulos":240,"bytes":18832},{"id":"cofre","tipo":"modelo","nombre":"Cofre","categoria":"utilería","vista":"modelos/cofre.jpg","archivo":{"ruta":"modelos/cofre.glb","bytes":6176,"formato":"glb"},"triangulos":56,"bytes":6176},{"id":"cristal","tipo":"modelo","nombre":"Cristal de amatista","categoria":"fantasía","vista":"modelos/cristal.jpg","archivo":{"ruta":"modelos/cristal.glb","bytes":6132,"formato":"glb"},"triangulos":72,"bytes":6132},{"id":"espada","tipo":"modelo","nombre":"Espada","categoria":"fantasía","vista":"modelos/espada.jpg","archivo":{"ruta":"modelos/espada.glb","bytes":8232,"formato":"glb"},"triangulos":84,"bytes":8232},{"id":"escudo","tipo":"modelo","nombre":"Escudo","categoria":"fantasía","vista":"modelos/escudo.jpg","archivo":{"ruta":"modelos/escudo.glb","bytes":8480,"formato":"glb"},"triangulos":96,"bytes":8480},{"id":"llave","tipo":"modelo","nombre":"Llave","categoria":"fantasía","vista":"modelos/llave.jpg","archivo":{"ruta":"modelos/llave.glb","bytes":11320,"formato":"glb"},"triangulos":144,"bytes":11320},{"id":"moneda","tipo":"modelo","nombre":"Moneda","categoria":"juego","vista":"modelos/moneda.jpg","archivo":{"ruta":"modelos/moneda.glb","bytes":11940,"formato":"glb"},"triangulos":144,"bytes":11940},{"id":"corona","tipo":"modelo","nombre":"Corona","categoria":"juego","vista":"modelos/corona.jpg","archivo":{"ruta":"modelos/corona.glb","bytes":11320,"formato":"glb"},"triangulos":144,"bytes":11320},{"id":"trofeo","tipo":"modelo","nombre":"Trofeo","categoria":"juego","vista":"modelos/trofeo.jpg","archivo":{"ruta":"modelos/trofeo.glb","bytes":19652,"formato":"glb"},"triangulos":252,"bytes":19652},{"id":"cohete","tipo":"modelo","nombre":"Cohete","categoria":"vehículos","vista":"modelos/cohete.jpg","archivo":{"ruta":"modelos/cohete.glb","bytes":13708,"formato":"glb"},"triangulos":160,"bytes":13708},{"id":"auto","tipo":"modelo","nombre":"Auto","categoria":"vehículos","vista":"modelos/auto.jpg","archivo":{"ruta":"modelos/auto.glb","bytes":16276,"formato":"glb"},"triangulos":196,"bytes":16276},{"id":"vagon","tipo":"modelo","nombre":"Vagón de tren","categoria":"vehículos","vista":"modelos/vagon.jpg","archivo":{"ruta":"modelos/vagon.glb","bytes":15404,"formato":"glb"},"triangulos":184,"bytes":15404},{"id":"barco","tipo":"modelo","nombre":"Barco de vela","categoria":"vehículos","vista":"modelos/barco.jpg","archivo":{"ruta":"modelos/barco.glb","bytes":6204,"formato":"glb"},"triangulos":56,"bytes":6204},{"id":"avion","tipo":"modelo","nombre":"Avión","categoria":"vehículos","vista":"modelos/avion.jpg","archivo":{"ruta":"modelos/avion.glb","bytes":11096,"formato":"glb"},"triangulos":116,"bytes":11096},{"id":"robot","tipo":"modelo","nombre":"Robot","categoria":"personajes","vista":"modelos/robot.jpg","archivo":{"ruta":"modelos/robot.glb","bytes":10156,"formato":"glb"},"triangulos":112,"bytes":10156},{"id":"engrane","tipo":"modelo","nombre":"Engrane","categoria":"mecánica","vista":"modelos/engrane.jpg","archivo":{"ruta":"modelos/engrane.glb","bytes":15320,"formato":"glb"},"triangulos":200,"bytes":15320},{"id":"girar","tipo":"animacion","nombre":"Girar en su lugar","categoria":"básicas","vista":"animaciones/girar.webp","archivo":{"ruta":"animaciones/girar.glb","bytes":7036,"formato":"glb"},"duracion":3.0,"pistas":1,"bytes":7036},{"id":"rebotar","tipo":"animacion","nombre":"Rebote con squash and stretch","categoria":"básicas","vista":"animaciones/rebotar.webp","archivo":{"ruta":"animaciones/rebotar.glb","bytes":13072,"formato":"glb"},"duracion":2.0,"pistas":2,"bytes":13072},{"id":"flotar","tipo":"animacion","nombre":"Flotar","categoria":"básicas","vista":"animaciones/flotar.webp","archivo":{"ruta":"animaciones/flotar.glb","bytes":17416,"formato":"glb"},"duracion":4.0,"pistas":1,"bytes":17416},{"id":"latido","tipo":"animacion","nombre":"Latido","categoria":"básicas","vista":"animaciones/latido.webp","archivo":{"ruta":"animaciones/latido.glb","bytes":19056,"formato":"glb"},"duracion":1.2,"pistas":1,"bytes":19056},{"id":"pendulo","tipo":"animacion","nombre":"Péndulo","categoria":"física","vista":"animaciones/pendulo.webp","archivo":{"ruta":"animaciones/pendulo.glb","bytes":12832,"formato":"glb"},"duracion":2.0,"pistas":1,"bytes":12832},{"id":"columpio","tipo":"animacion","nombre":"Columpio","categoria":"física","vista":"animaciones/columpio.webp","archivo":{"ruta":"animaciones/columpio.glb","bytes":9076,"formato":"glb"},"duracion":2.4,"pistas":1,"bytes":9076},{"id":"resorte","tipo":"animacion","nombre":"Resorte","categoria":"física","vista":"animaciones/resorte.webp","archivo":{"ruta":"animaciones/resorte.glb","bytes":58536,"formato":"glb"},"duracion":1.5,"pistas":1,"bytes":58536},{"id":"trompo","tipo":"animacion","nombre":"Trompo","categoria":"física","vista":"animaciones/trompo.webp","archivo":{"ruta":"animaciones/trompo.glb","bytes":11872,"formato":"glb"},"duracion":2.0,"pistas":1,"bytes":11872},{"id":"puerta","tipo":"animacion","nombre":"Puerta que se abre","categoria":"objetos","vista":"animaciones/puerta.webp","archivo":{"ruta":"animaciones/puerta.glb","bytes":9260,"formato":"glb"},"duracion":3.0,"pistas":1,"bytes":9260},{"id":"cofre","tipo":"animacion","nombre":"Cofre del tesoro","categoria":"objetos","vista":"animaciones/cofre.webp","archivo":{"ruta":"animaciones/cofre.glb","bytes":9548,"formato":"glb"},"duracion":3.0,"pistas":3,"bytes":9548},{"id":"moneda_gira","tipo":"animacion","nombre":"Moneda que gira","categoria":"juego","vista":"animaciones/moneda_gira.webp","archivo":{"ruta":"animaciones/moneda_gira.glb","bytes":12864,"formato":"glb"},"duracion":1.5,"pistas":1,"bytes":12864},{"id":"molino","tipo":"animacion","nombre":"Molino de viento","categoria":"mecánica","vista":"animaciones/molino.webp","archivo":{"ruta":"animaciones/molino.glb","bytes":11124,"formato":"glb"},"duracion":4.0,"pistas":1,"bytes":11124},{"id":"engranes","tipo":"animacion","nombre":"Engranes","categoria":"mecánica","vista":"animaciones/engranes.webp","archivo":{"ruta":"animaciones/engranes.glb","bytes":31980,"formato":"glb"},"duracion":4.0,"pistas":2,"bytes":31980},{"id":"reloj","tipo":"animacion","nombre":"Reloj","categoria":"mecánica","vista":"animaciones/reloj.webp","archivo":{"ruta":"animaciones/reloj.glb","bytes":24344,"formato":"glb"},"duracion":6.0,"pistas":2,"bytes":24344},{"id":"orbita","tipo":"animacion","nombre":"Órbita (sol, planeta y luna)","categoria":"jerarquía","vista":"animaciones/orbita.webp","archivo":{"ruta":"animaciones/orbita.glb","bytes":25916,"formato":"glb"},"duracion":6.0,"pistas":2,"bytes":25916},{"id":"despegue","tipo":"animacion","nombre":"Despegue del cohete","categoria":"vehículos","vista":"animaciones/despegue.webp","archivo":{"ruta":"animaciones/despegue.glb","bytes":17204,"formato":"glb"},"duracion":4.0,"pistas":2,"bytes":17204},{"id":"caminar","tipo":"animacion","nombre":"Ciclo de caminata (robot)","categoria":"personajes","vista":"animaciones/caminar.webp","archivo":{"ruta":"animaciones/caminar.glb","bytes":18612,"formato":"glb"},"duracion":1.2,"pistas":5,"bytes":18612},{"id":"aleteo","tipo":"animacion","nombre":"Aleteo de pájaro","categoria":"personajes","vista":"animaciones/aleteo.webp","archivo":{"ruta":"animaciones/aleteo.glb","bytes":15012,"formato":"glb"},"duracion":0.8,"pistas":2,"bytes":15012},{"id":"ola","tipo":"animacion","nombre":"Ola de cubos","categoria":"movimiento","vista":"animaciones/ola.webp","archivo":{"ruta":"animaciones/ola.glb","bytes":15136,"formato":"glb"},"duracion":2.0,"pistas":7,"bytes":15136}]}
+{
+  "contrato": "amatista.biblioteca/1",
+  "version": "1.0.0",
+  "generado": "2026-11-04",
+  "licencia": {
+    "id": "CC0-1.0",
+    "texto": "Dominio público: úsalo como quieras, sin atribución.",
+    "autor": "Amatista (generado)"
+  },
+  "totales": {
+    "texturas": 45,
+    "modelos": 38,
+    "animaciones": 19,
+    "bytes": 20304368
+  },
+  "recursos": [
+    {
+      "id": "ladrillo_rojo",
+      "tipo": "textura",
+      "nombre": "Ladrillo rojo",
+      "categoria": "muros",
+      "vista": "texturas/ladrillo_rojo/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/ladrillo_rojo/color_512.jpg",
+            "bytes": 36067
+          },
+          "normal": {
+            "ruta": "texturas/ladrillo_rojo/normal_512.jpg",
+            "bytes": 65357
+          },
+          "rugosidad": {
+            "ruta": "texturas/ladrillo_rojo/rugosidad_512.jpg",
+            "bytes": 13046
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/ladrillo_rojo/color_1k.jpg",
+            "bytes": 97764
+          },
+          "normal": {
+            "ruta": "texturas/ladrillo_rojo/normal_1k.jpg",
+            "bytes": 277187
+          },
+          "rugosidad": {
+            "ruta": "texturas/ladrillo_rojo/rugosidad_1k.jpg",
+            "bytes": 24440
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 513861
+    },
+    {
+      "id": "ladrillo_gris",
+      "tipo": "textura",
+      "nombre": "Bloque gris",
+      "categoria": "muros",
+      "vista": "texturas/ladrillo_gris/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/ladrillo_gris/color_512.jpg",
+            "bytes": 28095
+          },
+          "normal": {
+            "ruta": "texturas/ladrillo_gris/normal_512.jpg",
+            "bytes": 60420
+          },
+          "rugosidad": {
+            "ruta": "texturas/ladrillo_gris/rugosidad_512.jpg",
+            "bytes": 9951
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/ladrillo_gris/color_1k.jpg",
+            "bytes": 95886
+          },
+          "normal": {
+            "ruta": "texturas/ladrillo_gris/normal_1k.jpg",
+            "bytes": 267925
+          },
+          "rugosidad": {
+            "ruta": "texturas/ladrillo_gris/rugosidad_1k.jpg",
+            "bytes": 21685
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 483962
+    },
+    {
+      "id": "baldosa_blanca",
+      "tipo": "textura",
+      "nombre": "Baldosa blanca",
+      "categoria": "pisos",
+      "vista": "texturas/baldosa_blanca/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/baldosa_blanca/color_512.jpg",
+            "bytes": 19119
+          },
+          "normal": {
+            "ruta": "texturas/baldosa_blanca/normal_512.jpg",
+            "bytes": 29078
+          },
+          "rugosidad": {
+            "ruta": "texturas/baldosa_blanca/rugosidad_512.jpg",
+            "bytes": 15319
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/baldosa_blanca/color_1k.jpg",
+            "bytes": 40667
+          },
+          "normal": {
+            "ruta": "texturas/baldosa_blanca/normal_1k.jpg",
+            "bytes": 59913
+          },
+          "rugosidad": {
+            "ruta": "texturas/baldosa_blanca/rugosidad_1k.jpg",
+            "bytes": 27876
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 191972
+    },
+    {
+      "id": "azulejo_azul",
+      "tipo": "textura",
+      "nombre": "Azulejo azul",
+      "categoria": "pisos",
+      "vista": "texturas/azulejo_azul/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/azulejo_azul/color_512.jpg",
+            "bytes": 23929
+          },
+          "normal": {
+            "ruta": "texturas/azulejo_azul/normal_512.jpg",
+            "bytes": 38405
+          },
+          "rugosidad": {
+            "ruta": "texturas/azulejo_azul/rugosidad_512.jpg",
+            "bytes": 22612
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/azulejo_azul/color_1k.jpg",
+            "bytes": 52195
+          },
+          "normal": {
+            "ruta": "texturas/azulejo_azul/normal_1k.jpg",
+            "bytes": 93275
+          },
+          "rugosidad": {
+            "ruta": "texturas/azulejo_azul/rugosidad_1k.jpg",
+            "bytes": 52501
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 282917
+    },
+    {
+      "id": "baldosa_barro",
+      "tipo": "textura",
+      "nombre": "Baldosa de barro",
+      "categoria": "pisos",
+      "vista": "texturas/baldosa_barro/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/baldosa_barro/color_512.jpg",
+            "bytes": 15756
+          },
+          "normal": {
+            "ruta": "texturas/baldosa_barro/normal_512.jpg",
+            "bytes": 21555
+          },
+          "rugosidad": {
+            "ruta": "texturas/baldosa_barro/rugosidad_512.jpg",
+            "bytes": 13856
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/baldosa_barro/color_1k.jpg",
+            "bytes": 39664
+          },
+          "normal": {
+            "ruta": "texturas/baldosa_barro/normal_1k.jpg",
+            "bytes": 59304
+          },
+          "rugosidad": {
+            "ruta": "texturas/baldosa_barro/rugosidad_1k.jpg",
+            "bytes": 30608
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 180743
+    },
+    {
+      "id": "madera_roble",
+      "tipo": "textura",
+      "nombre": "Madera de roble",
+      "categoria": "madera",
+      "vista": "texturas/madera_roble/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/madera_roble/color_512.jpg",
+            "bytes": 42251
+          },
+          "normal": {
+            "ruta": "texturas/madera_roble/normal_512.jpg",
+            "bytes": 69845
+          },
+          "rugosidad": {
+            "ruta": "texturas/madera_roble/rugosidad_512.jpg",
+            "bytes": 6472
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/madera_roble/color_1k.jpg",
+            "bytes": 135562
+          },
+          "normal": {
+            "ruta": "texturas/madera_roble/normal_1k.jpg",
+            "bytes": 261601
+          },
+          "rugosidad": {
+            "ruta": "texturas/madera_roble/rugosidad_1k.jpg",
+            "bytes": 18599
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 534330
+    },
+    {
+      "id": "madera_oscura",
+      "tipo": "textura",
+      "nombre": "Madera oscura",
+      "categoria": "madera",
+      "vista": "texturas/madera_oscura/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/madera_oscura/color_512.jpg",
+            "bytes": 41348
+          },
+          "normal": {
+            "ruta": "texturas/madera_oscura/normal_512.jpg",
+            "bytes": 82436
+          },
+          "rugosidad": {
+            "ruta": "texturas/madera_oscura/rugosidad_512.jpg",
+            "bytes": 7315
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/madera_oscura/color_1k.jpg",
+            "bytes": 136801
+          },
+          "normal": {
+            "ruta": "texturas/madera_oscura/normal_1k.jpg",
+            "bytes": 315453
+          },
+          "rugosidad": {
+            "ruta": "texturas/madera_oscura/rugosidad_1k.jpg",
+            "bytes": 20527
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 603880
+    },
+    {
+      "id": "madera_clara",
+      "tipo": "textura",
+      "nombre": "Madera clara",
+      "categoria": "madera",
+      "vista": "texturas/madera_clara/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/madera_clara/color_512.jpg",
+            "bytes": 35290
+          },
+          "normal": {
+            "ruta": "texturas/madera_clara/normal_512.jpg",
+            "bytes": 68691
+          },
+          "rugosidad": {
+            "ruta": "texturas/madera_clara/rugosidad_512.jpg",
+            "bytes": 7154
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/madera_clara/color_1k.jpg",
+            "bytes": 111724
+          },
+          "normal": {
+            "ruta": "texturas/madera_clara/normal_1k.jpg",
+            "bytes": 257570
+          },
+          "rugosidad": {
+            "ruta": "texturas/madera_clara/rugosidad_1k.jpg",
+            "bytes": 20150
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 500579
+    },
+    {
+      "id": "tablones",
+      "tipo": "textura",
+      "nombre": "Tablones",
+      "categoria": "madera",
+      "vista": "texturas/tablones/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/tablones/color_512.jpg",
+            "bytes": 14693
+          },
+          "normal": {
+            "ruta": "texturas/tablones/normal_512.jpg",
+            "bytes": 25666
+          },
+          "rugosidad": {
+            "ruta": "texturas/tablones/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/tablones/color_1k.jpg",
+            "bytes": 41100
+          },
+          "normal": {
+            "ruta": "texturas/tablones/normal_1k.jpg",
+            "bytes": 97478
+          },
+          "rugosidad": {
+            "ruta": "texturas/tablones/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 184625
+    },
+    {
+      "id": "marmol_blanco",
+      "tipo": "textura",
+      "nombre": "Mármol blanco",
+      "categoria": "piedra",
+      "vista": "texturas/marmol_blanco/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/marmol_blanco/color_512.jpg",
+            "bytes": 32305
+          },
+          "normal": {
+            "ruta": "texturas/marmol_blanco/normal_512.jpg",
+            "bytes": 12354
+          },
+          "rugosidad": {
+            "ruta": "texturas/marmol_blanco/rugosidad_512.jpg",
+            "bytes": 10078
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/marmol_blanco/color_1k.jpg",
+            "bytes": 127945
+          },
+          "normal": {
+            "ruta": "texturas/marmol_blanco/normal_1k.jpg",
+            "bytes": 62954
+          },
+          "rugosidad": {
+            "ruta": "texturas/marmol_blanco/rugosidad_1k.jpg",
+            "bytes": 30047
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 275683
+    },
+    {
+      "id": "marmol_negro",
+      "tipo": "textura",
+      "nombre": "Mármol negro",
+      "categoria": "piedra",
+      "vista": "texturas/marmol_negro/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/marmol_negro/color_512.jpg",
+            "bytes": 39522
+          },
+          "normal": {
+            "ruta": "texturas/marmol_negro/normal_512.jpg",
+            "bytes": 9133
+          },
+          "rugosidad": {
+            "ruta": "texturas/marmol_negro/rugosidad_512.jpg",
+            "bytes": 7319
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/marmol_negro/color_1k.jpg",
+            "bytes": 146354
+          },
+          "normal": {
+            "ruta": "texturas/marmol_negro/normal_1k.jpg",
+            "bytes": 45760
+          },
+          "rugosidad": {
+            "ruta": "texturas/marmol_negro/rugosidad_1k.jpg",
+            "bytes": 22844
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 270932
+    },
+    {
+      "id": "roca",
+      "tipo": "textura",
+      "nombre": "Roca",
+      "categoria": "piedra",
+      "vista": "texturas/roca/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/roca/color_512.jpg",
+            "bytes": 30989
+          },
+          "normal": {
+            "ruta": "texturas/roca/normal_512.jpg",
+            "bytes": 93498
+          },
+          "rugosidad": {
+            "ruta": "texturas/roca/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/roca/color_1k.jpg",
+            "bytes": 127070
+          },
+          "normal": {
+            "ruta": "texturas/roca/normal_1k.jpg",
+            "bytes": 497543
+          },
+          "rugosidad": {
+            "ruta": "texturas/roca/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 754788
+    },
+    {
+      "id": "roca_volcanica",
+      "tipo": "textura",
+      "nombre": "Roca volcánica",
+      "categoria": "piedra",
+      "vista": "texturas/roca_volcanica/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/roca_volcanica/color_512.jpg",
+            "bytes": 18235
+          },
+          "normal": {
+            "ruta": "texturas/roca_volcanica/normal_512.jpg",
+            "bytes": 88692
+          },
+          "rugosidad": {
+            "ruta": "texturas/roca_volcanica/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/roca_volcanica/color_1k.jpg",
+            "bytes": 77595
+          },
+          "normal": {
+            "ruta": "texturas/roca_volcanica/normal_1k.jpg",
+            "bytes": 484844
+          },
+          "rugosidad": {
+            "ruta": "texturas/roca_volcanica/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 675054
+    },
+    {
+      "id": "adoquin",
+      "tipo": "textura",
+      "nombre": "Adoquín",
+      "categoria": "piedra",
+      "vista": "texturas/adoquin/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/adoquin/color_512.jpg",
+            "bytes": 27478
+          },
+          "normal": {
+            "ruta": "texturas/adoquin/normal_512.jpg",
+            "bytes": 49394
+          },
+          "rugosidad": {
+            "ruta": "texturas/adoquin/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/adoquin/color_1k.jpg",
+            "bytes": 74042
+          },
+          "normal": {
+            "ruta": "texturas/adoquin/normal_1k.jpg",
+            "bytes": 127407
+          },
+          "rugosidad": {
+            "ruta": "texturas/adoquin/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 284009
+    },
+    {
+      "id": "empedrado",
+      "tipo": "textura",
+      "nombre": "Empedrado",
+      "categoria": "piedra",
+      "vista": "texturas/empedrado/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/empedrado/color_512.jpg",
+            "bytes": 35575
+          },
+          "normal": {
+            "ruta": "texturas/empedrado/normal_512.jpg",
+            "bytes": 59621
+          },
+          "rugosidad": {
+            "ruta": "texturas/empedrado/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/empedrado/color_1k.jpg",
+            "bytes": 95521
+          },
+          "normal": {
+            "ruta": "texturas/empedrado/normal_1k.jpg",
+            "bytes": 159175
+          },
+          "rugosidad": {
+            "ruta": "texturas/empedrado/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 355580
+    },
+    {
+      "id": "concreto",
+      "tipo": "textura",
+      "nombre": "Concreto",
+      "categoria": "construcción",
+      "vista": "texturas/concreto/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/concreto/color_512.jpg",
+            "bytes": 24004
+          },
+          "normal": {
+            "ruta": "texturas/concreto/normal_512.jpg",
+            "bytes": 89221
+          },
+          "rugosidad": {
+            "ruta": "texturas/concreto/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/concreto/color_1k.jpg",
+            "bytes": 90084
+          },
+          "normal": {
+            "ruta": "texturas/concreto/normal_1k.jpg",
+            "bytes": 476218
+          },
+          "rugosidad": {
+            "ruta": "texturas/concreto/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 685215
+    },
+    {
+      "id": "asfalto",
+      "tipo": "textura",
+      "nombre": "Asfalto",
+      "categoria": "construcción",
+      "vista": "texturas/asfalto/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/asfalto/color_512.jpg",
+            "bytes": 16766
+          },
+          "normal": {
+            "ruta": "texturas/asfalto/normal_512.jpg",
+            "bytes": 86027
+          },
+          "rugosidad": {
+            "ruta": "texturas/asfalto/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/asfalto/color_1k.jpg",
+            "bytes": 72287
+          },
+          "normal": {
+            "ruta": "texturas/asfalto/normal_1k.jpg",
+            "bytes": 474814
+          },
+          "rugosidad": {
+            "ruta": "texturas/asfalto/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 655582
+    },
+    {
+      "id": "metal_cepillado",
+      "tipo": "textura",
+      "nombre": "Metal cepillado",
+      "categoria": "metal",
+      "vista": "texturas/metal_cepillado/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/metal_cepillado/color_512.jpg",
+            "bytes": 10836
+          },
+          "normal": {
+            "ruta": "texturas/metal_cepillado/normal_512.jpg",
+            "bytes": 4366
+          },
+          "rugosidad": {
+            "ruta": "texturas/metal_cepillado/rugosidad_512.jpg",
+            "bytes": 11574
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/metal_cepillado/color_1k.jpg",
+            "bytes": 36311
+          },
+          "normal": {
+            "ruta": "texturas/metal_cepillado/normal_1k.jpg",
+            "bytes": 19378
+          },
+          "rugosidad": {
+            "ruta": "texturas/metal_cepillado/rugosidad_1k.jpg",
+            "bytes": 40221
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 122686
+    },
+    {
+      "id": "acero_oscuro",
+      "tipo": "textura",
+      "nombre": "Acero oscuro",
+      "categoria": "metal",
+      "vista": "texturas/acero_oscuro/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/acero_oscuro/color_512.jpg",
+            "bytes": 9467
+          },
+          "normal": {
+            "ruta": "texturas/acero_oscuro/normal_512.jpg",
+            "bytes": 4351
+          },
+          "rugosidad": {
+            "ruta": "texturas/acero_oscuro/rugosidad_512.jpg",
+            "bytes": 11956
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/acero_oscuro/color_1k.jpg",
+            "bytes": 31680
+          },
+          "normal": {
+            "ruta": "texturas/acero_oscuro/normal_1k.jpg",
+            "bytes": 19984
+          },
+          "rugosidad": {
+            "ruta": "texturas/acero_oscuro/rugosidad_1k.jpg",
+            "bytes": 41704
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 119142
+    },
+    {
+      "id": "metal_oxidado",
+      "tipo": "textura",
+      "nombre": "Metal oxidado",
+      "categoria": "metal",
+      "vista": "texturas/metal_oxidado/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/metal_oxidado/color_512.jpg",
+            "bytes": 35564
+          },
+          "normal": {
+            "ruta": "texturas/metal_oxidado/normal_512.jpg",
+            "bytes": 44968
+          },
+          "rugosidad": {
+            "ruta": "texturas/metal_oxidado/rugosidad_512.jpg",
+            "bytes": 35052
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/metal_oxidado/color_1k.jpg",
+            "bytes": 127699
+          },
+          "normal": {
+            "ruta": "texturas/metal_oxidado/normal_1k.jpg",
+            "bytes": 185627
+          },
+          "rugosidad": {
+            "ruta": "texturas/metal_oxidado/rugosidad_1k.jpg",
+            "bytes": 115867
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 544777
+    },
+    {
+      "id": "placa_metalica",
+      "tipo": "textura",
+      "nombre": "Placa antiderrapante",
+      "categoria": "metal",
+      "vista": "texturas/placa_metalica/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/placa_metalica/color_512.jpg",
+            "bytes": 28959
+          },
+          "normal": {
+            "ruta": "texturas/placa_metalica/normal_512.jpg",
+            "bytes": 53256
+          },
+          "rugosidad": {
+            "ruta": "texturas/placa_metalica/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/placa_metalica/color_1k.jpg",
+            "bytes": 83056
+          },
+          "normal": {
+            "ruta": "texturas/placa_metalica/normal_1k.jpg",
+            "bytes": 136244
+          },
+          "rugosidad": {
+            "ruta": "texturas/placa_metalica/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 307203
+    },
+    {
+      "id": "pasto",
+      "tipo": "textura",
+      "nombre": "Pasto",
+      "categoria": "naturaleza",
+      "vista": "texturas/pasto/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/pasto/color_512.jpg",
+            "bytes": 35463
+          },
+          "normal": {
+            "ruta": "texturas/pasto/normal_512.jpg",
+            "bytes": 83305
+          },
+          "rugosidad": {
+            "ruta": "texturas/pasto/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/pasto/color_1k.jpg",
+            "bytes": 153206
+          },
+          "normal": {
+            "ruta": "texturas/pasto/normal_1k.jpg",
+            "bytes": 440635
+          },
+          "rugosidad": {
+            "ruta": "texturas/pasto/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 718297
+    },
+    {
+      "id": "musgo",
+      "tipo": "textura",
+      "nombre": "Musgo",
+      "categoria": "naturaleza",
+      "vista": "texturas/musgo/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/musgo/color_512.jpg",
+            "bytes": 29848
+          },
+          "normal": {
+            "ruta": "texturas/musgo/normal_512.jpg",
+            "bytes": 85403
+          },
+          "rugosidad": {
+            "ruta": "texturas/musgo/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/musgo/color_1k.jpg",
+            "bytes": 127657
+          },
+          "normal": {
+            "ruta": "texturas/musgo/normal_1k.jpg",
+            "bytes": 449702
+          },
+          "rugosidad": {
+            "ruta": "texturas/musgo/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 698298
+    },
+    {
+      "id": "tierra",
+      "tipo": "textura",
+      "nombre": "Tierra",
+      "categoria": "naturaleza",
+      "vista": "texturas/tierra/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/tierra/color_512.jpg",
+            "bytes": 20549
+          },
+          "normal": {
+            "ruta": "texturas/tierra/normal_512.jpg",
+            "bytes": 68963
+          },
+          "rugosidad": {
+            "ruta": "texturas/tierra/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/tierra/color_1k.jpg",
+            "bytes": 102428
+          },
+          "normal": {
+            "ruta": "texturas/tierra/normal_1k.jpg",
+            "bytes": 422605
+          },
+          "rugosidad": {
+            "ruta": "texturas/tierra/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 620233
+    },
+    {
+      "id": "arena",
+      "tipo": "textura",
+      "nombre": "Arena",
+      "categoria": "naturaleza",
+      "vista": "texturas/arena/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/arena/color_512.jpg",
+            "bytes": 18299
+          },
+          "normal": {
+            "ruta": "texturas/arena/normal_512.jpg",
+            "bytes": 68493
+          },
+          "rugosidad": {
+            "ruta": "texturas/arena/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/arena/color_1k.jpg",
+            "bytes": 91891
+          },
+          "normal": {
+            "ruta": "texturas/arena/normal_1k.jpg",
+            "bytes": 420423
+          },
+          "rugosidad": {
+            "ruta": "texturas/arena/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 604794
+    },
+    {
+      "id": "nieve",
+      "tipo": "textura",
+      "nombre": "Nieve",
+      "categoria": "naturaleza",
+      "vista": "texturas/nieve/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/nieve/color_512.jpg",
+            "bytes": 17688
+          },
+          "normal": {
+            "ruta": "texturas/nieve/normal_512.jpg",
+            "bytes": 66877
+          },
+          "rugosidad": {
+            "ruta": "texturas/nieve/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/nieve/color_1k.jpg",
+            "bytes": 84733
+          },
+          "normal": {
+            "ruta": "texturas/nieve/normal_1k.jpg",
+            "bytes": 406495
+          },
+          "rugosidad": {
+            "ruta": "texturas/nieve/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 581481
+    },
+    {
+      "id": "barro",
+      "tipo": "textura",
+      "nombre": "Barro",
+      "categoria": "naturaleza",
+      "vista": "texturas/barro/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/barro/color_512.jpg",
+            "bytes": 15637
+          },
+          "normal": {
+            "ruta": "texturas/barro/normal_512.jpg",
+            "bytes": 69039
+          },
+          "rugosidad": {
+            "ruta": "texturas/barro/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/barro/color_1k.jpg",
+            "bytes": 74347
+          },
+          "normal": {
+            "ruta": "texturas/barro/normal_1k.jpg",
+            "bytes": 415710
+          },
+          "rugosidad": {
+            "ruta": "texturas/barro/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 580421
+    },
+    {
+      "id": "corteza",
+      "tipo": "textura",
+      "nombre": "Corteza",
+      "categoria": "naturaleza",
+      "vista": "texturas/corteza/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/corteza/color_512.jpg",
+            "bytes": 18551
+          },
+          "normal": {
+            "ruta": "texturas/corteza/normal_512.jpg",
+            "bytes": 33139
+          },
+          "rugosidad": {
+            "ruta": "texturas/corteza/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/corteza/color_1k.jpg",
+            "bytes": 67899
+          },
+          "normal": {
+            "ruta": "texturas/corteza/normal_1k.jpg",
+            "bytes": 127999
+          },
+          "rugosidad": {
+            "ruta": "texturas/corteza/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 253276
+    },
+    {
+      "id": "agua",
+      "tipo": "textura",
+      "nombre": "Agua",
+      "categoria": "naturaleza",
+      "vista": "texturas/agua/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/agua/color_512.jpg",
+            "bytes": 28603
+          },
+          "normal": {
+            "ruta": "texturas/agua/normal_512.jpg",
+            "bytes": 32622
+          },
+          "rugosidad": {
+            "ruta": "texturas/agua/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/agua/color_1k.jpg",
+            "bytes": 84378
+          },
+          "normal": {
+            "ruta": "texturas/agua/normal_1k.jpg",
+            "bytes": 134681
+          },
+          "rugosidad": {
+            "ruta": "texturas/agua/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 285972
+    },
+    {
+      "id": "hielo",
+      "tipo": "textura",
+      "nombre": "Hielo",
+      "categoria": "naturaleza",
+      "vista": "texturas/hielo/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/hielo/color_512.jpg",
+            "bytes": 20879
+          },
+          "normal": {
+            "ruta": "texturas/hielo/normal_512.jpg",
+            "bytes": 31975
+          },
+          "rugosidad": {
+            "ruta": "texturas/hielo/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/hielo/color_1k.jpg",
+            "bytes": 58261
+          },
+          "normal": {
+            "ruta": "texturas/hielo/normal_1k.jpg",
+            "bytes": 129986
+          },
+          "rugosidad": {
+            "ruta": "texturas/hielo/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 246789
+    },
+    {
+      "id": "lava",
+      "tipo": "textura",
+      "nombre": "Lava",
+      "categoria": "fantasía",
+      "vista": "texturas/lava/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/lava/color_512.jpg",
+            "bytes": 44433
+          },
+          "normal": {
+            "ruta": "texturas/lava/normal_512.jpg",
+            "bytes": 32617
+          },
+          "rugosidad": {
+            "ruta": "texturas/lava/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/lava/color_1k.jpg",
+            "bytes": 135370
+          },
+          "normal": {
+            "ruta": "texturas/lava/normal_1k.jpg",
+            "bytes": 134325
+          },
+          "rugosidad": {
+            "ruta": "texturas/lava/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 352433
+    },
+    {
+      "id": "cristal_amatista",
+      "tipo": "textura",
+      "nombre": "Cristal de amatista",
+      "categoria": "fantasía",
+      "vista": "texturas/cristal_amatista/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/cristal_amatista/color_512.jpg",
+            "bytes": 41529
+          },
+          "normal": {
+            "ruta": "texturas/cristal_amatista/normal_512.jpg",
+            "bytes": 14722
+          },
+          "rugosidad": {
+            "ruta": "texturas/cristal_amatista/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/cristal_amatista/color_1k.jpg",
+            "bytes": 132626
+          },
+          "normal": {
+            "ruta": "texturas/cristal_amatista/normal_1k.jpg",
+            "bytes": 37152
+          },
+          "rugosidad": {
+            "ruta": "texturas/cristal_amatista/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 231717
+    },
+    {
+      "id": "escamas",
+      "tipo": "textura",
+      "nombre": "Escamas",
+      "categoria": "fantasía",
+      "vista": "texturas/escamas/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/escamas/color_512.jpg",
+            "bytes": 40002
+          },
+          "normal": {
+            "ruta": "texturas/escamas/normal_512.jpg",
+            "bytes": 69226
+          },
+          "rugosidad": {
+            "ruta": "texturas/escamas/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/escamas/color_1k.jpg",
+            "bytes": 109786
+          },
+          "normal": {
+            "ruta": "texturas/escamas/normal_1k.jpg",
+            "bytes": 188550
+          },
+          "rugosidad": {
+            "ruta": "texturas/escamas/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 413252
+    },
+    {
+      "id": "hexagonos",
+      "tipo": "textura",
+      "nombre": "Hexágonos",
+      "categoria": "ciencia ficción",
+      "vista": "texturas/hexagonos/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/hexagonos/color_512.jpg",
+            "bytes": 38314
+          },
+          "normal": {
+            "ruta": "texturas/hexagonos/normal_512.jpg",
+            "bytes": 46578
+          },
+          "rugosidad": {
+            "ruta": "texturas/hexagonos/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/hexagonos/color_1k.jpg",
+            "bytes": 92636
+          },
+          "normal": {
+            "ruta": "texturas/hexagonos/normal_1k.jpg",
+            "bytes": 117323
+          },
+          "rugosidad": {
+            "ruta": "texturas/hexagonos/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 300539
+    },
+    {
+      "id": "panel_scifi",
+      "tipo": "textura",
+      "nombre": "Panel sci-fi",
+      "categoria": "ciencia ficción",
+      "vista": "texturas/panel_scifi/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/panel_scifi/color_512.jpg",
+            "bytes": 11098
+          },
+          "normal": {
+            "ruta": "texturas/panel_scifi/normal_512.jpg",
+            "bytes": 7859
+          },
+          "rugosidad": {
+            "ruta": "texturas/panel_scifi/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/panel_scifi/color_1k.jpg",
+            "bytes": 24256
+          },
+          "normal": {
+            "ruta": "texturas/panel_scifi/normal_1k.jpg",
+            "bytes": 17189
+          },
+          "rugosidad": {
+            "ruta": "texturas/panel_scifi/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 66090
+    },
+    {
+      "id": "circuito",
+      "tipo": "textura",
+      "nombre": "Circuito",
+      "categoria": "ciencia ficción",
+      "vista": "texturas/circuito/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/circuito/color_512.jpg",
+            "bytes": 69537
+          },
+          "normal": {
+            "ruta": "texturas/circuito/normal_512.jpg",
+            "bytes": 58264
+          },
+          "rugosidad": {
+            "ruta": "texturas/circuito/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/circuito/color_1k.jpg",
+            "bytes": 186513
+          },
+          "normal": {
+            "ruta": "texturas/circuito/normal_1k.jpg",
+            "bytes": 209487
+          },
+          "rugosidad": {
+            "ruta": "texturas/circuito/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 529489
+    },
+    {
+      "id": "tela_lona",
+      "tipo": "textura",
+      "nombre": "Lona",
+      "categoria": "tela",
+      "vista": "texturas/tela_lona/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/tela_lona/color_512.jpg",
+            "bytes": 31651
+          },
+          "normal": {
+            "ruta": "texturas/tela_lona/normal_512.jpg",
+            "bytes": 53454
+          },
+          "rugosidad": {
+            "ruta": "texturas/tela_lona/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/tela_lona/color_1k.jpg",
+            "bytes": 109186
+          },
+          "normal": {
+            "ruta": "texturas/tela_lona/normal_1k.jpg",
+            "bytes": 226436
+          },
+          "rugosidad": {
+            "ruta": "texturas/tela_lona/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 426415
+    },
+    {
+      "id": "tela_cuadros",
+      "tipo": "textura",
+      "nombre": "Tela a cuadros",
+      "categoria": "tela",
+      "vista": "texturas/tela_cuadros/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/tela_cuadros/color_512.jpg",
+            "bytes": 22191
+          },
+          "normal": {
+            "ruta": "texturas/tela_cuadros/normal_512.jpg",
+            "bytes": 53447
+          },
+          "rugosidad": {
+            "ruta": "texturas/tela_cuadros/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/tela_cuadros/color_1k.jpg",
+            "bytes": 81989
+          },
+          "normal": {
+            "ruta": "texturas/tela_cuadros/normal_1k.jpg",
+            "bytes": 226463
+          },
+          "rugosidad": {
+            "ruta": "texturas/tela_cuadros/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 389778
+    },
+    {
+      "id": "alfombra",
+      "tipo": "textura",
+      "nombre": "Alfombra",
+      "categoria": "tela",
+      "vista": "texturas/alfombra/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/alfombra/color_512.jpg",
+            "bytes": 32422
+          },
+          "normal": {
+            "ruta": "texturas/alfombra/normal_512.jpg",
+            "bytes": 53408
+          },
+          "rugosidad": {
+            "ruta": "texturas/alfombra/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/alfombra/color_1k.jpg",
+            "bytes": 110796
+          },
+          "normal": {
+            "ruta": "texturas/alfombra/normal_1k.jpg",
+            "bytes": 226374
+          },
+          "rugosidad": {
+            "ruta": "texturas/alfombra/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 428688
+    },
+    {
+      "id": "mezclilla",
+      "tipo": "textura",
+      "nombre": "Mezclilla",
+      "categoria": "tela",
+      "vista": "texturas/mezclilla/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/mezclilla/color_512.jpg",
+            "bytes": 35529
+          },
+          "normal": {
+            "ruta": "texturas/mezclilla/normal_512.jpg",
+            "bytes": 53485
+          },
+          "rugosidad": {
+            "ruta": "texturas/mezclilla/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/mezclilla/color_1k.jpg",
+            "bytes": 122644
+          },
+          "normal": {
+            "ruta": "texturas/mezclilla/normal_1k.jpg",
+            "bytes": 226408
+          },
+          "rugosidad": {
+            "ruta": "texturas/mezclilla/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 443754
+    },
+    {
+      "id": "cuero",
+      "tipo": "textura",
+      "nombre": "Cuero",
+      "categoria": "tela",
+      "vista": "texturas/cuero/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/cuero/color_512.jpg",
+            "bytes": 19236
+          },
+          "normal": {
+            "ruta": "texturas/cuero/normal_512.jpg",
+            "bytes": 76462
+          },
+          "rugosidad": {
+            "ruta": "texturas/cuero/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/cuero/color_1k.jpg",
+            "bytes": 74945
+          },
+          "normal": {
+            "ruta": "texturas/cuero/normal_1k.jpg",
+            "bytes": 402715
+          },
+          "rugosidad": {
+            "ruta": "texturas/cuero/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 579046
+    },
+    {
+      "id": "papel",
+      "tipo": "textura",
+      "nombre": "Papel",
+      "categoria": "otros",
+      "vista": "texturas/papel/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/papel/color_512.jpg",
+            "bytes": 11239
+          },
+          "normal": {
+            "ruta": "texturas/papel/normal_512.jpg",
+            "bytes": 77530
+          },
+          "rugosidad": {
+            "ruta": "texturas/papel/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/papel/color_1k.jpg",
+            "bytes": 60246
+          },
+          "normal": {
+            "ruta": "texturas/papel/normal_1k.jpg",
+            "bytes": 485647
+          },
+          "rugosidad": {
+            "ruta": "texturas/papel/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 640350
+    },
+    {
+      "id": "carton",
+      "tipo": "textura",
+      "nombre": "Cartón",
+      "categoria": "otros",
+      "vista": "texturas/carton/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/carton/color_512.jpg",
+            "bytes": 15317
+          },
+          "normal": {
+            "ruta": "texturas/carton/normal_512.jpg",
+            "bytes": 77974
+          },
+          "rugosidad": {
+            "ruta": "texturas/carton/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/carton/color_1k.jpg",
+            "bytes": 81942
+          },
+          "normal": {
+            "ruta": "texturas/carton/normal_1k.jpg",
+            "bytes": 488675
+          },
+          "rugosidad": {
+            "ruta": "texturas/carton/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 669596
+    },
+    {
+      "id": "plastico_rojo",
+      "tipo": "textura",
+      "nombre": "Plástico rojo",
+      "categoria": "otros",
+      "vista": "texturas/plastico_rojo/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/plastico_rojo/color_512.jpg",
+            "bytes": 3953
+          },
+          "normal": {
+            "ruta": "texturas/plastico_rojo/normal_512.jpg",
+            "bytes": 2112
+          },
+          "rugosidad": {
+            "ruta": "texturas/plastico_rojo/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/plastico_rojo/color_1k.jpg",
+            "bytes": 12452
+          },
+          "normal": {
+            "ruta": "texturas/plastico_rojo/normal_1k.jpg",
+            "bytes": 7429
+          },
+          "rugosidad": {
+            "ruta": "texturas/plastico_rojo/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 31634
+    },
+    {
+      "id": "goma_negra",
+      "tipo": "textura",
+      "nombre": "Goma negra",
+      "categoria": "otros",
+      "vista": "texturas/goma_negra/vista.jpg",
+      "mapas": [
+        "color",
+        "normal",
+        "rugosidad"
+      ],
+      "resoluciones": {
+        "512": {
+          "color": {
+            "ruta": "texturas/goma_negra/color_512.jpg",
+            "bytes": 3005
+          },
+          "normal": {
+            "ruta": "texturas/goma_negra/normal_512.jpg",
+            "bytes": 2144
+          },
+          "rugosidad": {
+            "ruta": "texturas/goma_negra/rugosidad_512.jpg",
+            "bytes": 1308
+          }
+        },
+        "1k": {
+          "color": {
+            "ruta": "texturas/goma_negra/color_1k.jpg",
+            "bytes": 9594
+          },
+          "normal": {
+            "ruta": "texturas/goma_negra/normal_1k.jpg",
+            "bytes": 7792
+          },
+          "rugosidad": {
+            "ruta": "texturas/goma_negra/rugosidad_1k.jpg",
+            "bytes": 4380
+          }
+        }
+      },
+      "tileable": true,
+      "bytes": 28223
+    },
+    {
+      "id": "arbol",
+      "tipo": "modelo",
+      "nombre": "Árbol frondoso",
+      "categoria": "naturaleza",
+      "vista": "modelos/arbol.jpg",
+      "archivo": {
+        "ruta": "modelos/arbol.glb",
+        "bytes": 11812,
+        "formato": "glb"
+      },
+      "triangulos": 134,
+      "bytes": 11812
+    },
+    {
+      "id": "pino",
+      "tipo": "modelo",
+      "nombre": "Pino",
+      "categoria": "naturaleza",
+      "vista": "modelos/pino.jpg",
+      "archivo": {
+        "ruta": "modelos/pino.glb",
+        "bytes": 10756,
+        "formato": "glb"
+      },
+      "triangulos": 120,
+      "bytes": 10756
+    },
+    {
+      "id": "roca",
+      "tipo": "modelo",
+      "nombre": "Roca",
+      "categoria": "naturaleza",
+      "vista": "modelos/roca.jpg",
+      "archivo": {
+        "ruta": "modelos/roca.glb",
+        "bytes": 3968,
+        "formato": "glb"
+      },
+      "triangulos": 42,
+      "bytes": 3968
+    },
+    {
+      "id": "hongo",
+      "tipo": "modelo",
+      "nombre": "Hongo",
+      "categoria": "naturaleza",
+      "vista": "modelos/hongo.jpg",
+      "archivo": {
+        "ruta": "modelos/hongo.glb",
+        "bytes": 9600,
+        "formato": "glb"
+      },
+      "triangulos": 112,
+      "bytes": 9600
+    },
+    {
+      "id": "nube",
+      "tipo": "modelo",
+      "nombre": "Nube",
+      "categoria": "naturaleza",
+      "vista": "modelos/nube.jpg",
+      "archivo": {
+        "ruta": "modelos/nube.glb",
+        "bytes": 19372,
+        "formato": "glb"
+      },
+      "triangulos": 256,
+      "bytes": 19372
+    },
+    {
+      "id": "montana",
+      "tipo": "modelo",
+      "nombre": "Montaña nevada",
+      "categoria": "naturaleza",
+      "vista": "modelos/montana.jpg",
+      "archivo": {
+        "ruta": "modelos/montana.glb",
+        "bytes": 5572,
+        "formato": "glb"
+      },
+      "triangulos": 56,
+      "bytes": 5572
+    },
+    {
+      "id": "isla",
+      "tipo": "modelo",
+      "nombre": "Isla flotante",
+      "categoria": "naturaleza",
+      "vista": "modelos/isla.jpg",
+      "archivo": {
+        "ruta": "modelos/isla.glb",
+        "bytes": 16600,
+        "formato": "glb"
+      },
+      "triangulos": 192,
+      "bytes": 16600
+    },
+    {
+      "id": "maceta",
+      "tipo": "modelo",
+      "nombre": "Maceta",
+      "categoria": "hogar",
+      "vista": "modelos/maceta.jpg",
+      "archivo": {
+        "ruta": "modelos/maceta.glb",
+        "bytes": 9040,
+        "formato": "glb"
+      },
+      "triangulos": 104,
+      "bytes": 9040
+    },
+    {
+      "id": "casa",
+      "tipo": "modelo",
+      "nombre": "Casa",
+      "categoria": "construcción",
+      "vista": "modelos/casa.jpg",
+      "archivo": {
+        "ruta": "modelos/casa.glb",
+        "bytes": 6180,
+        "formato": "glb"
+      },
+      "triangulos": 48,
+      "bytes": 6180
+    },
+    {
+      "id": "columna",
+      "tipo": "modelo",
+      "nombre": "Columna",
+      "categoria": "construcción",
+      "vista": "modelos/columna.jpg",
+      "archivo": {
+        "ruta": "modelos/columna.glb",
+        "bytes": 6136,
+        "formato": "glb"
+      },
+      "triangulos": 72,
+      "bytes": 6136
+    },
+    {
+      "id": "escalera",
+      "tipo": "modelo",
+      "nombre": "Escalera",
+      "categoria": "construcción",
+      "vista": "modelos/escalera.jpg",
+      "archivo": {
+        "ruta": "modelos/escalera.glb",
+        "bytes": 6092,
+        "formato": "glb"
+      },
+      "triangulos": 72,
+      "bytes": 6092
+    },
+    {
+      "id": "puerta",
+      "tipo": "modelo",
+      "nombre": "Puerta",
+      "categoria": "construcción",
+      "vista": "modelos/puerta.jpg",
+      "archivo": {
+        "ruta": "modelos/puerta.glb",
+        "bytes": 6416,
+        "formato": "glb"
+      },
+      "triangulos": 60,
+      "bytes": 6416
+    },
+    {
+      "id": "valla",
+      "tipo": "modelo",
+      "nombre": "Valla",
+      "categoria": "construcción",
+      "vista": "modelos/valla.jpg",
+      "archivo": {
+        "ruta": "modelos/valla.glb",
+        "bytes": 7548,
+        "formato": "glb"
+      },
+      "triangulos": 84,
+      "bytes": 7548
+    },
+    {
+      "id": "puente",
+      "tipo": "modelo",
+      "nombre": "Puente",
+      "categoria": "construcción",
+      "vista": "modelos/puente.jpg",
+      "archivo": {
+        "ruta": "modelos/puente.glb",
+        "bytes": 7212,
+        "formato": "glb"
+      },
+      "triangulos": 72,
+      "bytes": 7212
+    },
+    {
+      "id": "faro",
+      "tipo": "modelo",
+      "nombre": "Faro",
+      "categoria": "construcción",
+      "vista": "modelos/faro.jpg",
+      "archivo": {
+        "ruta": "modelos/faro.glb",
+        "bytes": 12476,
+        "formato": "glb"
+      },
+      "triangulos": 144,
+      "bytes": 12476
+    },
+    {
+      "id": "molino",
+      "tipo": "modelo",
+      "nombre": "Molino (base)",
+      "categoria": "construcción",
+      "vista": "modelos/molino.jpg",
+      "archivo": {
+        "ruta": "modelos/molino.glb",
+        "bytes": 6060,
+        "formato": "glb"
+      },
+      "triangulos": 64,
+      "bytes": 6060
+    },
+    {
+      "id": "silla",
+      "tipo": "modelo",
+      "nombre": "Silla",
+      "categoria": "hogar",
+      "vista": "modelos/silla.jpg",
+      "archivo": {
+        "ruta": "modelos/silla.glb",
+        "bytes": 6712,
+        "formato": "glb"
+      },
+      "triangulos": 72,
+      "bytes": 6712
+    },
+    {
+      "id": "mesa",
+      "tipo": "modelo",
+      "nombre": "Mesa",
+      "categoria": "hogar",
+      "vista": "modelos/mesa.jpg",
+      "archivo": {
+        "ruta": "modelos/mesa.glb",
+        "bytes": 5852,
+        "formato": "glb"
+      },
+      "triangulos": 60,
+      "bytes": 5852
+    },
+    {
+      "id": "lampara",
+      "tipo": "modelo",
+      "nombre": "Lámpara",
+      "categoria": "hogar",
+      "vista": "modelos/lampara.jpg",
+      "archivo": {
+        "ruta": "modelos/lampara.glb",
+        "bytes": 9012,
+        "formato": "glb"
+      },
+      "triangulos": 104,
+      "bytes": 9012
+    },
+    {
+      "id": "taza",
+      "tipo": "modelo",
+      "nombre": "Taza",
+      "categoria": "hogar",
+      "vista": "modelos/taza.jpg",
+      "archivo": {
+        "ruta": "modelos/taza.glb",
+        "bytes": 10740,
+        "formato": "glb"
+      },
+      "triangulos": 136,
+      "bytes": 10740
+    },
+    {
+      "id": "banca",
+      "tipo": "modelo",
+      "nombre": "Banca",
+      "categoria": "ciudad",
+      "vista": "modelos/banca.jpg",
+      "archivo": {
+        "ruta": "modelos/banca.glb",
+        "bytes": 5000,
+        "formato": "glb"
+      },
+      "triangulos": 48,
+      "bytes": 5000
+    },
+    {
+      "id": "farol",
+      "tipo": "modelo",
+      "nombre": "Farol",
+      "categoria": "ciudad",
+      "vista": "modelos/farol.jpg",
+      "archivo": {
+        "ruta": "modelos/farol.glb",
+        "bytes": 5292,
+        "formato": "glb"
+      },
+      "triangulos": 52,
+      "bytes": 5292
+    },
+    {
+      "id": "barril",
+      "tipo": "modelo",
+      "nombre": "Barril",
+      "categoria": "utilería",
+      "vista": "modelos/barril.jpg",
+      "archivo": {
+        "ruta": "modelos/barril.glb",
+        "bytes": 18832,
+        "formato": "glb"
+      },
+      "triangulos": 240,
+      "bytes": 18832
+    },
+    {
+      "id": "cofre",
+      "tipo": "modelo",
+      "nombre": "Cofre",
+      "categoria": "utilería",
+      "vista": "modelos/cofre.jpg",
+      "archivo": {
+        "ruta": "modelos/cofre.glb",
+        "bytes": 6176,
+        "formato": "glb"
+      },
+      "triangulos": 56,
+      "bytes": 6176
+    },
+    {
+      "id": "cristal",
+      "tipo": "modelo",
+      "nombre": "Cristal de amatista",
+      "categoria": "fantasía",
+      "vista": "modelos/cristal.jpg",
+      "archivo": {
+        "ruta": "modelos/cristal.glb",
+        "bytes": 6132,
+        "formato": "glb"
+      },
+      "triangulos": 72,
+      "bytes": 6132
+    },
+    {
+      "id": "espada",
+      "tipo": "modelo",
+      "nombre": "Espada",
+      "categoria": "fantasía",
+      "vista": "modelos/espada.jpg",
+      "archivo": {
+        "ruta": "modelos/espada.glb",
+        "bytes": 8232,
+        "formato": "glb"
+      },
+      "triangulos": 84,
+      "bytes": 8232
+    },
+    {
+      "id": "escudo",
+      "tipo": "modelo",
+      "nombre": "Escudo",
+      "categoria": "fantasía",
+      "vista": "modelos/escudo.jpg",
+      "archivo": {
+        "ruta": "modelos/escudo.glb",
+        "bytes": 8480,
+        "formato": "glb"
+      },
+      "triangulos": 96,
+      "bytes": 8480
+    },
+    {
+      "id": "llave",
+      "tipo": "modelo",
+      "nombre": "Llave",
+      "categoria": "fantasía",
+      "vista": "modelos/llave.jpg",
+      "archivo": {
+        "ruta": "modelos/llave.glb",
+        "bytes": 11320,
+        "formato": "glb"
+      },
+      "triangulos": 144,
+      "bytes": 11320
+    },
+    {
+      "id": "moneda",
+      "tipo": "modelo",
+      "nombre": "Moneda",
+      "categoria": "juego",
+      "vista": "modelos/moneda.jpg",
+      "archivo": {
+        "ruta": "modelos/moneda.glb",
+        "bytes": 11940,
+        "formato": "glb"
+      },
+      "triangulos": 144,
+      "bytes": 11940
+    },
+    {
+      "id": "corona",
+      "tipo": "modelo",
+      "nombre": "Corona",
+      "categoria": "juego",
+      "vista": "modelos/corona.jpg",
+      "archivo": {
+        "ruta": "modelos/corona.glb",
+        "bytes": 11320,
+        "formato": "glb"
+      },
+      "triangulos": 144,
+      "bytes": 11320
+    },
+    {
+      "id": "trofeo",
+      "tipo": "modelo",
+      "nombre": "Trofeo",
+      "categoria": "juego",
+      "vista": "modelos/trofeo.jpg",
+      "archivo": {
+        "ruta": "modelos/trofeo.glb",
+        "bytes": 19652,
+        "formato": "glb"
+      },
+      "triangulos": 252,
+      "bytes": 19652
+    },
+    {
+      "id": "cohete",
+      "tipo": "modelo",
+      "nombre": "Cohete",
+      "categoria": "vehículos",
+      "vista": "modelos/cohete.jpg",
+      "archivo": {
+        "ruta": "modelos/cohete.glb",
+        "bytes": 13708,
+        "formato": "glb"
+      },
+      "triangulos": 160,
+      "bytes": 13708
+    },
+    {
+      "id": "auto",
+      "tipo": "modelo",
+      "nombre": "Auto",
+      "categoria": "vehículos",
+      "vista": "modelos/auto.jpg",
+      "archivo": {
+        "ruta": "modelos/auto.glb",
+        "bytes": 16276,
+        "formato": "glb"
+      },
+      "triangulos": 196,
+      "bytes": 16276
+    },
+    {
+      "id": "vagon",
+      "tipo": "modelo",
+      "nombre": "Vagón de tren",
+      "categoria": "vehículos",
+      "vista": "modelos/vagon.jpg",
+      "archivo": {
+        "ruta": "modelos/vagon.glb",
+        "bytes": 15404,
+        "formato": "glb"
+      },
+      "triangulos": 184,
+      "bytes": 15404
+    },
+    {
+      "id": "barco",
+      "tipo": "modelo",
+      "nombre": "Barco de vela",
+      "categoria": "vehículos",
+      "vista": "modelos/barco.jpg",
+      "archivo": {
+        "ruta": "modelos/barco.glb",
+        "bytes": 6204,
+        "formato": "glb"
+      },
+      "triangulos": 56,
+      "bytes": 6204
+    },
+    {
+      "id": "avion",
+      "tipo": "modelo",
+      "nombre": "Avión",
+      "categoria": "vehículos",
+      "vista": "modelos/avion.jpg",
+      "archivo": {
+        "ruta": "modelos/avion.glb",
+        "bytes": 11096,
+        "formato": "glb"
+      },
+      "triangulos": 116,
+      "bytes": 11096
+    },
+    {
+      "id": "robot",
+      "tipo": "modelo",
+      "nombre": "Robot",
+      "categoria": "personajes",
+      "vista": "modelos/robot.jpg",
+      "archivo": {
+        "ruta": "modelos/robot.glb",
+        "bytes": 10156,
+        "formato": "glb"
+      },
+      "triangulos": 112,
+      "bytes": 10156
+    },
+    {
+      "id": "engrane",
+      "tipo": "modelo",
+      "nombre": "Engrane",
+      "categoria": "mecánica",
+      "vista": "modelos/engrane.jpg",
+      "archivo": {
+        "ruta": "modelos/engrane.glb",
+        "bytes": 15320,
+        "formato": "glb"
+      },
+      "triangulos": 200,
+      "bytes": 15320
+    },
+    {
+      "id": "girar",
+      "tipo": "animacion",
+      "nombre": "Girar en su lugar",
+      "categoria": "básicas",
+      "vista": "animaciones/girar.webp",
+      "archivo": {
+        "ruta": "animaciones/girar.glb",
+        "bytes": 7036,
+        "formato": "glb"
+      },
+      "duracion": 3.0,
+      "pistas": 1,
+      "bytes": 7036
+    },
+    {
+      "id": "rebotar",
+      "tipo": "animacion",
+      "nombre": "Rebote con squash and stretch",
+      "categoria": "básicas",
+      "vista": "animaciones/rebotar.webp",
+      "archivo": {
+        "ruta": "animaciones/rebotar.glb",
+        "bytes": 13072,
+        "formato": "glb"
+      },
+      "duracion": 2.0,
+      "pistas": 2,
+      "bytes": 13072
+    },
+    {
+      "id": "flotar",
+      "tipo": "animacion",
+      "nombre": "Flotar",
+      "categoria": "básicas",
+      "vista": "animaciones/flotar.webp",
+      "archivo": {
+        "ruta": "animaciones/flotar.glb",
+        "bytes": 17416,
+        "formato": "glb"
+      },
+      "duracion": 4.0,
+      "pistas": 1,
+      "bytes": 17416
+    },
+    {
+      "id": "latido",
+      "tipo": "animacion",
+      "nombre": "Latido",
+      "categoria": "básicas",
+      "vista": "animaciones/latido.webp",
+      "archivo": {
+        "ruta": "animaciones/latido.glb",
+        "bytes": 19056,
+        "formato": "glb"
+      },
+      "duracion": 1.2,
+      "pistas": 1,
+      "bytes": 19056
+    },
+    {
+      "id": "pendulo",
+      "tipo": "animacion",
+      "nombre": "Péndulo",
+      "categoria": "física",
+      "vista": "animaciones/pendulo.webp",
+      "archivo": {
+        "ruta": "animaciones/pendulo.glb",
+        "bytes": 12832,
+        "formato": "glb"
+      },
+      "duracion": 2.0,
+      "pistas": 1,
+      "bytes": 12832
+    },
+    {
+      "id": "columpio",
+      "tipo": "animacion",
+      "nombre": "Columpio",
+      "categoria": "física",
+      "vista": "animaciones/columpio.webp",
+      "archivo": {
+        "ruta": "animaciones/columpio.glb",
+        "bytes": 9076,
+        "formato": "glb"
+      },
+      "duracion": 2.4,
+      "pistas": 1,
+      "bytes": 9076
+    },
+    {
+      "id": "resorte",
+      "tipo": "animacion",
+      "nombre": "Resorte",
+      "categoria": "física",
+      "vista": "animaciones/resorte.webp",
+      "archivo": {
+        "ruta": "animaciones/resorte.glb",
+        "bytes": 58536,
+        "formato": "glb"
+      },
+      "duracion": 1.5,
+      "pistas": 1,
+      "bytes": 58536
+    },
+    {
+      "id": "trompo",
+      "tipo": "animacion",
+      "nombre": "Trompo",
+      "categoria": "física",
+      "vista": "animaciones/trompo.webp",
+      "archivo": {
+        "ruta": "animaciones/trompo.glb",
+        "bytes": 11872,
+        "formato": "glb"
+      },
+      "duracion": 2.0,
+      "pistas": 1,
+      "bytes": 11872
+    },
+    {
+      "id": "puerta",
+      "tipo": "animacion",
+      "nombre": "Puerta que se abre",
+      "categoria": "objetos",
+      "vista": "animaciones/puerta.webp",
+      "archivo": {
+        "ruta": "animaciones/puerta.glb",
+        "bytes": 9260,
+        "formato": "glb"
+      },
+      "duracion": 3.0,
+      "pistas": 1,
+      "bytes": 9260
+    },
+    {
+      "id": "cofre",
+      "tipo": "animacion",
+      "nombre": "Cofre del tesoro",
+      "categoria": "objetos",
+      "vista": "animaciones/cofre.webp",
+      "archivo": {
+        "ruta": "animaciones/cofre.glb",
+        "bytes": 9548,
+        "formato": "glb"
+      },
+      "duracion": 3.0,
+      "pistas": 3,
+      "bytes": 9548
+    },
+    {
+      "id": "moneda_gira",
+      "tipo": "animacion",
+      "nombre": "Moneda que gira",
+      "categoria": "juego",
+      "vista": "animaciones/moneda_gira.webp",
+      "archivo": {
+        "ruta": "animaciones/moneda_gira.glb",
+        "bytes": 12864,
+        "formato": "glb"
+      },
+      "duracion": 1.5,
+      "pistas": 1,
+      "bytes": 12864
+    },
+    {
+      "id": "molino",
+      "tipo": "animacion",
+      "nombre": "Molino de viento",
+      "categoria": "mecánica",
+      "vista": "animaciones/molino.webp",
+      "archivo": {
+        "ruta": "animaciones/molino.glb",
+        "bytes": 11124,
+        "formato": "glb"
+      },
+      "duracion": 4.0,
+      "pistas": 1,
+      "bytes": 11124
+    },
+    {
+      "id": "engranes",
+      "tipo": "animacion",
+      "nombre": "Engranes",
+      "categoria": "mecánica",
+      "vista": "animaciones/engranes.webp",
+      "archivo": {
+        "ruta": "animaciones/engranes.glb",
+        "bytes": 31980,
+        "formato": "glb"
+      },
+      "duracion": 4.0,
+      "pistas": 2,
+      "bytes": 31980
+    },
+    {
+      "id": "reloj",
+      "tipo": "animacion",
+      "nombre": "Reloj",
+      "categoria": "mecánica",
+      "vista": "animaciones/reloj.webp",
+      "archivo": {
+        "ruta": "animaciones/reloj.glb",
+        "bytes": 24344,
+        "formato": "glb"
+      },
+      "duracion": 6.0,
+      "pistas": 2,
+      "bytes": 24344
+    },
+    {
+      "id": "orbita",
+      "tipo": "animacion",
+      "nombre": "Órbita (sol, planeta y luna)",
+      "categoria": "jerarquía",
+      "vista": "animaciones/orbita.webp",
+      "archivo": {
+        "ruta": "animaciones/orbita.glb",
+        "bytes": 25916,
+        "formato": "glb"
+      },
+      "duracion": 6.0,
+      "pistas": 2,
+      "bytes": 25916
+    },
+    {
+      "id": "despegue",
+      "tipo": "animacion",
+      "nombre": "Despegue del cohete",
+      "categoria": "vehículos",
+      "vista": "animaciones/despegue.webp",
+      "archivo": {
+        "ruta": "animaciones/despegue.glb",
+        "bytes": 17204,
+        "formato": "glb"
+      },
+      "duracion": 4.0,
+      "pistas": 2,
+      "bytes": 17204
+    },
+    {
+      "id": "caminar",
+      "tipo": "animacion",
+      "nombre": "Ciclo de caminata (robot)",
+      "categoria": "personajes",
+      "vista": "animaciones/caminar.webp",
+      "archivo": {
+        "ruta": "animaciones/caminar.glb",
+        "bytes": 18612,
+        "formato": "glb"
+      },
+      "duracion": 1.2,
+      "pistas": 5,
+      "bytes": 18612
+    },
+    {
+      "id": "aleteo",
+      "tipo": "animacion",
+      "nombre": "Aleteo de pájaro",
+      "categoria": "personajes",
+      "vista": "animaciones/aleteo.webp",
+      "archivo": {
+        "ruta": "animaciones/aleteo.glb",
+        "bytes": 15012,
+        "formato": "glb"
+      },
+      "duracion": 0.8,
+      "pistas": 2,
+      "bytes": 15012
+    },
+    {
+      "id": "ola",
+      "tipo": "animacion",
+      "nombre": "Ola de cubos",
+      "categoria": "movimiento",
+      "vista": "animaciones/ola.webp",
+      "archivo": {
+        "ruta": "animaciones/ola.glb",
+        "bytes": 15136,
+        "formato": "glb"
+      },
+      "duracion": 2.0,
+      "pistas": 7,
+      "bytes": 15136
+    }
+  ]
+}

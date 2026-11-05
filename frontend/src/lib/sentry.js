@@ -61,3 +61,23 @@ export async function iniciarSentry(dsn = import.meta.env.VITE_SENTRY_DSN) {
     return false; // Sentry nunca rompe la plataforma
   }
 }
+
+export function programarSentry() {
+  if (typeof window === 'undefined') return;
+  if (!import.meta.env.VITE_SENTRY_DSN) {
+    marcarEstado('sin-dsn');
+    return;
+  }
+  const ejecutar = () => {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => iniciarSentry(), { timeout: 3000 });
+    } else {
+      setTimeout(() => iniciarSentry(), 1000);
+    }
+  };
+  if (document.readyState === 'complete') {
+    ejecutar();
+  } else {
+    window.addEventListener('load', ejecutar, { once: true });
+  }
+}

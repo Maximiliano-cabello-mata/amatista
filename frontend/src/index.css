@@ -142,6 +142,11 @@
   to { stroke-dashoffset: 0; }
 }
 
+.biblioteca-item {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 220px;
+}
+
 /* Se conserva el fotograma al salir de vista y se continúa al regresar. */
 [data-animacion-pausada],
 [data-animacion-pausada] *,

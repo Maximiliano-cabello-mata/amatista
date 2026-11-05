@@ -138,10 +138,10 @@ export default function Biblioteca() {
           <TituloSeccion className="mt-8" antetitulo={`${visibles.length} recursos`} titulo={TIPOS.find((t) => t.id === tipo).texto} />
           <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {visibles.map((r) => (
-              <li key={`${r.tipo}-${r.id}`}>
+              <li key={`${r.tipo}-${r.id}`} className="biblioteca-item">
                 <button type="button" onClick={() => { setAbierto(r.id); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                   className="corte-poly-sm block w-full border border-white/10 bg-superficie/85 text-left transition-colors hover:border-neon/50">
-                  <img src={BASE + r.vista} alt="" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+                  <img src={BASE + r.vista} alt="" width="320" height="240" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
                   <span className="block px-3 pt-2 font-semibold text-white">{r.nombre}</span>
                   <span className="block px-3 pb-3 font-mono text-[11px] uppercase tracking-wider text-texto/60">{NOMBRE_TIPO[r.tipo]} · {tamano(r.bytes)}</span>
                 </button>
