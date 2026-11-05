@@ -1,19 +1,19 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import AuthProvider from './auth/AuthProvider';
 import AvatarProvider from './avatares/AvatarProvider';
-import { useAuth } from './auth/contexto';
 import CatalogoProvider from './catalogo/CatalogoProvider';
 import BarraLateralHerramientas from './components/BarraLateralHerramientas';
 import BarraSuperior from './components/BarraSuperior';
 import FondoLowPoly from './components/FondoLowPoly';
 import PiePagina from './components/estructura/PiePagina';
-import { CristalLogo, IconoCandado } from './components/Iconos';
+import { CristalLogo } from './components/Iconos';
 const Inicio = lazy(() => import('./pages/Inicio'));
 import ProgresoProvider from './progreso/ProgresoProvider';
 import RecorridoProvider from './recorrido/RecorridoProvider';
-import { analizarRuta, rutaEntrar, rutas } from './rutas';
+import { analizarRuta, rutas } from './rutas';
 import BarraVista from './vista/BarraVista';
 import VistaProvider from './vista/VistaProvider';
+import RutaProtegida from './components/rutas/RutaProtegida';
 
 // Páginas bajo demanda: la pantalla de inicio carga rápido.
 // El laboratorio incluye A-Frame (~1.3 MB): solo se descarga si se visita.
@@ -68,63 +68,32 @@ function Cargando() {
 // El panel de administración es para profesores y administradores. El
 // servidor valida el rol en cada petición; aquí solo se evita mostrarlo.
 function RutaAdmin({ ruta, hash }) {
-  const { listo, usuario, esProfesor } = useAuth();
-  if (!listo) return <Cargando />;
-  if (esProfesor) return <Admin seccion={ruta.seccion} params={ruta.params} />;
   return (
-    <main className="mx-auto max-w-2xl px-4 py-16 text-center">
-      <IconoCandado className="mx-auto h-12 w-12 text-white/40" />
-      <h1 className="mt-4 text-3xl font-extrabold text-white">Área de profesores</h1>
-      <p className="mt-3 text-texto/75">
-        {usuario
-          ? 'Tu cuenta no tiene permiso para ver el panel de administración. Si eres profesor, pide a un administrador que te asigne el rol.'
-          : 'Entra con una cuenta de profesor o administrador para ver el panel.'}
-      </p>
-      <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-        {!usuario && (
-          <a
-            href={rutaEntrar(hash)}
-            className="corte-poly-sm destello inline-block bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white hover:brightness-110"
-          >
-            Entrar ▶
-          </a>
-        )}
-        <a
-          href={rutas.inicio}
-          className="corte-poly-sm inline-block bg-white/5 px-6 py-3 font-extrabold uppercase tracking-widest text-white/80 hover:bg-white/10"
-        >
-          ◂ Volver a los cursos
-        </a>
-      </div>
-    </main>
+    <RutaProtegida
+      hash={hash}
+      titulo="Área de profesores"
+      mensajeConUsuario="Tu cuenta no tiene permiso para ver el panel de administración. Si eres profesor, pide a un administrador que te asigne el rol."
+      mensajeSinUsuario="Entra con una cuenta de profesor o administrador para ver el panel."
+      fallbackCargando={<Cargando />}
+    >
+      <Admin seccion={ruta.seccion} params={ruta.params} />
+    </RutaProtegida>
   );
 }
 
 // El panel del profesor evaluador: para profesores (y administradores que también dan clase).
 function RutaProfesor({ ruta, hash }) {
-  const { listo, usuario, esProfesor } = useAuth();
-  if (!listo) return <Cargando />;
-  if (esProfesor) return <Profesor seccion={ruta.seccion} params={ruta.params} />;
   return (
-    <main className="mx-auto max-w-2xl px-4 py-16 text-center">
-      <IconoCandado className="mx-auto h-12 w-12 text-white/40" />
-      <h1 className="mt-4 text-3xl font-extrabold text-white">Panel del profesor</h1>
-      <p className="mt-3 text-texto/75">
-        {usuario
-          ? 'Tu cuenta es de alumno. Si eres profesor, pide a un administrador que te asigne el rol. Si tu profesor te dio un código, escríbelo en Mi panel › Mi grupo.'
-          : 'Entra con tu cuenta de profesor para ver tus grupos y las entregas de tus alumnos.'}
-      </p>
-      <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-        {!usuario && (
-          <a href={rutaEntrar(hash)} className="corte-poly-sm destello inline-block bg-amatista px-6 py-3 font-extrabold uppercase tracking-widest text-white hover:brightness-110">
-            Entrar ▶
-          </a>
-        )}
-        <a href={rutas.panel} className="corte-poly-sm inline-block bg-white/5 px-6 py-3 font-extrabold uppercase tracking-widest text-white/80 hover:bg-white/10">
-          Ir a Mi panel
-        </a>
-      </div>
-    </main>
+    <RutaProtegida
+      hash={hash}
+      titulo="Panel del profesor"
+      mensajeConUsuario="Tu cuenta es de alumno. Si eres profesor, pide a un administrador que te asigne el rol. Si tu profesor te dio un código, escríbelo en Mi panel › Mi grupo."
+      mensajeSinUsuario="Entra con tu cuenta de profesor para ver tus grupos y las entregas de tus alumnos."
+      botonVolver={{ href: rutas.panel, texto: 'Ir a Mi panel' }}
+      fallbackCargando={<Cargando />}
+    >
+      <Profesor seccion={ruta.seccion} params={ruta.params} />
+    </RutaProtegida>
   );
 }
 

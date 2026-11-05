@@ -54,6 +54,13 @@ export function compararVersiones(a = '', b = '') {
   return 0;
 }
 
+// Determina el estado de un paso individual.
+function calcularEstadoPaso(id, completa, cumplidos, pasoActual) {
+  if (completa || cumplidos.has(id)) return 'completado';
+  if (pasoActual === id) return 'actual';
+  return 'pendiente';
+}
+
 // Pasos de la práctica con su estado para dibujarlos en la lección:
 //   pasos: [{id, titulo}] (del servidor) o textos (bloque.steps, sin conexión)
 //   progreso: fila de /mi-progreso (objetivos cumplidos y paso actual)
@@ -63,9 +70,7 @@ export function pasosConEstado(pasos = [], progreso = null) {
   return pasos.map((paso, indice) => {
     const id = typeof paso === 'string' ? `paso-${indice}` : paso.id;
     const titulo = typeof paso === 'string' ? paso : paso.titulo;
-    let estado = 'pendiente';
-    if (completa || cumplidos.has(id)) estado = 'completado';
-    else if (progreso?.paso_actual === id) estado = 'actual';
+    const estado = calcularEstadoPaso(id, completa, cumplidos, progreso?.paso_actual);
     return { id, titulo, estado };
   });
 }
@@ -97,7 +102,7 @@ export const OPCIONES_ENFOQUE = [
 export const OPCIONES_ACOMPANAMIENTO = [
   { id: 'acompanado', titulo: 'Acompañado', texto: 'Tarjeta guía, avisos y diálogos que explican cada paso.' },
   { id: 'tarjeta', titulo: 'Solo tarjeta', texto: 'La tarjeta guía y los avisos, sin diálogos.' },
-  { id: 'silencioso', titulo: 'Silencioso', texto: 'Solo los objetivos y las pistas que pidas.' },
+  { id: 'silencioso', titulo: 'Solo los objetivos y las pistas que pidas.' },
 ];
 export const AJUSTES_POR_DEFECTO = { enfoque: 'auto', acompanamiento: 'acompanado', avisos_herramientas: true, tarjeta_3d: true };
 
@@ -115,18 +120,16 @@ export function estadoBlender(datos, practicaId = null) {
   const aqui = practicaId ? abiertos.find((b) => b.practica_id === practicaId) : null;
   if (aqui) {
     const enfoque = aqui.enfocado ? ' · enfocado' : '';
+    const progresoTexto = aqui.progreso != null ? ` (${aqui.progreso} %)` : '';
     return {
       estado: 'aqui',
       blender: aqui,
-      texto: `Tu Blender está en esta práctica${aqui.progreso != null ? ` (${aqui.progreso} %)` : ''}${enfoque}.`,
+      texto: `Tu Blender está en esta práctica${progresoTexto}${enfoque}.`,
     };
   }
   const uno = abiertos[0];
-  return {
-    estado: 'otra',
-    blender: uno,
-    texto: uno.practica ? `Tu Blender está abierto en «${uno.practica}».` : 'Tu Blender está abierto.',
-  };
+  const textoOtra = uno.practica ? `Tu Blender está abierto en «${uno.practica}».` : 'Tu Blender está abierto.';
+  return { estado: 'otra', blender: uno, texto: textoOtra };
 }
 
 // --- El instructor en vivo (motor 3.5) ------------------------------------------------------
@@ -151,14 +154,20 @@ export const CONTROL_VOLVER = { tipo: 'volver_practica', texto: 'Volver a mi pr�
 
 const MODOS = { OBJECT: 'Modo Objeto', EDIT_MESH: 'Modo Edición', SCULPT: 'Esculpir', POSE: 'Pose' };
 
+function formatearPasoInstructor(d) {
+  if (!d?.total) return '';
+  const tipo = d.parte !== undefined ? 'Misión' : 'Paso';
+  const sufijo = d.parte ? ` · ${d.parte}` : '';
+  return `${tipo} ${d.numero} de ${d.total}${sufijo}`;
+}
+
 export function instructorEnVivo(blender) {
   const d = blender?.detalle;
   if (!d) return null;
   const lista = Array.isArray(d.lista) ? d.lista : [];
   return {
     titulo: d.titulo || '',
-    // Motor 4: «Misión 4 de 11 · Las ruedas» (la misma tarjeta que en Blender).
-    paso: d.total ? `${d.parte !== undefined ? 'Misión' : 'Paso'} ${d.numero} de ${d.total}${d.parte ? ` · ${d.parte}` : ''}` : '',
+    paso: formatearPasoInstructor(d),
     objetivo: d.objetivo || '',
     pasos: Array.isArray(d.pasos) ? d.pasos.filter((p) => p && p.texto) : [],
     misionesHechas: Number.isFinite(d.hechas) ? d.hechas : 0,
