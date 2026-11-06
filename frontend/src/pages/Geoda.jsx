@@ -31,7 +31,7 @@ function descargar(nombre, texto) {
 
 function Dato({ etiqueta, valor }) {
   return (
-    <div className="corte-poly-sm border border-white/10 bg-base/60 px-4 py-3">
+    <div className="corte-poly-sm min-w-0 border border-white/10 bg-base/60 px-4 py-3">
       <dt className="font-mono text-[11px] uppercase tracking-[0.2em] text-texto/55">{etiqueta}</dt>
       <dd className="mt-1 truncate font-semibold text-white" title={valor}>{valor || '—'}</dd>
     </div>
