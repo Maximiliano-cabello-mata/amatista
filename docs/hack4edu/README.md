@@ -1,3 +1,5 @@
+> **Entrega cerrada:** para evaluar el resultado final, empezar por la [portada de cinco minutos](../../README.md), la [bitácora consolidada](cierre/BITACORA.md), la [declaración de IA](cierre/USO_DE_IA.md) y el [acta](cierre/ACTA.md). El contenido siguiente conserva la memoria previa y planes anteriores al cierre.
+
 # Amatista en Hack4Edu
 
 Todo lo que pide la competencia, en un solo lugar: qué es el proyecto, qué ya teníamos, qué se construye durante Hack4Edu, cómo comprobarlo y el material para el vídeo.
