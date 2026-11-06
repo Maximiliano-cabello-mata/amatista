@@ -4,11 +4,7 @@
 > [`tablero/tareas.yml`](tablero/tareas.yml) y se mueven con los commits
 > ([cómo](tablero/README.md)).
 
-<<<<<<< HEAD
-Último commit: 2026-11-05 18:51 · `main` en `e224dcd`
-=======
-Último commit: 2026-11-05 17:27 · `main` en `8175e9f`
->>>>>>> 000fbd8 (feat(profesor): incorporar flujo de aula por codigo, recreacion 3D y guia de 5 min)
+Último commit: 2026-11-05 19:44 · `main` en `c246ce9`
 
 **Etapa: Reestructuración** (desde el 2026-10-03) · [plan](docs/reestructuracion/00_plan_maestro.md) · [tablero anterior](tablero/historico/2026-10-03_v2_KANBAN.md)
 
