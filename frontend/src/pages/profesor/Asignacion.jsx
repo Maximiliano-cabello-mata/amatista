@@ -62,24 +62,34 @@ function Evaluar({ asignacion, fila, alEvaluar }) {
 
 function Detalle({ asignacion, fila, alEvaluar }) {
   const { token, usuario } = useAuth();
-  const [modelo, setModelo] = useState({ cargando: false, resultado: null });
+  const [modelo, setModelo] = useState({ clave: null, cargando: false, resultado: null });
   const entrega = fila.entrega;
   const profesorId = usuario?.id || 'profesor-local';
+  // Una entrega se identifica por alumno y fecha: si cambia, el modelo recreado anterior ya no vale.
+  const clave = entrega?.resumen ? `${fila.alumno.email}|${entrega.entregada_en}` : null;
 
   const abrir = useCallback(async () => {
-    setModelo({ cargando: true, resultado: null });
+    setModelo({ clave, cargando: true, resultado: null });
     const resultado = await traerModelo({ token, profesorId, asignacion, fila });
-    setModelo({ cargando: false, resultado });
-  }, [token, profesorId, asignacion, fila]);
+    setModelo({ clave, cargando: false, resultado });
+  }, [clave, token, profesorId, asignacion, fila]);
 
   // Recrea automáticamente el modelo en cuanto el profesor selecciona a un alumno con entrega.
+  // El estado se actualiza al llegar la respuesta (no de forma síncrona dentro del efecto).
   useEffect(() => {
-    if (entrega?.resumen) {
-      abrir();
-    }
-  }, [entrega?.entregada_en, entrega?.resumen, abrir]);
+    if (!clave) return undefined;
+    let vivo = true;
+    traerModelo({ token, profesorId, asignacion, fila }).then((resultado) => {
+      if (vivo) setModelo({ clave, cargando: false, resultado });
+    });
+    return () => {
+      vivo = false;
+    };
+  }, [clave, token, profesorId, asignacion, fila]);
 
-  const resultado = modelo.resultado;
+  const vigente = modelo.clave === clave;
+  const cargando = (vigente && modelo.cargando) || (Boolean(clave) && !vigente);
+  const resultado = vigente ? modelo.resultado : null;
   return (
     <Tarjeta etiqueta={fila.alumno.email} titulo={fila.alumno.nombre} accion={<Pastilla tono={estadoAlumno(fila).tono}>{estadoAlumno(fila).texto}</Pastilla>}>
       {!entrega ? (
@@ -112,8 +122,8 @@ function Detalle({ asignacion, fila, alEvaluar }) {
                   ? `Al recrearlo se lee el código capturado (${bytesLegibles(entrega.modelo_bytes)}) y se reconstruye la geometría 3D en este navegador.`
                   : 'Ya lo recogiste: se abre en la computadora donde lo abriste la primera vez.'}
               </p>
-              <Boton variante="neon" onClick={abrir} disabled={modelo.cargando}>
-                {modelo.cargando ? 'Recreando modelo 3D…' : 'Recrear modelo desde el código'}
+              <Boton variante="neon" onClick={abrir} disabled={cargando}>
+                {cargando ? 'Recreando modelo 3D…' : 'Recrear modelo desde el código'}
               </Boton>
             </div>
           )}
