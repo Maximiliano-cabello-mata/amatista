@@ -1,9 +1,9 @@
 import LogoCurso from './LogoCurso';
 import { LOGOS } from './logos';
 
-// Logo de un programa del catálogo (data/software.js). Los que ya tienen curso
-// usan su logotipo; los que vienen después (Maya, 3ds Max) muestran un
-// monograma propio dentro de un hexágono, sin usar marcas ajenas.
+// Logo de un programa del catálogo (data/software.js). Los programas con
+// logotipo vectorial usan LogoCurso; si alguno no tiene ícono propio,
+// muestra un monograma limpio dentro de un hexágono.
 function LogoSoftware({ software, className = 'h-8 w-9', decorativo = true }) {
   if (software?.logo && LOGOS[software.logo]) return <LogoCurso logo={software.logo} className={className} decorativo={decorativo} />;
   return (

@@ -22,6 +22,17 @@ function color(intensidad) {
   return `rgb(${mezcla(18, 91)},${mezcla(18, 44)},${mezcla(18, 122)})`;
 }
 
+// Trazo de arista pre-mezclado para las caras más iluminadas (sin duplicar polígonos en el DOM).
+function colorArista(intensidad) {
+  if (intensidad <= 0.5) return color(intensidad);
+  const k = (intensidad - 0.5) * 0.45;
+  const mezcla = (a, b) => Math.round(a + (b - a) * intensidad);
+  const r = Math.round(mezcla(18, 91) + (195 - mezcla(18, 91)) * k);
+  const g = Math.round(mezcla(18, 44) + (155 - mezcla(18, 44)) * k);
+  const b = Math.round(mezcla(18, 122) + (211 - mezcla(18, 122)) * k);
+  return `rgb(${r},${g},${b})`;
+}
+
 function generarTriangulos() {
   const azar = aleatorio(7);
   const dx = ANCHO / COLUMNAS;
@@ -60,29 +71,19 @@ function generarTriangulos() {
         triangulos.push({
           puntos: cara.map((p) => p.map((n) => n.toFixed(1)).join(',')).join(' '),
           relleno: color(intensidad),
-          // v4.0 · Facetas: las caras más iluminadas marcan sus aristas con una luz tenue.
-          arista: intensidad > 0.5 ? +((intensidad - 0.5) * 0.5).toFixed(3) : 0,
+          trazo: colorArista(intensidad),
         });
       }
     }
   }
-  // Destellos: unos pocos vértices cerca de la luz brillan y titilan (solo opacidad).
-  const destellos = [];
-  for (let f = 1; f < FILAS && destellos.length < 9; f++) {
-    for (let c = COLUMNAS - 1; c > 0 && destellos.length < 9; c--) {
-      const [x, y] = puntos[f][c];
-      const cercania = 1 - Math.hypot(x - luz[0], y - luz[1]) / distanciaMax;
-      if (cercania > 0.72 && azar() < 0.35) destellos.push({ x: x.toFixed(1), y: y.toFixed(1), retraso: (destellos.length * 0.9).toFixed(1) });
-    }
-  }
-  return { triangulos, destellos };
+  return triangulos;
 }
 
-const { triangulos: TRIANGULOS, destellos: DESTELLOS } = generarTriangulos();
+const TRIANGULOS = generarTriangulos();
 
 function FondoLowPoly() {
   return (
-    <div aria-hidden="true" className="fixed inset-0 -z-10 overflow-hidden">
+    <div aria-hidden="true" className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
       {/* En modo ligero (html.ligero) no se dibujan los 320 triángulos: queda el degradado. */}
       <svg
         className="fondo-pesado h-full w-full"
@@ -90,23 +91,8 @@ function FondoLowPoly() {
         preserveAspectRatio="xMidYMid slice"
       >
         {TRIANGULOS.map((t, i) => (
-          <polygon key={i} points={t.puntos} fill={t.relleno} stroke={t.relleno} strokeWidth="1" />
+          <polygon key={i} points={t.puntos} fill={t.relleno} stroke={t.trazo} strokeWidth="1" />
         ))}
-        <g fill="none" stroke="#c39bd3" strokeWidth="1">
-          {TRIANGULOS.filter((t) => t.arista).map((t, i) => (
-            <polygon key={i} points={t.puntos} strokeOpacity={t.arista} />
-          ))}
-        </g>
-        <g fill="#e8d5f0">
-          {DESTELLOS.map((d, i) => (
-            <path
-              key={i}
-              className="fondo-destello"
-              style={{ animationDelay: `${d.retraso}s` }}
-              d={`M${d.x} ${d.y - 7}L${+d.x + 2.2} ${d.y}L${d.x} ${+d.y + 7}L${d.x - 2.2} ${d.y}Z`}
-            />
-          ))}
-        </g>
       </svg>
       <div className="absolute inset-0 bg-gradient-to-b from-base/10 via-base/50 to-base" />
     </div>

@@ -1,6 +1,5 @@
-// Encabezado de página (v4.0 · Facetas): borde de gema, facetas low poly con la luz arriba a la
-// derecha y un brillo que cruza una vez. Ícono en hexágono, antetítulo, título, descripción,
-// `children` (chips de estado, una barra de avance…) y `acciones` (botones a la derecha).
+// Encabezado de página (v4.0 · Facetas): borde de gema y facetas low poly estáticas con la luz arriba
+// a la derecha. Ícono en hexágono, antetítulo, título, descripción, `children` y `acciones`.
 import { facetasEncabezado } from './facetas';
 
 const TONOS = {
@@ -20,7 +19,6 @@ function EncabezadoPagina({ antetitulo, titulo, descripcion, icono, acciones, ch
             <polygon key={i} points={f.puntos} fill={f.color} fillOpacity={f.opacidad} stroke={f.color} strokeOpacity={f.opacidad * 0.6} strokeWidth="0.6" />
           ))}
         </svg>
-        <span className="encabezado-faceta__brillo" aria-hidden="true" />
         <div className="relative flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:p-8">
           {icono && (
             <span className={`hexagono grid h-20 w-24 shrink-0 place-items-center ${estilo.hexagono}`} aria-hidden="true">

@@ -6,7 +6,7 @@ export default function PasoHerramienta({ software, alInicio }) {
   if (!herramienta) return null;
   if (software.id === 'blender' && alInicio) {
     return (
-      <div className="mb-5 grid gap-2.5 sm:grid-cols-2">
+      <div className="mb-5 grid gap-2.5">
         <a
           href={herramienta.href}
           className="corte-poly-sm elevar flex items-center gap-3 border border-blender/45 bg-blender/10 p-3.5 transition-colors hover:border-blender sm:p-4"
@@ -16,39 +16,23 @@ export default function PasoHerramienta({ software, alInicio }) {
           </span>
           <span className="min-w-0 flex-1">
             <span className="block font-mono text-[10px] font-bold uppercase tracking-widest text-blender">
-              Opción A · En tu ordenador (una sola vez)
+              Antes del paso 1 · En tu ordenador (una sola vez)
             </span>
             <span className="block font-extrabold text-white">Conectar mi Blender ({herramienta.nombre})</span>
             <span className="mt-0.5 block text-xs leading-snug text-texto/75">
-              Descarga el complemento y vincula tu Blender para que te guíe en cada práctica.
+              Descarga el complemento libre y vincula tu Blender para que te guíe en cada práctica incluso sin conexión.
             </span>
           </span>
           <span className="shrink-0 font-mono text-xs font-bold uppercase tracking-widest text-blender">Conectar ▸</span>
         </a>
 
-        <div className="grid gap-2">
-          <a
-            href={rutas.nube}
-            className="corte-poly-sm elevar flex items-center justify-between gap-3 border border-neon/40 bg-neon/5 px-3.5 py-2.5 transition-colors hover:border-neon"
-          >
-            <span className="min-w-0">
-              <span className="flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-widest text-neon">
-                <span>Opción B · Sin instalar</span>
-                <span className="border border-neon/40 bg-neon/15 px-1.5 py-0.2 text-[9px]">UTN</span>
-              </span>
-              <span className="block text-sm font-extrabold text-white">Abrir Blender en la nube</span>
-            </span>
-            <span className="shrink-0 font-mono text-xs font-bold uppercase tracking-widest text-neon">Abrir ▸</span>
+        <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-xs text-white/55">
+          <a href={rutas.geoda} className="hover:text-emerald-300 hover:underline">
+            ¿No sabes si tu PC corre Blender? Revísala y ajústala con Geoda ▸
           </a>
-
-          <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-xs text-white/55">
-            <a href={rutas.geoda} className="hover:text-emerald-300 hover:underline">
-              ¿No sabes si tu PC corre Blender? Revísala con Geoda ▸
-            </a>
-            <a href={rutas.biblioteca} className="hover:text-amatista-claro hover:underline">
-              Biblioteca 3D ▸
-            </a>
-          </div>
+          <a href={rutas.biblioteca} className="hover:text-amatista-claro hover:underline">
+            Biblioteca 3D libre (CC0) ▸
+          </a>
         </div>
       </div>
     );

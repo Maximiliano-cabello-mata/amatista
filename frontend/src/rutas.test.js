@@ -5,7 +5,7 @@ describe('rutas', () => {
   it('páginas del contrato', () => {
     expect(analizarRuta('')).toMatchObject({ pagina: 'inicio' });
     expect(analizarRuta('#/')).toMatchObject({ pagina: 'inicio' });
-    for (const pagina of ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'geoda', 'biblioteca', 'nube', 'ecosistema']) {
+    for (const pagina of ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'geoda', 'biblioteca', 'ecosistema']) {
       expect(analizarRuta(`#/${pagina}`)).toMatchObject({ pagina });
     }
     expect(analizarRuta(rutas.curso('blender'))).toMatchObject({ pagina: 'curso', cursoId: 'blender' });
@@ -16,8 +16,9 @@ describe('rutas', () => {
     });
   });
 
-  it('el viejo #/explorar lleva a Cursos y el curso abre un módulo', () => {
+  it('el viejo #/explorar lleva a Cursos, #/nube lleva a Todo Amatista (propuesta) y el curso abre un módulo', () => {
     expect(analizarRuta('#/explorar?software=aframe&q=luz')).toEqual({ pagina: 'inicio', consulta: {} });
+    expect(analizarRuta('#/nube')).toEqual({ pagina: 'ecosistema', consulta: {} });
     expect(analizarRuta(rutas.modulo('aframe', 3))).toMatchObject({ pagina: 'curso', cursoId: 'aframe', consulta: { modulo: '3' } });
   });
 

@@ -7,7 +7,7 @@ Pedido del usuario: volver atrás del diseño «tipo buscador» (Explorar, 21 de
 - Sale **Explorar** (`#/explorar`, buscador, filtros e índice). La dirección vieja lleva a la portada.
 - La barra queda en **Cursos · Mi panel** (· Admin). Sin ícono de búsqueda.
 - `catalogo/camino.js` arma, por programa, una **lista numerada de pasos**: cada paso es un módulo con una línea de qué vas a lograr (`resumenCorto`), sus minutos, su insignia y sus lecciones a un clic. Los pasos se agrupan por nivel (cada nivel es un curso) y uno solo queda marcado como **Siguiente**.
-- Arriba, pestañas grandes por programa («¿Qué quieres crear?»): Blender, A-Frame y, como próximos, Maya y 3ds Max. Cada nivel dice para quién es (campo `para` de `data/cursos.js`).
+- Arriba, pestañas grandes por programa («¿Qué quieres crear?»): software libre que ya tenemos integrado: Blender y A-Frame. Cada nivel dice para quién es (campo `para` de `data/cursos.js`).
 - El recorrido de la plataforma (botón «?») se actualizó a la nueva portada.
 
 ## 2. Recursos gráficos v4.2 (T-125)

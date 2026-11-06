@@ -192,7 +192,6 @@ html[data-pagina-oculta] *::after { animation-play-state: paused !important; }
 @keyframes esc-ruta { to { stroke-dashoffset: -40; } }
 @keyframes esc-flotar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 @keyframes esc-pulso { 0%, 100% { opacity: 0.05; } 50% { opacity: 0.16; } }
-@keyframes pagina { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
 .escenario * { transform-box: fill-box; transform-origin: center; }
 .esc-girar { animation: esc-girar 22s linear infinite; }
@@ -208,7 +207,6 @@ html[data-pagina-oculta] *::after { animation-play-state: paused !important; }
 .esc-ruta { animation: esc-ruta 3s linear infinite; }
 .esc-flotar { animation: esc-flotar 3s ease-in-out infinite; }
 .esc-pulso { animation: esc-pulso 4s ease-in-out infinite; }
-.animar-pagina { animation: pagina 0.35s ease-out both; }
 
 /* Globo de la mascota: esquina recortada hacia el personaje. */
 .globo { clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 12px)); }
@@ -414,22 +412,6 @@ html[data-pagina-oculta] *::after { animation-play-state: paused !important; }
 .particula:nth-child(even) { background-color: var(--tema-suave); }
 .particula--marco:nth-child(even), .particula--anillo:nth-child(even) { background: transparent; border-color: var(--tema-suave); }
 .particula:nth-child(3n) { animation-duration: calc(var(--d, 1) * 21s); }
-.mundo-tema--dentro .particula { animation-name: particula-subir-dentro; }
-.mundo-tema--dentro .particula--gota, .mundo-tema--dentro .particula--confeti,
-.mundo-tema--dentro .particula--hoja { animation-name: particula-caer-dentro; }
-.mundo-tema--dentro .particula--estrella { animation-name: particula-titilar; --y: 30%; }
-.mundo-tema--dentro .particula--anillo { animation-name: particula-anillo; --y: 40%; }
-.mundo-tema--dentro .particula--haz { animation-name: particula-barrer; }
-@keyframes particula-subir-dentro {
-  0% { transform: translate3d(0, 900px, 0) rotate(0) scale(var(--escala, 1)); opacity: 0; }
-  12% { opacity: 0.35; }
-  100% { transform: translate3d(12px, -40px, 0) rotate(240deg) scale(var(--escala, 1)); opacity: 0; }
-}
-@keyframes particula-caer-dentro {
-  0% { transform: translate3d(0, -40px, 0) rotate(0) scale(var(--escala, 1)); opacity: 0; }
-  12% { opacity: 0.4; }
-  100% { transform: translate3d(-16px, 900px, 0) rotate(380deg) scale(var(--escala, 1)); opacity: 0; }
-}
 
 /* La página del módulo toma el color de su mundo. */
 html[data-tema] ::selection { background: color-mix(in srgb, var(--tema-acento) 55%, transparent); color: #fff; }
@@ -709,20 +691,6 @@ button.personaje:hover .personaje__paso, .group:hover .personaje__paso { animati
 /* Botones: se hunden al presionarlos. */
 button:not(:disabled):active, a.corte-poly-sm:active { transform: translateY(1px) scale(0.985); }
 
-/* Tarjetas de curso y del panel: brillo que cruza al pasar el ratón. */
-.elevar { position: relative; }
-.elevar::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(115deg, transparent 40%, rgb(255 255 255 / 0.08) 50%, transparent 60%);
-  transform: translateX(-100%);
-  transition: transform 0.8s ease;
-}
-.elevar:hover::before { transform: translateX(100%); }
-
 /* Secciones de la portada fuera de la pantalla: el navegador no las pinta
    hasta que se acercan (en un teléfono modesto, la portada pintaba los nueve
    mundos animados al cargar). contain-intrinsic-size guarda el alto para que
@@ -916,19 +884,6 @@ button:not(:disabled):active, a.corte-poly-sm:active { transform: translateY(1px
 .bloque-leccion[data-bloque='concept_cards'] button > div { transition-timing-function: var(--curva-rebote); }
 .bloque-leccion[data-bloque='concept_cards'] button:hover > div:not([class*='rotateY']) { transform: translateY(-4px); }
 .bloque-leccion[data-bloque='concept_cards'] button:focus-visible { outline-offset: 4px; }
-/* Avisos: un borde que respira despacio (solo opacidad). */
-.bloque-leccion[data-bloque='callout'] > aside { position: relative; }
-.bloque-leccion[data-bloque='callout'] > aside::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--neon) 40%, transparent);
-  opacity: 0;
-  animation: aviso-respira 4.5s ease-in-out infinite;
-}
-@keyframes aviso-respira { 50% { opacity: 1; } }
-
 /* Barra de lectura: cuánto llevas de la lección (CSS puro con scroll(); sin soporte no aparece). */
 .lectura {
   position: fixed;
@@ -1051,11 +1006,11 @@ button:not(:disabled):active, a.corte-poly-sm:active { transform: translateY(1px
   border: 3px solid var(--blender);
 }
 
-/* Primeros pasos en vivo (RecorridoBlender.jsx): el punto que late mientras Blender habla. */
-.recorrido-vivo__latido { box-shadow: 0 0 0 0 var(--neon); animation: latido-enlace 1.8s ease-out infinite; }
+/* Primeros pasos en vivo (RecorridoBlender.jsx): el punto que late mientras Blender habla (solo GPU). */
+.recorrido-vivo__latido { animation: latido-enlace 1.8s ease-out infinite; }
 @keyframes latido-enlace {
-  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--neon) 70%, transparent); }
-  100% { box-shadow: 0 0 0 9px transparent; }
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.28); opacity: 0.65; }
 }
 
 /* ¿Verdad o mito?: los botones crecen un poco al pasar. */
@@ -1130,20 +1085,6 @@ button:not(:disabled):active, a.corte-poly-sm:active { transform: translateY(1px
   pointer-events: none;
 }
 .encabezado-faceta__facetas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.9; }
-/* El brillo cruza una sola vez al entrar a la página. */
-.encabezado-faceta__brillo {
-  position: absolute;
-  inset: -20% auto -20% 0;
-  width: 35%;
-  background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.09) 45%, rgb(0 229 255 / 0.12) 50%, transparent 60%);
-  transform: translateX(-120%) skewX(-12deg);
-  animation: brillo-faceta 1.6s var(--curva-salida) 0.35s 1 both;
-  pointer-events: none;
-}
-@keyframes brillo-faceta {
-  to { transform: translateX(380%) skewX(-12deg); }
-}
-
 /* Borde de gema para lo destacado (tarjeta de la fusión, recorrido, siguiente paso). */
 .borde-gema { position: relative; padding: 1.5px; background: var(--gema-suave); }
 .borde-gema > * { background: color-mix(in srgb, var(--superficie) 96%, transparent); }
@@ -1183,21 +1124,7 @@ button:not(:disabled):active, a.corte-poly-sm:active { transform: translateY(1px
 /* Pie de página: una fila de facetas arriba. */
 .pie-pagina__facetas { display: block; width: 100%; height: 18px; }
 
-/* Fondo: aristas de luz y destellos que titilan cerca de la luz. */
-.fondo-destello { animation: titilar 5s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
-@keyframes titilar {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.85; }
-}
-
-html.ligero .encabezado-faceta__brillo, html.ligero .fondo-destello { animation: none; }
-html.ligero .encabezado-faceta__brillo { display: none; }
 html.ligero .encabezado-faceta { box-shadow: none; }
-
-@media (prefers-reduced-motion: reduce) {
-  .encabezado-faceta__brillo { display: none; }
-  .fondo-destello { animation: none; }
-}
 
 /* Recorrido por la plataforma (recorrido/RecorridoProvider.jsx): la página se oscurece salvo el
    elemento de la parada, que se ilumina con un borde neón. La sombra gigante hace el oscurecido. */
@@ -1294,14 +1221,14 @@ h2[id^='modulo-'], [id^='nivel-'], #contenido { scroll-margin-top: 5.5rem; }
 /* La línea que une los hexágonos de los pasos: se pinta de verde hasta donde llegaste. */
 .camino__linea { background: rgba(255, 255, 255, 0.12); }
 .camino__paso[data-estado='hecho'] .camino__linea { background: linear-gradient(#34d399, rgba(52, 211, 153, 0.35)); }
-/* El hexágono del paso que sigue «respira» para que se encuentre sin leer. */
-.camino__pulso { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.5); }
+/* El hexágono del paso que sigue «respira» en GPU (transform y opacity, sin repintar filtros). */
+.camino__pulso { box-shadow: 0 0 12px rgba(0, 229, 255, 0.5); }
 @media (prefers-reduced-motion: no-preference) {
   .camino__pulso { animation: camino-latir 2.2s ease-in-out infinite; }
 }
 @keyframes camino-latir {
-  0%, 100% { filter: drop-shadow(0 0 0 rgba(0, 229, 255, 0)); }
-  50% { filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.75)); }
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.06); opacity: 0.88; }
 }
 html.ligero .camino__pulso { animation: none; }
 
@@ -1770,31 +1697,7 @@ ol[id^='paso-'] > li,
   transform: translate3d(0, -4px, 0);
   box-shadow: 0 14px 32px -12px rgb(0 0 0 / 0.6), 0 0 22px -10px rgb(155 89 182 / 0.4);
 }
-.elevar::before {
-  background: linear-gradient(
-    115deg,
-    transparent 36%,
-    rgb(255 255 255 / 0.09) 48%,
-    rgb(0 229 255 / 0.07) 53%,
-    transparent 65%
-  );
-  transition: transform 0.75s var(--curva-elastica);
-}
-
-/* 3. Encabezados facetados, pie de página y fondo low poly con luz viva */
-@keyframes faceta-respirar {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.38; }
-}
-@keyframes titilar-estrella {
-  0%, 100% { opacity: 0.15; transform: scale(0.78) rotate(0deg); }
-  50% { opacity: 0.92; transform: scale(1.22) rotate(14deg); }
-}
-@keyframes arista-pulso {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
-}
-
+/* 3. Encabezados facetados y pie de página (sin animaciones continuas en polígonos estáticos) */
 .encabezado-faceta {
   transition: box-shadow 0.4s var(--curva-elastica), transform 0.4s var(--curva-elastica);
 }
@@ -1814,35 +1717,12 @@ ol[id^='paso-'] > li,
 .encabezado-faceta:hover .hexagono {
   transform: translateY(-2px) scale(1.06) rotate(-3deg);
 }
-.encabezado-faceta__facetas polygon:nth-child(5n + 1) {
-  animation: faceta-respirar 6.5s ease-in-out infinite;
-}
-.encabezado-faceta__facetas polygon:nth-child(7n + 3) {
-  animation: faceta-respirar 8.5s ease-in-out 1.8s infinite;
-}
 
 .borde-gema {
   transition: box-shadow 0.35s var(--curva-elastica), transform 0.35s var(--curva-elastica);
 }
 .borde-gema:hover {
   box-shadow: var(--sombra-gema);
-}
-
-.fondo-destello {
-  animation: titilar-estrella 5.2s ease-in-out infinite;
-}
-.fondo-pesado > g:first-of-type > polygon:nth-child(3n) {
-  animation: arista-pulso 7s ease-in-out infinite;
-}
-.fondo-pesado > g:first-of-type > polygon:nth-child(5n) {
-  animation: arista-pulso 9.5s ease-in-out 2s infinite;
-}
-
-.pie-pagina__facetas polygon:nth-child(4n + 1) {
-  animation: faceta-respirar 7s ease-in-out infinite;
-}
-.pie-pagina__facetas polygon:nth-child(6n + 2) {
-  animation: faceta-respirar 9s ease-in-out 1.5s infinite;
 }
 .pie-pagina ul a {
   display: inline-block;
@@ -1932,13 +1812,6 @@ header a[aria-label*='Ver mi panel']:hover .hexagono {
   transform: translateX(4px) scale(1.1);
 }
 
-@keyframes rombo-pulso {
-  0%, 100% { transform: rotate(45deg) scale(1); box-shadow: 0 0 10px rgb(0 229 255 / 0.6); }
-  50% { transform: rotate(45deg) scale(1.22); box-shadow: 0 0 16px rgb(0 229 255 / 0.9); }
-}
-.titulo-seccion__ante::before {
-  animation: rombo-pulso 3.2s ease-in-out infinite;
-}
 .titulo-seccion__ante::after {
   transform-origin: left;
   animation: subrayar 0.9s 0.15s var(--curva-elastica) both;
@@ -2029,8 +1902,8 @@ ol[id^='paso-'] a:hover .hexagono {
 }
 
 @keyframes tecla-pulso {
-  0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--neon) 25%, transparent); }
-  50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--neon) 10%, transparent), 0 0 14px rgb(0 229 255 / 0.35); }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 .tecla-chip--toca {
   animation: tecla-pulso 1.8s ease-in-out infinite;

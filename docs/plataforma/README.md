@@ -23,7 +23,7 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 | [15 · Goliat, el compañero (30 oct)](15_goliat.md) | **Vigente.** Goliat en low poly en todas las páginas: asistente por reglas sin servicios externos, proyecto propio paso a paso y apoyo cuando una práctica se pone difícil. |
 | [14 · Refinamiento y dinámicas v4.3 (30 oct)](14_refinamiento_y_dinamicas.md) | **Vigente.** «Abrir en Blender» abre Blender (`amatista://`); Amatista dentro de Blender (add-on 5.4); botones Facetas 4.1 y tarjetas para elegir nivel; Entrena tus teclas, Ajusta el valor y Encuentra el error. |
 | [13 · Camino guiado, gráficos y Motor Web (23 oct)](13_camino_graficos_y_motor_web.md) | **Vigente.** Cursos como camino guiado (sin buscador); simulador de la vista, elige la figura, línea de tiempo y «En la industria»; Motor Web sobre A-Frame; A-Frame Inicial e Interactivo; add-on 5.3. |
-| [12 · Multiplataforma y accesible (21 oct)](12_multiplataforma_y_accesible.md) | **Reemplazado en parte por 13** (Explorar salió). Inicio · Explorar · Mi panel; Explorar con buscador y filtros; el Estudio A-Frame; el curso de A-Frame con 5 módulos; accesibilidad y cómo se suma un programa nuevo (Maya, 3ds Max). |
+| [12 · Multiplataforma y accesible (21 oct)](12_multiplataforma_y_accesible.md) | **Reemplazado en parte por 13** (Explorar salió). Inicio · Explorar · Mi panel; Explorar con buscador y filtros; el Estudio A-Frame; el curso de A-Frame con 5 módulos; accesibilidad y cómo se suma un programa nuevo (software libre). |
 | [Diseño «Facetas» (11 oct)](../diseno/2026-10-11_sistema_facetas.md) | **Vigente.** La anatomía común de todas las páginas (migas, encabezado facetado, secciones y pie global), los cuatro anchos y el CSS v4.0 del tema low poly. |
 
 ![Un módulo con su práctica en Blender](img/modulo_ruta.svg)
@@ -73,7 +73,7 @@ Cómo está organizada la plataforma para alumnos, profesores y administradores 
 
 ## Resumen de cambios (21 de octubre · multiplataforma)
 
-- **Blender deja de ser el centro**: Amatista enseña 3D (modelado, diseño, render, animación, interacción y XR) en varios programas. Hoy Blender y A-Frame; Maya y 3ds Max, próximamente.
+- **Blender deja de ser el centro**: Amatista enseña 3D (modelado, diseño, render, animación, interacción y XR) en varios programas. Enfoque 100 % en software libre que ya tenemos: Blender y A-Frame.
 - **Barra Inicio · Explorar · Mi panel** (· Admin) y **Explorar** con todo el contenido en una sola página, buscador y filtros por programa y disciplina.
 - **A-Frame con 5 módulos** y el **Estudio A-Frame**. Detalle en [12](12_multiplataforma_y_accesible.md).
 

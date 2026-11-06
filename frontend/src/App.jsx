@@ -7,13 +7,19 @@ import BarraSuperior from './components/BarraSuperior';
 import FondoLowPoly from './components/FondoLowPoly';
 import PiePagina from './components/estructura/PiePagina';
 import { CristalLogo } from './components/Iconos';
-const Inicio = lazy(() => import('./pages/Inicio'));
+const cargarInicio = () => import('./pages/Inicio');
+const Inicio = lazy(cargarInicio);
 import ProgresoProvider from './progreso/ProgresoProvider';
 import RecorridoProvider from './recorrido/RecorridoProvider';
 import { analizarRuta, rutas } from './rutas';
 import BarraVista from './vista/BarraVista';
 import VistaProvider from './vista/VistaProvider';
 import RutaProtegida from './components/rutas/RutaProtegida';
+
+// Si la primera vista es la portada (#/), arranca su descarga de inmediato sin bloquear otras rutas.
+if (typeof window !== 'undefined' && (!window.location.hash || window.location.hash === '#' || window.location.hash.startsWith('#/?') || window.location.hash === '#/')) {
+  cargarInicio();
+}
 
 // Páginas bajo demanda: la pantalla de inicio carga rápido.
 // El laboratorio incluye A-Frame (~1.3 MB): solo se descarga si se visita.
@@ -36,10 +42,23 @@ const Guia = lazy(() => import('./pages/Guia'));
 const Buzon = lazy(() => import('./pages/Buzon'));
 const Geoda = lazy(() => import('./pages/Geoda'));
 const Biblioteca = lazy(() => import('./pages/Biblioteca'));
-const Nube = lazy(() => import('./pages/Nube'));
 const Ecosistema = lazy(() => import('./pages/Ecosistema'));
-// Goliat, el compañero de toda la plataforma: llega después de la página.
+// Goliat, el compañero de toda la plataforma: llega en reposo después del primer pintado.
 const Goliat = lazy(() => import('./goliat/Goliat'));
+
+function useDiferidoEnReposo(esperaMs = 1200) {
+  const [listo, setListo] = useState(false);
+  useEffect(() => {
+    if (typeof window === 'undefined') return undefined;
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(() => setListo(true), { timeout: esperaMs });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(() => setListo(true), 250);
+    return () => window.clearTimeout(id);
+  }, [esperaMs]);
+  return listo;
+}
 
 function useRuta() {
   const [hash, setHash] = useState(() => window.location.hash);
@@ -131,8 +150,6 @@ function Pagina({ ruta, hash }) {
       return <Geoda />;
     case 'biblioteca':
       return <Biblioteca />;
-    case 'nube':
-      return <Nube />;
     case 'ecosistema':
       return <Ecosistema />;
     case 'admin':
@@ -154,6 +171,7 @@ function saltarAlContenido(evento) {
 
 function App() {
   const { ruta, hash } = useRuta();
+  const goliatListo = useDiferidoEnReposo();
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -183,9 +201,11 @@ function App() {
                 </div>
               </Suspense>
               <PiePagina />
-              <Suspense fallback={null}>
-                <Goliat />
-              </Suspense>
+              {goliatListo && (
+                <Suspense fallback={null}>
+                  <Goliat />
+                </Suspense>
+              )}
             </RecorridoProvider>
           </ProgresoProvider>
         </CatalogoProvider>

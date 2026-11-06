@@ -1,9 +1,10 @@
 // Escena del Motor Web de Amatista dentro de una lección (bloque motor_scene). Se carga bajo
 // demanda: importa A-Frame y los componentes am-… (motor3d/index.js) solo cuando el bloque se ve.
 // La escena se arma con la descripción del bloque (motor3d/escena.js) y cada 300 ms se lee su
-// foto (dónde está cada objeto) para revisar los retos en la lección.
+// foto (dónde está cada objeto) mientras está visible para revisar los retos en la lección.
 import '../../../motor3d';
 import { useEffect, useRef } from 'react';
+import { observarEscena } from '../../../lib/visibilidad3d';
 import { elegirCalidad, senalesDelNavegador } from '../../../motor3d/calidad';
 import { ATRIBUTOS_ESCENA, entidadesEscena } from '../../../motor3d/escena';
 
@@ -35,11 +36,17 @@ function EscenaMotor({ escena, version = 0, alFoto, alEvento }) {
     const eventos = ['am-reto-cumplido', 'am-soltar', 'am-toque'];
     for (const tipo of eventos) nodo.addEventListener(tipo, reenviar);
     contenedor.current.appendChild(nodo);
+    let visible = true;
+    const detener = observarEscena(nodo, contenedor.current, (activa) => {
+      visible = activa;
+    });
     const reloj = setInterval(() => {
+      if (!visible || document.hidden) return;
       const sistema = nodo.systems?.['am-interaccion'];
       if (sistema && nodo.hasLoaded) avisos.current.alFoto?.(sistema.foto());
     }, 300);
     return () => {
+      detener();
       clearInterval(reloj);
       for (const tipo of eventos) nodo.removeEventListener(tipo, reenviar);
       nodo.remove();

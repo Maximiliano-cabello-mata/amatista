@@ -121,7 +121,7 @@ Apoyo: `api/comun.py`, `api/dependencias.py`, `api/limites.py` (límites por IP 
 
 | Paquete | Para qué |
 |---|---|
-| `engine/amatista_engine/corazon/` | **Corazón Amatista 1.0** (`amatista.corazon/1`): `director.py`, `andamio.py`, `senales.py`, `perfiles/` (Blender, A-Frame, Maya, 3ds Max), `extensiones.py`, `ramas.py` y `conformidad.py` |
+| `engine/amatista_engine/corazon/` | **Corazón Amatista 1.0** (`amatista.corazon/1`): `director.py`, `andamio.py`, `senales.py`, `perfiles/` (Blender y A-Frame, software libre), `extensiones.py`, `ramas.py` y `conformidad.py` |
 | `engine/amatista_engine/guion/` | **Motor 7 «Guion»**: convierte objetivos en pasos con verbo evaluados por el resultado en escena, en cualquier orden y con pistas de ubicación real |
 | `engine/amatista_engine/taller/` | **Motor 5 «Amatista Taller»**: catálogo de habilidades (`amatista.skill/1`), modelo BKT con olvido, molde pieza por pieza y cajas de repaso |
 | `engine/amatista_engine/validators/` | Los 43 validadores: escena, objetos, mallas, transformaciones, materiales, animación, figura (`figure.recognize`, `figure.silhouette`), `example.matches` y `taller.molde` |

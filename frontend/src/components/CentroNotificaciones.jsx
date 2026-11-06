@@ -53,7 +53,7 @@ function CentroNotificaciones({ leccionSiguiente = null, className = '' }) {
   return (
     <aside
       aria-label="Aviso personalizado de estudio"
-      className={`corte-poly animar-entrar relative overflow-hidden border border-blender/60 bg-superficie/95 p-4 shadow-2xl backdrop-blur-md ${className}`}
+      className={`corte-poly animar-entrar relative overflow-hidden border border-blender/60 bg-superficie/95 p-4 shadow-2xl ${className}`}
       style={{
         boxShadow: `0 0 24px -4px ${notificacion.colorAcento}40`,
       }}

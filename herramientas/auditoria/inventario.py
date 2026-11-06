@@ -53,8 +53,16 @@ def main() -> None:
     ap.add_argument('--md')
     args = ap.parse_args()
 
-    rutas = subprocess.run(['git', 'ls-files'], cwd=RAIZ, capture_output=True, text=True, check=True).stdout.split('\n')
-    rutas = [r for r in rutas if r and (RAIZ / r).is_file()]
+    res = subprocess.run(['git', 'ls-files'], cwd=RAIZ, capture_output=True, text=True)
+    if res.returncode == 0 and res.stdout.strip():
+        rutas = [r for r in res.stdout.split('\n') if r and (RAIZ / r).is_file()]
+    else:
+        ignorar = {'.git', '__pycache__', 'node_modules', 'dist', '.pytest_cache'}
+        rutas = sorted(
+            p.relative_to(RAIZ).as_posix()
+            for p in RAIZ.rglob('*')
+            if p.is_file() and not any(part in ignorar for part in p.relative_to(RAIZ).parts)
+        )
     pruebas_por_nombre = defaultdict(set)
     for r in rutas:
         if es_prueba(r):

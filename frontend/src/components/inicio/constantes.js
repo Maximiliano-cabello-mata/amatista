@@ -5,10 +5,8 @@ export const plural = (n, uno, varios) => `${n} ${n === 1 ? uno : varios}`;
 export const horas = (minutos) => (minutos >= 90 ? `${Math.round(minutos / 6) / 10} h` : `${minutos} min`);
 
 export const QUE_CREAS = {
-  blender: 'Objetos, personajes y escenas 3D',
-  aframe: 'Mundos 3D para la web y la realidad virtual',
-  maya: 'Animación de personajes',
-  '3dsmax': 'Arquitectura y diseño de producto',
+  blender: 'Objetos, personajes y escenas 3D libres',
+  aframe: 'Mundos 3D abiertos para la web y realidad virtual',
 };
 
 export const SECRETOS_CRISTAL = [

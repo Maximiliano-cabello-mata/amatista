@@ -10,7 +10,7 @@ El análisis completo (historial, debilidades, investigación) está en el docum
 
 ## 1. Qué cambia
 
-Hasta el motor 7, el motor (Python puro) **evaluaba** la escena, pero quien **decidía qué ver** era el add-on: estados globales con relojes (`brillo.py` 9 s, `fichas.py` 16 s o 45 s, avisos 5 s) repartidos entre el guion, el taller, las fichas y el HUD. Nada de eso se podía probar sin Blender ni reusar en A-Frame, Maya o 3ds Max, y cada idea nueva era una versión nueva.
+Hasta el motor 7, el motor (Python puro) **evaluaba** la escena, pero quien **decidía qué ver** era el add-on: estados globales con relojes (`brillo.py` 9 s, `fichas.py` 16 s o 45 s, avisos 5 s) repartidos entre el guion, el taller, las fichas y el HUD. Nada de eso se podía probar sin Blender ni reusar en A-Frame u otro software libre, y cada idea nueva era una versión nueva.
 
 El corazón mueve esa decisión al motor:
 
@@ -26,7 +26,6 @@ El corazón mueve esa decisión al motor:
                  foto    │ capturar()        ejecutar(señal) / comprobar(señal)  │ turno
             ┌────────────┴───────────────────────────────────────────────▼──────────────────┐
             │ Adaptador del programa: Blender (add-on corazon/), A-Frame (Motor Web),         │
-            │ Maya y 3ds Max (perfil en borrador; falta el adaptador dentro del programa)     │
             └────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -36,7 +35,7 @@ El corazón mueve esa decisión al motor:
 | --- | --- |
 | `contrato.py` | Lugares, señales, estados de una señal, eventos y el `Turno`. Lo único que cruza la frontera con un programa. |
 | `adaptador.py` | `Perfil` (la interfaz de un programa, en datos) y `AdaptadorBase` (lo que hace el adaptador; por defecto, solo decir). |
-| `perfiles/` | Blender (estable, sale de `guion/donde.py`), A-Frame (estable, con `escena_desde_foto`), Maya y 3ds Max (borrador). |
+| `perfiles/` | Blender (estable, sale de `guion/donde.py`) y A-Frame (estable, con `escena_desde_foto`). Enfoque exclusivo en software libre. |
 | `andamiaje.py` | Cuatro escalones por herramienta: mostrar › señalar › recordar › reto. Baja con el uso sin ayuda, sube con los tropiezos y con una semana sin usarla. |
 | `senales.py` | Qué señal pedir y su ciclo de vida: propuesta › vigente / mostrada / fallida › perdida o cumplida. Nunca por reloj. |
 | `director.py` | Observa el reporte, decide el turno, pide la señal y la vuelve a comprobar. Uno por práctica abierta. |
@@ -113,12 +112,12 @@ Una extensión que falla se salta y queda en `extensiones.errores`; nunca rompe 
 
 Ramas del repositorio: `blender-principiante` (la del add-on), `blender-reto` y `aframe-web`. El .zip del add-on las lleva en `ramas/`.
 
-### Un programa nuevo (Maya, 3ds Max)
+### Un programa libre nuevo
 
 1. Completa su perfil en `corazon/perfiles/` (lugares de las herramientas, qué herramienta arregla cada validador, nombres de las primitivas).
-2. Escribe su adaptador dentro del programa: hereda de `AdaptadorBase`, implementa `capturar()` (la foto como `SceneState`, igual que `blender/adapter.py`), y agrega a `hacer`/`ver` las señales que el programa sabe hacer (`maya.cmds.setToolTo`, `pymxs.runtime.toolMode`).
+2. Escribe su adaptador dentro del programa: hereda de `AdaptadorBase`, implementa `capturar()` (la foto como `SceneState`, igual que `blender/adapter.py`), y agrega a `hacer`/`ver` las señales que el programa sabe hacer (según la API del software libre).
 3. `conformidad.revisar_adaptador(tu_adaptador)` sin problemas.
-4. Una rama (`practices/ramas/maya-principiante.json`).
+4. Una rama (`practices/ramas/<programa>-principiante.json`).
 
 El servidor revisa los intentos con el mismo motor, así que la evaluación no cambia.
 

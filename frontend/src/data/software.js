@@ -1,13 +1,11 @@
-// Amatista es una plataforma de 3D multiplataforma: enseña modelado, diseño,
-// animación y 3D para la web en varios programas. Blender fue el primero y
-// A-Frame el segundo; Maya y 3ds Max vienen después. Ningún programa es el
-// centro: cada uno es una entrada más del catálogo (#/explorar) con sus
-// cursos y, si la tiene, su herramienta propia (el add-on de Blender, el
-// Estudio A-Frame).
+// Amatista es una plataforma educativa de creación 3D enfocada al 100 % en
+// software libre y estándares abiertos que ya tenemos integrados: Blender (GPL)
+// para modelado, materiales, render y animación en escritorio, y A-Frame (MIT)
+// para escenas interactivas, WebGL y realidad virtual WebXR en el navegador.
 //
 // `ruta` es el campo `ruta` de los cursos (data/cursos.js, catalogo/agrupar.js):
-// así se sabe qué cursos son de cada programa. Un programa «proximamente»
-// todavía no tiene cursos y solo anuncia lo que enseñará.
+// así se sabe qué cursos pertenecen a cada programa y cuál es su herramienta
+// de práctica (Amatista Motor en Blender y el Estudio A-Frame en la web).
 import { rutas } from '../rutas';
 
 export const DISCIPLINAS = [
@@ -40,29 +38,9 @@ export const SOFTWARE = [
     logo: 'aframe',
     acento: 'neon',
     lema: 'Escenas 3D, interacción y realidad virtual en la web',
-    descripcion: 'Construye mundos 3D con etiquetas HTML y publícalos con un enlace: se ven en el navegador, el móvil y los visores de VR.',
+    descripcion: 'Construye mundos 3D libres con etiquetas HTML y publícalos con un enlace: se ven en el navegador, el móvil y los visores de VR.',
     disciplinas: ['modelado', 'diseno', 'animacion', 'interaccion', 'xr'],
     herramienta: { nombre: 'Estudio A-Frame', texto: 'Crea una escena ahora', href: rutas.estudio },
-  },
-  {
-    id: 'maya',
-    nombre: 'Maya',
-    estado: 'proximamente',
-    monograma: 'Ma',
-    acento: 'neon',
-    lema: 'Animación de personajes y rigging',
-    descripcion: 'El estándar de la animación en cine y videojuegos: rigging, animación de personajes y flujos de estudio.',
-    disciplinas: ['animacion', 'modelado'],
-  },
-  {
-    id: '3dsmax',
-    nombre: '3ds Max',
-    estado: 'proximamente',
-    monograma: '3ds',
-    acento: 'blender',
-    lema: 'Visualización arquitectónica y modelado técnico',
-    descripcion: 'Muy usado en arquitectura, interiores y diseño de producto: modelado preciso, materiales y render fotorrealista.',
-    disciplinas: ['modelado', 'render'],
   },
 ];
 

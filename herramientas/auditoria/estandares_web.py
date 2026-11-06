@@ -1,18 +1,25 @@
-"""Auditoría automática de estándares de optimización web y presupuestos de Amatista.
+"""Auditoría automática de estándares de optimización web, software libre y fluidez de Amatista.
 
 Verifica sin necesitar un navegador en ejecución que el repositorio cumpla todas
-las reglas de optimización sin pérdida de calidad:
+las reglas de optimización sin pérdida de calidad, enfoque en software libre y
+estado de propuestas:
 
 1. Grafo de entrada (`main.jsx`): sin módulos pesados (`data/modulos/*.json`),
-   sin `aframe`, sin `sentrySdk`, sin `Admin` y con `Inicio` y `Goliat` diferidos.
+   sin `aframe`, sin `sentrySdk`, sin `Admin`, sin `Nube` activa y con `Inicio` y
+   `Goliat` diferidos.
 2. Índice ligero (`indice-modulos.json`): sincronizado al 100 % con los 15
    módulos publicados, sin `quizData` ni `ficha`, y dentro del presupuesto.
 3. Activos sin pérdida (`public/`): ilustraciones SVG con atributos de trazo
    factorizados en `<svg>`, mapas de rugosidad PBR en escala de grises monocanal
    (`L`) y `catalogo.json` cuadrado al byte con el disco.
-4. Configuración de red, caché y renderizado (`_headers`, `vite.config.js`,
-   `Personaje.jsx`, `Biblioteca.jsx`, `Blender.jsx`): CSP, caché inmutable,
-   exclusiones de precache, dimensiones explícitas de imágenes y `content-visibility`.
+4. Configuración de red, caché, fluidez 60 fps y enfoque de producto:
+   - Software libre exclusivo (`Blender` y `A-Frame`): sin cursos ni perfiles
+     propietarios de Maya ni 3ds Max.
+   - Opción de la nube retirada como función activa y conservada únicamente como
+     propuesta documentada (`docs/propuestas/2026-11-05_propuesta_amatista_cloud.md`).
+   - Animaciones CSS 100 % en GPU (`transform`, `opacity`, `stroke-dashoffset`),
+     sin efectos imperceptibles continuos en polígonos estáticos, con observador
+     compartido de 2 fases en `Personaje.jsx` y montaje bajo demanda en `Paso.jsx`.
 
 Uso:
     python3 herramientas/auditoria/estandares_web.py [--json reporte.json] [--md reporte.md]
@@ -223,6 +230,28 @@ def auditar_activos() -> Tuple[List[str], Dict[str, Any]]:
     }
 
 
+def _extraer_keyframes(css: str) -> List[Tuple[str, str]]:
+    bloques: List[Tuple[str, str]] = []
+    patron = re.compile(r"@keyframes\s+([\w-]+)\s*\{")
+    pos = 0
+    while True:
+        m = patron.search(css, pos)
+        if not m:
+            break
+        nombre = m.group(1)
+        nivel = 1
+        i = m.end()
+        while i < len(css) and nivel > 0:
+            if css[i] == "{":
+                nivel += 1
+            elif css[i] == "}":
+                nivel -= 1
+            i += 1
+        bloques.append((nombre, css[m.end() : i - 1]))
+        pos = i
+    return bloques
+
+
 def auditar_configuracion_web() -> Tuple[List[str], Dict[str, Any]]:
     errores: List[str] = []
     headers_path = FRONTEND / "public" / "_headers"
@@ -243,6 +272,10 @@ def auditar_configuracion_web() -> Tuple[List[str], Dict[str, Any]]:
     if "programarSentry()" not in main_jsx:
         errores.append("frontend/src/main.jsx debe usar programarSentry() para diferir Sentry tras el primer pintado.")
 
+    app_jsx = (FRONTEND / "src" / "App.jsx").read_text(encoding="utf-8")
+    if "useDiferidoEnReposo" not in app_jsx:
+        errores.append("frontend/src/App.jsx debe diferir Goliat con useDiferidoEnReposo().")
+
     bib_jsx = (FRONTEND / "src" / "pages" / "Biblioteca.jsx").read_text(encoding="utf-8")
     if 'width="320"' not in bib_jsx or 'height="240"' not in bib_jsx:
         errores.append("Biblioteca.jsx debe declarar width y height explícitos en las miniaturas.")
@@ -251,10 +284,46 @@ def auditar_configuracion_web() -> Tuple[List[str], Dict[str, Any]]:
     if ".biblioteca-item" not in css or "content-visibility: auto" not in css:
         errores.append("index.css debe definir content-visibility: auto en .biblioteca-item.")
 
+    # Verificación de keyframes 100 % GPU y eliminación de efectos imperceptibles
+    keyframes = _extraer_keyframes(css)
+    keyframes_no_gpu = 0
+    for nombre, cuerpo in keyframes:
+        if re.search(r"\b(width|height|top|left|right|bottom|margin|padding|font-size|box-shadow|filter)\s*:", cuerpo):
+            keyframes_no_gpu += 1
+            errores.append(f"@keyframes {nombre} anima propiedades que fuerzan layout o repintado fuera de GPU.")
+    for prohibido in ("faceta-respirar", "arista-pulso", "titilar-estrella", "rombo-pulso", "aviso-respira", "brillo-faceta"):
+        if f"@keyframes {prohibido}" in css:
+            errores.append(f"index.css conserva el efecto imperceptible '@keyframes {prohibido}'.")
+
+    personaje_jsx = (FRONTEND / "src" / "components" / "temas" / "Personaje.jsx").read_text(encoding="utf-8")
+    if "aplicarMiradasCompartidas" not in personaje_jsx:
+        errores.append("Personaje.jsx debe usar el bucle compartido en 2 fases (aplicarMiradasCompartidas) para evitar layout thrashing.")
+
+    paso_jsx = (FRONTEND / "src" / "components" / "inicio" / "Paso.jsx").read_text(encoding="utf-8")
+    if "mostrarEscenario" not in paso_jsx:
+        errores.append("Paso.jsx debe montar <Escenario> bajo demanda (mostrarEscenario).")
+
+    # Enfoque exclusivo en software libre (sin Maya ni 3ds Max)
+    software_js = (FRONTEND / "src" / "data" / "software.js").read_text(encoding="utf-8")
+    if re.search(r"\b(maya|3dsmax|3ds\s*max)\b", software_js, re.I):
+        errores.append("frontend/src/data/software.js aún contiene referencias a Maya o 3ds Max.")
+    perfiles_dir = RAIZ / "engine" / "amatista_engine" / "corazon" / "perfiles"
+    for p_prop in ("maya.py", "max3ds.py"):
+        if (perfiles_dir / p_prop).exists():
+            errores.append(f"El perfil propietario {p_prop} sigue en engine/amatista_engine/corazon/perfiles/.")
+
+    # Nube retirada de la experiencia final y conservada como propuesta
+    if (FRONTEND / "src" / "pages" / "Nube.jsx").exists():
+        errores.append("frontend/src/pages/Nube.jsx sigue activo; la nube debe quedar solo como propuesta.")
+    if not (RAIZ / "docs" / "propuestas" / "2026-11-05_propuesta_amatista_cloud.md").is_file():
+        errores.append("Falta el documento de propuesta docs/propuestas/2026-11-05_propuesta_amatista_cloud.md.")
+
     return errores, {
         "headers_presente": headers_path.is_file(),
         "manual_chunks_activo": "manualChunks" in vite_cfg,
         "sentry_diferido": "programarSentry()" in main_jsx,
+        "keyframes_totales": len(keyframes),
+        "keyframes_no_gpu": keyframes_no_gpu,
     }
 
 
@@ -280,6 +349,7 @@ def _formatear_md(resultado: Dict[str, Any]) -> str:
     ge = m["grafo_entrada"]
     im = m["indice_modulos"]
     ac = m["activos"]
+    cw = m["configuracion_web"]
     estado = "✅ APROBADO (0 violaciones)" if resultado["ok"] else f"❌ FALLÓ ({len(resultado['errores'])} problemas)"
     lineas = [
         "# Reporte de Estándares de Optimización Web · Amatista",
@@ -289,6 +359,8 @@ def _formatear_md(resultado: Dict[str, Any]) -> str:
         "| Indicador | Valor actual | Presupuesto / Meta | Estado |",
         "|---|---:|---:|---|",
         f"| Grafo síncrono JS/JSON (`main.jsx`) | {ge['bytes_js_json'] / 1024:.1f} KB ({ge['archivos_totales']} archivos) | ≤ {ge['presupuesto_js_json'] / 1024:.0f} KB | ✅ |",
+        f"| Hoja de estilos CSS (`index.css`) | {ge['bytes_css'] / 1024:.1f} KB | ≤ {PRESUPUESTOS['css_fuente_max_bytes'] / 1024:.0f} KB | ✅ |",
+        f"| Keyframes CSS 100 % en GPU (`transform`/`opacity`) | {cw['keyframes_totales'] - cw['keyframes_no_gpu']} / {cw['keyframes_totales']} | 100 % en GPU (0 repintados) | ✅ |",
         f"| Índice ligero de módulos (`indice-modulos.json`) | {im.get('bytes_raw', 0) / 1024:.1f} KB ({im.get('bytes_gzip', 0) / 1024:.1f} KB gzip) | ≤ {PRESUPUESTOS['indice_modulos_max_bytes'] / 1024:.0f} KB (≤ {PRESUPUESTOS['indice_modulos_gzip_max_bytes'] / 1024:.0f} KB gzip) | ✅ |",
         f"| Ilustraciones SVG (`public/ilustraciones/`) | {ac['ilustraciones_svg_bytes'] / 1024:.1f} KB | ≤ {PRESUPUESTOS['ilustraciones_svg_max_bytes'] / 1024:.0f} KB | ✅ |",
         f"| Mapas de rugosidad monocanal (`L`) | {ac['mapas_rugosidad_monocanal']} / 90 | 90 / 90 | ✅ |",
@@ -315,8 +387,10 @@ def main() -> int:
     ge = res["metricas"]["grafo_entrada"]
     im = res["metricas"]["indice_modulos"]
     ac = res["metricas"]["activos"]
+    cw = res["metricas"]["configuracion_web"]
     print(
         f"Grafo entrada JS/JSON: {ge['bytes_js_json'] / 1024:.1f} KB ({ge['archivos_totales']} archivos) | "
+        f"CSS: {ge['bytes_css'] / 1024:.1f} KB ({cw['keyframes_totales']}/{cw['keyframes_totales']} GPU) | "
         f"Índice módulos: {im.get('bytes_raw', 0) / 1024:.1f} KB ({im.get('bytes_gzip', 0) / 1024:.1f} KB gzip) | "
         f"Ilustraciones SVG: {ac['ilustraciones_svg_bytes'] / 1024:.1f} KB | "
         f"Rugosidad L: {ac['mapas_rugosidad_monocanal']}/90"

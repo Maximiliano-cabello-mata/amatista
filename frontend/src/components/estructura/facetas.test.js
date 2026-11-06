@@ -51,39 +51,45 @@ describe('facetas', () => {
     expect(borde.map((t) => t.puntos)).toEqual(['0,10 5,0 10,10', '10,0 15,10 20,0', '20,10 25,0 30,10', '30,0 35,10 40,0']);
   });
 
-  it('mantiene las reglas CSS de animaciones balanceadas, ligeras en GPU y apagadas en modo ligero', () => {
+  it('mantiene las reglas CSS de animaciones balanceadas, 100 % en GPU (sin box-shadow ni filter) y sin efectos imperceptibles', () => {
     const css = readFileSync(RUTA_CSS, 'utf8');
     // Llaves balanceadas en todo el archivo
     const abiertas = (css.match(/\{/g) || []).length;
     const cerradas = (css.match(/\}/g) || []).length;
     expect(abiertas).toBe(cerradas);
 
-    // Keyframes y variables de v4.4 presentes
+    // Keyframes y variables esenciales presentes
     for (const token of [
       '--curva-elastica',
       '--curva-resorte',
       '--resplandor-neon',
       '@keyframes pagina-viva',
       '@keyframes cascada-entrar',
-      '@keyframes faceta-respirar',
-      '@keyframes titilar-estrella',
-      '@keyframes arista-pulso',
-      '@keyframes rombo-pulso',
       '@keyframes tecla-pulso',
     ]) {
       expect(css).toContain(token);
     }
 
-    // Ningún @keyframes anima propiedades que recalculan el diseño (width, height, top, left, margin, padding)
-    const bloquesKeyframes = extraerKeyframes(css);
-    expect(bloquesKeyframes.length).toBeGreaterThanOrEqual(45);
-    for (const { nombre, cuerpo } of bloquesKeyframes) {
-      expect(cuerpo, `@keyframes ${nombre}`).not.toMatch(/\b(width|height|top|left|right|bottom|margin|padding|font-size)\s*:/);
+    // Efectos continuos imperceptibles eliminados para garantizar fluidez a 60 fps
+    for (const eliminado of [
+      '@keyframes faceta-respirar',
+      '@keyframes titilar-estrella',
+      '@keyframes arista-pulso',
+      '@keyframes rombo-pulso',
+      '@keyframes aviso-respira',
+      '@keyframes brillo-faceta',
+    ]) {
+      expect(css).not.toContain(eliminado);
     }
 
-    // Las animaciones continuas nuevas se apagan en html.ligero y en prefers-reduced-motion
-    expect(css).toContain('html.ligero .encabezado-faceta__facetas polygon');
-    expect(css).toContain('html.ligero .pie-pagina__facetas polygon');
+    // Ningún @keyframes anima propiedades que recalculan el diseño o fuerzan repintado (box-shadow, filter)
+    const bloquesKeyframes = extraerKeyframes(css);
+    expect(bloquesKeyframes.length).toBeGreaterThanOrEqual(35);
+    for (const { nombre, cuerpo } of bloquesKeyframes) {
+      expect(cuerpo, `@keyframes ${nombre}`).not.toMatch(/\b(width|height|top|left|right|bottom|margin|padding|font-size|box-shadow|filter)\s*:/);
+    }
+
+    // Las animaciones continuas se apagan en html.ligero y en prefers-reduced-motion
     expect(css).toContain('html.ligero .tecla-chip--toca');
   });
 });

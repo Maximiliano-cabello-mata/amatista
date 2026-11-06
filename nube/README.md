@@ -1,3 +1,6 @@
+> **ESTADO: PROPUESTA TÉCNICA (NO INCLUIDA EN LA VERSIÓN FINAL).**
+> La opción de sesiones en la nube fue retirada de la interfaz y de las rutas activas de producción para enfocar Amatista al 100 % en ejecución local, offline-first y adaptación de hardware con Geoda. Consulta el documento consolidado en [`docs/propuestas/2026-11-05_propuesta_amatista_cloud.md`](../propuestas/2026-11-05_propuesta_amatista_cloud.md).
+
 # Amatista Cloud
 
 Blender en la nube para alumnos de la UTN: una hora por sesión, desde el navegador.

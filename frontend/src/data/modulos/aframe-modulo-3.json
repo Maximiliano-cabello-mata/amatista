@@ -40,7 +40,7 @@
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### Las primitivas no alcanzan para todo\nUna caja y una esfera sirven para empezar, pero un personaje, un árbol o una casa se modelan en un programa 3D (Blender, Maya, 3ds Max…) y se **exportan**. Para la web, el formato estándar es **glTF**, y su versión de un solo archivo es **GLB**.\n\nA glTF le dicen «el JPEG del 3D»: es abierto, compacto y lo entienden casi todos los programas y navegadores."
+            "body": "### Las primitivas no alcanzan para todo\nUna caja y una esfera sirven para empezar, pero un personaje, un árbol o una casa se modelan en un programa 3D libre como **Blender** y se **exportan**. Para la web, el formato estándar es **glTF**, y su versión de un solo archivo es **GLB**.\n\nA glTF le dicen «el JPEG del 3D»: es abierto, compacto y lo entienden casi todos los programas y navegadores."
           },
           {
             "type": "layers",
@@ -256,7 +256,7 @@
         "contentBlocks": [
           {
             "type": "markdown_text",
-            "body": "### El camino de un modelo\nAquí se juntan los programas que enseña Amatista: modelas en **Blender** (o Maya, o 3ds Max), exportas a **GLB** y lo publicas en **A-Frame**. Lo que aprendiste en un curso sirve en el otro."
+            "body": "### El camino de un modelo\nAquí se juntan los programas que enseña Amatista: modelas en **Blender**, exportas a **GLB** y lo publicas en **A-Frame**. Lo que aprendiste en un curso sirve en el otro."
           },
           {
             "type": "step_by_step",
@@ -295,7 +295,7 @@
             "items": [
               {
                 "id": "o1",
-                "text": "Modelar la pieza en Blender, Maya o 3ds Max"
+                "text": "Modelar la pieza en Blender"
               },
               {
                 "id": "o2",
@@ -366,7 +366,7 @@
             "type": "callout",
             "variant": "estudio",
             "title": "glTF, el «JPEG del 3D»",
-            "body": "glTF (y su versión de un solo archivo, **GLB**) es el formato estándar para 3D en tiempo real: lo usan tiendas en línea, motores de videojuegos, redes sociales y visores de AR. En la industria el flujo típico es: modelar en Blender (o Maya / 3ds Max), **reducir polígonos**, hornear texturas, exportar a GLB y **comprimir** con Draco o Meshopt (herramientas como gltf-transform lo hacen en un comando).\n\nUna referencia que usan muchos equipos: un producto para la web debería pesar **menos de 5 MB** y abrir en menos de tres segundos en un teléfono."
+            "body": "glTF (y su versión de un solo archivo, **GLB**) es el formato estándar para 3D en tiempo real: lo usan tiendas en línea, motores de videojuegos, redes sociales y visores de AR. En la industria el flujo típico es: modelar en Blender, **reducir polígonos**, hornear texturas, exportar a GLB y **comprimir** con Draco o Meshopt (herramientas como gltf-transform lo hacen en un comando).\n\nUna referencia que usan muchos equipos: un producto para la web debería pesar **menos de 5 MB** y abrir en menos de tres segundos en un teléfono."
           }
         ]
       },

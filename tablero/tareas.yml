@@ -651,7 +651,7 @@ tareas:
     titulo: "Plataforma multiplataforma: catálogo por programa y disciplina, página Explorar con buscador y filtros, barra Inicio · Explorar · Mi panel sin pestaña de Blender, portada y Mi panel por programa, accesibilidad (saltar al contenido, foco, aria-live)"
     version: v3.3.0
     area: pwa
-    aceptacion: "Todo el contenido (cursos, módulos y lecciones) se encuentra desde #/explorar en una sola pantalla, con filtros que quedan en la dirección; Maya y 3ds Max aparecen como próximos; 0 desbordes a 390 px; vitest, lint y build en verde"
+    aceptacion: "Todo el contenido (cursos, módulos y lecciones) se encuentra desde #/explorar en una sola pantalla, con filtros que quedan en la dirección; enfoque 100 % en software libre (Blender y A-Frame); 0 desbordes a 390 px; vitest, lint y build en verde"
     evidencia: "frontend/src/data/software.js; frontend/src/catalogo/indice.js; frontend/src/pages/Explorar.jsx; docs/plataforma/12_multiplataforma_y_accesible.md"
   - id: T-117
     titulo: "Estudio A-Frame (#/estudio): editor libre con vista en vivo, plantillas, piezas para insertar, descarga de la página y modelos GLB low poly propios que funcionan sin conexión"
@@ -679,7 +679,7 @@ tareas:
     aceptacion: "docs/motor/2026-10-21_lo_que_le_falta_al_motor.md con hallazgos ordenados y tareas propuestas"
     evidencia: "docs/motor/2026-10-21_lo_que_le_falta_al_motor.md"
   - id: T-121
-    titulo: "Adaptador del motor para un segundo programa (Maya con maya.cmds o 3ds Max con pymxs) que produzca la misma foto de escena"
+    titulo: "Adaptador del motor para software libre (Blender y A-Frame sobre la misma foto de escena; descartados Maya y 3ds Max)"
     version: v3.4.0
     area: motor
     depende_de: [T-120]
@@ -962,7 +962,7 @@ tareas:
     aceptacion: "docs/motor/referencia/23_corazon.md §8"
     bloqueo: "Lo hace el usuario en su computadora (la nube no tiene pantalla)"
   - id: T-183
-    titulo: "Adaptador del corazón dentro de Maya o 3ds Max (perfil en borrador ya listo) y que pase conformidad.revisar_adaptador"
+    titulo: "Conformidad del corazón en software libre (Blender y A-Frame estables; descartados los perfiles propietarios de Maya y 3ds Max)"
     version: v3.4.0
     area: motor
     depende_de: [T-180, T-121]

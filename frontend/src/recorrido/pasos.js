@@ -10,7 +10,7 @@ export const PASOS_RECORRIDO = [
     ruta: rutas.inicio,
     objetivo: 'hero',
     titulo: 'Bienvenido a Amatista',
-    texto: 'Amatista enseña 3D en varios programas: hoy Blender y A-Frame, y después Maya y 3ds Max. Aquí entiendes la idea y en cada programa la haces. Te muestro dónde está cada cosa.',
+    texto: 'Amatista enseña 3D con software libre: Blender para modelar y animar, y A-Frame para llevar tus mundos a la web y la realidad virtual. Aquí entiendes la idea y te muestro dónde está cada cosa.',
   },
   {
     id: 'menu',
@@ -73,7 +73,7 @@ export const PASOS_RECORRIDO = [
     ruta: rutas.panel,
     objetivo: 'panel',
     titulo: 'Mi panel',
-    texto: 'Lo que sigue, tu nivel, tu racha y tus insignias. Con tu cuenta, el avance de la plataforma y de Blender se guarda en la nube.',
+    texto: 'Lo que sigue, tu nivel, tu racha y tus insignias. Con tu cuenta, el avance de la plataforma y de Blender se sincroniza entre dispositivos.',
   },
   {
     id: 'ayuda',

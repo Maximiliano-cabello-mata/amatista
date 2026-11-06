@@ -21,9 +21,9 @@ export function observarVisibilidad(nodo, cambiar) {
   };
 }
 
-// Un observador compartido para los escenarios y adornos de toda la plataforma.
+// Un observador compartido únicamente para los elementos con animaciones continuas reales.
 export function iniciarPausaDecorativa() {
-  const selector = 'svg, .escenario, .personaje, .paseo, .mundo-tema, .emblema-heroe, .pie-pagina, .encabezado-faceta, .fondo-pesado, .barra, .titulo-seccion, .tecla-chip, .imagen-ligera, .camino__paso, .recorrido-vivo';
+  const selector = '.escenario, .personaje, .paseo, .mundo-tema, .emblema-heroe, .barra, .tecla-chip--toca, .imagen-ligera, .camino__pulso, .recorrido-vivo';
   const nodos = new Set();
   const observador = window.IntersectionObserver && new IntersectionObserver((entradas) => {
     for (const entrada of entradas) {

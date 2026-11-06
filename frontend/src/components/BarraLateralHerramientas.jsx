@@ -1,11 +1,10 @@
 // Barra lateral flotante de herramientas: vive fija en el costado derecho de la pantalla
-// con cuadritos animados y sus logos low-poly. No contamina la barra superior y le explica
+// con cuadritos y sus logos low-poly. No contamina la barra superior y le explica
 // con total claridad a quien no sabe nada qué es y para qué sirve cada herramienta.
 import {
   IconoAFrame,
   IconoBiblioteca,
   IconoBlender,
-  IconoCloud,
   IconoEcosistema,
   IconoGeoda,
 } from './Iconos';
@@ -13,25 +12,12 @@ import { rutas } from '../rutas';
 
 const HERRAMIENTAS = [
   {
-    id: 'nube',
-    href: rutas.nube,
-    pagina: 'nube',
-    etiqueta: 'UTN · Recomendado',
-    titulo: 'Blender en la nube',
-    paraQuien: 'Para quien no puede instalar Blender',
-    descripcion: 'Abre Blender completo directo en tu navegador con un solo clic. No necesitas instalar nada ni tener una PC potente.',
-    borde: 'hover:border-neon/80',
-    activoClase: 'border-neon bg-neon/15 text-neon shadow-[0_0_15px_rgba(0,229,255,0.4)]',
-    acento: 'text-neon',
-    Logo: IconoCloud,
-  },
-  {
     id: 'blender',
     href: rutas.blender,
     pagina: 'blender',
     etiqueta: 'En tu ordenador',
     titulo: 'Conectar mi Blender',
-    paraQuien: 'Si ya tienes Blender instalado',
+    paraQuien: 'Software libre en tu PC',
     descripcion: 'Descarga el complemento Amatista Motor para que revise lo que modelas en Blender y te guíe paso a paso.',
     borde: 'hover:border-blender/80',
     activoClase: 'border-blender bg-blender/15 text-blender shadow-[0_0_15px_rgba(245,121,42,0.4)]',
@@ -44,7 +30,7 @@ const HERRAMIENTAS = [
     pagina: 'biblioteca',
     etiqueta: 'Recursos gratis',
     titulo: 'Biblioteca 3D',
-    paraQuien: 'Modelos y texturas listas',
+    paraQuien: 'Modelos y texturas CC0',
     descripcion: 'Objetos 3D, texturas y materiales libres para usar en tus tareas sin tener que empezar desde cero.',
     borde: 'hover:border-amatista-claro/80',
     activoClase: 'border-amatista-claro bg-amatista/20 text-amatista-claro shadow-[0_0_15px_rgba(195,155,211,0.4)]',
@@ -84,7 +70,7 @@ const HERRAMIENTAS = [
     etiqueta: 'Guía rápida',
     titulo: '¿Qué es cada cosa?',
     paraQuien: 'Para entender la plataforma',
-    descripcion: 'Un mapa muy sencillo que te explica cómo se conectan los cursos, el motor y la nube sin rodeos técnicos.',
+    descripcion: 'Un mapa muy sencillo que te explica cómo se conectan los cursos, el motor, Geoda y la biblioteca sin rodeos técnicos.',
     borde: 'hover:border-amatista-claro/80',
     activoClase: 'border-amatista-claro bg-amatista/20 text-amatista-claro shadow-[0_0_15px_rgba(195,155,211,0.4)]',
     acento: 'text-amatista-claro',
@@ -100,7 +86,7 @@ function BarraLateralHerramientas({ pagina }) {
   return (
     <aside
       aria-label="Herramientas de Amatista"
-      className="barra-lateral-herramientas fixed right-2 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-center gap-1.5 rounded-2xl border border-white/10 bg-superficie/90 p-1.5 shadow-2xl backdrop-blur-md lg:flex"
+      className="barra-lateral-herramientas fixed right-2 top-1/2 z-30 hidden -translate-y-1/2 flex-col items-center gap-1.5 rounded-2xl border border-white/10 bg-superficie/95 p-1.5 shadow-2xl lg:flex"
     >
       {/* Cabecera discreta que indica qué es esta barra a quien entra por primera vez */}
       <a
@@ -114,7 +100,7 @@ function BarraLateralHerramientas({ pagina }) {
         <span className="mt-0.5 h-0.5 w-4 rounded-full bg-white/20 transition-all group-hover:w-6 group-hover:bg-neon" />
       </a>
 
-      {/* Lista de cuadritos con logo animado y globito explicativo hacia la izquierda */}
+      {/* Lista de cuadritos con logo y globito explicativo hacia la izquierda */}
       <ul className="flex flex-col gap-1.5">
         {HERRAMIENTAS.map((item) => {
           const Logo = item.Logo;
@@ -138,7 +124,7 @@ function BarraLateralHerramientas({ pagina }) {
               {/* Globito explicativo flotante hacia la izquierda */}
               <div
                 role="tooltip"
-                className="cuadrito-lateral__globo corte-poly pointer-events-none absolute right-full top-1/2 z-40 mr-3 w-72 -translate-y-1/2 border border-white/15 bg-superficie/95 p-3.5 shadow-2xl backdrop-blur-md"
+                className="cuadrito-lateral__globo corte-poly pointer-events-none absolute right-full top-1/2 z-40 mr-3 w-72 -translate-y-1/2 border border-white/15 bg-superficie/98 p-3.5 shadow-2xl"
               >
                 <div className="flex items-start gap-3">
                   <span className="hexagono grid h-10 w-11 shrink-0 place-items-center bg-black/50">
@@ -156,10 +142,10 @@ function BarraLateralHerramientas({ pagina }) {
                     </span>
                   </div>
                 </div>
-                <p className="mt-2 text-xs leading-relaxed text-texto/80 border-t border-white/5 pt-2">
+                <p className="mt-2 border-t border-white/5 pt-2 text-xs leading-relaxed text-texto/80">
                   {item.descripcion}
                 </p>
-                <div className="mt-2 flex items-center justify-between text-[10px] font-mono uppercase tracking-wider text-neon">
+                <div className="mt-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-wider text-neon">
                   <span>Haz clic para abrir</span>
                   <span aria-hidden="true">▸</span>
                 </div>

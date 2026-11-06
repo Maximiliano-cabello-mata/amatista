@@ -47,12 +47,13 @@ describe('camino guiado', () => {
     expect(camino.hechos).toBe(1);
   });
 
-  it('los programas que vienen no tienen pasos y el inicial respeta la elección', () => {
+  it('incluye únicamente el software libre disponible (Blender y A-Frame) y el inicial respeta la elección', () => {
     const lista = caminos(cursos, null);
-    expect(lista.map((c) => c.software.id)).toEqual(SOFTWARE.map((s) => s.id));
-    const maya = lista.find((c) => c.software.id === 'maya');
-    expect(maya.disponible).toBe(false);
-    expect(maya.pasos).toEqual([]);
+    expect(lista.map((c) => c.software.id)).toEqual(['blender', 'aframe']);
+    expect(lista.every((c) => c.disponible)).toBe(true);
+    const futuro = caminoDePrograma({ id: 'experimental', nombre: 'Experimental', estado: 'proximamente' }, cursos, null);
+    expect(futuro.disponible).toBe(false);
+    expect(futuro.pasos).toEqual([]);
     expect(programaInicial(lista)).toBe('blender');
     expect(programaInicial(lista, { elegido: 'aframe' })).toBe('aframe');
     expect(programaInicial(lista, { elegido: 'inventado', ultimoCurso: 'aframe' })).toBe('aframe');

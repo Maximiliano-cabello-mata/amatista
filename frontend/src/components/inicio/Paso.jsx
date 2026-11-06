@@ -43,6 +43,8 @@ export default function Paso({ paso, abierto, alternar, ultimo }) {
   const tema = useMemo(() => temaDelModulo(paso.modulo), [paso.modulo]);
   const frases = useMemo(() => mensajesDeMascota(tema?.mascota), [tema]);
   const [fraseIdx, setFraseIdx] = useState(-1);
+  // Solo monta el paisaje SVG (<Escenario>) en el paso activo, los abiertos o los que el usuario explora.
+  const [explorado, setExplorado] = useState(false);
   const relojFrase = useRef(null);
 
   useEffect(() => () => window.clearTimeout(relojFrase.current), []);
@@ -55,9 +57,15 @@ export default function Paso({ paso, abierto, alternar, ultimo }) {
   };
 
   const fraseActual = fraseIdx >= 0 ? frases[fraseIdx] : null;
+  const mostrarEscenario = conContenido && (paso.estado === 'siguiente' || abierto || explorado);
 
   return (
-    <li className={`camino__paso group/paso relative flex gap-3 sm:gap-4 ${ultimo ? '' : 'pb-3'}`} data-estado={paso.estado}>
+    <li
+      className={`camino__paso group/paso relative flex gap-3 sm:gap-4 ${ultimo ? '' : 'pb-3'}`}
+      data-estado={paso.estado}
+      onPointerEnter={() => !explorado && setExplorado(true)}
+      onFocusCapture={() => !explorado && setExplorado(true)}
+    >
       {!ultimo && <span className="camino__linea absolute bottom-0 left-6 top-11 w-px" aria-hidden="true" />}
       <Hexagono paso={paso} />
       <div
@@ -65,7 +73,7 @@ export default function Paso({ paso, abierto, alternar, ultimo }) {
           paso.estado === 'siguiente' ? 'border-neon/50 bg-gradient-to-r from-neon/10 to-superficie/95' : 'border-white/10 bg-superficie/90'
         }`}
       >
-        {conContenido && (
+        {mostrarEscenario && (
           <>
             <Escenario
               tema={tema}

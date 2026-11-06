@@ -2,6 +2,7 @@
 // Se carga bajo demanda (A-Frame ~1.3 MB, que el service worker guarda tras la primera vez).
 import '../../motor3d';
 import { useEffect, useRef } from 'react';
+import { observarEscena } from '../../lib/visibilidad3d';
 
 const AFRAME = window.AFRAME;
 
@@ -59,7 +60,11 @@ export default function Visor3D({ url, nombre }) {
       <a-entity gltf-model="url(${url})" am-animacion></a-entity>
       <a-entity camera am-orbita="distancia: 5; minimo: 1; objetivo: 0 0.9 0; inclinacion: 22"></a-entity>`;
     nodo.appendChild(escena);
-    return () => escena.parentNode?.removeChild(escena);
+    const detener = observarEscena(escena, nodo);
+    return () => {
+      detener();
+      escena.parentNode?.removeChild(escena);
+    };
   }, [url]);
   return <div ref={caja} className="h-72 w-full overflow-hidden sm:h-96" role="img" aria-label={`Vista 3D de ${nombre}. Arrastra para girarla.`} />;
 }

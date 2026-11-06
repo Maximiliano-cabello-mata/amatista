@@ -126,13 +126,13 @@ function Descarga({ token, usuario }) {
         <span aria-hidden="true">⬇</span>
         {estado.descargando ? 'Preparando tu paquete…' : `Descargar para ${sistema.nombre}`}
       </button>
-      {servidor.conocida && (
-        <p className={`mt-3 font-mono text-xs uppercase tracking-wider ${servidor.alDia ? 'text-emerald-300' : 'text-blender'}`}>
-          {servidor.alDia
+      <p className={`mt-3 min-h-[1.25rem] font-mono text-xs uppercase tracking-wider ${servidor.conocida ? (servidor.alDia ? 'text-emerald-300' : 'text-blender') : 'text-transparent'}`} aria-live="polite">
+        {servidor.conocida
+          ? servidor.alDia
             ? `✓ El servidor entrega ${NOMBRE_MOTOR} (versión ${servidor.version})`
-            : `El servidor todavía entrega la versión ${servidor.version}: falta actualizarlo a ${NOMBRE_MOTOR}`}
-        </p>
-      )}
+            : `El servidor todavía entrega la versión ${servidor.version}: falta actualizarlo a ${NOMBRE_MOTOR}`
+          : ' '}
+      </p>
       <p className="mt-3 text-sm text-texto/70">
         {usuario
           ? 'Tu paquete trae un acceso de un solo uso: al abrir Blender, Amatista ya estará conectado con tu cuenta.'
@@ -518,14 +518,20 @@ function Blender() {
         antetitulo: `${NOMBRE_MOTOR} para Blender`,
         titulo: 'Blender, con Amatista a tu lado',
         descripcion: 'Aquí está todo lo que une la plataforma con tu Blender: cómo funciona, la instalación, las prácticas que te enseñan el add-on y tus ajustes.',
-        children: usuario && conexion.cargado && (
-              <p className="mt-3 flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-widest">
-                <span className={`corte-poly-sm px-2.5 py-1 ${conexion.vinculado ? 'bg-emerald-400/15 text-emerald-300' : 'bg-white/5 text-white/55'}`}>
-                  {conexion.vinculado ? '✓ Blender vinculado' : '○ Blender sin vincular'}
-                </span>
-                <span className={`corte-poly-sm px-2.5 py-1 ${conexion.abierto ? 'bg-neon/15 text-neon' : 'bg-white/5 text-white/55'}`}>
-                  {conexion.abierto ? '● Blender abierto ahora' : '○ Blender cerrado'}
-                </span>
+        children: usuario && (
+              <p className="mt-3 flex min-h-[1.75rem] flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-widest">
+                {conexion.cargado ? (
+                  <>
+                    <span className={`corte-poly-sm px-2.5 py-1 ${conexion.vinculado ? 'bg-emerald-400/15 text-emerald-300' : 'bg-white/5 text-white/55'}`}>
+                      {conexion.vinculado ? '✓ Blender vinculado' : '○ Blender sin vincular'}
+                    </span>
+                    <span className={`corte-poly-sm px-2.5 py-1 ${conexion.abierto ? 'bg-neon/15 text-neon' : 'bg-white/5 text-white/55'}`}>
+                      {conexion.abierto ? '● Blender abierto ahora' : '○ Blender cerrado'}
+                    </span>
+                  </>
+                ) : (
+                  <span className="corte-poly-sm bg-white/5 px-2.5 py-1 text-white/40">Consultando estado de tu Blender…</span>
+                )}
               </p>
         ),
       }}

@@ -30,9 +30,9 @@ Las instrucciones nombran menús en español («Agregar › Malla», «Agregar �
 
 ### 4. El motor ya es casi multiplataforma, y no se está aprovechando
 
-Solo un archivo importa `bpy`: `engine/amatista_engine/blender/adapter.py`. Todo lo demás (validadores, reconocimiento de figuras, el modelo del alumno del Taller, pistas, repaso, la revisión del servidor) trabaja con la «foto» de la escena (`snapshot.py`, `SceneState`). Eso significa que **un adaptador para Maya (`maya.cmds`) o para 3ds Max (`pymxs`) que produzca la misma foto reutilizaría el 90 % del motor**, incluida la evaluación en el servidor.
+Solo un archivo importa `bpy`: `engine/amatista_engine/blender/adapter.py`. Todo lo demás (validadores, reconocimiento de figuras, el modelo del alumno del Taller, pistas, repaso, la revisión del servidor) trabaja con la «foto» de la escena (`snapshot.py`, `SceneState`). Eso significa que **el adaptador del Motor Web para A-Frame u otro software libre que produzca la misma foto reutilizaría el 90 % del motor**, incluida la evaluación en el servidor.
 
-**Qué hacer:** cuando llegue Maya o 3ds Max, empezar por ese adaptador y no por un motor nuevo. Vale la pena documentar ya el contrato de la foto como «formato de escena de Amatista» independiente de Blender.
+**Qué hacer:** mantener el enfoque en software libre que ya tenemos (Blender y A-Frame) sobre ese mismo contrato de escena y no por un motor nuevo. Vale la pena documentar ya el contrato de la foto como «formato de escena de Amatista» independiente de Blender.
 
 ### 5. Huecos del plan de estudios frente a los validadores
 
@@ -56,6 +56,6 @@ El enlace en vivo plataforma ↔ Blender va contra la API de producción, que si
 
 ## Tareas propuestas en el tablero
 
-- **T-121** Adaptador del motor para un segundo programa (Maya o 3ds Max) sobre la misma foto de escena.
+- **T-121** Contrato de escena compartido entre el software libre de la plataforma (Blender y A-Frame).
 - **T-122** El add-on muestra los menús en el idioma de la interfaz de Blender.
 - La prueba con un alumno ya está en **T-102** y **T-113**.

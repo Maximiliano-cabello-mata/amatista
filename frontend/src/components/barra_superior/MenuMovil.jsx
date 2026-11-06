@@ -5,14 +5,12 @@ import {
   IconoAFrame,
   IconoBiblioteca,
   IconoBlender,
-  IconoCloud,
   IconoEcosistema,
   IconoGeoda,
 } from '../Iconos';
 import { CLASE_BOTON_INSTALAR, PAGINAS_CURSOS } from './constantes';
 
 const HERRAMIENTAS_MOVIL = [
-  { href: rutas.nube, titulo: 'Blender en la nube', desc: 'UTN · Sin instalar', Icono: IconoCloud },
   { href: rutas.blender, titulo: 'Conectar mi Blender', desc: 'Amatista Motor en PC', Icono: IconoBlender },
   { href: rutas.biblioteca, titulo: 'Biblioteca 3D', desc: 'Recursos libres CC0', Icono: IconoBiblioteca },
   { href: rutas.estudio, titulo: 'Estudio Web 3D', desc: 'Escenas A-Frame y VR', Icono: IconoAFrame },

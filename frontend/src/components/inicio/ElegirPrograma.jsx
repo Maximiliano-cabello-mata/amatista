@@ -3,7 +3,7 @@ import { QUE_CREAS, plural } from './constantes';
 
 export default function ElegirPrograma({ lista, elegido, elegir }) {
   return (
-    <div role="tablist" aria-label="¿Qué quieres crear?" className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4" data-recorrido="programas">
+    <div role="tablist" aria-label="¿Qué quieres crear?" className="grid gap-2.5 sm:grid-cols-2" data-recorrido="programas">
       {lista.map((camino) => {
         const { software } = camino;
         const activo = software.id === elegido;
@@ -16,7 +16,7 @@ export default function ElegirPrograma({ lista, elegido, elegir }) {
             aria-selected={activo}
             aria-controls="camino-programa"
             onClick={() => elegir(software.id)}
-            className={`corte-poly-sm flex items-center gap-3 border p-3 text-left transition-colors ${
+            className={`corte-poly-sm flex items-center gap-3 border p-3.5 text-left transition-colors ${
               activo
                 ? 'border-neon bg-neon/10'
                 : camino.disponible

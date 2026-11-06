@@ -16,7 +16,6 @@ export const rutas = {
   guia: '#/guia',
   geoda: '#/geoda',
   biblioteca: '#/biblioteca',
-  nube: '#/nube',
   ecosistema: '#/ecosistema',
   buzon: '#/buzon',
   admin: '#/admin',
@@ -84,7 +83,7 @@ function rutaProfesor([seccion, id]) {
   return { seccion: 'grupos', params: {} };
 }
 
-const PAGINAS_SIMPLES = ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'guia', 'buzon', 'geoda', 'biblioteca', 'nube', 'ecosistema'];
+const PAGINAS_SIMPLES = ['estudio', 'panel', 'laboratorio', 'blender', 'vincular', 'entrar', 'registro', 'confirmar', 'recuperar', 'perfil', 'guia', 'buzon', 'geoda', 'biblioteca', 'ecosistema'];
 
 // Devuelve {pagina, ...}. Una consulta tras "?" (por ejemplo
 // "#/entrar?volver=%23%2Fperfil") llega en `consulta`.
@@ -105,6 +104,8 @@ export function analizarRuta(hash = '') {
   if (PAGINAS_SIMPLES.includes(partes[0])) return { pagina: partes[0], consulta };
   // #/explorar (el buscador del 21 de octubre) se retiró el 23: sus enlaces llevan a Cursos.
   if (partes[0] === 'explorar') return { pagina: 'inicio', consulta: {} };
+  // #/nube quedó como propuesta técnica (no incluida en la versión final): redirige a Todo Amatista.
+  if (partes[0] === 'nube') return { pagina: 'ecosistema', consulta: {} };
   if (partes[0] === 'profesor') return { pagina: 'profesor', ...rutaProfesor(partes.slice(1)), consulta };
   if (partes[0] === 'admin') return { pagina: 'admin', ...rutaAdmin(partes.slice(1)), consulta };
   if (partes[0] === 'curso' && partes[1] && partes[2] === 'leccion' && partes[3]) {

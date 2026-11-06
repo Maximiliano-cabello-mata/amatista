@@ -1,6 +1,5 @@
-// Tus programas (Mi panel, multiplataforma 2026-10-21): tu avance en cada programa que enseña
-// Amatista y su herramienta de práctica, uno junto al otro. Ningún programa tiene sección
-// propia en el panel: los que vienen (Maya, 3ds Max) aparecen aquí como «pronto».
+// Tus programas (Mi panel): tu avance en cada software libre que enseña
+// Amatista (Blender y A-Frame) y su herramienta de práctica, uno junto al otro.
 import { useMemo } from 'react';
 import { agruparPorRuta, resumenRuta } from '../../catalogo/agrupar';
 import { SOFTWARE } from '../../data/software';
@@ -11,8 +10,8 @@ import Seccion from './Seccion';
 function ProgramasPanel({ progreso, cursos, className = '' }) {
   const rutasPorId = useMemo(() => Object.fromEntries(agruparPorRuta(cursos).map((ruta) => [ruta.id, ruta])), [cursos]);
   return (
-    <Seccion id="panel-programas" etiqueta="Programas" titulo="Tu avance en cada programa" className={className}>
-      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <Seccion id="panel-programas" etiqueta="Software libre" titulo="Tu avance en cada programa" className={className}>
+      <ul className="grid gap-3 sm:grid-cols-2">
         {SOFTWARE.map((software) => {
           const ruta = software.ruta ? rutasPorId[software.ruta] : null;
           const resumen = ruta ? resumenRuta(progreso, ruta) : null;

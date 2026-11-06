@@ -38,10 +38,10 @@ function PiePagina() {
             <span className="text-lg font-extrabold tracking-[0.25em] text-white">AMATISTA</span>
           </a>
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-white/55">
-            Aprende 3D creando: modelado, diseño, animación y 3D para la web en varios programas, incluso sin Internet.
+            Aprende 3D creando con software libre: modelado, diseño, animación y 3D para la web, incluso sin Internet.
           </p>
           <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-widest text-white/40">
-            hoy con <LogoCurso logo="blender" className="h-4 w-5" decorativo={false} /> y <LogoCurso logo="aframe" className="h-4 w-5" decorativo={false} />, y más en camino
+            software libre: <LogoCurso logo="blender" className="h-4 w-5" decorativo={false} /> y <LogoCurso logo="aframe" className="h-4 w-5" decorativo={false} />
           </p>
         </div>
         <Columna titulo="Aprender">
@@ -58,7 +58,6 @@ function PiePagina() {
           <li><a href={rutas.vincular} className={ENLACE}>Conectar Blender con un código</a></li>
           <li><a href={rutas.geoda} className={ENLACE}>Geoda: ajusta todo a tu equipo</a></li>
           <li><a href={rutas.biblioteca} className={ENLACE}>Biblioteca de recursos libres</a></li>
-          <li><a href={rutas.nube} className={ENLACE}>Amatista Cloud (UTN)</a></li>
           <li><a href={rutas.ecosistema} className={ENLACE}>Todo Amatista: qué es cada cosa</a></li>
         </Columna>
         <Columna titulo="Tu cuenta">
@@ -84,7 +83,7 @@ function PiePagina() {
       </div>
       <div className="border-t border-white/5">
         <p className="mx-auto flex max-w-6xl flex-wrap justify-between gap-2 px-4 py-4 font-mono text-[11px] uppercase tracking-widest text-white/35 sm:px-6">
-          <span>Amatista · plataforma multiplataforma de creación 3D</span>
+          <span>Amatista · educación 3D con software libre</span>
           <span>{NOMBRE_MOTOR}</span>
         </p>
       </div>
