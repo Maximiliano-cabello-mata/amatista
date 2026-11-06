@@ -72,11 +72,15 @@ function Detalle({ asignacion, fila, alEvaluar }) {
     setModelo({ cargando: false, resultado });
   }, [token, profesorId, asignacion, fila]);
 
-  // Recrea automáticamente el modelo en cuanto el profesor selecciona a un alumno con entrega.
+  // Recrea el modelo al seleccionar una entrega sin actualizar el estado
+  // sincrónicamente desde el efecto (react-hooks/set-state-in-effect).
   useEffect(() => {
-    if (entrega?.resumen) {
-      abrir();
-    }
+    if (!entrega?.resumen) return undefined;
+    let vigente = true;
+    Promise.resolve().then(() => {
+      if (vigente) void abrir();
+    });
+    return () => { vigente = false; };
   }, [entrega?.entregada_en, entrega?.resumen, abrir]);
 
   const resultado = modelo.resultado;
