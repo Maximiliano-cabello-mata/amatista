@@ -15,7 +15,7 @@ import { esPracticaBlender } from '../modulos/practica';
 import Figura from '../components/leccion/Figura';
 import { actividadesDe } from '../components/leccion/interactivos/logica';
 import { queHacer } from '../components/leccion/queHacer';
-import { buscarLeccion, duracionTexto, TIPOS_LECCION } from '../data/cursos';
+import { buscarLeccion, conContenido, duracionTexto, TIPOS_LECCION } from '../data/cursos';
 import { useProgreso } from '../progreso/contexto';
 import {
   estaCompletada,
@@ -254,7 +254,7 @@ function Leccion({ cursoId, leccionId }) {
   const { revision } = useVista();
   const { token, usuario } = useAuth();
   const curso = buscarCurso(cursoId);
-  const ubicacion = curso && buscarLeccion(curso, leccionId);
+  const ubicacion = conContenido(curso && buscarLeccion(curso, leccionId), cursoId);
   const desbloqueada = Boolean(ubicacion) && estaDesbloqueada(progreso, curso.id, ubicacion.modulo, ubicacion.indice);
   // Vista de administrador: cualquier lección se abre para revisarla (el progreso no cambia por eso).
   const abierta = Boolean(ubicacion) && (desbloqueada || revision);
