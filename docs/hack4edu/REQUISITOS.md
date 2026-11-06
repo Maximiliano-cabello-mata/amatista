@@ -1,3 +1,5 @@
+> **Cierre:** el responsable confirmó la presentación para el sábado 7 de noviembre y la selección de la versión actual del 5 de noviembre. El [acta de entrega](cierre/ACTA.md) recoge el alcance y los pendientes comprobados. La lista siguiente es un antecedente y no certifica bases oficiales 2026.
+
 # Requisitos de Hack4Edu y cómo los cumplimos
 
 **Importante:** no se encontraron publicadas las bases de la edición 2026. Esta lista sale de lo que pidieron las ediciones anteriores de #hack4edu (ProFuturo, Universidad Pontificia de Salamanca y Red de Cátedras Telefónica) y de lo que nos pidieron a nosotros: **orden y evidencia comprobable de qué había antes y qué se trabaja en estos días**.

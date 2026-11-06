@@ -1,0 +1,44 @@
+{
+  "entrega": "Amatista y G7B · Hack4Edu 2026",
+  "zona_horaria": "America/Mexico_City",
+  "criterio_cierre": "Version actual seleccionada por el responsable; se incluye el trabajo del 5 de noviembre posterior a las 08:00.",
+  "presentacion": "2026-11-07",
+  "repositorios": [
+    {
+      "nombre": "amatista",
+      "revision_codigo": "4986448ad17baeecb711e755a0a25f510e0995f2",
+      "base_hack4edu": "7c8be0e98f104cdf6e915cf157d6b5b8b1a3beda"
+    },
+    {
+      "nombre": "amatista-g7b-etl",
+      "revision_codigo": "667f708ca50e239c2fb4518843c5b708ba9b9e54",
+      "base_hack4edu": "3aad46119b479bae4593ff7dfd5277c6dcbd5355"
+    }
+  ],
+  "etiqueta_documental": "hack4edu-cierre-2026-11-05",
+  "regla": "El cierre agrega documentacion. El codigo operativo se compara con revision_codigo. La hora de sellado y SHA-256 se registran en el manifiesto exterior del paquete.",
+  "verificaciones": [
+    {
+      "repositorio": "amatista",
+      "ejecucion": 42148364560,
+      "servidor": "correcto",
+      "complemento_blender": "correcto",
+      "frontend": "fallo de revision estatica; pruebas y compilacion omitidas"
+    },
+    {
+      "repositorio": "amatista-g7b-etl",
+      "ejecucion": 42096885575,
+      "pruebas": "correcto"
+    },
+    {
+      "repositorio": "amatista-g7b-etl",
+      "ejecucion": 42097116915,
+      "cubo": "fallo de autenticacion Azure por firma SAS vencida"
+    },
+    {
+      "repositorio": "amatista-g7b-etl",
+      "ejecucion": 42101605123,
+      "cuadernos": "correcto"
+    }
+  ]
+}

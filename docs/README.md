@@ -1,3 +1,5 @@
+> **Cierre de Hack4Edu:** [guía de cinco minutos](../README.md) · [acta y estado comprobado](hack4edu/cierre/ACTA.md) · [trabajo de cada día](hack4edu/cierre/BITACORA.md) · [participación sustancial de IA](hack4edu/cierre/USO_DE_IA.md). Los apartados históricos conservan la fecha indicada en cada uno.
+
 # Documentación de Amatista
 
 **Plataforma pública:** [https://amatista-3d.tech](https://amatista-3d.tech) · **API:** [https://api.amatista-3d.tech](https://api.amatista-3d.tech) · **[Despliegue vigente documentado (Workers + OCI)](despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md)**. El despliegue del antiguo dominio `.me` y la propuesta de Pages son históricos.

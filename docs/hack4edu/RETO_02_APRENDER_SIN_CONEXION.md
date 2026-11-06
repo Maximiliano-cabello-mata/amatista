@@ -1,3 +1,5 @@
+> **Nota del cierre:** este dossier es un antecedente técnico. Las afirmaciones de disponibilidad total, latencia de 0 ms, porcentajes de ahorro y funcionamiento universal no se certifican en este cierre. Para el alcance comprobado y las limitaciones, consultar el [acta](cierre/ACTA.md).
+
 # Reto 02 · Aprender sin conexión
 
 > **Hack4Edu 2026** · Desafío Tecnológico y Pedagógico de Inclusión Digital  
