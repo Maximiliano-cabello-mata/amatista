@@ -4,7 +4,24 @@ import { describe, expect, it } from 'vitest';
 import { analizarRuta, rutas } from '../rutas';
 import { VISTAS, colorCara, proyectarEscena } from './dibujo';
 import { codigoDictado, contarEstados, estadoAlumno, estadoParaAlumno, fecha, finDelDia, ordenarAlumnos } from './logica';
-import { FORMATO, aSRGB, armarEscena, bytesLegibles, desempaquetar, medidaLegible } from './modelo';
+import {
+  FORMATO,
+  PLANTILLAS_CODIGO_MODELO,
+  aSRGB,
+  armarEscena,
+  bytesLegibles,
+  compilarCodigoModelo,
+  desempaquetar,
+  medidaLegible,
+} from './modelo';
+import {
+  CODIGO_CLASE_DEMO,
+  evaluarEntregaLocal,
+  recogerModeloLocal,
+  subirCodigoModeloLocal,
+  unirseAGrupoLocal,
+  verAsignacionLocal,
+} from './aulaLocal';
 
 // Igual que addon/amatista_blender/modelo_ligero.py › empaquetar: JSON → zlib → base64.
 const empaquetar = (datos) => deflateSync(Buffer.from(JSON.stringify(datos))).toString('base64');
@@ -29,7 +46,7 @@ const CUBO = {
   ],
 };
 
-describe('modelo ligero', () => {
+describe('modelo ligero y compilador de código del alumno', () => {
   it('descomprime lo que manda el add-on y arma la escena en metros', async () => {
     const datos = await desempaquetar(empaquetar(CUBO));
     const escena = armarEscena(datos);
@@ -39,6 +56,47 @@ describe('modelo ligero', () => {
     expect(escena.suelo).toBeCloseTo(0);
     expect(escena.objetos[0].color[0]).toBeCloseTo(aSRGB(0.5));
     expect(escena.objetos[1].triangulos).toBeNull();
+  });
+
+  it('compila scripts Python bpy, escenas A-Frame <a-scene> y recetas JSON para recrearlos en el visor del profesor', async () => {
+    for (const plantilla of PLANTILLAS_CODIGO_MODELO) {
+      const modelo = compilarCodigoModelo(plantilla.codigo);
+      expect(modelo.formato).toBe(FORMATO);
+      expect(modelo.codigo_fuente).toContain(plantilla.codigo.trim().slice(0, 15));
+      const desempaquetado = await desempaquetar(JSON.stringify(modelo));
+      const escena = armarEscena(desempaquetado);
+      expect(escena.cuentas.mallas).toBeGreaterThan(0);
+      expect(escena.cuentas.triangulos).toBeGreaterThan(8);
+      expect(escena.codigoFuente).toBeTruthy();
+    }
+  });
+
+  it('permite al alumno unirse a una clase, subir el código del modelo y al profesor recrearlo y calificarlo', async () => {
+    const union = unirseAGrupoLocal(CODIGO_CLASE_DEMO, { id: 'alu-test', nombre: 'Elena Prueba', email: 'elena@aula.edu' });
+    expect(union.datos.codigo).toBe(CODIGO_CLASE_DEMO);
+
+    const envio = subirCodigoModeloLocal({
+      asignacionId: 'asg-tren-m1',
+      codigo: PLANTILLAS_CODIGO_MODELO[0].codigo,
+      usuario: { id: 'alu-test', nombre: 'Elena Prueba', email: 'elena@aula.edu' },
+    });
+    expect(envio.ok).toBe(true);
+    expect(envio.datos.resumen.mallas).toBeGreaterThanOrEqual(4);
+
+    const recogido = recogerModeloLocal('asg-tren-m1', 'alu-test');
+    const datos = await desempaquetar(recogido.datos.modelo);
+    const escena = armarEscena(datos);
+    expect(escena.cuentas.mallas).toBe(envio.datos.resumen.mallas);
+    expect(escena.lenguaje).toBe('python');
+
+    const calificada = evaluarEntregaLocal('asg-tren-m1', 'alu-test', {
+      estado: 'evaluada',
+      calificacion: 10,
+      comentario: 'Excelente recreación 3D desde código Python bpy.',
+    });
+    expect(calificada.datos.calificacion).toBe(10);
+    const vistaProf = verAsignacionLocal('asg-tren-m1');
+    expect(vistaProf.datos.alumnos.some((a) => a.alumno.id === 'alu-test')).toBe(true);
   });
 
   it('rechaza otro formato', async () => {

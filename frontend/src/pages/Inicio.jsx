@@ -97,7 +97,7 @@ function Inicio({ consulta = {} }) {
       <section className="animar-entrar flex flex-col gap-6 sm:flex-row sm:items-center" aria-labelledby="inicio-titulo" data-recorrido="hero">
         <EmblemaHeroe alTocar={tocarCristal} girando={girandoCristal} chispas={chispasCristal} />
         <div className="min-w-0 flex-1">
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">{hayAvance ? `Nivel ${nivel.nivel} · ${xp} XP` : 'No necesitas saber nada'}</p>
+          <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon">{hayAvance ? `Nivel ${nivel.nivel} · ${xp} XP` : '100 % Software Libre · Funciona sin conexión'}</p>
           <h1 id="inicio-titulo" className="mt-1 text-3xl font-extrabold leading-tight text-white sm:text-5xl">
             {nombreUsuario && <span className="block text-2xl font-bold text-amatista-claro sm:text-3xl">¡Hola, {nombreUsuario}!</span>}
             {hayAvance ? (
@@ -114,8 +114,8 @@ function Inicio({ consulta = {} }) {
             {siguiente
               ? `Tu siguiente lección es «${siguiente.titulo}», en ${siguiente.curso}.`
               : nombreUsuario
-                ? `Bienvenido a tu taller 3D, ${nombreUsuario}. Elige qué quieres crear y sigue los pasos en orden. Cada lección dura menos de diez minutos.`
-                : 'Elige qué quieres crear y sigue los pasos en orden. Cada lección dura menos de diez minutos y te dice qué hacer.'}
+                ? `Bienvenido a tu taller 3D, ${nombreUsuario}. Domina Blender y A-Frame con lecciones interactivas de diez minutos y entrega tus modelos por código.`
+                : 'Aprende creación 3D con Blender (GPL) y A-Frame (MIT). Cada lección dura menos de diez minutos, evalúa tu práctica paso a paso y funciona incluso sin Internet.'}
           </p>
           {secretoIdx >= 0 && (
             <p
@@ -143,6 +143,101 @@ function Inicio({ consulta = {} }) {
         </div>
       </section>
 
+      {/* Guía instantánea de 5 minutos para evaluadores, alumnos y profesores */}
+      <section
+        aria-labelledby="inicio-evaluadores"
+        className="corte-poly mt-8 border border-neon/35 bg-gradient-to-br from-neon/10 via-superficie/95 to-amatista-oscuro/30 p-5 sm:p-6"
+      >
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-neon">
+            ⚡ Recorrido rápido para evaluadores (5 min) · Sin cuenta ni configuración previa
+          </p>
+          <span className="corte-poly-sm border border-neon/40 bg-neon/10 px-2.5 py-0.5 font-mono text-[11px] text-neon">
+            Código de clase demo: <strong>AMA-7K2P</strong>
+          </span>
+        </div>
+        <h2 id="inicio-evaluadores" className="mt-1.5 text-lg font-extrabold text-white sm:text-xl">
+          Entiende y prueba el flujo completo Alumno → Código → Recreación 3D del Profesor en 3 clics
+        </h2>
+        <p className="mt-1 max-w-3xl text-xs leading-relaxed text-texto/80 sm:text-sm">
+          Para funcionar en escuelas sin Internet o con datos móviles limitados, Amatista <strong className="text-white">no sube archivos <code className="font-mono text-neon">.blend</code> pesados de 20 MB</strong>: captura <strong className="text-white">el código estructural del modelo (~1 KB)</strong> en Python <code className="font-mono text-amatista-claro">bpy</code>, HTML <code className="font-mono text-amatista-claro">&lt;a-scene&gt;</code> o JSON y <strong className="text-white">recrea la malla 3D en vivo en la interfaz del profesor</strong>.
+        </p>
+
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          <div className="corte-poly-sm flex flex-col justify-between border border-white/10 bg-base/80 p-4">
+            <div>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-amatista-claro">
+                Paso 1 · Aprender (Software Libre)
+              </span>
+              <h3 className="mt-1 text-sm font-extrabold text-white">
+                15 módulos Blender + A-Frame y Estudio 3D
+              </h3>
+              <p className="mt-1 text-xs leading-relaxed text-texto/70">
+                Explora lecciones interactivas con visor 3D, crea escenas en el Estudio Web o adapta los gráficos a tu PC con Geoda (N0–N4).
+              </p>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <a
+                href={primero?.href || '#/curso/blender_principiante'}
+                className="corte-poly-sm bg-white/10 px-3 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-white hover:bg-white/20"
+              >
+                Ver lección 1 →
+              </a>
+              <a
+                href={rutas.estudio}
+                className="corte-poly-sm border border-white/15 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-texto/80 hover:border-neon hover:text-neon"
+              >
+                Abrir Estudio 3D
+              </a>
+            </div>
+          </div>
+
+          <div className="corte-poly-sm flex flex-col justify-between border border-neon/40 bg-base/85 p-4">
+            <div>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-neon">
+                Paso 2 · Rol Alumno (Unirse y subir código)
+              </span>
+              <h3 className="mt-1 text-sm font-extrabold text-white">
+                Únete a la clase <code className="font-mono text-neon">AMA-7K2P</code> y envía tu código
+              </h3>
+              <p className="mt-1 text-xs leading-relaxed text-texto/70">
+                En <strong>Mi panel · Clase</strong> únete con 1 clic al grupo demo y sube el código de tu modelo (Python Blender, A-Frame o JSON) con validación en vivo.
+              </p>
+            </div>
+            <div className="mt-3">
+              <a
+                href={rutas.panel}
+                className="corte-poly-sm inline-block bg-neon px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-base hover:brightness-110"
+              >
+                Ir a Mi clase (Alumno) →
+              </a>
+            </div>
+          </div>
+
+          <div className="corte-poly-sm flex flex-col justify-between border border-amatista-claro/45 bg-base/85 p-4">
+            <div>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-amatista-claro">
+                Paso 3 · Rol Profesor (Recrear modelo 3D)
+              </span>
+              <h3 className="mt-1 text-sm font-extrabold text-white">
+                Recrea el modelo en 3D desde el código y califica
+              </h3>
+              <p className="mt-1 text-xs leading-relaxed text-texto/70">
+                Abre el visor del profesor: el motor compila el código enviado por el alumno, reconstruye la geometría 3D interactiva en pantalla y permite calificar (0–10).
+              </p>
+            </div>
+            <div className="mt-3">
+              <a
+                href={rutas.profesorPractica('asg-tren-m1')}
+                className="corte-poly-sm inline-block bg-amatista px-3.5 py-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-white hover:brightness-110"
+              >
+                Abrir Visor del Profesor →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <InvitacionRecorrido className="mt-8" />
 
       {/* El camino: elegir programa y la lista de pasos. */}
@@ -150,13 +245,13 @@ function Inicio({ consulta = {} }) {
         <TituloSeccion
           id="inicio-cursos"
           className="mb-4"
-          antetitulo="Cursos"
+          antetitulo="Cursos de Software Libre"
           titulo={
             <>
               ¿Qué quieres <span className="text-amatista-claro">crear</span>?
             </>
           }
-          descripcion="Todos los cursos ya están ordenados para ti. Elige un programa y sigue su camino desde el paso marcado como Siguiente."
+          descripcion="Todos los cursos están basados 100 % en software libre (Blender y A-Frame). Elige un programa y sigue su camino paso a paso."
         />
         <ElegirPrograma lista={lista} elegido={camino?.software.id} elegir={elegir} />
         {camino && (
@@ -215,12 +310,12 @@ function Inicio({ consulta = {} }) {
             <CristalLogo className="h-14 w-14 shrink-0" />
             <div className="min-w-0 flex-1">
               <h2 id="inicio-cuenta" className="text-xl font-extrabold text-white">
-                Guarda tu progreso en la nube
+                Sincroniza tu progreso cuando tengas conexión
               </h2>
               <p className="mt-1 text-texto/75">
                 {hayAvance
-                  ? `Tus ${xp} XP viven solo en este navegador. Crea una cuenta y lo que ya hiciste se suma a ella.`
-                  : 'Puedes empezar sin cuenta. Cuando quieras, crea una para respaldar tu avance y seguir desde cualquier dispositivo.'}
+                  ? `Tus ${xp} XP viven en este navegador. Crea una cuenta cuando quieras y todo lo que ya hiciste se fusiona automáticamente.`
+                  : 'Puedes estudiar, unirte a una clase y probar el visor del profesor sin cuenta. Crea una cuenta cuando quieras respaldar tu avance.'}
               </p>
             </div>
             <div className="grid shrink-0 gap-2 sm:w-52">

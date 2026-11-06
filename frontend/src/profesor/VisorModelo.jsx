@@ -1,7 +1,8 @@
-// Visor del modelo de un alumno: la escena que entregó, armada en el navegador
-// del profesor a partir del modelo ligero (unos KB). Canvas 2D, sin WebGL ni
-// descargas: gira con el ratón o el dedo, acerca con la rueda y tiene las
-// vistas del teclado numérico de Blender (1 frente, 3 derecha, 7 arriba).
+// Visor del modelo de un alumno: la escena que entregó, recreada en vivo en el
+// navegador del profesor a partir del CÓDIGO DEL MODELO capturado (unos pocos
+// bytes o KB, sin subir archivos .blend pesados). Canvas 2D sin WebGL: gira con
+// el ratón o el dedo, acerca con la rueda y tiene las vistas del teclado
+// numérico de Blender (1 frente, 3 derecha, 7 arriba) más inspector del código.
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { VISTAS, dibujar } from './dibujo';
 import { medidaLegible } from './modelo';
@@ -10,12 +11,19 @@ const BOTON = 'corte-poly-sm border border-white/10 bg-base/70 px-2.5 py-1.5 fon
 const ZOOM = { min: 0.35, max: 8 };
 const limitar = (valor, min, max) => Math.max(min, Math.min(max, valor));
 
+const ETIQUETA_LENGUAJE = {
+  python: 'Script Python Blender (bpy)',
+  aframe: 'Código Declarativo A-Frame (<a-scene>)',
+  json: 'Código JSON Estructural',
+  'amatista.modelo/1': 'Descriptor Cuantizado amatista.modelo/1',
+};
+
 function Muestra({ color }) {
   const [r, g, b] = color.map((c) => Math.round(c * 255));
   return <span aria-hidden="true" className="inline-block h-3 w-3 shrink-0 border border-white/20" style={{ background: `rgb(${r}, ${g}, ${b})` }} />;
 }
 
-function VisorModelo({ escena, titulo = 'Modelo del alumno' }) {
+function VisorModelo({ escena, titulo = 'Modelo del alumno', mostrarCodigoInicial = true }) {
   const lienzo = useRef(null);
   const caja = useRef(null);
   const arrastre = useRef(null);
@@ -24,6 +32,8 @@ function VisorModelo({ escena, titulo = 'Modelo del alumno' }) {
   const [alambre, setAlambre] = useState(false);
   const [resaltado, setResaltado] = useState(null);
   const [ocultos, setOcultos] = useState(() => new Set());
+  const [verCodigo, setVerCodigo] = useState(mostrarCodigoInicial);
+  const [copiado, setCopiado] = useState(false);
 
   // El lienzo sigue el ancho de su caja (teléfono o escritorio).
   useEffect(() => {
@@ -110,86 +120,133 @@ function VisorModelo({ escena, titulo = 'Modelo del alumno' }) {
       return siguiente;
     });
 
+  const copiarCodigo = () => {
+    if (!escena.codigoFuente) return;
+    navigator.clipboard?.writeText(escena.codigoFuente).then(() => {
+      setCopiado(true);
+      setTimeout(() => setCopiado(false), 1800);
+    });
+  };
+
   const mallas = useMemo(() => escena.objetos.filter((o) => o.triangulos), [escena]);
   const otros = escena.objetos.length - mallas.length;
   const [ancho, fondo, alto] = escena.medidas;
   const descripcion = `${titulo}: ${escena.cuentas.mallas} mallas, ${escena.cuentas.triangulos} triángulos, mide ${medidaLegible(ancho)} × ${medidaLegible(fondo)} × ${medidaLegible(alto)}.`;
+  const etiquetaLenguaje = ETIQUETA_LENGUAJE[escena.lenguaje] ?? 'Código estructural del modelo';
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_16rem]">
-      <div className="min-w-0">
-        <div ref={caja} className="corte-poly relative overflow-hidden border border-white/10 bg-[radial-gradient(ellipse_at_top,rgba(124,58,237,0.18),transparent_65%)] bg-base">
-          <canvas
-            ref={lienzo}
-            role="img"
-            aria-label={descripcion}
-            tabIndex={0}
-            onPointerDown={alPresionar}
-            onPointerMove={alMover}
-            onPointerUp={alSoltar}
-            onPointerCancel={alSoltar}
-            onKeyDown={alTeclear}
-            style={{ width: tamano.ancho, height: tamano.alto, touchAction: 'none' }}
-            className="block cursor-grab outline-none focus-visible:ring-2 focus-visible:ring-neon active:cursor-grabbing"
-          />
-          <p className="pointer-events-none absolute left-3 top-2 font-mono text-[10px] uppercase tracking-widest text-white/45">
-            Arrastra para girar · rueda para acercar · 1 3 7 vistas · Z alambre
-          </p>
-          {escena.resumido && (
-            <p className="absolute bottom-2 left-3 right-3 text-xs text-blender">
-              El modelo era muy pesado: algunas piezas llegaron como su caja.
-            </p>
-          )}
-        </div>
-        <div className="mt-3 flex flex-wrap gap-2" role="toolbar" aria-label="Vista del modelo">
-          <button type="button" className={BOTON} onClick={() => elegirVista('perspectiva')}>Perspectiva</button>
-          <button type="button" className={BOTON} onClick={() => elegirVista('frente')}>Frente · 1</button>
-          <button type="button" className={BOTON} onClick={() => elegirVista('derecha')}>Derecha · 3</button>
-          <button type="button" className={BOTON} onClick={() => elegirVista('arriba')}>Arriba · 7</button>
-          <button type="button" className={BOTON} aria-pressed={alambre} onClick={() => setAlambre((a) => !a)}>Alambre · Z</button>
-          <button type="button" className={BOTON} aria-label="Acercar" onClick={() => acercar(1.2)}>＋</button>
-          <button type="button" className={BOTON} aria-label="Alejar" onClick={() => acercar(1 / 1.2)}>－</button>
-        </div>
+    <div className="space-y-4">
+      <div className="corte-poly-sm flex flex-wrap items-center justify-between gap-2 border border-emerald-400/35 bg-emerald-400/10 px-3.5 py-2 text-xs text-emerald-200">
+        <span>
+          <strong>✓ Modelo recreado en vivo desde el código capturado:</strong> no se subió ningún archivo <code>.blend</code> pesado; la interfaz reconstruyó las {escena.cuentas.mallas} piezas y {escena.cuentas.triangulos} triángulos directamente desde el código.
+        </span>
+        {escena.codigoFuente && (
+          <button
+            type="button"
+            onClick={() => setVerCodigo((v) => !v)}
+            className="corte-poly-sm border border-emerald-300/40 bg-base/70 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-emerald-200 hover:border-neon hover:text-neon"
+          >
+            {verCodigo ? 'Ocultar código capturado' : 'Ver código capturado'}
+          </button>
+        )}
       </div>
 
-      <aside className="min-w-0">
-        <dl className="grid grid-cols-2 gap-2 text-sm">
-          {[
-            ['Mallas', escena.cuentas.mallas],
-            ['Triángulos', escena.cuentas.triangulos.toLocaleString('es-MX')],
-            ['Materiales', escena.cuentas.materiales],
-            ['Tamaño', `${medidaLegible(Math.max(ancho, fondo, alto))}`],
-          ].map(([etiqueta, valor]) => (
-            <div key={etiqueta} className="corte-poly-sm border border-white/10 bg-base/60 px-3 py-2">
-              <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">{etiqueta}</dt>
-              <dd className="text-lg font-extrabold text-white">{valor}</dd>
-            </div>
-          ))}
-        </dl>
-        <p className="mt-4 font-mono text-[11px] uppercase tracking-widest text-neon">Objetos</p>
-        <ul className="mt-2 max-h-72 space-y-1 overflow-y-auto pr-1 text-sm">
-          {mallas.map((o) => (
-            <li key={o.indice}>
-              <div
-                className={`flex items-center gap-2 border px-2 py-1.5 ${resaltado === o.indice ? 'border-neon bg-neon/5' : 'border-white/5 bg-base/40'}`}
-                onMouseEnter={() => setResaltado(o.indice)}
-                onMouseLeave={() => setResaltado(null)}
-              >
-                <Muestra color={o.color} />
-                <button type="button" className="min-w-0 flex-1 truncate text-left text-white/85 hover:text-white" onClick={() => setResaltado((r) => (r === o.indice ? null : o.indice))} title={o.mods.length ? `Modificadores: ${o.mods.join(', ')}` : undefined}>
-                  {o.nombre}
-                  <span className="ml-1.5 font-mono text-[10px] text-white/40">{o.triangulos.length / 3}△</span>
-                </button>
-                <button type="button" className="font-mono text-[10px] uppercase text-white/50 hover:text-neon" aria-pressed={!ocultos.has(o.indice)} onClick={() => alternarOculto(o.indice)}>
-                  {ocultos.has(o.indice) ? 'Ver' : 'Ocultar'}
-                </button>
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_16rem]">
+        <div className="min-w-0">
+          <div ref={caja} className="corte-poly relative overflow-hidden border border-white/10 bg-[radial-gradient(ellipse_at_top,rgba(124,58,237,0.18),transparent_65%)] bg-base">
+            <canvas
+              ref={lienzo}
+              role="img"
+              aria-label={descripcion}
+              tabIndex={0}
+              onPointerDown={alPresionar}
+              onPointerMove={alMover}
+              onPointerUp={alSoltar}
+              onPointerCancel={alSoltar}
+              onKeyDown={alTeclear}
+              style={{ width: tamano.ancho, height: tamano.alto, touchAction: 'none' }}
+              className="block cursor-grab outline-none focus-visible:ring-2 focus-visible:ring-neon active:cursor-grabbing"
+            />
+            <p className="pointer-events-none absolute left-3 top-2 font-mono text-[10px] uppercase tracking-widest text-white/45">
+              Arrastra para girar · rueda para acercar · 1 3 7 vistas · Z alambre
+            </p>
+            {escena.resumido && (
+              <p className="absolute bottom-2 left-3 right-3 text-xs text-blender">
+                El modelo era muy pesado: algunas piezas llegaron como su caja.
+              </p>
+            )}
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2" role="toolbar" aria-label="Vista del modelo">
+            <button type="button" className={BOTON} onClick={() => elegirVista('perspectiva')}>Perspectiva</button>
+            <button type="button" className={BOTON} onClick={() => elegirVista('frente')}>Frente · 1</button>
+            <button type="button" className={BOTON} onClick={() => elegirVista('derecha')}>Derecha · 3</button>
+            <button type="button" className={BOTON} onClick={() => elegirVista('arriba')}>Arriba · 7</button>
+            <button type="button" className={BOTON} aria-pressed={alambre} onClick={() => setAlambre((a) => !a)}>Alambre · Z</button>
+            <button type="button" className={BOTON} aria-label="Acercar" onClick={() => acercar(1.2)}>＋</button>
+            <button type="button" className={BOTON} aria-label="Alejar" onClick={() => acercar(1 / 1.2)}>－</button>
+          </div>
+        </div>
+
+        <aside className="min-w-0">
+          <dl className="grid grid-cols-2 gap-2 text-sm">
+            {[
+              ['Mallas', escena.cuentas.mallas],
+              ['Triángulos', escena.cuentas.triangulos.toLocaleString('es-MX')],
+              ['Materiales', escena.cuentas.materiales],
+              ['Tamaño', `${medidaLegible(Math.max(ancho, fondo, alto))}`],
+            ].map(([etiqueta, valor]) => (
+              <div key={etiqueta} className="corte-poly-sm border border-white/10 bg-base/60 px-3 py-2">
+                <dt className="font-mono text-[10px] uppercase tracking-widest text-white/50">{etiqueta}</dt>
+                <dd className="text-lg font-extrabold text-white">{valor}</dd>
               </div>
-            </li>
-          ))}
-        </ul>
-        {otros > 0 && <p className="mt-2 text-xs text-white/45">Además: {otros} {otros === 1 ? 'luz, cámara o vacío' : 'luces, cámaras o vacíos'}.</p>}
-        {escena.blender && <p className="mt-1 text-xs text-white/45">Hecho en Blender {escena.blender}.</p>}
-      </aside>
+            ))}
+          </dl>
+          <p className="mt-4 font-mono text-[11px] uppercase tracking-widest text-neon">Piezas recreadas</p>
+          <ul className="mt-2 max-h-72 space-y-1 overflow-y-auto pr-1 text-sm">
+            {mallas.map((o) => (
+              <li key={o.indice}>
+                <div
+                  className={`flex items-center gap-2 border px-2 py-1.5 ${resaltado === o.indice ? 'border-neon bg-neon/5' : 'border-white/5 bg-base/40'}`}
+                  onMouseEnter={() => setResaltado(o.indice)}
+                  onMouseLeave={() => setResaltado(null)}
+                >
+                  <Muestra color={o.color} />
+                  <button type="button" className="min-w-0 flex-1 truncate text-left text-white/85 hover:text-white" onClick={() => setResaltado((r) => (r === o.indice ? null : o.indice))} title={o.mods.length ? `Modificadores: ${o.mods.join(', ')}` : undefined}>
+                    {o.nombre}
+                    <span className="ml-1.5 font-mono text-[10px] text-white/40">{o.triangulos.length / 3}△</span>
+                  </button>
+                  <button type="button" className="font-mono text-[10px] uppercase text-white/50 hover:text-neon" aria-pressed={!ocultos.has(o.indice)} onClick={() => alternarOculto(o.indice)}>
+                    {ocultos.has(o.indice) ? 'Ver' : 'Ocultar'}
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+          {otros > 0 && <p className="mt-2 text-xs text-white/45">Además: {otros} {otros === 1 ? 'luz, cámara o vacío' : 'luces, cámaras o vacíos'}.</p>}
+          {escena.blender && <p className="mt-1 text-xs text-white/45">Origen: {escena.blender}.</p>}
+        </aside>
+      </div>
+
+      {verCodigo && escena.codigoFuente && (
+        <div className="corte-poly-sm border border-neon/35 bg-base/80 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2">
+            <div>
+              <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-neon">
+                Código capturado del alumno · {etiquetaLenguaje}
+              </p>
+              <p className="text-xs text-white/60">
+                Este código es lo único que viaja del alumno al profesor ({escena.codigoFuente.length.toLocaleString('es-MX')} caracteres), a partir del cual se recreó el modelo 3D de arriba.
+              </p>
+            </div>
+            <button type="button" onClick={copiarCodigo} className={BOTON}>
+              {copiado ? '¡Código copiado!' : 'Copiar código'}
+            </button>
+          </div>
+          <pre className="mt-3 max-h-56 overflow-auto font-mono text-xs leading-relaxed text-emerald-200/95">
+            <code>{escena.codigoFuente}</code>
+          </pre>
+        </div>
+      )}
     </div>
   );
 }

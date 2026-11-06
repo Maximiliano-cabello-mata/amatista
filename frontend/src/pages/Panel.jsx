@@ -1,7 +1,6 @@
-// Panel del alumno (#/panel): nivel, racha, qué sigue, avance por curso,
-// retos, actividad, exámenes, insignias y estado de la cuenta. Todo sale del
-// progreso local (useProgreso), del catálogo vigente (useCatalogo) y de la
-// sesión (useAuth): funciona igual sin conexión.
+// Panel del alumno (#/panel): mi clase (unirse y subir código del modelo), nivel,
+// racha, qué sigue, avance por curso, retos, actividad, exámenes, insignias y
+// estado de la cuenta. Funciona igual con o sin conexión.
 import { useMemo } from 'react';
 import { useAuth } from '../auth/contexto';
 import { useCatalogo } from '../catalogo/contexto';
@@ -28,10 +27,10 @@ import { rutas } from '../rutas';
 
 // Índice de Mi panel. Las rutas son por hash (#/…): los saltos se hacen con scroll, no con el enlace.
 const SECCIONES = [
+  ['panel-grupo', 'Mi clase (Subir código de modelo)'],
   ['panel-continuar', 'Qué sigue'],
-  ['panel-grupo', 'Mi grupo'],
   ['panel-cursos', 'Cursos'],
-  ['panel-programas', 'Programas'],
+  ['panel-programas', 'Software libre'],
   ['panel-retos', 'Retos'],
   ['panel-examenes', 'Exámenes'],
   ['panel-insignias', 'Insignias'],
@@ -60,7 +59,7 @@ function Panel() {
       <InvitacionRecorrido className="mt-6" />
 
       <nav aria-label="Secciones de Mi panel" className="mt-6 flex flex-wrap gap-2 font-mono text-[11px] uppercase tracking-widest">
-        {SECCIONES.filter(([id]) => usuario || id !== 'panel-grupo').map(([id, texto]) => (
+        {SECCIONES.map(([id, texto]) => (
           <a key={id} href={`#${id}`} onClick={(e) => irASeccion(e, id)} className="corte-poly-sm border border-white/10 bg-superficie/80 px-3 py-1.5 text-white/65 hover:border-neon hover:text-neon">
             {texto}
           </a>
@@ -69,10 +68,10 @@ function Panel() {
 
       {/* Móvil: una columna en orden de prioridad. Escritorio: 2/3 + 1/3. */}
       <div className="mt-6 grid gap-5 lg:grid-cols-3">
+        {/* Mi clase va primero para que el alumno y los evaluadores vean de inmediato cómo unirse y subir el código del modelo. */}
+        <GrupoPanel token={token} usuario={usuario} className="lg:col-span-3" />
         <ContinuarPanel progreso={progreso} cursos={cursos} className="lg:col-span-2" />
         <CuentaPanel usuario={usuario} sesionVencida={sesionVencida} lecciones={cuenta.lecciones} xp={xp} />
-        {/* Las prácticas que deja el profesor (panel del profesor evaluador, sql/014). */}
-        <GrupoPanel token={token} usuario={usuario} className="lg:col-span-3" />
         <CursosPanel progreso={progreso} cursos={cursos} className="lg:col-span-2" />
         <RetosPanel progreso={progreso} hoy={hoy} className="lg:row-span-2" />
         <ActividadPanel progreso={progreso} hoy={hoy} className="lg:col-span-2" />

@@ -4,22 +4,54 @@
 
 [![Hack4Edu 2026](https://img.shields.io/badge/Hack4Edu-2026-9b59b6?style=flat-square&logo=target)](docs/hack4edu/README.md)
 [![Reto 02](https://img.shields.io/badge/Reto_02-Aprender_sin_conexi%C3%B3n-00e5ff?style=flat-square)](docs/hack4edu/RETO_02_APRENDER_SIN_CONEXION.md)
+[![Software Libre](https://img.shields.io/badge/Software_Libre-100%25_Blender_%2B_A--Frame-f5792a?style=flat-square)](#1-estado-actual)
 [![Offline First PWA](https://img.shields.io/badge/PWA-Offline--First-emerald?style=flat-square)](https://amatista-3d.tech)
-[![Tests Vitest](https://img.shields.io/badge/Vitest-54%20suites%20%7C%20418%20pass-brightgreen?style=flat-square)](frontend)
-[![Presupuesto Web](https://img.shields.io/badge/Presupuesto_Web-252.6_KB_%E2%89%A4_280_KB-blue?style=flat-square)](herramientas/auditoria/estandares_web.py)
+[![Presupuesto Web](https://img.shields.io/badge/Presupuesto_Web-250.8_KB_%E2%89%A4_280_KB-blue?style=flat-square)](herramientas/auditoria/estandares_web.py)
 [![Docker](https://img.shields.io/badge/Docker-Orquestaci%C3%B3n_Local-orange?style=flat-square)](docker-compose.yml)
 
-> **Despliegue verificado con registros del 23 de octubre de 2026; código en `main` actualizado al 5 de noviembre de 2026.** La PWA pública utiliza Cloudflare Workers; la API funciona en Oracle Cloud con Caddy y Oracle Database. El dominio anterior `.me` es histórico.
+**Plataforma educativa 100 % de Software Libre para aprender creación 3D con Blender (GPL) y A-Frame (MIT), optimizada para funcionar sin conexión y en equipos escolares modestos.**
 
-> **Hack4Edu 2026 · Reto 02: Aprender sin conexión:** La etiqueta `hack4edu` separa lo que ya teníamos de lo construido durante la competencia. Consulta el **[Dossier Técnico del Reto 02](docs/hack4edu/RETO_02_APRENDER_SIN_CONEXION.md)**, la arquitectura de microservicios e IA local en **[ARQUITECTURA.md](ARQUITECTURA.md)**, y los requisitos y kit del vídeo en **[docs/hack4edu/](docs/hack4edu/README.md)**.
+---
 
-**Plataforma educativa para aprender creación 3D con Blender y llevarla a la web (GLB, A-Frame, WebXR), que sigue funcionando sin conexión.**
+## ⚡ Guía para Evaluadores (Entiende y Prueba Todo en 5 Minutos)
 
-El alumno avanza por cursos y módulos en una PWA. Cada módulo de Blender combina exploración interactiva, teoría visual con fichas de herramientas y un **proyecto práctico en Blender** que **Amatista Engine** (**Corazón Amatista 1.0** + **Amatista Motor 7.1 «Guion»**) evalúa y acompaña paso a paso dentro de Blender mediante un add-on. El progreso se guarda primero en el dispositivo y se sincroniza en una sola petición comprimida con el servidor (FastAPI + Oracle) cuando hay Internet.
+Si tienes **entre 5 y 10 minutos** para evaluar el repositorio y la plataforma, aquí tienes exactamente qué hace única a **Amatista** y cómo probar cada flujo al instante **sin necesidad de crear cuenta ni configurar servidores externos**:
 
-> **Local primero, servicios externos después.** El backend, el add-on y el asistente Goliat amplían la experiencia; ninguno es requisito para estudiar lo que ya se descargó.
+### 1. ¿Qué problema resuelve y cómo funciona?
+En escuelas con conectividad intermitente o nula y computadoras de bajos recursos:
+1. **100 % Software Libre y Cero Licencias:** Todo el plan de estudios (15 módulos, 9 talleres y 9 proyectos guiados) se enfoca exclusivamente en **Blender** y **A-Frame / WebXR**, eliminando dependencias de suites propietarias. Available con adaptación automática de hardware **Geoda (`N0–N4`)** y **100 % de animaciones en GPU (60 FPS)**.
+2. **Innovación en Aula — Captura del Código del Modelo (~1 KB) en vez de Archivos Binarios (20 MB):**
+   - Enviar archivos `.blend` o `.glb` por red escolar colapsa el ancho de banda.
+   - En Amatista, el alumno **se une a una clase con un código (`AMA-7K2P`)** y **sube el código de su modelo** (script Python `bpy.ops.mesh...`, escena declarativa `<a-scene>` de A-Frame o receta JSON `amatista.modelo/1`).
+   - La **interfaz del profesor (`#/profesor`) captura ese código y recrea el modelo 3D interactivo en vivo** en un lienzo `<canvas>` propio (sin depender de servidores de renderizado), permitiendo rotar la pieza, inspeccionar vértices/triángulos, auditar el código fuente enviado y calificar (`0–10`).
+   - *Nota arquitectónica:* La opción de renderizado remoto (`Amatista Cloud`) fue retirada de la versión final para priorizar la ejecución local fluida y se conserva documentada como propuesta técnica en [`docs/propuestas/2026-11-05_propuesta_amatista_cloud.md`](docs/propuestas/2026-11-05_propuesta_amatista_cloud.md).
 
-**Todo el proyecto en un vistazo:** [índice de la documentación](docs/README.md) · [arquitectura C4](ARQUITECTURA.md) · [reto 02 hack4edu](docs/hack4edu/RETO_02_APRENDER_SIN_CONEXION.md) · [guía de contribución](CONTRIBUTING.md) · [seguridad y privacidad](SECURITY.md) · [cronología](docs/historia/01_cronologia.md) · [mapa del repositorio](docs/manual-del-codigo/01_mapa_del_repositorio.md) · [manual del código](docs/manual-del-codigo/README.md) · [manual del desarrollador](docs/desarrollador/README.md) · [esquema SQL](docs/base-de-datos/README.md) · [tablero](KANBAN.md) · [dirección](PROYECTO.md) · [versiones](CHANGELOG.md)
+### 2. Recorrido práctico en 3 clics (5 minutos)
+
+| Tiempo | Qué probar en la aplicación | Ruta directa | Qué observar |
+|---|---|---|---|
+| **Min 1** | **Portada, Cursos Libres y Estudio 3D** | `#/` y `#/estudio` | En la portada verás el bloque **«⚡ Recorrido rápido para evaluadores»**, los caminos de **Blender** y **A-Frame**, y el **Estudio Web 3D** offline. |
+| **Min 2–3** | **Rol Alumno: Unirse a una clase y subir el código del modelo** | `#/panel` *(Mi panel · Clase)* | 1. En la tarjeta superior **«Mi clase»**, pulsa **«Unirse rápido a AMA-7K2P»**.<br>2. En cualquiera de las 3 prácticas del grupo, pulsa **«Subir código del modelo»**.<br>3. Elige una plantilla (**Tren Low-Poly en Python `bpy`**, **Faro y Cristal en `<a-scene>` A-Frame** o **Mesa en JSON**), edita el código, verifica el conteo de mallas/triángulos en vivo y pulsa **«Capturar código y enviar al profesor»**. |
+| **Min 4–5** | **Rol Profesor: Recrear el modelo 3D desde el código y calificar** | `#/profesor` o `#/profesor/practica/asg-tren-m1` | 1. Al abrir la entrega del alumno, el motor **compila el código capturado y recrea el modelo 3D interactivo** en pantalla.<br>2. Rota la cámara (`Perspectiva`, `Frente`, `Lado`, `Arriba`), despliega **«Código capturado del alumno»** para revisar el script exacto y asigna nota (`0–10`) + comentario. |
+
+### 3. Verificación rápida por terminal (1 minuto)
+
+```bash
+# 1. Auditar presupuestos web (≤ 280 KB JS/JSON, ≤ 105 KB CSS, 64/64 keyframes en GPU, 100 % software libre)
+python3 herramientas/auditoria/estandares_web.py
+
+# 2. Validar los 15 módulos curriculares (Blender + A-Frame) y las 30 pruebas del Corazón Amatista 1.0
+python3 backend/herramientas/contenido.py validar
+python3 -m unittest discover -s engine/tests -v
+```
+
+---
+
+> **Despliegue verificado con registros del 23 de octubre de 2026; código en `main` actualizado al 5 de noviembre de 2026.** La PWA pública utiliza Cloudflare Workers; la API funciona en Oracle Cloud con Caddy y Oracle Database.
+>
+> **Hack4Edu 2026 · Reto 02: Aprender sin conexión:** Consulta el **[Dossier Técnico del Reto 02](docs/hack4edu/RETO_02_APRENDER_SIN_CONEXION.md)**, la **[Auditoría y Optimización Integral](docs/auditoria/2026-11-05_auditoria_y_optimizacion_integral.md)** y la arquitectura en **[ARQUITECTURA.md](ARQUITECTURA.md)**.
+
+**Todo el proyecto en un vistazo:** [índice de la documentación](docs/README.md) · [auditoría y optimización 2026-11-05](docs/auditoria/2026-11-05_auditoria_y_optimizacion_integral.md) · [propuesta Amatista Cloud](docs/propuestas/2026-11-05_propuesta_amatista_cloud.md) · [arquitectura C4](ARQUITECTURA.md) · [reto 02 hack4edu](docs/hack4edu/RETO_02_APRENDER_SIN_CONEXION.md) · [guía de contribución](CONTRIBUTING.md) · [seguridad y privacidad](SECURITY.md) · [mapa del repositorio](docs/manual-del-codigo/01_mapa_del_repositorio.md) · [esquema SQL](docs/base-de-datos/README.md) · [tablero](KANBAN.md) · [versiones](CHANGELOG.md)
 
 ---
 
@@ -50,13 +82,14 @@ Código revisado al **5 de noviembre de 2026**:
 | Frente | Dónde está |
 |---|---|
 | **Producción** | Verificada en `amatista-3d.tech` (Cloudflare Workers) y `api.amatista-3d.tech` (Oracle Cloud + Caddy + FastAPI + Oracle). [Bitácora pública](docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md). |
-| **Corazón Amatista 1.0 y Motor 7.1** | Núcleo determinista en Python puro (`engine/amatista_engine/corazon/`, contrato `amatista.corazon/1`) con director, andamio por herramienta, señales comprobadas cada 0,5 s, perfiles y ramas con herencia (`practices/ramas/`). Add-on **Amatista Motor 7.1** (`addon/amatista_blender/guion/`): pasos evaluados por el estado real de la escena. [Corazón](docs/motor/referencia/23_corazon.md) · [Motor 7 Guion](docs/motor/referencia/22_motor_7.md). |
+| **Aula y Recreación 3D por Código** | Flujo completo Alumno ↔ Profesor (`frontend/src/profesor/modelo.js`, `aulaLocal.js`, `GrupoPanel.jsx`, `VisorModelo.jsx`): el alumno se une a una clase (`AMA-7K2P`) y envía el código de su modelo (`bpy`, `<a-scene>` o JSON ~1 KB); la interfaz del profesor (`#/profesor`) compila el código y recrea la malla 3D interactiva en vivo. |
+| **Corazón Amatista 1.0 y Motor 7.1** | Núcleo determinista en Python puro (`engine/amatista_engine/corazon/`, contrato `amatista.corazon/1`) con perfiles 100 % de software libre (`blender` y `aframe`), director, andamio por herramienta y señales comprobadas cada 0,5 s. Add-on **Amatista Motor 7.1** (`addon/amatista_blender/guion/`). [Corazón](docs/motor/referencia/23_corazon.md) · [Motor 7 Guion](docs/motor/referencia/22_motor_7.md). |
 | **Amatista Taller y Fichas (Motor 5 a 6.2)** | 33 habilidades en 9 talleres (`practices/blender/habilidades.json`), 26 fichas de herramientas y 9 zonas de Blender (`practices/blender/fichas.json`), termómetro de ánimo, autosanación de copias instaladas, plantilla «Blender Amatista», enlace `amatista://` e instaladores `.exe` y `.deb`. [Motor 6.2](docs/motor/referencia/21_motor_6_2.md). |
-| **Cursos publicados (15 módulos)** | **Blender** en tres niveles (**Principiante**, **Principiante-Intermedio** e **Intermedio**: 9 módulos, 9 talleres y 9 proyectos) y **A-Frame** en dos cursos (**Inicial** con 3 módulos e **Interactivo** con 3 módulos, incluido WebXR). [Ruta de Blender](docs/cursos/03_ruta_de_aprendizaje_blender.md) · [Camino y Motor Web](docs/plataforma/13_camino_graficos_y_motor_web.md). |
+| **Cursos publicados (15 módulos libres)** | **Blender** en tres niveles (**Principiante**, **Principiante-Intermedio** e **Intermedio**: 9 módulos, 9 talleres y 9 proyectos) y **A-Frame** en dos cursos (**Inicial** con 3 módulos e **Interactivo** con 3 módulos, incluido WebXR). [Ruta de Blender](docs/cursos/03_ruta_de_aprendizaje_blender.md) · [Camino y Motor Web](docs/plataforma/13_camino_graficos_y_motor_web.md). |
 | **Estudio A-Frame y Motor Web** | Editor libre en `#/estudio` con vista 3D en vivo, 8 plantillas, piezas insertables, modelos GLB low poly offline y el Motor Web (`frontend/src/motor3d/`) para entornos generados y retos. [Multiplataforma](docs/plataforma/12_multiplataforma_y_accesible.md). |
 | **Goliat, Avatares y Buzón** | **Goliat** (`frontend/src/goliat/`), compañero low poly en navegador que apoya cuando una práctica se complica con 0 ms de latencia; **avatares low poly** por cuenta y **Buzón del creador** (`#/buzon`, SQL `013`). [Goliat](docs/plataforma/15_goliat.md) · [Avatares y buzón](docs/plataforma/16_avatares_y_buzon.md). |
 | **Escuelas con pocos datos y Brevo** | Sincronización en una sola petición comprimida con gzip (`POST /api/sincronizar`), cola Outbox transaccional en `IndexedDB`, modo «Ahorro de datos» y correos transaccionales personalizados con Brevo API v3 y SMTP relay. [Pocos datos](docs/plataforma/17_pocos_datos.md). |
-| **Centro 3D, Geoda e IA Local** | Adaptación de hardware N0–N4 (`frontend/src/geoda/`), servidor de IA local del aula (`ai_tutor:8090` con Ollama confinado sin Internet) y Circuit Breaker. [Reto 02](docs/hack4edu/RETO_02_APRENDER_SIN_CONEXION.md) · [Arquitectura](ARQUITECTURA.md). |
+| **Centro 3D, Geoda e IA Local** | Adaptación de hardware N0–N4 (`frontend/src/geoda/`), 64/64 `@keyframes` compuestos en GPU, servidor de IA local del aula (`ai_tutor:8090` con Ollama confinado sin Internet) y Circuit Breaker. [Reto 02](docs/hack4edu/RETO_02_APRENDER_SIN_CONEXION.md) · [Arquitectura](ARQUITECTURA.md). |
 
 ---
 
@@ -66,11 +99,11 @@ Código revisado al **5 de noviembre de 2026**:
 
 Amatista resuelve el desafío mediante una arquitectura **Offline-First Radical** estructurada en cinco capas de resiliencia técnica:
 
-1. **Grafo Mínimo y Caché Estática Universal (≤ 280 KB):** El grafo JavaScript inicial de la PWA pesa solo **252,6 KB** (54 módulos), complementado por un índice completo de cursos de **5,5 KB gzip**. Toda la plataforma, lecciones y visor WebXR quedan precacheados tras la primera visita.
-2. **Cola Transaccional Outbox (`colaSincronizacion.js`):** El avance académico se persiste atómicamente en `IndexedDB`. Las escrituras consecutivas se compactan en el cliente y, al detectar red, se sincronizan en un único lote comprimido con gzip (`POST /api/sincronizar`), ahorrando entre el 80 % y el 90 % de los datos móviles.
-3. **Perfilado y Adaptación de Hardware N0–N4 (`Geoda`):** Clasifica el dispositivo escolar sin enviar datos a la red. Adapta el DPR (1.0× a 2.0×), la resolución de texturas (512 px vs 1024 px PBR) y activa el modo ligero (`html.ligero`) para netbooks modestas de 2 GB de RAM.
-4. **Inteligencia Artificial Local en Servidor de Aula (`ai_tutor:8090`):** Con `make up`, el servidor del aula levanta el microservicio RAG local sobre 26 fichas técnicas de Blender y el motor LLM Ollama (`qwen2.5-coder:3b`), aislado en la red interna `red_interna_ia` (`internal: true`, sin salida a Internet). Cuenta con Circuit Breaker y fallback en 0 ms a Goliat en navegador.
-5. **Modelo Cognitivo BKT y Pedagogía Desconectada:** Seguimiento continuo de 33 habilidades mediante *Bayesian Knowledge Tracing* en cliente y servidor, notificaciones motivacionales inteligentes de racha y buzón asíncrono para dudas con el docente.
+1. **Grafo Mínimo y Caché Estática Universal (≤ 280 KB):** El grafo JavaScript inicial de la PWA se mantiene bajo el presupuesto estricto de **280 KB**, complementado por un índice completo de cursos de **5,5 KB gzip**. Toda la plataforma, lecciones y visor WebXR quedan precacheados tras la primera visita.
+2. **Entregas de Aula por Código (~1 KB vs 20 MB):** Los alumnos entregan el código declarativo o script de su modelo 3D y el visor del profesor reconstruye la geometría en el navegador, reduciendo el consumo de red en un **99,9 %**.
+3. **Cola Transaccional Outbox (`colaSincronizacion.js`):** El avance académico se persiste atómicamente en `IndexedDB`. Las escrituras consecutivas se compactan en el cliente y, al detectar red, se sincronizan en un único lote comprimido con gzip (`POST /api/sincronizar`).
+4. **Perfilado y Adaptación de Hardware N0–N4 (`Geoda`):** Clasifica el dispositivo escolar sin enviar datos a la red. Adapta el DPR (1.0× a 2.0×), la resolución de texturas (512 px vs 1024 px PBR) y activa el modo ligero (`html.ligero`) para netbooks modestas de 2 GB de RAM.
+5. **Inteligencia Artificial Local en Servidor de Aula (`ai_tutor:8090`):** Con `make up`, el servidor del aula levanta el microservicio RAG local sobre 26 fichas técnicas de Blender y el motor LLM Ollama (`qwen2.5-coder:3b`), aislado en la red interna `red_interna_ia` (`internal: true`, sin salida a Internet). Cuenta con Circuit Breaker y fallback en 0 ms a Goliat en navegador.
 
 - 📄 **Dossier técnico completo:** **[docs/hack4edu/RETO_02_APRENDER_SIN_CONEXION.md](docs/hack4edu/RETO_02_APRENDER_SIN_CONEXION.md)**
 - 🏛️ **Diagrama C4 y Decisiones ADR:** **[ARQUITECTURA.md](ARQUITECTURA.md)**
@@ -94,7 +127,7 @@ Amatista nació el **27 de septiembre de 2026** y en seis semanas evolucionó de
 | 21–29 oct | Multiplataforma, Motor Web y `.tech` | Estudio A-Frame (`#/estudio`), Motor Web 3D, 6 módulos de A-Frame y despliegue en `amatista-3d.tech` | PR #37 a #39 |
 | 30–31 oct | Motores 6 a 7.1, Corazón y Goliat | Blender Amatista, fichas (`fichas.json`), Goliat, avatares y buzón (SQL 013), **Corazón Amatista 1.0** | PR #41 a #50 |
 | 1–3 nov | Centro 3D y Geoda | Detección N0–N4, perfiles por hardware y corte oficial de Hack4Edu | Etiqueta `hack4edu` |
-| 4–5 nov | Notificaciones, Brevo e IA Local | Motor de notificaciones estilo Duolingo, correos personalizados Brevo, orquestación Docker y microservicio `ai_tutor` | `v3.6.0` |
+| 4–5 nov | Notificaciones, Aula por Código y Optimización GPU | Flujo Alumno/Profesor por código de modelo, 100 % software libre (`Blender` + `A-Frame`), 64/64 keyframes GPU e IA Local | `v3.6.0` |
 
 ---
 
@@ -104,9 +137,9 @@ Amatista nació el **27 de septiembre de 2026** y en seis semanas evolucionó de
 
 | Rol | Qué hace en Amatista |
 |---|---|
-| **Alumno** | Sigue el camino guiado de **Blender** (9 módulos) y **A-Frame** (6 módulos), practica en el **Estudio A-Frame** (`#/estudio`), recibe apoyo de **Goliat**, elige su avatar low poly, escribe al **Buzón del creador** (`#/buzon`) y consulta su avance en **Mi panel**. Funciona sin cuenta y sin conexión; al registrarse, fusiona su progreso local. |
-| **Profesor** | Consulta el panel de administración en solo lectura: resumen, módulos, prácticas, herramientas, auditoría y alumnos. |
-| **Administrador** | Crea y publica módulos con la Fórmula Amatista, edita lecciones con más de 25 bloques interactivos y gráficos, responde el buzón del creador, audita contenido y practica en Blender sin guardar progreso (cada sesión arranca de cero). |
+| **Alumno** | Sigue el camino guiado de **Blender** (9 módulos) y **A-Frame** (6 módulos), se une a una clase con código (ej. `AMA-7K2P`), **envía el código de sus modelos 3D** desde `Mi panel · Clase` (`#/panel`), practica en el **Estudio A-Frame** (`#/estudio`), recibe apoyo de **Goliat** y consulta su avance sin conexión. |
+| **Profesor** | Crea grupos y prácticas en `#/profesor`, recibe el código de los modelos enviados por sus alumnos, **recrea la escena 3D interactiva en vivo** desde el código capturado, inspecciona geometría/dimensiones y asigna calificaciones (`0–10`) con retroalimentación. |
+| **Administrador** | Crea y publica módulos con la Fórmula Amatista, edita lecciones con más de 25 bloques interactivos y gráficos, responde el buzón del creador y audita contenido en `#/admin`. |
 
 Detalle por pantalla: [mapa de la plataforma](docs/plataforma/01_mapa_de_la_plataforma.md).
 
@@ -148,10 +181,11 @@ Consulta el diagrama C4 detallado, el aislamiento de redes y los registros de de
 
 ```text
 amatista/
-├── frontend/                  PWA React 19 + Vite 8 + Tailwind 4 (310 archivos en src/)
-│   ├── src/pages/             Inicio, Curso, Leccion, Estudio, Panel, Blender, Vincular, Guia, Buzon, cuenta/*, admin/*
+├── frontend/                  PWA React 19 + Vite 8 + Tailwind 4 (308 archivos en src/)
+│   ├── src/pages/             Inicio, Curso, Leccion, Estudio, Panel, Profesor, Blender, Vincular, Guia, Buzon, cuenta/*, admin/*
+│   ├── src/profesor/          Compilador de código a 3D (modelo.js), aulaLocal.js, VisorModelo.jsx y proyección 3D (dibujo.js)
 │   ├── src/nucleo/            dispositivo.js (N0–N4), colaSincronizacion.js (Outbox), iaLocal.js (Circuit Breaker)
-│   ├── src/components/        estructura/ (Facetas), leccion/, modulo/, panel/, admin/, etiquetas/, graficas/
+│   ├── src/components/        estructura/ (Facetas), leccion/, modulo/, panel/ (GrupoPanel + EditorCodigoModelo), admin/
 │   ├── src/motor3d/           Motor Web de Amatista sobre A-Frame (escenas, física ligera, retos)
 │   ├── src/estudio/           Estudio A-Frame (#/estudio): plantillas, piezas y modelos GLB offline
 │   ├── src/goliat/            Goliat: asistente por reglas en el navegador y proyectos guiados (latencia 0 ms)
@@ -159,26 +193,26 @@ amatista/
 │   ├── src/buzon/             Cliente del buzón del creador
 │   ├── src/progreso/          Sincronización offline-first, compresión gzip y modo Ahorro de datos
 │   └── src/data/modulos/      15 módulos publicados en JSON (9 de Blender + 6 de A-Frame) y archivo/
-├── backend/                   API FastAPI + SQLAlchemy 2 (82 archivos)
-│   ├── api/                   14 routers: auth, sesiones, progreso, eventos, sincronizar, admin, contenido,
-│   │                          niveles, blender, addon, enlace, taller, perfil, buzon
+├── backend/                   API FastAPI + SQLAlchemy 2 (67 archivos)
+│   ├── api/                   Routers activos: auth, sesiones, progreso, eventos, sincronizar, admin, contenido,
+│   │                          niveles, blender, addon, enlace, taller, perfil, buzon, evaluacion (y nube como propuesta opcional)
 │   ├── contenido/             Motor de validación, plantillas y cálculo de Amatista Taller en servidor
-│   ├── database/              Conexión dual (Oracle ATP / SQLite) y 24 tablas en modelos.py
-│   ├── sql/                   Scripts aditivos de Oracle 001–013 (orden en sql/LEEME.txt)
+│   ├── database/              Conexión dual (Oracle ATP / SQLite) y 27 tablas en modelos.py
+│   ├── sql/                   Scripts aditivos de Oracle 001–014 (orden en sql/LEEME.txt)
 │   └── herramientas/          contenido.py, crear_admin.py, migrar.py, auditoria_seguridad.py, rendimiento.py
 ├── ai_tutor/                  Microservicio de IA Local RAG + LLM (Python 3.11-slim, UID 10001, read_only)
 │   ├── motor_ia.py            RAG en memoria sobre practices/blender/fichas.json + cliente Ollama
 │   ├── servicio.py            Endpoints FastAPI (:8090) para tutoría y diagnóstico geométrico
 │   └── Dockerfile             Contenedor endurecido multi-etapa para ejecución en servidor de aula
-├── engine/                    Amatista Engine en Python puro, sin bpy (129 archivos)
+├── engine/                    Amatista Engine en Python puro, sin bpy (96 archivos)
 │   ├── amatista_engine/
-│   │   ├── corazon/           Corazón Amatista 1.0 (amatista.corazon/1): director, andamio, señales, perfiles y ramas
+│   │   ├── corazon/           Corazón Amatista 1.0 (amatista.corazon/1): director, andamio, señales y perfiles libres (blender, aframe)
 │   │   ├── guion/             Motor 7 «Guion»: pasos con verbo, pistas reales y evaluación sin orden fijo
 │   │   ├── taller/            Motor 5 «Amatista Taller»: habilidades BKT, molde, demostraciones y repaso Leitner
 │   │   └── validators/        43 validadores declarativos (incluidos example.matches y taller.molde)
 │   └── herramientas/          corazon.py, practicas.py, referencias.py, formato_json.py, run_in_blender.py
-├── addon/                     Extensión Amatista Motor 7.1.0 para Blender 4.2+ (101 archivos)
-│   ├── amatista_blender/      corazon/, guion/, taller/, interfaz/, plantilla_amatista/, fichas.py, protocolo.py
+├── addon/                     Extensión Amatista Motor 7.1.0 para Blender 4.2+ (76 archivos)
+│   ├── amatista_blender/      corazon/, guion/, taller/, interfaz/, plantilla_amatista/, modelo_ligero.py, fichas.py, protocolo.py
 │   └── herramientas/          construir.py, instaladores.py (.exe y .deb)
 ├── practices/                 Contenido declarativo del motor
 │   ├── blender/               9 prácticas de proyecto, cursos.json, habilidades.json, fichas.json, palabras.json
@@ -189,7 +223,7 @@ amatista/
 ├── ARQUITECTURA.md            Diagrama C4 de contenedores, aislamiento de redes y decisiones ADR
 ├── CONTRIBUTING.md            Guía de contribución, presupuestos web y flujo de desarrollo
 ├── SECURITY.md                Política de seguridad, divulgación y privacidad estudiantil
-├── docs/                      215 documentos organizados en 11 secciones → docs/README.md
+├── docs/                      Documentación técnica, auditorías y propuestas (incl. propuesta Amatista Cloud) → docs/README.md
 └── CHANGELOG.md               Historial detallado de entregas
 ```
 
@@ -214,6 +248,7 @@ Oracle Autonomous Database 23ai en producción (esquema `ADMIN`); SQLite en desa
 | `011` | Detalle del instructor compartido entre procesos (`ADDON_ENLACES.DETALLE`) |
 | `012` | Amatista Taller: modelo BKT por habilidad y `TALLERES_ALUMNO` (**21 tablas**) |
 | `013` | Avatares y buzón del creador (`PERFILES`, `SUGERENCIAS`, `SUGERENCIA_MENSAJES`: **24 tablas**) |
+| `014` | Grupos escolares, miembros, asignaciones y entregas con código/modelo (`GRUPOS`, `GRUPO_MIEMBROS`, `ASIGNACIONES`, `ENTREGAS`: **27 tablas**) |
 
 ---
 
@@ -224,7 +259,7 @@ Oracle Autonomous Database 23ai en producción (esquema `ADMIN`); SQLite en desa
 | PWA | React 19, Vite 8, Tailwind CSS 4, vite-plugin-pwa, IndexedDB, A-Frame 1.8, Vitest, ESLint |
 | API | FastAPI, Uvicorn, SQLAlchemy 2, python-oracledb, compresión GZip bidireccional, pytest |
 | IA Local | Microservicio FastAPI (`ia-tutor:8090`), RAG en memoria (`fichas.json`), Ollama (`qwen2.5-coder:3b`), red interna Docker |
-| Datos | Oracle Autonomous Database 23ai (24 tablas), SQLite, PL/SQL (`AMATISTA_AUTOR`) |
+| Datos | Oracle Autonomous Database 23ai (27 tablas), SQLite, PL/SQL (`AMATISTA_AUTOR`) |
 | Blender | Blender 4.2+ (probado en 4.2 y 5.0), add-on **Amatista Motor 7.1.0**, **Corazón Amatista 1.0** y **Amatista Engine** |
 | Servidor | Cloudflare Workers (PWA), VM en Oracle Cloud, Docker Compose, Caddy y Cloudflare SSL |
 | Proceso | GitHub Actions (CI, instaladores y tablero), commits firmados con SSH |
@@ -281,11 +316,11 @@ make audit
 |---|---|
 | `backend/herramientas/contenido.py` | Validar, importar, exportar y crear módulos y lecciones; niveles; publicar prácticas |
 | `backend/herramientas/crear_admin.py` | Dar el rol de administrador a una cuenta |
-| `backend/diagnostico_oracle.py` | Comparar las 24 tablas de Oracle con `modelos.py` |
+| `backend/diagnostico_oracle.py` | Comparar las tablas de Oracle con `modelos.py` |
 | `engine/herramientas/corazon.py` | Inspeccionar ramas, perfiles y simular turnos del Corazón Amatista sin Blender |
 | `engine/herramientas/practicas.py` | Crear, revisar y probar prácticas (58 casos resueltos) sin Blender |
 | `backend/herramientas/auditoria_seguridad.py` | Auditar todas las rutas de la API contra inyección SQL, permisos y fuerza bruta |
-| `herramientas/auditoria/estandares_web.py` | Verificar presupuestos de tamaño web (≤ 280 KB) y rugosidad de mallas |
+| `herramientas/auditoria/estandares_web.py` | Verificar presupuestos de tamaño web (≤ 280 KB), 100 % keyframes en GPU, exclusividad de software libre y rugosidad de mallas |
 | `addon/herramientas/construir.py` e `instaladores.py` | Construir `dist/amatista-7.1.0.zip` e instaladores `.exe` / `.deb` |
 | `tablero/actualizar.py` | Regenerar `KANBAN.md` a partir de `tablero/tareas.yml` y el historial de Git |
 
@@ -309,7 +344,7 @@ Tags publicados en GitHub hasta `v3.0.0-alpha.10`; corte oficial de Hack4Edu en 
 
 ## 13. Qué sigue
 
-1. **Cerrar despliegue en producción y pruebas con ventana en Blender**: aplicar `007` a `013` en Oracle, actualizar el backend en la VM, reinstalar el add-on 7.1 y ejecutar las pruebas visuales pendientes (`T-113`, `T-143`, `T-178`, `T-182`).
+1. **Cerrar despliegue en producción y pruebas con ventana en Blender**: aplicar `007` a `014` en Oracle, actualizar el backend en la VM, reinstalar el add-on 7.1 y ejecutar las pruebas visuales pendientes (`T-113`, `T-143`, `T-178`, `T-182`).
 2. **Seguridad y operación del servidor**: pasar al usuario `AMATISTA_APP` (`004`, `T-004`), cerrar el puerto 8000 directo en OCI (`T-130`), configurar SMTP (`T-032`) y activar Sentry (`T-185`).
 3. **Centro 3D y experimento de estadía con G7B (`v3.5.0`)**: detección de nivel de equipo (`N0`–`N4`) en el add-on (`T-188`), telemetría agregada con consentimiento (`T-187`, `T-189`, `T-190`) y recomendaciones adaptadas en Mi panel (`T-192`).
 
@@ -319,6 +354,8 @@ Tags publicados en GitHub hasta `v3.0.0-alpha.10`; corte oficial de Hack4Edu en 
 
 | Sección | Qué encuentras |
 |---|---|
+| [Auditoría y Optimización 2026-11-05](docs/auditoria/2026-11-05_auditoria_y_optimizacion_integral.md) | Informe completo de auditoría, enfoque 100 % software libre, flujo de aula por código y optimización 60 FPS en GPU |
+| [Propuesta Amatista Cloud](docs/propuestas/2026-11-05_propuesta_amatista_cloud.md) | Documento de arquitectura de sesiones efímeras en contenedor (conservado como propuesta técnica, fuera de la versión final) |
 | [Hack4Edu 2026](docs/hack4edu/README.md) | Reto 02, requisitos, antes y ahora, y [dossier técnico offline](docs/hack4edu/RETO_02_APRENDER_SIN_CONEXION.md) |
 | [Arquitectura C4](ARQUITECTURA.md) | Diagrama de contenedores, microservicios, aislamiento de IA y registros ADR |
 | [Contribución](CONTRIBUTING.md) | Guía para desarrolladores, comandos Makefile y presupuestos web auditados |
@@ -328,9 +365,8 @@ Tags publicados en GitHub hasta `v3.0.0-alpha.10`; corte oficial de Hack4Edu en 
 | [Amatista Engine](docs/motor/README.md) | Corazón Amatista 1.0, Motor 7 «Guion», Amatista Taller (Motor 5) y referencia del add-on |
 | [Manual del código](docs/manual-del-codigo/README.md) | Mapa del repositorio, frontend, backend, motor y add-on explicados con recetas |
 | [Manual del desarrollador](docs/desarrollador/README.md) | Entorno, herramientas CLI, pruebas, CI y flujo de trabajo |
-| [Base de datos](docs/base-de-datos/README.md) | Esquema SQL completo (24 tablas), diagrama entidad-relación y migración |
+| [Base de datos](docs/base-de-datos/README.md) | Esquema SQL completo (27 tablas), diagrama entidad-relación y migración |
 | [Despliegue público .tech](docs/despliegue/2026-10-29_despliegue_publico_amatista_3d_tech.md) | Cloudflare Workers, OCI, Caddy, Oracle, Motor 6/7 y Sentry |
-| [Auditoría y Seguridad](docs/auditoria/2026-10-11_auditoria_completa.md) | Auditoría completa del repositorio, [seguridad](docs/seguridad/01_auditoria_2026-10-05.md) y [rendimiento](docs/rendimiento/2026-10-05_informe.md) |
 
 ---
 

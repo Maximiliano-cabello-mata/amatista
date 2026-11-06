@@ -56,7 +56,7 @@ export default function MenuMovil({
               pagina === 'panel' ? 'bg-white/10 text-white' : 'text-white/70 hover:text-neon'
             }`}
           >
-            Mi panel
+            Mi panel · Clase (Alumno)
           </a>
         </li>
         {verEvaluar && (
@@ -69,7 +69,7 @@ export default function MenuMovil({
                 pagina === 'profesor' ? 'bg-white/10 text-white' : 'text-white/70 hover:text-neon'
               }`}
             >
-              Evaluar
+              Profesor · Recrear 3D
             </a>
           </li>
         )}

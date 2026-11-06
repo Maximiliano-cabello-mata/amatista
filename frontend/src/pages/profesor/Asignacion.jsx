@@ -1,6 +1,7 @@
 // Las entregas de una práctica: una fila por alumno (primero lo que espera
-// evaluación), el modelo de cada uno armado aquí y la evaluación.
-import { useState } from 'react';
+// evaluación), el modelo de cada uno recreado en 3D a partir del código
+// capturado y el formulario de evaluación docente.
+import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../../auth/contexto';
 import { Boton, CampoAdmin, CargandoAdmin, ErrorAdmin, Kpi, Mensaje, Pastilla, Tarjeta, Vacio } from '../../components/admin/ui';
 import { useDatosAdmin } from '../../components/admin/useDatosAdmin';
@@ -31,18 +32,18 @@ function Evaluar({ asignacion, fila, alEvaluar }) {
       setEstado({ enviando: false, error: r.error, hecho: null });
       return;
     }
-    setEstado({ enviando: false, error: null, hecho: tipo === 'evaluada' ? 'Evaluación guardada: el alumno la verá en Mi panel.' : 'Le pediste rehacerla: podrá volver a entregar.' });
+    setEstado({ enviando: false, error: null, hecho: tipo === 'evaluada' ? 'Evaluación guardada: el alumno ya la ve en Mi panel › Mi clase.' : 'Le pediste rehacerla: podrá actualizar el código de su modelo.' });
     alEvaluar(r.datos);
   };
 
   return (
-    <div className="grid gap-4 sm:grid-cols-[8rem_minmax(0,1fr)]">
+    <div className="grid gap-4 border-t border-white/10 pt-4 sm:grid-cols-[8rem_minmax(0,1fr)]">
       <CampoAdmin etiqueta="Calificación" ayuda="De 0 a 10 (opcional).">
         {({ id, describe }) => (
           <input id={id} aria-describedby={describe} type="number" min={0} max={10} step={1} inputMode="numeric" className={CAMPO} value={nota} onChange={(e) => setNota(e.target.value)} />
         )}
       </CampoAdmin>
-      <CampoAdmin etiqueta="Comentario para el alumno" ayuda="Qué hizo bien y qué le falta. Lo lee en Mi panel.">
+      <CampoAdmin etiqueta="Comentario para el alumno" ayuda="Qué hizo bien y qué le falta. Lo lee al instante en Mi panel › Mi clase.">
         {({ id, describe }) => (
           <textarea id={id} aria-describedby={describe} className={`${CAMPO} min-h-24`} maxLength={1000} value={comentario} onChange={(e) => setComentario(e.target.value)} />
         )}
@@ -63,38 +64,56 @@ function Detalle({ asignacion, fila, alEvaluar }) {
   const { token, usuario } = useAuth();
   const [modelo, setModelo] = useState({ cargando: false, resultado: null });
   const entrega = fila.entrega;
+  const profesorId = usuario?.id || 'profesor-local';
 
-  const abrir = async () => {
+  const abrir = useCallback(async () => {
     setModelo({ cargando: true, resultado: null });
-    const resultado = await traerModelo({ token, profesorId: usuario.id, asignacion, fila });
+    const resultado = await traerModelo({ token, profesorId, asignacion, fila });
     setModelo({ cargando: false, resultado });
-  };
+  }, [token, profesorId, asignacion, fila]);
+
+  // Recrea automáticamente el modelo en cuanto el profesor selecciona a un alumno con entrega.
+  useEffect(() => {
+    if (entrega?.resumen) {
+      abrir();
+    }
+  }, [entrega?.entregada_en, entrega?.resumen, abrir]);
 
   const resultado = modelo.resultado;
   return (
     <Tarjeta etiqueta={fila.alumno.email} titulo={fila.alumno.nombre} accion={<Pastilla tono={estadoAlumno(fila).tono}>{estadoAlumno(fila).texto}</Pastilla>}>
       {!entrega ? (
-        <Vacio titulo="Todavía no entrega.">
-          {fila.avance ? `Va en ${fila.avance.progreso} % con ${fila.avance.intentos} intentos y ${fila.avance.pistas} pistas.` : 'No ha abierto la práctica en Blender.'}
+        <Vacio titulo="Todavía no entrega el código de su modelo.">
+          {fila.avance ? (
+            `Va en ${fila.avance.progreso} % con ${fila.avance.intentos} intentos.`
+          ) : (
+            <span>
+              Puedes enviar una entrega como alumno desde{' '}
+              <a href={`${rutas.panel}#panel-grupo`} className="font-bold text-neon underline">
+                Mi panel › Mi clase
+              </a>{' '}
+              y se recreará aquí al instante.
+            </span>
+          )}
         </Vacio>
       ) : (
         <div className="space-y-5">
           <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <Kpi etiqueta="Motor" valor={`${entrega.progreso} %`} detalle={entrega.completada ? 'Práctica completa' : 'Sin terminar'} tono={entrega.completada ? 'text-emerald-300' : 'text-white'} />
             <Kpi etiqueta="Intentos" valor={entrega.intentos} />
-            <Kpi etiqueta="Entregó" valor={fecha(entrega.entregada_en, { soloDia: true })} detalle={entrega.tarde ? 'Después de la fecha' : null} tono="text-white text-xl" />
-            <Kpi etiqueta="Modelo" valor={entrega.resumen ? entrega.resumen.triangulos.toLocaleString('es-MX') : '—'} detalle={entrega.resumen ? `triángulos · ${bytesLegibles(entrega.modelo_bytes)}` : 'Sin modelo'} />
+            <Kpi etiqueta="Entregó" valor={fecha(entrega.entregada_en, { soloDia: true })} detalle={entrega.tarde ? 'Después de la fecha' : 'A tiempo'} tono="text-white text-xl" />
+            <Kpi etiqueta="Código capturado" valor={bytesLegibles(entrega.modelo_bytes)} detalle={entrega.resumen ? `${entrega.resumen.objetos} piezas · ${entrega.resumen.triangulos.toLocaleString('es-MX')} △` : 'Sin modelo'} tono="text-neon" />
           </dl>
 
           {entrega.resumen && !resultado?.ok && (
             <div className="corte-poly-sm flex flex-col gap-3 border border-dashed border-white/15 p-4 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm text-white/65">
                 {entrega.modelo_en_servidor
-                  ? `Al abrirlo se descarga (${bytesLegibles(entrega.modelo_bytes)}) y se guarda solo en esta computadora; el servidor lo borra.`
+                  ? `Al recrearlo se lee el código capturado (${bytesLegibles(entrega.modelo_bytes)}) y se reconstruye la geometría 3D en este navegador.`
                   : 'Ya lo recogiste: se abre en la computadora donde lo abriste la primera vez.'}
               </p>
               <Boton variante="neon" onClick={abrir} disabled={modelo.cargando}>
-                {modelo.cargando ? 'Abriendo…' : 'Ver su modelo'}
+                {modelo.cargando ? 'Recreando modelo 3D…' : 'Recrear modelo desde el código'}
               </Boton>
             </div>
           )}
@@ -105,8 +124,8 @@ function Detalle({ asignacion, fila, alEvaluar }) {
           )}
           {resultado?.ok && (
             <>
-              {!resultado.guardado && <Mensaje tono="aviso">Este navegador no pudo guardarlo: el servidor lo conserva para que lo abras desde otra computadora.</Mensaje>}
-              <VisorModelo escena={resultado.escena} titulo={`Modelo de ${fila.alumno.nombre}`} />
+              {!resultado.guardado && <Mensaje tono="aviso">Este navegador no pudo guardarlo en IndexedDB: se conserva disponible para volver a recrearlo.</Mensaje>}
+              <VisorModelo escena={resultado.escena} titulo={`Modelo recreado de ${fila.alumno.nombre}`} />
             </>
           )}
 
@@ -128,7 +147,9 @@ function Asignacion({ asignacionId }) {
   const { asignacion, alumnos } = respuesta.datos;
   const filas = ordenarAlumnos(alumnos);
   const cuenta = contarEstados(alumnos);
-  const fila = filas.find((f) => f.alumno.id === elegido) ?? null;
+  // Si no se ha elegido ninguno, selecciona automáticamente al primer alumno con entrega para mostrar el modelo recreado al instante.
+  const idActivo = elegido ?? filas.find((f) => f.entrega)?.alumno.id ?? filas[0]?.alumno.id ?? null;
+  const fila = filas.find((f) => f.alumno.id === idActivo) ?? null;
 
   const alternarEstado = async () => {
     const r = await cambiarAsignacion(token, asignacion.id, { estado: asignacion.estado === 'abierta' ? 'cerrada' : 'abierta' });
@@ -137,7 +158,7 @@ function Asignacion({ asignacionId }) {
   };
 
   const alEvaluar = (entrega) =>
-    modificar((d) => ({ ...d, alumnos: d.alumnos.map((f) => (f.alumno.id === elegido ? { ...f, entrega } : f)) }));
+    modificar((d) => ({ ...d, alumnos: d.alumnos.map((f) => (f.alumno.id === idActivo ? { ...f, entrega } : f)) }));
 
   return (
     <div className="space-y-6">
@@ -170,12 +191,13 @@ function Asignacion({ asignacionId }) {
           <ul className="space-y-2" aria-label="Alumnos del grupo">
             {filas.map((f) => {
               const e = estadoAlumno(f);
+              const activo = idActivo === f.alumno.id;
               return (
                 <li key={f.alumno.id}>
                   <button
                     type="button"
                     onClick={() => setElegido(f.alumno.id)}
-                    aria-pressed={elegido === f.alumno.id}
+                    aria-pressed={activo}
                     className="corte-poly-sm flex w-full items-center justify-between gap-2 border border-white/10 bg-superficie/90 px-3 py-2.5 text-left hover:border-neon aria-pressed:border-neon aria-pressed:bg-neon/5"
                   >
                     <span className="min-w-0 truncate font-semibold text-white">{f.alumno.nombre}</span>

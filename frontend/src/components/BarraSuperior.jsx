@@ -30,7 +30,7 @@ function BarraSuperior({ ruta, hash = '' }) {
   const enLinea = useConexion();
   const instalar = useInstalarPWA();
   const { xp, nivel } = useProgreso();
-  const { usuario, esProfesor, esAdmin, cerrarSesion } = useAuth();
+  const { usuario, esAdmin, cerrarSesion } = useAuth();
   const { comoAlumno } = useVista();
   const [menuAbierto, setMenuAbierto] = useState(false);
   const barra = useRef(null);
@@ -43,7 +43,7 @@ function BarraSuperior({ ruta, hash = '' }) {
 
   const pagina = ruta?.pagina ?? 'inicio';
   const verAdmin = esAdmin && !comoAlumno;
-  const verEvaluar = esProfesor && !comoAlumno;
+  const verEvaluar = !comoAlumno;
   const enCuenta = ['entrar', 'registro', 'confirmar', 'recuperar'].includes(pagina);
 
   const salir = async () => {
@@ -60,7 +60,7 @@ function BarraSuperior({ ruta, hash = '' }) {
           <span className="hidden text-xl font-extrabold tracking-[0.25em] text-white min-[440px]:inline">AMATISTA</span>
         </a>
 
-        {/* Navegación central pura y limpia: solo lo esencial para el estudiante */}
+        {/* Navegación central clara: Cursos, Mi panel / Mi clase (Alumno) y Profesor (Recrear 3D) */}
         <nav className="hidden md:block" aria-label="Principal" data-recorrido="menu">
           <ul className="flex items-center gap-2">
             <li>
@@ -76,9 +76,10 @@ function BarraSuperior({ ruta, hash = '' }) {
               <a
                 href={rutas.panel}
                 aria-current={pagina === 'panel' ? 'page' : undefined}
+                title="Tu avance, unirte a una clase (AMA-7K2P) y subir el código de tu modelo"
                 className={`nav-principal__enlace ${pagina === 'panel' ? 'nav-principal__enlace--activo' : ''}`}
               >
-                Mi panel
+                Mi panel · Clase
               </a>
             </li>
             {verEvaluar && (
@@ -86,9 +87,10 @@ function BarraSuperior({ ruta, hash = '' }) {
                 <a
                   href={rutas.profesor}
                   aria-current={pagina === 'profesor' ? 'page' : undefined}
+                  title="Interfaz del profesor: recrear modelos 3D desde el código capturado del alumno"
                   className={`nav-principal__enlace ${pagina === 'profesor' ? 'nav-principal__enlace--activo' : ''}`}
                 >
-                  Evaluar
+                  Profesor · Recrear 3D
                 </a>
               </li>
             )}

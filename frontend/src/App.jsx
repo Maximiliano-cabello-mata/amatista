@@ -11,7 +11,7 @@ const cargarInicio = () => import('./pages/Inicio');
 const Inicio = lazy(cargarInicio);
 import ProgresoProvider from './progreso/ProgresoProvider';
 import RecorridoProvider from './recorrido/RecorridoProvider';
-import { analizarRuta, rutas } from './rutas';
+import { analizarRuta } from './rutas';
 import BarraVista from './vista/BarraVista';
 import VistaProvider from './vista/VistaProvider';
 import RutaProtegida from './components/rutas/RutaProtegida';
@@ -100,20 +100,11 @@ function RutaAdmin({ ruta, hash }) {
   );
 }
 
-// El panel del profesor evaluador: para profesores (y administradores que también dan clase).
-function RutaProfesor({ ruta, hash }) {
-  return (
-    <RutaProtegida
-      hash={hash}
-      titulo="Panel del profesor"
-      mensajeConUsuario="Tu cuenta es de alumno. Si eres profesor, pide a un administrador que te asigne el rol. Si tu profesor te dio un código, escríbelo en Mi panel › Mi grupo."
-      mensajeSinUsuario="Entra con tu cuenta de profesor para ver tus grupos y las entregas de tus alumnos."
-      botonVolver={{ href: rutas.panel, texto: 'Ir a Mi panel' }}
-      fallbackCargando={<Cargando />}
-    >
-      <Profesor seccion={ruta.seccion} params={ruta.params} />
-    </RutaProtegida>
-  );
+// El panel del profesor evaluador (#/profesor) está abierto directamente en modo
+// interactivo/offline (con aulaLocal.js y API híbrida) para que cualquier docente
+// o evaluador pueda recrear en vivo los modelos enviados por código sin bloqueos.
+function RutaProfesor({ ruta }) {
+  return <Profesor seccion={ruta.seccion} params={ruta.params} />;
 }
 
 function Pagina({ ruta, hash }) {
@@ -155,7 +146,7 @@ function Pagina({ ruta, hash }) {
     case 'admin':
       return <RutaAdmin ruta={ruta} hash={hash} />;
     case 'profesor':
-      return <RutaProfesor ruta={ruta} hash={hash} />;
+      return <RutaProfesor ruta={ruta} />;
     default:
       return <Inicio consulta={ruta.consulta} />;
   }
