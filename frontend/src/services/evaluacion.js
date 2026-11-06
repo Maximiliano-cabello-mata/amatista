@@ -7,6 +7,7 @@ import {
   asignarPracticaLocal,
   crearGrupoLocal,
   evaluarEntregaLocal,
+  guardarAulaLocal,
   leerAulaLocal,
   listarGruposLocal,
   marcarVistaLocal,
@@ -54,6 +55,7 @@ export async function cambiarGrupo(token, grupoId, cambios) {
   if (g) {
     if (cambios.nombre != null) g.nombre = cambios.nombre;
     if (cambios.archivado != null) g.archivado = Boolean(cambios.archivado);
+    guardarAulaLocal(estado);
   }
   return { ok: true, status: 200, datos: g ?? { id: grupoId, ...cambios } };
 }
@@ -70,6 +72,13 @@ export async function sacarAlumno(token, grupoId, alumnoId) {
   if (token && !String(grupoId).startsWith('grp-')) {
     const r = await pedirJSON(`${BASE}/grupos/${parte(grupoId)}/alumnos/${parte(alumnoId)}`, { metodo: 'DELETE', token });
     if (r.ok) return r;
+  }
+  const estado = leerAulaLocal();
+  const g = estado.grupos.find((x) => x.id === grupoId);
+  if (g && g.alumnos) {
+    g.alumnos = g.alumnos.filter((a) => a.id !== alumnoId);
+    g.alumnos_count = g.alumnos.length;
+    guardarAulaLocal(estado);
   }
   return { ok: true, status: 200, datos: { ok: true } };
 }
@@ -98,7 +107,10 @@ export async function cambiarAsignacion(token, asignacionId, cambios) {
   }
   const estado = leerAulaLocal();
   const a = estado.asignaciones.find((x) => x.id === asignacionId);
-  if (a && cambios.estado) a.estado = cambios.estado;
+  if (a && cambios.estado) {
+    a.estado = cambios.estado;
+    guardarAulaLocal(estado);
+  }
   return { ok: true, status: 200, datos: a ?? { id: asignacionId, ...cambios } };
 }
 

@@ -16,9 +16,10 @@ function EnEstaComputadora() {
   const { pregunta, preguntar, responder } = useConfirmacion();
 
   useEffect(() => {
-    if (!hayAlmacen() || !usuario) return;
-    listarModelos(usuario.id)
-      .then((lista) => setModelos(lista.sort((a, b) => (b.guardado_en ?? '').localeCompare(a.guardado_en ?? ''))))
+    if (!hayAlmacen()) return;
+    const profesorId = usuario?.id || 'profesor-local';
+    listarModelos(profesorId)
+      .then((lista) => setModelos((lista || []).sort((a, b) => (b.guardado_en ?? '').localeCompare(a.guardado_en ?? ''))))
       .catch(() => setError('Este navegador no deja leer los modelos guardados.'));
   }, [usuario]);
 

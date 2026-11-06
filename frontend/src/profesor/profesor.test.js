@@ -17,10 +17,13 @@ import {
 import {
   CODIGO_CLASE_DEMO,
   evaluarEntregaLocal,
+  listarGruposLocal,
+  misAsignacionesLocal,
   recogerModeloLocal,
   subirCodigoModeloLocal,
   unirseAGrupoLocal,
   verAsignacionLocal,
+  verGrupoLocal,
 } from './aulaLocal';
 
 // Igual que addon/amatista_blender/modelo_ligero.py › empaquetar: JSON → zlib → base64.
@@ -96,7 +99,32 @@ describe('modelo ligero y compilador de código del alumno', () => {
     });
     expect(calificada.datos.calificacion).toBe(10);
     const vistaProf = verAsignacionLocal('asg-tren-m1');
+    expect(vistaProf.datos.asignacion).toBeDefined();
+    expect(vistaProf.datos.asignacion.id).toBe('asg-tren-m1');
+    expect(vistaProf.datos.asignacion.titulo).toBeTruthy();
+    expect(vistaProf.datos.asignacion.practica).toBeTruthy();
     expect(vistaProf.datos.alumnos.some((a) => a.alumno.id === 'alu-test')).toBe(true);
+
+    const vistaGrupo = verGrupoLocal('grp-demo-7k2p');
+    expect(vistaGrupo.ok).toBe(true);
+    expect(vistaGrupo.datos.asignaciones.length).toBeGreaterThan(0);
+    for (const a of vistaGrupo.datos.asignaciones) {
+      expect(a.entregas).toBeDefined();
+      expect(typeof a.entregas.entregada).toBe('number');
+      expect(typeof a.entregas.evaluada).toBe('number');
+      expect(typeof a.entregas.rehacer).toBe('number');
+    }
+
+    const vistaAlumno = misAsignacionesLocal({ id: 'alu-test' });
+    expect(vistaAlumno.ok).toBe(true);
+    expect(Array.isArray(vistaAlumno.datos.asignaciones)).toBe(true);
+    expect(vistaAlumno.datos.asignaciones.length).toBeGreaterThan(0);
+    expect(vistaAlumno.datos.grupos.length).toBeGreaterThan(0);
+
+    const listaGrupos = listarGruposLocal();
+    expect(listaGrupos.ok).toBe(true);
+    expect(listaGrupos.datos.length).toBeGreaterThan(0);
+    expect(listaGrupos.datos[0].codigo).toBeTruthy();
   });
 
   it('rechaza otro formato', async () => {

@@ -139,7 +139,8 @@ function Grupo({ grupoId }) {
             ) : (
               <ul className="space-y-2">
                 {grupo.asignaciones.map((a) => {
-                  const entregadas = a.entregas.entregada + a.entregas.evaluada + a.entregas.rehacer;
+                  const entregas = a.entregas ?? { entregada: 0, evaluada: 0, rehacer: 0 };
+                  const entregadas = (entregas.entregada || 0) + (entregas.evaluada || 0) + (entregas.rehacer || 0);
                   return (
                     <li key={a.id}>
                       <a href={rutas.profesorPractica(a.id)} className="corte-poly-sm flex flex-wrap items-center justify-between gap-3 border border-white/10 bg-base/50 px-4 py-3 hover:border-neon">
@@ -151,7 +152,7 @@ function Grupo({ grupoId }) {
                         </span>
                         <span className="flex flex-wrap items-center gap-2">
                           {a.estado === 'cerrada' && <Pastilla>Cerrada</Pastilla>}
-                          {a.entregas.entregada > 0 && <Pastilla tono="bg-neon/10 text-neon">{a.entregas.entregada} por evaluar</Pastilla>}
+                          {(entregas.entregada || 0) > 0 && <Pastilla tono="bg-neon/10 text-neon">{entregas.entregada} por evaluar</Pastilla>}
                           <Pastilla tono="bg-amatista/15 text-amatista-claro">
                             {entregadas}/{grupo.alumnos.length} entregaron
                           </Pastilla>

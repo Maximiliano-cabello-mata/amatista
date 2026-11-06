@@ -144,21 +144,26 @@ function Asignacion({ asignacionId }) {
 
   if (cargando && !respuesta) return <CargandoAdmin texto="Cargando las entregas…" />;
   if (!respuesta?.ok) return <ErrorAdmin respuesta={respuesta} alReintentar={recargar} />;
-  const { asignacion, alumnos } = respuesta.datos;
+  const datos = respuesta?.datos ?? {};
+  const asignacion = datos.asignacion ?? datos;
+  const alumnos = Array.isArray(datos.alumnos) ? datos.alumnos : [];
   const filas = ordenarAlumnos(alumnos);
   const cuenta = contarEstados(alumnos);
   // Si no se ha elegido ninguno, selecciona automáticamente al primer alumno con entrega para mostrar el modelo recreado al instante.
-  const idActivo = elegido ?? filas.find((f) => f.entrega)?.alumno.id ?? filas[0]?.alumno.id ?? null;
-  const fila = filas.find((f) => f.alumno.id === idActivo) ?? null;
+  const idActivo = elegido ?? filas.find((f) => f.entrega)?.alumno?.id ?? filas[0]?.alumno?.id ?? null;
+  const fila = filas.find((f) => f.alumno?.id === idActivo) ?? null;
 
   const alternarEstado = async () => {
     const r = await cambiarAsignacion(token, asignacion.id, { estado: asignacion.estado === 'abierta' ? 'cerrada' : 'abierta' });
-    if (r.ok) modificar((d) => ({ ...d, asignacion: { ...d.asignacion, estado: r.datos.estado } }));
+    if (r.ok) modificar((d) => ({ ...d, asignacion: { ...(d.asignacion || d), estado: r.datos.estado } }));
     else setAviso(r.error);
   };
 
   const alEvaluar = (entrega) =>
-    modificar((d) => ({ ...d, alumnos: d.alumnos.map((f) => (f.alumno.id === idActivo ? { ...f, entrega } : f)) }));
+    modificar((d) => ({
+      ...d,
+      alumnos: (d.alumnos || []).map((f) => (f.alumno?.id === idActivo ? { ...f, entrega } : f)),
+    }));
 
   return (
     <div className="space-y-6">

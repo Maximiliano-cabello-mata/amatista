@@ -78,8 +78,11 @@ function crearEstadoInicial() {
       grupo_id: 'grp-demo-7k2p',
       grupo_nombre: 'Modelado 3D · Secundaria y Bachillerato',
       practica_id: 'blender.bp.m1.tren',
+      practica: 'Tren Low-Poly',
       titulo: 'Tren Low-Poly (Módulo 1)',
       descripcion: 'Modela el chasis, caldera, cabina y ruedas de un tren de juguete.',
+      indicaciones: 'Modela el chasis, caldera, cabina y ruedas de un tren de juguete.',
+      nivel: 1,
       fecha_limite: '2026-11-30T23:59:59.000Z',
       estado: 'abierta',
       creada_en: '2026-11-01T10:30:00.000Z',
@@ -89,8 +92,11 @@ function crearEstadoInicial() {
       grupo_id: 'grp-demo-7k2p',
       grupo_nombre: 'Modelado 3D · Secundaria y Bachillerato',
       practica_id: 'aframe.m1.isla',
+      practica: 'Faro y Cristal en Isla',
       titulo: 'Faro y Cristal en Isla (Módulo 1 A-Frame)',
       descripcion: 'Crea la isla, torre del faro y cristal amatista con primitivas A-Frame.',
+      indicaciones: 'Crea la isla, torre del faro y cristal amatista con primitivas A-Frame.',
+      nivel: 1,
       fecha_limite: '2026-12-15T23:59:59.000Z',
       estado: 'abierta',
       creada_en: '2026-11-02T09:00:00.000Z',
@@ -245,18 +251,16 @@ function contarPorEvaluar(grupoId, estado) {
 
 export function listarGruposLocal() {
   const estado = leerAulaLocal();
-  const datos = estado.grupos
-    .filter((g) => !g.archivado)
-    .map((g) => ({
-      id: g.id,
-      nombre: g.nombre,
-      codigo: g.codigo,
-      creado_en: g.creado_en,
-      archivado: Boolean(g.archivado),
-      alumnos: g.alumnos?.length || 0,
-      practicas: estado.asignaciones.filter((a) => a.grupo_id === g.id).length,
-      por_evaluar: contarPorEvaluar(g.id, estado),
-    }));
+  const datos = estado.grupos.map((g) => ({
+    id: g.id,
+    nombre: g.nombre,
+    codigo: g.codigo,
+    creado_en: g.creado_en,
+    archivado: Boolean(g.archivado),
+    alumnos: g.alumnos?.length || 0,
+    practicas: estado.asignaciones.filter((a) => a.grupo_id === g.id).length,
+    por_evaluar: contarPorEvaluar(g.id, estado),
+  }));
   return { ok: true, status: 200, datos };
 }
 
@@ -298,12 +302,22 @@ export function verGrupoLocal(grupoId) {
     .filter((a) => a.grupo_id === grupo.id)
     .map((a) => {
       const entregas = estado.entregas.filter((e) => e.asignacion_id === a.id);
+      const conteos = {
+        entregada: entregas.filter((e) => e.estado === 'entregada').length,
+        evaluada: entregas.filter((e) => e.estado === 'evaluada').length,
+        rehacer: entregas.filter((e) => e.estado === 'rehacer').length,
+      };
+      const practica = PRACTICAS_CATALOGO.find((p) => p.id === a.practica_id);
       return {
         ...a,
+        practica: a.practica || practica?.titulo || a.titulo,
+        nivel: a.nivel ?? practica?.nivel ?? 1,
+        indicaciones: a.indicaciones || a.descripcion || '',
         alumnos_total: grupo.alumnos?.length || 0,
         entregas_total: entregas.length,
-        evaluadas_total: entregas.filter((e) => e.estado === 'evaluada').length,
-        por_evaluar: entregas.filter((e) => e.estado === 'entregada').length,
+        evaluadas_total: conteos.evaluada,
+        por_evaluar: conteos.entregada,
+        entregas: conteos,
       };
     });
 
@@ -327,20 +341,29 @@ export function asignarPracticaLocal(datos) {
   const grupo = estado.grupos.find((g) => g.id === datos.grupo_id);
   const practica = PRACTICAS_CATALOGO.find((p) => p.id === datos.practica_id);
   const titulo = datos.titulo?.trim() || practica?.titulo || 'Práctica 3D';
+  const indicaciones = datos.indicaciones?.trim() || practica?.descripcion || '';
 
   const nueva = {
     id: `asg-${Date.now()}`,
     grupo_id: datos.grupo_id,
     grupo_nombre: grupo?.nombre || 'Clase',
     practica_id: datos.practica_id,
+    practica: practica?.titulo || titulo,
+    nivel: practica?.nivel || 1,
     titulo,
-    descripcion: datos.indicaciones?.trim() || practica?.descripcion || '',
+    descripcion: indicaciones,
+    indicaciones,
     fecha_limite: datos.fecha_limite || null,
     estado: 'abierta',
     creada_en: new Date().toISOString(),
+    entregas: { entregada: 0, evaluada: 0, rehacer: 0 },
+    alumnos_total: grupo?.alumnos?.length || 0,
+    entregas_total: 0,
+    evaluadas_total: 0,
+    por_evaluar: 0,
   };
 
-  estado.asignaciones.push(nueva);
+  estado.asignaciones.unshift(nueva);
   guardarAulaLocal(estado);
   return { ok: true, status: 201, datos: nueva };
 }
@@ -373,13 +396,22 @@ export function verAsignacionLocal(asignacionId) {
     };
   });
 
+  const practica = PRACTICAS_CATALOGO.find((p) => p.id === asignacion.practica_id);
+  const asignacionFormateada = {
+    ...asignacion,
+    practica: asignacion.practica || practica?.titulo || asignacion.titulo,
+    nivel: asignacion.nivel ?? practica?.nivel ?? 1,
+    indicaciones: asignacion.indicaciones || asignacion.descripcion || '',
+    descripcion: asignacion.descripcion || asignacion.indicaciones || '',
+  };
+
   return {
     ok: true,
     status: 200,
     datos: {
-      ...asignacion,
-      grupo,
+      asignacion: asignacionFormateada,
       alumnos: filas,
+      grupo,
     },
   };
 }
@@ -453,25 +485,70 @@ export function misAsignacionesLocal(usuario = null) {
   const gruposUsuario = estado.grupos.filter((g) => !g.archivado && (g.alumnos?.some((a) => a.id === alumnoId) || !usuario));
   const gruposFinales = gruposUsuario.length ? gruposUsuario : [estado.grupos[0]];
 
-  const gruposConAsignaciones = gruposFinales.map((g) => {
+  const todasAsignaciones = [];
+  const gruposRespuesta = gruposFinales.map((g) => {
     const asgs = estado.asignaciones
       .filter((a) => a.grupo_id === g.id && a.estado !== 'cerrada')
       .map((a) => {
-        const entrega = estado.entregas.find((e) => e.asignacion_id === a.id && e.alumno_id === alumnoId) || null;
+        const practica = PRACTICAS_CATALOGO.find((p) => p.id === a.practica_id);
+        const ent = estado.entregas.find((e) => e.asignacion_id === a.id && e.alumno_id === alumnoId) || null;
+        const entrega = ent
+          ? {
+              id: ent.id,
+              estado: ent.estado,
+              progreso: ent.progreso ?? 100,
+              completada: Boolean(ent.completada),
+              intentos: ent.intentos || 1,
+              entregada_en: ent.entregada_en,
+              calificacion: ent.calificacion,
+              comentario: ent.comentario,
+              evaluada_en: ent.evaluada_en,
+              nueva: !ent.visto_en,
+              codigo_fuente: ent.codigo_fuente,
+              resumen: ent.resumen,
+              bytes: ent.bytes || ent.modelo_bytes,
+              modelo_bytes: ent.modelo_bytes || ent.bytes,
+            }
+          : null;
+
         return {
-          ...a,
+          id: a.id,
+          grupo_id: a.grupo_id,
+          grupo_nombre: g.nombre,
+          practica_id: a.practica_id,
+          practica: a.practica || practica?.titulo || a.titulo,
+          curso_id: a.curso_id || practica?.curso_id || null,
+          leccion_id: a.leccion_id || practica?.id || null,
+          nivel: a.nivel ?? practica?.nivel ?? 1,
+          titulo: a.titulo,
+          indicaciones: a.indicaciones || a.descripcion || '',
+          descripcion: a.descripcion || a.indicaciones || '',
+          fecha_limite: a.fecha_limite,
+          estado: a.estado,
+          creada_en: a.creada_en,
           entrega,
         };
       });
+
+    todasAsignaciones.push(...asgs);
+
     return {
       id: g.id,
       nombre: g.nombre,
       codigo: g.codigo,
+      profesor: 'Profesor de Modelado 3D',
       asignaciones: asgs,
     };
   });
 
-  return { ok: true, status: 200, datos: { grupos: gruposConAsignaciones } };
+  return {
+    ok: true,
+    status: 200,
+    datos: {
+      grupos: gruposRespuesta,
+      asignaciones: todasAsignaciones,
+    },
+  };
 }
 
 export function subirCodigoModeloLocal({ asignacionId, codigo, usuario = null }) {
