@@ -465,8 +465,12 @@ def verificar_token_google(credencial: str, client_id_esperado: Optional[str] = 
     if not credencial or len(credencial) > 8192:
         raise HTTPException(status_code=400, detail="Token de Google no válido.")
 
-    # Modo prueba / desarrollo con tokens sintéticos de prueba
+    # Tokens sintéticos «test_google_<correo>»: SOLO con AMATISTA_GOOGLE_PRUEBAS=1 (pruebas y desarrollo).
+    # Sin esa variable, aceptarlos permitiría entrar a cualquier cuenta (incluida la de un admin)
+    # escribiendo solo su correo (auditoría del 6 de noviembre de 2026).
     if credencial.startswith("test_google_"):
+        if os.getenv("AMATISTA_GOOGLE_PRUEBAS") != "1":
+            raise HTTPException(status_code=401, detail="Token de Google no válido.")
         partes = credencial[len("test_google_") :].split("_", 1)
         correo_test = normalizar_email(partes[0])
         nombre_test = partes[1].replace("+", " ") if len(partes) > 1 else correo_test.split("@")[0].capitalize()
@@ -477,6 +481,11 @@ def verificar_token_google(credencial: str, client_id_esperado: Optional[str] = 
             "sub": f"google_test_{correo_test}",
             "picture": f"https://lh3.googleusercontent.com/a/test_{correo_test.split('@')[0]}",
         }
+
+    # Un token real solo se acepta si sabemos para qué aplicación debe ser (aud): sin GOOGLE_CLIENT_ID
+    # serviría cualquier token emitido por Google para otra aplicación.
+    if not client_id_esperado:
+        raise HTTPException(status_code=401, detail="El inicio de sesión con Google no está configurado en este servidor.")
 
     url = f"https://oauth2.googleapis.com/tokeninfo?id_token={urllib.parse.quote(credencial)}"
     req = urllib.request.Request(url, headers={"User-Agent": "Amatista-Backend/1.0"})
@@ -493,8 +502,10 @@ def verificar_token_google(credencial: str, client_id_esperado: Optional[str] = 
     if iss not in ("accounts.google.com", "https://accounts.google.com"):
         raise HTTPException(status_code=401, detail="Emisor del token de Google no reconocido.")
 
-    if client_id_esperado and datos.get("aud") != client_id_esperado:
+    if datos.get("aud") != client_id_esperado:
         raise HTTPException(status_code=401, detail="El token de Google no corresponde a esta aplicación.")
+    if datos.get("email_verified") not in (True, "true", "True", 1, "1"):
+        raise HTTPException(status_code=401, detail="Google no confirmó ese correo.")
 
     email = normalizar_email(datos.get("email", ""))
     if not email:

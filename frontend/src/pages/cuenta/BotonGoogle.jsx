@@ -128,6 +128,13 @@ function BotonGoogle({
       return;
     }
 
+    // El acceso con un correo escrito a mano solo existe en desarrollo (el servidor además exige
+    // AMATISTA_GOOGLE_PRUEBAS=1). En producción, sin Client ID, el botón no se muestra.
+    if (!import.meta.env.DEV) {
+      setErrorLocal('El inicio con Google no está disponible en este momento.');
+      return;
+    }
+
     const correoPrueba = window.prompt(
       'Introduce un correo de Google para probar el inicio de sesión:',
       'alumno.prueba@gmail.com'
@@ -145,6 +152,9 @@ function BotonGoogle({
       setCargando(false);
     }
   };
+
+  // Sin Client ID en producción no hay forma segura de entrar con Google: no se ofrece.
+  if (!clienteId && !import.meta.env.DEV) return null;
 
   return (
     <div className={`w-full ${className}`}>
