@@ -16,6 +16,7 @@ import EmblemaHeroe from '../components/inicio/EmblemaHeroe';
 import Camino from '../components/inicio/Camino';
 import ElegirPrograma from '../components/inicio/ElegirPrograma';
 import { CLAVE_PROGRAMA, COLORES_CHISPA, SECRETOS_CRISTAL } from '../components/inicio/constantes';
+import { debeMostrarAviso, marcarAvisoVisto } from '../components/inicio/avisoEvaluadores';
 
 const BOTON = 'boton boton--grande';
 
@@ -51,9 +52,15 @@ function Inicio({ consulta = {} }) {
   const [secretoIdx, setSecretoIdx] = useState(-1);
   const [girandoCristal, setGirandoCristal] = useState(false);
   const [chispasCristal, setChispasCristal] = useState([]);
+  const [mostrarAvisoEvaluadores, setMostrarAvisoEvaluadores] = useState(() => debeMostrarAviso());
   const relojSecreto = useRef(null);
 
   useEffect(() => () => window.clearTimeout(relojSecreto.current), []);
+
+  // La primera visita cuenta como vista: no reaparece al volver a la portada.
+  useEffect(() => {
+    if (mostrarAvisoEvaluadores) marcarAvisoVisto();
+  }, [mostrarAvisoEvaluadores]);
 
   const tocarCristal = () => {
     const clave = Date.now();
@@ -143,7 +150,8 @@ function Inicio({ consulta = {} }) {
         </div>
       </section>
 
-      {/* Guía instantánea de 5 minutos para evaluadores, alumnos y profesores */}
+      {/* Guía temporal del 5-6 de noviembre: solo una vez por navegador. */}
+      {mostrarAvisoEvaluadores && (
       <section
         aria-labelledby="inicio-evaluadores"
         className="corte-poly mt-8 border border-neon/35 bg-gradient-to-br from-neon/10 via-superficie/95 to-amatista-oscuro/30 p-5 sm:p-6"
@@ -152,9 +160,19 @@ function Inicio({ consulta = {} }) {
           <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-neon">
             ⚡ Recorrido rápido para evaluadores (5 min) · Sin cuenta ni configuración previa
           </p>
-          <span className="corte-poly-sm border border-neon/40 bg-neon/10 px-2.5 py-0.5 font-mono text-[11px] text-neon">
-            Código de clase demo: <strong>AMA-7K2P</strong>
-          </span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="corte-poly-sm border border-neon/40 bg-neon/10 px-2.5 py-0.5 font-mono text-[11px] text-neon">
+              Código de clase demo: <strong>AMA-7K2P</strong>
+            </span>
+            <button
+              type="button"
+              aria-label="Cerrar guía para evaluadores"
+              onClick={() => { marcarAvisoVisto(); setMostrarAvisoEvaluadores(false); }}
+              className="corte-poly-sm border border-white/25 px-2.5 py-0.5 font-mono text-[11px] text-white/80 hover:border-neon hover:text-white"
+            >
+              Cerrar ×
+            </button>
+          </div>
         </div>
         <h2 id="inicio-evaluadores" className="mt-1.5 text-lg font-extrabold text-white sm:text-xl">
           Entiende y prueba el flujo completo Alumno → Código → Recreación 3D del Profesor en 3 clics
@@ -237,6 +255,7 @@ function Inicio({ consulta = {} }) {
           </div>
         </div>
       </section>
+      )}
 
       <InvitacionRecorrido className="mt-8" />
 
