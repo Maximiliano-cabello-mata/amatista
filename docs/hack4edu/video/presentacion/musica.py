@@ -1,15 +1,16 @@
-"""Música de la presentación de Hack4Edu (5:00), sintetizada desde cero con las piezas de ../pelicula/musica.py.
+"""Música y diseño sonoro de la presentación de Hack4Edu (4:20), sintetizados desde cero con las piezas de
+../pelicula/musica.py (sin licencias de terceros).      python3 musica.py <salida.wav>
 
-    python3 musica.py <salida.wav>
-
-Sigue la misma línea de tiempo que frontend/presentacion/tiempos.js (PRE = 4 s y tres pausas con música:
-nuestra historia, la demostración web y la del add-on). Va por debajo de la voz; en las pausas se oye más.
-  Problema   piano íntimo en menor; latidos graves cuando la red colapsa
-  Historia   piano más presente (no hay voz); sube hacia «Por eso…»
-  Amatista   golpe y acorde mayor cuando aparece la gema
-  Solución   arpegio luminoso con batería suave
-  Geoda      campanas y un latido sincronizado con el corazón que late en pantalla
-  Cierre     el tema en mayor, golpe en «hasta hoy» y acorde final
+Sigue frontend/presentacion/tiempos.js: prólogo de 16 s, la gema (4 s) y la voz seguida desde el segundo 20.
+Psicología del sonido, para que el oído siga atento aunque la vista se distraiga:
+  · Motivo de Amatista: tres campanas (Mi–Si–Mi) que suenan siempre con la marca (logo, revelación, pilares,
+    cierre). El oído aprende la asociación y la reconoce cada vez.
+  · Golpe en cada cifra, con una subida corta antes (20,900+, 1,500+, 500+): anticipación y recompensa.
+  · Ruptura de patrón: la música se cae cuando «la red escolar colapsa» y se queda en silencio antes de
+    «hasta hoy»; el contraste hace que esa frase pegue.
+  · Color emocional por capítulo: menor y grave en el problema, mayor y luminoso en la solución, sereno en la
+    telemetría, cálido en la inclusión. Clics de logro en cada pieza revisada y latido en Geoda.
+  · Todo va por debajo de la voz (sidechain al mezclar); donde no hay voz se oye más.
 """
 import os
 import sys
@@ -22,97 +23,106 @@ from musica import (DO, DOsm, FA, LA, LAm, MI, MIm, REm, SIm, SOL, Pista, acto_i
                     colchon, golpe, latidos, midi, reverberar, soplido, subida)
 
 SR = 44100
-PRE, DUR = 4.0, 300.0
-PAUSAS = [('historia', 78.1, 16.0), ('demo-web', 106.25, 18.0), ('demo-addon', 125.25, 20.0)]
+PRE, DUR = 20.0, 260.0
 
 
-def t_voz(v):
+def t(v):
     """Segundo del video en que suena el segundo v de la voz."""
-    return PRE + v + sum(d for _i, en, d in PAUSAS if v >= en)
+    return PRE + v
 
 
-def t_pausa(nombre):
-    """Segundo del video en que empieza una pausa."""
-    en = next(e for i, e, _d in PAUSAS if i == nombre)
-    return PRE + en + sum(d for _i, e, d in PAUSAS if e < en)
+def motivo(p, x, vol=1.0):
+    """El motivo de Amatista: Mi–Si–Mi en campanas, con un brillo debajo."""
+    for j, n in enumerate((76, 83, 88)):
+        p.poner(x + j * 0.16, campana(midi(n), 3.0), 0.24 * vol, pan=-0.25 + j * 0.25)
+    p.poner(x, colchon([midi(64), midi(71), midi(76)], 2.6, ataque=0.05, salida=2.0), 0.18 * vol)
 
 
-def acorde_mayor(p, t, notas, d, vol=0.6):
-    p.poner(t, golpe(3.0), 0.7 * vol)
-    p.poner(t, colchon([midi(n) for n in notas], d, ataque=0.05, salida=3), vol)
-    for j, n in enumerate((72, 76, 79, 84)):
-        p.poner(t + 0.25 + j * 0.18, campana(midi(n), 4), 0.22 * vol / 0.6, pan=-0.3 + j * 0.2)
+def impacto(p, x, vol=1.0, anticipa=1.0):
+    """Subida corta y golpe: anticipación y recompensa en una cifra."""
+    p.poner(x - anticipa, subida(anticipa), 0.35 * vol)
+    p.poner(x, golpe(2.2), 0.55 * vol)
+
+
+def acorde(p, x, notas, d, vol=0.6):
+    p.poner(x, golpe(3.0), 0.6 * vol)
+    p.poner(x, colchon([midi(n) for n in notas], d, ataque=0.05, salida=3), vol)
+
+
+def clic(p, x, nota=88, vol=0.12):
+    p.poner(x, campana(midi(nota), 0.45), vol, pan=0.3)
 
 
 def componer():
     p = Pista(DUR)
 
-    # Apertura: la gema se arma
-    p.poner(0.2, colchon([midi(n) for n in (45, 52, 57, 64)], 12, ataque=2.5), 0.4)
-    p.poner(1.6, subida(1.8), 0.45)
-    acorde_mayor(p, 3.4, (48, 55, 62, 64, 67), 8, vol=0.45)
+    # Prólogo · nuestra historia: piano íntimo; tensión cuando «no alcanzaba»; sube hacia «Por eso creamos…»
+    acto_intimo(p, 0.3, 12.8, [REm, LAm, FA, MIm], bpm=84, vol=0.34)
+    latidos(p, 8.3, 12.4, bpm=70, vol=0.3)
+    p.poner(12.6, colchon([midi(n) for n in (50, 57, 62, 65)], 4.0, ataque=1.2), 0.45)
+    p.poner(13.4, campana(midi(81), 2.5), 0.2)
+    p.poner(13.6, subida(2.4), 0.6)
+    p.poner(16.0 - 0.55, soplido(1.1), 0.6)
 
-    # 01 · El problema
-    acto_intimo(p, t_voz(8.1), t_voz(60.2), [LAm, FA, DO, SOL], bpm=72, vol=0.2)
-    p.poner(t_voz(60.2), colchon([midi(45), midi(52), midi(57)], 18.5, ataque=3), 0.3)
-    latidos(p, t_voz(67.1), t_voz(78.0), bpm=66, vol=0.45)
-    p.poner(t_voz(67.1), golpe(2.2), 0.35)
+    # La gema se arma: golpe, acorde mayor y el motivo (primera vez que el oído lo aprende)
+    acorde(p, t(-0.6), (48, 55, 62, 64, 67), 7, vol=0.5)
+    motivo(p, t(-0.4), 1.1)
 
-    # Nuestra historia (16 s, sin voz): piano íntimo que sube hacia «Por eso…»
-    h0 = t_pausa('historia')
-    p.poner(h0 - 0.55, soplido(1.1), 0.6)
-    acto_intimo(p, h0 + 0.3, h0 + 12.6, [REm, LAm, FA, MIm], bpm=84, vol=0.36)
-    p.poner(h0 + 12.4, colchon([midi(n) for n in (50, 57, 62, 65)], 4.0, ataque=1.2), 0.45)
-    p.poner(h0 + 13.4, campana(midi(81), 2.5), 0.2)
-    p.poner(h0 + 14.0, subida(2.0), 0.6)
-    fin_historia = h0 + 16.0
-    # 02 · La solución
-    p.poner(fin_historia - 0.55, soplido(1.1), 0.7)
-    acorde_mayor(p, t_voz(79.9), (36, 48, 55, 64, 67), 9, vol=0.55)
-    acto_ritmo(p, t_voz(90.2), t_pausa('demo-web'), [DO, SOL, LAm, FA], bpm=96, vol=0.2, bateria=0.35)
+    # 01 · El problema: grave y en menor
+    acto_intimo(p, t(8.1), t(60.2), [LAm, FA, DO, SOL], bpm=72, vol=0.2)
+    p.poner(t(35.0), colchon([midi(33), midi(40)], 26, ataque=3), 0.22)  # dron grave bajo la brecha
+    impacto(p, t(42.4), 1.0)     # 20,900+
+    impacto(p, t(46.0), 0.85)    # 1,500+
+    p.poner(t(60.2), colchon([midi(45), midi(52), midi(57)], 7.0, ataque=2, salida=0.3), 0.3)
+    # «la red escolar colapsa»: la música se cae (ruptura de patrón)
+    p.poner(t(66.9), soplido(0.9, sube=False), 0.6)
+    p.poner(t(67.08), golpe(2.4), 0.55)
+    latidos(p, t(68.8), t(77.7), bpm=66, vol=0.42)
+    p.poner(t(72.8), colchon([midi(40), midi(47)], 5.2, ataque=2, salida=0.4), 0.3)
 
-    # Demostración web (18 s): ritmo luminoso; una campana en cada cambio de toma
-    d0 = t_pausa('demo-web')
-    p.poner(d0 - 0.55, soplido(1.1), 0.6)
-    acto_ritmo(p, d0, d0 + 18.0, [FA, DO, SOL, LAm], bpm=104, vol=0.3, bateria=0.8)
-    for k, a in enumerate((0.7, 3.8, 6.7, 9.9, 14.1)):
-        p.poner(d0 + a, campana(midi((79, 81, 84, 86, 88)[k]), 1.6), 0.2, pan=-0.3 + 0.15 * k)
-    p.poner(d0 + 18.0 - 0.55, soplido(1.1), 0.6)
-    acto_ritmo(p, t_voz(106.25), t_pausa('demo-addon'), [DO, SOL, LAm, FA], bpm=96, vol=0.2, bateria=0.35)
-
-    # Demostración del add-on (20 s): cada pieza revisada suena; acorde de logro al terminar la práctica
-    a0 = t_pausa('demo-addon')
-    p.poner(a0 - 0.55, soplido(1.1), 0.6)
-    acto_ritmo(p, a0, a0 + 15.6, [MI, DOsm, LA, SIm], bpm=104, vol=0.28, bateria=0.7, campanas=True)
-    t = 0.7
-    for nombre, d in [('i', 1.5), ('p', 1.7), ('0', 1.0), ('1', 1.0), ('2', 0.9), ('p', 1.7)] + [('x', 0.65)] * 7 + [('x', 0.8), ('g', 1.5)]:
-        if nombre not in ('i', 'p'):
-            p.poner(a0 + t, campana(midi(88), 0.5), 0.12, pan=0.3)
-        t += d
-    acorde_mayor(p, a0 + 15.6, (40, 52, 59, 64, 68, 71), 4.8, vol=0.55)
-    p.poner(a0 + 20.0 - 0.55, soplido(1.1), 0.6)
+    # 02 · La solución: un instante de silencio y se abre en mayor
+    p.poner(t(78.1) - 0.55, soplido(1.1), 0.65)
+    acorde(p, t(79.9), (36, 48, 55, 64, 67), 8, vol=0.55)
+    motivo(p, t(80.1), 1.0)
+    acto_ritmo(p, t(83.7), t(125.25), [DO, SOL, LAm, FA], bpm=100, vol=0.2, bateria=0.4)
+    motivo(p, t(92.52), 0.6)     # pilar 1
+    for x in (95.5, 98.2, 99.7, 103.2):
+        clic(p, t(x), 84, 0.1)   # cada toma de la demostración web
+    motivo(p, t(106.38), 0.6)    # pilar 2
+    for x in (119.6, 120.05, 120.5, 120.95, 121.4, 121.85, 122.3, 122.75, 123.25):
+        clic(p, t(x))            # cada pieza que el add-on revisa
+    acorde(p, t(123.9), (48, 55, 60, 64, 67, 72), 3.5, vol=0.35)  # ¡práctica terminada!
 
     # Geoda: campanas y el latido del corazón (lub-dub cada 1.1 s desde que se nombra)
-    acto_ritmo(p, t_voz(125.25), t_voz(144.1), [MI, DOsm, LA, SIm], bpm=90, vol=0.17, bateria=0, campanas=True)
-    p.poner(t_voz(125.25), colchon([midi(n) for n in (52, 59, 64, 68)], 19.5, ataque=2), 0.26)
-    latidos(p, t_voz(130.24), t_voz(144.0), bpm=60 / 1.1, vol=0.42)
+    acto_ritmo(p, t(125.25), t(144.1), [MI, DOsm, LA, SIm], bpm=90, vol=0.17, bateria=0, campanas=True)
+    p.poner(t(125.25), colchon([midi(n) for n in (52, 59, 64, 68)], 19.5, ataque=2), 0.24)
+    motivo(p, t(130.24), 0.7)
+    latidos(p, t(130.24), t(144.0), bpm=60 / 1.1, vol=0.42)
 
-    # 03 · Telemetría y sincronización
-    p.poner(t_voz(144.1) - 0.55, soplido(1.1), 0.6)
-    acto_ritmo(p, t_voz(144.1), t_voz(177.0), [MI, DOsm, LA, SIm], bpm=96, vol=0.19, bateria=0.4, campanas=True)
+    # 03 · Telemetría y sincronización: sereno; la información «viaja»
+    p.poner(t(144.1) - 0.55, soplido(1.1), 0.6)
+    acto_ritmo(p, t(144.1), t(177.0), [MI, DOsm, LA, SIm], bpm=96, vol=0.18, bateria=0.3, campanas=True)
+    p.poner(t(159.0), soplido(1.0), 0.4)          # el texto ligero viaja
+    for x, n in ((163.86, 84), (165.36, 88)):    # FastAPI, SQL
+        clic(p, t(x), n, 0.14)
 
-    # 04 · Inclusión y escala
-    p.poner(t_voz(177.0) - 0.55, soplido(1.1), 0.6)
-    acto_ritmo(p, t_voz(177.0), t_voz(223.6), [FA, DO, SOL, LAm], bpm=96, vol=0.21, bateria=0.55)
+    # 04 · Inclusión y escala: cálido y creciendo
+    p.poner(t(177.0) - 0.55, soplido(1.1), 0.6)
+    acto_ritmo(p, t(177.0), t(223.6), [FA, DO, SOL, LAm], bpm=100, vol=0.21, bateria=0.55)
+    impacto(p, t(187.9), 0.85)   # 1,500+ facultades
+    impacto(p, t(199.7), 1.0)    # 500+ alumnos
+    clic(p, t(206.9), 81, 0.14)  # costo mínimo
+    clic(p, t(214.96), 84, 0.14)  # en producción
+    p.poner(t(219.6), colchon([midi(n) for n in (53, 60, 65, 69)], 4.5, ataque=1.5), 0.3)  # Latinoamérica
 
-    # Cierre: «hasta hoy» y la tarjeta final
-    acto_intimo(p, t_voz(223.6), t_voz(228.3), [DO, SOL], bpm=80, vol=0.24, mayor=True)
-    p.poner(t_voz(227.6), subida(0.8), 0.4)
-    p.poner(t_voz(228.42), golpe(4), 0.6)
-    p.poner(t_voz(228.42), colchon([midi(n) for n in (36, 48, 55, 64, 67, 71)], DUR - t_voz(228.42), ataque=0.1, salida=5), 0.7)
-    for j, n in enumerate((72, 76, 79, 83, 84)):
-        p.poner(t_voz(228.6) + j * 0.22, campana(midi(n), 5), 0.26, pan=-0.4 + j * 0.2)
-    acto_intimo(p, t_voz(234.0), DUR - 1.5, [DO, FA, DO, SOL], bpm=76, vol=0.26, mayor=True)
+    # Cierre: piano suave… silencio… «hasta hoy» con todo
+    acto_intimo(p, t(223.6), t(226.7), [DO, SOL], bpm=80, vol=0.22, mayor=True)
+    p.poner(t(228.42) - 0.9, subida(0.9), 0.35)
+    acorde(p, t(228.42), (36, 48, 55, 64, 67, 71), 6, vol=0.7)
+    motivo(p, t(228.6), 1.2)
+    p.poner(t(229.4), colchon([midi(n) for n in (48, 55, 60, 64)], 5, ataque=1.5), 0.3)
+    motivo(p, t(233.4), 1.0)     # la tarjeta final: la marca, otra vez
+    acto_intimo(p, t(233.6), DUR - 1.2, [DO, FA, DO, SOL], bpm=76, vol=0.26, mayor=True)
 
     n = int(DUR * SR)
     l, r = reverberar(p.l[:n + SR]), reverberar(p.r[:n + SR])

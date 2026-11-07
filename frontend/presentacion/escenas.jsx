@@ -290,8 +290,7 @@ export function Colapso({ v }) {
 }
 
 // ------------------------------------------------------------------ Pausas con música (sin voz)
-// Tres momentos cortos y con ritmo: nuestra historia (16 s) y dos demostraciones reales (18 s y 20 s).
-// Cada una recibe h: segundos desde que empezó la pausa.
+// El prólogo recibe h: segundos desde que empieza el video.
 
 function Cita({ h, a, texto, tam = 38, vel = 0.07 }) {
   const palabras = texto.split(' ');
@@ -306,7 +305,7 @@ function Cita({ h, a, texto, tam = 38, vel = 0.07 }) {
   );
 }
 
-// Nuestra historia (16 s). Magenta = lo humano. Termina en «Por eso…» y entra la voz: «Para romper esta barrera…».
+// Nuestra historia: prólogo de 16 s antes de la voz. Magenta = lo humano. Termina en «Por eso creamos…» y entra la gema.
 const TESTIMONIOS = [
   { nombre: 'Maximiliano Cabello Mata', a: 0.9, x: 120, foto: `${M}/fotos/1.jpg`,
     texto: 'Quise hacer proyectos de modelado 3D en la universidad… *y *los *recursos *no *alcanzaban.' },
@@ -361,147 +360,7 @@ export function Historia({ h }) {
       <div style={{ position: 'absolute', left: 0, right: 0, top: 380, textAlign: 'center', opacity: poreso }}>
         <div style={{ font: '600 46px var(--sans)', color: 'var(--niebla)' }}>Nadie debería recortar sus ideas por falta de equipo.</div>
         <div className="gema-texto" style={{ marginTop: 30, font: '850 140px var(--sans)', transform: `scale(${mezclar(1.25, 1, curva.sale(tramo(h, 13.4, 14.4)))})`,
-          opacity: curva.sale(tramo(h, 13.4, 14.0)) }}>Por eso…</div>
-      </div>
-    </Capa>
-  );
-}
-
-// Encabezado común de las demostraciones.
-function EnAccion({ h, etiqueta, color = 'var(--cian)', claseChip = 'chip-cian' }) {
-  return (
-    <>
-      <Entra v={h} a={0.15} estilo={{ left: 120, top: 92 }}><span className={`chip ${claseChip} faceta-sm`}>{etiqueta}</span></Entra>
-      <Titulo v={h} a={0.3} texto="Amatista *en *acción" tam={66} estilo={{ left: 120, top: 150 }} />
-      <div style={{ position: 'absolute', left: 120, top: 128, width: 6, height: 6, background: color }} />
-    </>
-  );
-}
-
-function Pasos({ h, pasos, actual, x = 1340, y = 250 }) {
-  return (
-    <div style={{ position: 'absolute', left: x, top: y, width: 480, display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {pasos.map((p, i) => {
-        const k = curva.rebote(tramo(h, p.a, p.a + 0.45));
-        const activo = i === actual;
-        const hecho = i < actual;
-        return (
-          <div key={p.t} className="tarjeta faceta-sm" style={{ padding: '16px 20px', display: 'flex', gap: 16, alignItems: 'center',
-            opacity: acotar(k * 1.5) * (activo ? 1 : 0.55), transform: `translateX(${(1 - acotar(k)) * 40}px) scale(${activo ? 1.03 : 1})`, transformOrigin: '0 50%',
-            borderColor: activo ? 'rgb(0 229 255 / 0.7)' : undefined, boxShadow: activo ? '0 0 34px rgb(0 229 255 / 0.25)' : undefined }}>
-            <span style={{ flex: 'none', width: 46, height: 46, display: 'grid', placeItems: 'center', background: activo || hecho ? 'var(--cian)' : 'rgb(195 155 211 / 0.3)',
-              color: '#04161a', font: '800 22px var(--mono)', clipPath: 'polygon(50% 0,100% 50%,50% 100%,0 50%)' }}>{hecho ? '✓' : p.n}</span>
-            <div style={{ minWidth: 0 }}>
-              <div style={{ font: '700 28px/1.15 var(--sans)' }}>{p.t}</div>
-              <div style={{ font: '500 20px var(--sans)', color: 'var(--lavanda)' }}>{p.s}</div>
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-// Demostración 1: la aplicación web (18 s), con metraje real suavizado a 30 cuadros por segundo.
-const CLIPS_WEB = [
-  { toma: 'portada_s', desde: 4.9, a: 0.7, d: 3.1, n: '1', t: 'Entra desde cualquier navegador', s: 'sin instalar nada', url: 'amatista-3d.tech' },
-  { toma: 'curso_s', desde: 1.1, a: 3.8, d: 2.9, n: '2', t: 'Elige tu nivel', s: 'de principiante a avanzado', url: 'amatista-3d.tech/#/curso/blender' },
-  { toma: 'leccion_s', desde: 1.2, a: 6.7, d: 3.2, n: '3', t: 'Lecciones cortas y prácticas', s: 'conoce Blender antes de abrirlo', url: 'amatista-3d.tech/#/leccion' },
-  { toma: 'ciudad_s', desde: 2.8, a: 9.9, d: 4.2, n: '4', t: 'Programa un mundo 3D y míralo al instante', s: 'en el mismo navegador', url: 'amatista-3d.tech/#/estudio' },
-  { toma: 'jefe_s', desde: 0.5, a: 14.1, d: 3.4, n: '5', t: 'Retos con jefe final', s: 'aprender jugando', url: 'amatista-3d.tech/#/reto' },
-];
-
-export function DemoWeb({ h }) {
-  const actual = Math.max(0, CLIPS_WEB.findIndex((c) => h < c.a + c.d));
-  const clip = CLIPS_WEB[actual];
-  return (
-    <Capa>
-      <Fondo v={h} tono={0.2} />
-      <EnAccion h={h} etiqueta="Demostración real · aplicación web" />
-      <div className="pantalla faceta" style={{ left: 120, top: 250, width: 1160, height: 694, opacity: curva.sale(tramo(h, 0.4, 0.9)),
-        transform: `translateY(${(1 - curva.sale(tramo(h, 0.4, 1.0))) * 40}px)` }}>
-        <div className="navegador-barra"><i /><i /><i /><span style={{ marginLeft: 14 }}>🔒 {clip.url}</span></div>
-        <div style={{ position: 'absolute', inset: '42px 0 0 0', overflow: 'hidden', background: '#120a1d' }}>
-          {CLIPS_WEB.map((c, i) => {
-            const o = curva.suave(tramo(h, c.a - 0.25, c.a + 0.05)) * (i === CLIPS_WEB.length - 1 ? 1 : 1 - curva.suave(tramo(h, c.a + c.d - 0.05, c.a + c.d + 0.25)));
-            if (o <= 0) return null;
-            const z = mezclar(1.0, 1.05, tramo(h, c.a, c.a + c.d));
-            return (
-              <div key={c.toma} style={{ position: 'absolute', inset: 0, opacity: o, transform: `scale(${z})`, transformOrigin: '50% 30%' }}>
-                <Metraje toma={c.toma} t={h - c.a} desde={c.desde} posicion="50% 0%" />
-              </div>
-            );
-          })}
-        </div>
-        {/* avance de la demostración */}
-        <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 6, display: 'flex', gap: 4, zIndex: 3 }}>
-          {CLIPS_WEB.map((c) => <div key={c.toma} style={{ flex: c.d, background: 'rgb(195 155 211 / 0.25)' }}>
-            <div style={{ height: '100%', width: `${tramo(h, c.a, c.a + c.d) * 100}%`, background: 'var(--cian)' }} /></div>)}
-        </div>
-      </div>
-      <Pasos h={h} pasos={CLIPS_WEB} actual={actual} />
-    </Capa>
-  );
-}
-
-// Demostración 2: el complemento (add-on) para Blender (20 s). Cada imagen es un estado real del add-on
-// en Blender 4.0: la práctica del tren armada pieza por pieza, revisada por Amatista en la computadora.
-const CAPTURAS = [
-  ['001_inicio', 1.5], ['002_pista_donde', 1.7], ['003_pieza_00', 1.0], ['004_pieza_01', 1.0], ['005_pieza_02', 0.9], ['006_pista_como', 1.7],
-  ['007_pieza_03', 0.65], ['008_pieza_04', 0.65], ['009_pieza_05', 0.65], ['010_pieza_06', 0.65], ['011_pieza_07', 0.65], ['012_pieza_08', 0.65],
-  ['013_pieza_09', 0.65], ['014_pieza_10', 0.8], ['015_guardar', 1.5], ['016_final', 3.4],
-];
-const T_CAPTURAS = (() => { let t = 0.7; return CAPTURAS.map(([n, d]) => { const a = t; t += d; return { n, a, d }; }); })();
-const PASOS_ADDON = [
-  { n: '1', t: 'La guía te dice qué hacer', s: 'una banda clara, un paso a la vez', a: 0.8 },
-  { n: '2', t: '¿Dudas? Pide una pista', s: '¿dónde está? · ¿cómo se hace?', a: 2.3 },
-  { n: '3', t: 'Amatista revisa cada pieza', s: 'en tu computadora, al instante', a: 8.7 },
-  { n: '4', t: '¡Práctica terminada!', s: 'todo sin internet', a: 15.6 },
-];
-// Recorte de la captura (1920×1080): la vista 3D, sin los paneles de propiedades.
-const RECORTE = { x: 0, y: 36, w: 1560 };
-const BANDA = { x: 320, y: 96, w: 740, h: 210 };
-
-export function DemoAddon({ h }) {
-  const actual = h < 2.3 ? 0 : h < 8.7 ? 1 : h < 15.6 ? 2 : 3;
-  const ancho = 1160;
-  const esc = ancho / RECORTE.w;
-  const lupa = curva.sale(tramo(h, 1.2, 1.8)) * (1 - curva.suave(tramo(h, 18.6, 19.2)));
-  const final = curva.sale(tramo(h, 15.6, 16.2));
-  return (
-    <Capa>
-      <Fondo v={h} tono={0.2} />
-      <EnAccion h={h} etiqueta="Demostración real · complemento para Blender" />
-      <div className="pantalla faceta" style={{ left: 120, top: 250, width: ancho, height: 694, opacity: curva.sale(tramo(h, 0.4, 0.9)),
-        transform: `translateY(${(1 - curva.sale(tramo(h, 0.4, 1.0))) * 40}px)`, boxShadow: final > 0 ? `0 0 ${final * 80}px rgb(0 229 255 / 0.35), 0 50px 120px rgb(0 0 0 / 0.6)` : undefined }}>
-        {T_CAPTURAS.map((c, i) => {
-          const sig = T_CAPTURAS[i + 1];
-          const o = curva.suave(tramo(h, c.a - 0.18, c.a + 0.02)) * (sig ? 1 - curva.suave(tramo(h, sig.a - 0.18, sig.a + 0.02)) : 1);
-          if (o <= 0) return null;
-          const z = 1 + 0.035 * tramo(h, 0.7, 19.5);
-          return (
-            <img key={c.n} alt="" src={`${M}/addon/${c.n}.jpg`} style={{ position: 'absolute', left: -RECORTE.x * esc, top: -RECORTE.y * esc, width: 1920 * esc, height: 1080 * esc,
-              maxWidth: 'none', objectFit: 'fill', opacity: o, transform: `scale(${z})`, transformOrigin: '35% 45%' }} />
-          );
-        })}
-        {/* Lupa sobre la banda de la guía para que se lea */}
-        <div style={{ position: 'absolute', left: BANDA.x * esc - 30, top: (BANDA.y - RECORTE.y) * esc - 14, width: BANDA.w * esc * 1.55, height: BANDA.h * esc * 1.55,
-          overflow: 'hidden', opacity: lupa, transform: `scale(${mezclar(0.9, 1, lupa)})`, transformOrigin: '0 0', border: '2px solid rgb(0 229 255 / 0.8)',
-          boxShadow: '0 20px 60px rgb(0 0 0 / 0.7), 0 0 30px rgb(0 229 255 / 0.3)', zIndex: 2 }}>
-          {T_CAPTURAS.map((c, i) => {
-            const sig = T_CAPTURAS[i + 1];
-            const o = curva.suave(tramo(h, c.a - 0.18, c.a + 0.02)) * (sig ? 1 - curva.suave(tramo(h, sig.a - 0.18, sig.a + 0.02)) : 1);
-            if (o <= 0) return null;
-            const e2 = esc * 1.55;
-            return <img key={c.n} alt="" src={`${M}/addon/${c.n}.jpg`} style={{ position: 'absolute', left: -BANDA.x * e2, top: -BANDA.y * e2, width: 1920 * e2, height: 1080 * e2,
-              maxWidth: 'none', objectFit: 'fill', opacity: o }} />;
-          })}
-        </div>
-      </div>
-      <Pasos h={h} pasos={PASOS_ADDON} actual={actual} />
-      <div style={{ position: 'absolute', left: 1340, top: 760, display: 'flex', gap: 14, flexWrap: 'wrap', width: 480, opacity: final }}>
-        <span className="chip chip-cian faceta-sm" style={{ fontSize: 20 }}><Icono tipo="sinwifi" tam={28} color="#04161a" />100 % sin internet</span>
-        <span className="chip faceta-sm" style={{ fontSize: 20 }}>Blender 4 · sin tarjeta gráfica</span>
+          opacity: curva.sale(tramo(h, 13.4, 14.0)) }}>Por eso creamos…</div>
       </div>
     </Capa>
   );
@@ -533,68 +392,145 @@ export function Amatista({ v }) {
   );
 }
 
-// ------------------------------------------------------------------ 5 · Pilar 1: la PWA (90 → 106 s)
+// ------------------------------------------------------------------ 5 · Pilar 1: la aplicación web (90 → 106 s)
+// La demostración real corre MIENTRAS la voz la describe: cada toma entra con su palabra.
+const CLIPS_WEB = [
+  { toma: 'portada_s', desde: 4.9, a: 92.7, n: '1', t: 'Corre en cualquier navegador', s: 'sin instalar nada pesado', url: 'amatista-3d.tech' },
+  { toma: 'curso_s', desde: 1.1, a: 95.5, n: '2', t: 'Elige tu nivel', s: 'de principiante a avanzado', url: 'amatista-3d.tech/#/curso/blender' },
+  { toma: 'leccion_s', desde: 1.2, a: 98.2, n: '3', t: 'Consulta contenidos', s: 'lecciones cortas y prácticas', url: 'amatista-3d.tech/#/leccion' },
+  { toma: 'mundo_ciudad_s', desde: 9.7, a: 99.7, n: '4', t: 'Interactúa con mundos 3D', s: 'en el mismo navegador', url: 'amatista-3d.tech/#/estudio' },
+  { toma: null, a: 103.2, n: '5', t: 'Menos datos que una red social', s: '≈ 0.4 MB la primera visita', url: 'amatista-3d.tech' },
+];
+
+function Pasos({ v, pasos, x = 1340, y = 250 }) {
+  const actual = pasos.reduce((k, p, i) => (v >= p.a ? i : k), -1);
+  return (
+    <div style={{ position: 'absolute', left: x, top: y, width: 480, display: 'flex', flexDirection: 'column', gap: 14 }}>
+      {pasos.map((p, i) => {
+        const k = curva.rebote(tramo(v, p.a, p.a + 0.45));
+        const activo = i === actual;
+        const hecho = i < actual;
+        return (
+          <div key={p.t} className="tarjeta faceta-sm" style={{ padding: '14px 20px', display: 'flex', gap: 16, alignItems: 'center',
+            opacity: acotar(k * 1.5) * (activo ? 1 : 0.55), transform: `translateX(${(1 - acotar(k)) * 40}px) scale(${activo ? 1.03 : 1})`, transformOrigin: '0 50%',
+            borderColor: activo ? 'rgb(0 229 255 / 0.7)' : undefined, boxShadow: activo ? '0 0 34px rgb(0 229 255 / 0.25)' : undefined }}>
+            <span style={{ flex: 'none', width: 44, height: 44, display: 'grid', placeItems: 'center', background: activo || hecho ? 'var(--cian)' : 'rgb(195 155 211 / 0.3)',
+              color: '#04161a', font: '800 22px var(--mono)', clipPath: 'polygon(50% 0,100% 50%,50% 100%,0 50%)' }}>{hecho ? '✓' : p.n}</span>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ font: '700 27px/1.15 var(--sans)' }}>{p.t}</div>
+              <div style={{ font: '500 20px var(--sans)', color: 'var(--lavanda)' }}>{p.s}</div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 export function Pwa({ v }) {
-  const red = tramo(v, 103.6, 104.6);
+  const actual = CLIPS_WEB.reduce((k, c, i) => (v >= c.a ? i : k), 0);
+  const datos = tramo(v, 103.6, 105.0);
   return (
     <Capa>
       <Fondo v={v} />
       <Etiqueta v={v} a={90.3} texto="02 · La solución · Dos pilares" estilo={{ left: 120, top: 100 }} />
       <Titulo v={v} a={92.5} texto="01 · Aplicación web *ultraligera" tam={64} estilo={{ left: 120, top: 150 }} />
-      <Entra v={v} a={94.2} estilo={{ left: 126, top: 250, font: '500 30px var(--sans)', color: 'var(--lavanda)' }}>Aplicación web · funciona en cualquier navegador · sin instalar nada pesado</Entra>
-      <Pantalla v={v} a={92.7} b={97.6} src={`${M}/capturas/portada.jpg`} x={120} y={330} w={1100} h={640} />
-      <Pantalla v={v} a={97.6} b={99.5} src={`${M}/capturas/leccion_actividad.jpg`} x={120} y={330} w={1100} h={640} url="amatista-3d.tech/#/curso/blender" />
-      <div className="pantalla faceta" style={{ left: 120, top: 330, width: 1100, height: 640, opacity: vida(v, 99.5, 103.4, 0.5) }}>
-        <div className="navegador-barra"><i /><i /><i /><span style={{ marginLeft: 14 }}>🔒 amatista-3d.tech/#/estudio</span></div>
-        <div style={{ position: 'absolute', top: 42, inset: '42px 0 0 0' }}><Metraje toma="mundo_ciudad_s" t={v - 99.5} desde={9.7} /></div>
+      <div className="pantalla faceta" style={{ left: 120, top: 250, width: 1160, height: 694, opacity: curva.sale(tramo(v, 92.6, 93.1)),
+        transform: `translateY(${(1 - curva.sale(tramo(v, 92.6, 93.2))) * 40}px)` }}>
+        <div className="navegador-barra"><i /><i /><i /><span style={{ marginLeft: 14 }}>🔒 {CLIPS_WEB[actual].url}</span></div>
+        <div style={{ position: 'absolute', inset: '42px 0 0 0', overflow: 'hidden', background: '#120a1d' }}>
+          {CLIPS_WEB.map((c, i) => {
+            const sig = CLIPS_WEB[i + 1];
+            const o = curva.suave(tramo(v, c.a - 0.25, c.a + 0.05)) * (sig ? 1 - curva.suave(tramo(v, sig.a - 0.05, sig.a + 0.25)) : 1);
+            if (o <= 0) return null;
+            if (!c.toma) {
+              return (
+                <div key="datos" style={{ position: 'absolute', inset: 0, opacity: o, padding: '70px 80px', background: 'linear-gradient(160deg, #2a1240, #120a1d)' }}>
+                  <div style={{ font: '600 22px var(--mono)', letterSpacing: '0.3em', color: 'var(--cian)' }}>CONSUMO DE DATOS</div>
+                  {[['Red social', 1, '#5d4a6e', 'video, fotos y anuncios sin parar'], ['Amatista', 0.06, 'var(--cian)', '≈ 0.4 MB la primera visita · 0 MB al volver']].map(([n, f, col, nota], j) => (
+                    <div key={n} style={{ marginTop: 56 }}>
+                      <div style={{ font: '700 38px var(--sans)' }}>{n}</div>
+                      <div style={{ marginTop: 14, height: 56, width: `${Math.max(0.04, f * curva.sale(acotar(datos * 1.4 - j * 0.3))) * 100}%`, background: col }} />
+                      <div style={{ marginTop: 10, font: '500 24px var(--mono)', color: 'var(--lavanda)' }}>{nota}</div>
+                    </div>
+                  ))}
+                </div>
+              );
+            }
+            const z = mezclar(1.0, 1.05, tramo(v, c.a, sig ? sig.a : c.a + 3));
+            return (
+              <div key={c.toma} style={{ position: 'absolute', inset: 0, opacity: o, transform: `scale(${z})`, transformOrigin: '50% 30%' }}>
+                <Metraje toma={c.toma} t={v - c.a} desde={c.desde} posicion="50% 0%" />
+              </div>
+            );
+          })}
+        </div>
       </div>
-      <Foto v={v} a={95.5} src={`${M}/fotos/3.jpg`} x={1300} y={300} w={500} h={660} zoom={[1.02, 1.12]} posicion="50% 40%" etiqueta="Alumna · UTN" rot={2} />
-      {/* Consumo de datos: la barra de Amatista frente a una red social */}
-      <div className="tarjeta faceta" style={{ position: 'absolute', left: 120, top: 330, width: 1100, height: 640, padding: '70px 80px', opacity: vida(v, 103.4, SIEMPRE, 0.5) }}>
-        <div style={{ font: '600 22px var(--mono)', letterSpacing: '0.3em', color: 'var(--cian)' }}>CONSUMO DE DATOS</div>
-        {[['Red social', 1, '#5d4a6e', 'video, fotos y anuncios sin parar'], ['Amatista', 0.06, 'var(--cian)', '≈ 0.4 MB la primera visita · 0 MB al volver']].map(([n, f, c, nota], i) => (
-          <div key={n} style={{ marginTop: 60 }}>
-            <div style={{ font: '700 36px var(--sans)' }}>{n}</div>
-            <div style={{ marginTop: 14, height: 54, width: `${Math.max(0.05, f * curva.sale(acotar(red * 1.4 - i * 0.3))) * 100}%`, background: c }} />
-            <div style={{ marginTop: 10, font: '500 24px var(--mono)', color: 'var(--lavanda)' }}>{nota}</div>
-          </div>
-        ))}
-      </div>
+      <Pasos v={v} pasos={CLIPS_WEB} />
     </Capa>
   );
 }
 
-// ------------------------------------------------------------------ 6 · Pilar 2: el add-on de Blender (106 → 125 s)
+// ------------------------------------------------------------------ 6 · Pilar 2: el complemento para Blender (106 → 125 s)
+// Cada imagen es un estado real del add-on en Blender 4.0 (grabar_addon.py), en el segundo en que la voz lo dice.
+const CAPTURAS = [
+  ['001_inicio', 112.3], ['002_pista_donde', 114.4], ['003_pieza_00', 115.9], ['004_pieza_01', 116.6], ['005_pieza_02', 117.3], ['006_pista_como', 118.0],
+  ['007_pieza_03', 119.6], ['008_pieza_04', 120.05], ['009_pieza_05', 120.5], ['010_pieza_06', 120.95], ['011_pieza_07', 121.4], ['012_pieza_08', 121.85],
+  ['013_pieza_09', 122.3], ['014_pieza_10', 122.75], ['015_guardar', 123.25], ['016_final', 123.9],
+].map(([n, a]) => ({ n, a }));
+const PASOS_ADDON = [
+  { n: '1', t: 'Se instala fácil', s: 'en las computadoras del laboratorio', a: 108.5 },
+  { n: '2', t: 'Una guía dentro de Blender', s: 'un paso claro a la vez, con pistas', a: 112.6 },
+  { n: '3', t: '100 % sin internet', s: 'todo ocurre en la computadora', a: 117.7 },
+  { n: '4', t: 'Revisa paso a paso tu modelo', s: 'cada pieza, al instante', a: 119.6 },
+  { n: '5', t: '¡Práctica terminada!', s: 'el modelo quedó bien', a: 123.9 },
+];
+const RECORTE = { x: 0, y: 36, w: 1560 };
+const BANDA = { x: 320, y: 96, w: 740, h: 210 };
 
-const PASOS = [['Construir el modelo', 120.64], ['Revisar la escena', 121.66], ['Comparar con el ejemplo', 123.34]];
+function Captura({ v, recorte, escala, extra }) {
+  return CAPTURAS.map((c, i) => {
+    const sig = CAPTURAS[i + 1];
+    const o = curva.suave(tramo(v, c.a - 0.15, c.a + 0.02)) * (sig ? 1 - curva.suave(tramo(v, sig.a - 0.15, sig.a + 0.02)) : 1);
+    if (o <= 0) return null;
+    return <img key={c.n} alt="" src={`${M}/addon/${c.n}.jpg`} style={{ position: 'absolute', left: -recorte.x * escala, top: -recorte.y * escala,
+      width: 1920 * escala, height: 1080 * escala, maxWidth: 'none', objectFit: 'fill', opacity: o, ...extra }} />;
+  });
+}
 
 export function Blender({ v }) {
+  const ancho = 1160;
+  const esc = ancho / RECORTE.w;
+  const blender = curva.suave(tramo(v, 112.1, 112.6));
+  const lupa = curva.sale(tramo(v, 112.9, 113.5));
+  const final = curva.sale(tramo(v, 123.9, 124.4));
   return (
     <Capa>
       <Fondo v={v} />
-      <Titulo v={v} a={106.4} texto="02 · Complemento para *Blender" tam={64} estilo={{ left: 120, top: 120 }} />
-      <Foto v={v} a={108.4} b={112.3} src={`${M}/fotos/2.jpg`} x={120} y={260} w={1000} h={720} zoom={[1.05, 1.15]} etiqueta="Laboratorio escolar · se instala fácil" />
-      <div className="pantalla faceta" style={{ left: 120, top: 260, width: 1000, height: 720, opacity: vida(v, 112.4, SIEMPRE, 0.6) }}>
-        {/* Captura real del add-on: la banda guía sobre la vista 3D mientras el alumno arma el tren */}
-        {[['007_pieza_03', 112.4], ['011_pieza_07', 117.0], ['014_pieza_10', 121.0]].map(([n, a], i, todas) => {
-          const o = curva.suave(tramo(v, a, a + 0.4)) * (todas[i + 1] ? 1 - curva.suave(tramo(v, todas[i + 1][1], todas[i + 1][1] + 0.4)) : 1);
-          return o > 0 && <img key={n} alt="" src={`${M}/addon/${n}.jpg`} style={{ position: 'absolute', left: 0, top: -23, width: 1231, height: 692, maxWidth: 'none',
-            objectFit: 'fill', opacity: o, transform: `scale(${1 + 0.03 * tramo(v, 112.4, 125)})`, transformOrigin: '30% 40%' }} />;
-        })}
+      <Etiqueta v={v} a={106.4} texto="Pilar 2 · dentro de Blender" estilo={{ left: 120, top: 100 }} />
+      <Titulo v={v} a={106.5} texto="02 · Complemento para *Blender" tam={64} estilo={{ left: 120, top: 150 }} />
+      <div className="pantalla faceta" style={{ left: 120, top: 250, width: ancho, height: 694, opacity: curva.sale(tramo(v, 106.6, 107.1)),
+        boxShadow: final > 0 ? `0 0 ${final * 80}px rgb(0 229 255 / 0.35), 0 50px 120px rgb(0 0 0 / 0.6)` : undefined }}>
+        {/* el laboratorio donde se instala */}
+        <div style={{ position: 'absolute', inset: 0, opacity: 1 - blender }}>
+          <img alt="" src={`${M}/fotos/2.jpg`} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${mezclar(1.05, 1.15, tramo(v, 106.6, 112.6))})` }} />
+          <div style={{ position: 'absolute', left: 24, bottom: 20, font: '600 18px var(--mono)', letterSpacing: '0.2em', color: 'var(--niebla)' }}>LABORATORIO ESCOLAR · SE INSTALA FÁCIL</div>
+        </div>
+        <div style={{ position: 'absolute', inset: 0, opacity: blender, transform: `scale(${1 + 0.035 * tramo(v, 112.3, 125)})`, transformOrigin: '35% 45%' }}>
+          <Captura v={v} recorte={RECORTE} escala={esc} />
+        </div>
+        {/* lupa sobre la banda de la guía para que se lea */}
+        <div style={{ position: 'absolute', left: BANDA.x * esc - 30, top: (BANDA.y - RECORTE.y) * esc - 14, width: BANDA.w * esc * 1.55, height: BANDA.h * esc * 1.55,
+          overflow: 'hidden', opacity: lupa, transform: `scale(${mezclar(0.9, 1, lupa)})`, transformOrigin: '0 0', border: '2px solid rgb(0 229 255 / 0.8)',
+          boxShadow: '0 20px 60px rgb(0 0 0 / 0.7), 0 0 30px rgb(0 229 255 / 0.3)', zIndex: 2 }}>
+          <Captura v={v} recorte={BANDA} escala={esc * 1.55} />
+        </div>
       </div>
-      <Entra v={v} a={113.5} estilo={{ left: 1200, top: 280, width: 600, font: '650 40px/1.2 var(--sans)' }}>
-        De software profesional a <span className="gema-texto">herramienta guiada</span> de enseñanza
-      </Entra>
-      <Entra v={v} a={117.5} como="escala" estilo={{ left: 1200, top: 460 }}>
-        <span className="chip chip-cian faceta-sm" style={{ fontSize: 26 }}><Icono tipo="sinwifi" tam={36} color="#04161a" />100 % sin internet</span>
-      </Entra>
-      <div style={{ position: 'absolute', left: 1200, top: 560, display: 'flex', flexDirection: 'column', gap: 26 }}>
-        {PASOS.map(([t, a]) => <Marca key={t} v={v} a={a} texto={t} />)}
+      <Pasos v={v} pasos={PASOS_ADDON} />
+      <div style={{ position: 'absolute', left: 1340, top: 860, display: 'flex', gap: 14, width: 480, opacity: final }}>
+        <span className="chip chip-cian faceta-sm" style={{ fontSize: 18, whiteSpace: 'nowrap', padding: '10px 16px' }}><Icono tipo="sinwifi" tam={24} color="#04161a" />sin internet</span>
+        <span className="chip faceta-sm" style={{ fontSize: 18, whiteSpace: 'nowrap', padding: '10px 16px' }}>sin tarjeta gráfica</span>
       </div>
-      <Entra v={v} a={123.4} como="escala" estilo={{ left: 1520, top: 760 }}>
-        <div className="foto faceta" style={{ position: 'relative', width: 280, height: 200 }}><img alt="" src={`${M}/capturas/ref_m1-tren.jpg`} /></div>
-      </Entra>
     </Capa>
   );
 }

@@ -1,4 +1,4 @@
-# Presentación de Hack4Edu · Reto 2 (5:00)
+# Presentación de Hack4Edu · Reto 2 (4:20)
 
 El video de la presentación, hecho con la misma técnica que la película (`../pelicula`): cada cuadro es
 una función pura del tiempo, se dibuja en el navegador con React y se captura cuadro por cuadro.
@@ -7,18 +7,21 @@ una función pura del tiempo, se dibuja en el navegador con React y se captura c
   `cd frontend && npx vite --port 5173` → <http://localhost:5173/presentacion/> (`?t=95` empieza en ese segundo).
 - **Sigue la voz exactamente.** La voz se transcribió con Whisper palabra por palabra; cada elemento entra
   cuando se dice su palabra (`tiempos.js`: subtítulos, capítulos y el texto oficial del reto).
-- **Línea de tiempo.** 4 s de apertura, la voz (233.7 s), tres pausas cortas con música y la tarjeta final:
-  5:00 exactos. Las pausas son **Nuestra historia** (16 s), **Demostración real · aplicación web** (18 s) y
-  **Demostración real · complemento para Blender** (20 s). Las dos demostraciones caen justo en empalmes del
-  audio original, así el cambio de grabación queda escondido detrás de la pausa.
+- **Línea de tiempo.** Un prólogo de 16 s con **Nuestra historia** (lo que vivieron Maximiliano y Diana Paola
+  como alumnos) que termina en «Por eso creamos…», la gema que se arma (4 s), **la voz completa y seguida**
+  (233.7 s, sin pausas: la narrativa no se corta) y la tarjeta final: 4:20, dentro del límite de 5 minutos.
+- **Demostraciones dentro del relato.** La plataforma real corre mientras la voz dice «Una aplicación web
+  ultraligera…» y el add-on real arma el tren mientras dice «Un add-on integrado para Blender…»: cada toma y
+  cada pieza entran con su palabra.
 - **Armar el video:** `bash docs/hack4edu/video/presentacion/armar.sh` → `salida/` (no se versiona).
 
 ## Escenas
 
 | Capítulo | Escenas |
 |---|---|
-| 01 · El problema | Apertura y equipo · El reto (texto oficial, palabra por palabra) · La brecha (20,900+ y 1,500+) · El colapso · **Nuestra historia** |
-| 02 · La solución | Amatista · Pilar 1: la aplicación web · **Demostración web** · Pilar 2: el complemento para Blender · **Demostración del add-on** · **Geoda, el corazón de Amatista** |
+| Prólogo | **Nuestra historia** → «Por eso creamos…» → la gema |
+| 01 · El problema | Apertura y equipo · El reto (texto oficial, palabra por palabra) · La brecha (20,900+ y 1,500+) · El colapso |
+| 02 · La solución | Amatista · Pilar 1: la aplicación web (demostración real) · Pilar 2: el complemento para Blender (demostración real) · **Geoda, el corazón de Amatista** |
 | 03 · Telemetría | Practica sin conexión · Vuelve la red (telemetría ligera, FastAPI, SQL, códigos y roles) · El panel del profesor |
 | 04 · Inclusión y escala | Inclusivo y equitativo · Piloto y costo · Mercado global · Cierre |
 
@@ -41,6 +44,18 @@ una función pura del tiempo, se dibuja en el navegador con React y se captura c
 
 El audio original une varias grabaciones: hay 8 empalmes con huecos digitales de 28 a 92 ms. `voz.py` los rellena
 con ruido de sala de la misma grabación y les pone fundidos de 12 ms; la música (sidechain) los cubre.
+
+## Psicología del sonido
+
+Para que el oído siga atento aunque la vista se distraiga (`musica.py`):
+
+- **Motivo de Amatista** (Mi–Si–Mi en campanas): suena siempre con la marca (la gema, la revelación, cada pilar,
+  Geoda, «hasta hoy» y la tarjeta final). El oído aprende la asociación y la reconoce.
+- **Anticipación y recompensa:** una subida corta y un golpe en cada cifra (20,900+, 1,500+, 500+).
+- **Ruptura de patrón:** la música se cae cuando «la red escolar colapsa» y baja 12 dB antes de «hasta hoy»,
+  que entra 15 dB arriba con el acorde final.
+- **Color emocional:** menor y grave en el problema, mayor y luminoso en la solución, sereno en la telemetría,
+  cálido en la inclusión; clics de logro en cada pieza que revisa el add-on y latido en Geoda.
 
 ## Español neutro
 

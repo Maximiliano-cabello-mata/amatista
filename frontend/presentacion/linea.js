@@ -1,4 +1,4 @@
-// Línea de tiempo: escenas en segundos de la voz, pasadas a la línea (la voz más las pausas con música).
+// Línea de tiempo: escenas en segundos de la voz (seguida, sin pausas). Antes va el prólogo y la gema.
 import * as E from './escenas.jsx';
 import { FIN, PAUSAS, PRE, VOZ, aLinea, inicioPausa } from './tiempos.js';
 
@@ -6,22 +6,18 @@ import { FIN, PAUSAS, PRE, VOZ, aLinea, inicioPausa } from './tiempos.js';
 export const reloj = { fijar: () => {} };
 
 const FIN_V = VOZ + FIN;
-const PAUSA = Object.fromEntries(PAUSAS.map((p) => [p.id, p]));
-const ESCENA_PAUSA = { historia: E.Historia, 'demo-web': E.DemoWeb, 'demo-addon': E.DemoAddon };
 
-// desde/hasta en segundos de la voz. Una escena que termina donde empieza una pausa se corta ahí.
+// desde/hasta en segundos de la voz (negativos: antes de que empiece la voz).
 const EN_VOZ = [
-  { id: 'apertura', tono: 0.3, Escena: E.Apertura, desde: -PRE, hasta: 8.1 },
+  { id: 'historia', tono: -0.05, Escena: E.Historia, desde: -PRE, hasta: -4 },
+  { id: 'apertura', tono: 0.3, Escena: E.Apertura, desde: -4, hasta: 8.1, barrido: true },
   { id: 'reto', Escena: E.Reto, desde: 8.1, hasta: 35 },
   { id: 'brecha', tono: -0.15, Escena: E.Brecha, desde: 35, hasta: 60.2 },
   { id: 'colapso', tono: -0.35, Escena: E.Colapso, desde: 60.2, hasta: 78.1 },
-  { pausa: 'historia' },
   { id: 'amatista', tono: 0.6, Escena: E.Amatista, desde: 78.1, hasta: 90.2, barrido: true },
   { id: 'pwa', tono: 0.15, Escena: E.Pwa, desde: 90.2, hasta: 106.25 },
-  { pausa: 'demo-web' },
-  { id: 'blender', tono: 0.15, Escena: E.Blender, desde: 106.25, hasta: 125.25, barrido: true },
-  { pausa: 'demo-addon' },
-  { id: 'geoda', tono: 0.25, Escena: E.GeodaEscena, desde: 125.25, hasta: 144.1, barrido: true },
+  { id: 'blender', tono: 0.15, Escena: E.Blender, desde: 106.25, hasta: 125.25 },
+  { id: 'geoda', tono: 0.25, Escena: E.GeodaEscena, desde: 125.25, hasta: 144.1 },
   { id: 'sin-conexion', tono: -0.1, Escena: E.SinConexion, desde: 144.1, hasta: 155.3, barrido: true },
   { id: 'sincroniza', Escena: E.Sincroniza, desde: 155.3, hasta: 171.5 },
   { id: 'profesor', Escena: E.Profesor, desde: 171.5, hasta: 177 },
@@ -53,10 +49,5 @@ const hastaEnLinea = (v) => {
   return p ? inicioPausa(p) : aLinea(v);
 };
 
-export const ESCENAS = EN_VOZ.map((e) => {
-  if (e.pausa) {
-    const p = PAUSA[e.pausa];
-    return { matiz: COLOR[p.id][0], acento: COLOR[p.id][1], id: p.id, tono: p.id === 'historia' ? -0.05 : 0.2, Escena: ESCENA_PAUSA[p.id], desde: inicioPausa(p), hasta: inicioPausa(p) + p.d, barrido: true, pausa: true };
-  }
-  return { ...e, matiz: COLOR[e.id][0], acento: COLOR[e.id][1], desde: aLinea(e.desde), hasta: hastaEnLinea(e.hasta) };
-});
+// Sin pausas, la línea es la voz: las escenas se usan tal cual.
+export const ESCENAS = EN_VOZ.map((e) => ({ ...e, matiz: COLOR[e.id][0], acento: COLOR[e.id][1], desde: aLinea(e.desde), hasta: hastaEnLinea(e.hasta) }));

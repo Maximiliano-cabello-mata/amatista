@@ -1,17 +1,13 @@
 // Tiempos de la voz (segundos del audio), medidos con Whisper palabra por palabra.
-// El video empieza PRE segundos antes de la voz (la gema se arma) y termina FIN después.
-// En cada pausa (segundo «en» de la voz) la voz se detiene «d» segundos y entra una escena con música:
-// nuestra historia y dos demostraciones reales. Las dos demostraciones caen justo en empalmes del audio,
-// así el corte queda escondido tras la pausa. El total queda en 5 minutos exactos.
-export const PRE = 4;
+// La voz corre seguida, sin pausas: la narrativa no se corta.
+// Antes de la voz va un prólogo con música (nuestra historia, PROLOGO s) y la gema que se arma (4 s);
+// después de «Muchas gracias», la tarjeta final (FIN s).
+export const PROLOGO = 16;
+export const PRE = PROLOGO + 4;
 export const VOZ = 233.71;
-export const PAUSAS = [
-  { id: 'historia', en: 78.1, d: 16 },
-  { id: 'demo-web', en: 106.25, d: 18 },
-  { id: 'demo-addon', en: 125.25, d: 20 },
-];
-export const DURACION = 300;
-export const FIN = DURACION - PRE - VOZ - PAUSAS.reduce((s, p) => s + p.d, 0);
+export const PAUSAS = [];
+export const DURACION = 260;
+export const FIN = DURACION - PRE - VOZ;
 
 // Línea (segundos desde que empieza la voz, contando las pausas) ↔ voz.
 export const inicioPausa = (p) => p.en + PAUSAS.filter((q) => q.en < p.en).reduce((s, q) => s + q.d, 0);

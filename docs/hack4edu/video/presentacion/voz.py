@@ -1,18 +1,17 @@
-"""Pista de voz de la presentación (5:00).   python3 voz.py <voz_mejorada.wav> <salida.wav>
+"""Pista de voz de la presentación (4:20).   python3 voz.py <voz_mejorada.wav> <salida.wav>
 
 1. Repara los empalmes del audio original (huecos digitales de 30–100 ms donde se unieron grabaciones):
    los rellena con ruido de sala de la misma grabación y les pone fundidos cortos, para que no se oiga el corte.
-2. Abre las pausas con música (nuestra historia y las dos demostraciones). Dos de ellas caen justo en
-   empalmes, así el cambio de grabación queda escondido detrás de la pausa.
-3. Agrega PRE s al inicio y completa los 5:00.
+2. La voz corre seguida, sin pausas, para que la narrativa no se corte.
+3. Agrega PRE s al inicio (prólogo con nuestra historia y la gema) y la tarjeta final.
 """
 import sys
 import wave
 
 import numpy as np
 
-PRE, DUR = 4.0, 300.0
-PAUSAS = [(78.1, 16.0), (106.25, 18.0), (125.25, 20.0)]  # (segundo de la voz, duración)
+PRE, DUR = 20.0, 260.0  # prólogo de 16 s + gema de 4 s antes de la voz
+PAUSAS = []  # la voz corre seguida: la narrativa no se corta
 EMPALMES = [21.09, 34.82, 55.15, 106.22, 125.21, 143.97, 166.94, 193.53]
 
 with wave.open(sys.argv[1]) as w:
