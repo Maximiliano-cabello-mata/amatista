@@ -11,7 +11,7 @@ import Presentacion from './Presentacion.jsx';
 import { ESCENAS, reloj } from './linea.js';
 import { DURACION, PRE } from './tiempos.js';
 
-const TOMAS = ['mundo_ciudad', 'sin_conexion', 'portada', 'panel'];
+const TOMAS = ['mundo_ciudad_s', 'sin_conexion_s', 'portada_s', 'curso_s', 'leccion_s', 'ciudad_s', 'jefe_s', 'panel_s'];
 const consulta = new URLSearchParams(location.search);
 const renderizando = consulta.has('render');
 

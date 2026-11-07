@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Barrido } from '../pelicula/piezas.jsx';
 import { curva, tramo } from '../pelicula/tiempo';
-import { CAPITULOS, DURACION, PRE, SUBTITULOS, VOZ, aLinea, aVoz, enHistoria } from './tiempos.js';
+import { CAPITULOS, DURACION, PRE, SUBTITULOS, VOZ, aLinea, aVoz, pausaEn } from './tiempos.js';
 import { ESCENAS, reloj } from './linea.js';
 import { Fondo } from './escenas.jsx';
 import { FondoGlobal } from './contexto.js';
@@ -49,7 +49,7 @@ function Marco({ v, l }) {
 }
 
 function Subtitulo({ v, l }) {
-  if (enHistoria(l)) return null;
+  if (pausaEn(l)) return null;
   if (v >= SIN_SUBTITULOS[0] && v < SIN_SUBTITULOS[1]) return null;
   const s = SUBTITULOS.find(([a, b]) => v >= a - 0.08 && v < b + 0.25);
   if (!s) return null;
@@ -65,6 +65,8 @@ export function Montaje({ t }) {
   let barrido = 0;
   let tonoSuma = 0;
   let pesoSuma = 0;
+  const matiz = [0, 0, 0];
+  const acento = [0, 0, 0];
   const capas = [];
   ESCENAS.forEach((e, i) => {
     const sig = ESCENAS[i + 1];
@@ -82,8 +84,9 @@ export function Montaje({ t }) {
       const tono = e.id === 'cierre' ? 0.2 + curva.sale(tramo(v, 228.42, 229.0)) * 0.6 : (e.tono ?? 0);
       tonoSuma += tono * o;
       pesoSuma += o;
+      for (let k = 0; k < 3; k += 1) { matiz[k] += e.matiz[k] * o; acento[k] += e.acento[k] * o; }
       capas.push(
-        <div key={e.id} style={{ position: 'absolute', inset: 0, opacity: o, transform: ZONA, transformOrigin: ORIGEN }}><Escena v={v} l={l} /></div>,
+        <div key={e.id} style={{ position: 'absolute', inset: 0, opacity: o, transform: ZONA, transformOrigin: ORIGEN }}><Escena v={v} l={l} h={l - e.desde} /></div>,
       );
     }
     if (e.barrido && Math.abs(l - e.desde) < 0.6) barrido = tramo(l, e.desde - 0.55, e.desde + 0.55);
@@ -91,7 +94,8 @@ export function Montaje({ t }) {
   return (
     <div className="pres">
       <div style={{ position: 'absolute', inset: 0, opacity: curva.suave(tramo(l, -PRE, -PRE + 0.8)) * (1 - negro) }}>
-        <Fondo v={l} tono={pesoSuma ? tonoSuma / pesoSuma : 0} />
+        <Fondo v={l} tono={pesoSuma ? tonoSuma / pesoSuma : 0}
+          matiz={pesoSuma ? matiz.map((c) => Math.round(c / pesoSuma)) : undefined} acento={pesoSuma ? acento.map((c) => Math.round(c / pesoSuma)) : undefined} />
       </div>
       <FondoGlobal.Provider value>{capas}</FondoGlobal.Provider>
       <Marco v={v} l={l} />
@@ -112,7 +116,7 @@ export default function Presentacion({ inicial = 0, automatico = true }) {
     let pedido = requestAnimationFrame(function paso(ahora) {
       const tt = (ahora - inicio) / 1000;
       const ll = tt - PRE;
-      const habla = ll >= 0 && !enHistoria(ll) && aVoz(ll) < VOZ;
+      const habla = ll >= 0 && !pausaEn(ll) && aVoz(ll) < VOZ;
       if (habla && audio.paused) { audio.currentTime = aVoz(ll); audio.play().catch(() => {}); }
       if (!habla && !audio.paused) audio.pause();
       setT(Math.min(tt, DURACION));

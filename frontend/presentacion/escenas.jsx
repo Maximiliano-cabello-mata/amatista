@@ -19,7 +19,7 @@ function Capa({ children, estilo }) {
 }
 
 // Fondo: el low poly de la plataforma bajo una luz amatista que respira, con viñeta.
-export function Fondo({ v, tono = 0 }) {
+export function Fondo({ v, tono = 0, matiz = [155, 89, 182], acento = [0, 229, 255] }) {
   const global = useContext(FondoGlobal);
   if (global) return null;
   const x = 50 + Math.sin(v * 0.07) * 18;
@@ -27,8 +27,8 @@ export function Fondo({ v, tono = 0 }) {
   return (
     <Capa>
       <Capa estilo={{ opacity: 0.55, transform: `scale(${1.06 + Math.sin(v * 0.03) * 0.02})` }}><FondoLowPoly /></Capa>
-      <Capa estilo={{ background: `radial-gradient(60% 70% at ${x}% ${y}%, rgb(155 89 182 / ${0.32 + tono * 0.2}), transparent 70%)` }} />
-      <Capa estilo={{ background: `radial-gradient(40% 50% at ${100 - x}% ${100 - y}%, rgb(0 229 255 / ${0.07 + tono * 0.06}), transparent 70%)` }} />
+      <Capa estilo={{ background: `radial-gradient(60% 70% at ${x}% ${y}%, rgb(${matiz.join(' ')} / ${0.32 + tono * 0.2}), transparent 70%)` }} />
+      <Capa estilo={{ background: `radial-gradient(40% 50% at ${100 - x}% ${100 - y}%, rgb(${acento.join(' ')} / ${0.08 + Math.max(0, tono) * 0.08}), transparent 70%)` }} />
       <Capa estilo={{ background: 'radial-gradient(120% 90% at 50% 45%, transparent 55%, rgb(5 2 10 / 0.85) 100%)' }} />
     </Capa>
   );
@@ -289,90 +289,219 @@ export function Colapso({ v }) {
   );
 }
 
-// ------------------------------------------------------------------ 3b · Nuestra historia (sin voz, 52 s)
-// Lo vivieron los dos como alumnos: los recursos no alcanzaban para los proyectos que querían hacer.
-// Magenta = lo humano. Termina en «Por eso…» y entra la voz: «Para romper esta barrera creamos Amatista».
+// ------------------------------------------------------------------ Pausas con música (sin voz)
+// Tres momentos cortos y con ritmo: nuestra historia (16 s) y dos demostraciones reales (18 s y 20 s).
+// Cada una recibe h: segundos desde que empezó la pausa.
 
-function Cita({ h, a, texto, tam = 38 }) {
+function Cita({ h, a, texto, tam = 38, vel = 0.07 }) {
   const palabras = texto.split(' ');
   return (
-    <p style={{ margin: 0, font: `500 ${tam}px/1.34 var(--sans)` }}>
+    <p style={{ margin: 0, font: `500 ${tam}px/1.3 var(--sans)` }}>
       {palabras.map((p, j) => {
-        const k = curva.sale(tramo(h, a + j * 0.11, a + j * 0.11 + 0.5));
+        const k = curva.sale(tramo(h, a + j * vel, a + j * vel + 0.35));
         const fuerte = p.startsWith('*');
-        return <span key={j} style={{ opacity: 0.15 + k * 0.85, color: fuerte ? 'var(--magenta)' : undefined, fontWeight: fuerte ? 700 : undefined }}>{p.replace('*', '')} </span>;
+        return <span key={j} style={{ opacity: 0.12 + k * 0.88, color: fuerte ? 'var(--magenta)' : undefined, fontWeight: fuerte ? 700 : undefined }}>{p.replace('*', '')} </span>;
       })}
     </p>
   );
 }
 
+// Nuestra historia (16 s). Magenta = lo humano. Termina en «Por eso…» y entra la voz: «Para romper esta barrera…».
 const TESTIMONIOS = [
-  { nombre: 'Maximiliano Cabello Mata', a: 10.0, x: 120, texto: 'Como alumno quise realizar proyectos y modelados 3D en la universidad… y sufrí mucho: *los *recursos *no *alcanzaban.' },
-  { nombre: 'Diana Paola Acatitla Martínez', a: 20.5, x: 1000, texto: 'Sufrimos lo mismo: los equipos no daban para desarrollar proyectos *de *la *magnitud *que *deseábamos.' },
+  { nombre: 'Maximiliano Cabello Mata', a: 0.9, x: 120, foto: `${M}/fotos/1.jpg`,
+    texto: 'Quise hacer proyectos de modelado 3D en la universidad… *y *los *recursos *no *alcanzaban.' },
+  { nombre: 'Diana Paola Acatitla Martínez', a: 3.6, x: 1000, foto: `${M}/fotos/2.jpg`,
+    texto: 'Los equipos no daban para proyectos *del *tamaño *que *imaginábamos.' },
 ];
 
-export function Historia({ l }) {
-  const h = l - 78.1;
-  const sale = 41.2;
-  const proyecto = curva.suave(tramo(h, 31.4, 35.4));
+export function Historia({ h }) {
+  const sale = 8.0;
+  const proyecto = curva.suave(tramo(h, 8.4, 10.6));
   const limite = 0.42;
+  const poreso = curva.sale(tramo(h, 12.9, 13.6));
   return (
     <Capa>
-      <Fondo v={l} tono={-0.1} />
-      <Entra v={h} a={0.3} b={sale} estilo={{ left: 120, top: 100 }}><span className="chip chip-magenta faceta-sm">Nuestra historia</span></Entra>
-      {/* Apertura: lo vivimos */}
-      <div style={{ position: 'absolute', inset: 0, filter: 'grayscale(0.85) brightness(0.8)' }}>
-        <Foto v={h} a={0.6} b={9.2} src={`${M}/fotos/2.jpg`} x={1180} y={200} w={620} h={540} zoom={[1.12, 1.24]} hacia={[1, -1]} />
-      </div>
-      <Titulo v={h} a={1.0} b={9.2} texto="Antes de crear Amatista," tam={76} estilo={{ left: 120, top: 300, width: 1020, color: 'var(--niebla)' }} />
-      <Titulo v={h} a={2.6} b={9.2} texto="lo *vivimos *en *carne *propia." tam={76} estilo={{ left: 120, top: 400, width: 1020 }} />
-      <Entra v={h} a={4.6} b={9.2} estilo={{ left: 124, top: 540, width: 1000, font: '500 34px/1.35 var(--sans)', color: 'var(--lavanda)' }}>
-        Como estudiantes de modelado 3D, en la universidad.
-      </Entra>
-
-      {/* Testimonios */}
+      <Fondo v={h} tono={-0.05} />
+      <Entra v={h} a={0.2} b={12.4} estilo={{ left: 120, top: 96 }}><span className="chip chip-magenta faceta-sm">Nuestra historia · lo vivimos como alumnos</span></Entra>
       {TESTIMONIOS.map((p) => (
-        <Entra key={p.nombre} v={h} a={p.a} b={sale} como="escala" estilo={{ left: p.x, top: 200 }}>
-          <div className="tarjeta faceta" style={{ width: 800, minHeight: 360, padding: '38px 46px', boxSizing: 'border-box', borderColor: 'rgb(255 111 174 / 0.35)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginBottom: 22 }}>
-              <span style={{ width: 20, height: 20, background: 'var(--magenta)', clipPath: 'polygon(50% 0,100% 50%,50% 100%,0 50%)' }} />
-              <span style={{ font: '700 32px var(--sans)', color: 'var(--niebla)' }}>{p.nombre}</span>
+        <Entra key={p.nombre} v={h} a={p.a} b={sale} como="escala" estilo={{ left: p.x, top: 190 }}>
+          <div className="tarjeta faceta" style={{ width: 800, height: 600, boxSizing: 'border-box', overflow: 'hidden', borderColor: 'rgb(255 111 174 / 0.4)' }}>
+            <div style={{ position: 'relative', height: 280, overflow: 'hidden', filter: 'grayscale(0.7) brightness(0.75)' }}>
+              <img alt="" src={p.foto} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${mezclar(1.06, 1.16, tramo(h, p.a, sale))})` }} />
             </div>
-            <div style={{ font: '800 80px/0.6 var(--sans)', color: 'var(--magenta)', opacity: 0.6, height: 34 }}>“</div>
-            <Cita h={h} a={p.a + 0.5} texto={p.texto} />
+            <div style={{ padding: '26px 40px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 14 }}>
+                <span style={{ width: 18, height: 18, background: 'var(--magenta)', clipPath: 'polygon(50% 0,100% 50%,50% 100%,0 50%)' }} />
+                <span style={{ font: '700 30px var(--sans)', color: 'var(--niebla)' }}>{p.nombre}</span>
+              </div>
+              <Cita h={h} a={p.a + 0.4} texto={p.texto} tam={36} />
+            </div>
           </div>
         </Entra>
       ))}
-
       {/* Las ideas crecían más que los equipos */}
-      <div style={{ position: 'absolute', left: 120, top: 640, width: 1680, opacity: vida(h, 31.0, sale, 0.6) }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', font: '600 22px var(--mono)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+      <div style={{ position: 'absolute', left: 160, right: 160, top: 330, opacity: vida(h, 8.1, 12.4, 0.5) }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', font: '600 24px var(--mono)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
           <span style={{ color: 'var(--lavanda)' }}>Tamaño de nuestros proyectos</span>
           <span style={{ color: 'var(--magenta)', opacity: tramo(proyecto, limite + 0.1, limite + 0.3) }}>no alcanzaba</span>
         </div>
-        <div style={{ position: 'relative', marginTop: 16, height: 64, background: 'rgb(195 155 211 / 0.12)' }}>
+        <div style={{ position: 'relative', marginTop: 18, height: 80, background: 'rgb(195 155 211 / 0.12)' }}>
           <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${Math.min(proyecto, limite) * 100}%`, background: 'var(--amatista)' }} />
           <div style={{ position: 'absolute', left: `${limite * 100}%`, top: 0, bottom: 0, width: `${Math.max(0, proyecto - limite) * 100}%`,
-            background: 'repeating-linear-gradient(135deg, #ff6fae 0 16px, rgb(255 111 174 / 0.45) 16px 32px)' }} />
-          <div style={{ position: 'absolute', left: `${limite * 100}%`, top: -14, bottom: -14, width: 4, background: '#fff' }} />
+            background: 'repeating-linear-gradient(135deg, #ff6fae 0 18px, rgb(255 111 174 / 0.45) 18px 36px)' }} />
+          <div style={{ position: 'absolute', left: `${limite * 100}%`, top: -16, bottom: -16, width: 5, background: '#fff' }} />
         </div>
-        <div style={{ position: 'relative', height: 40, marginTop: 14 }}>
-          <span style={{ position: 'absolute', left: `${limite * 100}%`, transform: 'translateX(-50%)', font: '600 22px var(--mono)', letterSpacing: '0.12em', color: '#fff', whiteSpace: 'nowrap' }}>
-            ▲ LO QUE AGUANTABA EL EQUIPO
-          </span>
+        <div style={{ marginTop: 16, marginLeft: `${limite * 100}%`, transform: 'translateX(-50%)', width: 'max-content', font: '600 24px var(--mono)', letterSpacing: '0.12em' }}>
+          ▲ LO QUE AGUANTABA EL EQUIPO
         </div>
-        <div style={{ marginTop: 18, font: '750 50px var(--sans)', opacity: curva.sale(tramo(h, 35.6, 36.4)) }}>
+        <div style={{ marginTop: 50, textAlign: 'center', font: '780 72px var(--sans)', opacity: curva.sale(tramo(h, 10.4, 11.0)) }}>
           Las ideas eran grandes. <span style={{ color: 'var(--magenta)' }}>Los equipos, no.</span>
         </div>
       </div>
-
-      {/* Hacia la solución */}
-      <div style={{ position: 'absolute', left: 200, right: 200, top: 330, textAlign: 'center', opacity: curva.sale(tramo(h, 42.0, 42.8)) }}>
-        <Cita h={h} a={42.0} texto="No queremos que ningún otro estudiante tenga que *recortar *sus *ideas por falta de equipo." tam={58} />
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 380, textAlign: 'center', opacity: poreso }}>
+        <div style={{ font: '600 46px var(--sans)', color: 'var(--niebla)' }}>Nadie debería recortar sus ideas por falta de equipo.</div>
+        <div className="gema-texto" style={{ marginTop: 30, font: '850 140px var(--sans)', transform: `scale(${mezclar(1.25, 1, curva.sale(tramo(h, 13.4, 14.4)))})`,
+          opacity: curva.sale(tramo(h, 13.4, 14.0)) }}>Por eso…</div>
       </div>
-      <div className="gema-texto" style={{ position: 'absolute', left: 0, right: 0, top: 620, textAlign: 'center', font: '850 120px var(--sans)',
-        opacity: curva.sale(tramo(h, 47.0, 47.8)), transform: `scale(${mezclar(1.2, 1, curva.sale(tramo(h, 47.0, 48.0)))})` }}>
-        Por eso…
+    </Capa>
+  );
+}
+
+// Encabezado común de las demostraciones.
+function EnAccion({ h, etiqueta, color = 'var(--cian)', claseChip = 'chip-cian' }) {
+  return (
+    <>
+      <Entra v={h} a={0.15} estilo={{ left: 120, top: 92 }}><span className={`chip ${claseChip} faceta-sm`}>{etiqueta}</span></Entra>
+      <Titulo v={h} a={0.3} texto="Amatista *en *acción" tam={66} estilo={{ left: 120, top: 150 }} />
+      <div style={{ position: 'absolute', left: 120, top: 128, width: 6, height: 6, background: color }} />
+    </>
+  );
+}
+
+function Pasos({ h, pasos, actual, x = 1340, y = 250 }) {
+  return (
+    <div style={{ position: 'absolute', left: x, top: y, width: 480, display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {pasos.map((p, i) => {
+        const k = curva.rebote(tramo(h, p.a, p.a + 0.45));
+        const activo = i === actual;
+        const hecho = i < actual;
+        return (
+          <div key={p.t} className="tarjeta faceta-sm" style={{ padding: '16px 20px', display: 'flex', gap: 16, alignItems: 'center',
+            opacity: acotar(k * 1.5) * (activo ? 1 : 0.55), transform: `translateX(${(1 - acotar(k)) * 40}px) scale(${activo ? 1.03 : 1})`, transformOrigin: '0 50%',
+            borderColor: activo ? 'rgb(0 229 255 / 0.7)' : undefined, boxShadow: activo ? '0 0 34px rgb(0 229 255 / 0.25)' : undefined }}>
+            <span style={{ flex: 'none', width: 46, height: 46, display: 'grid', placeItems: 'center', background: activo || hecho ? 'var(--cian)' : 'rgb(195 155 211 / 0.3)',
+              color: '#04161a', font: '800 22px var(--mono)', clipPath: 'polygon(50% 0,100% 50%,50% 100%,0 50%)' }}>{hecho ? '✓' : p.n}</span>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ font: '700 28px/1.15 var(--sans)' }}>{p.t}</div>
+              <div style={{ font: '500 20px var(--sans)', color: 'var(--lavanda)' }}>{p.s}</div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// Demostración 1: la aplicación web (18 s), con metraje real suavizado a 30 cuadros por segundo.
+const CLIPS_WEB = [
+  { toma: 'portada_s', desde: 0.3, a: 0.7, d: 3.1, n: '1', t: 'Entra desde cualquier navegador', s: 'sin instalar nada', url: 'amatista-3d.tech' },
+  { toma: 'curso_s', desde: 0.3, a: 3.8, d: 2.9, n: '2', t: 'Elige tu nivel', s: 'de principiante a avanzado', url: 'amatista-3d.tech/#/curso/blender' },
+  { toma: 'leccion_s', desde: 0.6, a: 6.7, d: 3.2, n: '3', t: 'Lecciones cortas y prácticas', s: 'conoce Blender antes de abrirlo', url: 'amatista-3d.tech/#/leccion' },
+  { toma: 'ciudad_s', desde: 1.2, a: 9.9, d: 4.2, n: '4', t: 'Programa un mundo 3D y míralo al instante', s: 'en el mismo navegador', url: 'amatista-3d.tech/#/estudio' },
+  { toma: 'jefe_s', desde: 2.0, a: 14.1, d: 3.4, n: '5', t: 'Retos con jefe final', s: 'aprender jugando', url: 'amatista-3d.tech/#/reto' },
+];
+
+export function DemoWeb({ h }) {
+  const actual = Math.max(0, CLIPS_WEB.findIndex((c) => h < c.a + c.d));
+  const clip = CLIPS_WEB[actual];
+  return (
+    <Capa>
+      <Fondo v={h} tono={0.2} />
+      <EnAccion h={h} etiqueta="Demostración real · aplicación web" />
+      <div className="pantalla faceta" style={{ left: 120, top: 250, width: 1160, height: 694, opacity: curva.sale(tramo(h, 0.4, 0.9)),
+        transform: `translateY(${(1 - curva.sale(tramo(h, 0.4, 1.0))) * 40}px)` }}>
+        <div className="navegador-barra"><i /><i /><i /><span style={{ marginLeft: 14 }}>🔒 {clip.url}</span></div>
+        <div style={{ position: 'absolute', inset: '42px 0 0 0', overflow: 'hidden', background: '#120a1d' }}>
+          {CLIPS_WEB.map((c, i) => {
+            const o = curva.suave(tramo(h, c.a - 0.25, c.a + 0.05)) * (i === CLIPS_WEB.length - 1 ? 1 : 1 - curva.suave(tramo(h, c.a + c.d - 0.05, c.a + c.d + 0.25)));
+            if (o <= 0) return null;
+            const z = mezclar(1.0, 1.05, tramo(h, c.a, c.a + c.d));
+            return (
+              <div key={c.toma} style={{ position: 'absolute', inset: 0, opacity: o, transform: `scale(${z})`, transformOrigin: '50% 30%' }}>
+                <Metraje toma={c.toma} t={h - c.a} desde={c.desde} posicion="50% 0%" />
+              </div>
+            );
+          })}
+        </div>
+        {/* avance de la demostración */}
+        <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 6, display: 'flex', gap: 4, zIndex: 3 }}>
+          {CLIPS_WEB.map((c) => <div key={c.toma} style={{ flex: c.d, background: 'rgb(195 155 211 / 0.25)' }}>
+            <div style={{ height: '100%', width: `${tramo(h, c.a, c.a + c.d) * 100}%`, background: 'var(--cian)' }} /></div>)}
+        </div>
+      </div>
+      <Pasos h={h} pasos={CLIPS_WEB} actual={actual} />
+    </Capa>
+  );
+}
+
+// Demostración 2: el complemento (add-on) para Blender (20 s). Cada imagen es un estado real del add-on
+// en Blender 4.0: la práctica del tren armada pieza por pieza, revisada por Amatista en la computadora.
+const CAPTURAS = [
+  ['001_inicio', 1.5], ['002_pista_donde', 1.7], ['003_pieza_00', 1.0], ['004_pieza_01', 1.0], ['005_pieza_02', 0.9], ['006_pista_como', 1.7],
+  ['007_pieza_03', 0.65], ['008_pieza_04', 0.65], ['009_pieza_05', 0.65], ['010_pieza_06', 0.65], ['011_pieza_07', 0.65], ['012_pieza_08', 0.65],
+  ['013_pieza_09', 0.65], ['014_pieza_10', 0.8], ['015_guardar', 1.5], ['016_final', 3.4],
+];
+const T_CAPTURAS = (() => { let t = 0.7; return CAPTURAS.map(([n, d]) => { const a = t; t += d; return { n, a, d }; }); })();
+const PASOS_ADDON = [
+  { n: '1', t: 'La guía te dice qué hacer', s: 'una banda clara, un paso a la vez', a: 0.8 },
+  { n: '2', t: '¿Dudas? Pide una pista', s: '¿dónde está? · ¿cómo se hace?', a: 2.3 },
+  { n: '3', t: 'Amatista revisa cada pieza', s: 'en tu computadora, al instante', a: 8.7 },
+  { n: '4', t: '¡Práctica terminada!', s: 'todo sin internet', a: 15.6 },
+];
+// Recorte de la captura (1920×1080): la vista 3D, sin los paneles de propiedades.
+const RECORTE = { x: 0, y: 36, w: 1560 };
+const BANDA = { x: 320, y: 96, w: 740, h: 210 };
+
+export function DemoAddon({ h }) {
+  const actual = h < 2.3 ? 0 : h < 8.7 ? 1 : h < 15.6 ? 2 : 3;
+  const ancho = 1160;
+  const esc = ancho / RECORTE.w;
+  const lupa = curva.sale(tramo(h, 1.2, 1.8)) * (1 - curva.suave(tramo(h, 18.6, 19.2)));
+  const final = curva.sale(tramo(h, 15.6, 16.2));
+  return (
+    <Capa>
+      <Fondo v={h} tono={0.2} />
+      <EnAccion h={h} etiqueta="Demostración real · complemento para Blender" />
+      <div className="pantalla faceta" style={{ left: 120, top: 250, width: ancho, height: 694, opacity: curva.sale(tramo(h, 0.4, 0.9)),
+        transform: `translateY(${(1 - curva.sale(tramo(h, 0.4, 1.0))) * 40}px)`, boxShadow: final > 0 ? `0 0 ${final * 80}px rgb(0 229 255 / 0.35), 0 50px 120px rgb(0 0 0 / 0.6)` : undefined }}>
+        {T_CAPTURAS.map((c, i) => {
+          const sig = T_CAPTURAS[i + 1];
+          const o = curva.suave(tramo(h, c.a - 0.18, c.a + 0.02)) * (sig ? 1 - curva.suave(tramo(h, sig.a - 0.18, sig.a + 0.02)) : 1);
+          if (o <= 0) return null;
+          const z = 1 + 0.035 * tramo(h, 0.7, 19.5);
+          return (
+            <img key={c.n} alt="" src={`${M}/addon/${c.n}.jpg`} style={{ position: 'absolute', left: -RECORTE.x * esc, top: -RECORTE.y * esc, width: 1920 * esc, height: 1080 * esc,
+              maxWidth: 'none', objectFit: 'fill', opacity: o, transform: `scale(${z})`, transformOrigin: '35% 45%' }} />
+          );
+        })}
+        {/* Lupa sobre la banda de la guía para que se lea */}
+        <div style={{ position: 'absolute', left: BANDA.x * esc - 30, top: (BANDA.y - RECORTE.y) * esc - 14, width: BANDA.w * esc * 1.55, height: BANDA.h * esc * 1.55,
+          overflow: 'hidden', opacity: lupa, transform: `scale(${mezclar(0.9, 1, lupa)})`, transformOrigin: '0 0', border: '2px solid rgb(0 229 255 / 0.8)',
+          boxShadow: '0 20px 60px rgb(0 0 0 / 0.7), 0 0 30px rgb(0 229 255 / 0.3)', zIndex: 2 }}>
+          {T_CAPTURAS.map((c, i) => {
+            const sig = T_CAPTURAS[i + 1];
+            const o = curva.suave(tramo(h, c.a - 0.18, c.a + 0.02)) * (sig ? 1 - curva.suave(tramo(h, sig.a - 0.18, sig.a + 0.02)) : 1);
+            if (o <= 0) return null;
+            const e2 = esc * 1.55;
+            return <img key={c.n} alt="" src={`${M}/addon/${c.n}.jpg`} style={{ position: 'absolute', left: -BANDA.x * e2, top: -BANDA.y * e2, width: 1920 * e2, height: 1080 * e2,
+              maxWidth: 'none', objectFit: 'fill', opacity: o }} />;
+          })}
+        </div>
+      </div>
+      <Pasos h={h} pasos={PASOS_ADDON} actual={actual} />
+      <div style={{ position: 'absolute', left: 1340, top: 760, display: 'flex', gap: 14, flexWrap: 'wrap', width: 480, opacity: final }}>
+        <span className="chip chip-cian faceta-sm" style={{ fontSize: 20 }}><Icono tipo="sinwifi" tam={28} color="#04161a" />100 % sin internet</span>
+        <span className="chip faceta-sm" style={{ fontSize: 20 }}>Blender 4 · sin tarjeta gráfica</span>
       </div>
     </Capa>
   );
@@ -413,12 +542,12 @@ export function Pwa({ v }) {
       <Fondo v={v} />
       <Etiqueta v={v} a={90.3} texto="02 · La solución · Dos pilares" estilo={{ left: 120, top: 100 }} />
       <Titulo v={v} a={92.5} texto="01 · Aplicación web *ultraligera" tam={64} estilo={{ left: 120, top: 150 }} />
-      <Entra v={v} a={94.2} estilo={{ left: 126, top: 250, font: '500 30px var(--sans)', color: 'var(--lavanda)' }}>PWA · corre en cualquier navegador estándar · sin instalar nada pesado</Entra>
+      <Entra v={v} a={94.2} estilo={{ left: 126, top: 250, font: '500 30px var(--sans)', color: 'var(--lavanda)' }}>Aplicación web · funciona en cualquier navegador · sin instalar nada pesado</Entra>
       <Pantalla v={v} a={92.7} b={97.6} src={`${M}/capturas/portada.jpg`} x={120} y={330} w={1100} h={640} />
       <Pantalla v={v} a={97.6} b={99.5} src={`${M}/capturas/leccion_actividad.jpg`} x={120} y={330} w={1100} h={640} url="amatista-3d.tech/#/curso/blender" />
       <div className="pantalla faceta" style={{ left: 120, top: 330, width: 1100, height: 640, opacity: vida(v, 99.5, 103.4, 0.5) }}>
         <div className="navegador-barra"><i /><i /><i /><span style={{ marginLeft: 14 }}>🔒 amatista-3d.tech/#/estudio</span></div>
-        <div style={{ position: 'absolute', top: 42, inset: '42px 0 0 0' }}><Metraje toma="mundo_ciudad" t={v - 99.5} desde={3} /></div>
+        <div style={{ position: 'absolute', top: 42, inset: '42px 0 0 0' }}><Metraje toma="mundo_ciudad_s" t={v - 99.5} desde={3} /></div>
       </div>
       <Foto v={v} a={95.5} src={`${M}/fotos/3.jpg`} x={1300} y={300} w={500} h={660} zoom={[1.02, 1.12]} posicion="50% 40%" etiqueta="Alumna · UTN" rot={2} />
       {/* Consumo de datos: la barra de Amatista frente a una red social */}
@@ -444,15 +573,15 @@ export function Blender({ v }) {
   return (
     <Capa>
       <Fondo v={v} />
-      <Titulo v={v} a={106.4} texto="02 · Add-on para *Blender" tam={64} estilo={{ left: 120, top: 120 }} />
+      <Titulo v={v} a={106.4} texto="02 · Complemento para *Blender" tam={64} estilo={{ left: 120, top: 120 }} />
       <Foto v={v} a={108.4} b={112.3} src={`${M}/fotos/2.jpg`} x={120} y={260} w={1000} h={720} zoom={[1.05, 1.15]} etiqueta="Laboratorio escolar · se instala fácil" />
       <div className="pantalla faceta" style={{ left: 120, top: 260, width: 1000, height: 720, opacity: vida(v, 112.4, SIEMPRE, 0.6) }}>
-        <img alt="" src={`${M}/capturas/blender_real.png`} style={{ objectPosition: '50% 50%' }} />
-        <div className="tarjeta faceta" style={{ position: 'absolute', right: 26, top: 90, width: 470, padding: 24, opacity: vida(v, 114.9, SIEMPRE, 0.5) }}>
-          <div style={{ font: '600 16px var(--mono)', letterSpacing: '0.16em', color: 'var(--cian)' }}>AMATISTA MOTOR · PASO 3 DE 5</div>
-          <div style={{ marginTop: 8, font: '700 26px var(--sans)' }}>Agrega las ruedas del tren</div>
-          <div style={{ marginTop: 8, font: '500 18px var(--sans)', color: 'var(--lavanda)' }}>Shift + A › Cilindro, gíralo 90° y ponlo a la altura del chasis.</div>
-        </div>
+        {/* Captura real del add-on: la banda guía sobre la vista 3D mientras el alumno arma el tren */}
+        {[['007_pieza_03', 112.4], ['011_pieza_07', 117.0], ['014_pieza_10', 121.0]].map(([n, a], i, todas) => {
+          const o = curva.suave(tramo(v, a, a + 0.4)) * (todas[i + 1] ? 1 - curva.suave(tramo(v, todas[i + 1][1], todas[i + 1][1] + 0.4)) : 1);
+          return o > 0 && <img key={n} alt="" src={`${M}/addon/${n}.jpg`} style={{ position: 'absolute', left: 0, top: -23, width: 1231, height: 692, maxWidth: 'none',
+            objectFit: 'fill', opacity: o, transform: `scale(${1 + 0.03 * tramo(v, 112.4, 125)})`, transformOrigin: '30% 40%' }} />;
+        })}
       </div>
       <Entra v={v} a={113.5} estilo={{ left: 1200, top: 280, width: 600, font: '650 40px/1.2 var(--sans)' }}>
         De software profesional a <span className="gema-texto">herramienta guiada</span> de enseñanza
@@ -480,7 +609,7 @@ const PROCESO = [
   { n: '3', t: 'Estructura', s: 'pasos, datos y ejemplos', a: 134.6 },
 ];
 const NUTRE = [
-  { t: 'Guías paso a paso', s: 'en la PWA y en el add-on de Blender', a: 138.44, y: 330, icono: 'laptop' },
+  { t: 'Guías paso a paso', s: 'en la aplicación web y en Blender', a: 138.44, y: 330, icono: 'laptop' },
   { t: 'Asistencia inteligente', s: 'ejecutada en el equipo del alumno', a: 139.96, y: 510, icono: 'chip' },
 ];
 const CORAZON = [960, 500];
@@ -586,7 +715,7 @@ export function SinConexion({ v }) {
       <Etiqueta v={v} a={144.2} texto="03 · Telemetría y sincronización" estilo={{ left: 120, top: 100 }} />
       <Titulo v={v} a={144.4} texto="Practica *sin conexión" tam={70} estilo={{ left: 120, top: 150 }} />
       <div className="pantalla faceta" style={{ left: 120, top: 300, width: 1060, height: 650, opacity: curva.sale(tramo(v, 144.6, 145.4)) }}>
-        <Metraje toma="sin_conexion" t={v - 144.6} desde={2} />
+        <Metraje toma="sin_conexion_s" t={v - 144.6} desde={2} />
         <div style={{ position: 'absolute', top: 24, right: 24, opacity: vida(v, 145.86, SIEMPRE, 0.3) }}>
           <span className="chip chip-magenta faceta-sm"><Icono tipo="sinwifi" tam={30} color="#2a0618" />Sin conexión</span>
         </div>
@@ -616,7 +745,7 @@ export function Sincroniza({ v }) {
       <Fondo v={v} />
       <Entra v={v} a={155.4} estilo={{ left: 120, top: 110, display: 'flex', alignItems: 'center', gap: 20 }}>
         <Icono tipo="wifi" tam={70} color={vuelve > 0.5 ? '#00e5ff' : '#c39bd3'} />
-        <span style={{ font: '750 56px var(--sans)' }}>Vuelve la red</span>
+        <span style={{ font: '750 56px var(--sans)' }}>Vuelve la conexión</span>
       </Entra>
       {/* Lo que NO viaja */}
       <Entra v={v} a={157.3} estilo={{ left: 120, top: 300 }}>
@@ -636,7 +765,7 @@ export function Sincroniza({ v }) {
         </div>
       </Entra>
       <Flujo t={v} de={[560, 690]} a={[900, 520]} n={14} curvatura={-60} vel={0.55} fuerza={curva.sale(tramo(v, 161.3, 161.9))} />
-      <Nodo v={v} a={163.86} titulo="FastAPI" sub="backend" x={1040} y={520} w={300} color="var(--cian)" />
+      <Nodo v={v} a={163.86} titulo="FastAPI" sub="servidor" x={1040} y={520} w={300} color="var(--cian)" />
       <Flujo t={v} de={[1190, 520]} a={[1460, 520]} n={8} curvatura={0} vel={0.6} fuerza={curva.sale(tramo(v, 165.0, 165.6))} />
       <Nodo v={v} a={165.36} titulo="SQL" sub="esquemas optimizados" x={1600} y={520} w={300} color="var(--cian)" />
       <Entra v={v} a={167.44} como="escala" estilo={{ left: 820, top: 760 }}>

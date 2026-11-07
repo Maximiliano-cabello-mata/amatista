@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Arma la presentación de Hack4Edu (5:00) de punta a punta:
+#   0. (una vez) tomas suavizadas y capturas del add-on       suavizar.sh, grabar_addon.py (ver README)
 #   1. cuadros 1920×1080 a 30 fps de frontend/presentacion   ../pelicula/render.cjs (servidor de desarrollo en :5173)
-#   2. pista de voz con el hueco de «Nuestra historia»        voz.py
+#   2. voz: empalmes reparados y tres pausas con música       voz.py
 #   3. música sintetizada con la misma línea de tiempo         musica.py
 #   4. mezcla: música bajo la voz (sidechain) y −16 LUFS       ffmpeg
 #   5. video final y versión solo voz                           salida/
@@ -34,7 +35,9 @@ wait
 
 python3 "$AQUI/voz.py" "$RAIZ/frontend/presentacion/media/voz_mejorada.wav" "$SALIDA/voz.wav"
 python3 "$AQUI/musica.py" "$SALIDA/musica.wav"
-MEZCLA="[0]aresample=48000,pan=stereo|c0=c0|c1=c0,asplit=2[v][key];[1]aresample=48000,volume=0.32[m];\
+# La música sube 4 dB en las pausas (historia y demostraciones), donde no hay voz.
+VOL="volume='0.32*if(between(t,82.0,98.2)+between(t,126.15,144.35)+between(t,163.15,183.35),1.6,1)':eval=frame"
+MEZCLA="[0]aresample=48000,pan=stereo|c0=c0|c1=c0,asplit=2[v][key];[1]aresample=48000,$VOL[m];\
 [m][key]sidechaincompress=threshold=0.06:ratio=3:attack=40:release=900:knee=4[md];[v][md]amix=inputs=2:normalize=0[out]"
 ffmpeg -y -loglevel error -i "$SALIDA/voz.wav" -i "$SALIDA/musica.wav" -filter_complex "$MEZCLA" -map '[out]' "$SALIDA/mezcla_cruda.wav"
 MEDIDA=$(ffmpeg -i "$SALIDA/mezcla_cruda.wav" -af loudnorm=I=-16:TP=-1.5:LRA=11:print_format=json -f null - 2>&1 | sed -n '/^{/,/^}/p' \

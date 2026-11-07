@@ -1,17 +1,32 @@
 // Tiempos de la voz (segundos del audio), medidos con Whisper palabra por palabra.
 // El video empieza PRE segundos antes de la voz (la gema se arma) y termina FIN después.
-// En HUECO.en (segundo de la voz) la voz se detiene HUECO.d segundos: ahí va «Nuestra historia».
-// El total queda en 5 minutos exactos.
+// En cada pausa (segundo «en» de la voz) la voz se detiene «d» segundos y entra una escena con música:
+// nuestra historia y dos demostraciones reales. Las dos demostraciones caen justo en empalmes del audio,
+// así el corte queda escondido tras la pausa. El total queda en 5 minutos exactos.
 export const PRE = 4;
 export const VOZ = 233.71;
-export const HUECO = { en: 78.1, d: 52 };
+export const PAUSAS = [
+  { id: 'historia', en: 78.1, d: 16 },
+  { id: 'demo-web', en: 106.25, d: 18 },
+  { id: 'demo-addon', en: 125.25, d: 20 },
+];
 export const DURACION = 300;
-export const FIN = DURACION - PRE - VOZ - HUECO.d;
+export const FIN = DURACION - PRE - VOZ - PAUSAS.reduce((s, p) => s + p.d, 0);
 
-// Línea (segundos desde que empieza la voz, contando el hueco) ↔ voz.
-export const aLinea = (v) => (v >= HUECO.en ? v + HUECO.d : v);
-export const aVoz = (l) => (l < HUECO.en ? l : l < HUECO.en + HUECO.d ? HUECO.en : l - HUECO.d);
-export const enHistoria = (l) => l >= HUECO.en && l < HUECO.en + HUECO.d;
+// Línea (segundos desde que empieza la voz, contando las pausas) ↔ voz.
+export const inicioPausa = (p) => p.en + PAUSAS.filter((q) => q.en < p.en).reduce((s, q) => s + q.d, 0);
+export const aLinea = (v) => v + PAUSAS.filter((p) => v >= p.en).reduce((s, p) => s + p.d, 0);
+export const pausaEn = (l) => PAUSAS.find((p) => l >= inicioPausa(p) && l < inicioPausa(p) + p.d) ?? null;
+export function aVoz(l) {
+  let corrido = 0; // segundos de pausa ya pasados
+  for (const p of PAUSAS) {
+    const a = p.en + corrido;
+    if (l < a) return l - corrido;
+    if (l < a + p.d) return p.en;
+    corrido += p.d;
+  }
+  return l - corrido;
+}
 
 // Capítulos del guion (barra inferior).
 export const CAPITULOS = [
