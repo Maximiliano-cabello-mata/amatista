@@ -1,28 +1,47 @@
 // Tiempos de la voz (segundos del audio), medidos con Whisper palabra por palabra.
-// La voz corre seguida, sin pausas: la narrativa no se corta.
-// Antes de la voz va un prólogo con música (nuestra historia, PROLOGO s) y la gema que se arma (4 s);
-// después de «Muchas gracias», la tarjeta final (FIN s).
-export const PROLOGO = 16;
-export const PRE = PROLOGO + 4;
+// Versión de 3:40: la voz con cuatro frases quitadas (no cambian el sentido) y nada que no esté en el audio.
+// Cada corte va en un silencio o en el borde exacto de una palabra (medido en la energía de la grabación) y deja
+// una pausa natural (relleno con ruido de sala); en esa pausa la imagen se funde del antes al después.
+//   [inicio, fin, relleno] en segundos de la voz original
+export const CORTES = [
+  [21.14, 28.56, 0.30],   // «e incorporar contenidos… IA ejecutada localmente» (el texto oficial sigue en pantalla)
+  [125.262, 128.62, 0.18], // «Además, como mención especial en nuestra arquitectura,»
+  [166.986, 171.454, 0.12], // «mediante códigos de vinculación de un solo uso y cuentas por rol,»
+  [187.15, 192.64, 0.32],  // «así como a más de 1,500 facultades…» (la cifra ya se dijo en el problema)
+];
+export const PRE = 3;
 export const VOZ = 233.71;
-export const PAUSAS = [];
-export const DURACION = 260;
-export const FIN = DURACION - PRE - VOZ;
+const QUITADO = CORTES.reduce((s, [a, b, r]) => s + (b - a - r), 0);
+export const DURACION = 220.4;
+export const FIN = DURACION - PRE - (VOZ - QUITADO);
 
-// Línea (segundos desde que empieza la voz, contando las pausas) ↔ voz.
-export const inicioPausa = (p) => p.en + PAUSAS.filter((q) => q.en < p.en).reduce((s, q) => s + q.d, 0);
-export const aLinea = (v) => v + PAUSAS.filter((p) => v >= p.en).reduce((s, p) => s + p.d, 0);
-export const pausaEn = (l) => PAUSAS.find((p) => l >= inicioPausa(p) && l < inicioPausa(p) + p.d) ?? null;
-export function aVoz(l) {
-  let corrido = 0; // segundos de pausa ya pasados
-  for (const p of PAUSAS) {
-    const a = p.en + corrido;
-    if (l < a) return l - corrido;
-    if (l < a + p.d) return p.en;
-    corrido += p.d;
+// Línea (segundos del video desde que empieza la voz) ↔ voz original.
+export function aLinea(v) {
+  let quitado = 0;
+  for (const [a, b, r] of CORTES) {
+    if (v < a) break;
+    if (v < b) return a - quitado + r * ((v - a) / (b - a));
+    quitado += b - a - r;
   }
-  return l - corrido;
+  return v - quitado;
 }
+
+// En un corte devuelve los dos lados para fundirlos; fuera de un corte, uno solo con peso 1.
+export function lados(l) {
+  let quitado = 0;
+  for (const [a, b, r] of CORTES) {
+    const la = a - quitado; // línea donde empieza el corte
+    if (l < la - 0.15) break;
+    if (l < la + r + 0.15) {
+      const k = Math.min(1, Math.max(0, (l - (la - 0.15)) / (r + 0.3)));
+      const suave = k < 0.5 ? 4 * k ** 3 : 1 - (-2 * k + 2) ** 3 / 2;
+      return [{ v: a + (l - la), peso: 1 - suave }, { v: b - (la + r - l), peso: suave }];
+    }
+    quitado += b - a - r;
+  }
+  return [{ v: l + quitado, peso: 1 }];
+}
+export const aVoz = (l) => lados(l).reduce((m, x) => (x.peso > m.peso ? x : m)).v;
 
 // Capítulos del guion (barra inferior).
 export const CAPITULOS = [
@@ -37,8 +56,7 @@ export const SUBTITULOS = [
   [0.0, 7.48, 'Buenos días. Somos el equipo Amatista: Maximiliano Cabello Mata y Diana Paola Acatitla Martínez.'],
   [8.26, 13.86, 'Elegimos el Reto 2: crear una solución educativa offline-first,'],
   [14.18, 17.84, 'capaz de funcionar en escuelas o comunidades con conectividad limitada,'],
-  [18.14, 21.04, 'sincronizando la información cuando vuelva a disponer de internet,'],
-  [21.14, 28.54, 'e incorporar contenidos, actividades, seguimiento del progreso, comunicación docente o IA ejecutada localmente.'],
+  [18.14, 21.04, 'sincronizando la información cuando vuelva a disponer de internet.'],
   [28.54, 34.68, 'La falta de conectividad sigue siendo una de las principales barreras para acceder al aprendizaje digital.'],
   [35.02, 40.64, 'Actualmente, la enseñanza del modelado 3D en México enfrenta una profunda brecha de infraestructura.'],
   [41.02, 48.38, 'Aunque existen más de 20,900 escuelas de nivel medio superior y más de 1,500 facultades universitarias'],
@@ -57,20 +75,18 @@ export const SUBTITULOS = [
   [106.38, 111.82, 'Un add-on integrado para Blender que se instala de forma sencilla en las computadoras del laboratorio escolar'],
   [112.42, 119.6, 'y convierte este software profesional en una herramienta guiada de enseñanza, 100 % desconectada de internet,'],
   [119.6, 125.02, 'verificando paso a paso, en la computadora del alumno, que haya construido bien su modelo.'],
-  [125.4, 128.44, 'Además, como mención especial en nuestra arquitectura,'],
-  [128.6, 132.38, 'respaldamos este aprendizaje con Geoda, nuestro propio flujo automatizado'],
+  [128.64, 132.38, 'Respaldamos este aprendizaje con Geoda, nuestro propio flujo automatizado'],
   [132.7, 138.26, 'de extracción y limpieza de datos que estructura documentación técnica oficial para nutrir nuestras guías'],
   [138.44, 143.82, 'paso a paso y habilitar asistencia inteligente ejecutada localmente, sin depender de internet.'],
   [144.2, 148.88, 'Mientras el estudiante practica sin conexión, Amatista guarda su avance en el equipo'],
   [148.88, 155.16, 'registrando telemetría educativa muy ligera: qué pasos logró completar y dónde tuvo dificultad.'],
   [155.4, 158.78, 'Al recuperar la conexión, en lugar de subir archivos 3D pesados,'],
   [159.22, 164.56, 'la plataforma envía únicamente telemetría en texto ligero hacia nuestro backend en FastAPI'],
-  [164.56, 171.46, 'y esquemas SQL optimizados. Mediante códigos de vinculación de un solo uso y cuentas por rol,'],
-  [171.6, 176.92, 'el profesor recibe en su panel el seguimiento real de todo su grupo desde la fuente original.'],
+  [164.56, 166.9, 'y esquemas SQL optimizados.'],
+  [171.5, 176.92, 'El profesor recibe en su panel el seguimiento real de todo su grupo desde la fuente original.'],
   [177.14, 182.66, 'Bajo un enfoque inclusivo y equitativo, Amatista beneficia directamente a cientos de planteles'],
-  [182.66, 186.98, 'de educación media superior con limitaciones de equipo,'],
-  [187.18, 192.68, 'así como a más de 1,500 facultades universitarias de ingeniería, arquitectura y arte digital.'],
-  [192.68, 201.04, 'En nuestra fase piloto inicial en México, proyectamos beneficiar directamente a más de 500 alumnos.'],
+  [182.66, 187.1, 'de educación media superior con limitaciones de equipo.'],
+  [192.66, 201.04, 'En nuestra fase piloto inicial en México, proyectamos beneficiar directamente a más de 500 alumnos.'],
   [201.04, 206.54, 'Al procesar los gráficos en el equipo local y sincronizar solo telemetría ligera,'],
   [206.62, 209.78, 'nuestro costo operativo de servidor por estudiante es mínimo.'],
   [210.24, 213.6, 'Así cumplimos con el criterio de transferencia al mercado global:'],
@@ -86,6 +102,6 @@ export const RETO = [
   { desde: 10.24, hasta: 13.9, texto: 'El reto consiste en crear una solución educativa offline-first' },
   { desde: 14.18, hasta: 17.84, texto: 'capaz de funcionar en escuelas o comunidades con conectividad limitada,' },
   { desde: 18.14, hasta: 21.04, texto: 'sincronizando la información cuando vuelva a disponer de red.' },
-  { desde: 21.14, hasta: 28.3, texto: 'Puede incorporar contenidos, actividades, seguimiento del progreso, comunicación docente o incluso capacidades de IA ejecutadas localmente.' },
+  { desde: 21.0, hasta: 21.1, texto: 'Puede incorporar contenidos, actividades, seguimiento del progreso, comunicación docente o incluso capacidades de IA ejecutadas localmente.', fija: true },
   { desde: 28.54, hasta: 34.5, texto: 'La falta de conectividad sigue siendo una de las principales barreras para acceder al aprendizaje digital.', fuerte: true },
 ];

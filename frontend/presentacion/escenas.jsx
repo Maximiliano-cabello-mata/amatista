@@ -162,9 +162,10 @@ export function Apertura({ v }) {
 
 // ------------------------------------------------------------------ 1 · El reto, textual (8 → 35 s)
 
+// Lo que dice la voz del reto, en el segundo en que lo dice.
 const CHIPS_RETO = [
-  { texto: 'Contenidos', a: 21.76 }, { texto: 'Actividades', a: 22.58 }, { texto: 'Seguimiento del progreso', a: 23.32 },
-  { texto: 'Comunicación docente', a: 24.46 }, { texto: 'IA ejecutada localmente', a: 27.16 },
+  { texto: 'Solución offline-first', a: 12.94 }, { texto: 'Escuelas y comunidades', a: 15.32 },
+  { texto: 'Conectividad limitada', a: 16.74 }, { texto: 'Sincroniza al volver la conexión', a: 18.14 },
 ];
 
 export function Reto({ v }) {
@@ -183,7 +184,7 @@ export function Reto({ v }) {
               {palabras.map((p, j) => {
                 const tp = mezclar(frase.desde, frase.hasta, j / palabras.length);
                 const dicho = curva.sale(tramo(v, tp - 0.05, tp + 0.25));
-                const color = frase.fuerte ? `rgb(${mezclar(120, 0, dicho)} ${mezclar(110, 229, dicho)} ${mezclar(140, 255, dicho)})`
+                const color = frase.fija ? 'rgb(196 182 212)' : frase.fuerte ? `rgb(${mezclar(120, 0, dicho)} ${mezclar(110, 229, dicho)} ${mezclar(140, 255, dicho)})`
                   : `rgb(${mezclar(120, 244, dicho)} ${mezclar(105, 238, dicho)} ${mezclar(140, 250, dicho)})`;
                 return <span key={j} style={{ color }}>{p} </span>;
               })}
@@ -285,83 +286,6 @@ export function Colapso({ v }) {
         </div>
         <div style={{ marginTop: 22, font: '500 28px var(--sans)', color: 'var(--lavanda)', opacity: vida(v, 75.74, SIEMPRE, 0.5) }}>¿Quién necesita ayuda? ¿En qué paso se detuvo?</div>
       </Entra>
-    </Capa>
-  );
-}
-
-// ------------------------------------------------------------------ Pausas con música (sin voz)
-// El prólogo recibe h: segundos desde que empieza el video.
-
-function Cita({ h, a, texto, tam = 38, vel = 0.07 }) {
-  const palabras = texto.split(' ');
-  return (
-    <p style={{ margin: 0, font: `500 ${tam}px/1.3 var(--sans)` }}>
-      {palabras.map((p, j) => {
-        const k = curva.sale(tramo(h, a + j * vel, a + j * vel + 0.35));
-        const fuerte = p.startsWith('*');
-        return <span key={j} style={{ opacity: 0.12 + k * 0.88, color: fuerte ? 'var(--magenta)' : undefined, fontWeight: fuerte ? 700 : undefined }}>{p.replace('*', '')} </span>;
-      })}
-    </p>
-  );
-}
-
-// Nuestra historia: prólogo de 16 s antes de la voz. Magenta = lo humano. Termina en «Por eso creamos…» y entra la gema.
-const TESTIMONIOS = [
-  { nombre: 'Maximiliano Cabello Mata', a: 0.9, x: 120, foto: `${M}/fotos/1.jpg`,
-    texto: 'Quise hacer proyectos de modelado 3D en la universidad… *y *los *recursos *no *alcanzaban.' },
-  { nombre: 'Diana Paola Acatitla Martínez', a: 3.6, x: 1000, foto: `${M}/fotos/2.jpg`,
-    texto: 'Los equipos no daban para proyectos *del *tamaño *que *imaginábamos.' },
-];
-
-export function Historia({ h }) {
-  const sale = 8.0;
-  const proyecto = curva.suave(tramo(h, 8.4, 10.6));
-  const limite = 0.42;
-  const poreso = curva.sale(tramo(h, 12.9, 13.6));
-  return (
-    <Capa>
-      <Fondo v={h} tono={-0.05} />
-      <Entra v={h} a={0.2} b={12.4} estilo={{ left: 120, top: 96 }}><span className="chip chip-magenta faceta-sm">Nuestra historia · lo vivimos como alumnos</span></Entra>
-      {TESTIMONIOS.map((p) => (
-        <Entra key={p.nombre} v={h} a={p.a} b={sale} como="escala" estilo={{ left: p.x, top: 190 }}>
-          <div className="tarjeta faceta" style={{ width: 800, height: 600, boxSizing: 'border-box', overflow: 'hidden', borderColor: 'rgb(255 111 174 / 0.4)' }}>
-            <div style={{ position: 'relative', height: 280, overflow: 'hidden', filter: 'grayscale(0.7) brightness(0.75)' }}>
-              <img alt="" src={p.foto} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${mezclar(1.06, 1.16, tramo(h, p.a, sale))})` }} />
-            </div>
-            <div style={{ padding: '26px 40px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 14 }}>
-                <span style={{ width: 18, height: 18, background: 'var(--magenta)', clipPath: 'polygon(50% 0,100% 50%,50% 100%,0 50%)' }} />
-                <span style={{ font: '700 30px var(--sans)', color: 'var(--niebla)' }}>{p.nombre}</span>
-              </div>
-              <Cita h={h} a={p.a + 0.4} texto={p.texto} tam={36} />
-            </div>
-          </div>
-        </Entra>
-      ))}
-      {/* Las ideas crecían más que los equipos */}
-      <div style={{ position: 'absolute', left: 160, right: 160, top: 330, opacity: vida(h, 8.1, 12.4, 0.5) }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', font: '600 24px var(--mono)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
-          <span style={{ color: 'var(--lavanda)' }}>Tamaño de nuestros proyectos</span>
-          <span style={{ color: 'var(--magenta)', opacity: tramo(proyecto, limite + 0.1, limite + 0.3) }}>no alcanzaba</span>
-        </div>
-        <div style={{ position: 'relative', marginTop: 18, height: 80, background: 'rgb(195 155 211 / 0.12)' }}>
-          <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${Math.min(proyecto, limite) * 100}%`, background: 'var(--amatista)' }} />
-          <div style={{ position: 'absolute', left: `${limite * 100}%`, top: 0, bottom: 0, width: `${Math.max(0, proyecto - limite) * 100}%`,
-            background: 'repeating-linear-gradient(135deg, #ff6fae 0 18px, rgb(255 111 174 / 0.45) 18px 36px)' }} />
-          <div style={{ position: 'absolute', left: `${limite * 100}%`, top: -16, bottom: -16, width: 5, background: '#fff' }} />
-        </div>
-        <div style={{ marginTop: 16, marginLeft: `${limite * 100}%`, transform: 'translateX(-50%)', width: 'max-content', font: '600 24px var(--mono)', letterSpacing: '0.12em' }}>
-          ▲ LO QUE AGUANTABA EL EQUIPO
-        </div>
-        <div style={{ marginTop: 50, textAlign: 'center', font: '780 72px var(--sans)', opacity: curva.sale(tramo(h, 10.4, 11.0)) }}>
-          Las ideas eran grandes. <span style={{ color: 'var(--magenta)' }}>Los equipos, no.</span>
-        </div>
-      </div>
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 380, textAlign: 'center', opacity: poreso }}>
-        <div style={{ font: '600 46px var(--sans)', color: 'var(--niebla)' }}>Nadie debería recortar sus ideas por falta de equipo.</div>
-        <div className="gema-texto" style={{ marginTop: 30, font: '850 140px var(--sans)', transform: `scale(${mezclar(1.25, 1, curva.sale(tramo(h, 13.4, 14.4)))})`,
-          opacity: curva.sale(tramo(h, 13.4, 14.0)) }}>Por eso creamos…</div>
-      </div>
     </Capa>
   );
 }
@@ -566,13 +490,13 @@ export function GeodaEscena({ v }) {
   return (
     <Capa>
       <Fondo v={v} tono={0.2 + p * 0.15} />
-      <Entra v={v} a={126.3} estilo={{ left: 120, top: 100 }}><span className="chip chip-magenta faceta-sm">Mención especial · arquitectura</span></Entra>
-      <Entra v={v} a={128.6} estilo={{ left: 124, top: 170, font: '600 40px var(--sans)', color: 'var(--niebla)' }}>
+      <Entra v={v} a={128.15} estilo={{ left: 120, top: 100 }}><span className="chip chip-magenta faceta-sm">Mención especial · arquitectura</span></Entra>
+      <Entra v={v} a={128.3} estilo={{ left: 124, top: 170, font: '600 40px var(--sans)', color: 'var(--niebla)' }}>
         Lo que respalda el aprendizaje
       </Entra>
 
       {/* La gema de Amatista, translúcida, y Geoda latiendo dentro */}
-      <div style={{ position: 'absolute', left: CORAZON[0] - 330, top: CORAZON[1] - 350, opacity: 0.22 * curva.sale(tramo(v, 127.0, 128.4)) }}>
+      <div style={{ position: 'absolute', left: CORAZON[0] - 330, top: CORAZON[1] - 350, opacity: 0.22 * curva.sale(tramo(v, 128.1, 128.9)) }}>
         <Gema tam={660} arma={1} brillo={0.3 + p * 0.3} />
       </div>
       <svg viewBox="0 0 1920 1080" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
@@ -706,17 +630,6 @@ export function Sincroniza({ v }) {
       <Nodo v={v} a={163.86} titulo="FastAPI" sub="servidor" x={1040} y={520} w={300} color="var(--cian)" />
       <Flujo t={v} de={[1190, 520]} a={[1460, 520]} n={8} curvatura={0} vel={0.6} fuerza={curva.sale(tramo(v, 165.0, 165.6))} />
       <Nodo v={v} a={165.36} titulo="SQL" sub="esquemas optimizados" x={1600} y={520} w={300} color="var(--cian)" />
-      <Entra v={v} a={167.44} como="escala" estilo={{ left: 820, top: 760 }}>
-        <div className="tarjeta faceta" style={{ padding: '24px 34px', display: 'flex', alignItems: 'center', gap: 26 }}>
-          <span style={{ font: '500 24px var(--sans)', color: 'var(--lavanda)' }}>Código de vinculación<br />de un solo uso</span>
-          <span className="mono" style={{ font: '700 54px var(--mono)', letterSpacing: '0.2em', color: 'var(--cian)' }}>K7Q-2PX</span>
-        </div>
-      </Entra>
-      <div style={{ position: 'absolute', left: 1460, top: 760, display: 'flex', flexDirection: 'column', gap: 14 }}>
-        {[['Alumno', 170.16], ['Docente', 170.5], ['Administrador', 170.84]].map(([r, a]) => (
-          <Entra key={r} v={v} a={a} como="der" estilo={{ position: 'relative' }}><span className="chip faceta-sm">{r}</span></Entra>
-        ))}
-      </div>
     </Capa>
   );
 }
@@ -727,8 +640,8 @@ export function Profesor({ v }) {
   return (
     <Capa>
       <Fondo v={v} />
-      <Titulo v={v} a={171.6} texto="El profesor ve a *todo su grupo" tam={66} estilo={{ left: 120, top: 100 }} />
-      <Pantalla v={v} a={171.8} src={`${M}/capturas/profesor_recrear_abajo.jpg`} x={120} y={220} w={1180} h={760} url="amatista-3d.tech/#/profesor" como="escala" />
+      <Titulo v={v} a={171.2} texto="El profesor ve a *todo su grupo" tam={66} estilo={{ left: 120, top: 100 }} />
+      <Pantalla v={v} a={171.3} src={`${M}/capturas/profesor_recrear_abajo.jpg`} x={120} y={220} w={1180} h={760} url="amatista-3d.tech/#/profesor" como="escala" />
       <Entra v={v} a={173.5} como="der" estilo={{ left: 1360, top: 300, width: 440 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
           <Marca v={v} a={173.6} texto="Seguimiento real" />
@@ -761,13 +674,6 @@ export function Inclusion({ v }) {
         <div style={{ font: '800 64px var(--sans)' }} className="gema-texto">Cientos de planteles</div>
         <div style={{ font: '500 30px var(--sans)', color: 'var(--niebla)' }}>de educación media superior con limitaciones de equipo</div>
       </Entra>
-      <Contador v={v} a={187.9} hasta={1500} sufijo="+" tam={96} estilo={{ left: 1000, top: 780 }} />
-      <Entra v={v} a={188.3} estilo={{ left: 1004, top: 890, font: '500 30px var(--sans)', color: 'var(--niebla)' }}>facultades universitarias</Entra>
-      <div style={{ position: 'absolute', left: 1004, top: 950, display: 'flex', gap: 14 }}>
-        {[['Ingeniería', 190.22], ['Arquitectura', 191.2], ['Arte digital', 192.02]].map(([t, a]) => (
-          <Entra key={t} v={v} a={a} como="escala" estilo={{ position: 'relative' }}><span className="chip faceta-sm" style={{ fontSize: 18 }}>{t}</span></Entra>
-        ))}
-      </div>
     </Capa>
   );
 }
@@ -782,7 +688,8 @@ export function Piloto({ v }) {
   return (
     <Capa>
       <Fondo v={v} />
-      <Titulo v={v} a={194.0} texto="Fase piloto · México" tam={56} estilo={{ left: 120, top: 110, color: 'var(--niebla)' }} />
+      <Titulo v={v} a={192.3} texto="Fase piloto · México" tam={56} estilo={{ left: 120, top: 110, color: 'var(--niebla)' }} />
+      <Foto v={v} a={192.9} b={199.4} src={`${M}/fotos/4.jpg`} x={1100} y={110} w={700} h={390} zoom={[1.05, 1.15]} posicion="50% 35%" etiqueta="Fase piloto · alumnos en México" />
       <Contador v={v} a={199.7} hasta={500} sufijo="+" tam={190} estilo={{ left: 120, top: 190 }} />
       <Entra v={v} a={200.3} estilo={{ left: 128, top: 400, font: '600 40px var(--sans)' }}>alumnos beneficiados directamente</Entra>
       <svg viewBox="0 0 700 360" style={{ position: 'absolute', left: 1100, top: 120, width: 700, height: 360 }}>

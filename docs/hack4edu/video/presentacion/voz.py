@@ -1,17 +1,19 @@
-"""Pista de voz de la presentación (4:20).   python3 voz.py <voz_mejorada.wav> <salida.wav>
+"""Pista de voz de la presentación (3:40).   python3 voz.py <voz_mejorada.wav> <salida.wav>
 
 1. Repara los empalmes del audio original (huecos digitales de 30–100 ms donde se unieron grabaciones):
    los rellena con ruido de sala de la misma grabación y les pone fundidos cortos, para que no se oiga el corte.
-2. La voz corre seguida, sin pausas, para que la narrativa no se corte.
-3. Agrega PRE s al inicio (prólogo con nuestra historia y la gema) y la tarjeta final.
+2. Quita cuatro frases (CORTES, igual que frontend/presentacion/tiempos.js). Cada corte va en un silencio o en
+   el borde exacto de una palabra, con fundidos de 15 ms, y deja una pausa natural con ruido de sala.
+3. Agrega PRE s al inicio (la gema) y la tarjeta final.
 """
 import sys
 import wave
 
 import numpy as np
 
-PRE, DUR = 20.0, 260.0  # prólogo de 16 s + gema de 4 s antes de la voz
-PAUSAS = []  # la voz corre seguida: la narrativa no se corta
+PRE, DUR = 3.0, 220.4
+PAUSAS = []
+CORTES = [(21.14, 28.56, 0.30), (125.262, 128.62, 0.18), (166.986, 171.454, 0.12), (187.15, 192.64, 0.32)]
 EMPALMES = [21.09, 34.82, 55.15, 106.22, 125.21, 143.97, 166.94, 193.53]
 
 with wave.open(sys.argv[1]) as w:
@@ -70,20 +72,23 @@ for t in EMPALMES:
     voz[i0 - f:i1 + f] += relleno
     print(f"empalme {t:7.2f} s: hueco de {hueco / sr * 1000:.0f} ms reparado")
 
-# 2. Pausas: la voz se corta (con fundido de 40 ms) en el punto exacto y vuelve después.
+# 2. Cortes: se quitan las frases y queda una pausa natural de ruido de sala; bordes con fundido de 15 ms.
+f2 = int(0.015 * sr)
 partes, desde = [], 0
-g = int(0.04 * sr)
-for t, d in PAUSAS:
-    corte = int(t * sr)
-    trozo = voz[desde:corte].copy()
-    trozo[-g:] *= rampa(g, sube=False)
+for a, b, r in CORTES:
+    trozo = voz[desde:int(a * sr)].copy()
+    trozo[-f2:] *= rampa(f2, sube=False)
     if desde:
-        trozo[:g] *= rampa(g)
-    partes += [trozo, np.zeros(int(d * sr), np.float32)]
-    desde = corte
+        trozo[:f2] *= rampa(f2)
+    sala = tono_de_sala(int(r * sr))
+    sala[:f2] *= rampa(f2)
+    sala[-f2:] *= rampa(f2, sube=False)
+    partes += [trozo, sala]
+    desde = int(b * sr)
 ultimo = voz[desde:].copy()
-ultimo[:g] *= rampa(g)
+ultimo[:f2] *= rampa(f2)
 partes.append(ultimo)
+print(f"voz editada: {sum(len(x) for x in partes) / sr:.2f} s")
 
 pista = np.concatenate([np.zeros(int(PRE * sr), np.float32)] + partes)
 pista = np.concatenate([pista, np.zeros(max(0, int(DUR * sr) - len(pista)), np.float32)])[:int(DUR * sr)]

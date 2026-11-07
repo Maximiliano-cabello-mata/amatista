@@ -1,4 +1,4 @@
-# Presentación de Hack4Edu · Reto 2 (4:20)
+# Presentación de Hack4Edu · Reto 2 (3:40)
 
 El video de la presentación, hecho con la misma técnica que la película (`../pelicula`): cada cuadro es
 una función pura del tiempo, se dibuja en el navegador con React y se captura cuadro por cuadro.
@@ -7,19 +7,30 @@ una función pura del tiempo, se dibuja en el navegador con React y se captura c
   `cd frontend && npx vite --port 5173` → <http://localhost:5173/presentacion/> (`?t=95` empieza en ese segundo).
 - **Sigue la voz exactamente.** La voz se transcribió con Whisper palabra por palabra; cada elemento entra
   cuando se dice su palabra (`tiempos.js`: subtítulos, capítulos y el texto oficial del reto).
-- **Línea de tiempo.** Un prólogo de 16 s con **Nuestra historia** (lo que vivieron Maximiliano y Diana Paola
-  como alumnos) que termina en «Por eso creamos…», la gema que se arma (4 s), **la voz completa y seguida**
-  (233.7 s, sin pausas: la narrativa no se corta) y la tarjeta final: 4:20, dentro del límite de 5 minutos.
+- **Duración: 3:40.** Las bases oficiales más recientes publicadas (2024) piden «una presentación de 5 minutos
+  o un video de 3 minutos»; las de 2026 no estaban publicadas al editar. El video usa **solo el audio del
+  equipo**: 3 s para que se arme la gema, la voz editada (213.9 s) y la tarjeta final.
+- **La voz editada.** Se quitan cuatro frases que no cambian el sentido (`tiempos.js › CORTES`, igual en
+  `voz.py` y `musica.py`). Cada corte va en un silencio o en el borde exacto de una palabra (medido en la
+  energía de la grabación), con fundidos de 15 ms y una pausa natural de ruido de sala; en esa pausa la imagen
+  se funde del antes al después y el cambio de escena cae dentro del tramo quitado, así nada se ve vacío. La
+  música corre continua por encima, lo que disimula aún más la unión.
+
+  | Se quita | Dura | Por qué se puede |
+  |---|---|---|
+  | «e incorporar contenidos, actividades… IA ejecutada localmente» | 7.4 s | el texto oficial del reto sigue completo en pantalla |
+  | «Además, como mención especial en nuestra arquitectura,» | 3.4 s | introducción; entra directo «Respaldamos este aprendizaje con Geoda» |
+  | «mediante códigos de vinculación de un solo uso y cuentas por rol,» | 4.5 s | detalle técnico; la idea del panel del profesor queda completa |
+  | «así como a más de 1,500 facultades universitarias…» | 5.5 s | la cifra 1,500+ ya se dijo en el problema |
+
 - **Demostraciones dentro del relato.** La plataforma real corre mientras la voz dice «Una aplicación web
-  ultraligera…» y el add-on real arma el tren mientras dice «Un add-on integrado para Blender…»: cada toma y
-  cada pieza entran con su palabra.
+  ultraligera…» y el add-on real arma el tren mientras dice «Un add-on integrado para Blender…».
 - **Armar el video:** `bash docs/hack4edu/video/presentacion/armar.sh` → `salida/` (no se versiona).
 
 ## Escenas
 
 | Capítulo | Escenas |
 |---|---|
-| Prólogo | **Nuestra historia** → «Por eso creamos…» → la gema |
 | 01 · El problema | Apertura y equipo · El reto (texto oficial, palabra por palabra) · La brecha (20,900+ y 1,500+) · El colapso |
 | 02 · La solución | Amatista · Pilar 1: la aplicación web (demostración real) · Pilar 2: el complemento para Blender (demostración real) · **Geoda, el corazón de Amatista** |
 | 03 · Telemetría | Practica sin conexión · Vuelve la red (telemetría ligera, FastAPI, SQL, códigos y roles) · El panel del profesor |
@@ -47,7 +58,8 @@ con ruido de sala de la misma grabación y les pone fundidos de 12 ms; la músic
 
 ## Psicología del sonido
 
-Para que el oído siga atento aunque la vista se distraiga (`musica.py`):
+Para que el oído siga atento aunque la vista se distraiga (`musica.py`). La música corre continua sobre los
+cortes de la voz:
 
 - **Motivo de Amatista** (Mi–Si–Mi en campanas): suena siempre con la marca (la gema, la revelación, cada pilar,
   Geoda, «hasta hoy» y la tarjeta final). El oído aprende la asociación y la reconoce.

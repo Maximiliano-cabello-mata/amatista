@@ -1,7 +1,8 @@
-"""Música y diseño sonoro de la presentación de Hack4Edu (4:20), sintetizados desde cero con las piezas de
+"""Música y diseño sonoro de la presentación de Hack4Edu (3:40), sintetizados desde cero con las piezas de
 ../pelicula/musica.py (sin licencias de terceros).      python3 musica.py <salida.wav>
 
-Sigue frontend/presentacion/tiempos.js: prólogo de 16 s, la gema (4 s) y la voz seguida desde el segundo 20.
+Sigue frontend/presentacion/tiempos.js: la gema (3 s) y la voz editada (cuatro frases quitadas). La música corre
+continua por encima de los cortes de la voz, y así los disimula.
 Psicología del sonido, para que el oído siga atento aunque la vista se distraiga:
   · Motivo de Amatista: tres campanas (Mi–Si–Mi) que suenan siempre con la marca (logo, revelación, pilares,
     cierre). El oído aprende la asociación y la reconoce cada vez.
@@ -23,12 +24,20 @@ from musica import (DO, DOsm, FA, LA, LAm, MI, MIm, REm, SIm, SOL, Pista, acto_i
                     colchon, golpe, latidos, midi, reverberar, soplido, subida)
 
 SR = 44100
-PRE, DUR = 20.0, 260.0
+PRE, DUR = 3.0, 220.4
+CORTES = [(21.14, 28.56, 0.30), (125.262, 128.62, 0.18), (166.986, 171.454, 0.12), (187.15, 192.64, 0.32)]
 
 
 def t(v):
-    """Segundo del video en que suena el segundo v de la voz."""
-    return PRE + v
+    """Segundo del video en que suena el segundo v de la voz original (igual que aLinea en tiempos.js)."""
+    quitado = 0.0
+    for a, b, r in CORTES:
+        if v < a:
+            break
+        if v < b:
+            return PRE + a - quitado + r * (v - a) / (b - a)
+        quitado += b - a - r
+    return PRE + v - quitado
 
 
 def motivo(p, x, vol=1.0):
@@ -55,14 +64,6 @@ def clic(p, x, nota=88, vol=0.12):
 
 def componer():
     p = Pista(DUR)
-
-    # Prólogo · nuestra historia: piano íntimo; tensión cuando «no alcanzaba»; sube hacia «Por eso creamos…»
-    acto_intimo(p, 0.3, 12.8, [REm, LAm, FA, MIm], bpm=84, vol=0.34)
-    latidos(p, 8.3, 12.4, bpm=70, vol=0.3)
-    p.poner(12.6, colchon([midi(n) for n in (50, 57, 62, 65)], 4.0, ataque=1.2), 0.45)
-    p.poner(13.4, campana(midi(81), 2.5), 0.2)
-    p.poner(13.6, subida(2.4), 0.6)
-    p.poner(16.0 - 0.55, soplido(1.1), 0.6)
 
     # La gema se arma: golpe, acorde mayor y el motivo (primera vez que el oído lo aprende)
     acorde(p, t(-0.6), (48, 55, 62, 64, 67), 7, vol=0.5)
@@ -109,7 +110,6 @@ def componer():
     # 04 · Inclusión y escala: cálido y creciendo
     p.poner(t(177.0) - 0.55, soplido(1.1), 0.6)
     acto_ritmo(p, t(177.0), t(223.6), [FA, DO, SOL, LAm], bpm=100, vol=0.21, bateria=0.55)
-    impacto(p, t(187.9), 0.85)   # 1,500+ facultades
     impacto(p, t(199.7), 1.0)    # 500+ alumnos
     clic(p, t(206.9), 81, 0.14)  # costo mínimo
     clic(p, t(214.96), 84, 0.14)  # en producción

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Barrido } from '../pelicula/piezas.jsx';
 import { curva, tramo } from '../pelicula/tiempo';
-import { CAPITULOS, DURACION, PRE, SUBTITULOS, VOZ, aLinea, aVoz, pausaEn } from './tiempos.js';
+import { CAPITULOS, CORTES, DURACION, PRE, SUBTITULOS, VOZ, aLinea, aVoz, lados } from './tiempos.js';
 import { ESCENAS, reloj } from './linea.js';
 import { Fondo } from './escenas.jsx';
 import { FondoGlobal } from './contexto.js';
@@ -48,9 +48,9 @@ function Marco({ v, l }) {
   );
 }
 
-function Subtitulo({ v, l }) {
-  if (pausaEn(l)) return null;
+function Subtitulo({ v }) {
   if (v >= SIN_SUBTITULOS[0] && v < SIN_SUBTITULOS[1]) return null;
+  if (CORTES.some(([a, b]) => v > a + 0.05 && v < b - 0.05)) return null;
   const s = SUBTITULOS.find(([a, b]) => v >= a - 0.08 && v < b + 0.25);
   if (!s) return null;
   const [a, b, texto] = s;
@@ -58,16 +58,10 @@ function Subtitulo({ v, l }) {
   return <div className="subtitulo faceta-sm" style={{ opacity: o }}>{texto}</div>;
 }
 
-export function Montaje({ t }) {
-  const l = t - PRE; // línea: segundos desde la voz, contando el hueco de la historia
-  const v = aVoz(l); // segundo de la voz (se detiene durante la historia)
-  const negro = curva.suave(tramo(t, DURACION - 1.2, DURACION));
-  let barrido = 0;
-  let tonoSuma = 0;
-  let pesoSuma = 0;
-  const matiz = [0, 0, 0];
-  const acento = [0, 0, 0];
+// Las capas de las escenas para un segundo v de la voz, con su peso (en un corte se dibujan los dos lados).
+function capasDe(v, peso, lado, color) {
   const capas = [];
+  let barrido = 0;
   ESCENAS.forEach((e, i) => {
     const sig = ESCENAS[i + 1];
     const ant = ESCENAS[i - 1];
@@ -75,31 +69,43 @@ export function Montaje({ t }) {
     const saleCruce = sig && !sig.barrido;
     const a = entraCruce ? e.desde - CRUCE : e.desde;
     const b = saleCruce ? e.hasta + CRUCE : e.hasta;
-    if (l >= a && l < b) {
-      let o = 1;
-      if (entraCruce) o *= curva.suave(tramo(l, e.desde - CRUCE, e.desde + CRUCE));
-      if (saleCruce) o *= 1 - curva.suave(tramo(l, e.hasta - CRUCE, e.hasta + CRUCE));
-      if (!ant) o *= curva.suave(tramo(l, -PRE, -PRE + 0.8));
+    if (v >= a && v < b) {
+      let o = peso;
+      if (entraCruce) o *= curva.suave(tramo(v, e.desde - CRUCE, e.desde + CRUCE));
+      if (saleCruce) o *= 1 - curva.suave(tramo(v, e.hasta - CRUCE, e.hasta + CRUCE));
+      if (!ant) o *= curva.suave(tramo(v, -PRE, -PRE + 0.8));
       const { Escena } = e;
       const tono = e.id === 'cierre' ? 0.2 + curva.sale(tramo(v, 228.42, 229.0)) * 0.6 : (e.tono ?? 0);
-      tonoSuma += tono * o;
-      pesoSuma += o;
-      for (let k = 0; k < 3; k += 1) { matiz[k] += e.matiz[k] * o; acento[k] += e.acento[k] * o; }
+      color.tono += tono * o;
+      color.peso += o;
+      for (let k = 0; k < 3; k += 1) { color.matiz[k] += e.matiz[k] * o; color.acento[k] += e.acento[k] * o; }
       capas.push(
-        <div key={e.id} style={{ position: 'absolute', inset: 0, opacity: o, transform: ZONA, transformOrigin: ORIGEN }}><Escena v={v} l={l} h={l - e.desde} /></div>,
+        <div key={`${e.id}-${lado}`} style={{ position: 'absolute', inset: 0, opacity: o, transform: ZONA, transformOrigin: ORIGEN }}><Escena v={v} /></div>,
       );
     }
-    if (e.barrido && Math.abs(l - e.desde) < 0.6) barrido = tramo(l, e.desde - 0.55, e.desde + 0.55);
+    if (e.barrido && Math.abs(v - e.desde) < 0.6) barrido = Math.max(barrido, tramo(v, e.desde - 0.55, e.desde + 0.55) * (peso > 0.5 ? 1 : 0));
   });
+  return { capas, barrido };
+}
+
+export function Montaje({ t }) {
+  const l = t - PRE; // línea: segundos del video desde que empieza la voz
+  const v = aVoz(l); // segundo de la voz original (el lado dominante si estamos en un corte)
+  const negro = curva.suave(tramo(t, DURACION - 1.2, DURACION));
+  const color = { tono: 0, peso: 0, matiz: [0, 0, 0], acento: [0, 0, 0] };
+  const partes = lados(l).map((x, i) => capasDe(x.v, x.peso, i, color));
+  const capas = partes.flatMap((p) => p.capas);
+  const barrido = Math.max(...partes.map((p) => p.barrido));
+  const p = color.peso;
   return (
     <div className="pres">
       <div style={{ position: 'absolute', inset: 0, opacity: curva.suave(tramo(l, -PRE, -PRE + 0.8)) * (1 - negro) }}>
-        <Fondo v={l} tono={pesoSuma ? tonoSuma / pesoSuma : 0}
-          matiz={pesoSuma ? matiz.map((c) => Math.round(c / pesoSuma)) : undefined} acento={pesoSuma ? acento.map((c) => Math.round(c / pesoSuma)) : undefined} />
+        <Fondo v={l} tono={p ? color.tono / p : 0}
+          matiz={p ? color.matiz.map((c) => Math.round(c / p)) : undefined} acento={p ? color.acento.map((c) => Math.round(c / p)) : undefined} />
       </div>
       <FondoGlobal.Provider value>{capas}</FondoGlobal.Provider>
       <Marco v={v} l={l} />
-      <Subtitulo v={v} l={l} />
+      <Subtitulo v={v} />
       <Barrido k={barrido} />
       {negro > 0 && <div style={{ position: 'absolute', inset: 0, background: '#000', opacity: negro, zIndex: 70 }} />}
     </div>
@@ -111,13 +117,13 @@ export default function Presentacion({ inicial = 0, automatico = true }) {
   useEffect(() => {
     reloj.fijar = setT;
     if (!automatico) return undefined;
-    const audio = new Audio('/presentacion/media/voz_mejorada.wav');
+    const audio = new Audio('/presentacion/media/voz_editada.wav');
     const inicio = performance.now() - inicial * 1000;
     let pedido = requestAnimationFrame(function paso(ahora) {
       const tt = (ahora - inicio) / 1000;
       const ll = tt - PRE;
-      const habla = ll >= 0 && !pausaEn(ll) && aVoz(ll) < VOZ;
-      if (habla && audio.paused) { audio.currentTime = aVoz(ll); audio.play().catch(() => {}); }
+      const habla = ll >= 0 && aVoz(ll) < VOZ;
+      if (habla && audio.paused) { audio.currentTime = ll; audio.play().catch(() => {}); }
       if (!habla && !audio.paused) audio.pause();
       setT(Math.min(tt, DURACION));
       pedido = requestAnimationFrame(paso);
