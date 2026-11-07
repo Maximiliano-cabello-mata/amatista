@@ -1,17 +1,17 @@
-"""Pista de voz de la presentación (3:40).   python3 voz.py <voz_mejorada.wav> <salida.wav>
+"""Pista de voz de la presentación (versión final, 3:59).   python3 voz.py <voz_mejorada.wav> <salida.wav>
 
 1. Repara los empalmes del audio original (huecos digitales de 30–100 ms donde se unieron grabaciones):
    los rellena con ruido de sala de la misma grabación y les pone fundidos cortos, para que no se oiga el corte.
 2. Quita cuatro frases (CORTES, igual que frontend/presentacion/tiempos.js). Cada corte va en un silencio o en
    el borde exacto de una palabra, con fundidos de 15 ms, y deja una pausa natural con ruido de sala.
-3. Agrega PRE s al inicio (la gema) y la tarjeta final.
+3. Agrega PRE s al inicio (apertura sin voz de 19 s y la gema) y la tarjeta final.
 """
 import sys
 import wave
 
 import numpy as np
 
-PRE, DUR = 3.0, 220.4
+PRE, DUR = 22.0, 239.4  # 19 s de apertura sin voz + 3 s de la gema
 PAUSAS = []
 CORTES = [(21.14, 28.56, 0.30), (125.262, 128.62, 0.18), (166.986, 171.454, 0.12), (187.15, 192.64, 0.32)]
 EMPALMES = [21.09, 34.82, 55.15, 106.22, 125.21, 143.97, 166.94, 193.53]

@@ -1,4 +1,4 @@
-"""Música y diseño sonoro de la presentación de Hack4Edu (3:40), sintetizados desde cero con las piezas de
+"""Música y diseño sonoro de la presentación de Hack4Edu (versión final, 3:59), sintetizados desde cero con las piezas de
 ../pelicula/musica.py (sin licencias de terceros).      python3 musica.py <salida.wav>
 
 Sigue frontend/presentacion/tiempos.js: la gema (3 s) y la voz editada (cuatro frases quitadas). La música corre
@@ -24,7 +24,7 @@ from musica import (DO, DOsm, FA, LA, LAm, MI, MIm, REm, SIm, SOL, Pista, acto_i
                     colchon, golpe, latidos, midi, reverberar, soplido, subida)
 
 SR = 44100
-PRE, DUR = 3.0, 220.4
+PRE, DUR = 22.0, 239.4  # 19 s de apertura sin voz + 3 s de la gema
 CORTES = [(21.14, 28.56, 0.30), (125.262, 128.62, 0.18), (166.986, 171.454, 0.12), (187.15, 192.64, 0.32)]
 
 
@@ -64,6 +64,18 @@ def clic(p, x, nota=88, vol=0.12):
 
 def componer():
     p = Pista(DUR)
+
+    # Apertura sin voz (0–19 s): pregunta → alumnos reales → madurez → «Esta es Amatista.»
+    p.poner(0.2, colchon([midi(n) for n in (45, 52, 57, 64)], 10.5, ataque=2.0), 0.42)   # pregunta: suspenso
+    latidos(p, 0.9, 4.4, bpm=72, vol=0.28)
+    acto_intimo(p, 4.7, 10.3, [FA, DO, SOL, LAm], bpm=88, vol=0.34)                     # alumnos: calidez
+    p.poner(7.8, campana(midi(81), 2.2), 0.16)                                          # «Ya está pasando.»
+    acto_ritmo(p, 10.5, 17.4, [DO, SOL, LAm, FA], bpm=104, vol=0.3, bateria=0.7)         # madurez: confianza
+    for k in range(6):
+        clic(p, 11.3 + k * 0.45, (76, 79, 81, 84, 86, 88)[k], 0.16)                     # cada prueba de madurez
+    p.poner(17.4, colchon([midi(n) for n in (48, 55, 64, 67)], 2.2, ataque=0.3), 0.4)   # «Esta es Amatista.»
+    p.poner(17.0, subida(2.0), 0.55)
+    p.poner(19.0 - 0.55, soplido(1.1), 0.65)                                            # barrido hacia la gema
 
     # La gema se arma: golpe, acorde mayor y el motivo (primera vez que el oído lo aprende)
     acorde(p, t(-0.6), (48, 55, 62, 64, 67), 7, vol=0.5)

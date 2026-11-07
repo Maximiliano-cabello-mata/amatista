@@ -1,5 +1,5 @@
 // Tiempos de la voz (segundos del audio), medidos con Whisper palabra por palabra.
-// Versión de 3:40: la voz con cuatro frases quitadas (no cambian el sentido) y nada que no esté en el audio.
+// Versión final (3:59): apertura de 19 s + la voz con cuatro frases quitadas (no cambian el sentido) y nada que no esté en el audio.
 // Cada corte va en un silencio o en el borde exacto de una palabra (medido en la energía de la grabación) y deja
 // una pausa natural (relleno con ruido de sala); en esa pausa la imagen se funde del antes al después.
 //   [inicio, fin, relleno] en segundos de la voz original
@@ -9,10 +9,10 @@ export const CORTES = [
   [166.986, 171.454, 0.12], // «mediante códigos de vinculación de un solo uso y cuentas por rol,»
   [187.15, 192.64, 0.32],  // «así como a más de 1,500 facultades…» (la cifra ya se dijo en el problema)
 ];
-export const PRE = 3;
+export const PRE = 22; // 19 s de apertura sin voz (quién es Amatista) + 3 s de la gema
 export const VOZ = 233.71;
 const QUITADO = CORTES.reduce((s, [a, b, r]) => s + (b - a - r), 0);
-export const DURACION = 220.4;
+export const DURACION = 239.4;
 export const FIN = DURACION - PRE - (VOZ - QUITADO);
 
 // Línea (segundos del video desde que empieza la voz) ↔ voz original.

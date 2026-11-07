@@ -9,7 +9,8 @@ const FIN_V = VOZ + FIN;
 
 // desde/hasta en segundos de la voz (negativos: antes de que empiece la voz).
 const EN_VOZ = [
-  { id: 'apertura', tono: 0.3, Escena: E.Apertura, desde: -PRE, hasta: 8.1 },
+  { id: 'intro', tono: 0.1, Escena: E.Intro, desde: -PRE, hasta: -3 },
+  { id: 'apertura', tono: 0.3, Escena: E.Apertura, desde: -3, hasta: 8.1, barrido: true },
   { id: 'reto', Escena: E.Reto, desde: 8.1, hasta: 35 },
   { id: 'brecha', tono: -0.15, Escena: E.Brecha, desde: 35, hasta: 60.2 },
   { id: 'colapso', tono: -0.35, Escena: E.Colapso, desde: 60.2, hasta: 78.1 },
@@ -33,7 +34,7 @@ const EN_VOZ = [
 const AMATISTA = [155, 89, 182];
 const CIAN = [0, 229, 255];
 const COLOR = {
-  apertura: [AMATISTA, CIAN], reto: [[140, 90, 190], CIAN],
+  intro: [[140, 90, 200], CIAN], apertura: [AMATISTA, CIAN], reto: [[140, 90, 190], CIAN],
   brecha: [[105, 95, 135], [255, 111, 174]], colapso: [[95, 85, 120], [255, 90, 120]],
   amatista: [[180, 105, 220], CIAN], pwa: [AMATISTA, CIAN], 'demo-web': [[120, 90, 200], CIAN],
   blender: [AMATISTA, CIAN], 'demo-addon': [[120, 90, 200], CIAN], geoda: [[0, 160, 200], [180, 105, 220]],

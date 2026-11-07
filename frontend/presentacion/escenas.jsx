@@ -133,6 +133,80 @@ function Nodo({ v, a, titulo, sub, x, y, color = 'var(--amatista)', w = 300 }) {
   );
 }
 
+// ------------------------------------------------------------------ 0 · Apertura sin voz (19 s): quién es Amatista
+// Vende Amatista, no la tecnología: la pregunta del reto, alumnos reales y la prueba de madurez (Modalidad Senior).
+// Solo cifras comprobables en el repositorio. Recibe v (de −22 a −3); h = segundos desde que empieza el video.
+const MADUREZ = [
+  { valor: 'En producción', nota: 'amatista-3d.tech, abierta a cualquiera', icono: 'laptop' },
+  { valor: '15 módulos', nota: '58 prácticas guiadas paso a paso', icono: 'escritorio' },
+  { valor: 'Blender 7.1', nota: 'complemento que revisa cada paso', icono: 'chip' },
+  { valor: 'Panel docente', nota: 'seguimiento real de todo el grupo', icono: 'escritorio' },
+  { valor: 'Sin internet', nota: 'funciona offline y sincroniza después', icono: 'sinwifi' },
+  { valor: 'Desde octubre', nota: '620 commits de trabajo continuo', icono: 'laptop' },
+];
+
+export function Intro({ v }) {
+  const h = v + 22;
+  const pregunta = vida(h, 0.9, 4.4, 0.5);
+  const fotos = vida(h, 4.7, 10.2, 0.5);
+  const madurez = vida(h, 10.5, 17.3, 0.5);
+  const cierre = curva.sale(tramo(h, 17.5, 18.1));
+  return (
+    <Capa>
+      <Fondo v={h} tono={0.1} />
+      <Destellos t={h} n={30} fuerza={0.5} />
+      <Entra v={h} a={0.4} b={17.3} estilo={{ left: 0, right: 0, top: 96, textAlign: 'center' }}>
+        <span className="chip chip-cian faceta-sm">Hack4Edu 2026 · Modalidad Senior · Reto 2 · Educación offline-first</span>
+      </Entra>
+      {/* 1 · La pregunta del reto */}
+      <div style={{ position: 'absolute', left: 60, right: 60, top: 380, textAlign: 'center', opacity: pregunta }}>
+        <div style={{ font: '780 64px/1.15 var(--sans)', whiteSpace: 'nowrap', transform: `translateY(${(1 - curva.sale(tramo(h, 0.9, 1.5))) * 30}px)` }}>
+          ¿Y si una escuela quiere enseñar <span className="gema-texto">a crear en 3D</span>…
+        </div>
+        <div style={{ marginTop: 26, font: '700 60px/1.15 var(--sans)', color: 'var(--niebla)', opacity: curva.sale(tramo(h, 2.1, 2.7)) }}>
+          …sin internet y sin computadoras potentes?
+        </div>
+      </div>
+      {/* 2 · Alumnos reales */}
+      <div style={{ position: 'absolute', inset: 0, opacity: fotos }}>
+        {[[`${M}/fotos/3.jpg`, 4.8, 250, -2], [`${M}/fotos/5.jpg`, 5.3, 760, 1.5], [`${M}/fotos/4.jpg`, 5.8, 1270, -1]].map(([src, a, x, rot]) => (
+          <Foto key={src} v={h} a={a} src={src} x={x} y={190} w={420} h={560} zoom={[1.04, 1.14]} posicion="50% 35%" rot={rot} />
+        ))}
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 800, textAlign: 'center' }}>
+          <span style={{ font: '750 56px var(--sans)', opacity: curva.sale(tramo(h, 6.4, 7.0)) }}>Alumnos reales. Laboratorios reales. </span>
+          <span style={{ font: '800 56px var(--sans)', color: 'var(--magenta)', opacity: curva.sale(tramo(h, 7.8, 8.4)) }}>Ya está pasando.</span>
+        </div>
+      </div>
+      {/* 3 · Madurez: no es una maqueta */}
+      <div style={{ position: 'absolute', inset: 0, opacity: madurez }}>
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 180, textAlign: 'center', font: '780 70px var(--sans)' }}>
+          No es una maqueta: <span className="gema-texto">es un proyecto maduro.</span>
+        </div>
+        <div style={{ position: 'absolute', left: 90, right: 90, top: 330, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 30 }}>
+          {MADUREZ.map((m, k) => {
+            const a = 11.3 + k * 0.45;
+            const e = curva.rebote(tramo(h, a, a + 0.45));
+            return (
+              <div key={m.valor} className="tarjeta faceta" style={{ padding: '44px 36px', minHeight: 250, boxSizing: 'border-box', display: 'flex', gap: 26, alignItems: 'center',
+                opacity: acotar(e * 1.5), transform: `translateY(${(1 - acotar(e)) * 30}px) scale(${mezclar(0.92, 1, acotar(e))})`,
+                boxShadow: `0 0 ${vida(h, a, a + 0.9, 0.2) * 40}px rgb(0 229 255 / 0.5), 0 30px 80px rgb(0 0 0 / 0.45)` }}>
+                <Icono tipo={m.icono} tam={84} color="#00e5ff" />
+                <div>
+                  <div style={{ font: '800 50px/1.1 var(--sans)' }}>{m.valor}</div>
+                  <div style={{ marginTop: 10, font: '500 29px/1.25 var(--sans)', color: 'var(--niebla)' }}>{m.nota}</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      {/* 4 · Paso a la historia */}
+      <div className="gema-texto" style={{ position: 'absolute', left: 0, right: 0, top: 440, textAlign: 'center', font: '850 120px var(--sans)', opacity: cierre,
+        transform: `scale(${mezclar(1.15, 1, cierre)})` }}>Esta es Amatista.</div>
+    </Capa>
+  );
+}
+
 // ------------------------------------------------------------------ 0 · Apertura y equipo (−3 → 8 s)
 
 export function Apertura({ v }) {

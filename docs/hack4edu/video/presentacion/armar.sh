@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Arma la presentación de Hack4Edu (3:40) de punta a punta:
+# Arma la presentación de Hack4Edu (versión final, 3:59) de punta a punta:
 #   0. (una vez) tomas suavizadas y capturas del add-on       suavizar.sh, grabar_addon.py (ver README)
 #   1. cuadros 1920×1080 a 30 fps de frontend/presentacion   ../pelicula/render.cjs (servidor de desarrollo en :5173)
 #   2. voz editada: 4 frases quitadas, uniones limpias        voz.py
@@ -27,7 +27,7 @@ trap 'kill $DEV 2>/dev/null || true' EXIT
 esperar http://127.0.0.1:5173/presentacion/
 rm -rf "$CUADROS"
 # Tres tramos en paralelo: cada cuadro es una función pura del tiempo, el orden no importa.
-for tramo in "0 74" "74 148" "148 220.4"; do
+for tramo in "0 80" "80 160" "160 239.4"; do
   set -- $tramo
   node "$AQUI/../pelicula/render.cjs" --url "$URL" --salida "$CUADROS" --desde "$1" --hasta "$2" & 
 done
@@ -35,8 +35,8 @@ wait
 
 python3 "$AQUI/voz.py" "$RAIZ/frontend/presentacion/media/voz_mejorada.wav" "$SALIDA/voz.wav"
 python3 "$AQUI/musica.py" "$SALIDA/musica.wav"
-# La música sube 4 dB en la tarjeta final, donde ya no hay voz.
-VOL="volume='0.32*if(gt(t,214.3),1.6,1)':eval=frame"
+# La música sube 4 dB en la apertura sin voz y en la tarjeta final.
+VOL="volume='0.32*if(lt(t,22.1)+gt(t,233.3),1.6,1)':eval=frame"
 MEZCLA="[0]aresample=48000,pan=stereo|c0=c0|c1=c0,asplit=2[v][key];[1]aresample=48000,$VOL[m];\
 [m][key]sidechaincompress=threshold=0.06:ratio=3:attack=40:release=900:knee=4[md];[v][md]amix=inputs=2:normalize=0[out]"
 ffmpeg -y -loglevel error -i "$SALIDA/voz.wav" -i "$SALIDA/musica.wav" -filter_complex "$MEZCLA" -map '[out]' "$SALIDA/mezcla_cruda.wav"

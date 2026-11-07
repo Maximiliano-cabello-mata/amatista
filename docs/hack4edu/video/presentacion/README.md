@@ -1,4 +1,4 @@
-# Presentación de Hack4Edu · Reto 2 (3:40)
+# Presentación de Hack4Edu · Reto 2 · versión final Modalidad Senior (3:59)
 
 El video de la presentación, hecho con la misma técnica que la película (`../pelicula`): cada cuadro es
 una función pura del tiempo, se dibuja en el navegador con React y se captura cuadro por cuadro.
@@ -7,7 +7,12 @@ una función pura del tiempo, se dibuja en el navegador con React y se captura c
   `cd frontend && npx vite --port 5173` → <http://localhost:5173/presentacion/> (`?t=95` empieza en ese segundo).
 - **Sigue la voz exactamente.** La voz se transcribió con Whisper palabra por palabra; cada elemento entra
   cuando se dice su palabra (`tiempos.js`: subtítulos, capítulos y el texto oficial del reto).
-- **Duración: 3:40.** Las bases oficiales más recientes publicadas (2024) piden «una presentación de 5 minutos
+- **Versión final para la Modalidad Senior (3:59).** Una apertura sin voz de 19 s presenta a Amatista antes
+  de la historia: la pregunta del reto, alumnos reales y la ficha de madurez (en producción, 15 módulos y 58
+  prácticas, complemento para Blender 7.1, panel docente, funciona sin internet, 620 commits desde octubre),
+  y «Esta es Amatista.» abre paso a la gema. Senior premia proyectos maduros con base previa; la apertura
+  muestra esa madurez con cifras comprobables en el repositorio. Deja 1 minuto libre en la final de 5 minutos.
+- **Corte de la voz: 3:40.** Las bases oficiales más recientes publicadas (2024) piden «una presentación de 5 minutos
   o un video de 3 minutos»; las de 2026 no estaban publicadas al editar. El video usa **solo el audio del
   equipo**: 3 s para que se arme la gema, la voz editada (213.9 s) y la tarjeta final.
 - **La voz editada.** Se quitan cuatro frases que no cambian el sentido (`tiempos.js › CORTES`, igual en
