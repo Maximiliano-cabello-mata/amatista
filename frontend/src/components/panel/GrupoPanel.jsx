@@ -376,7 +376,7 @@ function GrupoPanel({ token, usuario, className = '' }) {
         </p>
         <a
           href={rutas.profesor}
-          className="corte-poly-sm shrink-0 border border-neon/50 bg-neon/15 px-3 py-2 font-mono text-[11px] font-bold uppercase tracking-widest text-neon hover:bg-neon/25"
+          className="corte-poly-sm max-w-full border border-neon/50 bg-neon/15 px-3 py-2 font-mono text-[11px] font-bold uppercase tracking-widest text-neon [overflow-wrap:anywhere] hover:bg-neon/25 sm:shrink-0"
         >
           Abrir interfaz del profesor (#/profesor) ▸
         </a>

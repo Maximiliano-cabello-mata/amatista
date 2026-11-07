@@ -21,6 +21,8 @@ def entorno_pruebas(monkeypatch):
     monkeypatch.setenv("AMATISTA_CACHE_CATALOGO_S", "0")
     monkeypatch.setenv("AMATISTA_CACHE_RESUMEN_S", "0")
     monkeypatch.delenv("AMATISTA_ADMINS", raising=False)
+    # Tokens sintéticos de Google (test_google_<correo>) solo en pruebas.
+    monkeypatch.setenv("AMATISTA_GOOGLE_PRUEBAS", "1")
     monkeypatch.delenv("AMATISTA_REQUIERE_CONFIRMACION", raising=False)
     monkeypatch.delenv("SMTP_HOST", raising=False)
 

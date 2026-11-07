@@ -35,7 +35,15 @@ export default defineConfig({
         },
       },
     },
-    rolldownOptions: { output: { comments: false } },
+    // Vite 8 compila con rolldown, que ignora `rollupOptions.output.manualChunks`: los grupos van aquí.
+    // A-Frame (~1.3 MB) en su propio archivo «aframe-master-*» para que globIgnores y la caché en
+    // tiempo de ejecución lo reconozcan; si se mezcla con otro módulo, se precachea para todos.
+    rolldownOptions: {
+      output: {
+        comments: false,
+        advancedChunks: { groups: [{ name: 'aframe-master', test: /node_modules[\\/]aframe[\\/]/ }] },
+      },
+    },
   },
   // Pruebas de funciones puras (reglas del progreso, catálogo): `npm test`.
   test: {
