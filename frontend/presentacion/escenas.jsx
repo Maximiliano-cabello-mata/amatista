@@ -404,11 +404,11 @@ function Pasos({ h, pasos, actual, x = 1340, y = 250 }) {
 
 // Demostración 1: la aplicación web (18 s), con metraje real suavizado a 30 cuadros por segundo.
 const CLIPS_WEB = [
-  { toma: 'portada_s', desde: 0.3, a: 0.7, d: 3.1, n: '1', t: 'Entra desde cualquier navegador', s: 'sin instalar nada', url: 'amatista-3d.tech' },
-  { toma: 'curso_s', desde: 0.3, a: 3.8, d: 2.9, n: '2', t: 'Elige tu nivel', s: 'de principiante a avanzado', url: 'amatista-3d.tech/#/curso/blender' },
-  { toma: 'leccion_s', desde: 0.6, a: 6.7, d: 3.2, n: '3', t: 'Lecciones cortas y prácticas', s: 'conoce Blender antes de abrirlo', url: 'amatista-3d.tech/#/leccion' },
-  { toma: 'ciudad_s', desde: 1.2, a: 9.9, d: 4.2, n: '4', t: 'Programa un mundo 3D y míralo al instante', s: 'en el mismo navegador', url: 'amatista-3d.tech/#/estudio' },
-  { toma: 'jefe_s', desde: 2.0, a: 14.1, d: 3.4, n: '5', t: 'Retos con jefe final', s: 'aprender jugando', url: 'amatista-3d.tech/#/reto' },
+  { toma: 'portada_s', desde: 4.9, a: 0.7, d: 3.1, n: '1', t: 'Entra desde cualquier navegador', s: 'sin instalar nada', url: 'amatista-3d.tech' },
+  { toma: 'curso_s', desde: 1.1, a: 3.8, d: 2.9, n: '2', t: 'Elige tu nivel', s: 'de principiante a avanzado', url: 'amatista-3d.tech/#/curso/blender' },
+  { toma: 'leccion_s', desde: 1.2, a: 6.7, d: 3.2, n: '3', t: 'Lecciones cortas y prácticas', s: 'conoce Blender antes de abrirlo', url: 'amatista-3d.tech/#/leccion' },
+  { toma: 'ciudad_s', desde: 2.8, a: 9.9, d: 4.2, n: '4', t: 'Programa un mundo 3D y míralo al instante', s: 'en el mismo navegador', url: 'amatista-3d.tech/#/estudio' },
+  { toma: 'jefe_s', desde: 0.5, a: 14.1, d: 3.4, n: '5', t: 'Retos con jefe final', s: 'aprender jugando', url: 'amatista-3d.tech/#/reto' },
 ];
 
 export function DemoWeb({ h }) {
@@ -547,7 +547,7 @@ export function Pwa({ v }) {
       <Pantalla v={v} a={97.6} b={99.5} src={`${M}/capturas/leccion_actividad.jpg`} x={120} y={330} w={1100} h={640} url="amatista-3d.tech/#/curso/blender" />
       <div className="pantalla faceta" style={{ left: 120, top: 330, width: 1100, height: 640, opacity: vida(v, 99.5, 103.4, 0.5) }}>
         <div className="navegador-barra"><i /><i /><i /><span style={{ marginLeft: 14 }}>🔒 amatista-3d.tech/#/estudio</span></div>
-        <div style={{ position: 'absolute', top: 42, inset: '42px 0 0 0' }}><Metraje toma="mundo_ciudad_s" t={v - 99.5} desde={3} /></div>
+        <div style={{ position: 'absolute', top: 42, inset: '42px 0 0 0' }}><Metraje toma="mundo_ciudad_s" t={v - 99.5} desde={9.7} /></div>
       </div>
       <Foto v={v} a={95.5} src={`${M}/fotos/3.jpg`} x={1300} y={300} w={500} h={660} zoom={[1.02, 1.12]} posicion="50% 40%" etiqueta="Alumna · UTN" rot={2} />
       {/* Consumo de datos: la barra de Amatista frente a una red social */}
@@ -715,7 +715,9 @@ export function SinConexion({ v }) {
       <Etiqueta v={v} a={144.2} texto="03 · Telemetría y sincronización" estilo={{ left: 120, top: 100 }} />
       <Titulo v={v} a={144.4} texto="Practica *sin conexión" tam={70} estilo={{ left: 120, top: 150 }} />
       <div className="pantalla faceta" style={{ left: 120, top: 300, width: 1060, height: 650, opacity: curva.sale(tramo(v, 144.6, 145.4)) }}>
-        <Metraje toma="sin_conexion_s" t={v - 144.6} desde={2} />
+        <div style={{ position: 'absolute', inset: 0, transform: `scale(${1 + 0.07 * tramo(v, 144.6, 155.3)})`, transformOrigin: '40% 35%' }}>
+          <Metraje toma="sin_conexion_s" t={v - 144.6} desde={2} />
+        </div>
         <div style={{ position: 'absolute', top: 24, right: 24, opacity: vida(v, 145.86, SIEMPRE, 0.3) }}>
           <span className="chip chip-magenta faceta-sm"><Icono tipo="sinwifi" tam={30} color="#2a0618" />Sin conexión</span>
         </div>
